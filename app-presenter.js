@@ -37,9 +37,9 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 
 // question
-//app.get("/question/:id", routes.question); // get question by id
-//app.put("/question/:id", routes.question); // update question by id
-//app.delete("/question/:id", routes.question); // update question by id
+app.get("/question/:id", routesPresenter.question); // get question by id
+app.put("/question/:id", routesPresenter.question); // update question by id
+app.delete("/question/:id", routesPresenter.question); // update question by id
 
 exports.server = app
 

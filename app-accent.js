@@ -35,6 +35,7 @@ app.dynamicHelpers({
 
 // routing
 app.get('/', routesCommon.index);
+app.get('/login', routesCommon.login);
 
 // question
 //app.get("/question/:id", routes.question); // get question by id

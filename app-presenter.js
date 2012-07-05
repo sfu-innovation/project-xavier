@@ -35,7 +35,7 @@ app.dynamicHelpers({
 
 // routing
 app.get('/', routesCommon.index);
-
+app.get('/login', routesCommon.login);
 // question
 app.get("/question/:id", routesPresenter.question); // get question by id
 app.put("/question/:id", routesPresenter.question); // update question by id

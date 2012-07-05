@@ -73,7 +73,6 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 
 		user.save().error(function(error){
 			console.log("Failed to insert user " + error);
-		});
-
+		})
 	}
 }

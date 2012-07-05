@@ -1,5 +1,6 @@
 var express = require('express');
-//var routes = require('./routes');
+var routesCommon = require('./routes/common/routesCommon.js');
+var routesEngage = require('./routes/engage/routesEngage.js');
 var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('config.json'));
 
@@ -33,7 +34,7 @@ app.dynamicHelpers({
 });
 
 // routing
-//app.get('/', routes.index);
+app.get('/', routesCommon.index);
 
 // question
 //app.get("/question/:id", routes.question); // get question by id

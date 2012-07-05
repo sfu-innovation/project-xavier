@@ -1,9 +1,14 @@
 {
-
-	"mysql-database":{
+	"mysqlDatabase":{
 		"host":"",
-		"port":"",
 		"user":"",
-		"password":""
+		"password":"",
+		"db-name":""
+	},
+	"mysqlTestDatabase":{
+		"host":"",
+		"user":"",
+		"password":"",
+		"db-name":""
 	}
 }

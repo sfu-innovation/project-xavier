@@ -64,4 +64,22 @@
 			"instructor":"BSDF787D98ASDF099D7G"
 		}
 	]
+	"notifications":[
+		 {
+		    "uuid":"B827346H7ASDFG9"
+		    ,"user":"aka87"
+		    ,"app":"Accent"
+		    ,"description":"Jihoon has commented on your question"
+		    ,"batch":day
+		    ,"emailed": false
+		 }
+		,{
+			"uuid":"B857346H7ASDFG9"
+		    ,"user":"aka87"
+		    ,"app":"Accent"
+		    ,"description":"Mike has commented on your question"
+		    ,"batch":week
+		    ,"emailed": false
+		 }
+	]
 }

@@ -1,8 +1,12 @@
 {
-	"name": "model",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
+	"name":"project-xavier",
+	"version":"0.0.1",
+	"dependencies":{
+		"sequelize":">=0.0.1",
+		"mysql":">=0.0.1",
+		"express":">=0.0.1",
+		"should":">=0.0.1",
+		"mikeklem-cas":">=0.0.1",
 		"com.izaakschroeder.elasticsearch": ">=0.0.1",
         "optimist": "*"
 	}

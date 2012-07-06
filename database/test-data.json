@@ -1,0 +1,95 @@
+{
+	"users": [
+		{
+			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"firstName":"Mike",
+			"lastName":"Klemarewski",
+			"type":1,
+			"userID":"mak10",
+			"email":"mak10@sfu.ca"
+		},
+		{
+			"uuid":"BSDF787D98A7SDF8ASD7G",
+			"firstName":"Ted",
+			"lastName":"Kirkpatrick",
+			"type":0,
+			"userID":"ted",
+			"email":"ted@sfu.ca"
+		},
+		{
+			"uuid":"BSDF787D98ASDF099D7G",
+			"firstName":"Bernie",
+			"lastName":"Maroney",
+			"type":0,
+			"userID":"bernie",
+			"email":"bernie@sfu.ca"
+		},
+		{
+			"uuid":"A7S7FSD78FA98A7SDF8ASD7G",
+			"firstName":"Jihoon",
+			"lastName":"Klemarewski",
+			"type":1,
+			"userID":"jh99",
+			"email":"jh99@sfu.ca"
+
+		},
+		{	
+			"uuid":"A7S7F8GA7SD9ASD8DF89AG",
+			"firstName":"Yukai",
+			"lastName":"Hong",
+			"type":1,
+			"userID":"yk38",
+			"email":"yk38@sfu.ca"
+		}
+	],
+	"courses":[
+		{
+			"uuid":"A8G7S6H7ASDFG9",
+			"title":"Algorithms",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":307,
+			"instructor":"BSDF787D98A7SDF8ASD7G"
+		},
+		{
+			"uuid":"A827346H7ASDFG9",
+			"title":"Networking",
+			"section":"D200",
+			"subject":"CMPT",
+			"number":371,
+			"instructor":"BSDF787D98ASDF099D7G"
+		}
+	],
+	"courseMembers":[
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"A7S7FSD78FA98A7SDF8ASD7G"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"A7S7F8GA7SD9ASD8DF89AG"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"A7S7F8GA7SD9ASD8DF89AG"
+		}
+	],
+	"notifications":[
+		 {
+		    "uuid":"B827346H7ASDFG9"
+		    ,"user":"aka87"
+		    ,"app":"Accent"
+		    ,"description":"Jihoon has commented on your question"
+		    ,"batch":"day"
+		    ,"emailed": false
+		 }
+		,{
+			"uuid":"B857346H7ASDFG9"
+		    ,"user":"aka87"
+		    ,"app":"Accent"
+		    ,"description":"Mike has commented on your question"
+		    ,"batch":"week"
+		    ,"emailed": false
+		 }
+	]
+}

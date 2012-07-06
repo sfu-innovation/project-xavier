@@ -1,0 +1,26 @@
+{
+	"engageServer" : {
+		"host":"localhost",
+		"port":3000
+	},
+	"accentServer" : {
+		"host":"localhost",
+		"port":3001
+	},
+	"presenterServer" : {
+		"host":"localhost",
+		"port":3002
+	},
+	"mysqlDatabase":{
+		"host":"",
+		"user":"",
+		"password":"",
+		"db-name":""
+	},
+	"mysqlTestDatabase":{
+		"host":"",
+		"user":"",
+		"password":"",
+		"db-name":""
+	}
+}

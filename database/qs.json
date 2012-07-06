@@ -1,0 +1,130 @@
+[
+	{
+	"_index":"presenter",
+	"_type":"questions",
+	"_id":"pJfznhheQuOicWWAjx7F00",
+	"_score":1,
+	"_source":
+		{"user":"jbo1",
+		"title":"When can we register for courses?",
+		"body":"some description",
+		"category":"academic",
+		"status":"unanswered",
+		"timestamp":"2012-06-30",
+		"followup":[]
+		}
+	},
+	{
+	"_index":"presenter",
+	"_type":"comments",
+	"_id":"qJfznhheQuOicWWAjx7F05",
+	"_score":1,
+	"_source":
+		{"user":"mcs3",
+			"upvote":"15",
+			"downvote":"0",
+			"title":"The club in downtown...",
+			"body":"some description",
+			"target_uuid":"pJfznhheQuOicWWAjx7F00",
+			"objectType":"question",
+			"timestamp":"2012-06-29",
+			"isAnswered":"false"
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F05",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":"15",
+			"downvote":"0",
+			"title":"New info",
+			"body":"some description",
+			"target_uuid":"pJfznhheQuOicWWAjx7F00",
+			"objectType":"question",
+			"timestamp":"2012-06-30",
+			"isAnswered":"false"
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F00",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"What the fuck dude?",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"timestamp":"2012-06-30",
+			"followup":[]
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfznhseQuOicWWAjx7F00",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"When can we register for courses?",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"timestamp":"2012-06-30",
+			"followup":[]
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"aJfznhheQuOicWWAjx7F05",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":"15",
+			"downvote":"0",
+			"title":"The club in downtown...",
+			"body":"some description",
+			"target_uuid":"aJfznhheQuOicWWAjx7F00",
+			"objectType":"question",
+			"timestamp":"2012-06-29",
+			"isAnswered":"false"
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"aJfzggggguOicWWAjx7F05",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":"15",
+			"downvote":"0",
+			"title":"New info",
+			"body":"some description",
+			"target_uuid":"aJfznhheQuOicWWAjx7F00",
+			"objectType":"question",
+			"timestamp":"2012-06-30",
+			"isAnswered":"false"
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F00",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"What the fuck dude?",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"timestamp":"2012-06-30",
+			"followup":[]
+		}
+	}
+]

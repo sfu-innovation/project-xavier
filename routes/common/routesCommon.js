@@ -23,6 +23,7 @@ exports.login = function(request, response){
 	    	//Todo: proper redirection to page after login
 	    	else {
 	        	// Log the user in
+	        	request.session.user = username;
 	       		response.send({status: status, username: username});
 	      	}
 	    });

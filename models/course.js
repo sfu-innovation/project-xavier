@@ -24,16 +24,18 @@ var Course = exports.Course = db.define('Course', {
 
 exports.selectCourse = function(args, callback){
 	Course.find({where: args}).success(function(course){
-		callback(course);
+		callback(null, course);
 	}).error(function(error){
+		callback(error, null);
 		console.log("Couldn't select course " + error);
 	});
 }
 
 exports.selectCourses = function(args, callback){
-	Course.findAll({where: args}).success(function(course){
-		callback(course);
+	Course.findAll({where: args}).success(function(courses){
+		callback(null, courses);
 	}).error(function(error){
+		callback(error, null);
 		console.log("Couldn't select course " + error);
 	});
 }
@@ -42,7 +44,9 @@ exports.getInstructor = function(args, callback){
 	Course.find({where: args}).success(function(course){
 		var CourseUser = require('./user.js').User;
 		CourseUser.find({where: {uuid: course.instructor}}).success(function(courseInstructor){
-			callback(courseInstructor);
-		})
+			callback(null, courseInstructor);
+		}).error(function(error){
+			callback(error, null);
+		});
 	})
 }

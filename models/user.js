@@ -27,16 +27,18 @@ var User = exports.User = db.define('User', {
 
 exports.selectUser = function(args, callback){
 	User.find({where: args}).success(function(user){
-		callback(user);
+		callback(null, user);
 	}).error(function(error){
+		callback(error, null);
 		console.log("Couldn't find user " + error);
 	});
 }
 
 exports.selectUsers = function(args, callback){
 	User.findAll({where: args}).success(function(users){
-		callback(users);
+		callback(null, users);
 	}).error(function(error){
+		callback(error, null);
 		console.log("Failed to select users " + error);
 	});
 }
@@ -46,12 +48,14 @@ exports.getUserCourses = function(args, callback){
 		var courseUUIDs = JSON.parse(user.courses).courses;
 		if(courseUUIDs){
 			UserCourse.findAll({where: {uuid: courseUUIDs}}).success(function(userCourses){
-				callback(userCourses);
+				callback(null, userCourses);
 			}).error(function(error){
+				callback(error, null);
 				console.log("Couldn't find users courses " + error);
 			})
 		}
 	}).error(function(error){
+		callback(error, null);
 		console.log("Can't find user " + error);
 	})
 }

@@ -8,6 +8,7 @@ var mysql   = require("mysql").createClient({
 var Sequelize = require('sequelize');
 var User = require('../models/user.js').User;
 var Course = require('../models/course.js').Course;
+var Notification = require('../models/notification.js').Notification;
 
 
 exports.createDB = function(dbName, callback){
@@ -23,8 +24,10 @@ exports.createDB = function(dbName, callback){
 			mysql.end();
 			User.sync().success(function(){
 				Course.sync().success(function(){
-					if(callback){
-						callback();
+					Notification.sync().success(function(){
+						if(callback){
+							callback();
+						}
 					}
 				});	
 			});
@@ -73,6 +76,13 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 
 		user.save().error(function(error){
 			console.log("Failed to insert user " + error);
+		})
+	}
+	for(index in data.notifications){
+		var notification = Notification.build(data.notifications[index]);
+
+		notification.save().error(function(error){
+			console.log("Failed to insert notification " + error);
 		})
 	}
 }

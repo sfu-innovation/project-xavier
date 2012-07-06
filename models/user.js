@@ -19,10 +19,8 @@ var User = exports.User = db.define('User', {
 	lastName: {type: Sequelize.STRING, allowNull: false},
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
-	engageConfig: {type: Sequelize.INTEGER, unique: true},
-	accentConfig: {type: Sequelize.INTEGER, unique: true},
-	rqraConfig: {type: Sequelize.INTEGER, unique: true},
-	courses: {type: Sequelize.TEXT}
+	courses: {type: Sequelize.TEXT},
+	lastWatchedTag: {type: Sequelize.STRING}
 });
 
 exports.selectUser = function(args, callback){

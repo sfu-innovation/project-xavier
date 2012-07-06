@@ -6,8 +6,7 @@
 			"lastName":"Klemarewski",
 			"type":1,
 			"userID":"mak10",
-			"email":"mak10@sfu.ca",
-			"courses":"{\"courses\":[]}"
+			"email":"mak10@sfu.ca"
 		},
 		{
 			"uuid":"BSDF787D98A7SDF8ASD7G",
@@ -15,8 +14,7 @@
 			"lastName":"Kirkpatrick",
 			"type":0,
 			"userID":"ted",
-			"email":"ted@sfu.ca",
-			"courses":"{\"courses\":[]}"
+			"email":"ted@sfu.ca"
 		},
 		{
 			"uuid":"BSDF787D98ASDF099D7G",
@@ -24,8 +22,7 @@
 			"lastName":"Maroney",
 			"type":0,
 			"userID":"bernie",
-			"email":"bernie@sfu.ca",
-			"courses":"{\"courses\":[]}"
+			"email":"bernie@sfu.ca"
 		},
 		{
 			"uuid":"A7S7FSD78FA98A7SDF8ASD7G",
@@ -33,8 +30,8 @@
 			"lastName":"Klemarewski",
 			"type":1,
 			"userID":"jh99",
-			"email":"jh99@sfu.ca",
-			"courses":"{\"courses\":[\"A8G7S6H7ASDFG9\"]}"
+			"email":"jh99@sfu.ca"
+
 		},
 		{	
 			"uuid":"A7S7F8GA7SD9ASD8DF89AG",
@@ -42,8 +39,7 @@
 			"lastName":"Hong",
 			"type":1,
 			"userID":"yk38",
-			"email":"yk38@sfu.ca",
-			"courses":"{\"courses\":[\"A8G7S6H7ASDFG9\", \"A827346H7ASDFG9\"]}"
+			"email":"yk38@sfu.ca"
 		}
 	],
 	"courses":[
@@ -63,14 +59,28 @@
 			"number":371,
 			"instructor":"BSDF787D98ASDF099D7G"
 		}
-	]
+	],
+	"courseMembers":[
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"A7S7FSD78FA98A7SDF8ASD7G"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"A7S7F8GA7SD9ASD8DF89AG"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"A7S7F8GA7SD9ASD8DF89AG"
+		}
+	],
 	"notifications":[
 		 {
 		    "uuid":"B827346H7ASDFG9"
 		    ,"user":"aka87"
 		    ,"app":"Accent"
 		    ,"description":"Jihoon has commented on your question"
-		    ,"batch":day
+		    ,"batch":"day"
 		    ,"emailed": false
 		 }
 		,{
@@ -78,7 +88,7 @@
 		    ,"user":"aka87"
 		    ,"app":"Accent"
 		    ,"description":"Mike has commented on your question"
-		    ,"batch":week
+		    ,"batch":"week"
 		    ,"emailed": false
 		 }
 	]

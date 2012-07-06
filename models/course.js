@@ -7,7 +7,7 @@ var db = new Sequelize(
 	config.mysqlDatabase["password"],
 	{
 		host: config.mysqlDatabase["host"],
-		logging: false
+		//logging: false
 	}
 );
 

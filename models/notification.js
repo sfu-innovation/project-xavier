@@ -1,6 +1,6 @@
 var fs  = require("fs");
 var config = JSON.parse( fs.readFileSync("config.json"));
-var Sequalize = require('sequelize');
+var Sequelize = require('sequelize');
 var db = new Sequelize(
 	 config.mysqlDatabase["db-name"]
 	,config.mysqlDatabase["user"]
@@ -10,7 +10,7 @@ var db = new Sequelize(
 	 }
 );
 
-var Notification = exports.Notification = db.define('Notification'.{
+var Notification = exports.Notification = db.define('Notification', {
 	  uuid: {type: Sequelize.STRING, primaryKey: true }
 	, user : {type:Sequelize.STRING, allowNull: false}
 	, app : {type:Sequelize.STRING, allowNull: false}
@@ -20,7 +20,7 @@ var Notification = exports.Notification = db.define('Notification'.{
 });
 
 exports.selectNotification =  function(args, callback){
-	Notification.find{(where: args}.success(function(notification){
+	Notification.find({where: args}).success(function(notification){
 		callback( null, notification);
 	}).error(function(error){
 		console.log("Couldn't select notification " + error );

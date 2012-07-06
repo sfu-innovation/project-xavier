@@ -8,7 +8,7 @@ var db = new Sequelize(
 	config.mysqlDatabase["password"],
 	{
 		host: config.mysqlDatabase["host"],
-		logging: false
+		//logging: false
 	}
 );
 
@@ -19,7 +19,6 @@ var User = exports.User = db.define('User', {
 	lastName: {type: Sequelize.STRING, allowNull: false},
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
-	courses: {type: Sequelize.TEXT},
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 

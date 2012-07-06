@@ -8,6 +8,7 @@ var mysql   = require("mysql").createClient({
 var Sequelize = require('sequelize');
 var User = require('../models/user.js').User;
 var Course = require('../models/course.js').Course;
+var CourseMember = require('../models/courseMember.js').CourseMember;
 var Notification = require('../models/notification.js').Notification;
 
 
@@ -25,11 +26,13 @@ exports.createDB = function(dbName, callback){
 			User.sync().success(function(){
 				Course.sync().success(function(){
 					Notification.sync().success(function(){
-						if(callback){
+						CourseMember.sync().success(function(){
+							if(callback){
 							callback();
-						}
-					}
-				});	
+							}
+						});
+					});
+				});
 			});
 		}
 	});
@@ -63,7 +66,7 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 	);
 	
 	var data  = JSON.parse(fs.readFileSync(dataFile));
-	
+
 	for(index in data.courses){
 		var course = Course.create(data.courses[index]).success(function(course){
 			course.save().error(function(error){
@@ -76,6 +79,13 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 
 		user.save().error(function(error){
 			console.log("Failed to insert user " + error);
+		})
+	}
+	for(index in data.courseMembers){
+		var member = CourseMember.build(data.courseMembers[index]);
+
+		member.save().error(function(error){
+			console.log("Failed to insert course member " + error);
 		})
 	}
 	for(index in data.notifications){

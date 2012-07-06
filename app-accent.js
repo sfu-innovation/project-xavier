@@ -1,6 +1,7 @@
 var express = require('express');
 var routesCommon = require('./routes/common/routesCommon.js');
 var routesAccent = require('./routes/accent/routesAccent.js');
+var routesPresenter = require('./routes/rqra/routesPresenter.js');
 var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('config.json'));
 
@@ -37,10 +38,11 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 
-// question
-//app.get("/question/:id", routes.question); // get question by id
-//app.put("/question/:id", routes.question); // update question by id
-//app.delete("/question/:id", routes.question); // update question by id
+app.get('/course/:id', routesCommon.course); // get course by id
+
+app.get("/question/:id", routesPresenter.question); // get question by id
+app.put("/question/:id", routesPresenter.question); // update question by id
+app.delete("/question/:id", routesPresenter.question); // update question by id
 
 exports.server = app
 

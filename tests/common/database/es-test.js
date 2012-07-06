@@ -1,8 +1,8 @@
 //TODO: map result to Question model
 
-var queryES = require('./queryES.js');
-var question = require('./models/question.js');
-var comment = require('./models/comment.js');
+var queryES = require('../../../database/queryES.js');
+var question = require('../../../models/question.js');
+var comment = require('../../../models/comment.js');
 
 //NOTE**
 //for types, 0 = presenter, 1 = accent
@@ -14,11 +14,11 @@ var comment = require('./models/comment.js');
 
 //*****************GET a question***********************
 //@params: questionID, type, callback
-/*
+
 queryES.getQuestion('aJfzndwdadddQuOicWWAjx7F00', 1, function(result){
 	console.log(result);
 });
-*/
+
 
 //*****************GET all question by user uuid********
 /*

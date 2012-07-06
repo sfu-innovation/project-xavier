@@ -39,9 +39,9 @@ app.get('/login', routesCommon.login);
 
 app.get('/course/:id', routesCommon.course); // get course by id
 
-app.get("/question/:id", routesPresenter.question); // get question by id
-app.put("/question/:id", routesPresenter.question); // update question by id
-app.delete("/question/:id", routesPresenter.question); // update question by id
+app.get("/question/:appType/:uid", routesPresenter.question); // get question by id
+app.put("/question/:appType/:uid", routesPresenter.question); // update question by id
+app.delete("/question/:appType/:uid", routesPresenter.question); // update question by id
 
 exports.server = app
 

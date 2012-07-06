@@ -1,6 +1,6 @@
 //TODO: map result to Question model
 
-var queryES = require('../../../database/queryES.js');
+var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
 
@@ -15,7 +15,7 @@ var comment = require('../../../models/comment.js');
 //*****************GET a question***********************
 //@params: questionID, type, callback
 
-queryES.getQuestion('aJfzndwdadddQuOicWWAjx7F00', 1, function(result){
+queryES.getQuestion('aJfznhseQuOicWWAjx7F00', 1, function(result){
 	console.log(result);
 });
 

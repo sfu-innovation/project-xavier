@@ -30,7 +30,8 @@ var map = function(appType){
 						"type": "string"
 					},
 					"user": {
-						"type": "string"
+						"type": "string",
+						"index": "not_analyzed"
 					},
 					"title": {
 						"type": "multi_field",
@@ -49,7 +50,8 @@ var map = function(appType){
 						"format":"dateOptionalTime"
 					},
 					"followup": {
-						"type": "string"
+						"type": "string",
+						"index": "not_analyzed"
 					}
 				}
 			},
@@ -82,7 +84,8 @@ var map = function(appType){
 						"type": "string"
 					},	
 					"target_uuid": {
-						"type" : "string"
+						"type" : "string",
+						"index": "not_analyzed"
 					},
 					"title": {
 						"type": "multi_field",

@@ -101,12 +101,12 @@ queryES.getComment('aJfzggggguOicWWAjx7F05', 1, function(result){
 
 //*****************GET a comment by target_uuid***********************
 //@params: target_uuid, appType, callback
-
+/*
 queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
 	console.log('Found: ' + result.total);
 	console.log(JSON.stringify(result.hits));
 });
-
+*/
 
 //*****************GET all comments by user uuid********
 

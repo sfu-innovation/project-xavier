@@ -79,17 +79,15 @@
 		    "uuid":"B827346H7ASDFG9"
 		    ,"user":"aka87"
 		    ,"app":"Accent"
-		    ,"description":"Jihoon has commented on your question"
-		    ,"batch":"day"
-		    ,"emailed": false
+		    ,"target":"B857346H7ASDFG9"
+		    ,"attribute":0
 		 }
 		,{
 			"uuid":"B857346H7ASDFG9"
 		    ,"user":"aka87"
 		    ,"app":"Accent"
-		    ,"description":"Mike has commented on your question"
-		    ,"batch":"week"
-		    ,"emailed": false
+		    ,"target":"B857346H7BSDFG9"
+		    ,"attribute":1
 		 }
 	]
 }

@@ -25,15 +25,10 @@ exports.createDB = function(dbName, callback){
 		else{
 			console.log("Database created! Creating tables...\n");
 			mysql.end();
-			console.log("now loading models");
 			User.sync().success(function(){
-				console.log("loaded user");
 				Course.sync().success(function(){
-					console.log("course user");
 					Notification.sync().success(function(){
-						console.log("notification user");
 						CourseMember.sync().success(function(){
-							console.log("coursememeber user");
 							UserNotification.sync().success(function(){
 								if(callback){
 									callback();
@@ -42,9 +37,7 @@ exports.createDB = function(dbName, callback){
 						});
 					});
 				});
-			}).error(function(error) {
-  				console.log("[ERROR] "+error);
-			});
+			})
 		}
 	});
 }

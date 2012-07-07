@@ -301,42 +301,6 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	});
 }
 
-
-
-//append a comment questionID to a comment's id list
-QueryES.prototype.appendCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs += commentID',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
-}
-
-//delete a comment questionID to a comment's id list
-QueryES.prototype.deleteCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs.remove(commentID)',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
-}
-
 //update a comment vote
 QueryES.prototype.updateVote = function(commentID, direction, appType, callback){
 	var data;

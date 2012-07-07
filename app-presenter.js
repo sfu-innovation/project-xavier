@@ -46,22 +46,22 @@ app.get('/api/course/:id', routesCommon.course); // get course by id
 // notification
 
 // questions
-app.get("/api/question/:appType/:uid", routesPresenter.question); // get question by id
-app.put("/api/question/:appType/:uid", routesPresenter.question); // update question by id
-app.delete("/api/question/:appType/:uid", routesPresenter.question); // update question by id
-app.get("/api/user/:uid/:appType/questions", routesPresenter.questionsByUser); // get all questions for a user
-app.post("/api/user/:uid/:appType/questions", routesPresenter.questionsByUser); // user posts a new question
-app.put("/api/question/:appType/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
-app.put("/api/question/:appType/:uid/status", routesPresenter.questionStatus); // updates a questions status
+app.get("/api/question/:uid", routesPresenter.question); // get question by id
+app.put("/api/question/:uid", routesPresenter.question); // update question by id
+app.delete("/api/question/:uid", routesPresenter.question); // update question by id
+app.get("/api/user/:uid/questions", routesPresenter.questionsByUser); // get all questions for a user
+app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
+app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
+app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
 
 // comments
-app.get("/api/comment/:appType/:uid", routesPresenter.comment); // get a comment by id
-app.put("/api/comment/:appType/:uid", routesPresenter.comment); // updates a question by id
-app.delete("/api/comment/:appType/:uid", routesPresenter.comment); //deletes a comment by id
-app.get("/api/user/:uid/:appType/comments", routesPresenter.commentsByUser); // gets a list of comments posted by a user
-app.post("/api/user/:uid/:appType/comments", routesPresenter.commentsByUser); // user posts a comment
-app.post("/api/comment/:appType/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
-app.put("/api/comment/:appType/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
+app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id
+app.put("/api/comment/:uid", routesPresenter.comment); // updates a question by id
+app.delete("/api/comment/:uid", routesPresenter.comment); //deletes a comment by id
+app.get("/api/user/:uid/comments", routesPresenter.commentsByUser); // gets a list of comments posted by a user
+app.post("/api/user/:uid/comments", routesPresenter.commentsByUser); // user posts a comment
+app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
+app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
 
 exports.server = app
 

@@ -36,6 +36,27 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	});
 }
 
+//get all question
+QueryES.prototype.getAllQuestion = function(appType, callback){
+	var data = {
+		query: {
+			match_all:{}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
 QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 	var data = {
 		query: {
@@ -59,7 +80,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 			callback(data.hits);
 		}
 		else{
-			console.log("User did not ask a question");
+			callback(undefined);
 		}
 	});
 }
@@ -95,12 +116,10 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 			callback(data.hits);
 		}
 		else{
-			console.log("Nothing found");
+			callback(undefined);
 		}
 	});
 }
-
-
 
 //Add a new question
 QueryES.prototype.addQuestion = function(data, appType, callback){
@@ -227,6 +246,27 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 	});
 }
 
+//get all comments
+QueryES.prototype.getAllComment = function(appType, callback){
+	var data = {
+		query: {
+			match_all:{}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
 //get all comment data based on userID for now
 QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 	var data = {
@@ -299,42 +339,6 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	document.delete(function(){
 		callback();
 	});
-}
-
-
-
-//append a comment questionID to a comment's id list
-QueryES.prototype.appendCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs += commentID',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
-}
-
-//delete a comment questionID to a comment's id list
-QueryES.prototype.deleteCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs.remove(commentID)',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
 }
 
 //update a comment vote

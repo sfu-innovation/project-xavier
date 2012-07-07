@@ -3,8 +3,12 @@ var config = require('./../../config.json');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 
-var AppTypes = { Accent: 0, Presenter: 1 };
 var Direction = { Down: 0, Up: 1 };
+
+//var currentHost = config.presenterServer.host;
+var currentHost = config.accentServer.host;
+//var currentPort = config.presenterServer.port;
+var currentPort = config.accentServer.port;
 
 // question variables
 var questionUid = "SomeUid";
@@ -19,10 +23,10 @@ exports.questionTest = {
 		var newQuestion = new question(questionUid, userUid, questionTitle, questionBody, 'life', 0);
 		
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"POST",
-			path:"/api/user/jrf2/" + AppTypes.Presenter + "/questions",
+			path:"/api/user/jrf2/questions",
 			headers: {
 				"content-type": "application/json"
 			}
@@ -45,10 +49,10 @@ exports.questionTest = {
 	// get the details of the question created
 	getQuestion: function(test) {	
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -71,10 +75,10 @@ exports.questionTest = {
 	// update the question
 	updateQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"PUT",
-			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -97,10 +101,10 @@ exports.questionTest = {
 	// check that the question has been updated
 	checkUpdatedQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -123,10 +127,10 @@ exports.questionTest = {
 	// delete the question
 	deleteQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"DELETE",
-			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -148,10 +152,10 @@ exports.questionTest = {
 	// try to get the deleted question to make sure it has been deleted
 	getDeletedQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -176,10 +180,10 @@ exports.commentTest = {
 		var newQuestion = new question(questionUid, userUid, questionTitle, questionBody, 'life', 0);
 		
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"POST",
-			path:"/api/user/jrf2/" + AppTypes.Presenter + "/comments",
+			path:"/api/user/jrf2/comments",
 			headers: {
 				"content-type": "application/json"
 			}
@@ -202,10 +206,10 @@ exports.commentTest = {
 	// get the details of the question created
 	getQuestion: function(test) {	
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -228,10 +232,10 @@ exports.commentTest = {
 	// update the question
 	updateQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"PUT",
-			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -254,10 +258,10 @@ exports.commentTest = {
 	// check that the question has been updated
 	checkUpdatedQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -280,10 +284,10 @@ exports.commentTest = {
 	// delete the question
 	deleteQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"DELETE",
-			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -305,10 +309,10 @@ exports.commentTest = {
 	// try to get the deleted question to make sure it has been deleted
 	getDeletedQuestion: function(test) {
 		var options = {
-			host:config.presenterServer.host,
-			port:config.presenterServer.port,
+			host:currentHost,
+			port:currentPort,
 			method:"GET",
-			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}

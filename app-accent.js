@@ -38,11 +38,29 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 
+// user
+app.get('/api/user/:id', routesCommon.user); // get user by id
+
+// course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 
-app.get("/api/question/:id", routesPresenter.question); // get question by id
-app.put("/api/question/:id", routesPresenter.question); // update question by id
-app.delete("/api/question/:id", routesPresenter.question); // update question by id
+// questions
+app.get("/api/question/:uid", routesAccent.question); // get question by id
+app.put("/api/question/:uid", routesAccent.question); // update question by id
+app.delete("/api/question/:uid", routesAccent.question); // update question by id
+app.get("/api/user/:uid/questions", routesAccent.questionsByUser); // get all questions for a user
+app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
+app.put("/api/question/:uid/follow/:follower", routesAccent.followQuestion); // a follower follows a question
+app.put("/api/question/:uid/status", routesAccent.questionStatus); // updates a questions status
+
+// comments
+app.get("/api/comment/:uid", routesAccent.comment); // get a comment by id
+app.put("/api/comment/:uid", routesAccent.comment); // updates a question by id
+app.delete("/api/comment/:uid", routesAccent.comment); //deletes a comment by id
+app.get("/api/user/:uid/comments", routesAccent.commentsByUser); // gets a list of comments posted by a user
+app.post("/api/user/:uid/comments", routesAccent.commentsByUser); // user posts a comment
+app.post("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
+app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
 
 exports.server = app
 

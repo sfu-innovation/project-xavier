@@ -37,6 +37,10 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 
+// user
+app.get('/api/user/:id', routesCommon.user); // get user by id
+
+// course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 
 exports.server = app

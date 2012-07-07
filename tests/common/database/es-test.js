@@ -14,12 +14,20 @@ var comment = require('../../../models/comment.js');
 
 //*****************GET a question***********************
 //@params: questionID, type, callback
-
+/*
 queryES.getQuestion('aJfznhseQuOicWWAjx7F00', 1, function(result){
 	console.log(result);
 });
+*/
 
+//*****************GET all question*********************
 
+//@params: type, callback
+/*
+queryES.getAllQuestion(0, function(result){
+	console.log(JSON.stringify(result));
+})
+*/
 //*****************GET all question by user uuid********
 /*
 NOTE:
@@ -107,6 +115,15 @@ queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
 	console.log(JSON.stringify(result.hits));
 });
 */
+
+//*****************GET all question*********************
+
+//@params: type, callback
+/*
+ queryES.getAllComment(0, function(result){
+ console.log(JSON.stringify(result));
+ })
+ */
 
 //*****************GET all comments by user uuid********
 

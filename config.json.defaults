@@ -15,7 +15,8 @@
 		"host":"",
 		"user":"",
 		"password":"",
-		"db-name":""
+		"db-name":"",
+		"port":""
 	},
 	"mysqlTestDatabase":{
 		"host":"",

@@ -7,7 +7,9 @@ var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
 	config.mysqlDatabase["password"],
+	
 	{
+		port: config.mysqlDatabase["port"],
 		host: config.mysqlDatabase["host"],
 		//logging: false
 	}
@@ -20,6 +22,14 @@ var User = exports.User = db.define('User', {
 	lastName: {type: Sequelize.STRING, allowNull: false},
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
+	
+	/*notificationOnResource : {type: Sequelize.STRING, allowNull: false, defaultValue: "now"},
+	notificationOnQuestion: {type: Sequelize.STRING, allowNull: false, defaultValue: "now"},
+	notificationOnTag : {type: Sequelize.STRING, allowNull: false, defaultValue: "now"},
+	notificationOnLike : {type: Sequelize.STRING, allowNull: false, defaultValue: "now"},
+	notificationOnComment : {type: Sequelize.STRING, allowNull: false, defaultValue: "now"},
+	notificationOnStar : {type: Sequelize.STRING, allowNull: false},*/
+	
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 

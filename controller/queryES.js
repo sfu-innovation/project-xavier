@@ -36,6 +36,27 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	});
 }
 
+//get all question
+QueryES.prototype.getAllQuestion = function(appType, callback){
+	var data = {
+		query: {
+			match_all:{}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
 QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 	var data = {
 		query: {
@@ -59,7 +80,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 			callback(data.hits);
 		}
 		else{
-			console.log("User did not ask a question");
+			callback(undefined);
 		}
 	});
 }
@@ -95,12 +116,10 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 			callback(data.hits);
 		}
 		else{
-			console.log("Nothing found");
+			callback(undefined);
 		}
 	});
 }
-
-
 
 //Add a new question
 QueryES.prototype.addQuestion = function(data, appType, callback){
@@ -223,6 +242,27 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 		}
 		else{
 			console.log("Specified target_uuid does not contain any comments");
+		}
+	});
+}
+
+//get all comments
+QueryES.prototype.getAllComment = function(appType, callback){
+	var data = {
+		query: {
+			match_all:{}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits);
+		}
+		else{
+			callback(undefined);
 		}
 	});
 }

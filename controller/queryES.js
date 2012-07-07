@@ -25,7 +25,6 @@ var switchMapping = function(appType) {
 
 //get a question
 QueryES.prototype.getQuestion = function(questionID, appType, callback){
-	console.log('the app type is : ' +appType);
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
 	
 	db.get(link, {}, function(err, req, data){
@@ -187,11 +186,14 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 
 //get a comment data based on commentID
 QueryES.prototype.getComment = function(commentID, appType, callback){
-
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID;
 	
 	db.get(link, {}, function(err, req, data){
-		callback(data._source);
+		if (data) {
+			callback(data._source);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 

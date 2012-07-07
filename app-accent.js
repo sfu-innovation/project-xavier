@@ -38,11 +38,11 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 
-app.get('/course/:id', routesCommon.course); // get course by id
+app.get('/api/course/:id', routesCommon.course); // get course by id
 
-app.get("/question/:id", routesPresenter.question); // get question by id
-app.put("/question/:id", routesPresenter.question); // update question by id
-app.delete("/question/:id", routesPresenter.question); // update question by id
+app.get("/api/question/:id", routesPresenter.question); // get question by id
+app.put("/api/question/:id", routesPresenter.question); // update question by id
+app.delete("/api/question/:id", routesPresenter.question); // update question by id
 
 exports.server = app
 

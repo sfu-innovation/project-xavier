@@ -6,8 +6,10 @@ var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
 	config.mysqlDatabase["password"],
+	
 	{
-		host: config.mysqlDatabase["host"],
+		port: config.mysqlDatabase["port"],
+		host: config.mysqlDatabase["host"]
 		//logging: false
 	}
 );

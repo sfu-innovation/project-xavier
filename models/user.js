@@ -7,7 +7,9 @@ var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
 	config.mysqlDatabase["password"],
+	
 	{
+		port: config.mysqlDatabase["port"],
 		host: config.mysqlDatabase["host"],
 		//logging: false
 	}
@@ -20,13 +22,21 @@ var User = exports.User = db.define('User', {
 	lastName: {type: Sequelize.STRING, allowNull: false},
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
+	
+	notificationOnResource : {type: Sequelize.STRING, defaultValue: "now"},
+	notificationOnQuestion: {type: Sequelize.STRING, defaultValue: "now"},
+	notificationOnTag : {type: Sequelize.STRING, defaultValue: "now"},
+	notificationOnLike : {type: Sequelize.STRING, defaultValue: "now"},
+	notificationOnComment : {type: Sequelize.STRING, defaultValue: "now"},
+	notificationOnStar : {type: Sequelize.STRING,defaultValue: "now"},
+	
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 
 exports.selectUser = function(args, callback){
-	User.find({where: args}).success(function(user){
+	User.find({where: args}).success(function(user) {
 		callback(null, user);
-	}).error(function(error){
+	}).error(function(error) {
 		callback(error, null);
 		console.log("Couldn't find user " + error);
 	});

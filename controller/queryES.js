@@ -26,9 +26,13 @@ var switchMapping = function(appType) {
 //get a question
 QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
-
+	
 	db.get(link, {}, function(err, req, data){
-		callback(data._source);
+		if (data) {
+			callback(data._source);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -182,11 +186,14 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 
 //get a comment data based on commentID
 QueryES.prototype.getComment = function(commentID, appType, callback){
-
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID;
 	
 	db.get(link, {}, function(err, req, data){
-		callback(data._source);
+		if (data) {
+			callback(data._source);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -292,42 +299,6 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	document.delete(function(){
 		callback();
 	});
-}
-
-
-
-//append a comment questionID to a comment's id list
-QueryES.prototype.appendCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs += commentID',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
-}
-
-//delete a comment questionID to a comment's id list
-QueryES.prototype.deleteCommentID = function(questionID, commentID, appType, callback){
-	var link = '/' + switchIndex(appType) + '/comments/' + questionID +'/_update';
-
-	var data = {
-		'script':'ctx._source.commentIDs.remove(commentID)',
-		'params':{
-			'commentID':commentID
-		}
-	}
-	
-	//add new comment to the document found at questionID
-	db.post(link, data, function(){
-		callback();
-	})
 }
 
 //update a comment vote

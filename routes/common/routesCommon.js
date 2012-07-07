@@ -1,6 +1,7 @@
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var courseModel = require("./../../models/course");
+var User = require("../../models/user");
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -23,9 +24,16 @@ exports.login = function(request, response){
 	    	
 	    	//Todo: proper redirection to page after login
 	    	else {
-	        	// Log the user in
-	        	request.session.user = username;
-	       		response.send({status: status, username: username});
+	        	// Log the user in and store user in the session
+	        	User.selectUser({"userID":username}, function(error, user){
+	        		if(!error){
+	        			request.session.user = user;
+						response.send(request.session);
+	        		}
+	        		else{
+	        			response.send(error);
+	        		}
+	        	});
 	      	}
 	    });
 	} 
@@ -37,12 +45,30 @@ exports.login = function(request, response){
 	}
 }
 
+exports.user = function(request, response) {
+	if (request.headers['content-type'] && request.headers['content-type'].indexOf('application/json') !== -1) {
+		var user_id = request.params.id;
+		
+		if (request.method === "GET") {
+			User.selectUser({ uuid: user_id }, function(error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, user: result }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+				}
+			});
+		}
+	}
+}
+
 exports.course = function(request, response) {
 	if (request.headers['content-type'] && request.headers['content-type'].indexOf('application/json') !== -1) {
 		var course_id = request.params.id;
 		
 		if (request.method === "GET") {
-			courseModel.selectCourse({ uuid: course_id }, function(result) {
+			courseModel.selectCourse({ uuid: course_id }, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, course: result }));

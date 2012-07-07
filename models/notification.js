@@ -2,21 +2,22 @@ var fs  = require("fs");
 var config = JSON.parse( fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
 var db = new Sequelize(
-	 config.mysqlDatabase["db-name"]
-	,config.mysqlDatabase["user"]
-	,config.mysqlDatabase["password"]
-	, {
-		 host: config.mysqlDatabase["host"]
-	 }
+	config.mysqlDatabase["db-name"],
+	config.mysqlDatabase["user"],
+	config.mysqlDatabase["password"],
+	
+	{
+		port: config.mysqlDatabase["port"],
+		host: config.mysqlDatabase["host"]
+	}
 );
 
 var Notification = exports.Notification = db.define('Notification', {
-	  uuid: {type: Sequelize.STRING, primaryKey: true }
-	, user : {type:Sequelize.STRING, allowNull: false}
-	, app : {type:Sequelize.STRING, allowNull: false}
-	, description : {type: Sequelize.STRING, allowNull: false}
-	, batch : {type: Sequelize.STRING, allowNull: false}
-	, emailed : {type: Sequelize.BOOLEAN, allowNull: false}
+	uuid: {type: Sequelize.STRING, primaryKey: true, unique: true },
+	app : {type:Sequelize.STRING, allowNull: false},
+	user : {type:Sequelize.STRING, allowNull: false},
+	target: {type:Sequelize.STRING, allowNull: false},
+	attribute:{ type:Sequelize.INTEGER, allowNULL: false}
 });
 
 exports.selectNotification =  function(args, callback){

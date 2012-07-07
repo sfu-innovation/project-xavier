@@ -1,15 +1,17 @@
-var fs      = require("fs")
+var fs      = require("fs");
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var mysql   = require("mysql").createClient({
 	host: config.mysqlDatabase["host"],
 	user: config.mysqlDatabase["user"],
 	password: config.mysqlDatabase["password"],
+	port: config.mysqlDatabase["port"],
 	});
 var Sequelize = require('sequelize');
 var User = require('../models/user.js').User;
 var Course = require('../models/course.js').Course;
 var CourseMember = require('../models/courseMember.js').CourseMember;
 var Notification = require('../models/notification.js').Notification;
+var UserNotification = require('../models/userNotification.js').UserNotification;
 
 
 exports.createDB = function(dbName, callback){
@@ -27,13 +29,15 @@ exports.createDB = function(dbName, callback){
 				Course.sync().success(function(){
 					Notification.sync().success(function(){
 						CourseMember.sync().success(function(){
-							if(callback){
-							callback();
-							}
+							UserNotification.sync().success(function(){
+								if(callback){
+									callback();
+								}
+							});
 						});
 					});
 				});
-			});
+			})
 		}
 	});
 }

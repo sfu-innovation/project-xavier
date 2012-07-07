@@ -34,9 +34,9 @@ var User = exports.User = db.define('User', {
 });
 
 exports.selectUser = function(args, callback){
-	User.find({where: args}).success(function(user){
+	User.find({where: args}).success(function(user) {
 		callback(null, user);
-	}).error(function(error){
+	}).error(function(error) {
 		callback(error, null);
 		console.log("Couldn't find user " + error);
 	});

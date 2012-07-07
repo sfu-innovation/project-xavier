@@ -22,7 +22,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"POST",
-			path:"/user/jrf2/" + AppTypes.Presenter + "/questions",
+			path:"/api/user/jrf2/" + AppTypes.Presenter + "/questions",
 			headers: {
 				"content-type": "application/json"
 			}
@@ -48,7 +48,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -74,7 +74,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"PUT",
-			path:"/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -100,7 +100,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -126,7 +126,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"DELETE",
-			path:"/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -151,7 +151,7 @@ exports.questionTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/question/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/question/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -179,7 +179,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"POST",
-			path:"/user/jrf2/" + AppTypes.Presenter + "/comments",
+			path:"/api/user/jrf2/" + AppTypes.Presenter + "/comments",
 			headers: {
 				"content-type": "application/json"
 			}
@@ -205,7 +205,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -231,7 +231,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"PUT",
-			path:"/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -257,7 +257,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -283,7 +283,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"DELETE",
-			path:"/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}
@@ -308,7 +308,7 @@ exports.commentTest = {
 			host:config.presenterServer.host,
 			port:config.presenterServer.port,
 			method:"GET",
-			path:"/comment/" + AppTypes.Presenter + "/" +  questionUid,
+			path:"/api/comment/" + AppTypes.Presenter + "/" +  questionUid,
 			headers: {
 				"content-type": "application/json"
 			}

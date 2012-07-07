@@ -45,12 +45,30 @@ exports.login = function(request, response){
 	}
 }
 
+exports.user = function(request, response) {
+	if (request.headers['content-type'] && request.headers['content-type'].indexOf('application/json') !== -1) {
+		var user_id = request.params.id;
+		
+		if (request.method === "GET") {
+			User.selectUser({ uuid: user_id }, function(error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, user: result }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+				}
+			});
+		}
+	}
+}
+
 exports.course = function(request, response) {
 	if (request.headers['content-type'] && request.headers['content-type'].indexOf('application/json') !== -1) {
 		var course_id = request.params.id;
 		
 		if (request.method === "GET") {
-			courseModel.selectCourse({ uuid: course_id }, function(result) {
+			courseModel.selectCourse({ uuid: course_id }, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, course: result }));

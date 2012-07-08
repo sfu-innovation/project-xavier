@@ -15,8 +15,35 @@ coreApi._construct = function()
 	function Presenter()
 	{
 
-		this.createQuestion = function(){
-			console.log("API - setQuestionById");
+		this.createQuestion = function(user_id, questionTitle, questionBody,callback){
+			console.log("API - createQuestion");
+
+			var body = {};
+			var question = {};
+			question.id = '3946000';
+			question.user = user_id;
+			question.body = questionBody;
+			question.category = 'sss';
+			question.status = 'unanswered';
+			question.title = questionTitle;
+			question.timestamp = '2008-10-21';
+			question.followup = [];
+			body.question = question;
+
+
+
+			$.ajax({
+				url : '/api/user/'+user_id+'/questions',
+				type: 'POST',
+				dataType: 'json',
+				contentType: "application/json",
+				data : JSON.stringify(body),
+				success: function(data){
+					callback(data);
+
+				}
+
+			})
 
 		}
 
@@ -82,6 +109,26 @@ coreApi._construct = function()
 					callback(data);
 				}
 			});
+		}
+
+		this.searchQuestion = function(query, callback){
+			console.log("API - searchQuestion");
+			var body = {};
+			body.query = query;
+			$.ajax({
+				url : '/api/search/',
+				type: 'POST',
+				dataType: 'json',
+				contentType: "application/json",
+				data : JSON.stringify(body),
+				success: function(data) {
+					callback(data);
+				}
+
+
+			})
+
+
 		}
 
 	}

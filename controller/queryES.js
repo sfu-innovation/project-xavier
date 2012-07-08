@@ -113,7 +113,7 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data && data.hits.total !== 0) {
-			callback(data.hits);
+			callback(data.hits.hits);
 		} else { 
 			callback(undefined);
 		}

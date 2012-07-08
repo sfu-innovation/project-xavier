@@ -69,10 +69,3 @@ app.post("/api/user/:uid/comments", routesAccent.commentsByUser); // user posts 
 app.post("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments", routesAccent.commentsByQuestion); // get all of the comments for a question
-
-exports.server = app
-
-// listening
-app.listen(process.env.DEPLOY_PORT || config.accentServer.port, function(){
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});

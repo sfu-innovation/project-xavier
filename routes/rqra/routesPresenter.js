@@ -17,8 +17,8 @@ exports.questionRoute = function(appType, request, response) {
 		
 	} else if (request.method === "PUT") {
 		//TODO: need update document and unit-test
-		var questionTitle = request.body.title;
-		var questionBody = request.body.description;
+		var questionTitle = request.body.questionTitle;
+		var questionBody = request.body.questionBody;
 
 		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
 			if (result) {

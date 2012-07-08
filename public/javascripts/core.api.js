@@ -50,6 +50,8 @@ coreApi._construct = function()
 			$.ajax({
 				url: '/api/question/'+id,
 				type: 'PUT',
+				dataType: 'json',
+				contentType: "application/json",
 				data : JSON.stringify(body),
 				success: function(data) {
 					callback(data);

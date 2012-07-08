@@ -40,6 +40,15 @@
 			"type":1,
 			"userID":"yk38",
 			"email":"yk38@sfu.ca"
+		},
+		{
+			"uuid":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"firstName":"Alex",
+			"lastName":"Kwan",
+			"type":1,
+			"userID":"aka87",
+			"email":"aka87@sfu.ca"
+		
 		}
 	],
 	"courses":[
@@ -74,20 +83,144 @@
 			"user":"A7S7F8GA7SD9ASD8DF89AG"
 		}
 	],
-	"notifications":[
+	"notification":[
 		 {
-		    "uuid":"B827346H7ASDFG9"
-		    ,"user":"aka87"
-		    ,"app":"Accent"
-		    ,"target":"B857346H7ASDFG9"
-		    ,"attribute":0
+		    "uuid":"B827346H7ASDFG9",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":"Accent",
+		    "target":"B857346H7ASDFG9",
+		    "attribute":0
 		 }
 		,{
-			"uuid":"B857346H7ASDFG9"
-		    ,"user":"aka87"
-		    ,"app":"Accent"
-		    ,"target":"B857346H7BSDFG9"
-		    ,"attribute":1
+			"uuid":"B857346H7ASDFG9",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":"Accent",
+		    "target":"B857346H7BSDFG9",
+		    "attribute":1
 		 }
+	],
+	"usernotification":[
+		{
+			"uuid": "B857346H7ASDF00",
+			"app": "Accent",
+			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
+			"emailSent": false,
+			"wait": "now"
+		},
+		{
+			"uuid" : "B857342H7ASDF01",
+			"app": "RQRA",
+			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "now"
+		},
+		{
+			"uuid" : "B857342H7ASDF02",
+			"app": "RQRA",
+			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "day"
+		},
+		{
+			"uuid" : "B857342H7ASDF03",
+			"app": "Accent",
+			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "month"
+		},
+		{
+			"uuid" : "B857342H7ASDF04",
+			"app": "Engage",
+			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "month"
+		},
+		{
+			"uuid": "B857346H7ASDF05",
+			"app": "Accent",
+			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
+			"emailSent": false,
+			"wait": "now"
+		},
+		{
+			"uuid" : "B857342H7ASDF06",
+			"app": "RQRA",
+			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "day"
+		},
+		{
+			"uuid" : "B857342H7ASDF07",
+			"app": "RQRA",
+			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "day"
+		},
+		{
+			"uuid" : "B857342H7ASDF08",
+			"app": "Accent",
+			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "day"
+		},
+		{
+			"uuid" : "B857342H7ASDF09",
+			"app": "Engage",
+			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "month"
+		},
+		{
+			"uuid": "B857346H7ASDF10",
+			"app": "Accent",
+			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
+			"emailSent": false,
+			"wait": "now"
+		},
+		{
+			"uuid" : "B857342H7ASDF11",
+			"app": "RQRA",
+			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "day"
+		},
+		{
+			"uuid" : "B857342H7ASDF12",
+			"app": "RQRA",
+			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "week"
+		},
+		{
+			"uuid" : "B857342H7ASDF13",
+			"app": "Accent",
+			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "week"
+		},
+		{
+			"uuid" : "B857342H7ASDF14",
+			"app": "Engage",
+			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
+			"description": "alex commented on your post \n \"Why is the sky red\"",
+			"emailSent": false,
+			"wait": "week"
+		}
+		
+	
 	]
 }

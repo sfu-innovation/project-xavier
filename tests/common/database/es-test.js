@@ -82,7 +82,7 @@ queryES.addQuestion(question, 0, function(){
 //*****************UPDATE a question**********************
 //@params: questionID, questionBody, type, callback
 /*
-queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'Z for question', 0, function(){
+queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'a question', 'some descriddd', 0, function(){
 	console.log("Question updated, check ES");
 });
 */

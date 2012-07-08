@@ -24,5 +24,12 @@
 		"password":"",
 		"db-name":"",
 		"port":""
+	},
+	"emailsettings" :{
+		  "user"      : "",
+		 "password"   : "",
+		 "host"       : "",
+		 "ssl"        : ,
+		 "from"       : ""
 	}
 }

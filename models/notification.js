@@ -12,6 +12,8 @@ var db = new Sequelize(
 	}
 );
 
+
+
 var Notification = exports.Notification = db.define('Notification', {
 	uuid: {type: Sequelize.STRING, primaryKey: true, unique: true },
 	app : {type:Sequelize.STRING, allowNull: false},

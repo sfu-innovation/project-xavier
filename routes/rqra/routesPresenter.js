@@ -23,7 +23,7 @@ exports.questionRoute = function(appType, request, response) {
 		//TODO: the user id should be grabbed from seesion, so we know how is creating a new question
 		//if not log in, cannot create a question
 
-		question.user = "fakeID";
+		question.user = "fakeid";
 
 
 

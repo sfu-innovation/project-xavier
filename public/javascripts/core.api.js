@@ -111,6 +111,26 @@ coreApi._construct = function()
 			});
 		}
 
+		this.searchQuestion = function(query, callback){
+			console.log("API - searchQuestion");
+			var body = {};
+			body.query = query;
+			$.ajax({
+				url : '/api/search/',
+				type: 'POST',
+				dataType: 'json',
+				contentType: "application/json",
+				data : JSON.stringify(body),
+				success: function(data) {
+					callback(data);
+				}
+
+
+			})
+
+
+		}
+
 	}
 
 

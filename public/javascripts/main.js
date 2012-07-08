@@ -153,6 +153,40 @@ $(document).ready(function(){
 	});
 
 
+	$('#search').click(function(){
+		var query = $('#searchQuery').val();
+		if (query) {
+
+			rqra.searchQuestion(query,function(data){
+
+				if (data){
+					if (data.errorcode === 0){
+						console.log('search result');
+						console.log(data);
+
+					}
+					else{
+						$('#error').text(data.message);
+
+
+					}
+
+				}
+				else {
+					$('#error').text('CANNOT CONNECT TO DATABASE');
+
+
+
+				}
+
+			});
+
+
+		}
+
+
+	})
+
 	$('#createQuestion').click(function(event){
 		var user_id = $('#new_question_user').val();
 		var title = $('#new_question_title').val();

@@ -24,10 +24,10 @@ var User = exports.User = db.define('User', {
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 
+//Saves user to database
+//User gets passed in as a JSON object
 exports.createUser = function(user, callback){
-	//console.log(UUID.generate());
 	user.uuid = UUID.generate();
-	console.log(JSON.stringify(user));
 	var newUser = User.build(user);
 	newUser.save().error(function(error){
 		console.log("Failed to insert user " + error);

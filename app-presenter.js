@@ -46,6 +46,7 @@ app.get('/api/course/:id', routesCommon.course); // get course by id
 // notification
 
 // questions
+app.get("/api/questions", routesPresenter.questions); // get all questions
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
 app.delete("/api/question/:uid", routesPresenter.question); // update question by id
@@ -55,6 +56,7 @@ app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); 
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
 
 // comments
+app.get("/api/comments", routesPresenter.comments); // get all comments
 app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id
 app.put("/api/comment/:uid", routesPresenter.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesPresenter.comment); //deletes a comment by id

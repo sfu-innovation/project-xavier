@@ -37,7 +37,7 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 }
 
 //get all question
-QueryES.prototype.getAllQuestion = function(appType, callback){
+QueryES.prototype.getAllQuestions = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -49,7 +49,7 @@ QueryES.prototype.getAllQuestion = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits); //only need the hits.hits part
 		}
 		else{
 			callback(undefined);

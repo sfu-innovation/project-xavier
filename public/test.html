@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="http://code.jquery.com/jquery-1.6.1.min.js" ></script>
+	<script src="/javascripts/core.api.js" ></script>
+	<script src="/javascripts/main.js" ></script>
+</head>
+<body>
+
+<div id="error" style="color:red"></div>
+
+<div class="question">
+
+	<div>
+		<button id="getALLQuestions">Refresh All Questions</button>
+		<ol id="questions"></ol>
+	</div>
+	<hr>
+	<div>
+		<button id="getQuestionById">Get this question by id</button>
+		<button id="updateQuestionById">Update this question by id</button>
+		<button id="deleteQuestionById">Delete this question by id</button>
+		<input id="question_id" type="text" size="50" placeholder="id">
+
+		<input id="question_title" type="text" size="100" placeholder="question title">
+		<textarea id="question_body" type="text"  rows="10" cols="200" placeholder="question_body"></textarea>
+
+
+	</div>
+
+	<hr>
+
+
+	<div>
+		<button id="getQuestionsByUserId">Get Questions asked by this user:</button>
+		<input id="user_id" type="text" size="20" placeholder="user id">
+
+		<ol id="user_questions">
+
+
+		</ol>
+	</div>
+
+	<div>
+		<button id="createQuestion">Create the fucking question</button>
+		<input type = "text" placeholder="question title" id="new_question_title">
+		<input type= "text" placeholder="question body"  id="new_question_body">
+		<input type="text" placeholder="user id" id="new_question_user">
+	</div>
+
+</div>
+
+
+<div class="comments">
+
+</div>
+
+</body>
+</html>

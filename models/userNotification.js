@@ -38,4 +38,3 @@ exports.selectUserNotifications = function(args, callback){
 		callback( error, null );
 	});
 }
- 

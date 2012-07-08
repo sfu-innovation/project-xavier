@@ -59,8 +59,8 @@ queryES.searchAll(searchString, 0, function(result){
 
 
 //*****************ADD a question***********************
-//Question model takes in (questionID, userID, questionBody, category)
-var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'life');
+//Question model takes in uuid, user, title, body, category, timestamp
+var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
 
 //@params: question model, type, callback
 /*
@@ -74,25 +74,34 @@ queryES.addQuestion(question, 0, function(){
 
 //@params: question model, type, callback
 /*
- queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddgg', 0, function(){
- console.log("Follower added, check ES");
- });
+queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddddddd', 0, function(result){
+	console.log("Follower added, check ES");
+	console.log(result);
+});
 */
 
 //*****************UPDATE a question**********************
 //@params: questionID, questionBody, type, callback
 /*
-queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'Z for question', 0, function(){
-	console.log("Question updated, check ES");
+queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'ddddd', 'some descriddd', 0, function(result){
+	console.log("Question updated, check ES: " + result._id);
 });
 */
 
 //*****************DELETE a question***********************
 //@params: questionID, type, callback
 /*
-queryES.deleteQuestion('someuidlololol', 0, function(){
+queryES.deleteQuestion('someuidlololol', 0, function(result){
 	console.log("Question deleted");
 })
+*/
+
+//****************UPDATE question status*******************
+//@params: questionID
+/*
+ queryES.updateStatus('pJfzndwdadddQuOicWWAjx7F00', 0, function(result){
+ 	console.log(result)
+ })
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

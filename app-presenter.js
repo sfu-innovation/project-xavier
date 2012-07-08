@@ -39,13 +39,18 @@ app.get('/login', routesCommon.login);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
+app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
 
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
+app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
 // notification
 
 // questions
+app.post("/api/question", routesPresenter.question); // post a new question by user id stored in seesion
+
+app.get("/api/questions", routesPresenter.questions); // get all questions
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
 app.delete("/api/question/:uid", routesPresenter.question); // update question by id
@@ -53,8 +58,12 @@ app.get("/api/user/:uid/questions", routesPresenter.questionsByUser); // get all
 app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
 app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
+app.post("/api/search/", routesPresenter.search); // search based on a query
 
 // comments
+app.post("/api/question",routesPresenter.comment); // post a new comment by user id stored in seesion object
+
+app.get("/api/comments", routesPresenter.comments); // get all comments
 app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id
 app.put("/api/comment/:uid", routesPresenter.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesPresenter.comment); //deletes a comment by id
@@ -62,10 +71,10 @@ app.get("/api/user/:uid/comments", routesPresenter.commentsByUser); // gets a li
 app.post("/api/user/:uid/comments", routesPresenter.commentsByUser); // user posts a comment
 app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
+app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
 
-exports.server = app
 
 // listening
-app.listen(process.env.DEPLOY_PORT || config.presenterServer.port, function(){
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+//app.listen(process.env.DEPLOY_PORT || config.presenterServer.port, function(){
+//	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+//});

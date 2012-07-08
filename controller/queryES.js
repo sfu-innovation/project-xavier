@@ -1,10 +1,10 @@
-var es = require('com.izaakschroeder.elasticsearch'),
-	db = es.connect('localhost'),
-
-	indice = ['presenter', 'accent'] //, 'engage', 'rqra'];
+var es = require('com.izaakschroeder.elasticsearch')
+	,db = es.connect('localhost'),
+	indice = ['presenter', 'accent'], //, 'engage', 'rqra'];
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
-	mapping = index.mapping('questions');
+	mapping = index.mapping('questions'),
+	UUID = require('com.izaakschroeder.uuid');
 
 var QueryES = function() {	
 }
@@ -37,7 +37,7 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 }
 
 //get all question
-QueryES.prototype.getAllQuestion = function(appType, callback){
+QueryES.prototype.getAllQuestions = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -49,7 +49,7 @@ QueryES.prototype.getAllQuestion = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits); //only need the hits.hits part
 		}
 		else{
 			callback(undefined);
@@ -77,7 +77,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);
@@ -112,10 +112,9 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 	switchMapping(0);
 
 	index.search(data, function(err, data){
-		if(data.hits.total !== 0){
+		if(data && data.hits.total !== 0) {
 			callback(data.hits);
-		}
-		else{
+		} else { 
 			callback(undefined);
 		}
 	});
@@ -128,10 +127,19 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	switchIndex(appType);
 	switchMapping(0);
 
-	document = mapping.document(data.id);
+	var user_uuid = UUID.generate();
 
-	document.set(data, function(){
-		callback();
+	console.log("from QueryEs addQuestion");
+	console.log("User uuid = " + user_uuid);
+
+	document = mapping.document(user_uuid);
+
+	document.set(data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -146,24 +154,33 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 		}
 	}
 
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 
-//update question title
-QueryES.prototype.updateQuestion = function(questionID, questionTitle, appType, callback){
+//update question title and body
+QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 
 	var data = {
-		'script':'ctx._source.title = title',
+		'script':'ctx._source.title = title; ctx._source.body = body',
 		'params':{
-			'title':questionTitle
+			'title':questionTitle,
+			'body':questionBody
 		}
 	}
 
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 
@@ -175,8 +192,12 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 	switchMapping(0);
 
 	document = mapping.document(questionID);
-	document.delete(function(){
-		callback();
+	document.delete(function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -193,8 +214,12 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	}
 
 	//add new comment to the document found at uid
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 
@@ -217,6 +242,7 @@ QueryES.prototype.getComment = function(commentID, appType, callback){
 }
 
 //get a comment data based on target_uuid
+// note: means, get all comments associated with a question
 QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, callback){
 	
 	var data = {
@@ -241,13 +267,14 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 			callback(data.hits);
 		}
 		else{
-			console.log("Specified target_uuid does not contain any comments");
+			//console.log("Specified target_uuid does not contain any comments");
+			callback(undefined);
 		}
 	});
 }
 
 //get all comments
-QueryES.prototype.getAllComment = function(appType, callback){
+QueryES.prototype.getAllComments = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -259,7 +286,7 @@ QueryES.prototype.getAllComment = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);

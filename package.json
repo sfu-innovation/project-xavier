@@ -8,6 +8,8 @@
 		"should":">=0.0.1",
 		"mikeklem-cas":">=0.0.1",
 		"com.izaakschroeder.elasticsearch": ">=0.0.1",
-        "optimist": "*"
+		"com.izaakschroeder.uuid": ">=0.0.1",
+        "optimist": "*",
+        "emailjs":">=0.0.1"
 	}
 }

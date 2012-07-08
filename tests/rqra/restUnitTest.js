@@ -5,10 +5,10 @@ var comment = require('./../../models/comment.js');
 
 var Direction = { Down: 0, Up: 1 };
 
-//var currentHost = config.presenterServer.host;
-var currentHost = config.accentServer.host;
-//var currentPort = config.presenterServer.port;
-var currentPort = config.accentServer.port;
+var currentHost = config.presenterServer.host;
+//var currentHost = config.accentServer.host;
+var currentPort = config.presenterServer.port;
+//var currentPort = config.accentServer.port;
 
 // question variables
 var questionUid = "SomeUid";

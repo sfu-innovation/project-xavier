@@ -43,6 +43,10 @@ app.get('/api/user/:id', routesCommon.user); // get user by id
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 
+// follower
+app.put('/api/resource/:uid/follow/:follower', routesEngage.follow); // adds a follower to a question tag
+app.delete('/api/resource/:uid/follow/:follower', routesEngage.follow); // removes a follower from a question tag
+
 exports.server = app
 
 // listening

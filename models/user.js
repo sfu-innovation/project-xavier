@@ -3,6 +3,7 @@ var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
 var Course = require('./course.js').Course;
 var CourseMember = require('./courseMember.js').CourseMember;
+var UUID = require('com.izaakschroeder.uuid');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
@@ -32,6 +33,16 @@ var User = exports.User = db.define('User', {
 	
 	lastWatchedTag: {type: Sequelize.STRING}
 });
+
+//Saves user to database
+//User gets passed in as a JSON object
+exports.createUser = function(user, callback){
+	user.uuid = UUID.generate();
+	var newUser = User.build(user);
+	newUser.save().error(function(error){
+		console.log("Failed to insert user " + error);
+	})
+}
 
 exports.selectUser = function(args, callback){
 	User.find({where: args}).success(function(user) {

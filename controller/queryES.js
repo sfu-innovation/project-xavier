@@ -134,6 +134,11 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	document = mapping.document(user_uuid);
 
+	var date = new Date();
+
+	data.timestamp = date.toISOString();
+
+
 	document.set(data, function(err, req, data){
 		if(data){
 			callback(data);

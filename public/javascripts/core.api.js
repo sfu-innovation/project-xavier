@@ -33,7 +33,8 @@ coreApi._construct = function()
 
 
 			$.ajax({
-				url : '/api/user/'+user_id+'/questions',
+				//url : '/api/user/'+user_id+'/questions',
+				url : '/api/question',
 				type: 'POST',
 				dataType: 'json',
 				contentType: "application/json",

@@ -44,6 +44,10 @@ app.get('/api/user/:id', routesCommon.user); // get user by id
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 
+// follower
+app.put('/api/question/:uid/follow/:follower', routesAccent.follow); // adds a follower to a question tag
+app.delete('/api/question/:uid/follow/:follower', routesAccent.follow); // removes a follower from a question tag
+
 // questions
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id

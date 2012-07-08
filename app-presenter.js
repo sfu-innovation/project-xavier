@@ -64,6 +64,7 @@ app.get("/api/user/:uid/comments", routesPresenter.commentsByUser); // gets a li
 app.post("/api/user/:uid/comments", routesPresenter.commentsByUser); // user posts a comment
 app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
+app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
 
 exports.server = app
 

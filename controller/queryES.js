@@ -218,6 +218,7 @@ QueryES.prototype.getComment = function(commentID, appType, callback){
 }
 
 //get a comment data based on target_uuid
+// note: means, get all comments associated with a question
 QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, callback){
 	
 	var data = {

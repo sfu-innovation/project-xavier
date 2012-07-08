@@ -186,7 +186,7 @@ exports.commentsByUser = function(request, response) {
 	exports.commentsByUserRoute(0, request, response);
 }
 
-exports.commentVoteRoute = function(request, response) {
+exports.commentVoteRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
 	var direction = request.params.dir;
 	
@@ -202,7 +202,7 @@ exports.commentVote = function(request, response) {
 	exports.commentVoteRoute(0, request, response);
 }
 
-exports.commentAnsweredRoute = function(request, response) {
+exports.commentAnsweredRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
 	var direction = request.params.dir;
 	
@@ -216,4 +216,24 @@ exports.commentAnsweredRoute = function(request, response) {
 
 exports.commentAnswered = function(request, response) {
 	exports.commentAnsweredRoute(0, request, response);
+}
+
+exports.commentsByQuestionRoute = function(appType, request, response) {
+	var question_id = request.params.uid;
+
+	if (request.method === "GET") {
+		queryES.getCommentByTarget_uuid(question_id, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.commentsByQuestion = function(request, response) {
+	commentsByQuestionRoute(0, request, response);
 }

@@ -5,19 +5,11 @@ coreApi._construct = function()
 	function Accent()
 	{
 
-		this.publicMethod = function()
-		{
-			alert('!');
-		}
 	}
 
 	function Engage()
 	{
 
-		this.publicMethod = function()
-		{
-
-		}
 	}
 
 	function Presenter()
@@ -28,7 +20,18 @@ coreApi._construct = function()
 
 		}
 
-		this.readQuestionById = function(id,callback){
+		this.getAllQuestions = function(callback){
+			console.log("API - getAllQuestions");
+			$.ajax({
+				url: '/api/questions',
+				type: 'GET',
+				success: function(data) {
+					callback(data);
+				}
+			});
+		}
+
+		this.getQuestionById = function(id,callback){
 			console.log("API - getQuestionById");
 			$.ajax({
 				url: '/api/question/'+id,
@@ -55,10 +58,8 @@ coreApi._construct = function()
 
 
 
-		this.deleteQuestionById = function(id, questionBody ,callback){
-			console.log("API - updateQuestionById");
-			var body= {};
-			body.questionBody = questionBody;
+		this.deleteQuestionById = function(id,callback){
+			console.log("API - deleteQuestionById");
 			$.ajax({
 				url: '/api/question/'+id,
 				type: 'DELETE',
@@ -81,15 +82,15 @@ coreApi._construct = function()
 
 coreApi._construct();
 
-
-var xx = new coreApi.Presenter();
-//xx.getQuestionById('pJfzndwdadddQuOicWWAjx7F00',function(data){
 //
-//	console.log(data);
+//var xx = new coreApi.Presenter();
+////xx.getQuestionById('pJfzndwdadddQuOicWWAjx7F00',function(data){
+////
+////	console.log(data);
+////
+////});
 //
-//});
-
-//xx.updateQuestionById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue" ,function(data){
+//xx.updateQuestionById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue!!!" ,function(data){
 //
 //	console.log(data);
 //

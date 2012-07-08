@@ -66,7 +66,7 @@ exports.userQuery = function(request, response) {
 		User.selectUser(request.body.where, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, user: result }));
+				response.end(JSON.stringify({ errorcode: 0, users: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
@@ -96,11 +96,11 @@ exports.courseQuery = function(request, response) {
 		courseModel.selectCourse(request.body.where, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, course: result }));
+				response.end(JSON.stringify({ errorcode: 0, courses: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));
 			}
-		}
+		});
 	}
 }

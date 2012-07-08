@@ -152,6 +152,34 @@ $(document).ready(function(){
 
 	});
 
+
+	$('#createQuestion').click(function(event){
+		var user_id = $('#new_question_user').val();
+		var title = $('#new_question_title').val();
+		var body = $('#new_question_body').val();
+		if (user_id && title && body){
+			rqra.createQuestion(user_id, title, body, function(data){
+				if (data){
+					if (data.errorcode === 0){
+						$('#error').text('OK OK REFRESH NOW');
+					}
+
+				}
+
+				else{
+					$('#error').text('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+
+		}
+
+	})
+
 	$('#getQuestionsByUserId').click(function(event){
 		var user_id = $("#user_id").val();
 		if (user_id){

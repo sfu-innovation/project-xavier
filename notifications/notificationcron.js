@@ -10,8 +10,31 @@ var server = email.server.connect({
 			,host     : config.emailsettings.host
 			,ssl      : config.emailsettings.ssl
 		});
+		
 var debug = false;
 
+console.log( process.argv );
+if ( process.argv.length < 3 ){
+	console.log( "[usage] node notifications/notificationcron.js "
+	+"--day | --week | --month");
+}
+var flag = process.argv[2];
+var waitTime;
+switch( flag ){
+	case "--day" :
+		waitTime = "day";
+		break;
+	case "--week" :
+		waitTime = "week";
+		break;
+	case "--month" :
+		var waitTime = "month";
+		break;
+	default :
+		console.log(' not a valid time :( '+flag);
+		return 1;
+
+}
 function contains(a, obj) {
     var i = a.length;
     while (i--) {
@@ -22,7 +45,7 @@ function contains(a, obj) {
     return -1;
 }
 var apps = ["accent", "RQRA", "Engage"];
-var waitTime = [/*"now", */"day"/*, "week", "month"*/];
+
 
 function compileEmail( arr ){
 	User.find({ where: { UUID: arr[0].user}}).success( function( user ){
@@ -82,7 +105,8 @@ function notifications( appType, waitTime ){
 		}
 	});
 }
+
 var i = 0;
-for( i = 0; i < apps.length; i++){
-	notifications( apps[i], "day");
+for( ; i < apps.length; i++){
+	notifications( apps[i], waitTime);
 }

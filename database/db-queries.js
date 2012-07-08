@@ -92,11 +92,19 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 			console.log("Failed to insert course member " + error);
 		})
 	}
-	for(index in data.notifications){
-		var notification = Notification.build(data.notifications[index]);
+	for(index in data.notification){
+		var notification = Notification.build(data.notification[index]);
 
 		notification.save().error(function(error){
 			console.log("Failed to insert notification " + error);
+		})
+	}
+	
+	for(index in data.usernotification){
+		var userNotification = UserNotification.build(data.usernotification[index]);
+
+		userNotification.save().error(function(error){
+			console.log("Failed to insert user notification " + error);
 		})
 	}
 }

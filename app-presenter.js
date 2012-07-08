@@ -48,6 +48,8 @@ app.post('/api/course/', routesCommon.courseQuery); // get a list of courses bas
 // notification
 
 // questions
+app.post("/api/question", routesPresenter.question); // post a new question by user id stored in seesion
+
 app.get("/api/questions", routesPresenter.questions); // get all questions
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
@@ -59,6 +61,8 @@ app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates
 app.post("/api/search/", routesPresenter.search); // search based on a query
 
 // comments
+app.post("/api/question",routesPresenter.comment); // post a new comment by user id stored in seesion object
+
 app.get("/api/comments", routesPresenter.comments); // get all comments
 app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id
 app.put("/api/comment/:uid", routesPresenter.comment); // updates a question by id

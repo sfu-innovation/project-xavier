@@ -61,6 +61,20 @@ exports.user = function(request, response) {
 	}
 }
 
+exports.userQuery = function(request, response) {
+	if (request.method === "POST" && request.body.where) {
+		User.selectUser(request.body.where, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, users: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+			}
+		});
+	}
+}
+
 exports.course = function(request, response) {
 	var course_id = request.params.id;
 	
@@ -69,6 +83,20 @@ exports.course = function(request, response) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, course: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));
+			}
+		});
+	}
+}
+
+exports.courseQuery = function(request, response) {
+	if (request.method === "POST" && request.body.where) {
+		courseModel.selectCourse(request.body.where, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, courses: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));

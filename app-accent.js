@@ -40,9 +40,11 @@ app.get('/login', routesCommon.login);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
+app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
 
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
+app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
 // follower
 app.put('/api/question/:uid/follow/:follower', routesAccent.follow); // adds a follower to a question tag

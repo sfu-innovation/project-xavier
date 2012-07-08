@@ -63,11 +63,11 @@ queryES.searchAll(searchString, 0, function(result){
 var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
 
 //@params: question model, type, callback
-
+/*
 queryES.addQuestion(question, 0, function(){	
 	console.log("Question added, check ES");
 });
-
+*/
 
 //*****************FOLLOW a question***********************
 //Question model takes in (questionID, userID, type, category)
@@ -147,14 +147,14 @@ queryES.getAllCommentByUserID('mcs3', 1, function(result){
 
 //*****************ADD a comment***********************
 //Comment model takes in (commentID, userID, commentBody)
-var comment = new comment('universal', 'zoro', 'Spaniards');
+var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41af', 'rainbow', 'About world cup', 'Let\'s win the World Cup');
 
 //@params: comment model, type, callback
-/*
+
 queryES.addComment(comment, 0, function(){
 	console.log("Comment added, check ES");
 });
-*/
+
 
 //*****************UPDATE a comment**********************
 //@params: commentID, commentBody, type, callback

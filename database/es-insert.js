@@ -27,11 +27,8 @@ var importToEs = function (f_name) {
         }
         else {            
             var json_data = JSON.parse(data);
-    
-            console.log("data = \n");
-            console.log(json_data);
-
             var total = 0;
+
             json_data.forEach(function(data) {
                 //var str = JSON.stringify(data);
                 data_index = data._index;
@@ -41,16 +38,9 @@ var importToEs = function (f_name) {
 
                 index = db.index(data_index),
                 mapping = index.mapping(data_mapping);
-
-
-
-                mapping.document(data_id).set(data_source);;
-                if (++total % 100 === 0) {
-                    console.log("datas indexed: "+total);
-                }
-
-
-
+                mapping.document(data_id).set(data_source, function(err, req, data){
+					console.log(data);
+				});;
              });
             console.log("The data has been indexed into your database.");
 

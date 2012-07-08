@@ -78,7 +78,7 @@ var map = function(appType){
 					},
 					"timestamp": {
 						"type": "date",
-						"format":"dateOptionalTime"
+						"format":"YYYY-MM-dd"
 					},
 					"user": {
 						"type": "string"

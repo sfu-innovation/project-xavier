@@ -48,10 +48,3 @@ app.post('/api/course/', routesCommon.courseQuery); // get a list of courses bas
 // follower
 app.put('/api/resource/:uid/follow/:follower', routesEngage.follow); // adds a follower to a question tag
 app.delete('/api/resource/:uid/follow/:follower', routesEngage.follow); // removes a follower from a question tag
-
-exports.server = app
-
-// listening
-app.listen(process.env.DEPLOY_PORT || config.engageServer.port, function(){
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});

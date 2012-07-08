@@ -72,9 +72,3 @@ app.post("/api/user/:uid/comments", routesPresenter.commentsByUser); // user pos
 app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
-
-
-// listening
-//app.listen(process.env.DEPLOY_PORT || config.presenterServer.port, function(){
-//	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-//});

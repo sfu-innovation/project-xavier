@@ -89,7 +89,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 QueryES.prototype.searchAll = function(search, appType, callback){
 
 	if(!search){
-		console.log("empty");
+		callback(undefined);
 		return;
 	}
 
@@ -111,9 +111,9 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 	switchIndex(appType);
 	switchMapping(0);
 
-	index.search(data, function(err, data){
+	mapping.search(data, function(err, data){
 		if(data && data.hits.total !== 0) {
-			callback(data.hits);
+			callback(data.hits.hits);
 		} else { 
 			callback(undefined);
 		}

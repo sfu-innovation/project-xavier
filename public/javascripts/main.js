@@ -42,6 +42,7 @@ $(document).ready(function(){
 				if(data){
 					if(data.errorcode === 0){
 						$('#question_title').val(data.question.title);
+						$('#question_body').val(data.question.body);
 					}
 					else{
 						$('#error').text(data.message);
@@ -61,10 +62,10 @@ $(document).ready(function(){
 	$("#updateQuestionById").click(function(event){
 		var question_id = $('#question_id').val();
 		var new_title = $('#question_title').val();
-
-		if(question_id && new_title){
+		var new_body = $('#question_body').val();
+		if(question_id && new_title && new_body){
 			//rqra.updateQuestionById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue!!!" ,function(data){
-			rqra.updateQuestionById(question_id, new_title ,function(data){
+			rqra.updateQuestionById(question_id, new_title, new_body ,function(data){
 				if(data){
 					console.log(data);
 					if(data.errorcode === 0){

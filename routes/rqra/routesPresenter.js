@@ -16,8 +16,11 @@ exports.questionRoute = function(appType, request, response) {
 		});
 		
 	} else if (request.method === "PUT") {
-		var questionBody = request.body.questionBody;
-		queryES.updateQuestion(question_id, questionBody, appType, function(result) {
+		//TODO: need update document and unit-test
+		var questionTitle = request.body.title;
+		var questionBody = request.body.description;
+
+		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});

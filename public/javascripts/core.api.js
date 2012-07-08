@@ -42,9 +42,10 @@ coreApi._construct = function()
 			});
 		}
 
-		this.updateQuestionById = function(id, questionBody ,callback){
+		this.updateQuestionById = function(id, questionTitle, questionBody ,callback){
 			console.log("API - updateQuestionById");
 			var body= {};
+			body.questionTitle = questionTitle;
 			body.questionBody = questionBody;
 			$.ajax({
 				url: '/api/question/'+id,

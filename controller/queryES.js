@@ -1,10 +1,10 @@
-var es = require('com.izaakschroeder.elasticsearch'),
-	db = es.connect('localhost'),
-
-	indice = ['presenter', 'accent'] //, 'engage', 'rqra'];
+var es = require('com.izaakschroeder.elasticsearch')
+	,db = es.connect('localhost'),
+	indice = ['presenter', 'accent'], //, 'engage', 'rqra'];
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
-	mapping = index.mapping('questions');
+	mapping = index.mapping('questions'),
+	UUID = require('com.izaakschroeder.uuid');
 
 var QueryES = function() {	
 }
@@ -129,8 +129,12 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	document = mapping.document(data.id);
 
-	document.set(data, function(){
-		callback();
+	document.set(data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -145,8 +149,12 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 		}
 	}
 
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 
@@ -162,8 +170,12 @@ QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionB
 		}
 	}
 
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 
@@ -175,8 +187,12 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 	switchMapping(0);
 
 	document = mapping.document(questionID);
-	document.delete(function(){
-		callback();
+	document.delete(function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	});
 }
 
@@ -193,8 +209,12 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	}
 
 	//add new comment to the document found at uid
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
 	})
 }
 

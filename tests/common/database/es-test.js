@@ -59,8 +59,8 @@ queryES.searchAll(searchString, 0, function(result){
 
 
 //*****************ADD a question***********************
-//Question model takes in (questionID, userID, questionBody, category)
-var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'life');
+//Question model takes in uuid, user, title, body, category, timestamp
+var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
 
 //@params: question model, type, callback
 /*
@@ -82,8 +82,8 @@ queryES.addQuestion(question, 0, function(){
 //*****************UPDATE a question**********************
 //@params: questionID, questionBody, type, callback
 /*
-queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'a question', 'some descriddd', 0, function(){
-	console.log("Question updated, check ES");
+queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'ddddd', 'some descriddd', 0, function(result){
+	console.log("Question updated, check ES: " + result._id);
 });
 */
 
@@ -94,6 +94,9 @@ queryES.deleteQuestion('someuidlololol', 0, function(){
 	console.log("Question deleted");
 })
 */
+
+//****************UPDATE question status*******************
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Comments 

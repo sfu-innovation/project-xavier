@@ -21,8 +21,13 @@ exports.questionRoute = function(appType, request, response) {
 		var questionBody = request.body.description;
 
 		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result._id }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
 		});
 		
 	} else if (request.method === "DELETE") {

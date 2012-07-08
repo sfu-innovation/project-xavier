@@ -63,11 +63,11 @@ queryES.searchAll(searchString, 0, function(result){
 var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
 
 //@params: question model, type, callback
-/*
+
 queryES.addQuestion(question, 0, function(){
 	console.log("Question added, check ES");
 });
-*/
+
 
 //*****************FOLLOW a question***********************
 //Question model takes in (questionID, userID, type, category)

@@ -129,7 +129,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	var user_uuid = UUID.generate();
 
-	console.log("from QueryEs addQuestion");
+	console.log("From QueryEs addQuestion");
 	console.log("User uuid = " + user_uuid);
 
 	document = mapping.document(user_uuid);

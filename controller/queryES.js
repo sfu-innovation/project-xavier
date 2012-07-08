@@ -112,10 +112,9 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 	switchMapping(0);
 
 	index.search(data, function(err, data){
-		if(data.hits.total !== 0){
+		if(data && data.hits.total !== 0) {
 			callback(data.hits);
-		}
-		else{
+		} else { 
 			callback(undefined);
 		}
 	});

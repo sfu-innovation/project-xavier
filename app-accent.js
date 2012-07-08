@@ -56,6 +56,7 @@ app.get("/api/user/:uid/questions", routesAccent.questionsByUser); // get all qu
 app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
 app.put("/api/question/:uid/follow/:follower", routesAccent.followQuestion); // a follower follows a question
 app.put("/api/question/:uid/status", routesAccent.questionStatus); // updates a questions status
+app.post("/api/search/", routesAccent.search); // search based on a query
 
 // comments
 app.get("/api/comment/:uid", routesAccent.comment); // get a comment by id

@@ -26,10 +26,10 @@
 		"port":""
 	},
 	"emailsettings" :{
-		  "user"      : "",
-		 "password"   : "",
-		 "host"       : "",
-		 "ssl"        : ,
-		 "from"       : ""
+		 "user": "",
+		 "password": "",
+		 "host": "",
+		 "ssl": "",
+		 "from": ""
 	}
 }

@@ -54,6 +54,7 @@ app.get("/api/user/:uid/questions", routesPresenter.questionsByUser); // get all
 app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
 app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
+app.post("/api/search/", routesPresenter.search); // search based on a query
 
 // comments
 app.get("/api/comments", routesPresenter.comments); // get all comments

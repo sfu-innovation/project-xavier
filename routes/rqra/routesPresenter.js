@@ -237,3 +237,23 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 exports.commentsByQuestion = function(request, response) {
 	exports.commentsByQuestionRoute(0, request, response);
 }
+
+exports.searchRoute = function(appType, request, response) {
+	var query = request.body.query;
+
+	if (request.method === "POST") {
+		queryES.searchAll(query, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.search = function(request, response) {
+	exports.searchRoute(0, request, response);
+}

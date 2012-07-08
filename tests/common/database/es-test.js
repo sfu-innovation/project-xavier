@@ -64,7 +64,7 @@ var question = new question('someuidlololol', 'someUserUUID', 'This is the quest
 
 //@params: question model, type, callback
 
-queryES.addQuestion(question, 0, function(){
+queryES.addQuestion(question, 0, function(){	
 	console.log("Question added, check ES");
 });
 

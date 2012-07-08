@@ -160,10 +160,21 @@ $(document).ready(function(){
 			rqra.searchQuestion(query,function(data){
 
 				if (data){
+					$('#search_results').empty();
 					if (data.errorcode === 0){
-						console.log('search result');
-						console.log(data);
-
+						$.each(data.questions, function(index,item){
+							console.log(item);
+							var content ='<li>'
+								+ '<p>'+ item._id + '</p>'
+								+ '<p>'+ item._source.body + '</p>'
+								+ '<p>'+ item._source.category + '</p>'
+								+ '<p>'+ item._source.status + '</p>'
+								+ '<p>'+ item._source.timestamp + '</p>'
+								+ '<p>'+ item._source.title + '</p>'
+								+ '<p>'+ item._source.user + '</p>'
+								+'</li>';
+							$('#search_results').append(content);
+						});
 					}
 					else{
 						$('#error').text(data.message);

@@ -8,5 +8,45 @@
 </head>
 <body>
 
+<div id="error" style="color:red"></div>
+
+<div class="question">
+
+	<div>
+		<button id="getALLQuestions">Refresh All Questions</button>
+		<ol id="questions"></ol>
+	</div>
+	<hr>
+	<div>
+		<button id="getQuestionById">Get this question by id</button>
+		<button id="updateQuestionById">Update this question by id</button>
+		<button id="deleteQuestionById">Delete this question by id</button>
+		<input id="question_id" type="text" size="50" placeholder="id">
+
+		<input id="question_title" type="text" size="100" placeholder="question body">
+
+
+	</div>
+
+	<hr>
+
+
+	<div>
+		<button id="getQuestionsByUserId">Get Questions asked by this user:</button>
+		<input id="user_id" type="text" size="20" placeholder="user id">
+
+		<ol id="user_questions">
+
+
+		</ol>
+	</div>
+
+</div>
+
+
+<div class="comments">
+
+</div>
+
 </body>
 </html>

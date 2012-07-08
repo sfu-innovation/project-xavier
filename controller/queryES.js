@@ -37,7 +37,7 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 }
 
 //get all question
-QueryES.prototype.getAllQuestion = function(appType, callback){
+QueryES.prototype.getAllQuestions = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -49,7 +49,7 @@ QueryES.prototype.getAllQuestion = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits); //only need the hits.hits part
 		}
 		else{
 			callback(undefined);
@@ -77,7 +77,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);
@@ -151,14 +151,15 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 	})
 }
 
-//update question title
-QueryES.prototype.updateQuestion = function(questionID, questionTitle, appType, callback){
+//update question title and body
+QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 
 	var data = {
-		'script':'ctx._source.title = title',
+		'script':'ctx._source.title = title; ctx._source.body = body',
 		'params':{
-			'title':questionTitle
+			'title':questionTitle,
+			'body':questionBody
 		}
 	}
 
@@ -247,7 +248,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 }
 
 //get all comments
-QueryES.prototype.getAllComment = function(appType, callback){
+QueryES.prototype.getAllComments = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -259,7 +260,7 @@ QueryES.prototype.getAllComment = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);

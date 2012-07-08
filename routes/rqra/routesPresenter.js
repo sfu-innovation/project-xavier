@@ -235,5 +235,5 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 }
 
 exports.commentsByQuestion = function(request, response) {
-	commentsByQuestionRoute(0, request, response);
+	exports.commentsByQuestionRoute(0, request, response);
 }

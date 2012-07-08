@@ -243,7 +243,8 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 			callback(data.hits);
 		}
 		else{
-			console.log("Specified target_uuid does not contain any comments");
+			//console.log("Specified target_uuid does not contain any comments");
+			callback(undefined);
 		}
 	});
 }
@@ -293,8 +294,8 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 			callback(data.hits);
 		}
 		else{
-			// callback(data); not yet
-			console.log("User did not post any comments");
+			callback(data); // not yet
+			//console.log("User did not post any comments");
 		}
 	});
 }

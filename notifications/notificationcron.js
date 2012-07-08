@@ -61,19 +61,26 @@ function compileEmail( arr ){
 			console.log( str );
 		
 			if ( !debug ) {
-			var message = {
-   				text:    str,
-   				from:    config.emailsettings.from,
-   				to:      user.firstName+ " " +user.lastName+"<"+user.email+">",
-   				subject: arr[0].app + " daily notification(s)"
-		 	};
+				var message = {
+   					text:    str,
+   					from:    config.emailsettings.from,
+   					to:      user.firstName+ " " +user.lastName+"<"+user.email+">",
+   					subject: arr[0].app + " : end of "+arr[0].wait+ " notification(s)"
+		 		};
 		
-		 	server.send(message, function(err, message){
-		 		console.log(err || message);
-		  	});
-		  	} else {
-		  	
+		 		server.send(message, function(err, message){
+		 			console.log(err || message);
+		  		});
+		  		i = 0;
+		  		for (; i < arr.length; i++){
+		  			arr[i].emailSent = true;
+		  			arr[i].save().success( function(){
+		  				console.log("notification sent");
+		  			});
+		  		}
 		  	}
+		  	
+		  	
 		}
 		
 	});

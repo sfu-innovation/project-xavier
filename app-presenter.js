@@ -69,9 +69,8 @@ app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes o
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
 
-exports.server = app
 
 // listening
-app.listen(process.env.DEPLOY_PORT || config.presenterServer.port, function(){
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+//app.listen(process.env.DEPLOY_PORT || config.presenterServer.port, function(){
+//	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+//});

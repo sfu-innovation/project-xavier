@@ -74,9 +74,10 @@ queryES.addQuestion(question, 0, function(){
 
 //@params: question model, type, callback
 /*
- queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddgg', 0, function(){
- console.log("Follower added, check ES");
- });
+queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddddddd', 0, function(result){
+	console.log("Follower added, check ES");
+	console.log(result);
+});
 */
 
 //*****************UPDATE a question**********************
@@ -90,13 +91,18 @@ queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'ddddd', 'some descriddd', 
 //*****************DELETE a question***********************
 //@params: questionID, type, callback
 /*
-queryES.deleteQuestion('someuidlololol', 0, function(){
+queryES.deleteQuestion('someuidlololol', 0, function(result){
 	console.log("Question deleted");
 })
 */
 
 //****************UPDATE question status*******************
-
+//@params: questionID
+/*
+ queryES.updateStatus('pJfzndwdadddQuOicWWAjx7F00', 0, function(result){
+ 	console.log(result)
+ })
+*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Comments 

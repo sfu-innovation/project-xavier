@@ -23,7 +23,7 @@ exports.questionRoute = function(appType, request, response) {
 		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, question: result._id }));
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
@@ -32,8 +32,13 @@ exports.questionRoute = function(appType, request, response) {
 		
 	} else if (request.method === "DELETE") {
 		queryES.deleteQuestion(question_id, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
 		});
 	}
 }
@@ -75,8 +80,13 @@ exports.questionsByUserRoute = function(appType, request, response) {
 		});
 	} else if (request.method === "POST") {
 		queryES.addQuestion(request.body.question, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
 		});
 	}
 }
@@ -91,8 +101,13 @@ exports.followQuestionRoute = function(appType, request, response) {
 	
 	if (request.method === "PUT") {
 		queryES.addFollower(questionId, followerId, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
 		});
 	}
 }
@@ -106,8 +121,13 @@ exports.questionStatusRoute = function(appType, request, response) {
 	
 	if (request.method === "PUT") {
 		queryES.updateStatus(questionId, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
 		});
 	}
 }

@@ -6,6 +6,7 @@ var mysql   = require("mysql").createClient({
 	password: config.mysqlDatabase["password"],
 	port: config.mysqlDatabase["port"],
 	});
+
 var Sequelize = require('sequelize');
 var User = require('../models/user.js').User;
 var Course = require('../models/course.js').Course;
@@ -15,9 +16,16 @@ var UserNotification = require('../models/userNotification.js').UserNotification
 
 
 exports.createDB = function(dbName, callback){
+	var mysql   = require("mysql").createClient({
+		host: config.mysqlDatabase["host"],
+		user: config.mysqlDatabase["user"],
+		password: config.mysqlDatabase["password"],
+	});
+
 	mysql.query('CREATE DATABASE IF NOT EXISTS ' + dbName + ' CHARACTER SET \'utf8\''
 		, function(err){
 		if(err){
+			callback(0);
 			console.log("Unable to create db " + err);
 			return;
 		}
@@ -31,9 +39,10 @@ exports.createDB = function(dbName, callback){
 						CourseMember.sync().success(function(){
 							UserNotification.sync().success(function(){
 								if(callback){
-									callback();
+									callback(1);
 								}
 							});
+
 						});
 					});
 				});
@@ -43,18 +52,28 @@ exports.createDB = function(dbName, callback){
 }
 
 exports.dropDB = function(dbName, callback){
+	var mysql   = require("mysql").createClient({
+		host: config.mysqlDatabase["host"],
+		user: config.mysqlDatabase["user"],
+		password: config.mysqlDatabase["password"],
+	});
+
 	mysql.query('DROP DATABASE ' + dbName, function(error){
+		console.log("DELETING");
 		if(error){
+			if(callback){
+				callback(0);
+			}
 			console.log("Couldn't delete database " + error);
 		}
 		else{
 			if(callback){
-				callback();
+				callback(1);
 			}
 			console.log("Database " + dbName + " deleted");
 		}
 		mysql.end();
-	})
+	});
 }
 
 exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
@@ -64,8 +83,9 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 		dbUser,	
 		dbPassword,
 		{
-			host: dbHost,
-			define: {charset:'utf8'}
+			host: dbHost
+			, logging: false
+			, define: {charset:'utf8'}
 		}
 	);
 	

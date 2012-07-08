@@ -1,14 +1,27 @@
 var should = require('should');
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
-var queries = require('../../database/db-queries.js');
+var queries = require('../../../database/db-queries.js');
 
 module.exports = {
 
 	createDeleteTests:{
-		'db creation': function(test){
-			queries.createDB(config.mysqlTestDatabase["db-name"], function(){
-				test.ok(1);
+		
+		setUp: function(callback){
+			callback();
+		},
+		tearDown: function(callback){
+			callback();
+		},
+		"db_creation": function(test){
+			queries.createDB(config.mysqlDatabase["db-name"], function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
+		"db_deletion": function(test){
+			queries.dropDB(config.mysqlDatabase["db-name"], function(result){
+				test.ok(result);
 				test.done();
 			});
 		}

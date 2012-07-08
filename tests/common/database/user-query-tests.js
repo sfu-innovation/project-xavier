@@ -32,6 +32,7 @@ module.exports = {
 				test.ok(result);
 				test.done();
 			});
-		}
+		},
+		
 	},
 }

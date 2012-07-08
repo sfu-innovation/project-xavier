@@ -77,7 +77,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);
@@ -247,7 +247,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 }
 
 //get all comments
-QueryES.prototype.getAllComment = function(appType, callback){
+QueryES.prototype.getAllComments = function(appType, callback){
 	var data = {
 		query: {
 			match_all:{}
@@ -259,7 +259,7 @@ QueryES.prototype.getAllComment = function(appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);

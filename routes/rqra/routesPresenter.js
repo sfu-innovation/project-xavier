@@ -41,7 +41,7 @@ exports.questions = function(request, response) {
 		queryES.getAllQuestions( 0, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, question: result }));
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
@@ -139,6 +139,23 @@ exports.commentRoute = function(appType, request, response) {
 
 exports.comment = function(request, response) {
 	exports.commentRoute(0, request, response);
+}
+
+
+//get all comments
+exports.comments = function(request, response) {
+	if (request.method === "GET") {
+		queryES.getAllComments( 0, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+
 }
 
 exports.commentsByUserRoute = function(appType, request, response) {

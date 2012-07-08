@@ -1,12 +1,16 @@
+//Just a test file to demo how to use core.api.js
+
+
+
 $(document).ready(function(){
 
 	var rqra = new coreApi.Presenter();
 	rqra.getAllQuestions(function(data){
 		if(data){
 			$('#questions').empty();
-			if(data.errorcode === 0 && data.question.length > 0){
+			if(data.errorcode === 0 && data.questions.length > 0){
 
-				$.each(data.question, function(index,item){
+				$.each(data.questions, function(index,item){
 					console.log(item);
 					var content ='<li>'
 						+ '<p>'+ item._id + '</p>'
@@ -120,9 +124,9 @@ $(document).ready(function(){
 		rqra.getAllQuestions(function(data){
 			 if(data){
 				 $('#questions').empty();
-				 if(data.errorcode === 0 && data.question.length > 0){
+				 if(data.errorcode === 0 && data.questions.length > 0){
 
-					$.each(data.question, function(index,item){
+					$.each(data.questions, function(index,item){
 						console.log(item);
 						var content ='<li>'
 							+ '<p>'+ item._id + '</p>'
@@ -146,6 +150,48 @@ $(document).ready(function(){
 		});
 
 	});
+
+	$('#getQuestionsByUserId').click(function(event){
+		var user_id = $("#user_id").val();
+		if (user_id){
+			rqra.getQuestionsByUserId(user_id,function(data){
+				if(data){
+					console.log("!!!!");
+					console.log(data);
+					$('#user_questions').empty();
+					if(data.errorcode === 0 && data.questions.length > 0){
+
+						$.each(data.questions, function(index,item){
+							console.log(item);
+							var content ='<li>'
+								+ '<p>'+ item._id + '</p>'
+								+ '<p>'+ item._source.body + '</p>'
+								+ '<p>'+ item._source.category + '</p>'
+								+ '<p>'+ item._source.status + '</p>'
+								+ '<p>'+ item._source.timestamp + '</p>'
+								+ '<p>'+ item._source.title + '</p>'
+								+ '<p>'+ item._source.user + '</p>'
+								+'</li>';
+							$('#user_questions').append(content);
+						});
+					}
+					else{
+						$('#error').text(data.message);
+					}
+
+				}
+				else{
+					$('#error').text('CANNOT CONNECT TO DATABASE');
+				}
+			});
+		}
+		else{
+			$('#error').text('CANNOT BE EMPTY FILED');
+		}
+
+
+	});
+
 
 
 });

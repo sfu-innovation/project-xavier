@@ -70,6 +70,17 @@ coreApi._construct = function()
 		}
 
 
+		this.getQuestionsByUserId = function(user_id,callback){
+			console.log("API - getQuestionsByUserId");
+			$.ajax({
+				url: '/api/user/'+user_id+'/questions',
+				type: 'GET',
+				success: function(data) {
+					callback(data);
+				}
+			});
+		}
+
 	}
 
 

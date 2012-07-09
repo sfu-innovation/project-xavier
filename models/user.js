@@ -57,8 +57,11 @@ exports.selectUsers = function(args, callback){
 	});
 }
 
+//Gets all the courses associated with a certain user
 exports.getUserCourses = function(args, callback){
 	CourseMember.findAll({where: args}).success(function(memberRows){
+		
+		//Build the list of course uuids
 		if(memberRows.length > 0){
 			var i;
 			var courseUUIDs = [];
@@ -67,6 +70,7 @@ exports.getUserCourses = function(args, callback){
 			}
 		}
 
+		//Get the courses
 		if(courseUUIDs){
 			Course.findAll({where: {uuid: courseUUIDs}}).success(function(userCourses){
 				callback(null, userCourses);

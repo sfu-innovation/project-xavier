@@ -353,7 +353,7 @@ QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody,
 	var data = {
 		'script':'ctx._source.title = title; ctx._source.body = body',
 		'params':{
-			'title':commentTitle
+			'title':commentTitle,
 			'body':commentBody
 		}
 	}

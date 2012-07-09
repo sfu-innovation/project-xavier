@@ -222,5 +222,27 @@
 		}
 		
 	
+	],
+		"usernotificationsettings": [
+		{
+			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G"
+		},
+		{
+			"uuid":"BSDF787D98A7SDF8ASD7G"
+		},
+		{
+			"uuid":"BSDF787D98ASDF099D7G"
+		},
+		{
+			"uuid":"A7S7FSD78FA98A7SDF8ASD7G"
+
+		},
+		{	
+			"uuid":"A7S7F8GA7SD9ASD8DF89AG"
+		},
+		{
+			"uuid":"A7S7F8GA7SD11A7SDF8ASD7G"
+		
+		}
 	]
 }

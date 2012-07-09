@@ -13,6 +13,7 @@ var Course = require('../models/course.js').Course;
 var CourseMember = require('../models/courseMember.js').CourseMember;
 var Notification = require('../models/notification.js').Notification;
 var UserNotification = require('../models/userNotification.js').UserNotification;
+var UserNotificationSettings = require('../models/userNotificationSettings.js').UserNotificationSettings;
 
 
 exports.createDB = function(dbName, callback){
@@ -20,6 +21,7 @@ exports.createDB = function(dbName, callback){
 		host: config.mysqlDatabase["host"],
 		user: config.mysqlDatabase["user"],
 		password: config.mysqlDatabase["password"],
+		port: config.mysqlDatabase["port"]
 	});
 
 	mysql.query('CREATE DATABASE IF NOT EXISTS ' + dbName + ' CHARACTER SET \'utf8\''
@@ -38,9 +40,11 @@ exports.createDB = function(dbName, callback){
 					Notification.sync().success(function(){
 						CourseMember.sync().success(function(){
 							UserNotification.sync().success(function(){
-								if(callback){
-									callback(1);
-								}
+								UserNotificationSettings.sync().success(function(){
+									if(callback){
+										callback(1);
+									}
+								});
 							});
 
 						});
@@ -56,6 +60,7 @@ exports.dropDB = function(dbName, callback){
 		host: config.mysqlDatabase["host"],
 		user: config.mysqlDatabase["user"],
 		password: config.mysqlDatabase["password"],
+		port: config.mysqlDatabase["port"]
 	});
 
 	mysql.query('DROP DATABASE ' + dbName, function(error){
@@ -125,6 +130,14 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 
 		userNotification.save().error(function(error){
 			console.log("Failed to insert user notification " + error);
+		})
+	}
+	
+	for(index in data.usernotificationsettings){
+		var userNotificationSettings = UserNotificationSettings.build(data.usernotificationsettings[index]);
+
+		userNotificationSettings.save().error(function(error){
+			console.log("Failed to insert user notification settings " + error);
 		})
 	}
 }

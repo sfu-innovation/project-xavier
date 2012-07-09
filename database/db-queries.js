@@ -70,7 +70,7 @@ exports.createDB = function(dbName, callback){
 
 var createTable = function(table, callback){
 	table.sync().success(function(){
-		callback(null, 1);
+		callback(null, true);
 	}).error(function(){
 		callback(error, null);
 	})
@@ -87,13 +87,13 @@ exports.dropDB = function(dbName, callback){
 	mysql.query('DROP DATABASE ' + dbName, function(error){
 		if(error){
 			if(callback){
-				callback(0);
+				callback(error, null);
 			}
 			console.log("Couldn't delete database " + error);
 		}
 		else{
 			if(callback){
-				callback(1);
+				callback(null, true);
 			}
 			console.log("Database " + dbName + " deleted");
 		}

@@ -10,7 +10,7 @@
 		"body":"some description",
 		"category":"academic",
 		"status":"unanswered",
-		"timestamp":"2012-5-1T17:24:51",
+		"timestamp":"2012-07-09T18:19:31.204Z",
 		"followup":[]
 		}
 	},
@@ -21,13 +21,13 @@
 	"_score":1,
 	"_source":
 		{"user":"mcs3",
-			"upvote":"15",
-			"downvote":"0",
+			"upvote":7,
+			"downvote":0,
 			"title":"The club in downtown...",
 			"body":"some description",
 			"target_uuid":"pJfznhheQuOicWWAjx7F00",
 			"objectType":"question",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false"
 		}
 	},
@@ -38,13 +38,13 @@
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
-			"upvote":"15",
-			"downvote":"0",
+			"upvote":5,
+			"downvote":0,
 			"title":"New info",
 			"body":"some description",
 			"target_uuid":"pJfznhheQuOicWWAjx7F00",
 			"objectType":"question",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false"
 		}
 	},
@@ -59,7 +59,7 @@
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[]
 		}
 	},
@@ -74,7 +74,7 @@
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[]
 		}
 	},
@@ -85,13 +85,13 @@
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
-			"upvote":"15",
-			"downvote":"0",
+			"upvote":3,
+			"downvote":2,
 			"title":"The club in downtown...",
 			"body":"some description",
 			"target_uuid":"aJfznhheQuOicWWAjx7F00",
 			"objectType":"question",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false"
 		}
 	},
@@ -102,13 +102,13 @@
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
-			"upvote":"15",
-			"downvote":"0",
+			"upvote":1,
+			"downvote":1,
 			"title":"New info",
 			"body":"some description",
 			"target_uuid":"aJfznhheQuOicWWAjx7F00",
 			"objectType":"question",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false"
 		}
 	},
@@ -123,7 +123,7 @@
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
-			"timestamp":"2012-5-1T17:24:51",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[]
 		}
 	}

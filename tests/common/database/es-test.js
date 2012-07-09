@@ -4,6 +4,8 @@ var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
 var qID = '';
+var cID = '';
+
 //NOTE**
 //for types, 0 = presenter, 1 = accent
 
@@ -111,91 +113,97 @@ module.exports = {
 		}
 	}
 }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Comments 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+module.exports = {
+	comments:{
+		setUp: function(callback){
+			callback();
+		},
+		tearDown: function(callback){
+			callback();
+		},
 //*****************GET a comment***********************
 //@params: commentID, type, callback
-/*
-queryES.getComment('aJfzggggguOicWWAjx7F05', 1, function(result){
-	console.log(result);
-});
-*/
-
-//*****************GET a comment by target_uuid***********************
-//@params: target_uuid, appType, callback
-/*
-queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
-	console.log('Found: ' + result.total);
-	console.log(JSON.stringify(result.hits));
-});
-*/
-
-//*****************GET all question*********************
-
+		"getComment": function(test){		
+			queryES.getComment('aJfzggggguOicWWAjx7F05', 1, function(result){				
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************GET all comments*********************
 //@params: type, callback
-/*
- queryES.getAllComment(0, function(result){
- console.log(JSON.stringify(result));
- })
- */
-
+		"getAllComment":function(test){			
+			 queryES.getAllComment(0, function(result){
+		 		test.ok(result);
+				test.done();
+			 })	
+		},
 //*****************GET all comments by user uuid********
-
 //@params: userID, type, callback
-/*
-queryES.getAllCommentByUserID('mcs3', 1, function(result){
-	//You should get 2 sets of result
-	console.log('Found: ' + result.total);
-	console.log(JSON.stringify(result.hits));
-})
-*/
-
+		"getAllCommentByUserID":function(test){			
+			queryES.getAllCommentByUserID('mcs3', 1, function(result){
+				test.ok(result);
+				test.done();
+			})			
+		},
 //*****************ADD a comment***********************
-//Comment model takes in (target_uuid, user, objectType, title, body, timestamp)
-//var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
-
+//Comment model takes in target_uuid, user, objectType, title, body
 //@params: comment model, type, callback
-/*
-queryES.addComment(comment, 0, function(){
-	console.log("Comment added, check ES");
-});
-*/
-
+		"addComment": function(test){			
+			var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
+			queryES.addComment(comment, 0, function(result){
+				cID = result._id;
+				test.ok(result);
+				test.done();
+			});
+		},
+//****************GET a comment by target_uuid**************
+//@params: target_uuid, appType, callback
+		"getCommentByTarget_uuid":function(test){
+			queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
 //*****************UPDATE a comment**********************
 //@params: commentID, commentTitle, commentBody, appType, callback
-/*
-queryES.updateComment('8b67e304-af4b-4d57-a325-0e8b4e7e9237', 'dreamworks', 'shrek', 0, function(result){
-	console.log("Comment updated, check ES");
-	console.log(result);
-});
-*/
-
+		"updateComment":function(test){
+			queryES.updateComment(cID, 'updated comment', 'updated body', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************UPDATE a comment's vote**********************
+//direction: 0 = up, 1 = down
+//@params: commentID, direction, type, callback
+		"updateComment":function(test){
+			queryES.updateVote(cID, 1, 0, function(result) {
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************UPDATE a comment's isAnswered**********************
+//@params: commentID, appType, callback
+		"updateComment":function(test){
+			queryES.updateIsAnswered(cID, 0, function(result) {
+				test.ok(result);
+				test.done();
+			});
+		},
 //*****************DELETE a comment***********************
 //@params: commentID, type, callback
-/*
-queryES.deleteComment('universal', 0, function(result){
-	console.log("Comment deleted");
-	console.log(result);
-})
-*/
+		"deleteComment":function(test){
+			queryES.deleteComment(cID, 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		}
+	}
+}
 
-//*****************Update comment's vote***********************
-//@params: commentID, direction, type, callback
-/*
-queryES.updateVote('qJfzggggguOicWWAjx7F05', 1, 0, function(result) {
-	console.log("Comment vote updated");
-	console.log(result);
-});
-*/
 
-//*****************Update comment's isAnswered***********************
-//@params: commentID, appType, callback
-/*
-queryES.updateIsAnswered('qJfznhheQuOicWWAjx7F05', 0, function(result) {
-	console.log("Comment isAnswered updated");
-	console.log(result);
-});
-*/
 

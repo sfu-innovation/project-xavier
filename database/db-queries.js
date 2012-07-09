@@ -75,6 +75,10 @@ exports.dropDB = function(dbName, callback){
 	});
 }
 
+var dumb = function(){
+
+}
+
 exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, callback){
 	var db = new Sequelize(
 		dbName,	
@@ -82,7 +86,7 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		dbPassword,
 		{
 			host: dbHost
-			, logging: false
+			, logging: dumb
 			, define: {charset:'utf8'}
 		}
 	);

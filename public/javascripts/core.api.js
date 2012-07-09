@@ -15,13 +15,12 @@ coreApi._construct = function()
 	function Presenter()
 	{
 
-		this.createQuestion = function(user_id, questionTitle, questionBody,callback){
+		this.createQuestion = function( questionTitle, questionBody,callback){
 			console.log("API - createQuestion");
 
 			var body = {};
 			var question = {};
 			question.id = '3946000';
-			question.user = user_id;
 			question.body = questionBody;
 			question.category = 'sss';
 			question.status = 'unanswered';
@@ -33,7 +32,8 @@ coreApi._construct = function()
 
 
 			$.ajax({
-				url : '/api/user/'+user_id+'/questions',
+				//url : '/api/user/'+user_id+'/questions',
+				url : '/api/question',
 				type: 'POST',
 				dataType: 'json',
 				contentType: "application/json",

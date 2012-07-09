@@ -5,34 +5,7 @@
 $(document).ready(function(){
 
 	var rqra = new coreApi.Presenter();
-	rqra.getAllQuestions(function(data){
-		if(data){
-			$('#questions').empty();
-			if(data.errorcode === 0 && data.questions.length > 0){
-
-				$.each(data.questions, function(index,item){
-					console.log(item);
-					var content ='<li>'
-						+ '<p>'+ item._id + '</p>'
-						+ '<p>'+ item._source.body + '</p>'
-						+ '<p>'+ item._source.category + '</p>'
-						+ '<p>'+ item._source.status + '</p>'
-						+ '<p>'+ item._source.timestamp + '</p>'
-						+ '<p>'+ item._source.title + '</p>'
-						+ '<p>'+ item._source.user + '</p>'
-						+'</li>';
-					$('#questions').append(content);
-				});
-			}
-			else{
-				$('#error').text(data.message);
-			}
-
-		}
-		else{
-			$('#error').text('CANNOT CONNECT TO DATABASE');
-		}
-	});
+	loadAllQuestions(rqra);
 
 
 	$("#getQuestionById").click(function(event){
@@ -70,7 +43,7 @@ $(document).ready(function(){
 					console.log(data);
 					if(data.errorcode === 0){
 
-						$('#error').text("COOL, NOW REFRESH ALL QUESTIONS.");
+						$('#error').text("COOL,REFRESH THE LIST");
 					}
 					else{
 						$('#error').text(data.message);
@@ -97,7 +70,7 @@ $(document).ready(function(){
 					console.log(data);
 					if(data.errorcode === 0){
 
-						$('#error').text("COOL, NOW REFRESH ALL QUESTIONS.");
+						$('#error').text("COOL, REFRESH THE LIST");
 					}
 					else{
 						$('#error').text(data.message);
@@ -122,33 +95,7 @@ $(document).ready(function(){
 
 	$("#getALLQuestions").click(function(event){
 
-		rqra.getAllQuestions(function(data){
-			 if(data){
-				 $('#questions').empty();
-				 if(data.errorcode === 0 && data.questions.length > 0){
-
-					$.each(data.questions, function(index,item){
-						console.log(item);
-						var content ='<li>'
-							+ '<p>'+ item._id + '</p>'
-							+ '<p>'+ item._source.body + '</p>'
-							+ '<p>'+ item._source.category + '</p>'
-							+ '<p>'+ item._source.status + '</p>'
-							+ '<p>'+ item._source.timestamp + '</p>'
-							+ '<p>'+ item._source.title + '</p>'
-							+ '<p>'+ item._source.user + '</p>'
-							+'</li>';
-						$('#questions').append(content);
-					});
-				 }
-				 else{
-
-				 }
-
-			 }
-
-
-		});
+		loadAllQuestions(rqra);
 
 	});
 
@@ -199,11 +146,10 @@ $(document).ready(function(){
 	})
 
 	$('#createQuestion').click(function(event){
-		var user_id = $('#new_question_user').val();
 		var title = $('#new_question_title').val();
 		var body = $('#new_question_body').val();
 		if (user_id && title && body){
-			rqra.createQuestion(user_id, title, body, function(data){
+			rqra.createQuestion(title, body, function(data){
 				if (data){
 					if (data.errorcode === 0){
 						$('#error').text('OK OK REFRESH NOW');
@@ -238,13 +184,13 @@ $(document).ready(function(){
 						$.each(data.questions, function(index,item){
 							console.log(item);
 							var content ='<li>'
-								+ '<p>'+ item._id + '</p>'
-								+ '<p>'+ item._source.body + '</p>'
-								+ '<p>'+ item._source.category + '</p>'
-								+ '<p>'+ item._source.status + '</p>'
-								+ '<p>'+ item._source.timestamp + '</p>'
-								+ '<p>'+ item._source.title + '</p>'
-								+ '<p>'+ item._source.user + '</p>'
+								+ '<p>_id: '+ item._id + '</p>'
+								+ '<p>title: '+ item._source.title + '</p>'
+								+ '<p>body: '+ item._source.body + '</p>'
+								+ '<p>category: '+ item._source.category + '</p>'
+								+ '<p>status: '+ item._source.status + '</p>'
+								+ '<p>timestamp: '+ item._source.timestamp + '</p>'
+								+ '<p>user: '+ item._source.user + '</p>'
 								+'</li>';
 							$('#user_questions').append(content);
 						});
@@ -269,3 +215,36 @@ $(document).ready(function(){
 
 
 });
+
+function loadAllQuestions(rqra){
+
+	rqra.getAllQuestions(function(data){
+		if(data){
+			$('#questions').empty();
+			if(data.errorcode === 0 && data.questions.length > 0){
+
+				$.each(data.questions, function(index,item){
+					console.log(item);
+					var content ='<li>'
+						+ '<p>_id: '+ item._id + '</p>'
+						+ '<p>title: '+ item._source.title + '</p>'
+						+ '<p>body: '+ item._source.body + '</p>'
+						+ '<p>category: '+ item._source.category + '</p>'
+						+ '<p>status: '+ item._source.status + '</p>'
+						+ '<p>timestamp: '+ item._source.timestamp + '</p>'
+						+ '<p>user: '+ item._source.user + '</p>'
+						+'</li>';
+					$('#questions').append(content);
+				});
+			}
+			else{
+				$('#error').text(data.message);
+			}
+
+		}
+		else{
+			$('#error').text('CANNOT CONNECT TO DATABASE');
+		}
+	});
+
+}

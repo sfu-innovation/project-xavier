@@ -15,7 +15,31 @@ exports.questionRoute = function(appType, request, response) {
 			}
 		});
 		
-	} else if (request.method === "PUT") {
+	}
+
+	//post a new question
+	else if (request.method === "POST"){
+		var question = request.body.question;
+		//TODO: the user id should be grabbed from seesion, so we know how is creating a new question
+		//if not log in, cannot create a question
+
+		question.user = "fakeid";
+
+
+
+		queryES.addQuestion(request.body.question, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+
+	}
+
+	else if (request.method === "PUT") {
 		//TODO: need update document and unit-test
 		var questionTitle = request.body.questionTitle;
 		var questionBody = request.body.questionBody;
@@ -29,7 +53,7 @@ exports.questionRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
 			}
 		});
-		
+
 	} else if (request.method === "DELETE") {
 		queryES.deleteQuestion(question_id, appType, function(result) {
 			if (result) {
@@ -67,7 +91,7 @@ exports.questions = function(request, response) {
 
 exports.questionsByUserRoute = function(appType, request, response) {
 	var userId = request.params.uid;
-	
+
 	if (request.method === "GET") {
 		queryES.getAllQuestionByUserID(userId, appType, function(result) {
 			if (result) {
@@ -98,7 +122,7 @@ exports.questionsByUser = function(request, response) {
 exports.followQuestionRoute = function(appType, request, response) {
 	var questionId = request.params.uid;
 	var followerId = request.params.follower;
-	
+
 	if (request.method === "PUT") {
 		queryES.addFollower(questionId, followerId, appType, function(result) {
 			if (result) {
@@ -118,7 +142,7 @@ exports.followQuestion = function(request, response) {
 
 exports.questionStatusRoute = function(appType, request, response) {
 	var questionId = request.params.uid;
-	
+
 	if (request.method === "PUT") {
 		queryES.updateStatus(questionId, appType, function(result) {
 			if (result) {

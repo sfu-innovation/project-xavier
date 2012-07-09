@@ -48,15 +48,15 @@ queryES.getAllQuestionByUserID('jbo1', 0, function(result){
 */
 
 //*****************SEARCH all based on project type*****
-var searchString = 'the fuck';
+var searchString = 'fuk dwntwn';
 
 //@params: search string, type, callback
-/*
+
 queryES.searchAll(searchString, 0, function(result){
-	console.log('Found: ' + result.total);
-	console.log(JSON.stringify(result.hits));
+	console.log('Found: ' + result);
+	console.log(JSON.stringify(result));
 })
-*/
+
 
 
 //*****************ADD a question***********************
@@ -157,11 +157,11 @@ console.log(nowTime);
 var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd5', 'presenter', 'About dancing', 'Dancing time...', nowTime);
 
 //@params: comment model, type, callback
-
+/*
 queryES.addComment(comment, 0, function(){
 	console.log("Comment added, check ES");
 });
-
+*/
 
 //*****************UPDATE a comment**********************
 //@params: commentID, commentBody, type, callback

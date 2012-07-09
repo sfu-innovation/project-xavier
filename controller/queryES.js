@@ -95,15 +95,12 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 
 	var data = {
 		query: {
-			bool:{
-				must:[{
-					query_string: {
-						default_field: '_all',
-						query: search
-					}
-				}]
+			flt:{
+				"fields":["title", "body"]
+				, "like_text":search
 			}
 		},
+		sort:[{"title.untouched":{"order":"asc"}}],
 		from: 0,
 		size: 20
 	};
@@ -111,7 +108,7 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 	switchIndex(appType);
 	switchMapping(0);
 
-	mapping.search(data, function(err, data){
+	index.search(data, function(err, data){
 		if(data && data.hits.total !== 0) {
 			callback(data.hits.hits);
 		} else { 
@@ -133,6 +130,11 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	console.log("User uuid = " + user_uuid);
 
 	document = mapping.document(user_uuid);
+
+	var date = new Date();
+
+	data.timestamp = date.toISOString();
+
 
 	document.set(data, function(err, req, data){
 		if(data){

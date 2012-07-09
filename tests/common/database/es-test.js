@@ -3,7 +3,6 @@
 var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
-var time = require('com-jhc-time');
 
 //NOTE**
 //for types, 0 = presenter, 1 = accent

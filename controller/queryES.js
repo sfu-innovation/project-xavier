@@ -124,12 +124,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	switchIndex(appType);
 	switchMapping(0);
 
-	var user_uuid = UUID.generate();
-
-	console.log("From QueryEs addQuestion");
-	console.log("User uuid = " + user_uuid);
-
-	document = mapping.document(user_uuid);
+	document = mapping.document(UUID.generate());
 	data.timestamp = new Date().toISOString();
 
 	document.set(data, function(err, req, data){
@@ -332,14 +327,9 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	switchIndex(appType);
 	switchMapping(1);
 
-	var commentID = UUID.generate();
-
-	console.log("From QueryEs addComment");
-	console.log("Comment uuid = " + commentID);
-
-	document = mapping.document(commentID);
+	document = mapping.document(UUID.generate());
 	data.timestamp = new Date().toISOString();
-	
+
 	document.set(data, function(){
 		callback();
 	});

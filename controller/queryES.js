@@ -330,10 +330,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	document = mapping.document(UUID.generate());
 	data.timestamp = new Date().toISOString();
 
-	var date = new Date();
-
-	data.timestamp = date.toISOString();
-
 	document.set(data, function(err, req, data){
 		if (data) {
 			callback(data);

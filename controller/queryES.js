@@ -4,7 +4,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
-	UUID = require('com.izaakschroeder.uuid')
+	UUID = require('com.izaakschroeder.uuid');
 
 var QueryES = function() {	
 }
@@ -131,7 +131,6 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	document = mapping.document(user_uuid);
 	data.timestamp = new Date().toISOString();
-
 
 	document.set(data, function(err, req, data){
 		if(data){
@@ -338,8 +337,9 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	console.log("From QueryEs addComment");
 	console.log("Comment uuid = " + commentID);
 
-	document = mapping.document(commentID);	
-
+	document = mapping.document(commentID);
+	data.timestamp = new Date().toISOString();
+	
 	document.set(data, function(){
 		callback();
 	});

@@ -156,6 +156,26 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 	})
 }
 
+//Get questionID by follower
+QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callback){
+	var data= {
+		"query": {
+			"term": {"followup": "newGuy"}
+		}
+	}
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data && data.hits.total !== 0) {
+			callback(data.hits.hits);
+		} else {
+			callback(undefined);
+		}
+	});
+}
+
 //update question title and body
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';

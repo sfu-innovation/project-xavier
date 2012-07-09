@@ -78,7 +78,8 @@ var map = function(appType){
 					},
 					"timestamp": {
 						"type": "date",
-						"format":"YYYY-MM-dd"
+						//"format":"YYYY-MM-ddTHH:mm:ss"
+						"format":"dateOptionalTime"
 					},
 					"user": {
 						"type": "string"

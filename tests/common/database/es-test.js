@@ -3,6 +3,7 @@
 var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
+var time = require('com-jhc-time');
 
 //NOTE**
 //for types, 0 = presenter, 1 = accent
@@ -146,8 +147,14 @@ queryES.getAllCommentByUserID('mcs3', 1, function(result){
 */
 
 //*****************ADD a comment***********************
-//Comment model takes in (commentID, userID, commentBody)
-var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41af', 'rainbow', 'About world cup', 'Let\'s win the World Cup');
+//Comment model takes in (target_uuid, user, objectType, title, body, timestamp)
+var curTime = time.getCurrentTime();
+var nowTime = '2012-5-1T17:24:51';
+
+console.log(curTime);
+console.log(nowTime);
+
+var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd5', 'presenter', 'About dancing', 'Dancing time...', nowTime);
 
 //@params: comment model, type, callback
 /*

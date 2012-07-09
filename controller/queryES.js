@@ -1,10 +1,10 @@
-var es = require('com.izaakschroeder.elasticsearch')
-	,db = es.connect('localhost'),
+var es = require('com.izaakschroeder.elasticsearch'),
+	db = es.connect('localhost'),
 	indice = ['presenter', 'accent'], //, 'engage', 'rqra'];
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
-	UUID = require('com.izaakschroeder.uuid');
+	UUID = require('com.izaakschroeder.uuid')
 
 var QueryES = function() {	
 }

@@ -71,10 +71,10 @@ var map = function(appType){
 						}
 					},
 					"upvote": {
-						"type": "string"
+						"type": "integer"
 					},
 					"downvote": {
-						"type": "string"
+						"type": "integer"
 					},
 					"timestamp": {
 						"type": "date",

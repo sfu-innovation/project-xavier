@@ -14,10 +14,9 @@ var db = new Sequelize(
 );
 
 var UserNotificationSettings = exports.UserNotificationSettings = db.define('UserNotificationSettings', {
-	uuid: {type: Sequelize.STRING},
-	notificationOnResource : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnQuestion: {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnTag : {type: Sequelize.STRING, defaultValue: "now"},
+	user: {type: Sequelize.STRING, allowNull: false},
+	app: { type: Sequelize.STRING, allowNull: false},
+	notificationOnNewResource : {type: Sequelize.STRING, defaultValue: "now"},
 	notificationOnLike : {type: Sequelize.STRING, defaultValue: "now"},
 	notificationOnComment : {type: Sequelize.STRING, defaultValue: "now"},
 	notificationOnStar : {type: Sequelize.STRING,defaultValue: "now"}
@@ -40,22 +39,13 @@ function contains(a, obj) {
  those values into the db. This should help preserve our database integrity.
 */
 exports.updateNotificationSettings = function(args, callback){
-	UserNotificationSettings.find( { where: {uuid : args.uuid }}).success(function( notificationSettings){
+	UserNotificationSettings.find( { where: {user : args.user , app : args.app }}).success(function( notificationSettings){
 	
 		var arg;
+		
 		arg = args.motificationsOnResource; 
 		if ( null != arg && contains( arg, validTimes )){
 			notificationSettings.notificationOnResource = arg;
-		}
-		
-		arg = args.notificationOnQuestion;
-		if ( null != arg && contains( arg, validTimes )){
-			notificationSettings.notificationOnQuestion = arg
-		}
-		
-		arg = args.notificationOnTag
-		if ( null != arg && contains( arg, validTimes )){
-			notificationSettings.notificationOnTag = arg;
 		}
 		
 		arg = args.notificationOnLike;

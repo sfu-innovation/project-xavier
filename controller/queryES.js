@@ -130,10 +130,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	console.log("User uuid = " + user_uuid);
 
 	document = mapping.document(user_uuid);
-
-	var date = new Date();
-
-	data.timestamp = date.toISOString();
+	data.timestamp = new Date().toISOString();
 
 
 	document.set(data, function(err, req, data){
@@ -169,11 +166,14 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 
+	var date = new Date().toISOString();
+
 	var data = {
-		'script':'ctx._source.title = title; ctx._source.body = body',
+		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date;',
 		'params':{
 			'title':questionTitle,
-			'body':questionBody
+			'body':questionBody,
+			'date':date
 		}
 	}
 

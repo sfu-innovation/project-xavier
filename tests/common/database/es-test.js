@@ -50,17 +50,17 @@ queryES.getAllQuestionByUserID('jbo1', 0, function(result){
 var searchString = 'fuk dwntwn';
 
 //@params: search string, type, callback
-
+/*
 queryES.searchAll(searchString, 0, function(result){
 	console.log('Found: ' + result);
 	console.log(JSON.stringify(result));
 })
-
+*/
 
 
 //*****************ADD a question***********************
 //Question model takes in uuid, user, title, body, category, timestamp
-var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
+var question = new question('someUserUUID', 'This is the question i asked', 'dddd','life');
 
 //@params: question model, type, callback
 /*
@@ -83,7 +83,7 @@ queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddddddd', 0, function(result
 //*****************UPDATE a question**********************
 //@params: questionID, questionBody, type, callback
 /*
-queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'ddddd', 'some descriddd', 0, function(result){
+queryES.updateQuestion('f3228370-8726-4893-bbc2-100db9308dc1', 'ddddd', 'some descriddd', 0, function(result){
 	console.log("Question updated, check ES: " + result._id);
 });
 */

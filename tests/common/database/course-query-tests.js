@@ -2,7 +2,7 @@ var should = require('should');
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var queries = require('../../../database/db-queries.js');
-var User = require('../../../models/user.js');
+var Course = require('../../../models/course.js');
 
 module.exports = {
 
@@ -27,24 +27,27 @@ module.exports = {
 				callback();
 			});
 		},
-		"Select User": function(test){
-			User.selectUser({'userid':'mak10'}, function(error, user){
-				test.ok(user.userID.should.be.eql("mak10"));
+		"Select Course": function(test){
+			Course.selectCourse({'uuid':'A8G7S6H7ASDFG9'}, function(error, course){
+				test.ok(course.number.should.be.eql(307));
 				test.done();
 			});
 		},
-		
-		"Create User": function(test){
-			var newUser = {
-				firstName: "test"
-				, lastName: "user"
-				, userID: "test1234"
-				, email: "test1234@sfu.ca"
-				, type: 0
-			}
-			User.createUser(newUser, function(error, user){
-				test.ok(user.should.have.property('uuid'));
+		"Get Course Instructor": function(test){
+			Course.getInstructor({'uuid': 'A8G7S6H7ASDFG9'}, function(error, instructor){
+				test.ok(instructor['type'].should.be.eql(0));
+				test.ok(instructor.userID.should.be.eql('ted'));
 				test.done();	
+			})
+		},
+		//Tests that there are the correct number of course members, and that they are all students
+		"Get Course Members": function(test){
+			Course.getCourseMembers({'course':'A8G7S6H7ASDFG9'}, function(error, members){
+				test.ok(members.length.should.be.eql(2));
+				for(index in members){
+					test.ok(members[index].type.should.be.eql(1));
+				}
+				test.done();
 			})
 		}
 	},

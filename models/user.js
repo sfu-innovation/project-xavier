@@ -33,7 +33,9 @@ exports.createUser = function(user, callback){
 	user.uuid = UUID.generate();
 	var newUser = User.build(user);
 	newUser.save().error(function(error){
-		console.log("Failed to insert user " + error);
+		callback(error, null);
+	}).success(function(){
+		callback(null, newUser);
 	})
 }
 

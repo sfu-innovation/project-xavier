@@ -55,9 +55,9 @@ exports.getInstructor = function(args, callback){
 }
 
 exports.getCourseMembers = function(args, callback){
-		var User = require('./user.js').User;
-
-		CourseMember.findAll({where: args}).success(function(memberRows){
+	var User = require('./user.js').User;
+	CourseMember.findAll({where: args}).success(function(memberRows){
+		
 		if(memberRows.length > 0){
 			var i;
 			var userUUIDs = [];
@@ -79,7 +79,7 @@ exports.getCourseMembers = function(args, callback){
 		}
 
 	}).error(function(error){
-		callback(error, null);
 		console.log("Can't find course " + error);
+		callback(error, null);
 	})
 }

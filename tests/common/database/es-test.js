@@ -110,7 +110,7 @@ module.exports = {
 			})
 		}
 	}
-
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Comments 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +154,6 @@ queryES.getAllCommentByUserID('mcs3', 1, function(result){
 
 //*****************ADD a comment***********************
 //Comment model takes in (target_uuid, user, objectType, title, body, timestamp)
-
 //var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
 
 //@params: comment model, type, callback
@@ -182,32 +181,10 @@ queryES.deleteComment('universal', 0, function(result){
 })
 */
 
-//*****************Append a commentID to a question***********************
-//
-// Ignore appendCommentID and deleteCommentID for now.
-// This needs to be discussed together.
-//
-//@params: questionID, commentID, type, callback
-/*
-queryES.appendCommentID("","", type, function(result) {
-	console.log("CommentID appended to the Question");
-	console.log(result);
-});
-*/
-
-//*****************Delete a commentID from a question***********************
-//@params: questionID, commentID, callback
-/*
-queryES.deleteCommentID("","", function(result) {
-	console.log("CommentID deleted from the Question");
-	console.log(result);
-});
-*/
-
 //*****************Update comment's vote***********************
 //@params: commentID, direction, type, callback
 /*
-queryES.updateVote('zzz123', 1, 0, function(result) {
+queryES.updateVote('qJfzggggguOicWWAjx7F05', 1, 0, function(result) {
 	console.log("Comment vote updated");
 	console.log(result);
 });
@@ -221,4 +198,4 @@ queryES.updateIsAnswered('qJfznhheQuOicWWAjx7F05', 0, function(result) {
 	console.log(result);
 });
 */
-}
+

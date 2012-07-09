@@ -8,13 +8,14 @@ var mysql   = require("mysql").createClient({
 	});
 var async = require('async');
 var Sequelize = require('sequelize');
-var User = require('../models/user.js').User;
+
 var Course = require('../models/course.js').Course;
 var CourseMember = require('../models/courseMember.js').CourseMember;
 var Notification = require('../models/notification.js').Notification;
+var Resource = require(__dirname + '/../models/resource.js').Resource;
+var User = require('../models/user.js').User;
 var UserNotification = require('../models/userNotification.js').UserNotification;
 var UserNotificationSettings = require('../models/userNotificationSettings.js').UserNotificationSettings;
-
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -35,6 +36,17 @@ exports.createDB = function(dbName, callback){
 		else{
 			console.log("Database created! Creating tables...\n");
 			mysql.end();
+			
+			async.parallel([
+				createTable.bind(undefined, User)
+				, createTable.bind(undefined, Course)
+				, createTable.bind(undefined, Notification)
+				, createTable.bind(undefined, CourseMember)
+				, createTable.bind(undefined, UserNotification)
+				, createTable.bind(undefined, UserNotificationSettings)
+				, createTable.bind(undefined, Resource)
+				], callback)
+			/*
 			User.sync().success(function(){
 				Course.sync().success(function(){
 					Notification.sync().success(function(){
@@ -51,8 +63,17 @@ exports.createDB = function(dbName, callback){
 					});
 				});
 			})
+			*/
 		}
 	});
+}
+
+var createTable = function(table, callback){
+	table.sync().success(function(){
+		callback(null, true);
+	}).error(function(){
+		callback(error, null);
+	})
 }
 
 exports.dropDB = function(dbName, callback){
@@ -66,13 +87,13 @@ exports.dropDB = function(dbName, callback){
 	mysql.query('DROP DATABASE ' + dbName, function(error){
 		if(error){
 			if(callback){
-				callback(0);
+				callback(error, null);
 			}
 			console.log("Couldn't delete database " + error);
 		}
 		else{
 			if(callback){
-				callback(1);
+				callback(null, true);
 			}
 			console.log("Database " + dbName + " deleted");
 		}

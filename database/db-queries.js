@@ -86,7 +86,7 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		dbPassword,
 		{
 			host: dbHost
-			, logging: dumb
+			, logging: false
 			, define: {charset:'utf8'}
 		}
 	);

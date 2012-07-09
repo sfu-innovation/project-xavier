@@ -9,15 +9,17 @@ module.exports = {
 	userTests:{
 		
 		setUp: function(callback){
-			queries.createDB(config.mysqlDatabase["db-name"], function(){
-				queries.insertData(
-					'./database/test-data.json'
-					, config.mysqlDatabase["db-name"]
-					, config.mysqlDatabase["user"]
-					, config.mysqlDatabase["password"]
-					, config.mysqlDatabase["host"]
-					, callback
-				);
+			queries.dropDB(config.mysqlDatabase["db-name"], function(){
+				queries.createDB(config.mysqlDatabase["db-name"], function(){
+					queries.insertData(
+						'./database/test-data.json'
+						, config.mysqlDatabase["db-name"]
+						, config.mysqlDatabase["user"]
+						, config.mysqlDatabase["password"]
+						, config.mysqlDatabase["host"]
+						, callback
+					);
+				});
 			});
 		},
 		tearDown: function(callback){

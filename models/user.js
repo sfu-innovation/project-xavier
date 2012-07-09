@@ -24,13 +24,6 @@ var User = exports.User = db.define('User', {
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
 	
-	notificationOnResource : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnQuestion: {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnTag : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnLike : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnComment : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnStar : {type: Sequelize.STRING,defaultValue: "now"},
-	
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 

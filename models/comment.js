@@ -10,7 +10,7 @@
 */	
 
 //Comment Model
-var Comment = function(target_uuid, user, objectType, title, body, timestamp){
+var Comment = function(target_uuid, user, objectType, title, body){
 	//this.id = uuid;
 	this.target_uuid = target_uuid;
 	this.user = user;
@@ -19,7 +19,6 @@ var Comment = function(target_uuid, user, objectType, title, body, timestamp){
 	this.title = title;
 	this.body = body;		
 	this.objectType = objectType;
-	this.timestamp	= timestamp; //'2012-07-01';
 	this.isAnswered = 'false';
 }
 

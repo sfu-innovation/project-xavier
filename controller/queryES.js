@@ -4,7 +4,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
-	UUID = require('com.izaakschroeder.uuid')
+	UUID = require('com.izaakschroeder.uuid');
 
 var QueryES = function() {	
 }
@@ -124,17 +124,8 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	switchIndex(appType);
 	switchMapping(0);
 
-	var user_uuid = UUID.generate();
-
-	console.log("From QueryEs addQuestion");
-	console.log("User uuid = " + user_uuid);
-
-	document = mapping.document(user_uuid);
-
-	var date = new Date();
-
-	data.timestamp = date.toISOString();
-
+	document = mapping.document(UUID.generate());
+	data.timestamp = new Date().toISOString();
 
 	document.set(data, function(err, req, data){
 		if(data){
@@ -169,11 +160,14 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 
+	var date = new Date().toISOString();
+
 	var data = {
-		'script':'ctx._source.title = title; ctx._source.body = body',
+		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date;',
 		'params':{
 			'title':questionTitle,
-			'body':questionBody
+			'body':questionBody,
+			'date':date
 		}
 	}
 
@@ -333,12 +327,8 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	switchIndex(appType);
 	switchMapping(1);
 
-	var commentID = UUID.generate();
-
-	console.log("From QueryEs addComment");
-	console.log("Comment uuid = " + commentID);
-
-	document = mapping.document(commentID);	
+	document = mapping.document(UUID.generate());
+	data.timestamp = new Date().toISOString();
 
 	var date = new Date();
 

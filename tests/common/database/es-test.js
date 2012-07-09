@@ -3,7 +3,6 @@
 var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
-var time = require('com-jhc-time');
 
 //NOTE**
 //for types, 0 = presenter, 1 = accent
@@ -51,17 +50,17 @@ queryES.getAllQuestionByUserID('jbo1', 0, function(result){
 var searchString = 'fuk dwntwn';
 
 //@params: search string, type, callback
-
+/*
 queryES.searchAll(searchString, 0, function(result){
 	console.log('Found: ' + result);
 	console.log(JSON.stringify(result));
 })
-
+*/
 
 
 //*****************ADD a question***********************
 //Question model takes in uuid, user, title, body, category, timestamp
-var question = new question('someuidlololol', 'someUserUUID', 'This is the question i asked', 'dddd','life', '2012-06-30');
+var question = new question('someUserUUID', 'This is the question i asked', 'dddd','life');
 
 //@params: question model, type, callback
 /*
@@ -84,7 +83,7 @@ queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddddddd', 0, function(result
 //*****************UPDATE a question**********************
 //@params: questionID, questionBody, type, callback
 /*
-queryES.updateQuestion('pJfzndwdadddQuOicWWAjx7F00', 'ddddd', 'some descriddd', 0, function(result){
+queryES.updateQuestion('f3228370-8726-4893-bbc2-100db9308dc1', 'ddddd', 'some descriddd', 0, function(result){
 	console.log("Question updated, check ES: " + result._id);
 });
 */
@@ -148,11 +147,6 @@ queryES.getAllCommentByUserID('mcs3', 1, function(result){
 
 //*****************ADD a comment***********************
 //Comment model takes in (target_uuid, user, objectType, title, body, timestamp)
-var curTime = time.getCurrentTime();
-var nowTime = '2012-5-1T17:24:51';
-
-console.log(curTime);
-console.log(nowTime);
 
 var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
 

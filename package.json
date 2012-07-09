@@ -10,7 +10,6 @@
 		"com.izaakschroeder.elasticsearch": ">=0.0.1",
 		"com.izaakschroeder.uuid": ">=0.0.1",
         "optimist": "*",
-        "emailjs":">=0.0.1",
-        "com-jhc-time": ">=0.0.1"
+        "emailjs":">=0.0.1"
 	}
 }

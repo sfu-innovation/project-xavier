@@ -6,7 +6,7 @@ var mysql   = require("mysql").createClient({
 	password: config.mysqlDatabase["password"],
 	port: config.mysqlDatabase["port"],
 	});
-
+var async = require('async');
 var Sequelize = require('sequelize');
 var User = require('../models/user.js').User;
 var Course = require('../models/course.js').Course;
@@ -59,7 +59,6 @@ exports.dropDB = function(dbName, callback){
 	});
 
 	mysql.query('DROP DATABASE ' + dbName, function(error){
-		console.log("DELETING");
 		if(error){
 			if(callback){
 				callback(0);
@@ -76,8 +75,7 @@ exports.dropDB = function(dbName, callback){
 	});
 }
 
-exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
-	
+exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, callback){
 	var db = new Sequelize(
 		dbName,	
 		dbUser,	
@@ -91,40 +89,27 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost){
 	
 	var data  = JSON.parse(fs.readFileSync(dataFile));
 
-	for(index in data.courses){
-		var course = Course.create(data.courses[index]).success(function(course){
-			course.save().error(function(error){
-				console.log("Failed to insert course " + error);
+	async.parallel([
+		insert.bind(undefined, Course, data.courses),
+		insert.bind(undefined, User, data.users),
+		insert.bind(undefined, CourseMember, data.courseMembers),
+		insert.bind(undefined, Notification, data.notification),
+		insert.bind(undefined, UserNotification, data.usernotification)
+		], callback);
+}
+
+var insert = function(model, data, callback){
+	async.forEach(data, function(object, callback) {
+		model.create(object).success(function(object){
+			object.save().success(function() {
+				callback(undefined, object)
+			}).error(function(error){
+				callback(error)
 			})
 		})
-	}
-	for(index in data.users){
-		var user = User.build(data.users[index]);
+	}, callback)
 
-		user.save().error(function(error){
-			console.log("Failed to insert user " + error);
-		})
-	}
-	for(index in data.courseMembers){
-		var member = CourseMember.build(data.courseMembers[index]);
-
-		member.save().error(function(error){
-			console.log("Failed to insert course member " + error);
-		})
-	}
-	for(index in data.notification){
-		var notification = Notification.build(data.notification[index]);
-
-		notification.save().error(function(error){
-			console.log("Failed to insert notification " + error);
-		})
-	}
-	
-	for(index in data.usernotification){
-		var userNotification = UserNotification.build(data.usernotification[index]);
-
-		userNotification.save().error(function(error){
-			console.log("Failed to insert user notification " + error);
-		})
-	}
 }
+
+
+

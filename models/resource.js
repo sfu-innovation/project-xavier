@@ -17,7 +17,8 @@ var db = new Sequelize(
 
 var Resource = exports.Resource = db.define('Resource', {
 	uuid: {type: Sequelize.STRING, primaryKey: true}
-	, user: {type: Sequelize.STRING}
+	, user: {type: Sequelize.STRING, allowNull: false}
+	, course: {type: Sequelize.STRING, allowNull: false}
 	, title: {type: Sequelize.STRING, allowNull: false}
 	, description:  {type: Sequelize.TEXT}
 	, resourceType: {type: Sequelize.INTEGER, allowNull: false}
@@ -27,12 +28,29 @@ var Resource = exports.Resource = db.define('Resource', {
 
 
 exports.createResource = function(userUUID, args, callback){
+	var User = require(__dirname + '/user.js');
 	args.user = userUUID;
 	args.uuid = UUID.generate();
-	Resource.create(args).success(function(resource){
-		callback(null, resource);
-	}).error(function(error){
-		console.log("can't create resource " + error);
-		callback(error, null);
+	
+	User.getUserCourses({user: userUUID}, function(error, courses){
+		var isCourseMember = false;
+		for(index in courses){
+			if(args.course === courses[index].uuid){
+				isCourseMember = true;
+			}
+		}
+		
+		if(isCourseMember){
+			Resource.create(args).success(function(resource){
+				callback(null, resource);
+			}).error(function(error){
+				console.log("can't create resource " + error);
+				callback(error, null);
+			});
+		}
+
+		
 	});
+
+
 }

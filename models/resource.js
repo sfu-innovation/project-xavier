@@ -34,6 +34,15 @@ exports.createResource = function(userUUID, args, callback){
 	
 	User.getUserCourses({user: userUUID}, function(error, courses){
 		var isCourseMember = false;
+
+		if(error){
+			callback(error, null);
+		}
+
+		if(courses.length === 0){
+			callback("Can't create resource.  No courses found for user.", null);
+		}
+
 		for(index in courses){
 			if(args.course === courses[index].uuid){
 				isCourseMember = true;
@@ -48,8 +57,9 @@ exports.createResource = function(userUUID, args, callback){
 				callback(error, null);
 			});
 		}
-
-		
+		else{
+			callback("You can't create a resource for a course you aren't enrolled in", null);
+		}	
 	});
 
 

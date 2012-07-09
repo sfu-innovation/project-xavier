@@ -242,17 +242,16 @@ QueryES.prototype.getComment = function(commentID, appType, callback){
 QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, callback){
 	
 	var data = {
-		query: {
-			bool:{
-				must:[{
-					term:{
-						target_uuid: ptarget_uuid
-					}
-				}]
-			}
-		},
-		from: 0,
-		size: 20
+		  query: {
+		    query_string: {
+		      "fields": [
+		        "target_uuid"
+		      ],
+		      "query": ptarget_uuid
+		    },
+		    "from": 0,
+		    "size": 20
+		  }
 	};
 
 	switchIndex(appType);

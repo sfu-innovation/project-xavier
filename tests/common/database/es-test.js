@@ -159,12 +159,12 @@ queryES.addComment(comment, 0, function(){
 
 //*****************UPDATE a comment**********************
 //@params: commentID, commentTitle, commentBody, appType, callback
-
+/*
 queryES.updateComment('8b67e304-af4b-4d57-a325-0e8b4e7e9237', 'dreamworks', 'shrek', 0, function(result){
 	console.log("Comment updated, check ES");
 	console.log(result);
 });
-
+*/
 
 //*****************DELETE a comment***********************
 //@params: commentID, type, callback

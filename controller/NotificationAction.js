@@ -19,6 +19,31 @@ var debug = false;
 var NotificationAction = function() {	
 }
 
+NotificationAction.prototype.removeUserNotifications = function( args, callback ){ 
+	Notification.find( { where : { target: args.target, attribute : args.attribute, user : args.user }})
+	.success( function(notification) {
+		if ( null != notification ){
+			UserNotification.findAll({ where : {uuid : notification.uuid}})
+				.success( function(notifications){
+				var length = notifications.length;
+				console.log(" There are "+ length+"  user notifications to remove");
+				var i = 0;
+				for ( ; i < length; i++){
+					notifications[i].destroy().error( function( error ){
+						console.log( error );
+						callback( error, null );
+					});
+				}
+				callback( null, notification.uuid );
+			}).error( function(error){
+				console.log("error with finding the user notifications");
+				callback( error, null);
+			})
+		}else {
+			console.log(" the notifier does not exist ");
+		}
+	});
+}
 NotificationAction.prototype.removeNotifier = function( args, callback){
 	Notification.find( { where : args }).success( function(notification) {
 		if ( null != notification ){
@@ -270,7 +295,7 @@ var object = {
 
 
 var notify = new NotificationAction();
-notify.addUserNotification( object, function( err, data){
+notify.removeUserNotifications( object, function( err, data){
 	if (data ) {
 		console.log( "[SUCCESS] - "+ data);
 	} else {

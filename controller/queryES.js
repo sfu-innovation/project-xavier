@@ -350,11 +350,14 @@ QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody,
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 
+	var date = new Date().toISOString();
+
 	var data = {
-		'script':'ctx._source.title = title; ctx._source.body = body',
+		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date',
 		'params':{
 			'title':commentTitle,
-			'body':commentBody
+			'body':commentBody,
+			'date':date
 		}
 	}
 

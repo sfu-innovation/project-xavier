@@ -160,16 +160,18 @@ queryES.addComment(comment, 0, function(){
 //*****************UPDATE a comment**********************
 //@params: commentID, commentTitle, commentBody, appType, callback
 
-queryES.updateComment('8b67e304-af4b-4d57-a325-0e8b4e7e9237', 'pixar', 'toy story', 0, function(){
+queryES.updateComment('8b67e304-af4b-4d57-a325-0e8b4e7e9237', 'dreamworks', 'shrek', 0, function(result){
 	console.log("Comment updated, check ES");
+	console.log(result);
 });
 
 
 //*****************DELETE a comment***********************
 //@params: commentID, type, callback
 /*
-queryES.deleteComment('universal', 0, function(){
+queryES.deleteComment('universal', 0, function(result){
 	console.log("Comment deleted");
+	console.log(result);
 })
 */
 
@@ -180,31 +182,35 @@ queryES.deleteComment('universal', 0, function(){
 //
 //@params: questionID, commentID, type, callback
 /*
-queryES.appendCommentID("","", type, function() {
+queryES.appendCommentID("","", type, function(result) {
 	console.log("CommentID appended to the Question");
+	console.log(result);
 });
 */
 
 //*****************Delete a commentID from a question***********************
 //@params: questionID, commentID, callback
 /*
-queryES.deleteCommentID("","", function() {
+queryES.deleteCommentID("","", function(result) {
 	console.log("CommentID deleted from the Question");
+	console.log(result);
 });
 */
 
 //*****************Update comment's vote***********************
 //@params: commentID, direction, type, callback
 /*
-queryES.updateVote('zzz123', 1, 0, function() {
+queryES.updateVote('zzz123', 1, 0, function(result) {
 	console.log("Comment vote updated");
+	console.log(result);
 });
 */
 
 //*****************Update comment's isAnswered***********************
 //@params: commentID, appType, callback
 /*
-queryES.updateIsAnswered('qJfznhheQuOicWWAjx7F05', 0, function() {
+queryES.updateIsAnswered('qJfznhheQuOicWWAjx7F05', 0, function(result) {
 	console.log("Comment isAnswered updated");
+	console.log(result);
 });
 */

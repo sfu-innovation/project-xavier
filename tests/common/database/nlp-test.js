@@ -1,5 +1,9 @@
 var nlp = require('../../../controller/nlp.js');
 
-nlp('this is a sentence test', function(result){
-	console.log(result);
-})
+nlp('word', function(result){
+	console.log("result: " +result);
+});
+
+nlp('dddd', function(result){
+	console.log("result: " + result);
+});

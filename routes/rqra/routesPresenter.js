@@ -1,4 +1,5 @@
 var queryES = require('./../../controller/queryES.js');
+var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 
@@ -311,14 +312,16 @@ exports.searchRoute = function(appType, request, response) {
 	var query = request.body.query;
 
 	if (request.method === "POST") {
-		queryES.searchAll(query, appType, function(result) {
-			if (result) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
-			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
-			}
+		nlp(query, function(query){
+			queryES.searchAll(query, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
 		});
 	}
 }

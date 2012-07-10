@@ -31,5 +31,10 @@
 		 "host": "",
 		 "ssl": "",
 		 "from": ""
+	},
+	"dictionaryDB":{
+		"host":"",
+		"port": 0,
+		"db-num": 0
 	}
 }

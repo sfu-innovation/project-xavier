@@ -1,6 +1,7 @@
 var queryES = require('./../../controller/queryES.js');
+var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
-
+var comment = require('./../../models/comment.js');
 
 exports.questionRoute = function(appType, request, response) {
 	var question_id = request.params.uid;
@@ -19,15 +20,18 @@ exports.questionRoute = function(appType, request, response) {
 
 	//post a new question
 	else if (request.method === "POST"){
-		var question = request.body.question;
+
 		//TODO: the user id should be grabbed from seesion, so we know how is creating a new question
 		//if not log in, cannot create a question
+		console.log(request.body.question);
+		//user, title, body, category
+		var newQuestion = new question('fakeid'
+		,request.body.question.title
+		,request.body.question.body
+		,request.body.question.category);
 
-		question.user = "fakeid";
 
-
-
-		queryES.addQuestion(request.body.question, appType, function(result) {
+		queryES.addQuestion(newQuestion, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, question: result}));
@@ -41,8 +45,8 @@ exports.questionRoute = function(appType, request, response) {
 
 	else if (request.method === "PUT") {
 		//TODO: need update document and unit-test
-		var questionTitle = request.body.questionTitle;
-		var questionBody = request.body.questionBody;
+		var questionTitle = request.body.title;
+		var questionBody = request.body.body;
 
 		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
 			if (result) {
@@ -176,20 +180,24 @@ exports.commentRoute = function(appType, request, response) {
 	} else if (request.method === "POST"){
 		//POST a comment by user id grabbed from seesion's user object, currently using fakeid.
 		//TODO: add this to document
-		var comment = request.body.comment;
-		var user = "fakeid";
 
-		comment.user = user;
+		//target_uuid, user, objectType, title, body
+		var newComment = new comment(request.body.comment.target_uuid
+		,'fakeid'
+		,request.body.comment.objectType
+		,request.body.comment.title
+		,request.body.comment.body);
 
-		queryES.addComment(comment, appType, function(result) {
+		queryES.addComment(newComment, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});
 
 
 	} else if (request.method === "PUT") {
-		var commentBody = request.body.commentBody;
-		queryES.updateComment(comment_id, commentBody, appType, function(result) {
+		var commentTitle = request.body.title;
+		var commentBody = request.body.body;
+		queryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});
@@ -210,7 +218,7 @@ exports.comment = function(request, response) {
 //get all comments
 exports.comments = function(request, response) {
 	if (request.method === "GET") {
-		queryES.getAllComments( 0, function(result) {
+		queryES.getAllComments(0, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
@@ -251,6 +259,8 @@ exports.commentsByUser = function(request, response) {
 exports.commentVoteRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
 	var direction = request.params.dir;
+
+	console.log(direction);
 	
 	if (request.method === "POST") {
 		queryES.updateVote(commentId, direction, appType, function(result) {
@@ -302,16 +312,22 @@ exports.commentsByQuestion = function(request, response) {
 
 exports.searchRoute = function(appType, request, response) {
 	var query = request.body.query;
+	console.log('the query sent is: ' + query);
 
 	if (request.method === "POST") {
-		queryES.searchAll(query, appType, function(result) {
-			if (result) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
-			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
-			}
+
+		nlp(query, function(query){
+			console.log('query after nlp parsing is: ' + query);
+
+			queryES.searchAll(query, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
 		});
 	}
 }

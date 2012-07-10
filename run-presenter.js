@@ -1,5 +1,5 @@
 var fs = require('fs');
-var config = JSON.parse(fs.readFileSync('config.json'));
+var config = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 var app = require(__dirname + '/app-presenter.js');
 
 // listening

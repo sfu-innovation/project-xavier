@@ -7,7 +7,7 @@ var
         es = require('com.izaakschroeder.elasticsearch'),
         fs = require('fs');
 
-var argv = require('optimist').usage('Usage: $0 -h [host] -p [port] -f [file_name]').demand(['f']).default({ h:"localhost", p:9200, f:"qs.json"}).argv;
+var argv = require('optimist').usage('Usage: $0 -h [host] -p [port] -f [file_name]').demand(['f']).default({ h:"localhost", p:9200, f:"database/qs.json"}).argv;
 
 
 

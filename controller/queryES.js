@@ -279,7 +279,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			//console.log("Specified target_uuid does not contain any comments");
@@ -410,7 +410,7 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 
-	if (direction === 0) {
+	if (direction === '0') {
 		data = {
 			'script':'ctx._source.upvote += upvote',
 			'params':{

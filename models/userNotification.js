@@ -18,7 +18,7 @@ var UserNotification = exports.UserNotification = db.define('UserNotification', 
 	 user : {type:Sequelize.INTEGER, allowNull: false },
 	 description: {type:Sequelize.STRING, allowNull: false },
 	 emailSent: {type:Sequelize.BOOLEAN, defaultValue: false },
-	 wait:{ type:Sequelize.STRING , allowNULL: false, defaultValue: "now" }
+	 wait:{ type:Sequelize.INTEGER , allowNULL: false, defaultValue: 0}
 });
 
 exports.selectUserNotification =  function(args, callback){

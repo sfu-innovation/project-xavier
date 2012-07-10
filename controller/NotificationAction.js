@@ -335,11 +335,11 @@ NotificationAction.prototype.initNotificationSettings = function( args, callback
 	var self = this;
 	UserNotificationSettings.find( { where : { user : args.user }}).success(function( settings){
 		if ( null === settings ){
-			args.app = "Accent";
+			args.app = 1;
 			self.addNotificationSetting( args, function(err, data){
-				args.app = "RQRA";
+				args.app = 0;
 				self.addNotificationSetting( args, function( err, data ){
-					args.app = "Engage";
+					args.app = 2;
 					self.addNotificationSetting( args, function( err, data ){
 						callback(1);
 					});
@@ -426,7 +426,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				//creating the user notification with the slimmed down args
 				var userNotification = UserNotification.build(args);
 				
-				if ( args.wait == "now" ){
+				if ( args.wait == 0 ){
 					compileEmail( userNotification, callback );
 				} else {
 					userNotification.save().error(function(error){
@@ -492,6 +492,8 @@ args = {
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
 }
+
+
 */
 NotificationAction.prototype.addNewResourceUserNotification = function( args, callback){
 	args.attribute = 3;
@@ -517,4 +519,4 @@ notify.addUserNotification( object, function( err, data){
 });
   */
   
-  module.exports = new NotificationAction;
+module.exports = new NotificationAction;

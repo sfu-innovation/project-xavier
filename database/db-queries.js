@@ -17,6 +17,7 @@ var User = require('../models/user.js').User;
 var UserNotification = require('../models/userNotification.js').UserNotification;
 var UserNotificationSettings = require('../models/userNotificationSettings.js').UserNotificationSettings;
 var MediaFile = require('../models/mediafile.js').MediaFile;
+var Tag = require('../models/tag.js').Tag;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -46,7 +47,8 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, UserNotification), 
 				createTable.bind(undefined, UserNotificationSettings), 
 				createTable.bind(undefined, Resource),
-				createTable.bind(undefined, MediaFile)
+				createTable.bind(undefined, MediaFile),
+				createTable.bind(undefined, Tag)
 				], callback)
 			/*
 			User.sync().success(function(){
@@ -129,7 +131,8 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, Notification, data.notification),
 		insert.bind(undefined, UserNotification, data.usernotification),
 		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings),
-		insert.bind(undefined, MediaFile, data.mediafiles)
+		insert.bind(undefined, MediaFile, data.mediafiles),
+		insert.bind(undefined, Tag, data.tags)
 		], callback);
 }
 

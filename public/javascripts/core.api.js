@@ -24,7 +24,7 @@ coreApi._construct = function () {
 //			question.timestamp = '2008-10-21';
 //			question.followup = [];
 			body.question = question;
-
+			console.log()
 
 			$.ajax({
 				//url : '/api/user/'+user_id+'/questions',

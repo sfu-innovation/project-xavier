@@ -129,7 +129,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	document = mapping.document(questionUuid);
 	data.timestamp = new Date().toISOString();
 
-	notification.createNewQuestion({user:data.user, target:questionUuid, app:'RQRA'}, function(err, result){
+	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
 
 		if(result){
 
@@ -374,21 +374,24 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 //create a new comment
 QueryES.prototype.addComment = function(data, appType, callback){
 	var document;
+	var commentUuid = UUID.generate();
 
 	switchIndex(appType);
 	switchMapping(1);
 
-	document = mapping.document(UUID.generate());
+	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
 
-	document.set(data, function(err, req, data){
-		if (data) {
-			callback(data);
-		}
-		else {
-			callback(undefined);
-		}
-		
+	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
+		document.set(data, function(err, req, data){
+			if (data) {
+				callback(data);
+			}
+			else {
+				callback(undefined);
+			}
+
+		});
 	});
 }
 

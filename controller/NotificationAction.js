@@ -267,13 +267,13 @@ NotificationAction.prototype.removeNewResourceNotifier = function( args, callbac
 
 NotificationAction.prototype.createNewResource = function( args, callback ){
 	var self = this;
-	args.attribute = 1;
+	args.attribute = 0;
 	self.addNotifier( args, function( err, data){
-		args.attribute = 2;
+		args.attribute = 1;
 		self.addNotifier( args, function( err, data){
-			args.attribute = 3;
+			args.attribute = 2;
 			self.addNotifier( args, function( err, data){
-				callback(null, 1);
+				callback(null, data);
 			} );
 		});
 	});
@@ -335,9 +335,9 @@ NotificationAction.prototype.initNotificationSettings = function( args, callback
 	var self = this;
 	UserNotificationSettings.find( { where : { user : args.user }}).success(function( settings){
 		if ( null === settings ){
-			args.app = 1;
+			args.app = 0;
 			self.addNotificationSetting( args, function(err, data){
-				args.app = 0;
+				args.app = 1;
 				self.addNotificationSetting( args, function( err, data ){
 					args.app = 2;
 					self.addNotificationSetting( args, function( err, data ){

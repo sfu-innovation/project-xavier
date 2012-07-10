@@ -298,7 +298,6 @@ NotificationAction.prototype.createNewResource = function( args, callback ){
 	why this resembles just an add comment notifier.
 	
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
 	target : resource that was acted on
 	}
@@ -453,7 +452,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 		}
 	});
 }
-
+/*
 var object = {
 		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":"Accent",
@@ -471,4 +470,6 @@ notify.addUserNotification( object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
-  
+ */
+
+module.exports = new NotificationAction();

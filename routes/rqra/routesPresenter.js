@@ -137,7 +137,7 @@ exports.followQuestionRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 0, question: result}));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Duplicated Follower" }));
 			}
 		});
 	}
@@ -158,7 +158,7 @@ exports.unfollowQuestionRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 0, question: result}));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Duplicated Follower" }));
 			}
 		});
 	}

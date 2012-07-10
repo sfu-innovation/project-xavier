@@ -39,6 +39,52 @@ $(document).ready(function () {
 		}
 	})
 
+	$("#followQuestionById").click(function (event) {
+		var question_id = $('#question_id').val();
+		if (question_id) {
+			rqra.followQuestionById(question_id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK, REFRESH');
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	})
+
+
+	$("#unfollowQuestionById").click(function (event) {
+		var question_id = $('#question_id').val();
+		if (question_id) {
+			rqra.unfollowQuestionById(question_id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK, REFRESH');
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	})
 
 	$("#updateQuestionById").click(function (event) {
 		var question_id = $('#question_id').val();
@@ -149,6 +195,8 @@ $(document).ready(function () {
 		}
 	})
 
+
+
 	$('#search').click(function () {
 		var query = $('#searchQuery').val();
 		if (query) {
@@ -217,6 +265,8 @@ $(document).ready(function () {
 		}
 
 	})
+
+
 
 	$('#getQuestionsByUserId').click(function (event) {
 		var user_id = $("#question_user_id").val();
@@ -499,6 +549,8 @@ function loadAllQuestions(rqra) {
 						+ '<p>status: ' + item._source.status + '</p>'
 						+ '<p>timestamp: ' + item._source.timestamp + '</p>'
 						+ '<p>user: ' + item._source.user + '</p>'
+						+ '<p>followers: ' + item._source.followup + '</p>'
+
 						+ '</li>';
 					$('#questions').append(content);
 				});

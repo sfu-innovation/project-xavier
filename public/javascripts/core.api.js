@@ -138,6 +138,28 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.followQuestionById = function (id, callback){
+			console.log("API - followQuestionById");
+			$.ajax({
+				url:'/api/question/'+id+'/follow',
+				type:'PUT',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+		this.unfollowQuestionById = function (id, callback){
+			console.log("API - unfollowQuestionById");
+			$.ajax({
+				url:'/api/question/'+id+'/unfollow',
+				type:'PUT',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 		//Comments
 
 
@@ -242,14 +264,23 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.getCommentsByUserId = function (user_id, callback) {
+			console.log("API - getCommentsByUserId");
+			$.ajax({
+				url:'/api/user/' + user_id + '/comments',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+			});
+		}
 
 
 		this.upVoteCommentById = function(id, callback){
 			console.log('API - upVoteCommentById');
 			var dir = 0;
 			voteCommentById( id,dir, callback);
-
-
 		}
 
 		this.downVoteCommentById = function(id, callback){

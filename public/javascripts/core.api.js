@@ -200,22 +200,22 @@ coreApi._construct = function () {
 			});
 		}
 
-//		this.updateCommentById = function (id, commentTitle, commentBody, callback) {
-//			console.log("API - updateCommentById");
-//			var body = {};
-//			body.commentTitle = commentTitle;
-//			body.commentBody = commentBody;
-//			$.ajax({
-//				url:'/api/comment/' + id,
-//				type:'PUT',
-//				dataType:'json',
-//				contentType:"application/json",
-//				data:JSON.stringify(body),
-//				success:function (data) {
-//					callback(data);
-//				}
-//			});
-//		}
+		this.updateCommentById = function (id, commentTitle, commentBody, callback) {
+			console.log("API - updateCommentById");
+			var body = {};
+			body.title = commentTitle;
+			body.body = commentBody;
+			$.ajax({
+				url:'/api/comment/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 		this.deleteCommentById = function (id, callback) {

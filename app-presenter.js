@@ -56,6 +56,14 @@ app.put("/api/question/:uid", routesPresenter.question); // update question by i
 app.delete("/api/question/:uid", routesPresenter.question); // update question by id
 app.get("/api/user/:uid/questions", routesPresenter.questionsByUser); // get all questions for a user
 app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
+
+//TODO: need update this into document
+app.put("/api/question/:uid/follow", routesPresenter.followQuestion); // a follower follows a question
+//TODO: need update this into document
+app.put("/api/question/:uid/unfollow", routesPresenter.unfollowQuestion); // a follower follows a question
+
+//TODO: this going to be deprecated, becuase we do not need ":follower"
+
 app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
 app.post("/api/search/", routesPresenter.search); // search based on a query

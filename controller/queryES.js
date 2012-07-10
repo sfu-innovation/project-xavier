@@ -4,7 +4,8 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
-	UUID = require('com.izaakschroeder.uuid');
+	UUID = require('com.izaakschroeder.uuid'),
+	notification = require('./NotificationAction.js');
 
 var QueryES = function() {	
 }
@@ -120,19 +121,29 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 //Add a new question
 QueryES.prototype.addQuestion = function(data, appType, callback){
 	var document;
+	var questionUuid = UUID.generate();
 
 	switchIndex(appType);
 	switchMapping(0);
 
-	document = mapping.document(UUID.generate());
+	document = mapping.document(questionUuid);
 	data.timestamp = new Date().toISOString();
 
-	document.set(data, function(err, req, data){
-		if(data){
-			callback(data);
+	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
+
+		if(result){
+
+			document.set(data, function(err, req, data){
+				if(data){
+					callback(data);
+				}else{
+					callback(undefined);
+				}
+			})
 		}else{
 			callback(undefined);
 		}
+
 	});
 }
 
@@ -148,6 +159,27 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 	}
 
 	db.post(link, data, function(err, req, data){
+		if(data){
+			callback(data);
+		}else{
+			callback(undefined);
+		}
+	})
+}
+
+//Remove a new follower
+QueryES.prototype.removeFollower = function(questionID, followerID, appType, callback){
+	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
+
+	var data = {
+		'script':'ctx._source.followup.contains(followup) ? ctx._source.followup.remove(followup) : ctx.op = \"none\";',
+		'params':{
+			'followup':followerID
+		}
+	}
+
+	db.post(link, data, function(err, req, data){
+
 		if(data){
 			callback(data);
 		}else{
@@ -342,21 +374,24 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 //create a new comment
 QueryES.prototype.addComment = function(data, appType, callback){
 	var document;
+	var commentUuid = UUID.generate();
 
 	switchIndex(appType);
 	switchMapping(1);
 
-	document = mapping.document(UUID.generate());
+	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
 
-	document.set(data, function(err, req, data){
-		if (data) {
-			callback(data);
-		}
-		else {
-			callback(undefined);
-		}
-		
+	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
+		document.set(data, function(err, req, data){
+			if (data) {
+				callback(data);
+			}
+			else {
+				callback(undefined);
+			}
+
+		});
 	});
 }
 

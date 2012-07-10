@@ -4,3 +4,8 @@
 
 ## Info
 
+# Elasticsearch database
+* In your root folder: run these files in order: 
+  * node database\es-mapping.js
+  * node database\es-insert.js
+

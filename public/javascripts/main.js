@@ -322,6 +322,35 @@ $(document).ready(function () {
 	})
 
 
+	$("#updateCommentById").click(function (event) {
+		var comment_id = $('#comment_id').val();
+		var new_title = $('#comment_title').val();
+		var new_body = $('#comment_body').val();
+		if (comment_id && new_title && new_body) {
+			//rqra.updateCommentById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue!!!" ,function(data){
+			rqra.updateCommentById(comment_id, new_title, new_body, function (data) {
+
+				if (data) {
+
+					if (data.errorcode === 0) {
+
+						alert("COOL,REFRESH THE LIST");
+					}
+					else {
+						alert(data.message);
+					}
+
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT HAVE EMPTY FILED');
+		}
+	})
+
 	$('#deleteCommentById').click(function () {
 		var comment_id = $('#comment_id').val();
 		if (comment_id) {

@@ -67,8 +67,8 @@ coreApi._construct = function () {
 		this.updateQuestionById = function (id, questionTitle, questionBody, callback) {
 			console.log("API - updateQuestionById");
 			var body = {};
-			body.questionTitle = questionTitle;
-			body.questionBody = questionBody;
+			body.title= questionTitle;
+			body.body = questionBody;
 			$.ajax({
 				url:'/api/question/' + id,
 				type:'PUT',

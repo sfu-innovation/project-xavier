@@ -47,6 +47,7 @@ $(document).ready(function () {
 		if (question_id && new_title && new_body) {
 			//rqra.updateQuestionById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue!!!" ,function(data){
 			rqra.updateQuestionById(question_id, new_title, new_body, function (data) {
+
 				if (data) {
 
 					if (data.errorcode === 0) {

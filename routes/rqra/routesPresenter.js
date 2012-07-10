@@ -310,9 +310,13 @@ exports.commentsByQuestion = function(request, response) {
 
 exports.searchRoute = function(appType, request, response) {
 	var query = request.body.query;
+	console.log('the query sent is: ' + query);
 
 	if (request.method === "POST") {
+
 		nlp(query, function(query){
+			console.log('query after nlp parsing is: ' + query);
+
 			queryES.searchAll(query, appType, function(result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });

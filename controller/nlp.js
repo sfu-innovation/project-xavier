@@ -4,34 +4,32 @@ var dict = require('../database/dictionary.js'),
 	tokenizer = new natural.WordTokenizer(),
 	EventEmitter = require('events').EventEmitter;
 
-var emitter = new EventEmitter();
-
 natural.PorterStemmer.attach();
 
-var nlpQuery = module.exports = function(query, callback){
-	var words = [];
+var words = []
+	,emitter = new EventEmitter();
+/***
+ *	Fill new array with words from database,
+ *	emit "ready" event when done.
+ ***/
+dict.words(function(data) {
+	Array.prototype.push.apply(words,data);
+	emitter.emit("ready", words);
+})
 
-	/***
-	 *	Fill new array with words from database,
-	 *	emit "ready" event when done.
-	 ***/
-	dict.words(function(data) {
-		Array.prototype.push.apply(words,data);
-		emitter.emit("ready", words);
-	})
-
-	/***
-	 *	Check if dictionary array already filled.
-	 *	If not, fill dictionary.
-	 ***/
-	var w = function(callback) {
-		if (words.length > 0) {
-			callback(words);
-		} else {
-			emitter.on("ready", callback);
-		}
+/***
+ *	Check if dictionary array already filled.
+ *	If not, fill dictionary.
+ ***/
+var w = function(callback) {
+	if (words.length > 0) {
+		callback(words);
+	} else {
+		emitter.on("ready", callback);
 	}
+}
 
+var nlpQuery = module.exports = function(query, callback){
 	/***
 	 *	Tokenize query, check each word against
 	 *	dictionary to get array of possible matches.
@@ -43,14 +41,16 @@ var nlpQuery = module.exports = function(query, callback){
 			tokens = tokenizer.tokenize(query);
 		//tokens = query.tokenizeAndStem();
 
+		console.log('tokenizing query function');
 		for (i in tokens) {
 			var candidates = dict.testing(tokens[i], words);
 			//console.log(candidates);
-			console.log(hi_find(candidates));
+			//console.log(hi_find(candidates));
 			sent += " "+hi_find(candidates);
 			//console.log(candidates.sort()[candidates.length-1][1]);
 		}
 		var tmp = sent.tokenizeAndStem();
+		console.log('sent: ' + sent);
 		callback(tmp.join(' '));
 	})
 

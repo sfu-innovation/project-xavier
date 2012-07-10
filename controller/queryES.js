@@ -330,7 +330,7 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);

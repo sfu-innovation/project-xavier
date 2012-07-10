@@ -259,6 +259,8 @@ exports.commentsByUser = function(request, response) {
 exports.commentVoteRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
 	var direction = request.params.dir;
+
+	console.log(direction);
 	
 	if (request.method === "POST") {
 		queryES.updateVote(commentId, direction, appType, function(result) {

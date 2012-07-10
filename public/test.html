@@ -2,7 +2,13 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
+	<style>
+		.comments_li {background-color: #ffffee;}
+		.questions_li {background-color: #f4f4f4;}
+	</style>
 	<script src="http://code.jquery.com/jquery-1.6.1.min.js" ></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="/javascripts/core.api.js" ></script>
 	<script src="/javascripts/main.js" ></script>
 </head>
@@ -10,64 +16,125 @@
 
 <div id="error" style="color:red"></div>
 
-<div class="question">
+<div class id='tabs'>
+	<ul>
+		<li><a href="#searchpage">Search</a> </li>
+		<li><a href="#question">Question</a></li>
+		<li><a href="#comment">Comment</a></li>
+	</ul>
 
-	<div>
-		<button id="getALLQuestions">Refresh All Questions</button>
-		<ol id="questions"></ol>
-	</div>
-	<hr>
-	<div>
-		<button id="getQuestionById">Get this question by id</button>
-		<button id="updateQuestionById">Update this question by id</button>
-		<button id="deleteQuestionById">Delete this question by id</button>
-		<input id="question_id" type="text" size="50" placeholder="id">
+	<div id="searchpage">
+		<div>
 
-		<input id="question_title" type="text" size="100" placeholder="question title">
-		<textarea id="question_body" type="text"  rows="10" cols="200" placeholder="question_body"></textarea>
+			<button id="search">Search a question</button>
+			<input type = "text" size="100" placeholder="search something" id="searchQuery" >
+			<ol id="search_results"></ol>
 
 
-	</div>
-
-	<hr>
-
-
-	<div>
-		<button id="getQuestionsByUserId">Get Questions asked by this user:</button>
-		<input id="user_id" type="text" size="20" placeholder="user id">
-
-		<ol id="user_questions">
-
-
-		</ol>
+		</div>
 	</div>
 
-	<hr>
+	<div id="question">
+
+		<div>
+			<button id="getALLQuestions">Refresh All Questions</button>
+			<ol id="questions"></ol>
+		</div>
+		<hr>
+		<div>
+			<button id="getQuestionById">Get this question by id</button>
+			<button id="updateQuestionById">Update this question by id</button>
+			<button id="deleteQuestionById">Delete this question by id</button>
+			<button id="getCommentsByTargetId">Load the comments of this question</button>
+			<br />
+			<input id="question_id" type="text" size="50" placeholder="id">
+
+			<input id="question_title" type="text" size="100" placeholder="question title">
+			<textarea id="question_body" type="text"  rows="10" cols="200" placeholder="question_body"></textarea>
+
+			<ol id="question_comments"></ol>
 
 
-	<div>
-		<button id="createQuestion">Create a new question</button>
-		<input type = "text" placeholder="question title" id="new_question_title">
-		<input type= "text" placeholder="question body"  id="new_question_body">
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="getQuestionsByUserId">Get Questions asked by this user:</button>
+			<input id="question_user_id" type="text" size="20" placeholder="user id">
+
+			<ol id="user_questions">
+
+
+			</ol>
+
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="createQuestion">Create a new question</button>
+			<input type = "text" placeholder="question title" id="new_question_title">
+			<input type= "text" placeholder="question body"  id="new_question_body">
+		</div>
+
+		<hr>
+
+
+
 	</div>
 
-	<hr>
 
-	<div>
+	<div id="comment">
 
-		<button id="search">Search a question</button>
-		<input type = "text" size="100" placeholder="search something" id="searchQuery" >
-		<ol id="search_results"></ol>
+		<div>
+			<button id="getALLComments">Refresh All Comments</button>
+			<ol id="comments"></ol>
+		</div>
+		<hr>
+		<div>
+			<button id="getCommentById">Get this comment by id</button>
+			<button id="updateCommentById" disabled="disabled" >Update this comment by id</button>
+			<button id="deleteCommentById">Delete this comment by id</button>
+			<input id="comment_id" type="text" size="50" placeholder="id">
+
+			<input id="comment_title" type="text" size="100" placeholder="comment title">
+			<textarea id="comment_body" type="text"  rows="10" cols="200" placeholder="comment_body"></textarea>
+
+
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="getCommentsByUserId">Get Comments submited by this user:</button>
+			<input id="comment_user_id" type="text" size="20" placeholder="user id">
+
+			<ol id="user_comments">
+
+
+			</ol>
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="createComment">Create a new comment</button>
+			<input type = "text" placeholder="target question id" id="new_comment_target_id">
+			<input type = "text" placeholder="comment title" id="new_comment_title">
+			<input type= "text" placeholder="comment body"  id="new_comment_body">
+		</div>
+
+		<hr>
+
 
 
 	</div>
 
 </div>
-
-
-<div class="comments">
-
-</div>
-
 </body>
 </html>

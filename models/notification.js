@@ -1,6 +1,7 @@
 var fs  = require("fs");
 var config = JSON.parse( fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
+var UserNotification = require('./userNotification.js').UserNotification;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],
 	config.mysqlDatabase["user"],
@@ -40,3 +41,13 @@ exports.selectNotifications = function(args, callback){
 	});
 }
  
+exports.addNotification = function( args, callback ){
+	
+	Notification.find({where: args}).success(function(notification){
+		callback( null, notification);
+		console.log("The notification already exists " + error );
+	}).error(function(error){
+		console.log("Couldn't select notification " + error );
+		callback( error , null );
+	});
+}

@@ -16,6 +16,7 @@ var Resource = require(__dirname + '/../models/resource.js').Resource;
 var User = require('../models/user.js').User;
 var UserNotification = require('../models/userNotification.js').UserNotification;
 var UserNotificationSettings = require('../models/userNotificationSettings.js').UserNotificationSettings;
+var MediaFile = require('../models/mediafile.js').MediaFile;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -38,13 +39,14 @@ exports.createDB = function(dbName, callback){
 			mysql.end();
 			
 			async.parallel([
-				createTable.bind(undefined, User)
-				, createTable.bind(undefined, Course)
-				, createTable.bind(undefined, Notification)
-				, createTable.bind(undefined, CourseMember)
-				, createTable.bind(undefined, UserNotification)
-				, createTable.bind(undefined, UserNotificationSettings)
-				, createTable.bind(undefined, Resource)
+				createTable.bind(undefined, User), 
+				createTable.bind(undefined, Course), 
+				createTable.bind(undefined, Notification), 
+				createTable.bind(undefined, CourseMember), 
+				createTable.bind(undefined, UserNotification), 
+				createTable.bind(undefined, UserNotificationSettings), 
+				createTable.bind(undefined, Resource),
+				createTable.bind(undefined, MediaFile)
 				], callback)
 			/*
 			User.sync().success(function(){
@@ -72,6 +74,7 @@ var createTable = function(table, callback){
 	table.sync().success(function(){
 		callback(null, true);
 	}).error(function(){
+		console.log("very weird thing happeend bro");
 		callback(error, null);
 	})
 }
@@ -125,7 +128,8 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, CourseMember, data.courseMembers),
 		insert.bind(undefined, Notification, data.notification),
 		insert.bind(undefined, UserNotification, data.usernotification),
-		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings)
+		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings),
+		insert.bind(undefined, MediaFile, data.mediafiles)
 		], callback);
 }
 

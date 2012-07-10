@@ -229,23 +229,29 @@
 	],
 		"usernotificationsettings": [
 		{
-			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G"
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"app" :"RQRA"
 		},
 		{
-			"uuid":"BSDF787D98A7SDF8ASD7G"
+			"user":"BSDF787D98A7SDF8ASD7G",
+			"app" :"Accent"
 		},
 		{
-			"uuid":"BSDF787D98ASDF099D7G"
+			"user":"BSDF787D98ASDF099D7G",
+			"app" :"Engage"
 		},
 		{
-			"uuid":"A7S7FSD78FA98A7SDF8ASD7G"
+			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"app" :"Engage"
 
 		},
 		{	
-			"uuid":"A7S7F8GA7SD9ASD8DF89AG"
+			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"app" :"RQRA"
 		},
 		{
-			"uuid":"A7S7F8GA7SD11A7SDF8ASD7G"
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app" :"Accent"
 		
 		}
 	]

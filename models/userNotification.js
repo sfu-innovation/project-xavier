@@ -13,7 +13,7 @@ var db = new Sequelize(
 );
 
 var UserNotification = exports.UserNotification = db.define('UserNotification', {
-     uuid: {type: Sequelize.STRING, primaryKey: true, unique: true },
+     uuid: {type: Sequelize.STRING, allowNull: false },
 	 app : {type:Sequelize.STRING, allowNull: false },
 	 user : {type:Sequelize.STRING, allowNull: false },
 	 description: {type:Sequelize.STRING, allowNull: false },

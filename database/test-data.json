@@ -91,14 +91,14 @@
 		 {
 		    "uuid":"B827346H7ASDFG9",
 		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":"Accent",
+		    "app":1,
 		    "target":"B857346H7ASDFG9",
 		    "attribute":0
 		 }
 		,{
 			"uuid":"B857346H7ASDFG9",
 		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":"Accent",
+		    "app":1,
 		    "target":"B857346H7BSDFG9",
 		    "attribute":1
 		 }
@@ -106,7 +106,7 @@
 	"usernotification":[
 		{
 			"uuid": "B857346H7ASDF00",
-			"app": "Accent",
+			"app": 1,
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
@@ -114,7 +114,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF01",
-			"app": "RQRA",
+			"app": 0,
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -122,7 +122,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF02",
-			"app": "RQRA",
+			"app": 0,
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -130,7 +130,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF03",
-			"app": "Accent",
+			"app": 1,
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -138,7 +138,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF04",
-			"app": "Engage",
+			"app": 2,
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -146,7 +146,7 @@
 		},
 		{
 			"uuid": "B857346H7ASDF05",
-			"app": "Accent",
+			"app": 1,
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
@@ -154,7 +154,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF06",
-			"app": "RQRA",
+			"app": 0,
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -162,7 +162,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF07",
-			"app": "RQRA",
+			"app": 0,
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -170,7 +170,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF08",
-			"app": "Accent",
+			"app": 1,
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -178,7 +178,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF09",
-			"app": "Engage",
+			"app": 2,
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -186,7 +186,7 @@
 		},
 		{
 			"uuid": "B857346H7ASDF10",
-			"app": "Accent",
+			"app": 1,
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
@@ -194,7 +194,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF11",
-			"app": "RQRA",
+			"app": 0,
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -202,7 +202,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF12",
-			"app": "RQRA",
+			"app": 0,
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -210,7 +210,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF13",
-			"app": "Accent",
+			"app": 1,
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -218,7 +218,7 @@
 		},
 		{
 			"uuid" : "B857342H7ASDF14",
-			"app": "Engage",
+			"app": 2,
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
@@ -230,28 +230,28 @@
 		"usernotificationsettings": [
 		{
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
-			"app" :"RQRA"
+			"app" : 0
 		},
 		{
 			"user":"BSDF787D98A7SDF8ASD7G",
-			"app" :"Accent"
+			"app" : 1
 		},
 		{
 			"user":"BSDF787D98ASDF099D7G",
-			"app" :"Engage"
+			"app" : 2
 		},
 		{
 			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"app" :"Engage"
+			"app" : 2
 
 		},
 		{	
 			"user":"A7S7F8GA7SD9ASD8DF89AG",
-			"app" :"RQRA"
+			"app" : 0
 		},
 		{
 			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
-			"app" :"Accent"
+			"app" : 1
 		
 		}
 	],

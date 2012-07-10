@@ -17,7 +17,7 @@ var db = new Sequelize(
 
 var Notification = exports.Notification = db.define('Notification', {
 	uuid: {type: Sequelize.STRING, primaryKey: true, unique: true },
-	app : {type:Sequelize.STRING, allowNull: false},
+	app : {type:Sequelize.INTEGER, allowNull: false},
 	user : {type:Sequelize.STRING, allowNull: false},
 	target: {type:Sequelize.STRING, allowNull: false},
 	attribute:{ type:Sequelize.INTEGER, allowNULL: false}

@@ -517,4 +517,4 @@ notify.addUserNotification( object, function( err, data){
 });
   */
   
-  module.exports = new NotificationAction;
+module.exports = new NotificationAction;

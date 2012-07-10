@@ -15,13 +15,13 @@ var db = new Sequelize(
 
 var UserNotificationSettings = exports.UserNotificationSettings = db.define('UserNotificationSettings', {
 	user: {type: Sequelize.STRING, allowNull: false},
-	app: { type: Sequelize.STRING, allowNull: false},
-	notificationOnNewResource : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnLike : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnComment : {type: Sequelize.STRING, defaultValue: "now"},
-	notificationOnStar : {type: Sequelize.STRING,defaultValue: "now"}
+	app: { type: Sequelize.INTEGER, allowNull: false},
+	notificationOnNewResource : {type: Sequelize.INTEGER, defaultValue: 0},
+	notificationOnLike : {type: Sequelize.INTEGER, defaultValue: 0},
+	notificationOnComment : {type: Sequelize.INTEGER, defaultValue: 0},
+	notificationOnStar : {type: Sequelize.INTEGER,defaultValue: 0}
 });
-var validTimes = ["now", "day", "week", "month"];
+var validTimes = [0, 1, 2, 3 ];
 
 function contains(a, obj) {
     var i = a.length;

@@ -142,7 +142,6 @@ Adds a "like" user notifier on the specific resource/question
 to be triggered off a "like" event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
 	target : resource that was acted on,
 	}
@@ -157,7 +156,6 @@ Adds a "commment" user notifier on the specific resource/question
 to be triggered off a comment event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
 	target : resource that was acted on,
 	}
@@ -172,7 +170,6 @@ Adds a "star" user notifier on the specific resource/question
 to be triggered off a star event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
 	target : resource that was acted on,
 	}
@@ -187,8 +184,8 @@ Adds a "new resource" user notifier on the specific resource/question
 to be triggered off a new resource event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
+	app  : the application this listener is listening on
 	target : resource that was acted on,
 	}
 */
@@ -202,10 +199,8 @@ Removes a "like" user notifier on the specific resource/question
 to be triggered off a new resource event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
-	target : resource that was acted on,
-	attribute : the like attribute
+	target : resource that was acted on
 	}
 */
 
@@ -219,10 +214,8 @@ Removes a "comment" user notifier on the specific resource/question
 to be triggered off a new comment event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
-	target : resource that was acted on,
-	attribute : the comment attribute
+	target : resource that was acted on
 	}
 */
 
@@ -236,10 +229,8 @@ Removes a "star" user notifier on the specific resource/question
 to be triggered off a star event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
-	target : resource that was acted on,
-	attribute : the like attribute
+	target : resource that was acted on
 	}
 */
 
@@ -253,10 +244,8 @@ Removes a "new resource" user notifier on the specific resource/question
 to be triggered off a new resource event.
 
 args = {
-	uuid : should be generated,
 	user : user that will be alerted,
-	target : resource that was acted on,
-	attribute : the like attribute
+	target : resource that was acted on
 	}
 */
 
@@ -270,23 +259,21 @@ NotificationAction.prototype.removeNewResourceNotifier = function( args, callbac
 	and comments to the resource they posted.
 	
 	args = {
-	uuid : should be generated,
-	user : user that will be alerted,
-	target : resource that was acted on,
-	attribute : the like attribute
+		user : user that will be alerted,
+		target : resource that was acted on
 	}
 */
 
 
 NotificationAction.prototype.createNewResource = function( args, callback ){
 	var self = this;
-	args.attribute = 1;
+	args.attribute = 0;
 	self.addNotifier( args, function( err, data){
-		args.attribute = 2;
+		args.attribute = 1;
 		self.addNotifier( args, function( err, data){
-			args.attribute = 3;
+			args.attribute = 2;
 			self.addNotifier( args, function( err, data){
-				callback(null, 1);
+				callback(null, data);
 			} );
 		});
 	});
@@ -298,7 +285,7 @@ NotificationAction.prototype.createNewResource = function( args, callback ){
 	why this resembles just an add comment notifier.
 	
 args = {
-	uuid : should be generated,
+    app  : the app id
 	user : user that will be alerted,
 	target : resource that was acted on
 	}
@@ -315,6 +302,7 @@ course.
 
 args = {
 	target : the UUID of the course
+	app    : The application this course pertains to
    }
 
 */
@@ -347,11 +335,11 @@ NotificationAction.prototype.initNotificationSettings = function( args, callback
 	var self = this;
 	UserNotificationSettings.find( { where : { user : args.user }}).success(function( settings){
 		if ( null === settings ){
-			args.app = "Accent";
+			args.app = 0;
 			self.addNotificationSetting( args, function(err, data){
-				args.app = "RQRA";
+				args.app = 1;
 				self.addNotificationSetting( args, function( err, data ){
-					args.app = "Engage";
+					args.app = 2;
 					self.addNotificationSetting( args, function( err, data ){
 						callback(1);
 					});
@@ -438,7 +426,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				//creating the user notification with the slimmed down args
 				var userNotification = UserNotification.build(args);
 				
-				if ( args.wait == "now" ){
+				if ( args.wait == 0 ){
 					compileEmail( userNotification, callback );
 				} else {
 					userNotification.save().error(function(error){
@@ -454,6 +442,64 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	});
 }
 
+/*
+To add a user notification when a resource has been liked
+
+args = {
+	target      : <the resource, tag, question>
+	app         : <the application eg. Accent, Engage, QRQA>
+	description : The message to be delivered in the notification	
+}
+*/
+NotificationAction.prototype.addLikeUserNotification = function( args, callback){
+	args.attribute = 0;
+	this.addUserNotification(args,callback);
+}
+
+/*
+To add a user notification when a resource has been commented on
+
+args = {
+	target      : <the resource, tag, question>
+	app         : <the application eg. Accent, Engage, QRQA>
+	description : The message to be delivered in the notification	
+}
+*/
+NotificationAction.prototype.addCommentUserNotification = function( args, callback){
+	args.attribute = 1;
+	this.addUserNotification(args,callback);
+}
+
+/*
+To add a user notification when a resource has been starred
+
+args = {
+	target      : <the resource, tag, question>
+	app         : <the application eg. Accent, Engage, QRQA>
+	description : The message to be delivered in the notification	
+}
+*/
+NotificationAction.prototype.addStarUserNotification = function( args, callback){
+	args.attribute = 2;
+	this.addUserNotification(args,callback);
+}
+
+/*
+To add a user notification when a resource has been added
+
+args = {
+	target      : <the resource, tag, question>
+	app         : <the application eg. Accent, Engage, QRQA>
+	description : The message to be delivered in the notification	
+}
+
+
+*/
+NotificationAction.prototype.addNewResourceUserNotification = function( args, callback){
+	args.attribute = 3;
+	this.addUserNotification(args,callback);
+}
+/*
 var object = {
 		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":"Accent",
@@ -471,4 +517,6 @@ notify.addUserNotification( object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+  */
   
+module.exports = new NotificationAction;

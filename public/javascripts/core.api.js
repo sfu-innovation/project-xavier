@@ -67,8 +67,8 @@ coreApi._construct = function () {
 		this.updateQuestionById = function (id, questionTitle, questionBody, callback) {
 			console.log("API - updateQuestionById");
 			var body = {};
-			body.questionTitle = questionTitle;
-			body.questionBody = questionBody;
+			body.title= questionTitle;
+			body.body = questionBody;
 			$.ajax({
 				url:'/api/question/' + id,
 				type:'PUT',
@@ -138,6 +138,28 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.followQuestionById = function (id, callback){
+			console.log("API - followQuestionById");
+			$.ajax({
+				url:'/api/question/'+id+'/follow',
+				type:'PUT',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+		this.unfollowQuestionById = function (id, callback){
+			console.log("API - unfollowQuestionById");
+			$.ajax({
+				url:'/api/question/'+id+'/unfollow',
+				type:'PUT',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 		//Comments
 
 
@@ -200,22 +222,22 @@ coreApi._construct = function () {
 			});
 		}
 
-//		this.updateCommentById = function (id, commentTitle, commentBody, callback) {
-//			console.log("API - updateCommentById");
-//			var body = {};
-//			body.commentTitle = commentTitle;
-//			body.commentBody = commentBody;
-//			$.ajax({
-//				url:'/api/comment/' + id,
-//				type:'PUT',
-//				dataType:'json',
-//				contentType:"application/json",
-//				data:JSON.stringify(body),
-//				success:function (data) {
-//					callback(data);
-//				}
-//			});
-//		}
+		this.updateCommentById = function (id, commentTitle, commentBody, callback) {
+			console.log("API - updateCommentById");
+			var body = {};
+			body.title = commentTitle;
+			body.body = commentBody;
+			$.ajax({
+				url:'/api/comment/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 		this.deleteCommentById = function (id, callback) {
@@ -242,14 +264,23 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.getCommentsByUserId = function (user_id, callback) {
+			console.log("API - getCommentsByUserId");
+			$.ajax({
+				url:'/api/user/' + user_id + '/comments',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+			});
+		}
 
 
 		this.upVoteCommentById = function(id, callback){
 			console.log('API - upVoteCommentById');
 			var dir = 0;
 			voteCommentById( id,dir, callback);
-
-
 		}
 
 		this.downVoteCommentById = function(id, callback){

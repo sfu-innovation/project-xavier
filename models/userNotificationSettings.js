@@ -15,7 +15,7 @@ var db = new Sequelize(
 
 var UserNotificationSettings = exports.UserNotificationSettings = db.define('UserNotificationSettings', {
 	user: {type: Sequelize.STRING, allowNull: false},
-	app: { type: Sequelize.STRING, allowNull: false},
+	app: { type: Sequelize.INTEGER, allowNull: false},
 	notificationOnNewResource : {type: Sequelize.STRING, defaultValue: "now"},
 	notificationOnLike : {type: Sequelize.STRING, defaultValue: "now"},
 	notificationOnComment : {type: Sequelize.STRING, defaultValue: "now"},

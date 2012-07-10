@@ -7,7 +7,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	UUID = require('com.izaakschroeder.uuid'),
 	notification = require('./NotificationAction.js');
 
-var QueryES = function() {	
+var QueryES = function() {
 }
 
 // change the index to whatever you want
@@ -375,6 +375,7 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 QueryES.prototype.addComment = function(data, appType, callback){
 	var document;
 	var commentUuid = UUID.generate();
+	var self = this;
 
 	switchIndex(appType);
 	switchMapping(1);
@@ -383,14 +384,21 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 
 	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
-		document.set(data, function(err, req, data){
-			if (data) {
-				callback(data);
-			}
-			else {
+
+		self.updateStatus(data.target_uuid, appType, function(updateResult){
+
+			if(updateResult){
+				document.set(data, function(err, req, data){
+					if (data) {
+						callback(data);
+					}
+					else {
+						callback(undefined);
+					}
+				});
+			}else{
 				callback(undefined);
 			}
-
 		});
 	});
 }

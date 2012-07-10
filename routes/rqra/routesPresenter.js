@@ -1,6 +1,6 @@
 var queryES = require('./../../controller/queryES.js');
 var question = require('./../../models/question.js');
-
+var comment = require('./../../models/comment.js');
 
 exports.questionRoute = function(appType, request, response) {
 	var question_id = request.params.uid;
@@ -19,15 +19,18 @@ exports.questionRoute = function(appType, request, response) {
 
 	//post a new question
 	else if (request.method === "POST"){
-		var question = request.body.question;
+
 		//TODO: the user id should be grabbed from seesion, so we know how is creating a new question
 		//if not log in, cannot create a question
+		console.log(request.body.question);
+		//user, title, body, category
+		var newQuestion = new question('fakeid'
+		,request.body.question.title
+		,request.body.question.body
+		,request.body.question.category);
 
-		question.user = "fakeid";
 
-
-
-		queryES.addQuestion(request.body.question, appType, function(result) {
+		queryES.addQuestion(newQuestion, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, question: result}));
@@ -176,12 +179,15 @@ exports.commentRoute = function(appType, request, response) {
 	} else if (request.method === "POST"){
 		//POST a comment by user id grabbed from seesion's user object, currently using fakeid.
 		//TODO: add this to document
-		var comment = request.body.comment;
-		var user = "fakeid";
 
-		comment.user = user;
+		//target_uuid, user, objectType, title, body
+		var newComment = new comment(request.body.comment.target_uuid
+		,'fakeid'
+		,request.body.comment.objectType
+		,request.body.comment.title
+		,request.body.comment.body);
 
-		queryES.addComment(comment, appType, function(result) {
+		queryES.addComment(newComment, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});

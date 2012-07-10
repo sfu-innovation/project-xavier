@@ -244,6 +244,43 @@ coreApi._construct = function () {
 
 
 
+		this.upVoteCommentById = function(id, callback){
+			console.log('API - upVoteCommentById');
+			var dir = 0;
+			voteCommentById( id,dir, callback);
+
+
+		}
+
+		this.downVoteCommentById = function(id, callback){
+			console.log('API - downVoteCommentById');
+			var dir = 1;
+			voteCommentById(id,dir, callback);
+
+		}
+
+
+		//private method
+
+		var voteCommentById = function(id,dir,callback){
+
+			$.ajax({
+				url :'/api/comment/'+id+'/vote/'+dir,
+				type: 'POST',
+				dataType:'json',
+				contentType:"application/json",
+					success: function(data){
+					callback(data);
+				}
+
+			})
+
+		}
+
+
+
+
+
 
 	}
 
@@ -257,11 +294,10 @@ coreApi._construct();
 
 //
 //var xx = new coreApi.Presenter();
-////xx.getQuestionById('pJfzndwdadddQuOicWWAjx7F00',function(data){
-////
-////	console.log(data);
-////
-////});
+//xx.downVoteCommentById('qJfzggggguOicWWAjx7F05',function(data){
+//	console.log(data);
+//});
+
 //
 //xx.updateQuestionById('pJfzndwdadddQuOicWWAjx7F00', "i have no clue!!!" ,function(data){
 //

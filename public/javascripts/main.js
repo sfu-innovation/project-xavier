@@ -26,16 +26,16 @@ $(document).ready(function () {
 						$('#question_body').val(data.question.body);
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 			})
 		}
 		else {
-			$('#error').text('CANNOT BE EMPTY ID');
+			alert('CANNOT BE EMPTY ID');
 		}
 	})
 
@@ -51,20 +51,20 @@ $(document).ready(function () {
 
 					if (data.errorcode === 0) {
 
-						$('#error').text("COOL,REFRESH THE LIST");
+						alert("COOL,REFRESH THE LIST");
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 			})
 		}
 		else {
-			$('#error').text('CANNOT HAVE EMPTY FILED');
+			alert('CANNOT HAVE EMPTY FILED');
 		}
 	})
 
@@ -78,15 +78,15 @@ $(document).ready(function () {
 
 					if (data.errorcode === 0) {
 
-						$('#error').text("COOL, REFRESH THE LIST");
+						alert("COOL, REFRESH THE LIST");
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 
 
@@ -96,10 +96,57 @@ $(document).ready(function () {
 		}
 
 		else {
-			$('#error').text('CANNOT HAVE EMPTY FILED');
+			alert('CANNOT HAVE EMPTY FILED');
 		}
 	})
 
+
+
+	$('#upVoteCommentById').click(function () {
+		var question_id = $('#comment_id').val();
+		if (question_id) {
+
+			rqra.upVoteCommentById(question_id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert("COOL, REFRESH THE LIST");
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT HAVE EMPTY FILED');
+		}
+	})
+
+	$('#downVoteCommentById').click(function () {
+		var question_id = $('#comment_id').val();
+		if (question_id) {
+
+			rqra.downVoteCommentById(question_id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert("COOL, REFRESH THE LIST");
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT HAVE EMPTY FILED');
+		}
+	})
 
 	$('#search').click(function () {
 		var query = $('#searchQuery').val();
@@ -125,14 +172,14 @@ $(document).ready(function () {
 						});
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 
 
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 
 
 				}
@@ -152,13 +199,13 @@ $(document).ready(function () {
 			rqra.createQuestion(title, body, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
-						$('#error').text('OK OK REFRESH NOW');
+						alert('OK OK REFRESH NOW');
 					}
 
 				}
 
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 
 
 				}
@@ -195,17 +242,17 @@ $(document).ready(function () {
 						});
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 			});
 		}
 		else {
-			$('#error').text('CANNOT BE EMPTY FILED');
+			alert('CANNOT BE EMPTY FILED');
 		}
 
 
@@ -228,13 +275,13 @@ $(document).ready(function () {
 			rqra.createComment(target_id, title, body, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
-						$('#error').text('OK OK REFRESH NOW');
+						alert('OK OK REFRESH NOW');
 					}
 
 				}
 
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 
 
 				}
@@ -244,7 +291,7 @@ $(document).ready(function () {
 
 		}
 		else{
-			$('#error').text('CANNOT BE EMPTY FILED');
+			alert('CANNOT BE EMPTY FILED');
 		}
 
 	})
@@ -260,16 +307,16 @@ $(document).ready(function () {
 						$('#comment_body').val(data.comment.body);
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 			})
 		}
 		else {
-			$('#error').text('CANNOT BE EMPTY ID');
+			alert('CANNOT BE EMPTY ID');
 		}
 	})
 
@@ -284,15 +331,15 @@ $(document).ready(function () {
 
 					if (data.errorcode === 0) {
 
-						$('#error').text("COOL, REFRESH THE LIST");
+						alert("COOL, REFRESH THE LIST");
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 
 
@@ -302,7 +349,7 @@ $(document).ready(function () {
 		}
 
 		else {
-			$('#error').text('CANNOT HAVE EMPTY FILED');
+			alert('CANNOT HAVE EMPTY FILED');
 		}
 	});
 
@@ -336,17 +383,17 @@ $(document).ready(function () {
 						});
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 			});
 		}
 		else {
-			$('#error').text('CANNOT BE EMPTY FILED');
+			alert('CANNOT BE EMPTY FILED');
 		}
 
 
@@ -383,12 +430,12 @@ $(document).ready(function () {
 						});
 					}
 					else {
-						$('#error').text(data.message);
+						alert(data.message);
 					}
 
 				}
 				else {
-					$('#error').text('CANNOT CONNECT TO DATABASE');
+					alert('CANNOT CONNECT TO DATABASE');
 				}
 
 
@@ -398,7 +445,7 @@ $(document).ready(function () {
 		}
 
 		else {
-			$('#error').text('CANNOT HAVE EMPTY FILED');
+			alert('CANNOT HAVE EMPTY FILED');
 		}
 	});
 
@@ -427,12 +474,12 @@ function loadAllQuestions(rqra) {
 				});
 			}
 			else {
-				$('#error').text(data.message);
+				alert(data.message);
 			}
 
 		}
 		else {
-			$('#error').text('CANNOT CONNECT TO DATABASE');
+			alert('CANNOT CONNECT TO DATABASE');
 		}
 	});
 
@@ -466,12 +513,12 @@ function loadAllComments(rqra) {
 				});
 			}
 			else {
-				$('#error').text(data.message);
+				alert(data.message);
 			}
 
 		}
 		else {
-			$('#error').text('CANNOT CONNECT TO DATABASE');
+			alert('CANNOT CONNECT TO DATABASE');
 		}
 	});
 

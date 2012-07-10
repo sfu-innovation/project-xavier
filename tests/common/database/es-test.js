@@ -182,7 +182,7 @@ module.exports = {
 //*****************UPDATE a comment's vote**********************
 //direction: 0 = up, 1 = down
 //@params: commentID, direction, type, callback
-		"updateComment":function(test){
+		"updateCommentVote":function(test){
 			queryES.updateVote(cID, 1, 0, function(result) {
 				test.ok(result);
 				test.done();
@@ -190,7 +190,7 @@ module.exports = {
 		},
 //*****************UPDATE a comment's isAnswered**********************
 //@params: commentID, appType, callback
-		"updateComment":function(test){
+		"updateCommentIsAnswered":function(test){
 			queryES.updateIsAnswered(cID, 0, function(result) {
 				test.ok(result);
 				test.done();

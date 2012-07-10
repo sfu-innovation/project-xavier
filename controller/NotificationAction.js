@@ -453,7 +453,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 		}
 	});
 }
-
+/*
 var object = {
 		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":"Accent",
@@ -471,4 +471,4 @@ notify.addUserNotification( object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
-  
+  */

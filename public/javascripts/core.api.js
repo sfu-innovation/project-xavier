@@ -127,6 +127,8 @@ coreApi._construct = function () {
 
 		//Comments
 
+
+
 		this.getAllComments = function (callback) {
 			console.log("API - getAllComments");
 			$.ajax({
@@ -136,6 +138,42 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			});
+		}
+
+
+		this.createComment = function (targetId, commentTitle, commentBody, callback) {
+			console.log("API - createComment");
+
+			var body = {};
+			var comment = {};
+
+			comment.body = commentBody;
+//			comment.status = 'unanswered';
+			comment.title = commentTitle;
+
+			//TODO:need to fix this to dynamic input
+			comment.objectType = 'question';
+
+			comment.target_uuid = targetId;
+//			comment.timestamp = '2008-10-21';
+//			comment.followup = [];
+			body.comment = comment;
+
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/comment',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
 		}
 
 		this.getCommentById = function (id, callback) {

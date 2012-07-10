@@ -220,6 +220,36 @@ $(document).ready(function () {
 	});
 
 
+	$('#createComment').click(function (event) {
+		var target_id = $('#new_comment_target_id').val();
+		var title = $('#new_comment_title').val();
+		var body = $('#new_comment_body').val();
+		if (target_id && title && body) {
+			rqra.createComment(target_id, title, body, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						$('#error').text('OK OK REFRESH NOW');
+					}
+
+				}
+
+				else {
+					$('#error').text('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+		}
+		else{
+			$('#error').text('CANNOT BE EMPTY FILED');
+		}
+
+	})
+
+
 	$("#getCommentById").click(function (event) {
 		var comment_id = $('#comment_id').val();
 		if (comment_id) {

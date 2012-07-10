@@ -125,6 +125,19 @@ coreApi._construct = function () {
 
 		}
 
+
+
+		this.getCommentsByTargetId = function (target_id, callback){
+			console.log("API - getCommentsByTargetId");
+			$.ajax({
+				url:'/api/question/'+target_id+'/comments',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 		//Comments
 
 
@@ -141,20 +154,20 @@ coreApi._construct = function () {
 		}
 
 
-		this.createComment = function (targetId, commentTitle, commentBody, callback) {
+		this.createComment = function (target_id, comment_title, comment_body, callback) {
 			console.log("API - createComment");
 
 			var body = {};
 			var comment = {};
 
-			comment.body = commentBody;
+			comment.body = comment_body;
 //			comment.status = 'unanswered';
-			comment.title = commentTitle;
+			comment.title = comment_title;
 
 			//TODO:need to fix this to dynamic input
 			comment.objectType = 'question';
 
-			comment.target_uuid = targetId;
+			comment.target_uuid = target_id;
 //			comment.timestamp = '2008-10-21';
 //			comment.followup = [];
 			body.comment = comment;
@@ -224,9 +237,13 @@ coreApi._construct = function () {
 				type:'GET',
 				success:function (data) {
 					callback(data);
+
 				}
 			});
 		}
+
+
+
 
 	}
 

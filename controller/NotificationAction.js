@@ -64,7 +64,7 @@ args = {
 */
 
 NotificationAction.prototype.removeNotifier = function( args, callback){
-	Notification.find( { where : { user : args.user, target : args.target, attribute : args.attribute }).success( function(notification) {
+	Notification.find( { where : { user : args.user, target : args.target, attribute : args.attribute }}).success( function(notification) {
 		if ( null != notification ){
 			notification.destroy().success( function( removedElement ){
 				UserNotification.findAll({ where : {uuid : removedElement.uuid}})
@@ -277,7 +277,7 @@ NotificationAction.prototype.removeNewResourceNotifier = function( args, callbac
 	}
 */
 
-*/
+
 NotificationAction.prototype.createNewResource = function( args, callback ){
 	var self = this;
 	args.attribute = 1;
@@ -368,7 +368,7 @@ It can only be removed when the user sees the user notification.
 message needs to be of type UserNotification or else when we try to save it will throw
 an error 
 */
-function compileEmail( message ){
+function compileEmail( message, callback ){
 	var msg = message;
 	User.find({ where: { UUID: msg.user}}).success( function( user ){
 		if ( user != null ) {
@@ -387,6 +387,7 @@ function compileEmail( message ){
 		  	});
 		  	msg.emailSent = true;
 		  	msg.save().error( function( error ){
+		  		//console.log("unable to save "+error);
 		  		callback( error , null );
 		  	});
 		}
@@ -438,7 +439,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				var userNotification = UserNotification.build(args);
 				
 				if ( args.wait == "now" ){
-					compileEmail( userNotification );
+					compileEmail( userNotification, callback );
 				} else {
 					userNotification.save().error(function(error){
 						console.log("Failed to insert user notification " + error);
@@ -452,7 +453,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 		}
 	});
 }
-/*
+
 var object = {
 		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":"Accent",
@@ -470,4 +471,4 @@ notify.addUserNotification( object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
-  */
+  

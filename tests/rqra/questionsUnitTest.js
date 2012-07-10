@@ -1,15 +1,10 @@
 var http = require('http');
-var config = require('./../../config.json');
+//var config = require('./../../config.json');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 var express = require('express');
 var server = require('./../../app-presenter.js');
 var Direction = { Down: 0, Up: 1 };
-
-var currentHost = config.presenterServer.host;
-//var currentHost = config.accentServer.host;
-var currentPort = config.presenterServer.port;
-//var currentPort = config.accentServer.port;
 
 // question variables
 var questionUid = "SomeUid";
@@ -17,7 +12,8 @@ var userUid = "SomeUserUid";
 var questionTitle = "SomeTitle";
 var questionBody = "SomeQuestion";
 var updatedQuestionBody = "SomeUpdatedQuestion";
-
+var commentTitle = "SomeCommentTitle";
+var commentBody = "SomeCommentBody";
 
 module.exports = {
 
@@ -38,10 +34,10 @@ module.exports = {
 
 		// create a question for some user
 		createQuestion: function(test) {
-			var newQuestion = new question(questionUid, userUid, questionTitle, questionBody, 'life', 0);
+			var newQuestion = new question(userUid, questionTitle, questionBody, 'life');
 				
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"POST",
 				path:"/api/user/jrf2/questions",
@@ -56,6 +52,7 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
+					questionUid = body.question._id;
 					test.ok(body.errorcode === 0);
 					test.done();
 				});
@@ -67,7 +64,7 @@ module.exports = {
 		// get the details of the question created
 		getQuestion: function(test) {	
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/question/" +  questionUid,
@@ -93,7 +90,7 @@ module.exports = {
 		// update the question
 		updateQuestion: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"PUT",
 				path:"/api/question/" +  questionUid,
@@ -119,7 +116,7 @@ module.exports = {
 		// check that the question has been updated
 		checkUpdatedQuestion: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/question/" +  questionUid,
@@ -145,7 +142,7 @@ module.exports = {
 		// delete the question
 		deleteQuestion: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"DELETE",
 				path:"/api/question/" +  questionUid,
@@ -170,7 +167,7 @@ module.exports = {
 		// try to get the deleted question to make sure it has been deleted
 		getDeletedQuestion: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/question/" +  questionUid,
@@ -192,7 +189,7 @@ module.exports = {
 		}
 	},
 	
-	commentTest:{
+	/*commentTest:{
 
 		setUp: function(callback) {
 			var self = this;
@@ -203,16 +200,46 @@ module.exports = {
 				callback();
 			});
 		},
+		
 		tearDown: function(callback){
 			this.server.close();
 			callback();
 		},
-		// create a question for some user
+		
+		// creates the question we will comment on
 		createQuestion: function(test) {
 			var newQuestion = new question(questionUid, userUid, questionTitle, questionBody, 'life', 0);
+				
+			var options = {
+				host:this.host,
+				port:this.port,
+				method:"POST",
+				path:"/api/user/jrf2/questions",
+				headers: {
+					"content-type": "application/json"
+				}
+			}
+			
+			var request = http.request(options, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				});
+			});
+			request.write(JSON.stringify({ question: newQuestion }));
+			request.end();
+		},
+		
+		// create a comment for some user
+		createComment: function(test) {
+			var newComment = new comment(questionUid, userUid, 1, commentTitle, commentBody);
 			
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"POST",
 				path:"/api/user/jrf2/comments",
@@ -231,14 +258,14 @@ module.exports = {
 					test.done();
 				});
 			});
-			request.write(JSON.stringify({ comment: newQuestion }));
+			request.write(JSON.stringify({ comment: newComment }));
 			request.end();
 		},
 		
-		// get the details of the question created
-		getQuestion: function(test) {	
+		// get the details of the comment created
+		getComment: function(test) {	
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/comment/" +  questionUid,
@@ -261,10 +288,10 @@ module.exports = {
 			});
 		},
 		
-		// update the question
-		updateQuestion: function(test) {
+		// update the comment
+		updateComment: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"PUT",
 				path:"/api/comment/" +  questionUid,
@@ -287,10 +314,10 @@ module.exports = {
 			request.end();
 		},
 		
-		// check that the question has been updated
-		checkUpdatedQuestion: function(test) {
+		// check that the comment has been updated
+		checkUpdatedComment: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/comment/" +  questionUid,
@@ -313,10 +340,10 @@ module.exports = {
 			});
 		},
 		
-		// delete the question
-		deleteQuestion: function(test) {
+		// delete the comment
+		deleteComment: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"DELETE",
 				path:"/api/comment/" +  questionUid,
@@ -338,10 +365,10 @@ module.exports = {
 			request.end();
 		},
 		
-		// try to get the deleted question to make sure it has been deleted
-		getDeletedQuestion: function(test) {
+		// try to get the deleted comment to make sure it has been deleted
+		getDeletedComment: function(test) {
 			var options = {
-				host:currentHost,
+				host:this.host,
 				port:this.port,
 				method:"GET",
 				path:"/api/comment/" +  questionUid,
@@ -361,5 +388,5 @@ module.exports = {
 				});
 			});
 		}
-	}
+	}*/
 }

@@ -1,8 +1,6 @@
 var express = require('express');
 var routesCommon = require('./routes/common/routesCommon.js');
 var routesPresenter = require('./routes/rqra/routesPresenter.js');
-var fs = require('fs');
-var config = JSON.parse(fs.readFileSync('config.json'));
 
 var app = module.exports = express.createServer();
 

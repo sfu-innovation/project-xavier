@@ -1,5 +1,3 @@
-var fs      = require("fs")
-var config  = JSON.parse(fs.readFileSync("config.json"));
 var courseModel = require("./../../models/course");
 var User = require("../../models/user");
 

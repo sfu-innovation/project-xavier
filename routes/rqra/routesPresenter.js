@@ -44,8 +44,8 @@ exports.questionRoute = function(appType, request, response) {
 
 	else if (request.method === "PUT") {
 		//TODO: need update document and unit-test
-		var questionTitle = request.body.questionTitle;
-		var questionBody = request.body.questionBody;
+		var questionTitle = request.body.title;
+		var questionBody = request.body.body;
 
 		queryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
 			if (result) {
@@ -194,8 +194,8 @@ exports.commentRoute = function(appType, request, response) {
 
 
 	} else if (request.method === "PUT") {
-		var commentTitle = request.body.commentTitle;
-		var commentBody = request.body.commentBody;
+		var commentTitle = request.body.title;
+		var commentBody = request.body.body;
 		queryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));

@@ -11,6 +11,7 @@ var questionUid = "SomeUid";
 var userUid = "SomeUserUid";
 var questionTitle = "SomeTitle";
 var questionBody = "SomeQuestion";
+var updatedQuestionTitle = "SomeUpdatedTitle";
 var updatedQuestionBody = "SomeUpdatedQuestion";
 var commentTitle = "SomeCommentTitle";
 var commentBody = "SomeCommentBody";
@@ -109,7 +110,7 @@ module.exports = {
 					test.done();
 				});
 			});
-			request.write(JSON.stringify({ questionBody: updatedQuestionBody }));
+			request.write(JSON.stringify({ title: updatedQuestionTitle, body: updatedQuestionBody }));
 			request.end();
 		},
 		
@@ -133,7 +134,8 @@ module.exports = {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 						body.question.user === userUid &&
-						body.question.title === updatedQuestionBody);
+						body.question.title === updatedQuestionTitle &&
+						body.question.body === updatedQuestionBody);
 					test.done();
 				});
 			});

@@ -35,6 +35,6 @@
 	"dictionaryDB":{
 		"host":"",
 		"port": 0,
-		"db-num":
+		"db-num": 0
 	}
 }

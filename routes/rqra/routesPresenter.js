@@ -188,8 +188,9 @@ exports.commentRoute = function(appType, request, response) {
 
 
 	} else if (request.method === "PUT") {
+		var commentTitle = request.body.commentTitle;
 		var commentBody = request.body.commentBody;
-		queryES.updateComment(comment_id, commentBody, appType, function(result) {
+		queryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});
@@ -210,7 +211,7 @@ exports.comment = function(request, response) {
 //get all comments
 exports.comments = function(request, response) {
 	if (request.method === "GET") {
-		queryES.getAllComments( 0, function(result) {
+		queryES.getAllComments(0, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));

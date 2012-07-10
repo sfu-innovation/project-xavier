@@ -156,6 +156,26 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 	})
 }
 
+//Get questionID by follower
+QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callback){
+	var data= {
+		"query": {
+			"term": {"followup": "newGuy"}
+		}
+	}
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data && data.hits.total !== 0) {
+			callback(data.hits.hits);
+		} else {
+			callback(undefined);
+		}
+	});
+}
+
 //update question title and body
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
@@ -242,17 +262,16 @@ QueryES.prototype.getComment = function(commentID, appType, callback){
 QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, callback){
 	
 	var data = {
-		query: {
-			bool:{
-				must:[{
-					term:{
-						target_uuid: ptarget_uuid
-					}
-				}]
-			}
-		},
-		from: 0,
-		size: 20
+		  query: {
+		    query_string: {
+		      "fields": [
+		        "target_uuid"
+		      ],
+		      "query": ptarget_uuid
+		    },
+		    "from": 0,
+		    "size": 20
+		  }
 	};
 
 	switchIndex(appType);
@@ -311,7 +330,7 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits);
+			callback(data.hits.hits);
 		}
 		else{
 			callback(undefined);
@@ -330,25 +349,40 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	document = mapping.document(UUID.generate());
 	data.timestamp = new Date().toISOString();
 
-	document.set(data, function(){
-		callback();
+	document.set(data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
+		
 	});
 }
 
 //update comment body based on commentID
-QueryES.prototype.updateComment = function(commentID, comment, appType, callback){	
+QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody, appType, callback){	
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 
+	var date = new Date().toISOString();
+
 	var data = {
-		'script':'ctx._source.body = body',
+		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date',
 		'params':{
-			'body':comment
+			'title':commentTitle,
+			'body':commentBody,
+			'date':date
 		}
 	}
 
-	db.post(link, data, function(){
-		callback();
+	db.post(link, data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
 	})
 }
 
@@ -360,8 +394,13 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	switchMapping(1);
 
 	document = mapping.document(commentID);
-	document.delete(function(){
-		callback();
+	document.delete(function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
 	});
 }
 
@@ -389,9 +428,13 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 	}
 
 	//increment the vote found at commentID
-	db.post(link, data, function(){
-		// increment
-		callback();
+	db.post(link, data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
 	})
 }
 
@@ -409,8 +452,13 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 	}
 
 	//set isAnswered to true for the comment found at commentID
-	db.post(link, data, function(){		
-		callback();
+	db.post(link, data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
 	})
 }
 

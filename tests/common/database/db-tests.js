@@ -14,14 +14,18 @@ module.exports = {
 			callback();
 		},
 		"db_creation": function(test){
-			queries.createDB(config.mysqlDatabase["db-name"], function(result){
-				test.ok(result);
+			queries.createDB(config.mysqlDatabase["db-name"], function(error, result){
+				if(!error){
+					test.ok(result);
+				}
 				test.done();
 			});
 		},
 		"db_deletion": function(test){
-			queries.dropDB(config.mysqlDatabase["db-name"], function(result){
-				test.ok(result);
+			queries.dropDB(config.mysqlDatabase["db-name"], function(error, result){
+				if(!error){
+					test.ok(result);
+				}
 				test.done();
 			});
 		}

@@ -54,10 +54,12 @@ exports.getInstructor = function(args, callback){
 	})
 }
 
+//Gets all users that are associated to a certain course
 exports.getCourseMembers = function(args, callback){
-		var User = require('./user.js').User;
-
-		CourseMember.findAll({where: args}).success(function(memberRows){
+	var User = require('./user.js').User;
+	CourseMember.findAll({where: args}).success(function(memberRows){
+		
+		//Build list of user uuids
 		if(memberRows.length > 0){
 			var i;
 			var userUUIDs = [];
@@ -66,6 +68,7 @@ exports.getCourseMembers = function(args, callback){
 			}
 		}
 
+		//If there are any users, get them
 		if(userUUIDs){
 			User.findAll({where: {uuid: userUUIDs}}).success(function(users){
 				callback(null, users);
@@ -79,7 +82,7 @@ exports.getCourseMembers = function(args, callback){
 		}
 
 	}).error(function(error){
-		callback(error, null);
 		console.log("Can't find course " + error);
+		callback(error, null);
 	})
 }

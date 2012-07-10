@@ -3,6 +3,9 @@
 var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
+var qID = '';
+var target_uuid = '';
+var cID = '';
 
 //NOTE**
 //for types, 0 = presenter, 1 = accent
@@ -10,201 +13,199 @@ var comment = require('../../../models/comment.js');
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Questions 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+module.exports = {
+	questions:{
+		setUp: function(callback){
+			callback();
+		},
+		tearDown: function(callback){
+			callback();
+		},
 //*****************GET a question***********************
 //@params: questionID, type, callback
-/*
-queryES.getQuestion('aJfznhseQuOicWWAjx7F00', 1, function(result){
-	console.log(result);
-});
-*/
-
+		"getQuestion": function(test){
+			queryES.getQuestion('pJfznhheQuOicWWAjx7F00', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
 //*****************GET all question*********************
-
 //@params: type, callback
-/*
-queryES.getAllQuestion(0, function(result){
-	console.log(JSON.stringify(result));
-})
-*/
+		"getAllQuestions":function(test){
+			queryES.getAllQuestions(0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		},
 //*****************GET all question by user uuid********
-/*
-NOTE:
-For testing purposes we are using username INSTEAD of user uuid,
-so that results are meaningful
-*/
-
 //@params: userID, type, callback
-/*
-queryES.getAllQuestionByUserID('jbo1', 0, function(result){
-	//You should get 2 sets of result
-	//console.log('Found: ' + result.total);
-	//console.log(JSON.stringify(result.hits));
-
-	console.log(result);
-})
-*/
-
+		"getAllQuestionsByUserID":function(test){
+			queryES.getAllQuestionByUserID('jbo1', 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		},
 //*****************SEARCH all based on project type*****
-var searchString = 'fuk dwntwn';
-
-//@params: search string, type, callback
-/*
-queryES.searchAll(searchString, 0, function(result){
-	console.log('Found: ' + result);
-	console.log(JSON.stringify(result));
-})
-*/
-
-
+//@params: search query, type, callback
+		"searchAll": function(test){
+			queryES.searchAll('fuk dwntwn', 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		},
 //*****************ADD a question***********************
-//Question model takes in uuid, user, title, body, category, timestamp
-var question = new question('someUserUUID', 'This is the question i asked', 'dddd','life');
-
+//Question model takes in userID, title, body, category
 //@params: question model, type, callback
-/*
-queryES.addQuestion(question, 0, function(){	
-	console.log("Question added, check ES");
-});
-*/
-
-//*****************FOLLOW a question***********************
-//Question model takes in (questionID, userID, type, category)
-
-//@params: question model, type, callback
-/*
-queryES.addFollower('pJfzndwdadddQuOicWWAjx7F00', 'dddddddd', 0, function(result){
-	console.log("Follower added, check ES");
-	console.log(result);
-});
-*/
-
-//*****************UPDATE a question**********************
-//@params: questionID, questionBody, type, callback
-/*
-queryES.updateQuestion('f3228370-8726-4893-bbc2-100db9308dc1', 'ddddd', 'some descriddd', 0, function(result){
-	console.log("Question updated, check ES: " + result._id);
-});
-*/
-
-//*****************DELETE a question***********************
-//@params: questionID, type, callback
-/*
-queryES.deleteQuestion('someuidlololol', 0, function(result){
-	console.log("Question deleted");
-})
-*/
-
+		"addQuestion": function(test){
+			var q = new question('someUsrUuid', 'The question i ask', 'some description', 'someCategory');
+			queryES.addQuestion(q, 0, function(result){
+				qID = result._id;
+				test.ok(result);
+				test.done();
+			})
+		},
 //****************UPDATE question status*******************
 //@params: questionID
-/*
- queryES.updateStatus('pJfzndwdadddQuOicWWAjx7F00', 0, function(result){
- 	console.log(result)
- })
-*/
+		"updateQuestion":function(test){
+			queryES.updateStatus(qID, 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		},
+//*****************FOLLOW a question***********************
+//@params: question uuid, user uuid, callback
+		"followQuestion": function(test){
+			queryES.addFollower(qID, 'newGuy', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
+//****************GET questionID by follower**************
+//@params: follower ID, type, callback
+		"getQuestionByFollowerID":function(test){
+			queryES.getQuestionByFollowerID('newGuy', 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		},
+//*****************UPDATE a question**********************
+//@params: questionID, questionBody, type, callback
+		"updateQuestion":function(test){
+			queryES.updateQuestion(qID, 'new updated question', 'new description', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
+//****************UPDATE question status*******************
+//@params: questionID
+	"updateQuestion":function(test){
+		queryES.updateStatus(qID, 0, function(result){
+			test.ok(result);
+			test.done();
+		})
+	},
+//*****************DELETE a question***********************
+//@params: questionID, type, callback
+		"deleteQuestion":function(test){
+			queryES.deleteQuestion(qID, 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Comments 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+module.exports = {
+	comments:{
+		setUp: function(callback){
+			target_uuid = qID;
+			callback();
+		},
+		tearDown: function(callback){
+			callback();
+		},
 //*****************GET a comment***********************
 //@params: commentID, type, callback
-/*
-queryES.getComment('aJfzggggguOicWWAjx7F05', 1, function(result){
-	console.log(result);
-});
-*/
-
-//*****************GET a comment by target_uuid***********************
-//@params: target_uuid, appType, callback
-/*
-queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
-	console.log('Found: ' + result.total);
-	console.log(JSON.stringify(result.hits));
-});
-*/
-
-//*****************GET all question*********************
-
+		"getComment": function(test){		
+			queryES.getComment('aJfzggggguOicWWAjx7F05', 1, function(result){				
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************GET all comments*********************
 //@params: type, callback
-/*
- queryES.getAllComment(0, function(result){
- console.log(JSON.stringify(result));
- })
- */
-
+		"getAllComment":function(test){			
+			 queryES.getAllComment(0, function(result){
+		 		test.ok(result);
+				test.done();
+			 })	
+		},
 //*****************GET all comments by user uuid********
-
 //@params: userID, type, callback
-/*
-queryES.getAllCommentByUserID('mcs3', 1, function(result){
-	//You should get 2 sets of result
-	console.log('Found: ' + result.total);
-	console.log(JSON.stringify(result.hits));
-})
-*/
-
+		"getAllCommentByUserID":function(test){			
+			queryES.getAllCommentByUserID('mcs3', 1, function(result){
+				test.ok(result);
+				test.done();
+			})			
+		},
 //*****************ADD a comment***********************
-//Comment model takes in (target_uuid, user, objectType, title, body, timestamp)
-
-var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd5', 'presenter', 'About dancing', 'Dancing time...');
-
+//Comment model takes in target_uuid, user, objectType, title, body
 //@params: comment model, type, callback
-/*
-queryES.addComment(comment, 0, function(){
-	console.log("Comment added, check ES");
-});
-*/
-
+		"addComment": function(test){			
+			var comment = new comment(target_uuid, 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
+			queryES.addComment(comment, 0, function(result){
+				cID = result._id;
+				test.ok(result);
+				test.done();
+			});
+		},
+//****************GET a comment by target_uuid**************
+//@params: target_uuid, appType, callback
+		"getCommentByTarget_uuid":function(test){
+			queryES.getCommentByTarget_uuid(target_uuid, 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
 //*****************UPDATE a comment**********************
-//@params: commentID, commentBody, type, callback
-/*
-queryES.updateComment('universal', 'toy story', 0, function(){
-	console.log("Comment updated, check ES");
-});
-*/
-
+//@params: commentID, commentTitle, commentBody, appType, callback
+		"updateComment":function(test){
+			queryES.updateComment(cID, 'updated comment', 'updated body', 0, function(result){
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************UPDATE a comment's vote**********************
+//direction: 0 = up, 1 = down
+//@params: commentID, direction, type, callback
+		"updateCommentVote":function(test){
+			queryES.updateVote(cID, 1, 0, function(result) {
+				test.ok(result);
+				test.done();
+			});
+		},
+//*****************UPDATE a comment's isAnswered**********************
+//@params: commentID, appType, callback
+		"updateCommentIsAnswered":function(test){
+			queryES.updateIsAnswered(cID, 0, function(result) {
+				test.ok(result);
+				test.done();
+			});
+		},
 //*****************DELETE a comment***********************
 //@params: commentID, type, callback
-/*
-queryES.deleteComment('universal', 0, function(){
-	console.log("Comment deleted");
-})
-*/
+		"deleteComment":function(test){
+			queryES.deleteComment(cID, 0, function(result){
+				test.ok(result);
+				test.done();
+			})
+		}
+	}
+}
 
-//*****************Append a commentID to a question***********************
-//
-// Ignore appendCommentID and deleteCommentID for now.
-// This needs to be discussed together.
-//
-//@params: questionID, commentID, type, callback
-/*
-queryES.appendCommentID("","", type, function() {
-	console.log("CommentID appended to the Question");
-});
-*/
 
-//*****************Delete a commentID from a question***********************
-//@params: questionID, commentID, callback
-/*
-queryES.deleteCommentID("","", function() {
-	console.log("CommentID deleted from the Question");
-});
-*/
 
-//*****************Update comment's vote***********************
-//@params: commentID, direction, type, callback
-/*
-queryES.updateVote('zzz123', 1, 0, function() {
-	console.log("Comment vote updated");
-});
-*/
-
-//*****************Update comment's isAnswered***********************
-//@params: commentID, appType, callback
-/*
-queryES.updateIsAnswered('qJfznhheQuOicWWAjx7F05', 0, function() {
-	console.log("Comment isAnswered updated");
-});
-*/

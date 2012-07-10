@@ -65,7 +65,7 @@ app.post("/api/search/", routesPresenter.search); // search based on a query
 // comments
 
 //TODO: need update this into document
-app.post("/api/question",routesPresenter.comment); // post a new comment by user id stored in seesion object
+app.post("/api/comment",routesPresenter.comment); // post a new comment by user id stored in seesion object
 
 app.get("/api/comments", routesPresenter.comments); // get all comments
 app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id

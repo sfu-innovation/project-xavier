@@ -48,3 +48,6 @@ app.post('/api/course/', routesCommon.courseQuery); // get a list of courses bas
 // follower
 app.put('/api/resource/:uid/follow/:follower', routesEngage.follow); // adds a follower to a question tag
 app.delete('/api/resource/:uid/follow/:follower', routesEngage.follow); // removes a follower from a question tag
+
+// Resource
+app.post('/api/resource/create', routesEngage.createResource);

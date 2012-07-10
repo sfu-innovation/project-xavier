@@ -33,7 +33,9 @@ exports.createUser = function(user, callback){
 	user.uuid = UUID.generate();
 	var newUser = User.build(user);
 	newUser.save().error(function(error){
-		console.log("Failed to insert user " + error);
+		callback(error, null);
+	}).success(function(){
+		callback(null, newUser);
 	})
 }
 
@@ -55,8 +57,11 @@ exports.selectUsers = function(args, callback){
 	});
 }
 
+//Gets all the courses associated with a certain user
 exports.getUserCourses = function(args, callback){
 	CourseMember.findAll({where: args}).success(function(memberRows){
+		
+		//Build the list of course uuids
 		if(memberRows.length > 0){
 			var i;
 			var courseUUIDs = [];
@@ -65,6 +70,7 @@ exports.getUserCourses = function(args, callback){
 			}
 		}
 
+		//Get the courses
 		if(courseUUIDs){
 			Course.findAll({where: {uuid: courseUUIDs}}).success(function(userCourses){
 				callback(null, userCourses);
@@ -73,6 +79,7 @@ exports.getUserCourses = function(args, callback){
 				console.log("Couldn't find users courses " + error);
 			})	
 		}
+		//No courses were found
 		else{
 			callback(null, []);
 		}

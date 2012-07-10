@@ -110,7 +110,7 @@
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
-			"wait": "now"
+			"wait": 0
 		},
 		{
 			"uuid" : "B857342H7ASDF01",
@@ -118,7 +118,7 @@
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "now"
+			"wait": 0
 		},
 		{
 			"uuid" : "B857342H7ASDF02",
@@ -126,7 +126,7 @@
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "day"
+			"wait": 1
 		},
 		{
 			"uuid" : "B857342H7ASDF03",
@@ -134,7 +134,7 @@
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "month"
+			"wait": 3
 		},
 		{
 			"uuid" : "B857342H7ASDF04",
@@ -142,7 +142,7 @@
 			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "month"
+			"wait": 3
 		},
 		{
 			"uuid": "B857346H7ASDF05",
@@ -150,7 +150,7 @@
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
-			"wait": "now"
+			"wait": 0
 		},
 		{
 			"uuid" : "B857342H7ASDF06",
@@ -158,7 +158,7 @@
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "day"
+			"wait": 1
 		},
 		{
 			"uuid" : "B857342H7ASDF07",
@@ -166,7 +166,7 @@
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "day"
+			"wait": 1
 		},
 		{
 			"uuid" : "B857342H7ASDF08",
@@ -174,7 +174,7 @@
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "day"
+			"wait": 1
 		},
 		{
 			"uuid" : "B857342H7ASDF09",
@@ -182,7 +182,7 @@
 			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "month"
+			"wait": 3
 		},
 		{
 			"uuid": "B857346H7ASDF10",
@@ -190,7 +190,7 @@
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
 			"emailSent": false,
-			"wait": "now"
+			"wait": 0
 		},
 		{
 			"uuid" : "B857342H7ASDF11",
@@ -198,7 +198,7 @@
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "day"
+			"wait": 1
 		},
 		{
 			"uuid" : "B857342H7ASDF12",
@@ -206,7 +206,7 @@
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "week"
+			"wait": 2
 		},
 		{
 			"uuid" : "B857342H7ASDF13",
@@ -214,7 +214,7 @@
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "week"
+			"wait": 2
 		},
 		{
 			"uuid" : "B857342H7ASDF14",
@@ -222,7 +222,7 @@
 			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
 			"description": "alex commented on your post \n \"Why is the sky red\"",
 			"emailSent": false,
-			"wait": "week"
+			"wait": 2
 		}
 		
 	

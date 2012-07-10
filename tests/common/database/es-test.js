@@ -4,6 +4,7 @@ var queryES = require('../../../controller/queryES.js');
 var question = require('../../../models/question.js');
 var comment = require('../../../models/comment.js');
 var qID = '';
+var target_uuid = '';
 var cID = '';
 
 //NOTE**
@@ -121,6 +122,7 @@ module.exports = {
 module.exports = {
 	comments:{
 		setUp: function(callback){
+			target_uuid = qID;
 			callback();
 		},
 		tearDown: function(callback){
@@ -154,7 +156,7 @@ module.exports = {
 //Comment model takes in target_uuid, user, objectType, title, body
 //@params: comment model, type, callback
 		"addComment": function(test){			
-			var comment = new comment('0226148e-1d4d-4e4d-a54c-9a14486d41bf', 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
+			var comment = new comment(target_uuid, 'snsd6', 'presenter', 'About dancing', 'Dancing time...', '2012-05-07');
 			queryES.addComment(comment, 0, function(result){
 				cID = result._id;
 				test.ok(result);
@@ -164,7 +166,7 @@ module.exports = {
 //****************GET a comment by target_uuid**************
 //@params: target_uuid, appType, callback
 		"getCommentByTarget_uuid":function(test){
-			queryES.getCommentByTarget_uuid('pJfznhheQuOicWWAjx7F00', 0, function(result){
+			queryES.getCommentByTarget_uuid(target_uuid, 0, function(result){
 				test.ok(result);
 				test.done();
 			});

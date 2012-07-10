@@ -79,6 +79,7 @@ exports.getUserCourses = function(args, callback){
 				console.log("Couldn't find users courses " + error);
 			})	
 		}
+		//No courses were found
 		else{
 			callback(null, []);
 		}

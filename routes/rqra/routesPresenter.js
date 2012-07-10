@@ -213,7 +213,7 @@ exports.comments = function(request, response) {
 		queryES.getAllComments( 0, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));

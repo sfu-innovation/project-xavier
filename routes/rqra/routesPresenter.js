@@ -125,7 +125,10 @@ exports.questionsByUser = function(request, response) {
 
 exports.followQuestionRoute = function(appType, request, response) {
 	var questionId = request.params.uid;
-	var followerId = request.params.follower;
+	//var followerId = request.params.follower;
+
+	//TODO: replace with seesion uid later
+	var followerId = "fakeid";
 
 	if (request.method === "PUT") {
 		queryES.addFollower(questionId, followerId, appType, function(result) {
@@ -140,8 +143,33 @@ exports.followQuestionRoute = function(appType, request, response) {
 	}
 }
 
+
+exports.unfollowQuestionRoute = function(appType, request, response) {
+	var questionId = request.params.uid;
+	//var followerId = request.params.follower;
+
+	//TODO: replace with seesion uid later
+	var followerId = "fakeid";
+
+	if (request.method === "PUT") {
+		queryES.removeFollower(questionId, followerId, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
 exports.followQuestion = function(request, response) {
 	exports.followQuestionRoute(0, request, response);
+}
+
+exports.unfollowQuestion = function(request, response) {
+	exports.unfollowQuestionRoute(0, request, response);
 }
 
 exports.questionStatusRoute = function(appType, request, response) {

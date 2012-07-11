@@ -52,24 +52,6 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, Tag),
 				createTable.bind(undefined, UserProfile)
 				], callback)
-			/*
-			User.sync().success(function(){
-				Course.sync().success(function(){
-					Notification.sync().success(function(){
-						CourseMember.sync().success(function(){
-							UserNotification.sync().success(function(){
-								UserNotificationSettings.sync().success(function(){
-									if(callback){
-										callback(1);
-									}
-								});
-							});
-
-						});
-					});
-				});
-			})
-			*/
 		}
 	});
 }

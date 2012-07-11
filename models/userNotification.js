@@ -15,7 +15,7 @@ var db = new Sequelize(
 var UserNotification = exports.UserNotification = db.define('UserNotification', {
      uuid: {type: Sequelize.STRING, allowNull: false },
 	 app : {type:Sequelize.INTEGER, allowNull: false },
-	 user : {type:Sequelize.INTEGER, allowNull: false },
+	 user : {type:Sequelize.STRING, allowNull: false },
 	 description: {type:Sequelize.STRING, allowNull: false },
 	 emailSent: {type:Sequelize.BOOLEAN, defaultValue: false },
 	 wait:{ type:Sequelize.INTEGER , allowNULL: false, defaultValue: 0}

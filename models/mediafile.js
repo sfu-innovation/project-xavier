@@ -51,7 +51,7 @@ exports.selectMediaFiles = function(args, callback){
 	});
 }
 
-//Gets a mediaFile that created the media file
+//Gets a mediaFile that is created by user
 exports.getMediaFileUser = function(args, callback){
 	MediaFile.find({where: args}).success(function(mediaFile){		
 		var MediaFileUser = require('./user.js').User;

@@ -1,6 +1,7 @@
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
+var Resource = require(__dirname + '/resource.js').Resource;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
@@ -26,7 +27,16 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 		}
 		else{
 			Like.create({user:userUUID, resource: resourceUUID}).success(function(like){
-				callback(null, like);
+				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
+					var likeCount = resource.likes + 1;
+					resource.updateAttributes({likes: likeCount}).success(function(result){
+						callback(null, result);
+					}).error(function(error){
+						callback(error, null);
+					})
+				}).error(function(error){
+					callback(error, null);
+				})
 			}).error(function(error){
 				console.log(error);
 				callback(error, null);
@@ -41,7 +51,16 @@ exports.unlikeResource = function(userUUID, resourceUUID, callback){
 	Like.find({where:{user:userUUID, resource: resourceUUID}}).success(function(like){
 		if(like){
 			like.destroy().success(function(result){
-				callback(null, result);
+				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
+					var likeCount = resource.likes - 1;
+					resource.updateAttributes({likes: likeCount}).success(function(result){
+						callback(null, result);
+					}).error(function(error){
+						callback(error, null);
+					})
+				}).error(function(error){
+					callback(error, null);
+				})
 			}).error(function(error){
 				callback(error, null);
 			})

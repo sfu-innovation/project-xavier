@@ -16,4 +16,3 @@ var CourseSection = exports.CourseSection = db.define('CourseSection', {
 	section: {type: Sequelize.STRING, allowNull: false},
 	app    : { type: Sequelize.INTEGER, allowNull: false}
 });
-

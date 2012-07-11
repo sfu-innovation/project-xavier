@@ -36,3 +36,20 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 		callback(error, null);
 	})
 }
+
+exports.unlikeResource = function(userUUID, resourceUUID, callback){
+	Like.find({where:{user:userUUID, resource: resourceUUID}}).success(function(like){
+		if(like){
+			like.destroy().success(function(result){
+				callback(null, result);
+			}).error(function(error){
+				callback(error, null);
+			})
+		}
+		else{
+			callback("No like for that resource", null);
+		}
+	}).error(function(error){
+		callback(error, null);
+	})
+}

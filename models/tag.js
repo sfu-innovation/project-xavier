@@ -80,6 +80,4 @@ exports.updateTag = function(user_uid, args, callback){
 		callback(error, null);
 		console.log("Couldn't find tag " + error);
 	});
-
-
 }

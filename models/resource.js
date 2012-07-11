@@ -23,6 +23,7 @@ var Resource = exports.Resource = db.define('Resource', {
 	, description:  {type: Sequelize.TEXT}
 	, resourceType: {type: Sequelize.INTEGER, allowNull: false}
 	, fileType: {type: Sequelize.STRING, allowNull: true}
+	, likes: {type: Sequelize.INTEGER, defaultValue: 0}
 	, url: {type: Sequelize.STRING, allowNull: false}
 });
 
@@ -61,6 +62,17 @@ exports.createResource = function(userUUID, args, callback){
 			callback("You can't create a resource for a course you aren't enrolled in", null);
 		}	
 	});
+}
 
-
+exports.getLikes = function(args, callback){
+	Resource.find({where:args}).success(function(resource){
+		if(resource){
+			callback(null, resource.likes);
+		}
+		else{
+			callback("No resource found", null);
+		}
+	}).error(function(error){
+		callback(error, null);
+	})
 }

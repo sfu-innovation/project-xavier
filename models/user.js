@@ -22,9 +22,7 @@ var User = exports.User = db.define('User', {
 	firstName: {type: Sequelize.STRING, allowNull: false},
 	lastName: {type: Sequelize.STRING, allowNull: false},
 	userID: {type: Sequelize.STRING, unique: true},
-	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}},
-	
-	lastWatchedTag: {type: Sequelize.STRING}
+	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}}
 });
 
 //Saves user to database

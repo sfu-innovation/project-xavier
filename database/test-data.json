@@ -284,6 +284,13 @@
 			"title":"Preparation for linear algebra",			
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
+		},
+		{
+			"user_uid":"A7S7FSD78FA98A7SDF8ASD7G",
+			"target_uuid":"abc1234",
+			"title":"Making videos",			
+			"path":"http://www.youtube.com/yt",
+			"type":0
 		}
 	],
 

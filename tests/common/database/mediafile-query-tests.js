@@ -3,6 +3,7 @@ var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var queries = require('../../../database/db-queries.js');
 var MediaFile = require('../../../models/mediafile.js');
+var tuid = '';
 
 module.exports = {
 
@@ -52,10 +53,24 @@ module.exports = {
 				path:"http://www.youtube.com/bt",
 				type:1
 			}
-			MediaFile.createMediaFile(newMediaFile, function(error, mediaFile){				
+			MediaFile.createMediaFile(newMediaFile, function(error, mediaFile){	
+				tuid = mediaFile.target_uuid;
+				console.log("t_uid = " + tuid);
 				test.ok(mediaFile.should.have.property('target_uuid'));
 				test.done();	
 			})
-		} 
+		},				
+		"Update MediaFile": function(test){
+			var target = {'target_uuid':'abc1230'};
+			//target.target_uuid = tuid;
+			var updateAttributes = {'title':'jericho twist', 'path':'www.google.com'};
+			MediaFile.updateMediaFile(target, updateAttributes, function(error, updatedMediaFile){				
+				console.log("expect = " + updateAttributes.title);
+				console.log("result = " + updatedMediaFile.title);
+				//test.ok(updatedMediaFile.should.have.property('target_uuid'));
+				test.ok(updatedMediaFile.title.should.be.eql(updateAttributes.title));
+				test.done();	
+			})
+		}
 	},
 }

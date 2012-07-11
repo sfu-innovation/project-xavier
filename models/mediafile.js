@@ -43,7 +43,7 @@ exports.selectMediaFile = function(args, callback){
 }
 
 exports.selectMediaFiles = function(args, callback){
-	MediaFile.findAll({where: args}).success(function(mediaFiles){
+	MediaFile.findAll({where: args}).success(function(mediaFiles){		
 		callback(null, mediaFiles);
 	}).error(function(error){
 		callback(error, null);
@@ -72,4 +72,19 @@ exports.getMediaFileTags = function(args, callback){
 		callback(error, null);
 		console.log("Couldn't find media file tags " + error);
 	})
+}
+
+//Update a media file with spcified attributes
+exports.updateMediaFile = function(target_uuid, args, callback){
+	MediaFile.find({where: target_uuid}).success(function(mediaFile) {		
+		mediaFile.updateAttributes(args).success(function(updatedMedia) {
+			console.log("updated succesfully");
+			callback(null, updatedMedia);
+		});			
+	}).error(function(error) {
+		callback(error, null);
+		console.log("Couldn't find mediaFile " + error);
+	});
+
+
 }

@@ -20,6 +20,7 @@ var MediaFile = require('../models/mediafile.js').MediaFile;
 var Tag = require('../models/tag.js').Tag;
 var UserProfile = require('../models/userProfile.js').UserProfile;
 var Like = require('../models/like.js').Like;
+var Star = require('../models/star.js').Star;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -52,7 +53,8 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, MediaFile),
 				createTable.bind(undefined, Tag),
 				createTable.bind(undefined, UserProfile),
-				createTable.bind(undefined, Like)
+				createTable.bind(undefined, Like),
+				createTable.bind(undefined, Star)
 				], callback)
 		}
 	});

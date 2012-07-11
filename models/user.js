@@ -21,6 +21,7 @@ var User = exports.User = db.define('User', {
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
 	firstName: {type: Sequelize.STRING, allowNull: false},
 	lastName: {type: Sequelize.STRING, allowNull: false},
+	preferedName: {type: Sequelize.STRING, allowNull: true},
 	userID: {type: Sequelize.STRING, unique: true},
 	email: {type: Sequelize.STRING, unique: true, validate:{isEmail: true}}
 });
@@ -85,5 +86,19 @@ exports.getUserCourses = function(args, callback){
 	}).error(function(error){
 		callback(error, null);
 		console.log("Can't find user " + error);
+	})
+}
+
+exports.setPreferedName = function(userUUID, newName, callback){
+	User.find({where: {uuid:userUUID}}).success(function(user){
+		user.updateAttributes({
+			preferedName: newName
+		}).success(function(user){
+			callback(null, user);
+		}).error(function(error){
+			callback(error, null);
+		})
+	}).error(function(error){
+		callback(error, null);
 	})
 }

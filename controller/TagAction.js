@@ -49,6 +49,29 @@ TagAction.prototype.addTag = function( args, callback ){
 	})	
 }
 
+/*
+
+View all tags based on a user specified properties.
+
+args = {
+	user_uid		: <user id from the User model - primary key>
+	start			: <start time (seconds) of a video that user want to tag>
+	end				: <end time (seconds) of a video that user want to tag>
+	type			: <type of tag (not yet determined)>
+	target_uuid		: <id that links between Tag and MediaFile>
+	title			: <tag title>
+	description		: <tag description>
+	question_uid	: <question belonging to a tag>
+	important		: <boolean value of a video whether it is important>
+	interest		: <boolean value of a video whether it is interesting>
+	examable		: <boolean value of a video whether it is examable>
+	reviewlater		: <boolean value of a video whether it is worth reviewing it later>
+	shared			: <boolean value of a video whether it is shared by an instructor>
+}
+
+TO-DO: Maybe it would be beneficial to sort the tag based on the properties.
+*/
+
 TagAction.prototype.viewTags = function( args, callback ){ 
 	Tag.selectTags(args, function(error, tags){		
 		if (!error) {
@@ -60,6 +83,16 @@ TagAction.prototype.viewTags = function( args, callback ){
 		
 	})
 }
+
+/*
+
+View a question that belongs to a tag.
+
+args = {	
+	question_uid	: <question belonging to a tag>	
+}
+
+*/
 
 TagAction.prototype.viewQuestionTagged = function( args, callback ){ 
 	//console.log(args.question_uid)	
@@ -74,6 +107,16 @@ TagAction.prototype.viewQuestionTagged = function( args, callback ){
 	});	
 }
 
+/*
+
+Get a tag that belongs to a user.
+
+args = {	
+	user_uid		: <user id from the User model>	
+}
+
+*/
+
 TagAction.prototype.getTaggedUser = function( args, callback ){ 	
 	Tag.getUserTag(args, function(error, taggedUser){		
 		if (!error) {
@@ -85,6 +128,30 @@ TagAction.prototype.getTaggedUser = function( args, callback ){
 		
 	})	
 }
+
+/*
+
+Update a specific tag based on a target_uuid.
+
+args = {
+	user_uid		: <user id from the User model>		
+
+	allowed field: 		
+		start			: <start time (seconds) of a video that user want to tag>
+		end				: <end time (seconds) of a video that user want to tag>
+		type			: <type of tag (not yet determined)>
+		target_uuid		: <id that links between Tag and MediaFile>
+		title			: <tag title>
+		description		: <tag description>
+		question_uid	: <question belonging to a tag>
+		important		: <boolean value of a video whether it is important>
+		interest		: <boolean value of a video whether it is interesting>
+		examable		: <boolean value of a video whether it is examable>
+		reviewlater		: <boolean value of a video whether it is worth reviewing it later>
+		shared			: <instructor only?>
+}
+
+*/
 
 TagAction.prototype.updateTag = function( user_uid, args, callback ){ 	
 	Tag.updateTag(user_uid, args, function(error, updatedTag){		

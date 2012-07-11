@@ -39,6 +39,21 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 	})	
 }
 
+/*
+
+View all mediafiles based on a user specified properties.
+
+args = {
+	user_uid		: <user id from the User model>	
+	target_uuid		: <id that links between Tag and MediaFile - primary key>
+	title			: <mediafile title>
+	path			: <the url path of a mediafile>
+	type			: <type of mediafile (not yet determined)>
+}
+
+TO-DO: Maybe it would be beneficial to sort the mediafiles based on the properties.
+*/
+
 MediaAction.prototype.viewMedia = function( args, callback ){ 
 	MediaFile.selectMediaFiles(args, function(error, tags){		
 		if (!error) {
@@ -50,6 +65,17 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 		
 	})
 }
+
+
+/*
+
+Get a tagged mediafile that belongs to a specific tag.
+
+args = {	
+	user_uid		: <user id from the User model>	
+}
+
+*/
 
 MediaAction.prototype.getMediaFileTags = function( args, callback ){ 	
 	MediaFile.getMediaFileTags(args, function(error, mediaFileTags){		
@@ -63,6 +89,15 @@ MediaAction.prototype.getMediaFileTags = function( args, callback ){
 	})	
 }
 
+/*
+
+Get a mediafile that belongs to a user.
+
+args = {	
+	user_uid		: <user id from the User model>	
+}
+
+*/
 MediaAction.prototype.getMediaFileUser = function( args, callback ){ 	
 	MediaFile.getMediaFileUser(args, function(error, mediaFileUser){		
 		if (!error) {
@@ -74,6 +109,22 @@ MediaAction.prototype.getMediaFileUser = function( args, callback ){
 		
 	})	
 }
+
+/*
+
+Update a specific mediafile based on a target_uuid.
+
+args = {
+	target_uuid		: <id that links between Tag and MediaFile - primary key>
+
+	allowed field: 
+		user_uid		: <user id from the User model>		
+		title			: <mediafile title>
+		path			: <the url path of a mediafile>
+		type			: <type of mediafile (not yet determined)>	
+}
+
+*/
 
 MediaAction.prototype.updateMediaFile = function( target_uuid, args, callback ){ 	
 	MediaFile.updateMediaFile(target_uuid, args, function(error, updatedMediaFile){		

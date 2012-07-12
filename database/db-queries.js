@@ -6,6 +6,9 @@ var mysql   = require("mysql").createClient({
 	password: config.mysqlDatabase["password"],
 	port: config.mysqlDatabase["port"],
 	});
+
+process.setMaxListeners(0)
+
 var async = require('async');
 var Sequelize = require('sequelize');
 

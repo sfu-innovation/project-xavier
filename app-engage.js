@@ -58,3 +58,9 @@ app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a foll
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here
 app.post('/api/resource/create', routesEngage.createResource);
+
+
+//userprofile
+
+app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
+app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id

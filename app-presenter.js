@@ -97,3 +97,9 @@ app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updat
 app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
 
 
+
+//userprofile
+
+app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
+app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
+

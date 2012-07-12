@@ -14,8 +14,8 @@ var db = new Sequelize(
 );
 
 var MediaFile = exports.MediaFile = db.define('MediaFile', {
-	user_uid: {type: Sequelize.STRING},
-	target_uuid: {type: Sequelize.STRING, primaryKey: true, allowNull: false},	
+	user: {type: Sequelize.STRING},
+	target: {type: Sequelize.STRING, primaryKey: true, allowNull: false},	
 	title: {type: Sequelize.STRING, allowNull: false},
 	path: {type: Sequelize.STRING, allowNull: false},	
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}	
@@ -24,7 +24,7 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 //Saves media file to database
 //MediaFile gets passed in as a JSON object
 exports.createMediaFile = function(media, callback){
-	media.target_uuid = UUID.generate();
+	media.target = UUID.generate();
 	var newMediaFile = MediaFile.build(media);
 	newMediaFile.save().error(function(error){		
 		callback(error, null);
@@ -55,7 +55,7 @@ exports.selectMediaFiles = function(args, callback){
 exports.getMediaFileUser = function(args, callback){
 	MediaFile.find({where: args}).success(function(mediaFile){		
 		var MediaFileUser = require('./user.js').User;
-		MediaFileUser.find({where: {uuid: mediaFile.user_uid}}).success(function(mediaFileUser){
+		MediaFileUser.find({where: {uuid: mediaFile.user}}).success(function(mediaFileUser){
 			callback(null, mediaFileUser);
 		}).error(function(error){
 			callback(error, null);
@@ -75,8 +75,8 @@ exports.getMediaFileTags = function(args, callback){
 }
 
 //Update a media file with spcified attributes
-exports.updateMediaFile = function(target_uuid, args, callback){
-	MediaFile.find({where: target_uuid}).success(function(mediaFile) {		
+exports.updateMediaFile = function(target, args, callback){
+	MediaFile.find({where: target}).success(function(mediaFile) {		
 		mediaFile.updateAttributes(args).success(function(updatedMedia) {
 			console.log("updated succesfully");
 			callback(null, updatedMedia);

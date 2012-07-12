@@ -29,45 +29,45 @@ module.exports = {
 			});
 		},		
 		"Select MediaFile": function(test){
-			MediaFile.selectMediaFile({'target_uuid':'abc1231'}, function(error, mediaFile){
+			MediaFile.selectMediaFile({'target':'abc1231'}, function(error, mediaFile){
 				test.ok(mediaFile.title.should.be.eql("How to dribble like Lionel"));
 				test.done();
 			});
 		},
 		"Find MediaFileUser": function(test){
-			MediaFile.getMediaFileUser({'target_uuid':'abc1230'}, function(error, mediaFileUser){
+			MediaFile.getMediaFileUser({'target':'abc1230'}, function(error, mediaFileUser){
 				test.ok(mediaFileUser.firstName.should.be.eql("Mike"));
 				test.done();
 			});
 		},
 		"Find All MediaFileTags": function(test){
-			MediaFile.getMediaFileTags({'target_uuid':'abc1231'}, function(error, tags){				
+			MediaFile.getMediaFileTags({'target':'abc1231'}, function(error, tags){				
 				test.ok(tags[0].title.should.be.eql('soccer dribble'));
 				test.done();
 			});
 		},				
 		"Create MediaFile": function(test){
 			var newMediaFile = {
-				user_uid:"A7S7F8GA7SD98A7SDF8ASD7G",				
+				user:"A7S7F8GA7SD98A7SDF8ASD7G",				
 				title:"How to make buble tea",
 				path:"http://www.youtube.com/bt",
 				type:1
 			}
 			MediaFile.createMediaFile(newMediaFile, function(error, mediaFile){	
-				tuid = mediaFile.target_uuid;
+				tuid = mediaFile.target;
 				console.log("t_uid = " + tuid);
-				test.ok(mediaFile.should.have.property('target_uuid'));
+				test.ok(mediaFile.should.have.property('target'));
 				test.done();	
 			})
 		},				
 		"Update MediaFile": function(test){
-			var target = {'target_uuid':'abc1230'};
-			//target.target_uuid = tuid;
+			var target = {'target':'abc1230'};
+			//target.target = tuid;
 			var updateAttributes = {'title':'jericho twist', 'path':'www.google.com'};
 			MediaFile.updateMediaFile(target, updateAttributes, function(error, updatedMediaFile){				
 				console.log("expect = " + updateAttributes.title);
 				console.log("result = " + updatedMediaFile.title);
-				//test.ok(updatedMediaFile.should.have.property('target_uuid'));
+				//test.ok(updatedMediaFile.should.have.property('target'));
 				test.ok(updatedMediaFile.title.should.be.eql(updateAttributes.title));
 				test.done();	
 			})

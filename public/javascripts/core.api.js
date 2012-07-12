@@ -1,6 +1,23 @@
 var coreApi = {}
 coreApi._construct = function () {
 
+	function Common(){
+
+		this.getUserById = function(id,callback ){
+			console.log("API - getUserById");
+			$.ajax({
+				url:'/api/question/' + id,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+
+		}
+
+
+	}
+
 	function Accent() {
 
 	}
@@ -315,7 +332,7 @@ coreApi._construct = function () {
 
 	}
 
-
+	this.Common = Common;
 	this.Accent = Accent;
 	this.Engage = Engage;
 	this.Presenter = Presenter;

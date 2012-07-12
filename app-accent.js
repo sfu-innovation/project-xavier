@@ -44,6 +44,9 @@ app.post('/api/user/', routesCommon.userQuery); // get a list of users based on 
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
+//TODO: need update this into document
+app.get('/api/course/:id/members', routesCommon.courseMembers);//get a list of members of a course
+
 // follower
 //TODO: need update this into document
 app.put("/api/question/:uid/follow", routesAccent.followQuestion); // a follower follows a question

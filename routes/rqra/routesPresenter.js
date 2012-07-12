@@ -252,7 +252,6 @@ exports.comment = function(request, response) {
 
 
 exports.commentsRoute = function(appType,request,response){
-	console.log("what");
 	if (request.method === "GET") {
 		queryES.getAllComments(appType, function(result) {
 			if (result) {

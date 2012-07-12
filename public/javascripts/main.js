@@ -6,6 +6,7 @@ $(document).ready(function () {
 	$("#tabs").tabs();
 
 	var rqra = new coreApi.Presenter();
+	var common = new coreApi.Common();
 
 	loadAllQuestions(rqra);
 	loadAllComments(rqra);
@@ -530,6 +531,69 @@ $(document).ready(function () {
 	});
 
 
+
+///////////////////////////////////////////////USERS///////////////
+
+
+
+	$("#getUserById").click(function (event) {
+		var id = $('#user_uuid').val();
+		if (id) {
+			common.getUserById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						$('#user_first_name').val(data.user.firstName);
+						$('#user_last_name').val(data.user.lastName);
+						$('#user_type').val(data.user.typee);
+						$('#user_prefered_name').val(data.user.preferedName);
+						$('#user_user_id').val(data.user.userID);
+						$('#user_email').val(data.user.email);
+						$('#user_created').val(data.user.createdAt);
+						$('#user_updated').val(data.user.updatedAt);
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+	$("#getCourseById").click(function (event) {
+		var id = $('#course_uuid').val();
+		if (id) {
+			common.getCourseById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						$('#course_title').val(data.course.title);
+						$('#course_section').val(data.course.section);
+						$('#course_subject').val(data.course.subject);
+						$('#course_number').val(data.course.number);
+						$('#course_instructor').val(data.course.instructor);
+						$('#course_created').val(data.course.createdAt);
+						$('#course_updated').val(data.course.updatedAt);
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+
 });
 
 function loadAllQuestions(rqra) {
@@ -605,3 +669,4 @@ function loadAllComments(rqra) {
 	});
 
 }
+

@@ -6,7 +6,7 @@ coreApi._construct = function () {
 		this.getUserById = function(id,callback ){
 			console.log("API - getUserById");
 			$.ajax({
-				url:'/api/question/' + id,
+				url:'/api/user/' + id,
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -14,6 +14,22 @@ coreApi._construct = function () {
 			});
 
 		}
+
+
+
+		this.getCourseById = function(id,callback ){
+			console.log("API - getCourseById");
+			$.ajax({
+				url:'/api/course/' + id,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+
+		}
+
+
 
 
 	}

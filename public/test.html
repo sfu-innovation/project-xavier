@@ -10,7 +10,7 @@
 	<script src="http://code.jquery.com/jquery-1.6.1.min.js" ></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="/javascripts/core.api.js" ></script>
-	<script src="/javascripts/main.js" ></script>
+	<script src="/javascripts/main.js?v=2" ></script>
 </head>
 <body>
 
@@ -149,23 +149,46 @@
 
 	</div>
 
-	<div id="course"></div>
+	<div id="course">
+
+		<div>
+			<button id="getCourseById" >Get this Course by id</button>
+
+			<br />
+
+			<input id="course_uuid" type="text" size="40" placeholder="uuid" value="A827346H7ASDFG9" >
+
+
+			<input id="course_title" type="text" size="20" placeholder="title" disabled="disabled">
+
+			<input id="course_section" type="text" size="20" placeholder="section" disabled="disabled">
+			<input id="course_subject" type="text" size="20" placeholder="subject" disabled="disabled">
+			<input id="course_number" type="text" size="20" placeholder="number" disabled="disabled">
+			<input id="course_instructor" type="text" size="20" placeholder="instructor" disabled="disabled">
+			<input id="course_created" type="text" size="20" placeholder="created at" disabled="disabled">
+			<input id="course_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
+
+		</div>
+
+	</div>
 	<div id="user">
 		<div>
-			<button id="getUserById" disabled="disabled">Get this question by id</button>
+			<button id="getUserById" >Get this question by id</button>
 			<!--<button id="updateQuestionById">Update this question by id</button>-->
 			<!--<button id="deleteQuestionById">Delete this question by id</button>-->
 			<!--<button id="getCommentsByTargetId">Load the comments of this question</button>-->
 			<br />
 
-			<input id="user_uuid" type="text" size="20" placeholder="uuid" disabled="disabled">
-			<input id="user_user_id" type="text" size="20" placeholder="id">
+			<input id="user_uuid" type="text" size="40" placeholder="uuid" value="A7S7F8GA7SD98A7SDF8ASD7G" >
+			<input id="user_user_id" type="text" size="20" placeholder="id" disabled="disabled">
 
 			<input id="user_type" type="text" size="20" placeholder="type" disabled="disabled">
 
 			<input id="user_first_name" type="text" size="20" placeholder="first name" disabled="disabled">
 			<input id="user_last_name" type="text" size="20" placeholder="last name" disabled="disabled">
 			<input id="user_email" type="text" size="20" placeholder="email" disabled="disabled">
+			<input id="user_created" type="text" size="20" placeholder="created at" disabled="disabled">
+			<input id="user_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
 
 
 		</div>

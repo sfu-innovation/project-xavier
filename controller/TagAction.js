@@ -286,3 +286,4 @@ tagAction.viewCommentTagged(object, function( err, data){
 });
 */
 
+module.exports = new TagAction;

@@ -65,12 +65,11 @@ exports.unfollowQuestion = function(request, response) {
 //Tag
 
 exports.tag = function(request,response){
-	//TODO: replace this with seesion user
-
-	request.body.tag.user = 'fakeid';
+	//TODO: replace this with seesion user	
+	//request.body.tag.user = 'fakeid';
 	if(request.method === 'POST'){
 		TagAction.addTag(request.body.tag, function(error, result){
-			if(result){
+			if(result){				
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
 			}
@@ -93,8 +92,10 @@ exports.tag = function(request,response){
 		});
 		*/
 	}
-	else if (request.method === 'GET'){
-		TagAction.viewTags(request.body.tag, function(error, result){
+	else if (request.method === 'GET'){				
+		console.log("good catch by jordan = " + request.params.id);
+		
+		TagAction.viewTags({'target':request.params.id}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));

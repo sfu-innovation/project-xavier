@@ -258,36 +258,36 @@
 
 	"mediafiles": [
 		{
-			"user_uid":"A7S7F8GA7SD98A7SDF8ASD7G",
-			"target_uuid":"abc1230",
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"target":"abc1230",
 			"title":"How to dunk like MJ",
 			"path":"http://www.youtube.com/mj",
 			"type":0
 		},
 		{
-			"user_uid":"BSDF787D98A7SDF8ASD7G",
-			"target_uuid":"abc1231",
+			"user":"BSDF787D98A7SDF8ASD7G",
+			"target":"abc1231",
 			"title":"How to dribble like Lionel",			
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
 		},
 		{
-			"user_uid":"BSDF787D98ASDF099D7G",
-			"target_uuid":"abc1232",
+			"user":"BSDF787D98ASDF099D7G",
+			"target":"abc1232",
 			"title":"Cooking terriyaki",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
 		},
 		{
-			"user_uid":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target_uuid":"abc1233",
+			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"target":"abc1233",
 			"title":"Preparation for linear algebra",			
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
 		},
 		{
-			"user_uid":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target_uuid":"abc1234",
+			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"target":"abc1234",
 			"title":"Making videos",			
 			"path":"http://www.youtube.com/yt",
 			"type":0

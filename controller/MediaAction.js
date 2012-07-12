@@ -18,8 +18,8 @@ var MediaAction = function() {
 Adding a mediafile based on a user specified properties.
 
 args = {
-	user_uid		: <user id from the User model>	
-	target_uuid		: <id that links between Tag and MediaFile - primary key>
+	user		: <user id from the User model>	
+	target		: <id that links between Tag and MediaFile - primary key>
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -27,7 +27,7 @@ args = {
 
 */
 
-MediaAction.prototype.addMediaFile = function( args, callback ){ 	
+MediaAction.prototype.addMediaFile = function( args, callback ){	 
 	MediaFile.createMediaFile(args, function(error, newMediaFile){		
 		if (!error) {
 			callback(null, newMediaFile);	
@@ -44,8 +44,8 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 View all mediafiles based on a user specified properties.
 
 args = {
-	user_uid		: <user id from the User model>	
-	target_uuid		: <id that links between Tag and MediaFile - primary key>
+	user		: <user id from the User model>	
+	target		: <id that links between Tag and MediaFile - primary key>
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -72,7 +72,7 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 Get a tagged mediafile that belongs to a specific tag.
 
 args = {	
-	user_uid		: <user id from the User model>	
+	user		: <user id from the User model>	
 }
 
 */
@@ -94,7 +94,7 @@ MediaAction.prototype.getMediaFileTags = function( args, callback ){
 Get a mediafile that belongs to a user.
 
 args = {	
-	user_uid		: <user id from the User model>	
+	user		: <user id from the User model>	
 }
 
 */
@@ -112,13 +112,13 @@ MediaAction.prototype.getMediaFileUser = function( args, callback ){
 
 /*
 
-Update a specific mediafile based on a target_uuid.
+Update a specific mediafile based on a target.
 
 args = {
-	target_uuid		: <id that links between Tag and MediaFile - primary key>
+	target		: <id that links between Tag and MediaFile - primary key>
 
 	allowed field: 
-		user_uid		: <user id from the User model>		
+		user		: <user id from the User model>		
 		title			: <mediafile title>
 		path			: <the url path of a mediafile>
 		type			: <type of mediafile (not yet determined)>	
@@ -126,8 +126,8 @@ args = {
 
 */
 
-MediaAction.prototype.updateMediaFile = function( target_uuid, args, callback ){ 	
-	MediaFile.updateMediaFile(target_uuid, args, function(error, updatedMediaFile){		
+MediaAction.prototype.updateMediaFile = function( target, args, callback ){ 	
+	MediaFile.updateMediaFile(target, args, function(error, updatedMediaFile){		
 		if (!error) {
 			callback(null, updatedMediaFile);	
 		}
@@ -140,8 +140,8 @@ MediaAction.prototype.updateMediaFile = function( target_uuid, args, callback ){
 
 var object = {
 		//"type":12	
-		'target_uuid':'abc1232'
-		//'user_uid':'BSDF787D98A7SDF8ASD7G'
+		'target':'abc1232'
+		//'user':'BSDF787D98A7SDF8ASD7G'
   };
 
 var mediaAction = new MediaAction();
@@ -159,7 +159,7 @@ mediaAction.getMediaFileTags(object, function( err, data){
 */
 
 var newMediaFile = {
-	user_uid:"A7S7F8GA7SD98A7SDF8ASD7G",				
+	user:"A7S7F8GA7SD98A7SDF8ASD7G",				
 	title:"How to make buble tea",
 	path:"http://www.youtube.com/bt",
 	type:1
@@ -169,6 +169,43 @@ var updatedMediaFile = {
 	'title':'torfino kick', 
 	'path':'www.torfino.com'
 };
+
+/*
+mediaAction.viewMedia(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - ");
+		for(i=0; i<data.length; ++i){
+			console.log(data[i].title + ' ' + data[i].path);
+		}
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
+/*
+mediaAction.getMediaFileTags(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - ");
+		for(i=0; i<data.length; ++i){
+			console.log(data[i].title + ' ' + data[i].description);
+		}
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
+/*
+mediaAction.getMediaFileUser(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - " + data.firstName + ' ' + data.lastName);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
 /*
 mediaAction.addMediaFile(newMediaFile, function( err, data){
 	if (data) {
@@ -182,6 +219,7 @@ mediaAction.addMediaFile(newMediaFile, function( err, data){
 });
 */
 
+/*
 mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data.title + ' ' + data.path);
@@ -189,3 +227,4 @@ mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
 		console.log( "[ERROR] - "+ err);
 	}
 });
+*/

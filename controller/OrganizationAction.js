@@ -54,6 +54,7 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 
 OrganizationAction.prototype.addResourceToDefaultSection = function( args, callback ){
 	CourseSection.findAll({where : { course : args.course }}).success( function( sections ){
+		console.log( "Checking number of elements "+ sections.length);
 		Section.find({ where : { title : "Default", uuid : sections.section }}).success(function( defaultSection ){
 			SectionMaterial.create({ section : defaultSection.uuid , material : args.resource}).success( function ( savedMaterial ){
 				callback( null, defaultSection.uuid );
@@ -129,9 +130,16 @@ OrganizationAction.prototype.addSection = function( args, callback){
 		callback("unable to create default section", null );
 		return;	
 	}
-	Section.findAll({ where : { title : args.title, app : args.app }}).success( function( similarCourses) {
-		CourseSection.findAll({ where : { section : similarCourses.uuid }}).success( function( courseSections ){
-			if ( 0 === courseSections.length ){
+	console.log ( "title = "+ args.title );
+	CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
+		var sectionID = new Array();
+		var i = courseSections.length - 1;
+		for (; i >= 0; i--){
+			sectionID.push( courseSections[i].section );
+			//console.log("courseSEctions course  "+ courseSections[i].course + " section = "+ courseSections[i].section);
+		}
+		Section.findAll({ where : { uuid : sectionID, title : args.title }}).success(function( sections ){
+			if ( 0 === sections.length ){
 				var newUUID = UUID.generate();
 				Section.create({ uuid : newUUID, title : args.title, app : args.app }).success(function(section){
 					CourseSection.create( { course : args.course, section : newUUID, app : args.app }).success(function(newCourseSection){
@@ -140,17 +148,18 @@ OrganizationAction.prototype.addSection = function( args, callback){
 					callback( error, null);
 					});
 				}).error(function(error){
-				callback(error, null );
+					callback(error, null );
 				});
 			}
 			else {
 				callback(" The section already exists with this course", null );
 			}
-		}).error( function( error ){  // if there was an error in looking for course sections
-			callback( error, null );  // with similar uuids
+		}).error( function( error ){
+			callback( error, null );
 		});
-	}).error( function( error ){  // if there was an error in finding courses
-		callback( error, null );  // that had the same title and under the same app
+		
+	}).error( function( error ){  // if there was an error in looking for course sections
+		callback( error, null );  // with similar uuids
 	});
 }
 
@@ -166,7 +175,6 @@ OrganizationAction.prototype.addSection = function( args, callback){
 OrganizationAction.prototype.addDefaultSection = function( args, callback){
 	var defaultTitle = "Default";
 	CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
-		console.log(courseSections );
 		if ( 0 === courseSections.length ){
 			var newUUID = UUID.generate();
 			Section.create({ uuid : newUUID, title : defaultTitle, app : args.app }).success(function(section){
@@ -200,14 +208,19 @@ OrganizationAction.prototype.addDefaultSection = function( args, callback){
 	returns the UUID of the deleted section
 */
 OrganizationAction.prototype.removeSection = function( args, callback){
-	if ( "Default" === title ){
+	if ( "Default" === args.title ){
 		callback("Unable to remove default section from course");
 	}
 	CourseSection.find({ where : { section : args.section }}).success( function( courseSection ){
 		var courseID = courseSection.course; // this is the course ID we need to work with
-		Section.findAll({ where : { title : "Default", app : args.app }}).success( function( sections ){
-			CourseSection.find({ where : { course : courseID, section : sections.uuid }}).success(function( defaultSection ){
-				var defaultSectionID = defaultSection.section;
+		Section.find({ where : { title : "Default", app : args.app, uuid : args.section }}).success( function( section ){
+			var i = sections.length - 1;
+			var arr = new Array();
+			for(; i >= 0; i-- ){
+				arr.push( sections[i].uuid);
+			}
+			CourseSection.find({ where : { course : courseID, section : arr }}).success(function( defaultCourseSection ){
+				var defaultSectionID = defaultCourseSection.section;
 				// we need to redirect all of the resources from this section to the default section
 				SectionMaterial.findAll({ where : {section : args.section }}).success(function( sectionMaterials ){
 					var i = sectionMaterials.length - 1;
@@ -218,12 +231,16 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 							callback( error, null ); // transactions in sequelize, we could get really screwed up at this point
 						}); 
 					}
+					
 					// we need to remove the association between the section to the cousrse
-					courseSection.destroy().error( function ( error ){
+					removedCourseSection.destroy().error( function ( error ){
 						callback( error, null );
 					});
 					// we can now finally remove the section itself
-					section.find({where : { uuid : section }}).success( function( removedSection ){
+					Section.find({where : { uuid : section }}).success( function( removedSection ){
+						removedSection.destroy().error( function( error ){
+							callback( error, null );
+						});
 						callback( null, removedSection );
 					}).error( function ( error ){
 						callback( error, null);
@@ -234,7 +251,10 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 			}).error( function( error ){
 				callback( error, null );
 			});
+		}).error( function( error ){
+			callback( error, null );
 		});
+	}).error( function( error ){
 		callback( error, null );
 	});
 }
@@ -252,18 +272,51 @@ var object = {
 		    "description": "This is a test description"
 		    */
 	//	title : "Default",
-		title : "Title Description",    
+	//	title : "Title Description3",  
+	//	section : "ec68c6c6-8844-4c9d-b806-92d70ffaf253",  // default section
+		course : "A827346H7ASDFG9",
+	//	app : 1
+  };
+  
+  
+var object2 = {
+		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		/*    "app":"Accent",
+		    "target":"B857346H7ASDFG9",
+		    "attribute":2,
+		    "description": "This is a test description"
+		    */
+	//	title : "Default",
+	//	title : "Title Description3",  
+		section : "ec68c6c6-8844-4c9d-b806-92d70ffaf253",  // default section
 		course : "A827346H7ASDFG9",
 		app : 1
   };
 
 
+
 var organizationAction = new OrganizationAction();
-organizationAction.addSection( object, function( err, data){
+//addSection
+//addDefaultSection
+//addResourceToDefaultSection
+//removeSection
+
+/*
+organizationAction.addDefaultSection( object, function( err, data){
 	if (data ) {
 		console.log( "[SUCCESS] - "+ data);
 	} else {
 		console.log( "[ERROR] - "+err);
 	}
 });
+  */
+
+organizationAction.removeSection( object2, function( err, data){
+	if (data ) {
+		console.log( "[SUCCESS] - "+ data);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+
   

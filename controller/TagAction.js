@@ -109,6 +109,51 @@ TagAction.prototype.viewQuestionTagged = function( args, callback ){
 
 /*
 
+View a comment that belongs to a tag.
+
+args = {	
+	commentID	: <id belonging to a comment>	
+}
+
+*/
+
+TagAction.prototype.viewCommentTagged = function( args, callback ){ 
+	//console.log(args.question_uid)	
+	queryES.getComment(args.commentID, 1, function(result){
+		if (result) {
+			callback(null, result);
+		}
+		else {
+			var error = "No result."
+			callback(error, null);
+		}
+	});	
+}
+
+/*
+
+View a comment that belongs to a tag by target_uuid.
+
+args = {	
+	target_uuid	: <target id belonging to a question>	
+}
+
+*/
+
+TagAction.prototype.viewCommentTaggedByTarget_uuid = function( args, callback ){ 	
+	queryES.getCommentByTarget_uuid(args.target_uuid, 0, function(result){
+		if (result) {
+			callback(null, result);
+		}
+		else {
+			var error = "No result."
+			callback(error, null);
+		}
+	});	
+}
+
+/*
+
 Get a tag that belongs to a user.
 
 args = {	
@@ -170,9 +215,11 @@ var object = {
 		//"start":2,
 		//"end":54
 		//"question_uid":"pJfznhheQuOicWWAjx7F010"
+		//'commentID':'aJfzggggguOicWWAjx7F05'
 		//"reviewlater":true
 		//'target_uuid':'abc1232'
-		'user_uid':'BSDF787D98A7SDF8ASD7G'
+		//'user_uid':'BSDF787D98A7SDF8ASD7G'
+		'target_uuid':'pJfznhheQuOicWWAjx7F00'
   };
 
 var newTag = {
@@ -211,7 +258,7 @@ tagAction.addTag(newTag, function( err, data){
 	}
 });
 */
-
+/*
 tagAction.updateTag(object, updatedTag, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data.title + ' ' + data.shared);
@@ -219,3 +266,15 @@ tagAction.updateTag(object, updatedTag, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+*/
+
+
+tagAction.viewCommentTaggedByTarget_uuid(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - "+ JSON.stringify(data));
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+
+

@@ -10,9 +10,6 @@ var db = new Sequelize(
 		host: config.mysqlDatabase["host"]
 	}
 );
-var UUID = require('com.izaakschroeder.uuid');
-var SectionMaterial = require('models/sectionMaterial.js');
-var CourseSection   = require('models/courseSection.js');
 
 var Section = exports.Section = db.define('Section', {
 	uuid: {type: Sequelize.STRING, allowNull: false},

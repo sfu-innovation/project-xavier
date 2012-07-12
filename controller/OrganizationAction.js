@@ -1,42 +1,12 @@
 var fs      = require("fs");
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var UUID = require('com.izaakschroeder.uuid');
+var CourseSection = require('../models/courseSection.js').CourseSection;
+var Section = require('../models/section.js').Section;
+var SectionMaterial = require('../models/sectionMaterial.js').SectionMaterial;	
 
-var CourseSection = require('../models/courseSection.js');
-var Section = require('../models/section.js');
-var SectionMaterial = require('../models/sectionMaterial.js');		
+var OrganizationAction = function(){}
 
-
-var OrganizationAction = {
-
-}
-
-
-/*
-   Adds a resource to a default section of the course
-	args = {
-		resource : UUID of the resource.
-		course   : UUID of the course.
-	}
-	
-	returns the section UUID
-*/
-
-OrganizationAction.prototype.addResourceToDefaultSection = function( args, callback ){
-	CourseSection.findAll({where : { course : args.course }}).success( function( sections ){
-		Section.find({ where : { title : "Default", uuid : sections.section }}).success(function( defaultSection ){
-			SectionMaterial.create({ section : defaultSection.uuid , material : args.resource}).success( function ( savedMaterial ){
-				callback( null, defaultSection.uuid );
-			}).error( function ( error ){
-				callback( error, null );
-			});
-		}).error( function ( error ){
-			callback( error, null );
-		});
-	}).error( function ( error ){
-		callback( error, null );
-	});
-}
 /*
 	To add a resource to a section. Resources must be added to a section,
 	if the user wants to try to add them to a course they will be default be 
@@ -73,6 +43,32 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 }
 
 /*
+   Adds a resource to a default section of the course
+	args = {
+		resource : UUID of the resource.
+		course   : UUID of the course.
+	}
+	
+	returns the section UUID
+*/
+
+OrganizationAction.prototype.addResourceToDefaultSection = function( args, callback ){
+	CourseSection.findAll({where : { course : args.course }}).success( function( sections ){
+		Section.find({ where : { title : "Default", uuid : sections.section }}).success(function( defaultSection ){
+			SectionMaterial.create({ section : defaultSection.uuid , material : args.resource}).success( function ( savedMaterial ){
+				callback( null, defaultSection.uuid );
+			}).error( function ( error ){
+				callback( error, null );
+			});
+		}).error( function ( error ){
+			callback( error, null );
+		});
+	}).error( function ( error ){
+		callback( error, null );
+	});
+}
+
+/*
 	When we want to remove a resource from a section. We simply move the section UUID
 	to be the default section UUID for that course
 	
@@ -94,7 +90,7 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 				var defaultSectionID = defaultSection.uuid;
 				SectionMaterial.find({ where : { material : args.resource }}).success( function( materialToDefault ){
 					materialToDefault.updateAttributes({
-  							section: defaultSectionID;
+  							section: defaultSectionID
 						}).error(function(error) { // if there is a wierd crash at this point since im not sure how to do 
 							callback( error, null ); // transactions in sequelize, we could get really screwed up at this point
 						}); 
@@ -129,12 +125,13 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 	returns the UUID of the new section
 */
 OrganizationAction.prototype.addSection = function( args, callback){
-	if ( "default" === title ){
+	if ( "Default" === args.title ){
 		callback("unable to create default section", null );
+		return;	
 	}
 	Section.findAll({ where : { title : args.title, app : args.app }}).success( function( similarCourses) {
 		CourseSection.findAll({ where : { section : similarCourses.uuid }}).success( function( courseSections ){
-			if ( null === courseSections ){
+			if ( 0 === courseSections.length ){
 				var newUUID = UUID.generate();
 				Section.create({ uuid : newUUID, title : args.title, app : args.app }).success(function(section){
 					CourseSection.create( { course : args.course, section : newUUID, app : args.app }).success(function(newCourseSection){
@@ -162,35 +159,31 @@ OrganizationAction.prototype.addSection = function( args, callback){
 		
 	args = {
 		course: UUID of the course
-		app   : enumerated type of the application, refer to enumerated types in docs
 	}
 	
 	returns the UUID of the new section
 */
 OrganizationAction.prototype.addDefaultSection = function( args, callback){
 	var defaultTitle = "Default";
-	Section.findAll({ where : { title : defaultTitle, app : args.app }}).success( function( similarCourses) {
-		CourseSection.findAll({ where : { section : similarCourses.uuid }}).success( function( courseSections ){
-			if ( null === courseSections ){
-				var newUUID = UUID.generate();
-				Section.create({ uuid : newUUID, title : defaultTitle, app : args.app }).success(function(section){
-					CourseSection.create( { course : args.course, section : newUUID, app : args.app }).success(function(newCourseSection){
-						callback( null, newUUID );
-					}).error(function(error){
-					callback( error, null);
-					});
+	CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
+		console.log(courseSections );
+		if ( 0 === courseSections.length ){
+			var newUUID = UUID.generate();
+			Section.create({ uuid : newUUID, title : defaultTitle, app : args.app }).success(function(section){
+				CourseSection.create( { course : args.course, section : newUUID, app : args.app }).success(function(newCourseSection){
+					callback( null, newUUID );
 				}).error(function(error){
-				callback(error, null );
+				callback( error, null);
 				});
-			}
-			else {
-				callback(" The section already exists with this course", null );
-			}
-		}).error( function( error ){  // if there was an error in looking for course sections
+			}).error(function(error){
+			callback(error, null );
+			});
+		}
+		else {
+			callback(" The section already exists with this course", null );
+		}
+	}).error( function( error ){  // if there was an error in looking for course sections
 			callback( error, null );  // with similar uuids
-		});
-	}).error( function( error ){  // if there was an error in finding courses
-		callback( error, null );  // that had the same title and under the same app
 	});
 }
 /*
@@ -247,4 +240,30 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 }
 
 
-module.exports = new OrganizationAction;
+//module.exports = new OrganizationAction;
+
+
+
+var object = {
+		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		/*    "app":"Accent",
+		    "target":"B857346H7ASDFG9",
+		    "attribute":2,
+		    "description": "This is a test description"
+		    */
+	//	title : "Default",
+		title : "Title Description",    
+		course : "A827346H7ASDFG9",
+		app : 1
+  };
+
+
+var organizationAction = new OrganizationAction();
+organizationAction.addSection( object, function( err, data){
+	if (data ) {
+		console.log( "[SUCCESS] - "+ data);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+  

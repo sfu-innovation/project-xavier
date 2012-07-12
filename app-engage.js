@@ -39,13 +39,22 @@ app.get('/login', routesCommon.login);
 app.get('/api/user/:id', routesCommon.user); // get user by id
 app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
 
+app.get('/api/course/:id/members', routesCommon.courseMembers);
+
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
+
+
 // follower
-app.put('/api/resource/:uid/follow/:follower', routesEngage.follow); // adds a follower to a question tag
-app.delete('/api/resource/:uid/follow/:follower', routesEngage.follow); // removes a follower from a question tag
+//TODO: need update this into document
+app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower follows a question
+//TODO: need update this into document
+app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+
+app.post('/api/resource', routesEngage.createResource);
+//POST means create here
 app.post('/api/resource/create', routesEngage.createResource);

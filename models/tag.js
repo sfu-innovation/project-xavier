@@ -30,7 +30,7 @@ var Tag = exports.Tag = db.define('Tag', {
 
 //Saves tag to database
 //Tag gets passed in as a JSON object
-exports.createTag = function(tag, callback){	
+exports.createTag = function(tag, callback){
 	var newTag = Tag.build(tag);
 	newTag.save().error(function(error){
 		callback(error, null);
@@ -70,7 +70,7 @@ exports.getUserTag = function(args, callback){
 }
 
 
-//Update a tag with spcified attributes
+//Update a tag with specified attributes
 exports.updateTag = function(user_uid, args, callback){
 	Tag.find({where: user_uid}).success(function(tag) {		
 		tag.updateAttributes(args).success(function(updatedTag) {			

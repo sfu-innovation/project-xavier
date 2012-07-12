@@ -1,4 +1,6 @@
 var courseModel = require("./../../models/course");
+
+
 var User = require("../../models/user");
 
 exports.index = function(request, response) {
@@ -81,6 +83,22 @@ exports.course = function(request, response) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, course: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));
+			}
+		});
+	}
+}
+
+
+exports.courseMembers = function(request,response){
+	var course_id = request.params.id;
+	if (request.method === "GET") {
+		courseModel.getCourseMembers({ course: course_id }, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, members: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));

@@ -6,6 +6,7 @@ $(document).ready(function () {
 	$("#tabs").tabs();
 
 	var rqra = new coreApi.Presenter();
+	var engage = new coreApi.Engage();
 	var common = new coreApi.Common();
 
 	loadAllQuestions(rqra);
@@ -592,6 +593,49 @@ $(document).ready(function () {
 			alert('CANNOT BE EMPTY ID');
 		}
 	});
+
+
+	/////////////////////////////////////resource//////////////////////
+
+	$('#createResource').click(function (event) {
+
+		var course_id = $('#resource_course');
+		var title = $('#resource_title');
+		var description = $('#resource_description');
+		var type = $('#resource_resource_type');
+		var filetype = $('#resource_file_type');
+		var url = $('#resource_url');
+
+		if (course_id && title && description && type && filetype && url) {
+			engage.createResource(course_id, title, description,type,filetype,url, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK REFRESH NOW');
+					}
+					else{
+
+						alert(data.message);
+
+					}
+
+				}
+
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+		}
+		else{
+			alert('CANNOT BE EMPTY FILED');
+		}
+
+	})
+
 
 
 });

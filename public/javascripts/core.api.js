@@ -40,6 +40,33 @@ coreApi._construct = function () {
 
 	function Engage() {
 
+		this.createResource = function (course_id,title,description,resource_type,file_type,url,callback){
+			console.log('API - createResource');
+			var body = {};
+			var resource = {};
+			resource.course = course_id;
+			resource.title = title;
+			resource.description = description;
+			resource.resourceType = resource_type;
+			resource.fileType = file_type;
+			resource.url = url;
+
+			$.ajax({
+
+				url:'/api/resource',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
 	}
 
 	function Presenter() {
@@ -57,7 +84,7 @@ coreApi._construct = function () {
 //			question.timestamp = '2008-10-21';
 //			question.followup = [];
 			body.question = question;
-			console.log()
+
 
 			$.ajax({
 				//url : '/api/user/'+user_id+'/questions',

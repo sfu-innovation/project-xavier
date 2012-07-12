@@ -52,8 +52,10 @@ app.post('/api/course/', routesCommon.courseQuery); // get a list of courses bas
 //TODO: need update this into document
 app.post("/api/question", routesPresenter.question); // post a new question by user id stored in seesion
 
+
 //TODO: need update this into document
 app.get("/api/questions", routesPresenter.questions); // get all questions
+app.get("/api/questions/unanswered", routesPresenter.questionsUnanswered); // get all unanswered questions
 
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
@@ -74,6 +76,8 @@ app.put("/api/question/:uid/unfollow", routesPresenter.unfollowQuestion); // a f
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
 app.post("/api/search/", routesPresenter.search); // search based on a query
 
+
+
 // comments
 
 //TODO: need update this into document
@@ -91,3 +95,5 @@ app.get("/api/user/:uid/comments", routesPresenter.commentsByUser); // gets a li
 app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
+
+

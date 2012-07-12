@@ -86,6 +86,28 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 	});
 }
 
+QueryES.prototype.getAllUnansweredQuestions = function(appType, callback){
+	console.log('apptype: '+appType);
+
+	var data = {
+		query: {
+			term:{status:"unanswered"}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits); //only need the hits.hits part
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
 //search based on query
 QueryES.prototype.searchAll = function(search, appType, callback){
 

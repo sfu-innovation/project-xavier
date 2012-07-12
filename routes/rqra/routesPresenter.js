@@ -94,9 +94,31 @@ exports.questionsRoute = function(appType, request, response){
 //get all questions
 exports.questions = function(request, response) {
 	   exports.questionsRoute(0,request,response);
+}
+
+exports.questionsUnansweredRoute = function(appType, request, response){
+
+	console.log(request);
+	if (request.method === "GET") {
+		queryES.getAllUnansweredQuestions( appType, function(result) {
+			console.log(result);
+
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
 
 }
 
+exports.questionsUnanswered = function(request, response){
+	console.log('G');
+	exports.questionsUnansweredRoute(0, request, response);
+}
 
 exports.questionsByUserRoute = function(appType, request, response) {
 	var userId = request.params.uid;
@@ -379,3 +401,4 @@ exports.searchRoute = function(appType, request, response) {
 exports.search = function(request, response) {
 	exports.searchRoute(0, request, response);
 }
+

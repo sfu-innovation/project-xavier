@@ -21,7 +21,7 @@ var UserProfile = exports.UserProfile = db.define('UserProfile', {
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 
-exports.getUserProfile = function(userUUID, callback){
+exports.getUserProfile = function(userUUID, callback){	
 	UserProfile.find({where: {user:userUUID}}).success(function(profile){
 		if(profile){
 			callback(null, profile);

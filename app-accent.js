@@ -98,3 +98,9 @@ app.post("/api/tag", routesAccent.tag); // create a new tag
 app.get("/api/tag/:id", routesAccent.tag); // get a tag by id
 app.put("/api/tag/:id", routesAccent.tag); // update a tag by id
 app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
+
+
+//userprofile
+
+app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
+app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id

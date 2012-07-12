@@ -453,7 +453,7 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 
-	if (direction === '0') {
+	if (parseInt(direction) === 0) {
 		data = {
 			'script':'ctx._source.upvote += upvote',
 			'params':{

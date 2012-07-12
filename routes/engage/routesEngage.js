@@ -1,4 +1,5 @@
 var Resource = require(__dirname + "/../../models/resource");
+var routesPresenter = require("./../rqra/routesPresenter.js");
 
 exports.followQuestion = function(request, response) {
 	routesPresenter.followQuestionRoute(2, request, response);

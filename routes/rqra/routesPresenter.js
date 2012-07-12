@@ -321,7 +321,6 @@ exports.commentVote = function(request, response) {
 
 exports.commentAnsweredRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
-	var direction = request.params.dir;
 	
 	if (request.method === "PUT") {
 		queryES.updateIsAnswered(commentId, appType, function(result) {

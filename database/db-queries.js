@@ -21,6 +21,9 @@ var Tag = require('../models/tag.js').Tag;
 var UserProfile = require('../models/userProfile.js').UserProfile;
 var Like = require('../models/like.js').Like;
 var Star = require('../models/star.js').Star;
+var Section = require('../models/section.js').Section;
+var SectionMaterial = require('../models/sectionMaterial.js').SectionMaterial;
+var CourseSection = require('../models/courseSection.js').CourseSection;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -54,7 +57,10 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, Tag),
 				createTable.bind(undefined, UserProfile),
 				createTable.bind(undefined, Like),
-				createTable.bind(undefined, Star)
+				createTable.bind(undefined, Star),
+				createTable.bind(undefined, Section),
+				createTable.bind(undefined, SectionMaterial),
+				createTable.bind(undefined, CourseSection)
 				], callback)
 		}
 	});

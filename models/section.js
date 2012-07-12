@@ -13,6 +13,7 @@ var db = new Sequelize(
 
 var Section = exports.Section = db.define('Section', {
 	uuid: {type: Sequelize.STRING, allowNull: false},
-	title: {type: Sequelize.STRING, allowNull: false}
+	title: {type: Sequelize.STRING, allowNull: false},
+	app  : {type: Sequelize.INTEGER, allowNull: false}
 });
 

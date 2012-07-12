@@ -8,11 +8,10 @@ var db = new Sequelize(
 	{
 		port: config.mysqlDatabase["port"],
 		host: config.mysqlDatabase["host"]
-	}
+	}	
 );
 
 var SectionMaterial = exports.SectionMaterial = db.define('SectionMaterial', {
 	section: {type: Sequelize.STRING, allowNull: false},
-	material: {type: Sequelize.STRING, allowNull: false}
+	material: {type: Sequelize.STRING, allowNull: false},
 });
-

@@ -80,7 +80,7 @@ exports.tag = function(request,response){
 		});
 	}
 	else if (request.method === 'GET'){
-		Tag.selectTag(request.body,tag, function(error,result){
+		Tag.selectTag(request.body.tag, function(error,result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -94,7 +94,7 @@ exports.tag = function(request,response){
 
 	}
 	else if (request.method === 'PUT'){
-		Tag.updateTag(request.body,tag, function(error,result){
+		Tag.updateTag(request.body.tag, function(error,result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));

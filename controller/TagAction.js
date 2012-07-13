@@ -224,7 +224,7 @@ var newTag = {
 	"type":2,
 	"target":"abc1235",
 	"title":"mario kart",
-	'description":"luigi",
+	"description":"luigi",
 	"question":"aJfznhseQuOicWWAjx7F00",
 	"important":false,
 	"interest":false,
@@ -277,6 +277,7 @@ tagAction.updateTag(object, updatedTag, function( err, data){
 });
 */
 
+
 tagAction.getTaggedUser(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data.lastName + ' ' + data.firstName);
@@ -284,6 +285,7 @@ tagAction.getTaggedUser(object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+
 
 /*
 tagAction.viewQuestionTagged(object, function( err, data){

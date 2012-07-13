@@ -61,7 +61,7 @@ exports.unfollowQuestion = function(request, response) {
 }
 
 
-//Tag
+// Tag
 exports.tag = function(request,response){	
 	if(request.method === 'POST'){
 		TagAction.addTag(request.body, function(error, result){
@@ -75,8 +75,9 @@ exports.tag = function(request,response){
 			}
 		});
 	}
-	else if (request.method === 'GET'){								
-		TagAction.viewTags({'target':request.params.id}, function(error, result){
+	else if (request.method === 'GET'){	
+		var targetID = request.params.id;							
+		TagAction.viewTags({'target':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -88,7 +89,8 @@ exports.tag = function(request,response){
 		});		
 	}
 	else if (request.method === 'PUT'){		
-		TagAction.updateTag({'target':request.params.id}, request.body, function(error, result){
+		var targetID = request.params.id;
+		TagAction.updateTag({'target':targetID}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -107,6 +109,55 @@ exports.tag = function(request,response){
 
 
 }
+
+exports.taggedQuestion = function(request,response){	
+	if (request.method === 'GET'){		
+		var questionID = request.params.qid;						
+		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
+exports.taggedComment = function(request,response){	
+	if (request.method === 'GET'){		
+		var commentID = request.params.cid;				
+		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
+exports.taggedUser = function(request,response){	
+	if (request.method === 'GET'){
+		var userId = request.params.uid;								
+		TagAction.getTaggedUser({'user':userId}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
 
 //deprecated
 

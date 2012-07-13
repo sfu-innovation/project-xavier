@@ -215,6 +215,25 @@ var newTag = {
 	shared:false
 };
 
+// REST
+/*
+{
+	"user":"BSDF787D98A7SDF8ASD7G2",
+	"start":12,
+	"end":34,			
+	"type":2,
+	"target":"abc1235",
+	"title":"mario kart",
+	'description":"luigi",
+	"question":"aJfznhseQuOicWWAjx7F00",
+	"important":false,
+	"interest":false,
+	"examable":true,
+	"reviewlater":true,
+	"shared":false
+}
+*/
+
 
 var tagAction = new TagAction();
 

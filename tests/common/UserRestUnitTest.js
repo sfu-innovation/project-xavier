@@ -19,6 +19,13 @@ module.exports = {
 
 			var that = this;
 
+			this.requestOptions = {
+				host:config.presenterServer.host,
+				headers: {
+					"content-type": "application/json"
+				}
+			}
+
 			queries.dropDB(config.mysqlDatabase["db-name"], function(){
 				queries.createDB(config.mysqlDatabase["db-name"], function(){
 					
@@ -55,17 +62,11 @@ module.exports = {
 		
 		getUser: function(test){
 
-			options = {
-				host:config.presenterServer.host,
-				method:"GET",
-				path:"/api/user/" + this.user.uuid,
-				port:this.port,
-				headers: {
-					"content-type": "application/json"
-				}
-			};
-		
-			var request = http.get(options, function(response){
+			this.requestOptions.path = "/api/user/" + this.user.uuid;
+			this.requestOptions.port = this.port;
+			this.requestOptions.method = "GET";
+
+			var request = http.get(this.requestOptions, function(response){
 				var body = "";
 				response.on('data', function (chunk) {
 					body += chunk;
@@ -79,18 +80,14 @@ module.exports = {
 			});
 		},
 		getUserProfile: function(test){
-			var that = this;
-			options = {
-				host:config.presenterServer.host,
-				method:"GET",
-				path:"/api/user/" + this.user.uuid + "/profile",
-				port:this.port,
-				headers: {
-					"content-type": "application/json"
-				}
-			};
 
-			var request = http.get(options, function(response){
+			var that = this;
+
+			this.requestOptions.path = "/api/user/" + this.user.uuid + "/profile";
+			this.requestOptions.port = this.port;
+			this.requestOptions.method = "GET";
+
+			var request = http.get(this.requestOptions, function(response){
 				var body = "";
 				response.on('data', function (chunk) {
 					body += chunk;

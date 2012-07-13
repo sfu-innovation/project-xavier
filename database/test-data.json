@@ -293,7 +293,52 @@
 			"type":0
 		}
 	],
-
+    "resources":[
+    	{
+    		"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"title" : "Test resource title",
+    		"description" : "Test resource description",
+    		"resourceType" : 2,
+    		"fileType" : "mp4",
+    		"likes" : 2, 
+    		"url" : "http://www.google.com"
+    		
+    	},
+    	{
+    		"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"title" : "Test resource title1",
+    		"description" : "Test resource description",
+    		"resourceType" : 2,
+    		"fileType" : "mp4",
+    		"likes" : 2, 
+    		"url" : "http://www.google.com"
+    		
+    	},
+    	{
+    		"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"title" : "Test resource title2",
+    		"description" : "Test resource description",
+    		"resourceType" : 2,
+    		"fileType" : "mp4",
+    		"likes" : 2, 
+    		"url" : "http://www.google.com"
+    		
+    	},
+    	{
+    		"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
+    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"title" : "Test resource title2",
+    		"description" : "Test resource description",
+    		"resourceType" : 2,
+    		"fileType" : "mp4",
+    		"likes" : 2, 
+    		"url" : "http://www.google.com"
+    		
+    	}
+    ],
 	"tags": [
 		{
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G",	

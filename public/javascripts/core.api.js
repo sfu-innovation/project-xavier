@@ -1,11 +1,71 @@
 var coreApi = {}
 coreApi._construct = function () {
 
+	function Common(){
+
+		this.getUserById = function(id,callback ){
+			console.log("API - getUserById");
+			$.ajax({
+				url:'/api/user/' + id,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+
+		}
+
+
+
+		this.getCourseById = function(id,callback ){
+			console.log("API - getCourseById");
+			$.ajax({
+				url:'/api/course/' + id,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+
+		}
+
+
+
+
+	}
+
 	function Accent() {
 
 	}
 
 	function Engage() {
+
+		this.createResource = function (course_id,title,description,resource_type,file_type,url,callback){
+			console.log('API - createResource');
+			var body = {};
+			var resource = {};
+			resource.course = course_id;
+			resource.title = title;
+			resource.description = description;
+			resource.resourceType = resource_type;
+			resource.fileType = file_type;
+			resource.url = url;
+
+			$.ajax({
+
+				url:'/api/resource',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
 
 	}
 
@@ -24,7 +84,7 @@ coreApi._construct = function () {
 //			question.timestamp = '2008-10-21';
 //			question.followup = [];
 			body.question = question;
-			console.log()
+
 
 			$.ajax({
 				//url : '/api/user/'+user_id+'/questions',
@@ -315,7 +375,7 @@ coreApi._construct = function () {
 
 	}
 
-
+	this.Common = Common;
 	this.Accent = Accent;
 	this.Engage = Engage;
 	this.Presenter = Presenter;

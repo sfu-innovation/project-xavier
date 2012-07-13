@@ -1,6 +1,7 @@
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
+var UUID = require('com.izaakschroeder.uuid');
 var CourseMember = require('./courseMember.js').CourseMember;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
@@ -10,7 +11,6 @@ var db = new Sequelize(
 	{
 		port: config.mysqlDatabase["port"],
 		host: config.mysqlDatabase["host"]
-		//logging: false
 	}
 );
 
@@ -24,6 +24,16 @@ var Course = exports.Course = db.define('Course', {
 	instructor: {type: Sequelize.STRING, allowNull: false},
 	meetingtimes: {type: Sequelize.TEXT}
 });
+
+exports.createCourse = function(newCourse, callback){
+	newCourse.uuid = UUID.generate();
+	Course.create(newCourse).success(function(course){
+		callback(null, course);
+	}).error(function(error){
+		callback(error, null);
+	})
+
+}
 
 exports.selectCourse = function(args, callback){
 	Course.find({where: args}).success(function(course){

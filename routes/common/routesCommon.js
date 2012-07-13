@@ -1,5 +1,8 @@
 var courseModel = require("./../../models/course");
+
+
 var User = require("../../models/user");
+var UserProfile = require("../../models/userProfile")
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -14,7 +17,6 @@ exports.login = function(request, response) {
 	var ticket = request.query["ticket"];
 	if (ticket) {
 		cas.validate(ticket, function(err, status, username) {
-			console.log(status + " " + username);
 			if (err) {
 				// Handle the error
 	        	response.send({error: err});
@@ -25,8 +27,25 @@ exports.login = function(request, response) {
 	        	// Log the user in and store user in the session
 	        	User.selectUser({"userID":username}, function(error, user){
 	        		if(!error){
-	        			request.session.user = user;
-						response.send(request.session);
+	        			//If no user was found in the database, create a new one
+	        			if(!user){
+	        				var newUser = {
+								firstName: ""
+								, lastName: ""
+								, userID: username
+								, email: username + "@sfu.ca"
+							}
+	        				User.createUser(newUser, function(error, user){
+	        					if(error){
+		        					response.send(error);
+	        					}
+	        					else{
+	        						request.session.user = user;
+									response.send(request.session);
+	        					}
+	        				})
+
+	        			}
 	        		}
 	        		else{
 	        			response.send(error);
@@ -59,6 +78,39 @@ exports.user = function(request, response) {
 	}
 }
 
+exports.userProfile = function(request,response){
+	var user_id = request.params.id;
+
+	if (request.method === "GET") {
+		UserProfile.getUserProfile(user_id, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, user: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+			}
+
+		});
+
+	}
+
+	if (request.method === "PUT") {
+		UserProfile.updateProfile(user_id, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, user: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+			}
+
+		});
+	}
+
+}
+
+
 exports.userQuery = function(request, response) {
 	if (request.method === "POST" && request.body.where) {
 		User.selectUser(request.body.where, function(error, result) {
@@ -74,6 +126,7 @@ exports.userQuery = function(request, response) {
 }
 
 exports.course = function(request, response) {
+
 	var course_id = request.params.id;
 	
 	if (request.method === "GET") {
@@ -81,6 +134,22 @@ exports.course = function(request, response) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, course: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));
+			}
+		});
+	}
+}
+
+
+exports.courseMembers = function(request,response){
+	var course_id = request.params.id;
+	if (request.method === "GET") {
+		courseModel.getCourseMembers({ course: course_id }, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, members: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));

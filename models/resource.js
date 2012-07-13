@@ -64,6 +64,23 @@ exports.createResource = function(userUUID, args, callback){
 	});
 }
 
+//Deletes the resource with the given uuid
+exports.deleteResource = function(resourceUUID, callback){
+	Resource.find({where: {uuid:resourceUUID}}).success(function(resource){
+		if(resource){
+			resource.destroy().success(function(result){
+				callback(null, result);
+			}).error(function(error){
+				callback(error, null);
+			})
+		}
+		else{
+			callback("That resource doesn't exist!", null);
+		}
+	})
+}
+
+//Gets the number of likes for the course that matches args
 exports.getLikes = function(args, callback){
 	Resource.find({where:args}).success(function(resource){
 		if(resource){

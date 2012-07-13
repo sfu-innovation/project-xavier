@@ -1,16 +1,12 @@
 var Resource = require(__dirname + "/../../models/resource");
+var routesPresenter = require("./../rqra/routesPresenter.js");
 
-exports.follower = function(request, response) {
-	var resource_id = request.params.uid;
-	var follower_id = request.params.follower;
+exports.followQuestion = function(request, response) {
+	routesPresenter.followQuestionRoute(2, request, response);
+}
 
-	if (request.method === "PUT") {
-		response.writeHead(500, { 'Content-Type': 'application/json' });
-		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-	} else if (request.method === "DELETE") {
-		response.writeHead(500, { 'Content-Type': 'application/json' });
-		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-	}
+exports.unfollowQuestion = function(request, response) {
+	routesPresenter.unfollowQuestionRoute(2, request, response);
 }
 
 exports.createResource = function(request, response){

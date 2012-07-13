@@ -75,11 +75,10 @@ exports.question = function(request, response) {
 	exports.questionRoute(0, request, response);
 }
 
+exports.questionsRoute = function(appType, request, response){
 
-//get all questions
-exports.questions = function(request, response) {
 	if (request.method === "GET") {
-		queryES.getAllQuestions( 0, function(result) {
+		queryES.getAllQuestions( appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -92,6 +91,34 @@ exports.questions = function(request, response) {
 
 }
 
+//get all questions
+exports.questions = function(request, response) {
+	   exports.questionsRoute(0,request,response);
+}
+
+exports.questionsUnansweredRoute = function(appType, request, response){
+
+	console.log(request);
+	if (request.method === "GET") {
+		queryES.getAllUnansweredQuestions( appType, function(result) {
+			console.log(result);
+
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+
+}
+
+exports.questionsUnanswered = function(request, response){
+	console.log('G');
+	exports.questionsUnansweredRoute(0, request, response);
+}
 
 exports.questionsByUserRoute = function(appType, request, response) {
 	var userId = request.params.uid;
@@ -106,17 +133,20 @@ exports.questionsByUserRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
 			}
 		});
-	} else if (request.method === "POST") {
-		queryES.addQuestion(request.body.question, appType, function(result) {
-			if (result) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, question: result}));
-			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
-			}
-		});
 	}
+		//deprecated, used POST for question in questionRoute
+
+//	} else if (request.method === "POST") {
+//		queryES.addQuestion(request.body.question, appType, function(result) {
+//			if (result) {
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, question: result}));
+//			} else {
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+//			}
+//		});
+//	}
 }
 
 exports.questionsByUser = function(request, response) {
@@ -243,10 +273,9 @@ exports.comment = function(request, response) {
 }
 
 
-//get all comments
-exports.comments = function(request, response) {
+exports.commentsRoute = function(appType,request,response){
 	if (request.method === "GET") {
-		queryES.getAllComments(0, function(result) {
+		queryES.getAllComments(appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
@@ -256,6 +285,12 @@ exports.comments = function(request, response) {
 			}
 		});
 	}
+
+}
+
+//get all comments
+exports.comments = function(request, response) {
+	  exports.commentsRoute(0,request,response);
 
 }
 
@@ -272,12 +307,16 @@ exports.commentsByUserRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
 			}
 		});
-	} else if (request.method === "POST") {
-		queryES.addComment(request.body.comment, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
-		});
 	}
+
+	//deprecated, used POST in commentRoute instead
+
+//	else if (request.method === "POST") {
+//		queryES.addComment(request.body.comment, appType, function(result) {
+//			response.writeHead(200, { 'Content-Type': 'application/json' });
+//			response.end(JSON.stringify({ errorcode: 0 }));
+//		});
+//	}
 }
 
 exports.commentsByUser = function(request, response) {
@@ -304,7 +343,6 @@ exports.commentVote = function(request, response) {
 
 exports.commentAnsweredRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
-	var direction = request.params.dir;
 	
 	if (request.method === "PUT") {
 		queryES.updateIsAnswered(commentId, appType, function(result) {
@@ -363,3 +401,4 @@ exports.searchRoute = function(appType, request, response) {
 exports.search = function(request, response) {
 	exports.searchRoute(0, request, response);
 }
+

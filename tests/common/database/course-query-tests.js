@@ -28,12 +28,14 @@ module.exports = {
 			});
 		},
 		"Select Course": function(test){
+			console.log("Starting test");
 			Course.selectCourse({'uuid':'A8G7S6H7ASDFG9'}, function(error, course){
 				test.ok(course.number.should.be.eql(307));
 				test.done();
 			});
 		},
 		"Get Course Instructor": function(test){
+			console.log("Starting test");
 			Course.getInstructor({'uuid': 'A8G7S6H7ASDFG9'}, function(error, instructor){
 				test.ok(instructor['type'].should.be.eql(0));
 				test.ok(instructor.userID.should.be.eql('ted'));
@@ -42,6 +44,7 @@ module.exports = {
 		},
 		//Tests that there are the correct number of course members, and that they are all students
 		"Get Course Members": function(test){
+			console.log("Starting test");
 			Course.getCourseMembers({'course':'A8G7S6H7ASDFG9'}, function(error, members){
 				test.ok(members.length.should.be.eql(2));
 				for(index in members){

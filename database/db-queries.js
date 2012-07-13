@@ -126,7 +126,8 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, UserNotification, data.usernotification),
 		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings),
 		insert.bind(undefined, MediaFile, data.mediafiles),
-		insert.bind(undefined, Tag, data.tags)
+		insert.bind(undefined, Tag, data.tags),
+		insert.bind(undefined, Resource, data.resources)
 		], callback);
 }
 

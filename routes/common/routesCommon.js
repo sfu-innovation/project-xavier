@@ -3,7 +3,7 @@ var courseModel = require("./../../models/course");
 var User = require("../../models/user");
 var UserProfile = require("../../models/userProfile");
 
-var SectionMaterial = require("../../models/sectionMaterial");
+//var SectionMaterial = require("../../models/sectionMaterial");
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -217,7 +217,7 @@ exports.courseQuery = function(request, response) {
 		});
 	}
 }
-
+/*
 //section materials
 exports.addResourceToSection = function(request, response){
 	if(request.method === "POST"){
@@ -236,3 +236,4 @@ exports.addResourceToSection = function(request, response){
 exports.updateResourceFromSectionToSection = function(request, response){}
 
 exports.removeResourceFromSection = function(request, response){}
+*/

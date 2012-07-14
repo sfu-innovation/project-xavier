@@ -34,3 +34,18 @@ exports.createResource = function(request, response){
 
 	}
 }
+
+//Deletes the resource with the uuid provided in the response
+exports.deleteResource = function(request, response){
+	if(request.method === 'DELETE'){
+		var resourceID = request.params.uuid;
+		Resource.deleteResource(resourceID, function(error, resource){
+			if(error){
+				response.end(JSON.stringify({ errorcode: 1, message: "Couldn't delete that resource"}));
+			}
+			else{
+				response.end(JSON.stringify({errorcode: 0, message: "DELETED!"}));
+			}
+		})
+	}
+}

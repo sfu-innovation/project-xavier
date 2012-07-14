@@ -3,6 +3,11 @@
 
 $(document).ready(function () {
 
+	if(window.location.toString().indexOf("localhost") ==-1){
+		alert("WRONG!!! To use this page, you need run the app first then visit localhost:port/test.html");
+	}
+
+
 	$("#tabs").tabs();
 
 	var rqra = new coreApi.Presenter();
@@ -540,7 +545,7 @@ $(document).ready(function () {
 					if (data.errorcode === 0) {
 						$('#user_first_name').val(data.user.firstName);
 						$('#user_last_name').val(data.user.lastName);
-						$('#user_type').val(data.user.typee);
+						$('#user_type').val(data.user.type);
 						$('#user_prefered_name').val(data.user.preferedName);
 						$('#user_user_id').val(data.user.userID);
 						$('#user_email').val(data.user.email);
@@ -635,11 +640,7 @@ $(document).ready(function () {
 				if (data) {
 					if (data.errorcode === 0) {
 
-						$('#userp_bio').val(data.profile.bio);
-						$('#userp_profile_picture').val(data.profile.profilePicture);
-						$('#userp_last_watched_tag').val(data.profile.lastWatchedTag);
-						$('#userp_created').val(data.profile.createdAt);
-						$('#userp_updated').val(data.profile.updatedAt);
+						alert('OK OK REFRESH NOW');
 
 
 					}

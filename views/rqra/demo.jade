@@ -1,0 +1,104 @@
+div#logoContainer
+	div#logo
+		img(src="images/img.png", alt="logo image")
+	
+	div#pageContainer
+		<!-- header panel -->
+		div#headerPanel
+			div#mainMenu
+				div#browseButton(class="mainMenuButton", onmouseover="openMenu('browserButtonMenu')")
+					div.mainMenuButtonText Browse
+					div#browserButtonMenu(class="dropMenu")
+						div#menuTopics
+							h3 Topics
+							div.table
+								div.column1
+									div
+										a(href="#") Color Theory
+									div
+										a(href="#") Icon Design
+									div
+										a(href="#") Interface Design
+								div.column2
+									div
+										a(href="#") Web Design
+									div
+										a(href="#") CSS
+									div
+										a(href="#") JQuery
+						div#menuCourses
+							h3 Courses
+							div
+								a(href="#") IAT 200
+							div
+								a(href="#") IAT 231
+							div
+								a(href="#") IAT 334
+				div#searchButton(class="mainMenuButton", onmouseover="openMenu('searchButtonMenu')")
+					div.mainMenuButtonText Search
+					div#searchButtonMenu(class="dropMenu")
+						input(type="textbox")
+						div.mainMenuButtonText
+							img(src="images/search.png", alt="search")
+				div.inviteButton(class="mainMenuButton")
+					div.mainMenuButtonText Invite
+				div.profileButton(class="mainMenuButton")
+					div.mainMenuButtonText Profile
+				div#mainMenuSpace
+				div#askButton
+					div.mainMenuButtonText Ask
+		
+		div#bodyContainer
+			<!-- Main Content Panel -->
+			div#contentPanel
+				div#contentMenu
+					div#askedButton(class="contentMenuButton") Asked
+					div#newButton(class="contentMenuButton") New
+					div#unansweredButton(class="contentMenuButton") Unanswered
+					div#seeAllButton(class="contentMenuButton") See All
+				<!-- list of questions -->
+				
+				div#questionList
+					div.question
+						h2 Question 1
+						p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed est mollis nibh mattis volutpat. Donec placerat ante sed arcu tristique dignissim. Nam sit amet diam nec ipsum congue cursus. Maecenas et tellus nec ante dignissim vulputate ut a eros. Sed pellentesque, libero et tincidunt gravida, neque dui semper purus, nec mollis ligula justo quis turpis. Aliquam nec diam ac quam cursus viverra. Praesent at enim id nunc gravida interdum. Etiam interdum nulla eu velit faucibus gravida. Pellentesque tincidunt ornare feugiat.
+			
+			<!-- Info Panel -->
+			div#infoPanel
+				div#profile
+					h2 Profile
+					div#profileImageContainer
+						img#profileImage(src="images/img.png", alt="ProfilePicture")
+					span.profileInfo Name:
+					span#profileName Argonius
+				hr
+				<!-- List of questions -->
+				div#recentlyAdded
+					h2 Recently Added
+					ol#recentlyAddedList
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sed hendrerit ante lacinia
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sagittis augue condimentum
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText auctor in lobortis vitae
+				hr
+				
+				<!-- List of questions -->
+				div#recentlyAnswered
+					h2 Recently Answered
+					ol#recentlyAnsweredList
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText Nunc vitae orci dui
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sagittis a et est

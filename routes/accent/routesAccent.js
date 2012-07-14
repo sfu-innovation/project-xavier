@@ -78,7 +78,7 @@ exports.tag = function(request,response){
 	}
 	else if (request.method === 'GET'){	
 		var targetID = request.params.id;							
-		TagAction.viewTags({'target':targetID}, function(error, result){
+		TagAction.viewTags({'uuid':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -91,7 +91,7 @@ exports.tag = function(request,response){
 	}
 	else if (request.method === 'PUT'){		
 		var targetID = request.params.id;
-		TagAction.updateTag({'target':targetID}, request.body, function(error, result){
+		TagAction.updateTag({'uuid':targetID}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -103,9 +103,17 @@ exports.tag = function(request,response){
 		});	
 	}
 	else if (request.method === 'DELETE'){
-		//TODO: no method found yet
-		// coming soon...
-
+		var targetID = request.params.id;
+		TagAction.deleteTag({'uuid':targetID},function(error,result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
 	}
 
 

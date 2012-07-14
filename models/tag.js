@@ -14,9 +14,9 @@ var db = new Sequelize(
 );
 
 var Tag = exports.Tag = db.define('Tag', {
-	user: {type: Sequelize.STRING, allowNull:false},
 	uuid: {type: Sequelize.STRING, primaryKey:true, allowNull:false},
-	start: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},	
+	user: {type: Sequelize.STRING, allowNull:false},
+	start: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
 	end: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},		
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
 	target: {type: Sequelize.STRING},

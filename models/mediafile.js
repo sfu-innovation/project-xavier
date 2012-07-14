@@ -85,6 +85,19 @@ exports.updateMediaFile = function(target, args, callback){
 		callback(error, null);
 		console.log("Couldn't find mediaFile " + error);
 	});
+}
 
-
+//Delete a media file with spcified attributes
+exports.deleteMediaFile = function(args, callback) {
+	MediaFile.find({where: args}).success(function(mediaFile) {
+		mediaFile.destroy().success(function(obj) {
+			callback(null, obj);
+		}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't delete the mediaFile " + error);
+		});
+	}).error(function(error) {
+		callback(error, null);
+		console.log("Couldn't find mediaFile " + error);
+	});
 }

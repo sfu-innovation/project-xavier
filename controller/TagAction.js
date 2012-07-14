@@ -187,6 +187,16 @@ TagAction.prototype.updateTag = function( uuid , args, callback ){
 	})	
 }
 
+/*
+
+Delete a specific tag based on a uuid.
+
+args = {
+		uuid			: <id for a specific Tag will work the best>	
+}
+
+*/
+
 TagAction.prototype.deleteTag = function( args, callback ){ 	
 	Tag.deleteTag( args, function(error, deletedTag){		
 		if (!error) {

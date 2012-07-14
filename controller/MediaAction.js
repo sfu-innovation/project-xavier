@@ -138,6 +138,27 @@ MediaAction.prototype.updateMediaFile = function( target, args, callback ){
 	})	
 }
 
+/*
+
+Delete a specific media file based on a target.
+
+args = {
+		target		: <target id that links between Tag and MediaFile will work the best>
+}
+
+*/
+
+MediaAction.prototype.deleteMediaFile = function( args, callback ){ 	
+	MediaFile.deleteMediaFile( args, function(error, deletedMediaFile){		
+		if (!error) {
+			callback(null, deletedMediaFile);	
+		}
+		else {
+			callback(error, null);
+		}		
+	})	
+}
+
 var object = {
 		//"type":12	
 		'target':'abc1232'
@@ -225,6 +246,16 @@ mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
 		console.log( "[SUCCESS] - "+ data.title + ' ' + data.path);
 	} else {
 		console.log( "[ERROR] - "+ err);
+	}
+});
+*/
+
+/*
+mediaAction.deleteMediaFile(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - " + data);
+	} else {
+		console.log( "[ERROR] - "+err);
 	}
 });
 */

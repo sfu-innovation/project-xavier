@@ -11,6 +11,19 @@ exports.unfollowQuestion = function(request, response) {
 	routesPresenter.unfollowQuestionRoute(2, request, response);
 }
 
+exports.getResource = function(request, response){
+	if(request.method === 'GET'){
+		Resource.getResourceByUUID(request.params.uuid, function(error, resource){
+			if(error){
+				 response.end(JSON.stringify({errorcode: 1, message: error}));
+			}
+			else{
+				response.end(JSON.stringify({errorcode: 0, resource: resource}));
+			}
+		});
+	}
+}
+
 exports.createResource = function(request, response){
 	if(request.method === 'POST'){
 		console.log("POST");
@@ -33,9 +46,23 @@ exports.createResource = function(request, response){
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
 		}
-
 	}
 }
+
+//Deletes the resource with the uuid provided in the response
+exports.deleteResource = function(request, response){
+	if(request.method === 'DELETE'){
+		Resource.deleteResource(request.params.uuid, function(error, resource){
+			if(error){
+				response.end(JSON.stringify({ errorcode: 1, message: "Couldn't delete that resource"}));
+			}
+			else{
+				response.end(JSON.stringify({errorcode: 0, message: "DELETED!"}));
+			}
+		})
+	}
+}
+
 
 exports.starredResources = function(request, response){
 	if(request.method === 'GET'){
@@ -139,5 +166,18 @@ exports.unlikeResource = function(request, response){
 			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
 		}
 
+	}
+}
+
+exports.getLikes = function(request, response){
+	if(request.method === 'GET'){
+		Resource.getLikesByUUID(request.params.uuid, function(error, resourceLikes){
+			if(error){
+				response.end(JSON.stringify({errorcode:1, message: "Couldn't get likes for that resource"}));
+			}
+			else{
+				response.end(JSON.stringify({errorcode: 0, likes: resourceLikes}));
+			}
+		})
 	}
 }

@@ -51,17 +51,39 @@ div#logoContainer
 		div#bodyContainer
 			<!-- Main Content Panel -->
 			div#contentPanel
-				div#contentMenu
-					div#askedButton(class="contentMenuButton") Asked
-					div#newButton(class="contentMenuButton") New
-					div#unansweredButton(class="contentMenuButton") Unanswered
-					div#seeAllButton(class="contentMenuButton") See All
+				<!-- content menu -->
+				div#contentMenu					
+					div#askedButton(class="contentMenuButton", onclick="displayAsked()") Asked
+					div#newButton(class="contentMenuButton", onclick="displayNew()") New
+					div#unansweredButton(class="contentMenuButton", onclick="displayUnanswered()") Unanswered
+					div#seeAllButton(class="contentMenuButton", onclick="displayAll()") See All
+					
 				<!-- list of questions -->
-				
-				div#questionList
-					div.question
-						h2 Question 1
-						p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed est mollis nibh mattis volutpat. Donec placerat ante sed arcu tristique dignissim. Nam sit amet diam nec ipsum congue cursus. Maecenas et tellus nec ante dignissim vulputate ut a eros. Sed pellentesque, libero et tincidunt gravida, neque dui semper purus, nec mollis ligula justo quis turpis. Aliquam nec diam ac quam cursus viverra. Praesent at enim id nunc gravida interdum. Etiam interdum nulla eu velit faucibus gravida. Pellentesque tincidunt ornare feugiat.
+				div#questionList(onload="displayAsked()")
+			
+				script(type="text/javascript")
+					function displayAsked() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>Asked Question 1</h2><p>This is a question that has been asked</p></div>";
+					}
+					
+					function displayNew() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>New  Question 1</h2><p>this is a new question</p></div>";
+					}
+					
+					function displayUnanswered() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>Unanswered Question 1</h2><p>this is an unanswered question</p></div>";
+					}
+					
+					function displayAll() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>All Question 1</h2><p>This is any question</p></div>";
+					}
+					
+					// displays asked questions on page load
+					displayAsked();
 			
 			<!-- Info Panel -->
 			div#infoPanel

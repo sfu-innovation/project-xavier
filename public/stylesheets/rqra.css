@@ -267,10 +267,18 @@ div#contentPanel {
 	margin: 3px;
 }
 
+div#contentMenu {
+	display: -webkit-box; 
+	-webkit-box-orient: horizontal;
+	display: -moz-box; 
+	-moz-box-orient: horizontal;
+	display: box; 
+	box-orient: horizontal;
+}
+
 div.contentMenuButton { 
-	float: left;
 	margin: 2px;
-	margin-left: 10px;
+	margin-left: 5px;
 	padding: 0px;
 	width: 100px;
 	text-align: center;
@@ -283,7 +291,12 @@ div.contentMenuButton:hover {
 }
 
 div#questionList {
-	float: left;
+	display: -webkit-box; 
+	-webkit-box-orient: vertical;
+	display: -moz-box; 
+	-moz-box-orient: vertical;
+	display: box; 
+	box-orient: vertical;
 }
 
 div.question {

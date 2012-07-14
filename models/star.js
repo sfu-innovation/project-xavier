@@ -69,8 +69,9 @@ exports.getStarredResources = function(userUUID, callback){
 			}).error(function(error){
 				callback(error, null);
 			})
+		}else{
+			callback("No starred resources found", null);
 		}
-		callback("No starred resources found", null);
 	}).error(function(error){
 		callback(error, null);
 	})

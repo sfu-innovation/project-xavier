@@ -60,7 +60,13 @@ app.post('/api/resource', routesEngage.createResource);
 app.post('/api/resource/create', routesEngage.createResource);
 
 
+//Star resources
+app.get('/api/star', routesEngage.starredResources);
+app.post('/api/star', routesEngage.starResource);
+app.delete('/api/unstar', routesEngage.unstarResource);
+
 //userprofile
 
 app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
+

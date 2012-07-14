@@ -60,20 +60,21 @@ module.exports = {
 				resource : 'A7S7FWGA8SD11A7SDF8ASD7G'
 			}
 			var args2 = {
-		    	section : "A827341H7AFFFFG9"
+		    	section : "A827346H7AFSSFG9"
 		    }
-		    
+		    console.log( args2 );
 			SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
 				test.ok(sectionMaterials.should.have.lengthOf(2));
-			});
-			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial ){
-				test.ok(newSectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
-				test.ok(newSectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
-				SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
-					test.ok(sectionMaterials.should.have.lengthOf(3));
-					test.done();
+				SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial ){
+					test.ok(newSectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
+					test.ok(newSectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
+					SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
+						test.ok(sectionMaterials.should.have.lengthOf(3));
+						test.done();
+					});
 				});
 			});
+			
 		},
 		
 		"Update Section Material" : function( test ){
@@ -83,7 +84,7 @@ module.exports = {
 			}
 			var args2 = {
 				resource : 'A7S7FWGA8SD11A7SDF8ASD7G',
-				section  : 'A827346H7ASDFG9'
+				section  : 'A827346H7AFSSFG9'
 			}
 			var args3 = {
 				resource : 'A7S7FWGA8SD11A7SDF8ASD7G',
@@ -92,7 +93,7 @@ module.exports = {
 			
 			SectionMaterial.findAMaterialInSection(args2, function( error, sectionMaterial ){
 				test.ok(sectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
-				test.ok(sectionMaterial.should.have.property('section', 'A827346H7ASDFG9'));
+				test.ok(sectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
 				args.sectionmaterial = sectionMaterial;
 				SectionMaterial.updateSectionMaterial( args, function( error, sectionMaterial2 ){
 					SectionMaterial.findAMaterialInSection(args3, function( error, sectionMaterial3 ){
@@ -106,22 +107,22 @@ module.exports = {
 		},
 		"Remove a Section Material":function(test){
 			var args = {
-		    	section : "A827346H7ASDFG9"
+		    	section : "A827346H7AFSSFG9"
 		    }
 		    
 			SectionMaterial.findAllMaterialsInSection(args, function( error, sectionMaterials ){
 				test.ok(sectionMaterials.should.have.lengthOf(2));
 				var args1 = {
-					resource : 'A7S7FWGA8SD11A7SDF8ASD7G',
-					section  : 'A827346H7ASDFG9'
+					resource : 'A7S7FWGA7SD11A7SDF8ASD7G',
+					section  : 'A827346H7AFSSFG9'
 				}
 				SectionMaterial.findAMaterialInSection(args1, function( error, sectionMaterial ){
-					test.ok(sectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
-					test.ok(sectionMaterial.should.have.property('section', 'A827346H7ASDFG9'));
-					args.sectionMaterial = sectionMaterial;
+					test.ok(sectionMaterial.should.have.property('material','A7S7FWGA7SD11A7SDF8ASD7G' ));
+					test.ok(sectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
+					args.sectionmaterial = sectionMaterial;
 					SectionMaterial.removeMaterialFromSection( args, function( error, removedSection ){
 					 	var args2 = {
-		    				section : "A827346H7ASDFG9"
+		    				section : "A827346H7AFSSFG9"
 		    			}
 						SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
 							test.ok(sectionMaterials.should.have.lengthOf(1));
@@ -133,7 +134,7 @@ module.exports = {
 		}, 
 		"Remove Section Materials":function(test){
 			var args = {
-		    	section : "A827346H7ASDFG9"
+		    	section : "A827346H7AFSSFG9"
 		    }
 		    
 			SectionMaterial.findAllMaterialsInSection(args, function( error, sectionMaterials ){
@@ -143,7 +144,7 @@ module.exports = {
 				}
 				SectionMaterial.removeAllMaterialFromSection(args1, function( error, sectionMaterial ){
 					 var args2 = {
-		    			section : "A827346H7ASDFG9"
+		    			section : "A827346H7AFSSFG9"
 		    		}
 					SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
 						test.ok(sectionMaterials.should.have.lengthOf(0));

@@ -61,7 +61,7 @@ module.exports = {
 			})
 		},
 		"Update Tag": function(test){
-			var target = {"user":"A7S7F8GA7SD98A7SDF8ASD7G"};
+			var target = {'user':'A7S7F8GA7SD98A7SDF8ASD7G'};
 			//target.target = tuid;
 			var updateAttributes = {'title':'jericho twist', 'shared':true};
 			Tag.updateTag(target, updateAttributes, function(error, updatedTag){				
@@ -69,6 +69,12 @@ module.exports = {
 				console.log("result = " + updatedTag.shared);
 				//test.ok(updatedTag.should.have.property('user'));
 				test.ok(updatedTag.shared.should.be.eql(updateAttributes.shared));
+				test.done();	
+			})
+		},
+		"Delete Tag": function(test){						
+			Tag.deleteTag({'target':'abc1231'}, function(error, deletedTag){											
+				test.ok(deletedTag.target.should.be.eql('abc1231'));
 				test.done();	
 			})
 		}

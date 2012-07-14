@@ -85,12 +85,16 @@ exports.updateTag = function(uuid, args, callback){
 	});
 }
 
+//Delete a tag with specified attributes
 exports.deleteTag = function(args, callback) {
 	Tag.find({where: args}).success(function(tag) {
 		tag.destroy().success(function(obj) {
-			if (obj && obj.deletedAt) {
-				callback(null, updatedTag);
+			callback(null, obj);
+			/*
+			if (obj && obj.deletedAt) {				
+				callback(null, obj);
 			}
+			*/
 		}).error(function(error) {
 			callback(error, null);
 			console.log("Couldn't delete the tag " + error);

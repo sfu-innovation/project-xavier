@@ -187,6 +187,16 @@ TagAction.prototype.updateTag = function( uuid , args, callback ){
 	})	
 }
 
+/*
+
+Delete a specific tag based on a uuid.
+
+args = {
+		uuid			: <id for a specific Tag will work the best>	
+}
+
+*/
+
 TagAction.prototype.deleteTag = function( args, callback ){ 	
 	Tag.deleteTag( args, function(error, deletedTag){		
 		if (!error) {
@@ -318,6 +328,7 @@ tagAction.viewCommentTagged(object, function( err, data){
 });
 */
 
+/*
 tagAction.deleteTag(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data);
@@ -325,5 +336,6 @@ tagAction.deleteTag(object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+*/
 
 module.exports = new TagAction;

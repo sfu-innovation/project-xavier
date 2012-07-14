@@ -72,7 +72,7 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 Get a tagged mediafile that belongs to a specific tag.
 
 args = {	
-	user		: <user id from the User model>	
+	target		: <target id from the Tag model>	
 }
 
 */
@@ -135,6 +135,27 @@ MediaAction.prototype.updateMediaFile = function( target, args, callback ){
 			callback(error, null);
 		}
 		
+	})	
+}
+
+/*
+
+Delete a specific media file based on a target.
+
+args = {
+		target		: <target id that links between Tag and MediaFile will work the best>
+}
+
+*/
+
+MediaAction.prototype.deleteMediaFile = function( args, callback ){ 	
+	MediaFile.deleteMediaFile( args, function(error, deletedMediaFile){		
+		if (!error) {
+			callback(null, deletedMediaFile);	
+		}
+		else {
+			callback(error, null);
+		}		
 	})	
 }
 
@@ -228,3 +249,15 @@ mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
 	}
 });
 */
+
+/*
+mediaAction.deleteMediaFile(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - " + data);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
+module.exports = new MediaAction;

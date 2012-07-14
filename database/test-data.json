@@ -259,35 +259,35 @@
 	"mediafiles": [
 		{
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
-			"target":"abc1230",
+			"id":"abc1230",
 			"title":"How to dunk like MJ",
 			"path":"http://www.youtube.com/mj",
 			"type":0
 		},
 		{
 			"user":"BSDF787D98A7SDF8ASD7G",
-			"target":"abc1231",
+			"id":"abc1231",
 			"title":"How to dribble like Lionel",			
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
 		},
 		{
 			"user":"BSDF787D98ASDF099D7G",
-			"target":"abc1232",
+			"id":"abc1232",
 			"title":"Cooking terriyaki",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
 		},
 		{
 			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target":"abc1233",
+			"id":"abc1233",
 			"title":"Preparation for linear algebra",			
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
 		},
 		{
 			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target":"abc1234",
+			"id":"abc1234",
 			"title":"Making videos",			
 			"path":"http://www.youtube.com/yt",
 			"type":0

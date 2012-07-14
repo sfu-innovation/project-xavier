@@ -38,7 +38,8 @@ app.get('/demo', routesPresenter.demo);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
-app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
+app.post('/api/users/', routesCommon.userQuery); // get a list of users based on a custom query
+app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update users prefered name
 
 app.get('/api/course/:id/members', routesCommon.courseMembers);
 

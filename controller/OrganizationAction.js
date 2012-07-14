@@ -97,8 +97,16 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 */
 OrganizationAction.prototype.addSection = function( args, callback){
 	CourseSection.sectionsInCourse( args, function( error, courseSectionUUIDs){
+		if ( error ){
+			callback( error, null );
+			return;
+		}
 		args.sections = courseSectionUUIDs;
 		Section.findSection( args, function ( error, section ){
+			if ( error ){
+				callback( error, null );
+				return;
+			}
 			Section.createSection( args, function ( error, newSection ){
 				if ( error ){
 					callback( error , null );

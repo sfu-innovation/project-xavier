@@ -30,7 +30,7 @@ module.exports = {
 		
 		"Find Materials in Section": function(test){
 		    var args = {
-		    	section : "A827346H7ASDFG9"
+		    	section : "A827346H7AFSSFG9"
 		    }
 		    
 			SectionMaterial.findAllMaterialsInSection(args, function( error, sectionMaterials ){
@@ -42,13 +42,13 @@ module.exports = {
 		"Find Material in Section": function(test){
 			var args = {
 				resource : 'A7S7FWGA8SD11A7SDF8ASD7G',
-				section  : 'A827346H7ASDFG9'
+				section  : 'A827346H7AFSSFG9'
 			}
 			
 			SectionMaterial.findAMaterialInSection(args, function( error, sectionMaterial ){
 				console.log(sectionMaterial);
 				test.ok(sectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
-				test.ok(sectionMaterial.should.have.property('section', 'A827346H7ASDFG9'));
+				test.ok(sectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
 				test.done();	
 			});
 			
@@ -56,11 +56,11 @@ module.exports = {
 		
 		"Create Section Material" : function( test ){
 			var args = {
-				section : 'A827346H7ASDFG9',
+				section : 'A827346H7AFSSFG9',
 				resource : 'A7S7FWGA8SD11A7SDF8ASD7G'
 			}
 			var args2 = {
-		    	section : "A827346H7ASDFG9"
+		    	section : "A827341H7AFFFFG9"
 		    }
 		    
 			SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
@@ -68,7 +68,7 @@ module.exports = {
 			});
 			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial ){
 				test.ok(newSectionMaterial.should.have.property('material','A7S7FWGA8SD11A7SDF8ASD7G' ));
-				test.ok(newSectionMaterial.should.have.property('section', 'A827346H7ASDFG9'));
+				test.ok(newSectionMaterial.should.have.property('section', 'A827346H7AFSSFG9'));
 				SectionMaterial.findAllMaterialsInSection(args2, function( error, sectionMaterials ){
 					test.ok(sectionMaterials.should.have.lengthOf(3));
 					test.done();

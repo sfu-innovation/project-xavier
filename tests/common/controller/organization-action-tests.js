@@ -65,28 +65,29 @@ module.exports = {
 		"Update Resource From Section To Section" : function( test ){
 			args = {
 				section : 'A827346H7AFSSFG9',
-				newsection : 'A827341H7AFFFFG9',
+				newsection : 'A412341H7AFSSFG9',
 				resource : 'A7S7FWGA7SD11A7SDF8ASD7G'
 			}
 			SectionMaterial.findAMaterialInSection( args, function( error, material ){
-				test.ok(material.should.have.property('section', 'A827341H7AFSSFG9'));
+				test.ok(material.should.have.property('section', 'A827346H7AFSSFG9'));
 				OrganizationAction.updateResourceFromSectionToSection( args, function( error, updatedResource ){
-					test.ok(updatedResource.should.have.property('section', 'A827341H7AFFFFG9'));
+					test.ok(updatedResource.should.have.property('section', 'A412341H7AFSSFG9'));
 					test.done();
 				});
 			});
 		},
 		"Add Section" : function( test ){
 			args = {
-				course : 'A8G7S6H7ASDFG9',
-				section  : 'best section ever',
+				course : 'A827346H7ASDFG9',
+				title  : 'best section ever',
 				app    :  2
 			}
 			CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-				test.ok(sectionUUIDs.should.have.lengthOf(1));
+				test.ok(sectionUUIDs.should.have.lengthOf(3));
 				OrganizationAction.addSection(args, function(error, newSection){
+					console.log( newSection );
 					CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-						test.ok(sectionUUIDs.should.have.lengthOf(2));
+						test.ok(sectionUUIDs.should.have.lengthOf(4));
 						test.done();
 					});
 				});
@@ -106,17 +107,19 @@ module.exports = {
 					});
 				});
 			});
-		},
+		}, 
 		"Update Section" : function( test ){
 			var args = {
-				sections : 'A827341H8BFSSFG9',
-				title : 'section description 3',
+				sections : 'A827346H7AFSSFG9',
+				title : 'section description 1',
 				newtitle : 'super duper section',
 				course : 'A827346H7ASDFG9'
 			}
 			Section.findSection( args, function( error, sectionObj ){
-				test.ok(sectionObj.should.have.property('title', 'section description 3'));
+				test.ok(sectionObj.should.have.property('title', 'section description 1'));
 				OrganizationAction.updateSection( args, function( error, updatedSection ){
+					console.log( args);
+					console.log( error );
 					test.ok(updatedSection.should.have.property('title', 'super duper section'));
 					test.done();
 				});
@@ -136,7 +139,7 @@ module.exports = {
 		
 		"Materials in Section " : function(test){
 			var args = {
-				section : 'A827346H7ASDFG9'
+				section : 'A827346H7AFSSFG9'
 			}
 			OrganizationAction.resourcesInSection(args, function(error, resources){
 				test.ok(resources.should.have.lengthOf(2));

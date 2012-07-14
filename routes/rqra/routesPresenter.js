@@ -3,6 +3,10 @@ var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 
+exports.demo = function(request, response) {
+	response.render('rqra/demo', { title: "Demo" });
+}
+
 exports.questionRoute = function(appType, request, response) {
 	var question_id = request.params.uid;
 	if (request.method === "GET") {

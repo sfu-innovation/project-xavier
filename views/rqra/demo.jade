@@ -1,0 +1,126 @@
+div#logoContainer
+	div#logo
+		img(src="images/img.png", alt="logo image")
+	
+	div#pageContainer
+		<!-- header panel -->
+		div#headerPanel
+			div#mainMenu
+				div#browseButton(class="mainMenuButton", onmouseover="openMenu('browserButtonMenu')")
+					div.mainMenuButtonText Browse
+					div#browserButtonMenu(class="dropMenu")
+						div#menuTopics
+							h3 Topics
+							div.table
+								div.column1
+									div
+										a(href="#") Color Theory
+									div
+										a(href="#") Icon Design
+									div
+										a(href="#") Interface Design
+								div.column2
+									div
+										a(href="#") Web Design
+									div
+										a(href="#") CSS
+									div
+										a(href="#") JQuery
+						div#menuCourses
+							h3 Courses
+							div
+								a(href="#") IAT 200
+							div
+								a(href="#") IAT 231
+							div
+								a(href="#") IAT 334
+				div#searchButton(class="mainMenuButton", onmouseover="openMenu('searchButtonMenu')")
+					div.mainMenuButtonText Search
+					div#searchButtonMenu(class="dropMenu")
+						input(type="textbox")
+						div.mainMenuButtonText
+							img(src="images/search.png", alt="search")
+				div.inviteButton(class="mainMenuButton")
+					div.mainMenuButtonText Invite
+				div.profileButton(class="mainMenuButton")
+					div.mainMenuButtonText Profile
+				div#mainMenuSpace
+				div#askButton
+					div.mainMenuButtonText Ask
+		
+		div#bodyContainer
+			<!-- Main Content Panel -->
+			div#contentPanel
+				<!-- content menu -->
+				div#contentMenu					
+					div#askedButton(class="contentMenuButton", onclick="displayAsked()") Asked
+					div#newButton(class="contentMenuButton", onclick="displayNew()") New
+					div#unansweredButton(class="contentMenuButton", onclick="displayUnanswered()") Unanswered
+					div#seeAllButton(class="contentMenuButton", onclick="displayAll()") See All
+					
+				<!-- list of questions -->
+				div#questionList(onload="displayAsked()")
+			
+				script(type="text/javascript")
+					function displayAsked() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>Asked Question 1</h2><p>This is a question that has been asked</p></div>";
+					}
+					
+					function displayNew() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>New  Question 1</h2><p>this is a new question</p></div>";
+					}
+					
+					function displayUnanswered() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>Unanswered Question 1</h2><p>this is an unanswered question</p></div>";
+					}
+					
+					function displayAll() {
+						var questionList = document.getElementById("questionList");
+						questionList.innerHTML = "<div class='question'><h2>All Question 1</h2><p>This is any question</p></div>";
+					}
+					
+					// displays asked questions on page load
+					displayAsked();
+			
+			<!-- Info Panel -->
+			div#infoPanel
+				div#profile
+					h2 Profile
+					div#profileImageContainer
+						img#profileImage(src="images/img.png", alt="ProfilePicture")
+					span.profileInfo Name:
+					span#profileName Argonius
+				hr
+				<!-- List of questions -->
+				div#recentlyAdded
+					h2 Recently Added
+					ol#recentlyAddedList
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sed hendrerit ante lacinia
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sagittis augue condimentum
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText auctor in lobortis vitae
+				hr
+				
+				<!-- List of questions -->
+				div#recentlyAnswered
+					h2 Recently Answered
+					ol#recentlyAnsweredList
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText Nunc vitae orci dui
+						li
+							div.listItemImage
+								img(src="images/img.png", alt="Item Image")
+							div.listItemText sagittis a et est

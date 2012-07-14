@@ -34,6 +34,7 @@ app.dynamicHelpers({
 // routing
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
+app.get('/demo', routesPresenter.demo);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id

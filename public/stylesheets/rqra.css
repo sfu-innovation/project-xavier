@@ -1,0 +1,309 @@
+/* Header Panel */
+
+body {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+	padding: 0px;
+	margin: 5px;
+	
+	font-family: Comic Sans, Comic Sans MS, cursive;
+}
+
+div#logoContainer {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#logo {
+	margin: 5px;
+}
+
+div#pageContainer {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+}
+
+ul.toolbar > li:hover {
+	background: #AAAAFF;
+}
+
+div#mainMenu {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div.mainMenuButton { 
+	margin: 2px;
+	padding: 5px;
+	width: 100px;
+	
+}
+
+div.mainMenuButtonText {
+	background: #AAAAAA;
+	text-align: center;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+div.mainMenuButtonText:hover { 
+	background: #AAAAFF;
+}
+
+div.dropMenu {
+	position: absolute;
+	visibility: hidden;
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid black;
+	background: #AAAAAA;
+}
+
+div#mainMenuSpace {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+}
+
+div#askButton {
+	margin: 2px;
+	padding: 5px;
+	width: 100px;
+	text-align: center;
+}
+
+/* Drop down menus */
+div#browserButtonMenu {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	float: left;
+	position: relative;
+	top: 5px;
+	left: 0px;
+	width: 350px;
+	border: 0px solid #666666;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+div#browserButtonMenu h3 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+div#menuTopics {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+}
+
+div#menuTopics h3, div#menuCourses h3 {
+	text-align: left;
+}
+
+div#menuTopics div, div#menuCourses div {
+	margin: 3px;
+}
+
+div#menuTopics div.table {
+	display: -webkit-box; 
+	-webkit-box-orient: horizontal;
+	display: -moz-box; 
+	-moz-box-orient: horizontal;
+	display: box; 
+	box-orient: horizontal;
+}
+
+div#browserButtonMenu div.column1 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+}
+
+div#browserButtonMenu div.column2 {
+	display: -webkit-box; 
+	-webkit-box-orient: vertical;
+	display: -moz-box; 
+	-moz-box-orient: vertical;
+	display: box; 
+	box-orient: vertical;
+}
+
+div#menuCourses {
+	display: -webkit-box; 
+	-webkit-box-orient: vertical;
+	display: -moz-box; 
+	-moz-box-orient: vertical;
+	display: box; 
+	box-orient: vertical;
+}
+
+div#searchButtonMenu {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	float: left;
+	position: relative;
+	top: 5px;
+	left: 0px;
+	border: 0px solid #666666;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+div#searchButtonMenu div {
+	box-shadow: 0px 0px 0px #000000;
+}
+
+/* Body */
+div#bodyContainer {
+	display: -webkit-box; 
+	-webkit-box-orient: horizontal;
+	display: -moz-box; 
+	-moz-box-orient: horizontal;
+	display: box; 
+	box-orient: horizontal;
+}
+
+/* Side Panel */
+div#infoPanel {
+	width: 250px;
+	padding: 10px;
+	margin: 3px;
+	background: #DDDDDD;
+	box-shadow: 2px 2px 5px #777777;
+}
+
+div#profileImageContainer {
+	background: #222222;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+img#profileImage {
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+	height: 150px;
+	margin-bottom: 5px;
+}
+
+span.profileInfo {
+	font-weight:bold;
+}
+
+div#profile h2 {
+	margin-top: 0px;
+}
+
+ol {
+	padding: 0px;
+	list-style: none;
+}
+
+ol#recentlyAddedList > li, ol#recentlyAnsweredList > li {
+	height: 64px;
+	padding: 5px;
+	background: #AAAAAA;
+	margin: 5px;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+ol#recentlyAddedList > li:hover, ol#recentlyAnsweredList > li:hover {
+	height: 64px;
+	padding: 5px;
+	background: #AAAAFF;
+}
+
+div.listItemImage {
+	position: relative;
+	float: left;
+	height: 64px;
+	width: 64px;
+}
+
+div.listItemText {
+	height: 64px;
+	margin-left: 80px;
+	padding-left: 10px;
+}
+
+/* Content Panel */
+div#contentPanel {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	margin: 3px;
+}
+
+div#contentMenu {
+	display: -webkit-box; 
+	-webkit-box-orient: horizontal;
+	display: -moz-box; 
+	-moz-box-orient: horizontal;
+	display: box; 
+	box-orient: horizontal;
+}
+
+div.contentMenuButton { 
+	margin: 2px;
+	margin-left: 5px;
+	padding: 0px;
+	width: 100px;
+	text-align: center;
+	background: #AAAAAA;
+	box-shadow: 2px 2px 5px #555555;
+}
+
+div.contentMenuButton:hover { 
+	background: #AAAAFF;
+}
+
+div#questionList {
+	display: -webkit-box; 
+	-webkit-box-orient: vertical;
+	display: -moz-box; 
+	-moz-box-orient: vertical;
+	display: box; 
+	box-orient: vertical;
+}
+
+div.question {
+	box-shadow: 2px 2px 5px #555555;
+	background: #AAAAAA;
+	padding: 5px;
+	margin: 2px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}

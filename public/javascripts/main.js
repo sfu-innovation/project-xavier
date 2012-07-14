@@ -213,7 +213,7 @@ $(document).ready(function () {
 					$('#search_results').empty();
 					if (data.errorcode === 0) {
 						$.each(data.questions, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="questions_li">'
 								+ '<p>' + item._id + '</p>'
 								+ '<p>' + item._source.body + '</p>'
@@ -253,8 +253,12 @@ $(document).ready(function () {
 		if (title && body) {
 			rqra.createQuestion(title, body, function (data) {
 				if (data) {
+
 					if (data.errorcode === 0) {
 						alert('OK OK REFRESH NOW');
+					}
+					else{
+						alert(data.message);
 					}
 
 				}
@@ -284,7 +288,7 @@ $(document).ready(function () {
 					if (data.errorcode === 0 && data.questions.length > 0) {
 
 						$.each(data.questions, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="questions_li">'
 								+ '<p>_id: ' + item._id + '</p>'
 								+ '<p>title: ' + item._source.title + '</p>'
@@ -444,12 +448,12 @@ $(document).ready(function () {
 		if (user_id) {
 			rqra.getCommentsByUserId(user_id, function (data) {
 				if (data) {
-					console.log(data);
+
 					$('#user_comments').empty();
 					if (data.errorcode === 0 && data.comments.length > 0) {
 
 						$.each(data.comments, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="comments_li">'
 								+ '<p>_id: ' + item._id + '</p>'
 								+ '<p>body: ' + item._source.body + '</p>'
@@ -462,7 +466,7 @@ $(document).ready(function () {
 								+ '<p>upvote: ' + item._source.upvote + '</p>'
 								+ '<p>user: ' + item._source.user + '</p>'
 								+ '</li>';
-							console.log(content);
+
 							$('#user_comments').append(content);
 						});
 					}
@@ -491,7 +495,7 @@ $(document).ready(function () {
 			rqra.getCommentsByTargetId(target_id, function (data) {
 
 				if (data) {
-					console.log(data);
+
 					if (data.errorcode === 0 && data.comments.length > 0) {
 
 
@@ -761,7 +765,7 @@ function loadAllQuestions(rqra) {
 			if (data.errorcode === 0 && data.questions.length > 0) {
 
 				$.each(data.questions, function (index, item) {
-					console.log(item);
+
 					var content = '<li class="questions_li">'
 						+ '<p>_id: ' + item._id + '</p>'
 						+ '<p>title: ' + item._source.title + '</p>'
@@ -798,7 +802,7 @@ function loadAllComments(rqra) {
 			if (data.errorcode === 0 && data.comments.length > 0) {
 
 				$.each(data.comments, function (index, item) {
-					console.log(item);
+
 					var content = '<li class="comments_li">'
 						+ '<p>_id: ' + item._id + '</p>'
 

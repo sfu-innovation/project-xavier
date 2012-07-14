@@ -132,15 +132,11 @@ coreApi._construct = function () {
 
 			question.body = questionBody;
 			question.category = 'testcategory'; //TODO need replaced
-//			question.status = 'unanswered';
 			question.title = questionTitle;
-//			question.timestamp = '2008-10-21';
-//			question.followup = [];
 			body.question = question;
 
 
 			$.ajax({
-				//url : '/api/user/'+user_id+'/questions',
 				url:'/api/question',
 				type:'POST',
 				dataType:'json',

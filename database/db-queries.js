@@ -33,7 +33,8 @@ exports.createDB = function(dbName, callback){
 		host: config.mysqlDatabase["host"],
 		user: config.mysqlDatabase["user"],
 		password: config.mysqlDatabase["password"],
-		port: config.mysqlDatabase["port"]
+		port: config.mysqlDatabase["port"],
+		debug : false
 	});
 
 	mysql.query('CREATE DATABASE IF NOT EXISTS ' + dbName + ' CHARACTER SET \'utf8\''
@@ -83,7 +84,8 @@ exports.dropDB = function(dbName, callback){
 		host: config.mysqlDatabase["host"],
 		user: config.mysqlDatabase["user"],
 		password: config.mysqlDatabase["password"],
-		port: config.mysqlDatabase["port"]
+		port: config.mysqlDatabase["port"],
+		debug : false
 	});
 
 	mysql.query('DROP DATABASE ' + dbName, function(error){
@@ -130,7 +132,10 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings),
 		insert.bind(undefined, MediaFile, data.mediafiles),
 		insert.bind(undefined, Tag, data.tags),
-		insert.bind(undefined, Resource, data.resources)
+		insert.bind(undefined, Resource, data.resources),
+		insert.bind(undefined, CourseSection, data.coursesections),
+		insert.bind(undefined, Section, data.sections),
+		insert.bind(undefined, SectionMaterial, data.sectionmaterials)
 		], callback);
 }
 

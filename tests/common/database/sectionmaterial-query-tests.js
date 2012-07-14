@@ -141,7 +141,6 @@ module.exports = {
 				var args1 = {
 					sectionmaterials : sectionMaterials
 				}
-				console.log('****' + sectionMaterials);
 				SectionMaterial.removeAllMaterialFromSection(args1, function( error, sectionMaterial ){
 					 var args2 = {
 		    			section : "A827346H7ASDFG9"

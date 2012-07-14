@@ -77,12 +77,13 @@ exports.removeSection = function( args, callback ){
     To find one section which matches the given section UUID and title 
     
 	args = {
-		section : UUIDs of all of the sections belonging to a specific course
+		sections : UUIDs of all of the sections belonging to a specific course
+		title : defining the section
 	}
 	returns the section which matchces the section UUID and section title
 */
 exports.findSection = function( args, callback ){
-	Section.find({ where : { uuid : args.section }}).success(function( section ){
+	Section.find({ where : { uuid : args.sections, title : args.title }}).success(function( section ){
 		callback( null, section );
 	}).error( function ( error ){
 		callback( error, null );
@@ -92,20 +93,18 @@ exports.findSection = function( args, callback ){
 	To update the section 
 	
 	args = {
-		section : UUID of the section
+		sectionObject : section object representation
 		title   : new title 
+		
 	}	
 	
 	returns the section which was updated.
 */
 
 exports.updateSection = function( args, callback ){
-	Section.find({ where : { uuid : args.section }}).success(function( section ){
-		section.updateAttributes({ title : args.title }).error(function(error ){
-			callback( error, null );
-		}).success( function ( section ){
-			callback( null, section );
-		});
-		
+	args.sectionObject.updateAttributes({ title : args.title }).error(function(error ){
+		callback( error, null );
+	}).success( function ( section ){
+		callback( null, section );
 	});
 }

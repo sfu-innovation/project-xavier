@@ -30,7 +30,8 @@ module.exports = {
 	
 		"Find Section": function(test){
 			var args = {
-				section : 'A827346H7ASDFG9'
+				sections : 'A827346H7ASDFG9',
+				title   : 'section description 1'
 			}
 			Section.findSection( args , function( error, section ){
 				test.ok(section.should.have.property( 'uuid', 'A827346H7ASDFG9'))
@@ -56,23 +57,24 @@ module.exports = {
 		
 		"Update Section":function(test){
 			var args = {
-				section : 'A827346H7ASDFG9',
+				sections : 'A827346H7ASDFG9',
 				title : 'section description 1'
 			}
 			Section.findSection( args , function( error, section ){
 				test.ok(section.should.have.property( 'uuid', 'A827346H7ASDFG9'))
 				test.ok(section.should.have.property( 'title', 'section description 1'));
+				var args2 = {
+					sectionObject : section,
+					title : 'super duper section'
+				}
+				Section.updateSection( args2 , function( error, section ){
+					test.ok(section.should.have.property( 'uuid', 'A827346H7ASDFG9'))
+					test.ok(section.should.have.property( 'title', 'super duper section'));
+					test.done();
+				});
 			});
 			
-			var args2 = {
-				section : 'A827346H7ASDFG9',
-				title : 'super duper section'
-			}
-			Section.updateSection( args2 , function( error, section ){
-				test.ok(section.should.have.property( 'uuid', 'A827346H7ASDFG9'))
-				test.ok(section.should.have.property( 'title', 'super duper section'));
-				test.done();
-			});
+			
 		},
 		
 		"Remove Section": function( test ) {

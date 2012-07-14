@@ -67,7 +67,7 @@ exports.tag = function(request,response){
 
 	if(request.method === 'POST'){
 
-		if(request.session.user){
+		if(request.session && request.session.user){
 			request.body.user =  request.session.user.uuid;
 
 			TagAction.addTag(request.body, function(error, result){

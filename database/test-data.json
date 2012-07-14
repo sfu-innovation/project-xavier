@@ -259,38 +259,97 @@
 	"mediafiles": [
 		{
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
-			"target":"abc1230",
+			"uuid":"abc1230",
 			"title":"How to dunk like MJ",
 			"path":"http://www.youtube.com/mj",
 			"type":0
 		},
 		{
 			"user":"BSDF787D98A7SDF8ASD7G",
-			"target":"abc1231",
+			"uuid":"abc1231",
 			"title":"How to dribble like Lionel",			
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
 		},
 		{
 			"user":"BSDF787D98ASDF099D7G",
-			"target":"abc1232",
+			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
 		},
 		{
 			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target":"abc1233",
+			"uuid":"abc1233",
 			"title":"Preparation for linear algebra",			
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
 		},
 		{
 			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"target":"abc1234",
+			"uuid":"abc1234",
 			"title":"Making videos",			
 			"path":"http://www.youtube.com/yt",
 			"type":0
+		}
+	],
+	"coursesections":[
+		{
+			"course"  : "A827346H7ASDFG9",
+			"section" : "A827346H7AFSSFG9",
+			"app"       : 2
+		},
+		{
+			"course"  : "A827346H7ASDFG9",
+			"section" : "A827341H7AFSSFG9",
+			"app"       : 2
+		},
+		{
+			"course"  : "A827346H7ASDFG9",
+			"section" : "A827341H8BFSSFG9",
+			"app"       : 2
+		},
+		{
+			"course"  : "A8G7S6H7ASDFG9",
+			"section" : "A827341H7AFFFFG9",
+			"app"       : 2
+		}
+	],
+	"sections":[
+		{
+			"uuid": "A827346H7AFSSFG9",
+			"title": "section description 1",
+			"app": 2
+		},
+		{
+			"uuid": "A412341H7AFSSFG9",
+			"title": "section description 2",
+			"app": 2
+		},
+		{
+			"uuid": "A457341H7AFSSFG9",
+			"title": "section description 3",
+			"app": 2
+		},
+		{
+			"uuid": "A827341H7AFFFFG9",
+			"title": "section description 4",
+			"app": 2
+		}
+	],
+	
+	"sectionmaterials":[
+		{
+			"section": "A827346H7AFSSFG9",
+			"material": "A7S7FWGA7SD11A7SDF8ASD7G"
+		},
+		{
+			"section": "A827346H7AFSSFG9",
+			"material": "A7S7FWGA8SD11A7SDF8ASD7G"
+		},
+		{
+			"section": "A827341H7AFFFFG9",
+			"material": "A7S7FHGA7SD11A7SDF8ASD7G"
 		}
 	],
     "resources":[
@@ -341,8 +400,8 @@
     ],
 	"tags": [
 		{
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",	
 			"uuid":"bbc0",
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
 			"start":0,
 			"end":10,			
 			"type":0,
@@ -357,8 +416,8 @@
 			"shared":false
 		},
 		{
-			"user":"BSDF787D98A7SDF8ASD7G",
 			"uuid":"bbc1",
+			"user":"BSDF787D98A7SDF8ASD7G",
 			"start":2,
 			"end":54,			
 			"type":1,
@@ -373,8 +432,8 @@
 			"shared":false
 		},
 		{
-			"user":"BSDF787D98ASDF099D7G",
 			"uuid":"bbc2",
+			"user":"BSDF787D98ASDF099D7G",
 			"start":11,
 			"end":17,			
 			"type":2,

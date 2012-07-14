@@ -14,7 +14,7 @@ var db = new Sequelize(
 );
 
 var MediaFile = exports.MediaFile = db.define('MediaFile', {
-	id: {type: Sequelize.STRING, primaryKey: true, allowNull: false},
+	uuid: {type: Sequelize.STRING, primaryKey: true, allowNull: false}, //MARK, UUID not ID OMG
 	user: {type: Sequelize.STRING, allowNull: false},
 	title: {type: Sequelize.STRING, allowNull: false},
 	description :{type:Sequelize.STRING},//TODO: update this to graph
@@ -25,7 +25,7 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 //Saves media file to database
 //MediaFile gets passed in as a JSON object
 exports.createMediaFile = function(media, callback){
-	media.id = UUID.generate();
+	media.uuid = UUID.generate();
 	var newMediaFile = MediaFile.build(media);
 	newMediaFile.save().error(function(error){		
 		callback(error, null);

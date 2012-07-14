@@ -59,6 +59,35 @@ coreApi._construct = function () {
 	}
 
 	function Accent() {
+		this.createTag = function(tag,callback){
+			console.log('API - createTag');
+			$.ajax({
+				url:'/api/tag',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(tag),
+				success:function (data) {
+					callback(data);
+				}
+			})
+
+		}
+
+		this.getTagById = function(id, callback){
+			console.log('API - getTagById');
+
+		}
+
+		this.updateTagById = function(id, callback){
+			console.log('API - updateTagById');
+
+		}
+
+		this.deleteTagById = function(id,callback){
+			console.log('API - deleteTagById');
+
+		}
 
 	}
 

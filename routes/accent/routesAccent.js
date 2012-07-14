@@ -63,18 +63,28 @@ exports.unfollowQuestion = function(request, response) {
 
 
 // Tag
-exports.tag = function(request,response){	
+exports.tag = function(request,response){
+
 	if(request.method === 'POST'){
-		TagAction.addTag(request.body, function(error, result){
-			if(result){				
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});
+
+		if(request.session.user){
+			request.body.user =  request.session.user.uuid;
+
+			TagAction.addTag(request.body, function(error, result){
+				if(result){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
 	}
 	else if (request.method === 'GET'){
 		var uuid = request.params.id;

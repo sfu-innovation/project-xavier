@@ -7,6 +7,7 @@ $(document).ready(function () {
 
 	var rqra = new coreApi.Presenter();
 	var engage = new coreApi.Engage();
+	var accent = new coreApi.Accent();
 	var common = new coreApi.Common();
 
 	loadAllQuestions(rqra);
@@ -150,7 +151,6 @@ $(document).ready(function () {
 	})
 
 
-
 	$('#upVoteCommentById').click(function () {
 		var question_id = $('#comment_id').val();
 		if (question_id) {
@@ -196,7 +196,6 @@ $(document).ready(function () {
 			alert('CANNOT HAVE EMPTY FILED');
 		}
 	})
-
 
 
 	$('#search').click(function () {
@@ -267,7 +266,6 @@ $(document).ready(function () {
 		}
 
 	})
-
 
 
 	$('#getQuestionsByUserId').click(function (event) {
@@ -343,7 +341,7 @@ $(document).ready(function () {
 
 
 		}
-		else{
+		else {
 			alert('CANNOT BE EMPTY FILED');
 		}
 
@@ -434,7 +432,6 @@ $(document).ready(function () {
 			alert('CANNOT HAVE EMPTY FILED');
 		}
 	});
-
 
 
 	$('#getCommentsByUserId').click(function (event) {
@@ -532,9 +529,7 @@ $(document).ready(function () {
 	});
 
 
-
 ///////////////////////////////////////////////USERS///////////////
-
 
 
 	$("#getUserById").click(function (event) {
@@ -625,7 +620,6 @@ $(document).ready(function () {
 	});
 
 
-
 	$("#updateUserProfileById").click(function (event) {
 		var id = $('#userp_user').val();
 
@@ -675,12 +669,12 @@ $(document).ready(function () {
 		var url = $('#resource_url');
 
 		if (course_id && title && description && type && filetype && url) {
-			engage.createResource(course_id, title, description,type,filetype,url, function (data) {
+			engage.createResource(course_id, title, description, type, filetype, url, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
 						alert('OK OK REFRESH NOW');
 					}
-					else{
+					else {
 
 						alert(data.message);
 
@@ -698,12 +692,62 @@ $(document).ready(function () {
 
 
 		}
-		else{
+		else {
 			alert('CANNOT BE EMPTY FILED');
 		}
 
 	})
 
+	//tag
+
+
+	$('#createTag').click(function (event) {
+
+		var tag = {};
+
+		tag.start = $('#tag_start').val();
+		tag.end = $('#tag_end').val();
+		tag.type = $('#tag_type').val();
+		tag.target = $('#tag_target_uuid').val();
+		tag.title = $('#tag_title').val();
+		tag.description = $('#tag_description').val();
+		tag.question = $('#tag_question').val();
+		tag.important = $('#tag_important').val();
+		tag.interest = $('#tag_interest').val();
+		tag.examable = $('#tag_examable').val();
+		tag.reviewlater = $('#tag_reviewlater').val();
+		tag.shared = $('#tag_shared').val();
+
+		if (tag.start && tag.description && tag.type && tag.target) {
+
+			accent.createTag(tag, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK REFRESH NOW');
+					}
+					else {
+
+						alert(data.message);
+
+					}
+
+				}
+
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+		}
+		else {
+			alert('CANNOT BE EMPTY FILED');
+		}
+
+	})
 
 
 });

@@ -29,13 +29,13 @@ module.exports = {
 			});
 		},		
 		"Select MediaFile": function(test){
-			MediaFile.selectMediaFile({'target':'abc1231'}, function(error, mediaFile){
+			MediaFile.selectMediaFile({'uuid':'abc1231'}, function(error, mediaFile){
 				test.ok(mediaFile.title.should.be.eql("How to dribble like Lionel"));
 				test.done();
 			});
 		},
 		"Find MediaFileUser": function(test){
-			MediaFile.getMediaFileUser({'target':'abc1230'}, function(error, mediaFileUser){
+			MediaFile.getMediaFileUser({'uuid':'abc1230'}, function(error, mediaFileUser){
 				test.ok(mediaFileUser.firstName.should.be.eql("Mike"));
 				test.done();
 			});
@@ -54,27 +54,27 @@ module.exports = {
 				type:1
 			}
 			MediaFile.createMediaFile(newMediaFile, function(error, mediaFile){	
-				tuid = mediaFile.target;
+				tuid = mediaFile.uuid;
 				console.log("t_uid = " + tuid);
-				test.ok(mediaFile.should.have.property('target'));
+				test.ok(mediaFile.should.have.property('uuid'));
 				test.done();	
 			})
 		},				
 		"Update MediaFile": function(test){
-			var target = {'target':'abc1230'};
-			//target.target = tuid;
+			var uuid = {'uuid':'abc1230'};
+			//uuid.uuid = tuid;
 			var updateAttributes = {'title':'jericho twist', 'path':'www.google.com'};
-			MediaFile.updateMediaFile(target, updateAttributes, function(error, updatedMediaFile){				
+			MediaFile.updateMediaFile(uuid, updateAttributes, function(error, updatedMediaFile){				
 				console.log("expect = " + updateAttributes.title);
 				console.log("result = " + updatedMediaFile.title);
-				//test.ok(updatedMediaFile.should.have.property('target'));
+				//test.ok(updatedMediaFile.should.have.property('uuid'));
 				test.ok(updatedMediaFile.title.should.be.eql(updateAttributes.title));
 				test.done();	
 			})
 		},
 		"Delete MediaFile": function(test){						
-			MediaFile.deleteMediaFile({'target':'abc1231'}, function(error, deletedMediaFile){											
-				test.ok(deletedMediaFile.target.should.be.eql('abc1231'));
+			MediaFile.deleteMediaFile({'uuid':'abc1231'}, function(error, deletedMediaFile){											
+				test.ok(deletedMediaFile.uuid.should.be.eql('abc1231'));
 				test.done();	
 			})
 		}

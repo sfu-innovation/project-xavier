@@ -94,9 +94,9 @@ exports.deleteResource = function(resourceUUID, callback){
 	})
 }
 
-//Gets the number of likes for the course that matches args
-exports.getLikes = function(args, callback){
-	Resource.find({where:args}).success(function(resource){
+//Gets the number of likes for the course with the given uuid
+exports.getLikesByUUID = function(resourceUUID, callback){
+	Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 		if(resource){
 			callback(null, resource.likes);
 		}

@@ -76,9 +76,9 @@ exports.tag = function(request,response){
 			}
 		});
 	}
-	else if (request.method === 'GET'){	
-		var targetID = request.params.id;							
-		TagAction.viewTags({'uuid':targetID}, function(error, result){
+	else if (request.method === 'GET'){
+		var uuid = request.params.id;
+		TagAction.viewTags({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -90,8 +90,8 @@ exports.tag = function(request,response){
 		});		
 	}
 	else if (request.method === 'PUT'){		
-		var targetID = request.params.id;
-		TagAction.updateTag({'uuid':targetID}, request.body, function(error, result){
+		var uuid = request.params.id;
+		TagAction.updateTag({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -103,8 +103,8 @@ exports.tag = function(request,response){
 		});	
 	}
 	else if (request.method === 'DELETE'){
-		var targetID = request.params.id;
-		TagAction.deleteTag({'uuid':targetID},function(error,result){
+		var uuid = request.params.id;
+		TagAction.deleteTag({'uuid':uuid},function(error,result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -118,6 +118,8 @@ exports.tag = function(request,response){
 
 
 }
+
+
 
 exports.taggedQuestion = function(request,response){	
 	if (request.method === 'GET'){		

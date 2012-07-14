@@ -46,6 +46,11 @@ exports.login = function(request, response) {
 	        				})
 
 	        			}
+						else{
+							//what to do if user is found in database
+							request.session.user = user;
+							response.send(request.session);
+						}
 	        		}
 	        		else{
 	        			response.send(error);

@@ -96,7 +96,7 @@ exports.userProfile = function(request,response){
 	}
 
 	if (request.method === "PUT") {
-		UserProfile.updateProfile(user_id, function(error, result) {
+		UserProfile.updateProfile(user_id, request.body, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, user: result }));

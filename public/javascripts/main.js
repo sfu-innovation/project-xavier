@@ -594,6 +594,74 @@ $(document).ready(function () {
 		}
 	});
 
+	///user profile
+
+	$("#getUserProfileById").click(function (event) {
+		var id = $('#userp_user').val();
+		if (id) {
+			common.getUserProfileById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						$('#userp_bio').val(data.profile.bio);
+						$('#userp_profile_picture').val(data.profile.profilePicture);
+						$('#userp_last_watched_tag').val(data.profile.lastWatchedTag);
+						$('#userp_created').val(data.profile.createdAt);
+						$('#userp_updated').val(data.profile.updatedAt);
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+
+
+	$("#updateUserProfileById").click(function (event) {
+		var id = $('#userp_user').val();
+
+		var new_bio = $('#userp_bio').val();
+		var new_profile_picture = $('#userp_profile_picture').val();
+
+		var user_profile = {};
+		user_profile.bio = new_bio;
+		user_profile.profilePicture = new_profile_picture;
+
+		if (id && new_bio && new_profile_picture) {
+			common.updateUserProfileById(id, user_profile, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+
+						$('#userp_bio').val(data.profile.bio);
+						$('#userp_profile_picture').val(data.profile.profilePicture);
+						$('#userp_last_watched_tag').val(data.profile.lastWatchedTag);
+						$('#userp_created').val(data.profile.createdAt);
+						$('#userp_updated').val(data.profile.updatedAt);
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
 
 	/////////////////////////////////////resource//////////////////////
 

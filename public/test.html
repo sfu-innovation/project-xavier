@@ -25,7 +25,9 @@
 		<li><a href="#user">User</a></li>
 		<li><a href="#userp">User Profile</a></li>
 		<li><a href="#tag">Tag</a></li>
+		<li><a href="#mediafile">Media File</a></li>
 		<li><a href="#resource">Resource</a></li>
+		<li><a href="#notification">Notification</a></li>
 
 	</ul>
 
@@ -200,7 +202,18 @@
 	</div>
 
 
-	<div id="userp"></div>
+	<div id="userp">
+		<button id="getUserProfileById">Get User Profile</button>
+		<button id="updateUserProfileById">Update User Profile</button>
+		<input id="userp_user" type="text" size="40" placeholder="profile picture" value="A7S7F8GA7SD98A7SDF8ASD7G" >
+		<input id="userp_profile_picture" type="text" size="20" placeholder="profile picture" >
+		<input id="userp_bio" type="text" size="20" placeholder="profile bio" >
+		<input id="userp_last_watched_tag" type="text" size="20" placeholder="last watched" disabled="disabled">
+		<input id="userp_created" type="text" size="20" placeholder="created at" disabled="disabled">
+		<input id="userp_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
+
+
+	</div>
 	<div id="tag">
 		<p>Only works in Accent!!!!</p>
 		<div>
@@ -212,7 +225,7 @@
 			<input id="tag_target_uuid" type="text" size="20" placeholder="target uuid" >
 			<input id="tag_title" type="text" size="20" placeholder="title" >
 			<input id="tag_description" type="text" size="20" placeholder="description" >
-			<input id="tag_question_uid" type="text" size="20" placeholder="description" >
+			<input id="tag_question" type="text" size="20" placeholder="uid" >
 
 			<input id="tag_important" type="text" size="20" placeholder="important" >
 			<input id="tag_interest" type="text" size="20" placeholder="interest" >
@@ -224,6 +237,12 @@
 		</div>
 
 	</div>
+
+	<div id="mediafile">
+
+	</div>
+
+
 	<div id="resource">
 		<p>Only works in Engage!!!!</p>
 		<div>
@@ -239,6 +258,12 @@
 		</div>
 
 	</div>
+
+	<div id="notification">
+
+	</div>
+
+
 
 
 </div>

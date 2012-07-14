@@ -15,12 +15,10 @@ var db = new Sequelize(
 
 var MediaFile = exports.MediaFile = db.define('MediaFile', {
 	id: {type: Sequelize.STRING, primaryKey: true, allowNull: false},
-	user: {type: Sequelize.STRING},
+	user: {type: Sequelize.STRING, allowNull: false},
 	title: {type: Sequelize.STRING, allowNull: false},
-	description :{type:Sequelize.STRING},
-	//TODO: update this to graph
-	thumbnail:{type: Sequelize.STRING},
-	path: {type: Sequelize.STRING, allowNull: false},	
+	description :{type:Sequelize.STRING},//TODO: update this to graph
+	path: {type: Sequelize.STRING, allowNull: false},
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}	
 });
 

@@ -54,11 +54,12 @@ app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
-
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here
 app.post('/api/resource/create', routesEngage.createResource);
-
+app.get('/api/resource/:uuid', routesEngage.getResource);
+app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
+app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 //Star resources
 app.get('/api/star', routesEngage.starredResources);	//get all starred resources

@@ -475,8 +475,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 				document.set(data, function(err, req, data){
 					if (data) {
 						callback(data);
-					}
-					else {
+					}else {
 						callback(undefined);
 					}
 				});

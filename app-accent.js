@@ -101,20 +101,27 @@ app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
 
 
 
-// wtf....??....
+
+//to be deprecated, use Get API for each Model instead
 app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagged questions
 app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
 app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
+
+app.get("/api/mediafile/")
 
 
 //mediafile
 
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
 app.get("/api/mediafile/:id", routesAccent.mediafile); // get a mediafile by id
-app.get("/api/mediafile/:tid/tag", routesAccent.mediafileTag); // get all mediafile tags
-app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
 app.put("/api/mediafile/:id/", routesAccent.mediafile); // update a mediafile by id
 app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile by id
+
+
+app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags by mediafile id
+
+//to be deprecated, use Get API for each Model instead
+app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
 
 //userprofile
 

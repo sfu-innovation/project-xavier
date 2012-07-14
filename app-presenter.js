@@ -45,7 +45,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
-app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
+app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
 // notification
 

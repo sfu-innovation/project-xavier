@@ -37,13 +37,14 @@ app.get('/login', routesCommon.login);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
-app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
+app.post('/api/users/', routesCommon.userQuery); // get a list of users based on a custom query
+app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update users prefered name
 
 app.get('/api/course/:id/members', routesCommon.courseMembers);
 
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
-app.post('/api/course/', routesCommon.courseQuery); // get a list of courses based on a custom query
+app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 
 
 

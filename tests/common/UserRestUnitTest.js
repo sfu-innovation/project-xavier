@@ -10,9 +10,7 @@ var currentPort = config.presenterServer.port;
 
 
 module.exports = {
-	userTest:{	
-		// get the details of the question created
-		
+	userTest:{
 		setUp: function(callback) {
 		
 

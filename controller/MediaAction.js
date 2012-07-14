@@ -72,7 +72,7 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 Get a tagged mediafile that belongs to a specific tag.
 
 args = {	
-	user		: <user id from the User model>	
+	target		: <target id from the Tag model>	
 }
 
 */
@@ -259,3 +259,5 @@ mediaAction.deleteMediaFile(object, function( err, data){
 	}
 });
 */
+
+module.exports = new MediaAction;

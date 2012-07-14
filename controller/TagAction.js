@@ -328,6 +328,7 @@ tagAction.viewCommentTagged(object, function( err, data){
 });
 */
 
+/*
 tagAction.deleteTag(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data);
@@ -335,5 +336,6 @@ tagAction.deleteTag(object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+*/
 
 module.exports = new TagAction;

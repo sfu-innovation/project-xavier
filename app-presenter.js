@@ -56,6 +56,8 @@ app.post("/api/question", routesPresenter.question); // post a new question by u
 //TODO: need update this into document
 app.get("/api/questions", routesPresenter.questions); // get all questions
 app.get("/api/questions/unanswered", routesPresenter.questionsUnanswered); // get all unanswered questions
+app.get("/api/questions/new", routesPresenter.questionsNew); //get all new questions
+app.get("/api/questions/answered", routesPresenter.questionsAnswered)
 
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id

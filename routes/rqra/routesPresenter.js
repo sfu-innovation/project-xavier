@@ -97,12 +97,8 @@ exports.questions = function(request, response) {
 }
 
 exports.questionsUnansweredRoute = function(appType, request, response){
-
-	console.log(request);
 	if (request.method === "GET") {
 		queryES.getAllUnansweredQuestions( appType, function(result) {
-			console.log(result);
-
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -112,12 +108,46 @@ exports.questionsUnansweredRoute = function(appType, request, response){
 			}
 		});
 	}
-
 }
 
 exports.questionsUnanswered = function(request, response){
-	console.log('G');
 	exports.questionsUnansweredRoute(0, request, response);
+}
+
+exports.questionsNewRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		queryES.getAllNewQuestions( appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsNew = function(request, response){
+	exports.questionsNewRoute(0, request, response);
+}
+
+exports.questionsAnsweredRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		queryES.getAllRecentlyAnsweredQuestions( appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsAnswered = function(request, response){
+	exports.questionsAnsweredRoute(0, request, response);
 }
 
 exports.questionsByUserRoute = function(appType, request, response) {

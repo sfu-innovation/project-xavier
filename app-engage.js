@@ -61,9 +61,13 @@ app.post('/api/resource/create', routesEngage.createResource);
 
 
 //Star resources
-app.get('/api/star', routesEngage.starredResources);
-app.post('/api/star', routesEngage.starResource);
-app.delete('/api/unstar', routesEngage.unstarResource);
+app.get('/api/star', routesEngage.starredResources);	//get all starred resources
+app.post('/api/star', routesEngage.starResource);		//star a resource
+app.delete('/api/star', routesEngage.unstarResource);	//unstar a resource
+
+//Like resources
+app.post('/api/like', routesEngage.likeResource);		//like a resource
+app.delete('/api/like', routesEngage.unlikeResource);	//unlike a resource
 
 //userprofile
 

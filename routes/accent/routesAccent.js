@@ -1,7 +1,6 @@
 var routesPresenter = require("./../rqra/routesPresenter.js");
 
 var TagAction = require("./../../controller/TagAction.js");
-var Tag = require("./../../models/tag");
 
 exports.question = function(request, response) {
 	routesPresenter.questionRoute(1, request, response);
@@ -62,13 +61,10 @@ exports.unfollowQuestion = function(request, response) {
 }
 
 
-//Tag
-
-exports.tag = function(request,response){
-	//TODO: replace this with seesion user	
-	//request.body.tag.user = 'fakeid';
+// Tag
+exports.tag = function(request,response){	
 	if(request.method === 'POST'){
-		TagAction.addTag(request.body.tag, function(error, result){
+		TagAction.addTag(request.body, function(error, result){
 			if(result){				
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -78,24 +74,10 @@ exports.tag = function(request,response){
 				response.end(JSON.stringify({ errorcode: 1, message: error }));
 			}
 		});
-
-		/*
-		Tag.createTag(request.body.tag, function(error, result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});
-		*/
 	}
-	else if (request.method === 'GET'){				
-		console.log("good catch by jordan = " + request.params.id);
-		
-		TagAction.viewTags({'target':request.params.id}, function(error, result){
+	else if (request.method === 'GET'){	
+		var targetID = request.params.id;							
+		TagAction.viewTags({'target':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -105,24 +87,10 @@ exports.tag = function(request,response){
 				response.end(JSON.stringify({ errorcode: 1, message: error }));
 			}
 		});		
-
-		/*
-		Tag.selectTag(request.body.tag, function(error,result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-
-		})
-		*/
-
 	}
-	else if (request.method === 'PUT'){
-		TagAction.updateTag(request.body.tag, function(error, result){
+	else if (request.method === 'PUT'){		
+		var targetID = request.params.id;
+		TagAction.updateTag({'target':targetID}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -132,20 +100,6 @@ exports.tag = function(request,response){
 				response.end(JSON.stringify({ errorcode: 1, message: error }));
 			}
 		});	
-
-		/*				
-		Tag.updateTag(request.body.tag, function(error,result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-
-		})
-		*/
 	}
 	else if (request.method === 'DELETE'){
 		//TODO: no method found yet
@@ -155,6 +109,55 @@ exports.tag = function(request,response){
 
 
 }
+
+exports.taggedQuestion = function(request,response){	
+	if (request.method === 'GET'){		
+		var questionID = request.params.qid;						
+		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
+exports.taggedComment = function(request,response){	
+	if (request.method === 'GET'){		
+		var commentID = request.params.cid;				
+		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
+exports.taggedUser = function(request,response){	
+	if (request.method === 'GET'){
+		var userId = request.params.uid;								
+		TagAction.getTaggedUser({'user':userId}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
 
 //deprecated
 

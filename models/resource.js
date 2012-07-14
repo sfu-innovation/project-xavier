@@ -18,7 +18,6 @@ var db = new Sequelize(
 var Resource = exports.Resource = db.define('Resource', {
 	uuid: {type: Sequelize.STRING, primaryKey: true}
 	, user: {type: Sequelize.STRING, allowNull: false}
-	, course: {type: Sequelize.STRING, allowNull: false}
 	, title: {type: Sequelize.STRING, allowNull: false}
 	, description:  {type: Sequelize.TEXT}
 	, resourceType: {type: Sequelize.INTEGER, allowNull: false}

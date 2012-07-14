@@ -84,3 +84,19 @@ exports.updateTag = function(uuid, args, callback){
 		console.log("Couldn't find tag " + error);
 	});
 }
+
+exports.deleteTag = function(args, callback) {
+	Tag.find({where: args}).success(function(tag) {
+		tag.destroy().success(function(obj) {
+			if (obj && obj.deletedAt) {
+				callback(null, updatedTag);
+			}
+		}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't delete the tag " + error);
+		});
+	}).error(function(error) {
+		callback(error, null);
+		console.log("Couldn't find tag " + error);
+	});
+}

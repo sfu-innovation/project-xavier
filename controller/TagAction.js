@@ -187,6 +187,17 @@ TagAction.prototype.updateTag = function( uuid , args, callback ){
 	})	
 }
 
+TagAction.prototype.deleteTag = function( args, callback ){ 	
+	Tag.deleteTag( args, function(error, deletedTag){		
+		if (!error) {
+			callback(null, deletedTag);	
+		}
+		else {
+			callback(error, null);
+		}		
+	})	
+}
+
 var object = {
 		//"type":12
 		//"start":2,
@@ -194,8 +205,8 @@ var object = {
 		//"question":"pJfzndwdadddQuOicWWAjx7F00"
 		//'commentID':'aJfzggggguOicWWAjx7F05'
 		//"reviewlater":true
-		//'target':'abc1232'
-		'user':'BSDF787D98A7SDF8ASD7G'
+		'target':'abc1230'
+		//'user':'BSDF787D98A7SDF8ASD7G'
 		//'uuid':'bbc3'
   };
 
@@ -214,6 +225,25 @@ var newTag = {
 	reviewlater:true,
 	shared:false
 };
+
+// REST
+/*
+{
+	"user":"BSDF787D98A7SDF8ASD7G2",
+	"start":12,
+	"end":34,			
+	"type":2,
+	"target":"abc1235",
+	"title":"mario kart",
+	"description":"luigi",
+	"question":"aJfznhseQuOicWWAjx7F00",
+	"important":false,
+	"interest":false,
+	"examable":true,
+	"reviewlater":true,
+	"shared":false
+}
+*/
 
 
 var tagAction = new TagAction();
@@ -258,6 +288,7 @@ tagAction.updateTag(object, updatedTag, function( err, data){
 });
 */
 
+/*
 tagAction.getTaggedUser(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data.lastName + ' ' + data.firstName);
@@ -265,6 +296,7 @@ tagAction.getTaggedUser(object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
+*/
 
 /*
 tagAction.viewQuestionTagged(object, function( err, data){
@@ -285,5 +317,13 @@ tagAction.viewCommentTagged(object, function( err, data){
 	}
 });
 */
+
+tagAction.deleteTag(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - "+ data);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
 
 module.exports = new TagAction;

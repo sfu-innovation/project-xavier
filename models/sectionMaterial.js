@@ -42,16 +42,16 @@ exports.removeAllMaterialFromSection = function( args, callback ){
 	Remove a specific sectionmaterial from a section
 	
 	args = {
-		sectionMaterial : the section material object to remove
+		sectionmaterial : the section material object to remove
 	}
 */
 
 exports.removeMaterialFromSection = function( args, callback ){
-	if ( null === args.sectionMaterial ){
+	if ( null === args.sectionmaterial ){
 		callback(" the section material was null ", null );
 		return;
 	}
-	args.sectionMaterial.destroy().error(function(error){
+	args.sectionmaterial.destroy().error(function(error){
 		callback(error, null );
 	});
 	callback( null, args.sectionMaterial );

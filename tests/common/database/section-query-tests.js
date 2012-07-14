@@ -3,11 +3,8 @@ var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var queries = require('../../../database/db-queries.js');
 var Section = require('../../../models/section.js');
-
 module.exports = {
-
 	userTests:{
-		
 		setUp: function(callback){
 			queries.dropDB(config.mysqlDatabase["db-name"], function(){
 				queries.createDB(config.mysqlDatabase["db-name"], function(){
@@ -26,7 +23,7 @@ module.exports = {
 			queries.dropDB(config.mysqlDatabase["db-name"], function(){
 				callback();
 			});
-		},		
+		},
 	
 		"Find Section": function(test){
 			var args = {
@@ -39,7 +36,6 @@ module.exports = {
 				test.done();
 			});
 		},
-	
 		"Create Section": function(test){
 		    var args = {
 		    	sections : ["A827346H7ASDFG9","A827346H7ASDFG9","A827341H8BFSSFG9","A827341H7AFFFFG9"],
@@ -54,7 +50,6 @@ module.exports = {
 				test.done();
 			});
 		},
-		
 		"Update Section":function(test){
 			var args = {
 				sections : 'A827346H7ASDFG9',
@@ -73,10 +68,7 @@ module.exports = {
 					test.done();
 				});
 			});
-			
-			
 		},
-		
 		"Remove Section": function( test ) {
 			
 			var args = {
@@ -85,9 +77,6 @@ module.exports = {
 			Section.removeSection( args, function( error, section ){
 				test.ok(section.should.have.property('title', 'section description 3'));
 			});
-			
-			
-
 			test.done();
 		}
 	}

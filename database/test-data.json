@@ -317,17 +317,17 @@
 	],
 	"sections":[
 		{
-			"uuid": "A827346H7ASDFG9",
+			"uuid": "A827346H7AFSSFG9",
 			"title": "section description 1",
 			"app": 2
 		},
 		{
-			"uuid": "A827346H7ASDFG9",
+			"uuid": "A412341H7AFSSFG9",
 			"title": "section description 2",
 			"app": 2
 		},
 		{
-			"uuid": "A827341H8BFSSFG9",
+			"uuid": "A457341H7AFSSFG9",
 			"title": "section description 3",
 			"app": 2
 		},
@@ -340,11 +340,11 @@
 	
 	"sectionmaterials":[
 		{
-			"section": "A827346H7ASDFG9",
+			"section": "A827346H7AFSSFG9",
 			"material": "A7S7FWGA7SD11A7SDF8ASD7G"
 		},
 		{
-			"section": "A827346H7ASDFG9",
+			"section": "A827346H7AFSSFG9",
 			"material": "A7S7FWGA8SD11A7SDF8ASD7G"
 		},
 		{

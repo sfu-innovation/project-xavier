@@ -1,10 +1,11 @@
 var fs      = require("fs");
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var UUID = require('com.izaakschroeder.uuid');
-var CourseSection = require('../models/courseSection.js').CourseSection;
-var Section = require('../models/section.js').Section;
-var SectionMaterial = require('../models/sectionMaterial.js').SectionMaterial;	
-
+var CourseSection = require('../models/courseSection.js');
+var Section = require('../models/section.js');
+var SectionMaterial = require('../models/sectionMaterial.js');	
+var SectionImpl = require('../models/section.js').Section;
+var Resource    = require('../models/resource.js').Resource;
 var OrganizationAction = function(){}
 
 /*
@@ -23,19 +24,15 @@ var OrganizationAction = function(){}
 	The newly added resource UUID.
 */
 OrganizationAction.prototype.addResourceToSection = function( args, callback ){
-	SectionMaterial.findAll({ where : { material : args.resource, section  : args.section }}).success( function ( sectionMaterials ){
-		if ( 0 === sectionMaterials.length ){
-			SectionMaterial.create({ section : args.section, material : args.resource}).success( function ( savedMaterial ){
-				callback( null, args.section );
-			}).error( function ( error ){
-				callback( error, null );
+	
+	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial){
+		if ( null === sectionMaterial ) {
+			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial){
+				callback( null, newSectionMaterial);
 			});
-		}
-		else {
+		}else {
 			callback ("The section material already exists", null );
 		}
-	}).error( function ( error ){
-		callback( error, null );
 	});
 }
 
@@ -51,23 +48,14 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	returns the default section uuid for that course.
 */
 OrganizationAction.prototype.removeResourceFromSection = function( args, callback ){
-	SectionMaterial.findAll({ where : { section : args.section, material : args.resource}})
-		.success(function( sectionMaterials ){
-		if ( 1 === sectionMaterials.length){
-			sectionMaterials[0].destroy().error(function(error){
-				callback(error, null );
-			}).success(function(){
-				callback( null, removed );
-			});
-		}
-			
-		
-		else {
-			callback(" Invalid number of sectionMaterials to remove", null);
-		}
-	}).error(function( error ){ // error block - SectionMaterial.findAll
-		callback( error, null );
-	});
+    SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
+    	var argsToRemove = {
+    		sectionmaterial : sectionMaterial
+    	}
+    	SectionMaterial.removeMaterialFromSection( argsToRemove, function( error, removedMaterial ){
+    		callback( null, removedMaterial );
+    	});
+    }); 
 }
 
 /*
@@ -79,36 +67,19 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 	
 	args = {
 		section : UUID of the section
-		newSection : UUID of the section
+		newsection : UUID of the section
 		resource : UUID of the resource
 	}
 	
 	returns the default section uuid for that course.
 */
 OrganizationAction.prototype.updateResourceFromSectionToSection = function( args, callback ){
-    // we first look into sectionMaterials to see if the material is already associated with the new section
-    SectionMaterial.find({ where : { section : args.newSection, material : args.resource }}).success(function( sectionMaterial){
-    	if ( null === sectionMaterial ){
-    	    //if it is NOT already associated, we then go find the resource associated with the current section
-    		SectionMaterial.find({ where : { section : args.section, material : args. resource}})
-    			.success(function( moveSectionMaterial ){
-    				if ( null === moveSectionMaterial ){
-    				// if the section we want to remove from doesnt even exist, stop
-    					callback("The section associated with the resource does not exist ", null );
-    					return;
-    				}
-    				// by this point we have validated that where we want to move to and where are moving from both exist
-    				moveSectionMaterial.updateAttributes({ section : args.newSection }).error(function(error ){
-							callback( error, null );
-						}).success(function( movedSectionMaterial ){
-							callback( null, moveSectionMaterial );
-						});
-    			});
-    	}
-    	else {
-    		callback( "The material already exists in the section you wanted to move it to ", null );
-    	}
-    });
+	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
+		args.sectionmaterial = sectionMaterial;
+		SectionMaterial.updateSectionMaterial( args, function( error, updatedMaterial ){
+			callback( null, updatedMaterial );
+		});
+	});
 }
 
 /*
@@ -125,37 +96,26 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 	returns the UUID of the new section
 */
 OrganizationAction.prototype.addSection = function( args, callback){
-    // we first need to get a list of the sections of this course
-	CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
-		var sectionID = new Array();
-		var i = courseSections.length - 1;
-		for (; i >= 0; i--){
-			sectionID.push( courseSections[i].section );
-		}
-		//we use this list of sections to determine that we dont already have a section with this name
-		//this is kind of bad but we dont have anything else to identify on at this time
-		Section.findAll({ where : { uuid : sectionID, title : args.title }}).success(function( sections ){
-			if ( 0 === sections.length ){
-				var newUUID = UUID.generate();
-				Section.create({ uuid : newUUID, title : args.title, app : args.app }).success(function(section){
-					CourseSection.create( { course : args.course, section : newUUID, app : args.app }).success(function(newCourseSection){
-						callback( null, newUUID );
-					}).error(function(error){
-					callback( error, null);
-					});
-				}).error(function(error){
-					callback(error, null );
+	CourseSection.sectionsInCourse( args, function( error, courseSectionUUIDs){
+		args.sections = courseSectionUUIDs;
+		Section.findSection( args, function ( error, section ){
+			Section.createSection( args, function ( error, newSection ){
+				if ( error ){
+					callback( error , null );
+					return;
+				}
+				args.section = newSection.uuid;
+				CourseSection.createCourseSection( args, function ( error, newCourseSection ){
+					if ( error ){
+						callback( error, null );
+						return;
+					}
+					else {
+						callback( null, newSection);
+					}	
 				});
-			}
-			else {
-				callback(" The section already exists with this course", null );
-			}
-		}).error( function( error ){ // error block -  Section.findAll 
-			callback( error, null );
+			});
 		});
-		
-	}).error( function( error ){  // error block - CourseSection.findAll
-		callback( error, null );  
 	});
 }
 
@@ -175,37 +135,32 @@ OrganizationAction.prototype.addSection = function( args, callback){
 	returns the UUID of the deleted section
 */
 OrganizationAction.prototype.removeSection = function( args, callback){
-	CourseSection.find({ where : { section : args.section }}).success( function( courseSection ){
-		if ( null === courseSection ){
-			callback("The section doesn't exist", null );
-			return;
+	CourseSection.removeCourseSection( args, function( error, removedCourseSection ){
+		if ( error ){
+					callback( error, null );
+					return;
 		}
-		else {
-			courseSection.destroy().error(function ( error ){
-				callback( error, null );
-				return;
-			});
-		}
-		SectionMaterial.findAll({ where : { section : args.section }}).success(function( sectionMaterials ){
-			if ( sectionMaterials.length > 0 ) {
-				var i = sectionMaterials.length - 1;
-				for(; i >= 0; i--){
-					sectionMaterials[i].destroy().error( function ( error ){
-						callback( error, null );
-					});
+		SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
+			if ( error ){
+					callback( error, null );
+					return;
+			}
+			args.sectionmaterials = sectionMaterials;
+			SectionMaterial.removeAllMaterialFromSection( args, function( error, removedSectionMaterials ){
+				if ( error ){
+					callback( error, null );
+					return;
 				}
-			}
+				Section.removeSection( args, function( error, removedSection ){
+					if ( error ){
+						callback( error, null );
+						return;
+					}
+					callback( null, removedSection );
+				});	
+			});
 		});
-		Section.find({ where : { uuid : args.section }}).success(function(sectionToBeRemoved){
-			if ( null === sectionToBeRemoved ){
-				callback("This section does not exist " + args.section , null );
-			}
-			else {
-				sectionToBeRemoved.destroy().error(function(error){
-					callback(error, null);
-				});
-			}
-		});
+	});
 }
 
 /*
@@ -213,41 +168,34 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 	will be removed and any section materials associated with this section will be removed.
 		
 	args = {
-		section : UUID of section to remove
+		newtitle : new sectionName
+		course  : course UUID
 		title   : new sectionName
 	}
 	
 	returns the UUID of the deleted section
 */
 OrganizationAction.prototype.updateSection = function( args, callback){
-  CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
-		var sectionID = new Array();
-		var i = courseSections.length - 1;
-		for (; i >= 0; i--){
-			sectionID.push( courseSections[i].section );
-		}
-		// we need to make sure there are no other sections for this course with the same title
-		Section.findAll({ where : { uuid : sectionID, title : args.title }}).success(function( sections ){
-			if ( 0 === sections.length ){
-				Section.find({ where : { uuid : args.section }}).success(function( section ){
-					section.updateAttributes({ title : args.title }).error(function(err0r ){
-						callback( error, null );
-					});
-				});
-			}
-			else {
-				callback("There is already a section associated with this course with the same name", null );
-			}
-		}).error(function(error){
-			callback( error, null );
-		});
-		
-	}).error( function ( error ){
-		callback( error, null );
-	});
+    CourseSection.sectionsInCourse( args, function( error, courseSections ){
+    	if ( error ){
+    			callback( error, null );
+    			return;
+    	}
+    	args.sections = courseSections;
+    	Section.findSection( args, function( error, section ){
+    		if ( error ){
+    			callback( error, null );
+    			return;
+    		}
+    		args.sectionObject = section;
+    		args.title = args.newtitle;
+    		Section.updateSection( args, function( error, updatedSection ){
+    			callback( null, updatedSection );
+    		});
+    	});
+    });
 }
 
-OrganizationAction.prototype.
 /*
 	Get all of the sections in a course
 	
@@ -257,26 +205,19 @@ OrganizationAction.prototype.
 	
 	Returns an array of all the sections associated with the course
 */
-OrganizationAction.prototype.coursesInSection = function( args, callback ){
-	CourseSection.findAll({ where : { course : args.course }}).success(function ( courseSections ){
-		var sectionsInCourse = new Array();
-		var i = courseSections.length - 1;
-		for(; i >= 0; i-- ){
-			sectionsInCourse.push(courseSections[i].section);
-		}
-		Section.findAll({ where : { uuid : sectionsInCourse }}).success(function( sections ){
+OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
+	CourseSection.sectionsInCourse( args, function( error, courseSections ){
+		SectionImpl.findAll({ where : { uuid : courseSections }}).success(function( sections ){
 			var retSections = new Array();
 			var x = sections.length -1 ;
 			for ( ; x >= 0; x-- ){
-				retSections.push(sections[i]);
+				retSections.push(sections[x]);
 			}
 			callback( null, retSections );
 			return;
 		}).error( function ( error ) {
 			callback( error, null );
-		}
-	}).error(function( error ){
-		callback( error, null );
+		});
 	});
 }
 
@@ -288,7 +229,7 @@ OrganizationAction.prototype.coursesInSection = function( args, callback ){
 	Returns the resources in a section
 */
 OrganizationAction.prototype.resourcesInSection = function( args, callback ){
-	SectionMaterial.findAll({ where : { section : args.section }}).success(function( sectionMaterials){
+	SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
 		var resourcesInSection = new Array();
 		var i = sectionMaterials.length - 1;
 		for(; i >= 0; i-- ){
@@ -304,8 +245,6 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 		}).error(function(error){
 			callback( error, null );
 		});
-	}).error(function(error){
-		callback( error , null );
 	});
 }
 
@@ -320,97 +259,21 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 */
 
 OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callback ){
-	CourseSection.findAll({ where : { course : args.course }}).success(function( sections ){
-		var sectionsInCourse  = new Array();
-		var i = sections.length - 1;
-		for(; i >= 0; i-- ){
-			sectionsInCourse.push( sections[i].section );
+	CourseSection.sectionsInCourse( args, function( error, courseSections ){
+		if ( error ) {
+			callback( error, null );
+			return;
 		}
-		SectionMaterial.findAll({ where : { section : sectionsInCourse }}).success(function( resources ){
-			callback( null, resources.length );
-		}).error(function(error){
-			callback(error, null );
+		args.section = courseSections;
+		SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
+			if ( error ) {
+				callback( error, null );
+			}
+			else {
+				callback( null, sectionMaterials.length );
+			}
 		});
-	}).error(function(error){
-		callback( error, null );
-	});	
+	});
 }
-//module.exports = new OrganizationAction;
 
-
-
-var object = {
-		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		/*    "app":"Accent",
-		    "target":"B857346H7ASDFG9",
-		    "attribute":2,
-		    "description": "This is a test description"
-		    */
-	//	title : "Default",
-		title : "Title Description3",  
-	//	section : "ec68c6c6-8844-4c9d-b806-92d70ffaf253",  // default section
-		course : "A827346H7ASDFG9",
-		app : 1
-  };
-  
-  
-var object2 = {
-		//	"user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		/*    "app":"Accent",
-		    "target":"B857346H7ASDFG9",
-		    "attribute":2,
-		    "description": "This is a test description"
-		    */
-		//title : "Default",
-		//title : "Title Description3",  
-		"resource" : "A7S7FWGA7SD11A7SDF8ASD7G",  // default section
-		"section" : "85c12caf-61ee-42de-9afa-d28a82e7ac9b"
-	//	app : 1
-  };
-
-
-
-var organizationAction = new OrganizationAction();
-//addSection
-//addDefaultSection
-//addResourceToDefaultSection
-//removeSection
-// A7S7FWGA7SD11A7SDF8ASD7G - resource ID
-
-/*
-organizationAction.addDefaultSection( object, function( err, data){
-	if (data ) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-/*
-organizationAction.addSection( object, function( err, data){
-	if (data ) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-//
-organizationAction.removeResourceFromSection( object2, function( err, data){
-	if (data ) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-  
-/*
-organizationAction.removeSection( object2, function( err, data){
-	if (data ) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-  
+module.exports = new OrganizationAction;

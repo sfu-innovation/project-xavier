@@ -61,29 +61,7 @@ div#logoContainer
 				<!-- list of questions -->
 				div#questionList(onload="displayAsked()")
 			
-				script(type="text/javascript")
-					function displayAsked() {
-						var questionList = document.getElementById("questionList");
-						questionList.innerHTML = "<div class='question'><h2>Asked Question 1</h2><p>This is a question that has been asked</p></div>";
-					}
-					
-					function displayNew() {
-						var questionList = document.getElementById("questionList");
-						questionList.innerHTML = "<div class='question'><h2>New  Question 1</h2><p>this is a new question</p></div>";
-					}
-					
-					function displayUnanswered() {
-						var questionList = document.getElementById("questionList");
-						questionList.innerHTML = "<div class='question'><h2>Unanswered Question 1</h2><p>this is an unanswered question</p></div>";
-					}
-					
-					function displayAll() {
-						var questionList = document.getElementById("questionList");
-						questionList.innerHTML = "<div class='question'><h2>All Question 1</h2><p>This is any question</p></div>";
-					}
-					
-					// displays asked questions on page load
-					displayAsked();
+				script(type="text/javascript", src="javascripts/rqra/questionTabs.js")
 			
 			<!-- Info Panel -->
 			div#infoPanel

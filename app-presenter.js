@@ -37,6 +37,10 @@ app.get('/login', routesCommon.login);
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
+app.get('/api/user/:id/courses', routesCommon.userCourses); // get user courses, **TODO:get from session usr uuid
+
+app.put("/api/user/preferred/:id", routesCommon.userPreferredName); // set preferred name, **TODO:get from session usr uuid
+
 app.post('/api/user/', routesCommon.userQuery); // get a list of users based on a custom query
 
 app.get('/api/course/:id/members', routesCommon.courseMembers);
@@ -56,6 +60,8 @@ app.post("/api/question", routesPresenter.question); // post a new question by u
 //TODO: need update this into document
 app.get("/api/questions", routesPresenter.questions); // get all questions
 app.get("/api/questions/unanswered", routesPresenter.questionsUnanswered); // get all unanswered questions
+app.get("/api/questions/new", routesPresenter.questionsNew); //get all new questions
+app.get("/api/questions/answered", routesPresenter.questionsAnswered)
 
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id

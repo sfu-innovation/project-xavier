@@ -87,12 +87,72 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 }
 
 QueryES.prototype.getAllUnansweredQuestions = function(appType, callback){
-	console.log('apptype: '+appType);
-
 	var data = {
 		query: {
 			term:{status:"unanswered"}
 		}
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits); //only need the hits.hits part
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
+QueryES.prototype.getAllNewQuestions = function(appType, callback){
+	var data = {
+		"query": {
+			"match_all": {}
+		},
+		"sort": [
+			{
+				"timestamp": {
+					"order": "desc"
+				}
+			}
+		],
+		"from": 0,
+		"size": 5
+	};
+
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits); //only need the hits.hits part
+		}
+		else{
+			callback(undefined);
+		}
+	});
+
+}
+
+QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, callback){
+	var data = {
+		"query": {
+			"term": {
+				"status": "answered"
+			}
+		},
+		"sort": [
+			{
+				"timestamp": {
+					"order": "desc"
+				}
+			}
+		],
+		"from": 0,
+		"size": 5
 	};
 
 	switchIndex(appType);
@@ -236,6 +296,8 @@ QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionB
 
 	var date = new Date().toISOString();
 
+	//updating timestamp might be problematic when calling 'getAllNewQuestions', need 2 fields
+	//create & modified field
 	var data = {
 		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date;',
 		'params':{

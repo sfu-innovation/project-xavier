@@ -34,7 +34,8 @@ args = {
 }
 
 */
-TagAction.prototype.addTag = function( args, callback ){ 	
+TagAction.prototype.addTag = function( args, callback ){
+
 	Tag.createTag(args, function(error, newTag){		
 		if (!error) {
 			callback(null, newTag);	
@@ -187,6 +188,27 @@ TagAction.prototype.updateTag = function( uuid , args, callback ){
 	})	
 }
 
+/*
+
+Delete a specific tag based on a uuid.
+
+args = {
+		uuid			: <id for a specific Tag will work the best>	
+}
+
+*/
+
+TagAction.prototype.deleteTag = function( args, callback ){ 	
+	Tag.deleteTag( args, function(error, deletedTag){		
+		if (!error) {
+			callback(null, deletedTag);	
+		}
+		else {
+			callback(error, null);
+		}		
+	})	
+}
+
 var object = {
 		//"type":12
 		//"start":2,
@@ -194,8 +216,8 @@ var object = {
 		//"question":"pJfzndwdadddQuOicWWAjx7F00"
 		//'commentID':'aJfzggggguOicWWAjx7F05'
 		//"reviewlater":true
-		//'target':'abc1232'
-		'user':'BSDF787D98A7SDF8ASD7G'
+		'target':'abc1230'
+		//'user':'BSDF787D98A7SDF8ASD7G'
 		//'uuid':'bbc3'
   };
 
@@ -277,7 +299,7 @@ tagAction.updateTag(object, updatedTag, function( err, data){
 });
 */
 
-
+/*
 tagAction.getTaggedUser(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ data.lastName + ' ' + data.firstName);
@@ -285,7 +307,7 @@ tagAction.getTaggedUser(object, function( err, data){
 		console.log( "[ERROR] - "+err);
 	}
 });
-
+*/
 
 /*
 tagAction.viewQuestionTagged(object, function( err, data){
@@ -301,6 +323,16 @@ tagAction.viewQuestionTagged(object, function( err, data){
 tagAction.viewCommentTagged(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - "+ JSON.stringify(data));
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
+/*
+tagAction.deleteTag(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - "+ data);
 	} else {
 		console.log( "[ERROR] - "+err);
 	}

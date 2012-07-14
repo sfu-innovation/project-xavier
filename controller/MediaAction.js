@@ -18,8 +18,8 @@ var MediaAction = function() {
 Adding a mediafile based on a user specified properties.
 
 args = {
+ 	id		: <MediaFile id - primary key>
 	user		: <user id from the User model>	
-	target		: <id that links between Tag and MediaFile - primary key>
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -44,8 +44,8 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 View all mediafiles based on a user specified properties.
 
 args = {
-	user		: <user id from the User model>	
-	target		: <id that links between Tag and MediaFile - primary key>
+	id		: <MediaFile id - primary key>
+	user		: <user id from the User model>
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -72,7 +72,7 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 Get a tagged mediafile that belongs to a specific tag.
 
 args = {	
-	user		: <user id from the User model>	
+	id		: <mediafile id>
 }
 
 */
@@ -112,10 +112,10 @@ MediaAction.prototype.getMediaFileUser = function( args, callback ){
 
 /*
 
-Update a specific mediafile based on a target.
+Update a specific mediafile based on a id.
 
 args = {
-	target		: <id that links between Tag and MediaFile - primary key>
+ 	id		: <MediaFile id - primary key>
 
 	allowed field: 
 		user		: <user id from the User model>		
@@ -126,8 +126,8 @@ args = {
 
 */
 
-MediaAction.prototype.updateMediaFile = function( target, args, callback ){ 	
-	MediaFile.updateMediaFile(target, args, function(error, updatedMediaFile){		
+MediaAction.prototype.updateMediaFile = function( id, args, callback ){
+	MediaFile.updateMediaFile(id, args, function(error, updatedMediaFile){
 		if (!error) {
 			callback(null, updatedMediaFile);	
 		}
@@ -138,9 +138,30 @@ MediaAction.prototype.updateMediaFile = function( target, args, callback ){
 	})	
 }
 
+/*
+
+Delete a specific media file based on a id.
+
+args = {
+ 	id		: <MediaFile id - primary key>
+}
+
+*/
+
+MediaAction.prototype.deleteMediaFile = function( args, callback ){ 	
+	MediaFile.deleteMediaFile( args, function(error, deletedMediaFile){		
+		if (!error) {
+			callback(null, deletedMediaFile);	
+		}
+		else {
+			callback(error, null);
+		}		
+	})	
+}
+
 var object = {
 		//"type":12	
-		'target':'abc1232'
+		'id':'abc1232'
 		//'user':'BSDF787D98A7SDF8ASD7G'
   };
 
@@ -228,3 +249,15 @@ mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
 	}
 });
 */
+
+/*
+mediaAction.deleteMediaFile(object, function( err, data){
+	if (data) {
+		console.log( "[SUCCESS] - " + data);
+	} else {
+		console.log( "[ERROR] - "+err);
+	}
+});
+*/
+
+module.exports = new MediaAction;

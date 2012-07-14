@@ -29,12 +29,65 @@ coreApi._construct = function () {
 
 		}
 
+		this.getUserProfileById = function(id,callback){
+			console.log("API - getUserProfileById");
+			$.ajax({
+				url:'/api/user/' + id+'/profile',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
+		this.updateUserProfileById = function(id, user_profile,callback){
+			console.log("API - updateUserProfileById");
+			$.ajax({
+				url:'/api/user/' + id+'/profile',
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(user_profile),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
 
 
 
 	}
 
 	function Accent() {
+		this.createTag = function(tag,callback){
+			console.log('API - createTag');
+			$.ajax({
+				url:'/api/tag',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(tag),
+				success:function (data) {
+					callback(data);
+				}
+			})
+
+		}
+
+		this.getTagById = function(id, callback){
+			console.log('API - getTagById');
+
+		}
+
+		this.updateTagById = function(id, callback){
+			console.log('API - updateTagById');
+
+		}
+
+		this.deleteTagById = function(id,callback){
+			console.log('API - deleteTagById');
+
+		}
 
 	}
 
@@ -79,15 +132,11 @@ coreApi._construct = function () {
 
 			question.body = questionBody;
 			question.category = 'testcategory'; //TODO need replaced
-//			question.status = 'unanswered';
 			question.title = questionTitle;
-//			question.timestamp = '2008-10-21';
-//			question.followup = [];
 			body.question = question;
 
 
 			$.ajax({
-				//url : '/api/user/'+user_id+'/questions',
 				url:'/api/question',
 				type:'POST',
 				dataType:'json',

@@ -46,6 +46,11 @@ exports.login = function(request, response) {
 	        				})
 
 	        			}
+						else{
+							//what to do if user is found in database
+							request.session.user = user;
+							response.send(request.session);
+						}
 	        		}
 	        		else{
 	        			response.send(error);
@@ -96,7 +101,7 @@ exports.userProfile = function(request,response){
 	}
 
 	if (request.method === "PUT") {
-		UserProfile.updateProfile(user_id, function(error, result) {
+		UserProfile.updateProfile(user_id, request.body, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, user: result }));
@@ -110,10 +115,42 @@ exports.userProfile = function(request,response){
 
 }
 
+exports.userPreferredName = function(request, response) {
+	var user_id = request.params.id;
+
+	if (request.method === "PUT") {
+		User.setPreferedName(user_id, request.body.name, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, users: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+			}
+		});
+	}
+}
+
 
 exports.userQuery = function(request, response) {
 	if (request.method === "POST" && request.body.where) {
 		User.selectUser(request.body.where, function(error, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, users: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+			}
+		});
+	}
+}
+
+exports.userCourses = function(request, response) {
+	var user_id = request.params.id;
+
+	if (request.method === "GET") {
+		User.getUserCourses({ user: user_id }, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, users: result }));

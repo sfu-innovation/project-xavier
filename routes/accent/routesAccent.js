@@ -1,6 +1,7 @@
 var routesPresenter = require("./../rqra/routesPresenter.js");
 
 var TagAction = require("./../../controller/TagAction.js");
+var MediaAction = require("./../../controller/MediaAction.js");
 
 exports.question = function(request, response) {
 	routesPresenter.questionRoute(1, request, response);
@@ -62,22 +63,32 @@ exports.unfollowQuestion = function(request, response) {
 
 
 // Tag
-exports.tag = function(request,response){	
+exports.tag = function(request,response){
+
 	if(request.method === 'POST'){
-		TagAction.addTag(request.body, function(error, result){
-			if(result){				
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});
+
+		if(request.session && request.session.user){
+			request.body.user =  request.session.user.uuid;
+
+			TagAction.addTag(request.body, function(error, result){
+				if(result){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
 	}
-	else if (request.method === 'GET'){	
-		var targetID = request.params.id;							
-		TagAction.viewTags({'target':targetID}, function(error, result){
+	else if (request.method === 'GET'){
+		var uuid = request.params.id;
+		TagAction.viewTags({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -89,8 +100,8 @@ exports.tag = function(request,response){
 		});		
 	}
 	else if (request.method === 'PUT'){		
-		var targetID = request.params.id;
-		TagAction.updateTag({'target':targetID}, request.body, function(error, result){
+		var uuid = request.params.id;
+		TagAction.updateTag({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -102,13 +113,23 @@ exports.tag = function(request,response){
 		});	
 	}
 	else if (request.method === 'DELETE'){
-		//TODO: no method found yet
-		// coming soon...
-
+		var uuid = request.params.id;
+		TagAction.deleteTag({'uuid':uuid},function(error,result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
 	}
 
 
 }
+
+
 
 exports.taggedQuestion = function(request,response){	
 	if (request.method === 'GET'){		
@@ -158,6 +179,86 @@ exports.taggedUser = function(request,response){
 	}
 }
 
+// MediaFile
+exports.mediafile = function(request,response){	
+	if(request.method === 'POST'){
+		MediaAction.addMediaFile(request.body, function(error, result){
+			if(result){				
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});
+	}
+	else if (request.method === 'GET'){	
+		var targetID = request.params.id;							
+		MediaAction.viewMedia({'target':targetID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+	else if (request.method === 'PUT'){		
+		var targetID = request.params.id;
+		MediaAction.updateMediaFile({'target':targetID}, request.body, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});	
+	}
+	else if (request.method === 'DELETE'){
+		//TODO: no method found yet
+		// coming soon...
+
+	}
+
+
+}
+
+exports.mediafileTag = function(request,response){	
+	if (request.method === 'GET'){
+		var targetID = request.params.tid;								
+		MediaAction.getMediaFileTags({'target':targetID}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
+
+exports.mediafileUser = function(request,response){	
+	if (request.method === 'GET'){
+		var userId = request.params.uid;								
+		MediaAction.getMediaFileUser({'user':userId}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});		
+	}
+}
 
 //deprecated
 

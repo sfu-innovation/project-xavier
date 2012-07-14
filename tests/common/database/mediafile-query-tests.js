@@ -71,6 +71,12 @@ module.exports = {
 				test.ok(updatedMediaFile.title.should.be.eql(updateAttributes.title));
 				test.done();	
 			})
+		},
+		"Delete MediaFile": function(test){						
+			MediaFile.deleteMediaFile({'target':'abc1231'}, function(error, deletedMediaFile){											
+				test.ok(deletedMediaFile.target.should.be.eql('abc1231'));
+				test.done();	
+			})
 		}
 	},
 }

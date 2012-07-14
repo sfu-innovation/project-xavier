@@ -3,10 +3,16 @@
 
 $(document).ready(function () {
 
+	if(window.location.toString().indexOf("localhost") ==-1){
+		alert("WRONG!!! To use this page, you need run the app first then visit localhost:port/test.html");
+	}
+
+
 	$("#tabs").tabs();
 
 	var rqra = new coreApi.Presenter();
 	var engage = new coreApi.Engage();
+	var accent = new coreApi.Accent();
 	var common = new coreApi.Common();
 
 	loadAllQuestions(rqra);
@@ -150,7 +156,6 @@ $(document).ready(function () {
 	})
 
 
-
 	$('#upVoteCommentById').click(function () {
 		var question_id = $('#comment_id').val();
 		if (question_id) {
@@ -198,7 +203,6 @@ $(document).ready(function () {
 	})
 
 
-
 	$('#search').click(function () {
 		var query = $('#searchQuery').val();
 		if (query) {
@@ -209,7 +213,7 @@ $(document).ready(function () {
 					$('#search_results').empty();
 					if (data.errorcode === 0) {
 						$.each(data.questions, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="questions_li">'
 								+ '<p>' + item._id + '</p>'
 								+ '<p>' + item._source.body + '</p>'
@@ -249,8 +253,12 @@ $(document).ready(function () {
 		if (title && body) {
 			rqra.createQuestion(title, body, function (data) {
 				if (data) {
+
 					if (data.errorcode === 0) {
 						alert('OK OK REFRESH NOW');
+					}
+					else{
+						alert(data.message);
 					}
 
 				}
@@ -269,7 +277,6 @@ $(document).ready(function () {
 	})
 
 
-
 	$('#getQuestionsByUserId').click(function (event) {
 		var user_id = $("#question_user_id").val();
 		if (user_id) {
@@ -281,7 +288,7 @@ $(document).ready(function () {
 					if (data.errorcode === 0 && data.questions.length > 0) {
 
 						$.each(data.questions, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="questions_li">'
 								+ '<p>_id: ' + item._id + '</p>'
 								+ '<p>title: ' + item._source.title + '</p>'
@@ -343,7 +350,7 @@ $(document).ready(function () {
 
 
 		}
-		else{
+		else {
 			alert('CANNOT BE EMPTY FILED');
 		}
 
@@ -436,18 +443,17 @@ $(document).ready(function () {
 	});
 
 
-
 	$('#getCommentsByUserId').click(function (event) {
 		var user_id = $("#comment_user_id").val();
 		if (user_id) {
 			rqra.getCommentsByUserId(user_id, function (data) {
 				if (data) {
-					console.log(data);
+
 					$('#user_comments').empty();
 					if (data.errorcode === 0 && data.comments.length > 0) {
 
 						$.each(data.comments, function (index, item) {
-							console.log(item);
+
 							var content = '<li class="comments_li">'
 								+ '<p>_id: ' + item._id + '</p>'
 								+ '<p>body: ' + item._source.body + '</p>'
@@ -460,7 +466,7 @@ $(document).ready(function () {
 								+ '<p>upvote: ' + item._source.upvote + '</p>'
 								+ '<p>user: ' + item._source.user + '</p>'
 								+ '</li>';
-							console.log(content);
+
 							$('#user_comments').append(content);
 						});
 					}
@@ -489,7 +495,7 @@ $(document).ready(function () {
 			rqra.getCommentsByTargetId(target_id, function (data) {
 
 				if (data) {
-					console.log(data);
+
 					if (data.errorcode === 0 && data.comments.length > 0) {
 
 
@@ -532,9 +538,7 @@ $(document).ready(function () {
 	});
 
 
-
 ///////////////////////////////////////////////USERS///////////////
-
 
 
 	$("#getUserById").click(function (event) {
@@ -545,7 +549,7 @@ $(document).ready(function () {
 					if (data.errorcode === 0) {
 						$('#user_first_name').val(data.user.firstName);
 						$('#user_last_name').val(data.user.lastName);
-						$('#user_type').val(data.user.typee);
+						$('#user_type').val(data.user.type);
 						$('#user_prefered_name').val(data.user.preferedName);
 						$('#user_user_id').val(data.user.userID);
 						$('#user_email').val(data.user.email);
@@ -594,6 +598,69 @@ $(document).ready(function () {
 		}
 	});
 
+	///user profile
+
+	$("#getUserProfileById").click(function (event) {
+		var id = $('#userp_user').val();
+		if (id) {
+			common.getUserProfileById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						$('#userp_bio').val(data.profile.bio);
+						$('#userp_profile_picture').val(data.profile.profilePicture);
+						$('#userp_last_watched_tag').val(data.profile.lastWatchedTag);
+						$('#userp_created').val(data.profile.createdAt);
+						$('#userp_updated').val(data.profile.updatedAt);
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+
+	$("#updateUserProfileById").click(function (event) {
+		var id = $('#userp_user').val();
+
+		var new_bio = $('#userp_bio').val();
+		var new_profile_picture = $('#userp_profile_picture').val();
+
+		var user_profile = {};
+		user_profile.bio = new_bio;
+		user_profile.profilePicture = new_profile_picture;
+
+		if (id && new_bio && new_profile_picture) {
+			common.updateUserProfileById(id, user_profile, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+
+						alert('OK OK REFRESH NOW');
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
 
 	/////////////////////////////////////resource//////////////////////
 
@@ -607,12 +674,12 @@ $(document).ready(function () {
 		var url = $('#resource_url');
 
 		if (course_id && title && description && type && filetype && url) {
-			engage.createResource(course_id, title, description,type,filetype,url, function (data) {
+			engage.createResource(course_id, title, description, type, filetype, url, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
 						alert('OK OK REFRESH NOW');
 					}
-					else{
+					else {
 
 						alert(data.message);
 
@@ -630,12 +697,62 @@ $(document).ready(function () {
 
 
 		}
-		else{
+		else {
 			alert('CANNOT BE EMPTY FILED');
 		}
 
 	})
 
+	//tag
+
+
+	$('#createTag').click(function (event) {
+
+		var tag = {};
+
+		tag.start = $('#tag_start').val();
+		tag.end = $('#tag_end').val();
+		tag.type = $('#tag_type').val();
+		tag.target = $('#tag_target_uuid').val();
+		tag.title = $('#tag_title').val();
+		tag.description = $('#tag_description').val();
+		tag.question = $('#tag_question').val();
+		tag.important = $('#tag_important').val();
+		tag.interest = $('#tag_interest').val();
+		tag.examable = $('#tag_examable').val();
+		tag.reviewlater = $('#tag_reviewlater').val();
+		tag.shared = $('#tag_shared').val();
+
+		if (tag.start && tag.description && tag.type && tag.target) {
+
+			accent.createTag(tag, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK REFRESH NOW');
+					}
+					else {
+
+						alert(data.message);
+
+					}
+
+				}
+
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+		}
+		else {
+			alert('CANNOT BE EMPTY FILED');
+		}
+
+	})
 
 
 });
@@ -648,7 +765,7 @@ function loadAllQuestions(rqra) {
 			if (data.errorcode === 0 && data.questions.length > 0) {
 
 				$.each(data.questions, function (index, item) {
-					console.log(item);
+
 					var content = '<li class="questions_li">'
 						+ '<p>_id: ' + item._id + '</p>'
 						+ '<p>title: ' + item._source.title + '</p>'
@@ -685,7 +802,7 @@ function loadAllComments(rqra) {
 			if (data.errorcode === 0 && data.comments.length > 0) {
 
 				$.each(data.comments, function (index, item) {
-					console.log(item);
+
 					var content = '<li class="comments_li">'
 						+ '<p>_id: ' + item._id + '</p>'
 

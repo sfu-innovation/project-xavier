@@ -9,14 +9,17 @@ var db = new Sequelize(
 	
 	{
 		port: config.mysqlDatabase["port"],
-		host: config.mysqlDatabase["host"],		
+		host: config.mysqlDatabase["host"]
 	}
 );
 
 var MediaFile = exports.MediaFile = db.define('MediaFile', {
+	id: {type: Sequelize.STRING, primaryKey: true, allowNull: false},
 	user: {type: Sequelize.STRING},
-	target: {type: Sequelize.STRING, primaryKey: true, allowNull: false},	
 	title: {type: Sequelize.STRING, allowNull: false},
+	description :{type:Sequelize.STRING},
+	//TODO: update this to graph
+	thumbnail:{type: Sequelize.STRING},
 	path: {type: Sequelize.STRING, allowNull: false},	
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}	
 });
@@ -24,7 +27,7 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 //Saves media file to database
 //MediaFile gets passed in as a JSON object
 exports.createMediaFile = function(media, callback){
-	media.target = UUID.generate();
+	media.id = UUID.generate();
 	var newMediaFile = MediaFile.build(media);
 	newMediaFile.save().error(function(error){		
 		callback(error, null);
@@ -75,8 +78,8 @@ exports.getMediaFileTags = function(args, callback){
 }
 
 //Update a media file with spcified attributes
-exports.updateMediaFile = function(target, args, callback){
-	MediaFile.find({where: target}).success(function(mediaFile) {		
+exports.updateMediaFile = function(id, args, callback){
+	MediaFile.find({where: id}).success(function(mediaFile) {
 		mediaFile.updateAttributes(args).success(function(updatedMedia) {
 			console.log("updated succesfully");
 			callback(null, updatedMedia);

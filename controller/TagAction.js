@@ -34,7 +34,8 @@ args = {
 }
 
 */
-TagAction.prototype.addTag = function( args, callback ){ 	
+TagAction.prototype.addTag = function( args, callback ){
+
 	Tag.createTag(args, function(error, newTag){		
 		if (!error) {
 			callback(null, newTag);	

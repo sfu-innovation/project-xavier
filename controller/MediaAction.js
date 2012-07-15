@@ -54,6 +54,21 @@ args = {
 TO-DO: Maybe it would be beneficial to sort the mediafiles based on the properties.
 */
 
+
+MediaAction.prototype.getMediaFileById = function( args, callback ){
+	MediaFile.selectMediaFile(args, function(error, tags){
+		if (!error) {
+			callback(null, tags);
+		}
+		else {
+			callback(error, null);
+		}
+
+	})
+}
+
+
+
 MediaAction.prototype.viewMedia = function( args, callback ){ 
 	MediaFile.selectMediaFiles(args, function(error, tags){		
 		if (!error) {

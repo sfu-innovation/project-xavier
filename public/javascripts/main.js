@@ -761,7 +761,7 @@ $(document).ready(function () {
 			accent.getTagById(id, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
-						console.log(data);
+						$('#tag_user').val(data.tag.user);
 						$('#tag_start').val(data.tag.start);
 						$('#tag_end').val(data.tag.end);
 						$('#tag_type').val(data.tag.type);
@@ -858,6 +858,181 @@ $(document).ready(function () {
 		}
 
 	}  );
+
+	//mediafile
+
+
+	$('#createMediaFile').click(function (event) {
+
+		var mediafile = {};
+
+		mediafile.title = $('#mediafile_title').val();
+		mediafile.description = $('#mediafile_description').val();
+		mediafile.path = $('#mediafile_path').val();
+		mediafile.type = $('#mediafile_type').val();
+
+
+
+		if (mediafile.title && mediafile.path && mediafile.type) {
+
+			accent.createMediaFile(mediafile, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						alert('OK OK REFRESH NOW');
+					}
+					else {
+
+						alert(data.message);
+
+					}
+
+				}
+
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+
+
+				}
+
+			})
+
+
+		}
+		else {
+			alert('CANNOT BE EMPTY FILED');
+		}
+
+	})
+
+
+	$("#getMediaFileById").click(function (event) {
+		var id = $('#mediafile_uuid').val();
+		if (id) {
+			accent.getMediaFileById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						console.log(data);
+
+						$('#mediafile_type').val(data.mediafile.type);
+						$('#mediafile_path').val(data.mediafile.path);
+						$('#mediafile_user').val(data.mediafile.user);
+						$('#mediafile_uuid').val(data.mediafile.uuid);
+						$('#mediafile_title').val(data.mediafile.title);
+						$('#mediafile_description').val(data.mediafile.description);
+						$('#mediafile_created').val(data.mediafile.createdAt);
+						$('#mediafile_updated').val(data.mediafile.updatedAt);
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+
+	$("#updateMediaFileById").click(function (event) {
+		var id = $('#mediafile_uuid').val();
+
+		var mediafile = {};
+
+		mediafile.title = $('#mediafile_title').val();
+		mediafile.description = $('#mediafile_description').val();
+		mediafile.path = $('#mediafile_path').val();
+		mediafile.type = $('#mediafile_type').val();
+
+
+		if (id && mediafile.title && mediafile.path && mediafile.type) {
+			accent.updateMediaFileById(id, mediafile, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+
+						alert('OK OK REFRESH NOW');
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+	$("#deleteMediaFileById").click(function (event) {
+		var id = $('#mediafile_uuid').val();
+		if(id){
+			accent.deleteMediaFileById(id, function (data) {
+				if (data) {
+
+					if (data.errorcode === 0) {
+
+						alert("COOL, REFRESH THE LIST");
+					}
+					else {
+						alert(data.message);
+					}
+
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+
+			});
+		}
+
+	}  );
+
+	$('#getTagsByMediaFileId').click(function(event){
+		var id = $('#mediafile_uuid').val();
+		if(id){
+			accent.getTagsByMediaFileId(id, function (data) {
+				if (data) {
+
+
+					if (data.errorcode === 0 && data.tags.length > 0) {
+
+						$.each(data.tags, function (index, item) {
+
+							console.log(item);
+
+							var content = '<li class="tags_li">'
+								+ '<p>title: ' + item.title + '</p>'
+								+ '<p>uuid: ' + item.uuid + '</p>'
+								+ '<p>start: ' + item.start + '</p>'
+								+ '<p>end: ' + item.end + '</p>'
+								+ '</li>';
+							$('#mediafile_tags').append(content);
+						});
+					}
+					else {
+						alert(data.message);
+					}
+
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+
+			});
+		}
+
+	})
+
 
 
 });

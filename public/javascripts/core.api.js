@@ -115,13 +115,14 @@ coreApi._construct = function () {
 		}
 
 		this.createMediaFile = function(media_file,callback){
+
 			console.log('API - createMediaFile');
 			$.ajax({
 				url:'/api/mediafile',
 				type:'POST',
 				dataType:'json',
 				contentType:"application/json",
-				data:JSON.stringify(tag),
+				data:JSON.stringify(media_file),
 				success:function (data) {
 					callback(data);
 				}
@@ -162,6 +163,19 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			})
+		}
+
+		this.getTagsByMediaFileId = function(id,callback){
+			console.log('API - getTagsByMediaFileId');
+			$.ajax({
+				url:'/api/mediafile/'+id+'/tags',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
+
+
 		}
 
 	}

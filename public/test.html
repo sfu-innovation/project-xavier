@@ -223,7 +223,7 @@
 			<button id="deleteTagById">Delete</button>
 
 			<input id="tag_uuid" type="text" size="100" placeholder="uuid, fill this only when get/update/delete">
-
+			<input id="tag_user" type="text" size="20" placeholder="user" disabled="disabled">
 			<input id="tag_start" type="text" size="20" placeholder="start" >
 			<input id="tag_end" type="text" size="20" placeholder="end" >
 			<input id="tag_type" type="text" size="20" placeholder="type" >
@@ -244,8 +244,26 @@
 	</div>
 
 	<div id="mediafile">
+		<button id="createMediaFile">Create a New MediaFile</button>
+		<button id="getMediaFileById">Get</button>
+		<button id="updateMediaFileById">Update</button>
+		<button id="deleteMediaFileById">Delete</button>
+		<button id="getTagsByMediaFileId">Get All Tags By Id</button>
 
+		<input id="mediafile_uuid" type="text" size="100" placeholder="uuid, fill this only when get/update/delete">
+		<input id="mediafile_user" type="text" size="20" placeholder="user" disabled="disabled">
+		<input id="mediafile_type" type="text" size="20" placeholder="type" >
+		<input id="mediafile_path" type="text" size="20" placeholder="path" >
+		<input id="mediafile_title" type="text" size="20" placeholder="title" >
+		<input id="mediafile_description" type="text" size="20" placeholder="description" >
+		<input id="mediafile_created" type="text" size="20" placeholder="created" disabled="disabled">
+		<input id="mediafile_updated" type="text" size="20" placeholder="updated"  disabled="disabled">
+
+		<ol id="mediafile_tags">
+
+		</ol>
 	</div>
+
 
 
 	<div id="resource">

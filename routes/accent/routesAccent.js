@@ -180,22 +180,30 @@ exports.tag = function(request,response){
 //}
 
 // MediaFile
-exports.mediafile = function(request,response){	
+exports.mediafile = function(request,response){
+
 	if(request.method === 'POST'){
-		MediaAction.addMediaFile(request.body, function(error, result){
-			if(result){				
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});
+		if(request.session && request.session.user){
+			request.body.user =  request.session.user.uuid;
+			MediaAction.addMediaFile(request.body, function(error, result){
+				if(result){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
 	}
 	else if (request.method === 'GET'){	
-		var uuid = request.params.id;							
-		MediaAction.viewMedia({'uuid':uuid}, function(error, result){
+		var uuid = request.params.id;
+		MediaAction.getMediaFileById({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
@@ -220,8 +228,17 @@ exports.mediafile = function(request,response){
 		});	
 	}
 	else if (request.method === 'DELETE'){
-		//TODO: no method found yet
-		// coming soon...
+		var uuid = request.params.id;
+		MediaAction.deleteMediaFile({'uuid':uuid}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});
 
 	}
 

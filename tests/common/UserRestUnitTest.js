@@ -38,6 +38,12 @@ module.exports = {
 						if(user){
 							that.user = user;
 							that.server = express.createServer();
+							that.server.use(function(req, res, next) {
+								req.session = {
+									user: user
+								}
+								next();
+							})
 							that.server.use(server);
 							that.server.listen(function() {
 								that.port = this.address().port;
@@ -122,6 +128,7 @@ module.exports = {
 			});
 		},
 		
+
 		setPreferedname: function(test){
 			this.requestOptions.path = "/api/user/setPreferedname";
 			this.requestOptions.port = this.port;
@@ -143,8 +150,6 @@ module.exports = {
 					test.done();
 				});
 			});
-			request.session = {};
-			request.user = this.user;
 			request.write(JSON.stringify(newName));
 			request.end();
 

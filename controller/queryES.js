@@ -119,7 +119,7 @@ QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callbac
 	});
 }
 
-QueryES.prototype.getAllNewQuestions = function(appType, callback){
+QueryES.prototype.getAllNewQuestions = function(appType, pageNum, callback){
 	var data = {
 		"query": {
 			"match_all": {}
@@ -131,8 +131,8 @@ QueryES.prototype.getAllNewQuestions = function(appType, callback){
 				}
 			}
 		],
-		"from": 0,
-		"size": 5
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 

@@ -117,31 +117,36 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 }
 
 
+//TODO:WTF is this broken code....uncomment and fix it
 
-returns an array of the removed notifications
-*/
-NotificationAction.prototype.processRemovingUserNotifications = fuction( arr, index, callback ){
-	this.removeUserNotificationsInternal( { arr[index] }, function(){
-		if ( ++index == arr.length ){
-			callback(null);
-			return;
-		}
-		processRemovingUserNotifications( arr, index, callback );
-	});
-}
+//returns an array of the removed notifications
+//*/
+//
+//NotificationAction.prototype.processRemovingUserNotifications = fuction( arr, index, callback ){
+//	this.removeUserNotificationsInternal( { arr[index] }, function(){
+//		if ( ++index == arr.length ){
+//			callback(null);
+//			return;
+//		}
+//		processRemovingUserNotifications( arr, index, callback );
+//	});
+//} );
 
-NotificationAction.prototype.removeUserNotificationsInternal = function( args, callback ){
-	UserNotification.removeUserNotification( args, function( error , removedNotification ){
-		if ( error ){
-			callback( error, null );
-		}
-		else if ( null === removedNotification ){
-			callback( "No notification was found to be removed", null );
-		}else {
-			callback( null );
-		}
-	});
-});
+
+//TODO:WTF is this broken code....uncomment and fix it
+
+//NotificationAction.prototype.removeUserNotificationsInternal = function( args, callback ){
+//	UserNotification.removeUserNotification( args, function( error , removedNotification ){
+//		if ( error ){
+//			callback( error, null );
+//		}
+//		else if ( null === removedNotification ){
+//			callback( "No notification was found to be removed", null );
+//		}else {
+//			callback( null );
+//		}
+//	});
+//});
 
 /*
 Designed to remove the user notifications out of the user notifications table.

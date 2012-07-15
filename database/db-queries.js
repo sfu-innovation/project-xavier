@@ -14,7 +14,7 @@ var Sequelize = require('sequelize');
 
 var Course = require('../models/course.js').Course;
 var CourseMember = require('../models/courseMember.js').CourseMember;
-var Notification = require('../models/notification.js').Notification;
+var NotificationListener = require('../models/notificationListener.js').NotificationListener;
 var Resource = require(__dirname + '/../models/resource.js').Resource;
 var User = require('../models/user.js').User;
 var UserNotification = require('../models/userNotification.js').UserNotification;
@@ -52,7 +52,7 @@ exports.createDB = function(dbName, callback){
 			async.parallel([
 				createTable.bind(undefined, User), 
 				createTable.bind(undefined, Course), 
-				createTable.bind(undefined, Notification), 
+				createTable.bind(undefined, NotificationListener), 
 				createTable.bind(undefined, CourseMember), 
 				createTable.bind(undefined, UserNotification), 
 				createTable.bind(undefined, UserNotificationSettings), 
@@ -127,7 +127,7 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
      	insert.bind(undefined, Course, data.courses),
 		insert.bind(undefined, User, data.users),
 		insert.bind(undefined, CourseMember, data.courseMembers),
-		insert.bind(undefined, Notification, data.notification),
+		insert.bind(undefined, NotificationListener, data.notificationlistener),
 		insert.bind(undefined, UserNotification, data.usernotification),
 		insert.bind(undefined, UserNotificationSettings, data.usernotificationsettings),
 		insert.bind(undefined, MediaFile, data.mediafiles),

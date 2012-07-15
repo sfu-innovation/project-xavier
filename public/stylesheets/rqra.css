@@ -310,3 +310,9 @@ div.question {
 	margin-top: 8px;
 	margin-bottom: 8px;
 }
+
+div#moreQuestionsButton {
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+}

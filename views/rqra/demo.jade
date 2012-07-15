@@ -53,13 +53,15 @@ div#logoContainer
 			div#contentPanel
 				<!-- content menu -->
 				div#contentMenu					
-					div#askedButton(class="contentMenuButton", onclick="displayAsked()") Asked
-					div#newButton(class="contentMenuButton", onclick="displayNew()") New
-					div#unansweredButton(class="contentMenuButton", onclick="displayUnanswered()") Unanswered
-					div#seeAllButton(class="contentMenuButton", onclick="displayAll()") See All
+					div#askedButton(class="contentMenuButton", onclick="getFirstAsked()") Asked
+					div#newButton(class="contentMenuButton", onclick="getFirstNew()") New
+					div#unansweredButton(class="contentMenuButton", onclick="getFirstUnanswered()") Unanswered
+					div#seeAllButton(class="contentMenuButton", onclick="getFirstAll()") See All
 					
 				<!-- list of questions -->
 				div#questionList(onload="displayAsked()")
+			
+				div#moreQuestionsButton(class="contentMenuButton", onclick="displayMore()") Get More Questions
 			
 				script(type="text/javascript", src="javascripts/rqra/questionTabs.js")
 			

@@ -1,13 +1,18 @@
 function displayAsked() {
+
+}
+
+function displayNew() {
 	var rqra = new coreApi.Presenter();
-	
 	var questionList = document.getElementById("questionList");
-	rqra.getAllQuestions(function (data) {
+	rqra.getNewQuestions(function (data) {
 		if (data && data.errorcode === 0 && data.questions.length > 0) {
 			questionList.innerHTML = "";
 			$.each(data.questions, function (index, item) {
 				questionList.innerHTML += "<div class='question'>"
 					+ "<h2>" + item._source.title + "</h2>"
+					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
+					+ "<div>AskedBy: " + item._source.user + "</div>"
 					+ "<p>" + item._source.body  + "</p>"
 					+ "</div>";
 			});
@@ -17,21 +22,46 @@ function displayAsked() {
 	});
 }
 
-function displayNew() {
-	var questionList = document.getElementById("questionList");
-	questionList.innerHTML = "<div class='question'><h2>New  Question 1</h2><p>this is a new question</p></div>";
-}
-
 function displayUnanswered() {
+	var rqra = new coreApi.Presenter();
 	var questionList = document.getElementById("questionList");
-	questionList.innerHTML = "<div class='question'><h2>Unanswered Question 1</h2><p>this is an unanswered question</p></div>";
+	rqra.getUnansweredQuestions(function (data) {
+		if (data && data.errorcode === 0 && data.questions.length > 0) {
+			questionList.innerHTML = "";
+			$.each(data.questions, function (index, item) {
+				questionList.innerHTML += "<div class='question'>"
+					+ "<h2>" + item._source.title + "</h2>"
+					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
+					+ "<div>AskedBy: " + item._source.user + "</div>"
+					+ "<p>" + item._source.body  + "</p>"
+					+ "</div>";
+			});
+		} else {
+			questionList.innerHTML = "failure";
+		}
+	});
 }
 
 function displayAll() {
+	var rqra = new coreApi.Presenter();
 	var questionList = document.getElementById("questionList");
-	questionList.innerHTML = "<div class='question'><h2>All Question 1</h2><p>This is any question</p></div>";
+	rqra.getAllQuestions(function (data) {
+		if (data && data.errorcode === 0 && data.questions.length > 0) {
+			questionList.innerHTML = "";
+			$.each(data.questions, function (index, item) {
+				questionList.innerHTML += "<div class='question'>"
+					+ "<h2>" + item._source.title + "</h2>"
+					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
+					+ "<div>AskedBy: " + item._source.user + "</div>"
+					+ "<p>" + item._source.body  + "</p>"
+					+ "</div>";
+			});
+		} else {
+			questionList.innerHTML = "failure";
+		}
+	});
 }
 
 // displays asked questions on page load
-displayAsked();
+displayAll();
 //loadAllQuestions(rqra);

@@ -250,7 +250,29 @@ coreApi._construct = function () {
 				}
 			});
 		}
-
+		
+		this.getNewQuestions = function (callback) {
+			console.log("API - getNewQuestions");
+			$.ajax({
+				url:'/api/questions/new',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+		
+		this.getUnansweredQuestions = function (callback) {
+			console.log("API - getUnansweredQuestions");
+			$.ajax({
+				url:'/api/questions/unanswered',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+		
 		this.getQuestionById = function (id, callback) {
 			console.log("API - getQuestionById");
 			$.ajax({

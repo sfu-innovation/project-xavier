@@ -1,5 +1,5 @@
-var fs      = require("fs")
-var config  = JSON.parse(fs.readFileSync("config.json"));
+var fs        = require("fs")
+var config    = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
@@ -16,3 +16,14 @@ var CourseMember = exports.CourseMember = db.define('CourseMember', {
 	user: {type: Sequelize.STRING, allowNull: false}
 });
 
+exports.addCourseMember = function(userUUID, courseUUID, callback){
+	var newMember = {
+		course: courseUUID,
+		user: userUUID
+	}
+	CourseMember.create(newMember).success(function(courseMember){
+		callback(null, courseMember);
+	}).error(function(error){
+		callback(error, null);
+	})
+}

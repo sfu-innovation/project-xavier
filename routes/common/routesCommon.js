@@ -194,7 +194,7 @@ exports.course = function(request, response) {
 exports.courseMembers = function(request,response){
 	var course_id = request.params.id;
 	if (request.method === "GET") {
-		courseModel.getCourseMembers({ course: course_id }, function(error, result) {
+		courseModel.getCourseMembers(course_id, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, members: result }));

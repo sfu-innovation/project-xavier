@@ -1,7 +1,7 @@
-var fs      = require("fs")
-var config  = JSON.parse(fs.readFileSync("config.json"));
-var Sequelize = require('sequelize');
-var UUID = require('com.izaakschroeder.uuid');
+var fs           = require("fs")
+var config       = JSON.parse(fs.readFileSync("config.json"));
+var Sequelize    = require('sequelize');
+var UUID         = require('com.izaakschroeder.uuid');
 var CourseMember = require('./courseMember.js').CourseMember;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
@@ -65,9 +65,9 @@ exports.getInstructor = function(args, callback){
 }
 
 //Gets all users that are associated to a certain course
-exports.getCourseMembers = function(args, callback){
+exports.getCourseMembers = function(courseUUID, callback){
 	var User = require('./user.js').User;
-	CourseMember.findAll({where: args}).success(function(memberRows){
+	CourseMember.findAll({where: {course: courseUUID}}).success(function(memberRows){
 		
 		//Build list of user uuids
 		if(memberRows.length > 0){

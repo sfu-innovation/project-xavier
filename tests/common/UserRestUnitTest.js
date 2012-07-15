@@ -1,9 +1,9 @@
-var http = require('http');
-var config = require('./../../config.json');
-var queries = require(__dirname + "/../../database/db-queries.js");
-var User = require(__dirname + "/../../models/user.js")
+var http    = require('http');
+var config  = require('./../../config.json');
 var express = require('express');
-var server = require('./../../app-presenter.js');
+var server  = require('./../../app-presenter.js');
+var queries = require(__dirname + "/../../database/db-queries.js");
+var User    = require(__dirname + "/../../models/user.js")
 
 var currentHost = config.presenterServer.host;
 var currentPort = config.presenterServer.port;
@@ -86,7 +86,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 						body.users[0].firstName === "Mike" && 
@@ -122,12 +121,12 @@ module.exports = {
 				});
 			});
 		},
+		
 		setPreferedname: function(test){
 			this.requestOptions.path = "/api/user/setPreferedname";
 			this.requestOptions.port = this.port;
 			this.requestOptions.method = "PUT";
-			this.requestOptions.session = {};
-			this.requestOptions.session.user = this.user;
+
 
 			var newName = {
 				"name":"Akbar"
@@ -144,7 +143,8 @@ module.exports = {
 					test.done();
 				});
 			});
-
+			request.session = {};
+			request.user = this.user;
 			request.write(JSON.stringify(newName));
 			request.end();
 

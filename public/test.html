@@ -218,8 +218,13 @@
 		<p>Only works in Accent!!!!</p>
 		<div>
 			<button id="createTag">Create a New Tag</button>
-			<input id="tag_start" type="text" size="20" placeholder="start" >
+			<button id="getTagById">Get</button>
+			<button id="updateTagById">Update</button>
+			<button id="deleteTagById">Delete</button>
 
+			<input id="tag_uuid" type="text" size="100" placeholder="uuid, fill this only when get/update/delete">
+
+			<input id="tag_start" type="text" size="20" placeholder="start" >
 			<input id="tag_end" type="text" size="20" placeholder="end" >
 			<input id="tag_type" type="text" size="20" placeholder="type" >
 			<input id="tag_target_uuid" type="text" size="20" placeholder="target uuid" >
@@ -232,8 +237,8 @@
 			<input id="tag_examable" type="text" size="20" placeholder="examable" >
 			<input id="tag_reviewlater" type="text" size="20" placeholder="review later" >
 			<input id="tag_shared" type="text" size="20" placeholder="shared" >
-
-
+			<input id="tag_created" type="text" size="20" placeholder="created" disabled="disabled">
+			<input id="tag_updated" type="text" size="20" placeholder="updated"  disabled="disabled">
 		</div>
 
 	</div>

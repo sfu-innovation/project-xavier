@@ -73,7 +73,7 @@ exports.tag = function(request,response){
 			TagAction.addTag(request.body, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, resource: result }));
+					response.end(JSON.stringify({ errorcode: 0, tag: result }));
 				}
 				else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -88,10 +88,10 @@ exports.tag = function(request,response){
 	}
 	else if (request.method === 'GET'){
 		var uuid = request.params.id;
-		TagAction.viewTags({'uuid':uuid}, function(error, result){
+		TagAction.getTagById({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, tag: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -104,7 +104,7 @@ exports.tag = function(request,response){
 		TagAction.updateTag({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, tag: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -117,7 +117,7 @@ exports.tag = function(request,response){
 		TagAction.deleteTag({'uuid':uuid},function(error,result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, tag: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -130,54 +130,54 @@ exports.tag = function(request,response){
 }
 
 
-
-exports.taggedQuestion = function(request,response){	
-	if (request.method === 'GET'){		
-		var questionID = request.params.qid;						
-		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});		
-	}
-}
-
-exports.taggedComment = function(request,response){	
-	if (request.method === 'GET'){		
-		var commentID = request.params.cid;				
-		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});		
-	}
-}
-
-exports.taggedUser = function(request,response){	
-	if (request.method === 'GET'){
-		var userId = request.params.uid;								
-		TagAction.getTaggedUser({'user':userId}, function(error, result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});		
-	}
-}
+//
+//exports.taggedQuestion = function(request,response){
+//	if (request.method === 'GET'){
+//		var questionID = request.params.qid;
+//		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
+//			if(result){
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, question: result }));
+//			}
+//			else{
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: error }));
+//			}
+//		});
+//	}
+//}
+//
+//exports.taggedComment = function(request,response){
+//	if (request.method === 'GET'){
+//		var commentID = request.params.cid;
+//		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
+//			if(result){
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+//			}
+//			else{
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: error }));
+//			}
+//		});
+//	}
+//}
+//
+//exports.taggedUser = function(request,response){
+//	if (request.method === 'GET'){
+//		var userId = request.params.uid;
+//		TagAction.getTaggedUser({'user':userId}, function(error, result){
+//			if(result){
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+//			}
+//			else{
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: error }));
+//			}
+//		});
+//	}
+//}
 
 // MediaFile
 exports.mediafile = function(request,response){	
@@ -185,7 +185,7 @@ exports.mediafile = function(request,response){
 		MediaAction.addMediaFile(request.body, function(error, result){
 			if(result){				
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -198,7 +198,7 @@ exports.mediafile = function(request,response){
 		MediaAction.viewMedia({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -211,7 +211,7 @@ exports.mediafile = function(request,response){
 		MediaAction.updateMediaFile({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -234,7 +234,7 @@ exports.mediafileTag = function(request,response){
 		MediaAction.getMediaFileTags({'target':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+				response.end(JSON.stringify({ errorcode: 0, tags: result }));
 			}
 			else{
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -244,21 +244,21 @@ exports.mediafileTag = function(request,response){
 	}
 }
 
-exports.mediafileUser = function(request,response){	
-	if (request.method === 'GET'){
-		var userId = request.params.uid;								
-		MediaAction.getMediaFileUser({'user':userId}, function(error, result){
-			if(result){
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: error }));
-			}
-		});		
-	}
-}
+//exports.mediafileUser = function(request,response){
+//	if (request.method === 'GET'){
+//		var userId = request.params.uid;
+//		MediaAction.getMediaFileUser({'user':userId}, function(error, result){
+//			if(result){
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
+//			}
+//			else{
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: error }));
+//			}
+//		});
+//	}
+//}
 
 //deprecated
 

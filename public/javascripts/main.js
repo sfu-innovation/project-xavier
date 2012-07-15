@@ -755,6 +755,111 @@ $(document).ready(function () {
 	})
 
 
+	$("#getTagById").click(function (event) {
+		var id = $('#tag_uuid').val();
+		if (id) {
+			accent.getTagById(id, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+						console.log(data);
+						$('#tag_start').val(data.tag.start);
+						$('#tag_end').val(data.tag.end);
+						$('#tag_type').val(data.tag.type);
+						$('#tag_target_uuid').val(data.tag.target);
+						$('#tag_title').val(data.tag.title);
+						$('#tag_description').val(data.tag.description);
+						$('#tag_question').val(data.tag.question);
+						$('#tag_important').val(data.tag.important);
+						$('#tag_interest').val(data.tag.interest);
+						$('#tag_examable').val(data.tag.examable);
+						$('#tag_reviewlater').val(data.tag.reviewlater);
+						$('#tag_shared').val(data.tag.shared);
+						$('#tag_created').val(data.tag.createdAt);
+						$('#tag_updated').val(data.tag.updatedAt);
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+
+	$("#updateTagById").click(function (event) {
+		var id = $('#tag_uuid').val();
+
+		var tag = {};
+
+		tag.start = $('#tag_start').val();
+		tag.end = $('#tag_end').val();
+		tag.type = $('#tag_type').val();
+		tag.target = $('#tag_target_uuid').val();
+		tag.title = $('#tag_title').val();
+		tag.description = $('#tag_description').val();
+		tag.question = $('#tag_question').val();
+		tag.important = $('#tag_important').val();
+		tag.interest = $('#tag_interest').val();
+		tag.examable = $('#tag_examable').val();
+		tag.reviewlater = $('#tag_reviewlater').val();
+		tag.shared = $('#tag_shared').val();
+
+		if (id && tag.start && tag.description && tag.type && tag.target) {
+			accent.updateTagById(id, tag, function (data) {
+				if (data) {
+					if (data.errorcode === 0) {
+
+						alert('OK OK REFRESH NOW');
+
+
+					}
+					else {
+						alert(data.message);
+					}
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+			})
+		}
+		else {
+			alert('CANNOT BE EMPTY ID');
+		}
+	});
+
+	$("#deleteTagById").click(function (event) {
+		var id = $('#tag_uuid').val();
+		if(id){
+			accent.deleteTagById(id, function (data) {
+				if (data) {
+
+					if (data.errorcode === 0) {
+
+						alert("COOL, REFRESH THE LIST");
+					}
+					else {
+						alert(data.message);
+					}
+
+				}
+				else {
+					alert('CANNOT CONNECT TO DATABASE');
+				}
+
+			});
+		}
+
+	}  );
+
+
 });
 
 function loadAllQuestions(rqra) {

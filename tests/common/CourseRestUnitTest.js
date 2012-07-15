@@ -14,7 +14,6 @@ var currentPort = config.presenterServer.port;
 module.exports = {
 	courseTest:{
 		setUp: function(callback) {
-
 			var that = this;
 
 			this.requestOptions = {
@@ -34,8 +33,8 @@ module.exports = {
 						"number":307,
 						"instructor":"BSDF787D98A7SDF8ASD7G"
 					}
-
 					Course.createCourse(newCourse, function(error, course){
+
 						if(course){
 							that.course = course;
 							that.server = express.createServer();
@@ -79,7 +78,7 @@ module.exports = {
 			});
 		},
 		courseQuery: function(test){
-			
+
 			this.requestOptions.port   = this.port;
 			this.requestOptions.method = "POST";
 			this.requestOptions.path   = "/api/courses/";
@@ -93,7 +92,6 @@ module.exports = {
 						"number":361,
 						"instructor":"BSDF787D981234AVD34"
 					}
-
 			Course.createCourse(newCourse, function(error, course){
 				if(course){
 					var request = http.request(that.requestOptions, function(response){

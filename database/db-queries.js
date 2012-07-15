@@ -49,7 +49,7 @@ exports.createDB = function(dbName, callback){
 			console.log("Database created! Creating tables...\n");
 			mysql.end();
 			
-			async.parallel([
+			async.series([
 				createTable.bind(undefined, User), 
 				createTable.bind(undefined, Course), 
 				createTable.bind(undefined, NotificationListener), 

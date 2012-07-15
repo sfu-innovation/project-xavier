@@ -30,11 +30,11 @@ var User = exports.User = db.define('User', {
 //User gets passed in as a JSON object
 exports.createUser = function(user, callback){
 	user.uuid = UUID.generate();
-	var newUser = User.build(user);
-	newUser.save().error(function(error){
+	User.create(user).error(function(error){
 		callback(error, null);
 	}).success(function(){
-		callback(null, newUser);
+		console.log("saved user");
+		callback(null, user);
 	})
 }
 

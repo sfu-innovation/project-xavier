@@ -38,6 +38,7 @@ module.exports = {
 						if(course){
 							that.course = course;
 							that.server = express.createServer();
+
 							that.server.use(server);
 							that.server.listen(function() {
 

@@ -18,8 +18,8 @@ var MediaAction = function() {
 Adding a mediafile based on a user specified properties.
 
 args = {
- 	id		: <MediaFile id - primary key>
-	user		: <user id from the User model>	
+ 	uuid		: <MediaFile uuid - primary key>
+	user		: <user uuid from the User model>	
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -44,8 +44,8 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 View all mediafiles based on a user specified properties.
 
 args = {
-	id		: <MediaFile id - primary key>
-	user		: <user id from the User model>
+	uuid		: <MediaFile uuid - primary key>
+	user		: <user uuid from the User model>
 	title			: <mediafile title>
 	path			: <the url path of a mediafile>
 	type			: <type of mediafile (not yet determined)>
@@ -72,7 +72,7 @@ MediaAction.prototype.viewMedia = function( args, callback ){
 Get a tagged mediafile that belongs to a specific tag.
 
 args = {	
-	id		: <mediafile id>
+	uuid		: <mediafile uuid>
 }
 
 */
@@ -94,7 +94,7 @@ MediaAction.prototype.getMediaFileTags = function( args, callback ){
 Get a mediafile that belongs to a user.
 
 args = {	
-	user		: <user id from the User model>	
+	user		: <user uuid from the User model>	
 }
 
 */
@@ -112,13 +112,13 @@ MediaAction.prototype.getMediaFileUser = function( args, callback ){
 
 /*
 
-Update a specific mediafile based on a id.
+Update a specific mediafile based on a uuid.
 
 args = {
- 	id		: <MediaFile id - primary key>
+ 	uuid		: <MediaFile uuid - primary key>
 
 	allowed field: 
-		user		: <user id from the User model>		
+		user		: <user uuid from the User model>		
 		title			: <mediafile title>
 		path			: <the url path of a mediafile>
 		type			: <type of mediafile (not yet determined)>	
@@ -126,8 +126,8 @@ args = {
 
 */
 
-MediaAction.prototype.updateMediaFile = function( id, args, callback ){
-	MediaFile.updateMediaFile(id, args, function(error, updatedMediaFile){
+MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){
+	MediaFile.updateMediaFile(uuid, args, function(error, updatedMediaFile){
 		if (!error) {
 			callback(null, updatedMediaFile);	
 		}
@@ -140,10 +140,10 @@ MediaAction.prototype.updateMediaFile = function( id, args, callback ){
 
 /*
 
-Delete a specific media file based on a id.
+Delete a specific media file based on a uuid.
 
 args = {
- 	id		: <MediaFile id - primary key>
+ 	uuid		: <MediaFile uuid - primary key>
 }
 
 */
@@ -161,7 +161,8 @@ MediaAction.prototype.deleteMediaFile = function( args, callback ){
 
 var object = {
 		//"type":12	
-		'id':'abc1232'
+		//'uuid':'abc1232'
+		'target':'abc1232'
 		//'user':'BSDF787D98A7SDF8ASD7G'
   };
 
@@ -195,7 +196,7 @@ var updatedMediaFile = {
 mediaAction.viewMedia(object, function( err, data){
 	if (data) {
 		console.log( "[SUCCESS] - ");
-		for(i=0; i<data.length; ++i){
+		for(i=0; i<data.length; ++i){			
 			console.log(data[i].title + ' ' + data[i].path);
 		}
 	} else {
@@ -216,6 +217,7 @@ mediaAction.getMediaFileTags(object, function( err, data){
 	}
 });
 */
+
 
 /*
 mediaAction.getMediaFileUser(object, function( err, data){

@@ -16,7 +16,7 @@ var db = new Sequelize(
 
 
 var Resource = exports.Resource = db.define('Resource', {
-	uuid: {type: Sequelize.STRING, primaryKey: true}
+	uuid: {type: Sequelize.STRING, unique: true, primaryKey: true}
 	, user: {type: Sequelize.STRING, allowNull: false}
 	, title: {type: Sequelize.STRING, allowNull: false}
 	, description:  {type: Sequelize.TEXT}
@@ -26,7 +26,22 @@ var Resource = exports.Resource = db.define('Resource', {
 	, url: {type: Sequelize.STRING, allowNull: false}
 });
 
+//Fetch the resource with the given UUID
+exports.getResourceByUUID = function(resourceUUID, callback){
+	Resource.find({where:{uuid:resourceUUID}}).success(function(resource){
+		if(resource){
+			callback(null, resource);
+		}
+		else{
+			callback("No Resource", null);
+		}
+	}).error(function(error){
+		callback(error, null);
+	})
+}
 
+//Creates a new resources and saves it to the database
+//userUUID is the uuid of the user submitting the resource
 exports.createResource = function(userUUID, args, callback){
 	var User = require(__dirname + '/user.js');
 	args.user = userUUID;
@@ -79,9 +94,9 @@ exports.deleteResource = function(resourceUUID, callback){
 	})
 }
 
-//Gets the number of likes for the course that matches args
-exports.getLikes = function(args, callback){
-	Resource.find({where:args}).success(function(resource){
+//Gets the number of likes for the course with the given uuid
+exports.getLikesByUUID = function(resourceUUID, callback){
+	Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 		if(resource){
 			callback(null, resource.likes);
 		}

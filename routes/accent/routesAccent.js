@@ -194,8 +194,8 @@ exports.mediafile = function(request,response){
 		});
 	}
 	else if (request.method === 'GET'){	
-		var targetID = request.params.id;							
-		MediaAction.viewMedia({'target':targetID}, function(error, result){
+		var uuid = request.params.id;							
+		MediaAction.viewMedia({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -207,8 +207,8 @@ exports.mediafile = function(request,response){
 		});		
 	}
 	else if (request.method === 'PUT'){		
-		var targetID = request.params.id;
-		MediaAction.updateMediaFile({'target':targetID}, request.body, function(error, result){
+		var uuid = request.params.id;
+		MediaAction.updateMediaFile({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resource: result }));

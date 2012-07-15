@@ -123,7 +123,7 @@ coreApi._construct = function () {
 	}
 
 	function Presenter() {
-
+		this.myname = "asdf";
 		this.createQuestion = function (questionTitle, questionBody, callback) {
 			console.log("API - createQuestion");
 

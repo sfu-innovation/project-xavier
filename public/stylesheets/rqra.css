@@ -55,7 +55,7 @@ div.mainMenuButton {
 	margin: 2px;
 	padding: 5px;
 	width: 100px;
-	
+	cursor: pointer;
 }
 
 div.mainMenuButtonText {
@@ -88,6 +88,7 @@ div#askButton {
 	padding: 5px;
 	width: 100px;
 	text-align: center;
+	cursor: pointer;
 }
 
 /* Drop down menus */
@@ -238,6 +239,7 @@ ol#recentlyAddedList > li, ol#recentlyAnsweredList > li {
 	background: #AAAAAA;
 	margin: 5px;
 	box-shadow: 2px 2px 5px #555555;
+	cursor: pointer;
 }
 
 ol#recentlyAddedList > li:hover, ol#recentlyAnsweredList > li:hover {
@@ -284,6 +286,7 @@ div.contentMenuButton {
 	text-align: center;
 	background: #AAAAAA;
 	box-shadow: 2px 2px 5px #555555;
+	cursor: pointer;
 }
 
 div.contentMenuButton:hover { 
@@ -306,4 +309,10 @@ div.question {
 	margin: 2px;
 	margin-top: 8px;
 	margin-bottom: 8px;
+}
+
+div#moreQuestionsButton {
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
 }

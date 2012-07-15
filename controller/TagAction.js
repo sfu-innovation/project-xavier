@@ -71,6 +71,18 @@ args = {
 TO-DO: Maybe it would be beneficial to sort the tag based on the properties.
 */
 
+TagAction.prototype.getTagById = function( args, callback ){
+	Tag.selectTag(args, function(error, tags){
+		if (!error) {
+			callback(null, tags);
+		}
+		else {
+			callback(error, null);
+		}
+
+	})
+}
+
 TagAction.prototype.viewTags = function( args, callback ){ 
 	Tag.selectTags(args, function(error, tags){		
 		if (!error) {

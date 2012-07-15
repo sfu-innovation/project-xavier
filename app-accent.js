@@ -115,7 +115,7 @@ app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
 app.get("/api/mediafile/:id", routesAccent.mediafile); // get a mediafile by id
-app.put("/api/mediafile/:id/", routesAccent.mediafile); // update a mediafile by id
+app.put("/api/mediafile/:id", routesAccent.mediafile); // update a mediafile by id
 app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile by id
 
 

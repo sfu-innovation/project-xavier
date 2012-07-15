@@ -124,7 +124,7 @@ exports.userPreferredName = function(request, response) {
 			User.setPreferedName(request.session.user.uuid, request.body.name, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, users: result }));
+					response.end(JSON.stringify({ errorcode: 0, user: result }));
 				} else {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));

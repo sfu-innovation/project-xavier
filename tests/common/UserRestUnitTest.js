@@ -106,7 +106,7 @@ module.exports = {
 			request.write(JSON.stringify({where: query}));
 			request.end();
 		},
-		/*
+		
 		getUserProfile: function(test){
 
 			var that = this;
@@ -127,9 +127,7 @@ module.exports = {
 				});
 			});
 		},
-		
-
-		setPreferedname: function(test){
+		setPreferedName: function(test){
 			this.requestOptions.path = "/api/user/setPreferedname";
 			this.requestOptions.port = this.port;
 			this.requestOptions.method = "PUT";
@@ -145,8 +143,8 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
-					console.log(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 &&
+						body.user.preferedName === newName.name);
 					test.done();
 				});
 			});
@@ -154,6 +152,5 @@ module.exports = {
 			request.end();
 
 		}
-		*/
 	}
 }

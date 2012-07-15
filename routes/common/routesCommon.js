@@ -3,7 +3,9 @@ var courseModel = require("./../../models/course");
 var User = require("../../models/user");
 var UserProfile = require("../../models/userProfile");
 
-//var SectionMaterial = require("../../models/sectionMaterial");
+var OrganizationAction = require("../../controller/OrganizationAction");
+
+process.setMaxListeners(0)//LOL issue.
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -217,23 +219,88 @@ exports.courseQuery = function(request, response) {
 		});
 	}
 }
-/*
+
 //section materials
 exports.addResourceToSection = function(request, response){
 	if(request.method === "POST"){
-		SectionMaterial.createSectionMaterial(request.body, function(error, result){
+		OrganizationAction.addResourceToSection(request.body, function(error, result){
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Section material not found" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
 			}
 		})
 	}
 }
 
-exports.updateResourceFromSectionToSection = function(request, response){}
+exports.updateResourceFromSectionToSection = function(request, response){
+	if(request.method === "PUT"){
+		OrganizationAction.updateResourceFromSectionToSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to update resource to new section" }));
+			}
+		})
+	}
+}
 
-exports.removeResourceFromSection = function(request, response){}
-*/
+exports.removeResourceFromSection = function(request, response){
+	if(request.method === "DELETE"){
+		OrganizationAction.removeResourceFromSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to remove resource from section" }));
+			}
+		})
+	}
+}
+
+exports.addSection = function(request, response){
+	if(request.method === "POST"){
+		OrganizationAction.addSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+			}
+		})
+	}
+}
+
+exports.updateSection = function(request, response){
+	if(request.method === "PUT"){
+		OrganizationAction.updateSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+			}
+		})
+	}
+}
+exports.removeSection = function(request, response){
+	if(request.method === "DELETE"){
+		OrganizationAction.removeSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+			}
+		})
+	}
+}
+

@@ -75,3 +75,14 @@ app.delete('/api/like', routesEngage.unlikeResource);	//unlike a resource
 app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
+/*FEEL FREE TO REMOVE THESE calls
+ ================================*/
+//tests for sectionMaterial
+app.post("/api/sectionMaterial", routesCommon.addResourceToSection);
+app.put("/api/sectionMaterial", routesCommon.updateResourceFromSectionToSection);
+app.delete("/api/sectionMaterial", routesCommon.removeResourceFromSection);
+
+//tests for section
+app.post("/api/section", routesCommon.addSection);
+app.put("/api/section", routesCommon.updateSection);
+app.delete("/api/section", routesCommon.removeSection);

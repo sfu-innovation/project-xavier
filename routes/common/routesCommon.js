@@ -304,6 +304,3 @@ exports.removeSection = function(request, response){
 	}
 }
 
-
-exports.removeResourceFromSection = function(request, response){}
-

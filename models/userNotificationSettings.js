@@ -92,11 +92,11 @@ exports.addNotificationSetting = function( args, callback){
 		user : UUID of the user 
 		app  : integer to represent the app
 	}
-	returns the notification settings or an error
+	returns the notification settings(array) or an error
 */
 exports.findNotificationSettings = function(args, callback ) {
 
-	UserNotificationSettings.findAll({where : { user : args.user,
+	UserNotificationSettings.find({where : { user : args.user,
                                                 app : args.app }
     }).success(function(notificationSettings ){
     	callback( null, notificationSettings );

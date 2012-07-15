@@ -3,7 +3,7 @@ var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var queries = require('../../../database/db-queries.js');
 
-var OrganizationAction       = require('../../../controller/OrganizationAction.js');
+var NotificationAction       = require('../../../controller/NotificationAction.js');
 var NotificationListener     = require('../../../models/notificationListener.js');
 var UserNotification         = require('../../../models/userNotification.js');
 var UserNotificationSettings = require('../../../models/userNotificationSettings.js');
@@ -32,68 +32,78 @@ module.exports = {
 			});
 		},
 		
-		"Add Resource To Section" : function( test ){
+		/*"Add Notification Listener" : function( test ){
 			var args = {
-				section : 'A827346H7ASDFG9',
-				resource : 'A7S7FHGA7SD11A7SDF8ASD7G'
+				user : 'AQWRHIQWDQIO8424RQHEIO2',
+				target : 'ADAD32F3E1E21EW',
+				event : 0,
+				app   : 2
 			}
-			SectionMaterial.findAllMaterialsInSection( args, function( error, materials ){
-				test.ok(materials.should.have.lengthOf(0));
-				OrganizationAction.addResourceToSection( args, function(error, newMaterialInSection ){
-					SectionMaterial.findAllMaterialsInSection( args, function( error, materials ){
-						test.ok(materials.should.have.lengthOf(1));
-						test.done();
-					})
-				});
-			});
-		},
-		"Remove Resource From Section" : function( test ){
-			var args = {
-				section : 'A827346H7ASDFG9',
-				resource : 'A7S7FWGA7SD11A7SDF8ASD7G'
-			}
-			SectionMaterial.findAllMaterialsInSection( args, function( error, materials ){
-				test.ok(materials.should.have.lengthOf(0));
-				OrganizationAction.removeResourceFromSection( args, function(error, newMaterialInSection ){
-					SectionMaterial.findAllMaterialsInSection( args, function( error, materials ){
-						test.ok(materials.should.have.lengthOf(0));
-						test.done();
-					})
-				});
-			});
-		},
-		"Update Resource From Section To Section" : function( test ){
-			args = {
-				section : 'A827346H7AFSSFG9',
-				newsection : 'A412341H7AFSSFG9',
-				resource : 'A7S7FWGA7SD11A7SDF8ASD7G'
-			}
-			SectionMaterial.findAMaterialInSection( args, function( error, material ){
-				test.ok(material.should.have.property('section', 'A827346H7AFSSFG9'));
-				OrganizationAction.updateResourceFromSectionToSection( args, function( error, updatedResource ){
-					test.ok(updatedResource.should.have.property('section', 'A412341H7AFSSFG9'));
-					test.done();
-				});
-			});
-		},
-		"Add Section" : function( test ){
-			args = {
-				course : 'A827346H7ASDFG9',
-				title  : 'best section ever',
-				app    :  2
-			}
-			CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-				test.ok(sectionUUIDs.should.have.lengthOf(3));
-				OrganizationAction.addSection(args, function(error, newSection){
-					console.log( newSection );
-					CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-						test.ok(sectionUUIDs.should.have.lengthOf(4));
+			NotificationListener.findNotificationListener( args, function( error, listener) {
+				NotificationAction.addNotifier( args, function( error, newListener){
+				console.log( newListener );
+					NotificationListener.findNotificationListener( args, function( error, listener) {
+						test.ok( listener.should.have.property('user', 'AQWRHIQWDQIO8424RQHEIO2'));
+						test.ok( listener.should.have.property('target', 'ADAD32F3E1E21EW'));
 						test.done();
 					});
 				});
 			});
 		},
-		"Remove Section" : function( test ){
+		
+		"Remove Notification Listener" : function( test ){
+			var args = {
+				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				target : 'B857346H7ASDFG9',
+				event : 0
+			}
+			NotificationListener.findNotificationListener( args, function( error, listener ){
+				test.ok( listener.should.have.property('user', 'A7S7F8GA7SD11A7SDF8ASD7G'));
+				test.ok( listener.should.have.property('target', 'B857346H7ASDFG9'));
+				NotificationAction.removeNotifier( args, function( error, removedListener ){
+					NotificationListener.findNotificationListener( args, function( error, listener ){
+						if ( null === listener ){
+							test.done();
+						}
+					});
+				});
+			});
+				
+		}, */
+		/*"Add User Notification" : function( test ){
+			args = {
+				listener    : 'B827346H7ASDFG9',
+				target      : 'B857346H7ASDFG9',
+				user        : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				app         : 1,
+				event       : 0,
+				description : 'Alex is testing  a notification for the add user notification test'
+			}
+			UserNotification.selectUserNotificationsByListener( args, function( error, notifications ){
+				NotificationAction.addUserNotification( args, function( error, newNotifications ){
+					UserNotification.selectUserNotificationsByListener( args, function( error, notifications ){
+						test.ok( notifications.should.have.lengthOf(1));
+						var notification = notifications[0];
+						test.ok( notification.should.have.property('description',
+						 'Alex is testing  a notification for the add user notification test'));
+						test.done();
+					});
+				});
+			});
+		},*/
+	/*	"Remove User Notifications" : function( test ){
+			args = {
+				course : 'A827346H7ASDFG9',
+				title  : 'best section ever',
+				app    :  2
+			}
+			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
+				target : The resource which incurred an event for this user notification to be created,
+				event : The event which caused this user notification to be created ,
+				user : The user to be notified by the notification listener 
+			});
+		},*/
+		/*"Remove Section" : function( test ){
 			args = {
 				course : 'A8G7S6H7ASDFG9',
 				section : 'A827341H7AFFFFG9'
@@ -154,7 +164,7 @@ module.exports = {
 				test.ok(numOfResources.should.equal(2));
 				test.done();
 			});
-		}
+		}*/
 		
 	}
 }

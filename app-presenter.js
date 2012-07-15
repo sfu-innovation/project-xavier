@@ -56,15 +56,15 @@ app.post("/api/question", routesPresenter.question); // post a new question by u
 
 
 //TODO: need update this into document
-app.get("/api/questions/:page", routesPresenter.questions); //P, get all questions
-app.get("/api/questions/unanswered/:page", routesPresenter.questionsUnanswered); //P, get all unanswered questions
+app.get("/api/questions/page/:page", routesPresenter.questions); //P, get all questions
+app.get("/api/questions/unanswered/page/:page", routesPresenter.questionsUnanswered); //P, get all unanswered questions
 app.get("/api/questions/new", routesPresenter.questionsNew); //get all new questions
-app.get("/api/questions/answered/:page", routesPresenter.questionsAnswered); //P
+app.get("/api/questions/answered/page/:page", routesPresenter.questionsAnswered); //P
 
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
 app.delete("/api/question/:uid", routesPresenter.question); // update question by id
-app.get("/api/user/:uid/questions/:page", routesPresenter.questionsByUser); // P, get all questions for a user. TODO:sort desc
+app.get("/api/user/:uid/questions/page/:page", routesPresenter.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
 //deprecated, we do not need :uid when user post a new question
 //app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
@@ -78,7 +78,7 @@ app.put("/api/question/:uid/unfollow", routesPresenter.unfollowQuestion); // a f
 //app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
 
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
-app.post("/api/search/:page", routesPresenter.search); // search based on a query
+app.post("/api/search/page/:page", routesPresenter.search); // search based on a query
 
 
 

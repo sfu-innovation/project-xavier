@@ -247,7 +247,7 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 			var retResources = new Array();
 			var x = resources.length - 1;
 			for( ; x >= 0; x-- ){
-				retResources.push( resources[i] );
+				retResources.push( resources[x] );
 			}
 			callback( null, retResources );
 		}).error(function(error){

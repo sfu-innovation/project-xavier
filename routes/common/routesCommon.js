@@ -268,10 +268,10 @@ exports.addSection = function(request, response){
 		OrganizationAction.addSection(request.body, function(error, result){
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+				response.end(JSON.stringify({ errorcode: 0, section: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add section" }));
 			}
 		})
 	}
@@ -282,10 +282,10 @@ exports.updateSection = function(request, response){
 		OrganizationAction.updateSection(request.body, function(error, result){
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+				response.end(JSON.stringify({ errorcode: 0, section: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to update section" }));
 			}
 		})
 	}
@@ -295,12 +295,53 @@ exports.removeSection = function(request, response){
 		OrganizationAction.removeSection(request.body, function(error, result){
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, sectionMaterial: result }));
+				response.end(JSON.stringify({ errorcode: 0, section: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Failed to add resource to section" }));
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to remove section" }));
 			}
 		})
 	}
 }
 
+exports.sectionsInCourse = function(request, response){
+	if(request.method === "POST"){
+		OrganizationAction.sectionsInCourse(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, sectionsInCourse: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to get all sections in a course" }));
+			}
+		})
+	}
+}
+
+exports.resourcesInSection = function(request, response){
+	if(request.method === "POST"){
+		OrganizationAction.resourcesInSection(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, resourcesInSection: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to get all resources in a section" }));
+			}
+		})
+	}
+}
+
+exports.numberOfResourcesInCourse = function(request, response){
+	if(request.method === "POST"){
+		OrganizationAction.numberOfResourcesInCourse(request.body, function(error, result){
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, numberOfResourcesInCourse: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Failed to get count of resources in a course" }));
+			}
+		})
+	}
+}

@@ -56,15 +56,15 @@ app.post("/api/question", routesPresenter.question); // post a new question by u
 
 
 //TODO: need update this into document
-app.get("/api/questions", routesPresenter.questions); // get all questions
-app.get("/api/questions/unanswered", routesPresenter.questionsUnanswered); // get all unanswered questions
+app.get("/api/questions/:page", routesPresenter.questions); //P, get all questions
+app.get("/api/questions/unanswered/:page", routesPresenter.questionsUnanswered); //P, get all unanswered questions
 app.get("/api/questions/new", routesPresenter.questionsNew); //get all new questions
-app.get("/api/questions/answered", routesPresenter.questionsAnswered)
+app.get("/api/questions/answered/:page", routesPresenter.questionsAnswered); //P
 
 app.get("/api/question/:uid", routesPresenter.question); // get question by id
 app.put("/api/question/:uid", routesPresenter.question); // update question by id
 app.delete("/api/question/:uid", routesPresenter.question); // update question by id
-app.get("/api/user/:uid/questions", routesPresenter.questionsByUser); // get all questions for a user
+app.get("/api/user/:uid/questions/:page", routesPresenter.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
 //deprecated, we do not need :uid when user post a new question
 //app.post("/api/user/:uid/questions", routesPresenter.questionsByUser); // user posts a new question
@@ -78,7 +78,7 @@ app.put("/api/question/:uid/unfollow", routesPresenter.unfollowQuestion); // a f
 //app.put("/api/question/:uid/follow/:follower", routesPresenter.followQuestion); // a follower follows a question
 
 app.put("/api/question/:uid/status", routesPresenter.questionStatus); // updates a questions status
-app.post("/api/search/", routesPresenter.search); // search based on a query
+app.post("/api/search/:page", routesPresenter.search); // search based on a query
 
 
 
@@ -87,18 +87,18 @@ app.post("/api/search/", routesPresenter.search); // search based on a query
 //TODO: need update this into document
 app.post("/api/comment",routesPresenter.comment); // post a new comment by user id stored in seesion object
 
-app.get("/api/comments", routesPresenter.comments); // get all comments
+app.get("/api/comments/:page", routesPresenter.comments); //P get all comments
 
 app.get("/api/comment/:uid", routesPresenter.comment); // get a comment by id
 app.put("/api/comment/:uid", routesPresenter.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesPresenter.comment); //deletes a comment by id
-app.get("/api/user/:uid/comments", routesPresenter.commentsByUser); // gets a list of comments posted by a user
+app.get("/api/user/:uid/comments/:page", routesPresenter.commentsByUser); //P gets a list of comments posted by a user
 
 //deprecated
 //app.post("/api/user/:uid/comments", routesPresenter.commentsByUser); // user posts a comment
 app.post("/api/comment/:uid/vote/:dir", routesPresenter.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesPresenter.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments", routesPresenter.commentsByQuestion); // get all of the comments for a question
+app.get("/api/question/:uid/comments/:page", routesPresenter.commentsByQuestion); // P get all of the comments for a question
 
 
 

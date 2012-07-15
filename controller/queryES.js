@@ -5,7 +5,8 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
 	UUID = require('com.izaakschroeder.uuid'),
-	notification = require('./NotificationAction.js');
+	notification = require('./NotificationAction.js'),
+	sizeOfResult = 5;
 
 var QueryES = function() {
 }
@@ -24,6 +25,13 @@ var switchMapping = function(appType) {
 	return mappingType;
 }
 
+var paging = function(pageNum){
+	var pageBeg = pageNum * sizeOfResult;
+
+	console.log('Beg: %s, End: %s', pageBeg , pageBeg + sizeOfResult);
+	return pageBeg;
+}
+
 //get a question
 QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
@@ -38,11 +46,14 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 }
 
 //get all question
-QueryES.prototype.getAllQuestions = function(appType, callback){
+QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
+
 	var data = {
 		query: {
 			match_all:{}
-		}
+		},
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -58,7 +69,7 @@ QueryES.prototype.getAllQuestions = function(appType, callback){
 	});
 }
 
-QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
+QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, callback){
 	var data = {
 		query: {
 			bool:{
@@ -69,8 +80,8 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 				}]
 			}
 		},
-		from: 0,
-		size: 20
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -86,11 +97,13 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, appType, callback){
 	});
 }
 
-QueryES.prototype.getAllUnansweredQuestions = function(appType, callback){
+QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callback){
 	var data = {
 		query: {
 			term:{status:"unanswered"}
-		}
+		},
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -137,7 +150,7 @@ QueryES.prototype.getAllNewQuestions = function(appType, callback){
 
 }
 
-QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, callback){
+QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, pageNum, callback){
 	var data = {
 		"query": {
 			"term": {
@@ -151,8 +164,8 @@ QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, callback){
 				}
 			}
 		],
-		"from": 0,
-		"size": 5
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -169,7 +182,7 @@ QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, callback){
 }
 
 //search based on query
-QueryES.prototype.searchAll = function(search, appType, callback){
+QueryES.prototype.searchAll = function(search, pageNum, appType, callback){
 
 	if(!search){
 		callback(undefined);
@@ -184,8 +197,8 @@ QueryES.prototype.searchAll = function(search, appType, callback){
 			}
 		},
 		sort:[{"title.untouched":{"order":"asc"}}],
-		from: 0,
-		size: 20
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -375,7 +388,7 @@ QueryES.prototype.getComment = function(commentID, appType, callback){
 
 //get a comment data based on target_uuid
 // note: means, get all comments associated with a question
-QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, callback){
+QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appType, callback){
 	
 	var data = {
 		  query: {
@@ -384,10 +397,10 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 		        "target_uuid"
 		      ],
 		      "query": ptarget_uuid
-		    },
-		    "from": 0,
-		    "size": 20
-		  }
+		    }
+		  },
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -405,11 +418,13 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, appType, call
 }
 
 //get all comments
-QueryES.prototype.getAllComments = function(appType, callback){
+QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	var data = {
 		query: {
 			match_all:{}
-		}
+		},
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);
@@ -426,7 +441,7 @@ QueryES.prototype.getAllComments = function(appType, callback){
 }
 
 //get all comment data based on userID for now
-QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
+QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, callback){
 	var data = {
 		query: {
 			bool:{
@@ -437,8 +452,8 @@ QueryES.prototype.getAllCommentByUserID = function(userID, appType, callback){
 				}]
 			}
 		},
-		from: 0,
-		size: 20
+		from: paging(pageNum),
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);

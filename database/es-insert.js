@@ -1,36 +1,15 @@
-var ElasticSearchImport =  function () {
+var es = require('com.izaakschroeder.elasticsearch')
+	,fs = require('fs')
+	,db = es.connect('localhost')
+	,esMapping = require('./es-mapping');
 
-/**
- * Module dependencies.
- */
-var
-        es = require('com.izaakschroeder.elasticsearch'),
-        fs = require('fs');
-
-var argv = require('optimist').usage('Usage: $0 -h [host] -p [port] -f [file_name]').demand(['f']).default({ h:"localhost", p:9200, f:"database/qs.json"}).argv;
-
-
-
-
-var db = es.connect(argv.h, argv.p);
-
-
-this.main = function () {
-    importToEs(argv.f);
-}
-
-
-var importToEs = function (f_name) {    
-    fs.readFile(f_name, function (err, data) {        
-        if (err) {
-            throw err;
-        }
-        else {            
+var importToEs = function(){
+    fs.readFile('database/qs.json', function (err, data) {
+		if (err) {
+			throw err;
+        }else {
             var json_data = JSON.parse(data);
-            var total = 0;
-
             json_data.forEach(function(data) {
-                //var str = JSON.stringify(data);
                 data_index = data._index;
                 data_mapping = data._type;
                 data_id = data._id;
@@ -41,15 +20,18 @@ var importToEs = function (f_name) {
                 mapping.document(data_id).set(data_source, function(err, req, data){
 					console.log(data);
 				});;
-             });
-            console.log("The data has been indexed into your database.");
-
-        }
-          
-    });
+ 			});
+		}
+	});
 }
 
+var deleteEs = function(){
+	db.delete('', function(err, req, data){
+		if(data){
+			console.log('-Deleted ES Documents-');
+			esMapping(importToEs);
+		}
+	});
 }
 
-var esi = new ElasticSearchImport();
-esi.main();
+deleteEs();

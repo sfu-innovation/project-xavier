@@ -1,11 +1,13 @@
 var es = require('com.izaakschroeder.elasticsearch'),
 	db = es.connect('localhost'),
-	indice = ['presenter', 'accent'], //, 'engage', 'rqra'];
+	indice = ['presenter', 'accent', 'engage'],
 	mappings = ['questions', 'comments'],
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
 	UUID = require('com.izaakschroeder.uuid'),
 	notification = require('./NotificationAction.js'),
+	organizationAction = require('./OrganizationAction.js'),
+	async = require('async'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -25,11 +27,30 @@ var switchMapping = function(appType) {
 	return mappingType;
 }
 
+//page converter
 var paging = function(pageNum){
 	var pageBeg = pageNum * sizeOfResult;
-
-	console.log('Beg: %s, End: %s', pageBeg , pageBeg + sizeOfResult);
 	return pageBeg;
+}
+
+//
+QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, callback){
+	var self = this;
+	var questions = [];
+
+	async.forEach(questionUuids, function(questionUuid, callback){
+		self.getQuestion(questionUuid, appType, function(data){
+			if(data){
+				questions.push(data);
+			}
+			callback();
+		})
+	}, function(err){
+		if(err){
+			throw err;
+		}
+		callback(questions);
+	})
 }
 
 //get a question
@@ -126,7 +147,7 @@ QueryES.prototype.getAllNewQuestions = function(appType, pageNum, callback){
 		},
 		"sort": [
 			{
-				"timestamp": {
+				"created": {
 					"order": "desc"
 				}
 			}
@@ -217,20 +238,25 @@ QueryES.prototype.searchAll = function(search, pageNum, appType, callback){
 QueryES.prototype.addQuestion = function(data, appType, callback){
 	var document;
 	var questionUuid = UUID.generate();
+	var args = {};	//used for organizationAction
 
 	switchIndex(appType);
 	switchMapping(0);
 
 	document = mapping.document(questionUuid);
 	data.timestamp = new Date().toISOString();
+	data.created = data.timestamp;
 
 	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
-
 		if(result){
-
 			document.set(data, function(err, req, data){
 				if(data){
-					callback(data);
+					args.section = data.sectionUuid;
+					args.resource = data._id;
+
+					//should check if adding to a section is really needed. rqra dont need it
+
+					organizationAction.addResourceToSection(args, callback);
 				}else{
 					callback(undefined);
 				}
@@ -306,11 +332,8 @@ QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callba
 //update question title and body
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
-
 	var date = new Date().toISOString();
 
-	//updating timestamp might be problematic when calling 'getAllNewQuestions', need 2 fields
-	//create & modified field
 	var data = {
 		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date;',
 		'params':{
@@ -350,11 +373,13 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 //change the status of a question from unanswered to answered
 QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
+	var date = new Date().toISOString();
 
 	var data = {
-		'script':'ctx._source.status = status',
+		'script':'ctx._source.status = status; ctx._source.timestamp = date;',
 		'params':{
-			'status':'answered'
+			'status':'answered',
+			'date':date
 		}
 	}
 
@@ -481,6 +506,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 
 	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
+	data.created = data.timestamp;
 
 	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
 
@@ -505,7 +531,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody, appType, callback){	
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
-
 	var date = new Date().toISOString();
 
 	var data = {

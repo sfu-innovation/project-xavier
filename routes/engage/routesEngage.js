@@ -26,12 +26,9 @@ exports.getResource = function(request, response){
 
 exports.createResource = function(request, response){
 	if(request.method === 'POST'){
-		console.log("POST");
 
 		if(request.session && request.session.user){
-			console.log(request.body);
 			Resource.createResource(request.session.user.uuid, request.body.resource, function(error, result){
-				console.log("RETURNED");
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -134,7 +131,7 @@ exports.likeResource = function(request, response){
 			Like.likeResource(request.session.user.uuid, request.body.uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, like: result }));
+					response.end(JSON.stringify({ errorcode: 0, resource: result }));
 				}else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: error }));
@@ -155,7 +152,7 @@ exports.unlikeResource = function(request, response){
 			Like.unlikeResource(request.session.user.uuid, request.body.uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, like: result }));
+					response.end(JSON.stringify({ errorcode: 0, resource: result }));
 				}else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: error }));

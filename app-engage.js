@@ -46,6 +46,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
+app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 
 
 
@@ -91,7 +92,7 @@ app.delete("/api/section", routesCommon.removeSection);
 
 //misc
 app.post("/api/section/course", routesCommon.sectionsInCourse);
-app.post("/api/section/resources", routesCommon.resourcesInSection);
+app.post("/api/section/resources", routesCommon.engageResourcesInSection);
 app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 

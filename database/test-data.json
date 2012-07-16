@@ -332,7 +332,8 @@
     "resources":[
     	{
     		"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
-    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"course": "A827346H7ASDFG9",
+    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
     		"title" : "Test resource title",
     		"description" : "Test resource description",
     		"resourceType" : 2,
@@ -343,7 +344,8 @@
     	},
     	{
     		"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
-    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+    		"course": "A827346H7ASDFG9",
     		"title" : "Test resource title1",
     		"description" : "Test resource description",
     		"resourceType" : 2,
@@ -354,7 +356,8 @@
     	},
     	{
     		"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
-    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+    		"course": "A827346H7ASDFG9",
     		"title" : "Test resource title2",
     		"description" : "Test resource description",
     		"resourceType" : 2,
@@ -365,7 +368,8 @@
     	},
     	{
     		"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
-    		"user" : "A7S7F8GA7SD11A7SDF8ASD7G",
+    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+    		"course": "A827346H7ASDFG9",
     		"title" : "Test resource title2",
     		"description" : "Test resource description",
     		"resourceType" : 2,

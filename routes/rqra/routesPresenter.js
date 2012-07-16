@@ -34,7 +34,7 @@ exports.questionRoute = function(appType, request, response) {
 			,request.body.question.category);
 
 
-			queryES.addQuestion(newQuestion, appType, function(result) {
+			queryES.addQuestion(newQuestion, appType, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, question: result}));

@@ -126,7 +126,7 @@ QueryES.prototype.getAllNewQuestions = function(appType, pageNum, callback){
 		},
 		"sort": [
 			{
-				"timestamp": {
+				"created": {
 					"order": "desc"
 				}
 			}
@@ -223,6 +223,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	document = mapping.document(questionUuid);
 	data.timestamp = new Date().toISOString();
+	data.created = data.timestamp;
 
 	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
 
@@ -306,11 +307,8 @@ QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callba
 //update question title and body
 QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionBody, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
-
 	var date = new Date().toISOString();
 
-	//updating timestamp might be problematic when calling 'getAllNewQuestions', need 2 fields
-	//create & modified field
 	var data = {
 		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date;',
 		'params':{
@@ -350,11 +348,13 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 //change the status of a question from unanswered to answered
 QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
+	var date = new Date().toISOString();
 
 	var data = {
-		'script':'ctx._source.status = status',
+		'script':'ctx._source.status = status; ctx._source.timestamp = date;',
 		'params':{
-			'status':'answered'
+			'status':'answered',
+			'date':date
 		}
 	}
 
@@ -481,6 +481,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 
 	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
+	data.created = data.timestamp;
 
 	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
 
@@ -505,7 +506,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody, appType, callback){	
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
-
 	var date = new Date().toISOString();
 
 	var data = {

@@ -44,6 +44,10 @@ var map = function(appType, callback){
 							}
 						}
 					},
+					"created": {
+						"type": "date",
+						"format":"dateOptionalTime"
+					},
 					"timestamp": {
 						"type": "date",
 						"format":"dateOptionalTime"
@@ -75,9 +79,12 @@ var map = function(appType, callback){
 					"downvote": {
 						"type": "integer"
 					},
+					"created": {
+						"type": "date",
+						"format":"dateOptionalTime"
+					},
 					"timestamp": {
 						"type": "date",
-						//"format":"YYYY-MM-ddTHH:mm:ss"
 						"format":"dateOptionalTime"
 					},
 					"user": {

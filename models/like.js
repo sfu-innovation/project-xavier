@@ -20,6 +20,7 @@ var Like = exports.Like = db.define('Like', {
 });
 
 
+//Returns the liked resource on success
 exports.likeResource = function(userUUID, resourceUUID, callback){
 	Like.find({where:{user:userUUID, resource: resourceUUID}}).success(function(like){
 		if(like){
@@ -47,6 +48,7 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 	})
 }
 
+//Returns the unliked resource on success
 exports.unlikeResource = function(userUUID, resourceUUID, callback){
 	Like.find({where:{user:userUUID, resource: resourceUUID}}).success(function(like){
 		if(like){

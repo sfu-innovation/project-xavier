@@ -153,17 +153,20 @@ exports.userQuery = function(request, response) {
 }
 
 exports.userCourses = function(request, response) {
-
 	if (request.method === "GET") {
 
 		if(request.session && request.session.user){
 			User.getUserCourses({ user: request.session.user.uuid }, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, users: result }));
-				} else {
+					response.end(JSON.stringify({ errorcode: 0, courses: result }));
+				} else if(error){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: "User not found" }));
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, courses: [] }));
 				}
 			});
 		}else{

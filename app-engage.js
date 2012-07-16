@@ -7,8 +7,10 @@ var app = module.exports = express.createServer();
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
+	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
+	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
 		}));
@@ -31,11 +33,10 @@ app.dynamicHelpers({
 	}
 });
 
-// routing
-app.get('/', routesCommon.index);
-app.get('/login', routesCommon.login);
+
 
 // user
+app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses
 app.get('/api/user/:id', routesCommon.user); // get user by id
 app.post('/api/users/', routesCommon.userQuery); // get a list of users based on a custom query
 app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update users prefered name
@@ -45,6 +46,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
+app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 
 
 
@@ -92,3 +94,18 @@ app.delete("/api/section", routesCommon.removeSection);
 app.post("/api/section/course", routesCommon.sectionsInCourse);
 app.post("/api/section/resources", routesCommon.resourcesInSection);
 app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
+
+
+
+//very important, do not touch!
+
+//non-REST calls
+// routing
+app.get('/login', routesCommon.login);
+
+app.get('/', routesEngage.index);
+
+
+//article - this is resource
+
+app.get('/article/:id', routesEngage.articleView);

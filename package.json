@@ -9,7 +9,6 @@
 		"mikeklem-cas":">=0.0.1",
 		"com.izaakschroeder.elasticsearch": ">=0.0.1",
 		"com.izaakschroeder.uuid": ">=0.0.1",
-        "optimist": "*",
         "emailjs":">=0.0.1",
         "async":">=0.0.1",
 		"redis":">=0.0.1",

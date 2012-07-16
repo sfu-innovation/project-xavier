@@ -55,9 +55,9 @@ exports.updateUserNotificationSettings = function(args, callback){
 	//console.log( args.
 	args.usernotificationsettings.updateAttributes({
 		notificationOnNewResource : args.notificationOnNewResource,
-		notificationOnLike : args.notificationOnLike,
-		notificationOnComment : args.notificationOnComment,
-		notificationOnStar : args.notificationOnStar
+		notificationOnLike        : args.notificationOnLike,
+		notificationOnComment     : args.notificationOnComment,
+		notificationOnStar        : args.notificationOnStar
 	}).success(function(updatedSettings){
 		callback( null, updatedSettings );
 	}).error(function( error ){
@@ -77,11 +77,15 @@ args = {
 Returns the notification setting that was created or a user
 */
 exports.addNotificationSetting = function( args, callback){
-	var newSettings = UserNotificationSettings.build(args);
-	newSettings.save().error(function(error){
-		callback( error, null);
-	}).success(function( setting ){
-		callback(null, setting );
+	this.findNotificationSettings( args, function( error, notificationSettings ){
+		if ( null === notificationSettings ){
+			var newSettings = UserNotificationSettings.build(args);
+			newSettings.save().error(function(error){
+				callback( error, null);
+			}).success(function( setting ){
+				callback(null, setting );
+			});
+		}
 	});
 }
 

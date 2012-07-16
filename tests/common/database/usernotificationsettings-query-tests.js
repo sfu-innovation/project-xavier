@@ -30,12 +30,12 @@ module.exports = {
 		"Find user notification settings": function(test){
 		  
 		    var args = {
-				user : 'A7S7FSD78FA98A7SDF8ASD7G',
-				app  : 2
+				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				app  : 1
 		    }
 		    
 		    UserNotificationSettings.findNotificationSettings( args, function( error, notificationSettings ){
-		    	test.ok( notificationSettings[0].should.have.property('notificationOnNewResource', 0 ));
+		    	test.ok( notificationSettings.should.have.property('notificationOnNewResource', 0 ));
 		    	test.done();
 		    });
 		},
@@ -49,7 +49,7 @@ module.exports = {
 			
 			UserNotificationSettings.addNotificationSetting( args, function( error, newNotificationSetting){
 				UserNotificationSettings.findNotificationSettings( args, function( error, notificationSettings ){
-		    		test.ok( notificationSettings[0].should.have.property('notificationOnNewResource', 0 ));
+		    		test.ok( notificationSettings.should.have.property('notificationOnNewResource', 0 ));
 		    		test.done();
 		    	});
 			
@@ -59,8 +59,8 @@ module.exports = {
 		
 			"Upate user notification settings ":function(test){
 			var args = {
-				user : 'A7S7FSD78FA98A7SDF8ASD7G',
-				app  : 2,
+				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				app  : 1,
 		    	
 		    	notificationOnNewResource : 3,
   				notificationOnLike      : 2,
@@ -68,7 +68,7 @@ module.exports = {
   				notificationOnStar      : 3
 			}
 			UserNotificationSettings.findNotificationSettings( args, function( error, notificationSettings ){
-				args.usernotificationsettings = notificationSettings[0];
+				args.usernotificationsettings = notificationSettings;
 		    	test.ok( args.usernotificationsettings.should.have.property("notificationOnNewResource", 0));
 		    	UserNotificationSettings.updateUserNotificationSettings( args, function( error, updatedSettings){
 		    		test.ok( updatedSettings.should.have.property("notificationOnNewResource", 3));

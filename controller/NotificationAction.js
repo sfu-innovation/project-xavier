@@ -1,7 +1,7 @@
 var UserNotification = require('../models/userNotification.js');
 var UserNotificationSettings = require('../models/userNotificationSettings.js');
 var NotificationListener = require('../models/notificationListener.js');
-
+var async                = require('async');
 var NotificationListenerImpl = NotificationListener.NotificationListener;
 var UserNotificationImpl = UserNotification.UserNotification;
 var UserNotificationSettingsImpl = UserNotificationSettings.UserNotificationSettings;
@@ -38,115 +38,64 @@ args = {
 	description : The message to be delivered in the notification	
 }
 
-TODO : separate how the functionality of finding if it is inside the table
-       so we can quickly check for listeners without having to potentially add
-    
-       However one could argue if we dont find any listeners we just dont do anything
-       
-    returns all of the newly created user notifcation objects
+returns a list of teh new user notifications created
 */
-
-NotificationAction.prototype.processAddingUserNotificationsInternal = function( args, arr, index, callback ){
-	args.listener = arr[index].uuid;
-	this.addUserNotificationInternal( args , function( err ){
-		if ( err ){
-			callback( err, null );
-			return;
-		}
-		if ( ++index == arr.length ){
-			callback( null );
-			return;
-		}
-		processAddingUserNotificationsInternal( arr, index, callback );
-	});
-	
-}
-
-NotificationAction.prototype.addUserNotificationInternal = function( args, callback ){
-	UserNotificationSettings.findNotificationSettings( args, function( error, settings ){
-		switch(args.event){
-			case 0: args.wait = settings.notificationOnLike       ; break;
-			case 1: args.wait = settings.notificationOnComment    ; break;
-			case 2: args.wait = settings.notificationOnStar       ; break;
-			case 3: args.wait = settings.notificationOnNewResource; break;
-		}
-		//by default email notification has not been sent yet
-		args.emailSent = false;
-		//removing extraneous properties rather than create a whole new object
-		delete args.target;
-		delete args.event;
-		//creating the user notification with the slimmed down args
-		if ( args.wait == 0 ){
-			compileEmail( args, function( error, newNotification ){
-				if ( error ){
-					callback( error);
-				}else {
-					callback( null );
-				}
-			});
-		} else {
-			UserNotification.createUserNotification( args, function( error, newNotification ){
-				if ( error ){
-					callback( error);
-				} else {
-					callback( null );
-				}
-			});
-		}
-	});
-}
 
 NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var self = this;
+	var addedUserNotifications = new Array();
+	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( args, function( error, listeners ){
-		self.processAddingUserNotificationsInternal( args, listeners, 0, function( err ){
+		var i = listeners.length - 1;
+		for(; i >= 0; i--){
+			var argWithListener = args;
+			argWithListener.listener = listeners[i].uuid;
+			argsWithListeners.push( argWithListener );
+		}
+		async.forEachSeries( argsWithListeners, function( listener, callback ) {
+			UserNotificationSettings.findNotificationSettings( args, function( error, settings ){
+				switch(args.event){
+					case 0: args.wait = settings.notificationOnLike       ; break;
+					case 1: args.wait = settings.notificationOnComment    ; break;
+					case 2: args.wait = settings.notificationOnStar       ; break;
+					case 3: args.wait = settings.notificationOnNewResource; break;
+				}
+				//by default email notification has not been sent yet
+				if ( 0 == args.wait ) {
+					args.emailSent = true;
+				} else {
+					args.emailSent = false;
+				}
+				delete args.target;
+				delete args.event;
+				async.series([ 
+					UserNotification.createUserNotification( args, function( error, newNotification ){
+						if ( error ){
+							callback( error);
+							return;
+						}
+					}),
+					compileEmail( args, function( error, newNotification ){
+						if ( error ){
+							callback( error, null);
+							return;
+						}
+						else {
+							addedUserNotifications.push( newNotification );
+						}
+					})
+				]);
+			});
+		} , function( err ){
 			if ( err ){
 				callback( err, null );
-				return;
-			} else
-			 {
-				var i = listeners.length - 1;
-   				var arr = new Array();
-   				for(; i >= 0; i--){
-   					arr.push(listeners[i].uuid);
-   				}
-   				callback( null, arr );
-			}	
+			}
+			else {
+				callback( null, addedUserNotifications );
+			}
 		});
 	});
 }
-
-
-//TODO:WTF is this broken code....uncomment and fix it
-
-//returns an array of the removed notifications
-//*/
-//
-//NotificationAction.prototype.processRemovingUserNotifications = fuction( arr, index, callback ){
-//	this.removeUserNotificationsInternal( { arr[index] }, function(){
-//		if ( ++index == arr.length ){
-//			callback(null);
-//			return;
-//		}
-//		processRemovingUserNotifications( arr, index, callback );
-//	});
-//} );
-
-
-//TODO:WTF is this broken code....uncomment and fix it
-
-//NotificationAction.prototype.removeUserNotificationsInternal = function( args, callback ){
-//	UserNotification.removeUserNotification( args, function( error , removedNotification ){
-//		if ( error ){
-//			callback( error, null );
-//		}
-//		else if ( null === removedNotification ){
-//			callback( "No notification was found to be removed", null );
-//		}else {
-//			callback( null );
-//		}
-//	});
-//});
 
 /*
 Designed to remove the user notifications out of the user notifications table.
@@ -157,11 +106,15 @@ var args = {
 	target : The resource which incurred an event for this user notification to be created,
 	event : The event which caused this user notification to be created ,
 	user : The user to be notified by the notification listener 
+	
+	listener : B827346H7ASDFG9
 }
 	returns a list of the notifiers of the removed notifications
-
+*/
 NotificationAction.prototype.removeUserNotifications = function( args, callback ){ 
+	var removedUserNotifications = new Array();
 	NotificationListener.findNotificationListener( args, function(error, notificationListener ){
+		
 		if ( error ){
 			callback( error, null );
 			return;
@@ -170,29 +123,33 @@ NotificationAction.prototype.removeUserNotifications = function( args, callback 
 			callback( "No notification listener could be found", null );
 			return;
 		}
-		if ( null != notificationListener ){
-			args.listener = notificationListener.listener;
-			UserNotification.selectUserNotificationsByListener( args, function(error, userNotifications ){
-				if ( error ){
-					callback( error, null );
-					return;
+		args.listener = notificationListener.listener;
+		UserNotification.selectUserNotificationsByListener( args, function(error, userNotifications ){
+			if ( error ){
+				callback( error, null );
+				return;
+			}
+			async.forEachSeries( userNotifications,
+				function( userNotification, callback )
+			 	{
+			 		UserNotification.removeUserNotification({ usernotification : userNotification }
+			 		, function( err, removedUserNotification ){
+			 			if ( err ){
+			 				callback( err, null );
+			 			}else {
+			 				removedUserNotifications.push( removedUserNotification );
+			 			}
+			 		  })
+			 		, function( err ){
+			 			callback( err, null );
+			 		    return;
+			 		}
 				}
-				if ( 0 === userNotifications ){
-					callback( null , 0);
-					return;
-				}
-				this.processRemovingUserNotifications( userNotifications, 0, function( error, data ){
-					var i = userNotifications.length - 1;
-					var temp;
-					var removedNotifications = new Array();
-					for( ; i >= 0; i-- ){
-						removedNotifications.push(userNotifications[i].listener);
-					}
-					callback( null, removedNotifications);
-				});
-			});
-		}
-	});
+			);
+			callback( null, removedUserNotifications );
+		});
+	})
+	
 }
 
 /*
@@ -312,8 +269,11 @@ It can only be removed when the user sees the user notification.
 message needs to be of type "UserNotification" or else when we try to save it will throw
 an error 
 */
-function compileEmail( message, callback ){
-	var msg = message;
+function compileEmail( args, callback ){
+	if ( 0 != args.wait ){
+		return;
+	}
+	var msg = args;
 	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
@@ -333,16 +293,12 @@ function compileEmail( message, callback ){
    				subject: title +" notification"
 		 	};
 		 	server.send(message, function(err, message){
-		 		console.log(err || message);
+		 		if ( err ){
+		 			callback( err, null );
+		 			return;
+		 		}
 		  	});
-		  	msg.emailSent = true;
-		  	UserNotification.createUserNotification( msg, function ( error, savedNotification ){
-		  		if ( error ){
-		  			callback( error);
-		  		}else {
-		  			callback( null );
-		  		}
-		  	});
+		  	console.log('fireeeed away');
 		}
 		else {
 			callback( "user doesnt exist", null );
@@ -529,17 +485,30 @@ args = {
 NotificationAction.prototype.setupCourseMaterialNotifiers = function( args, callback ){
 	var self = this;
 	Course.getCourseMembers( { course : args.target }, function( err, students ){
-		var i = students.length -1;
-		for(; i >= 0; i--){
-			args.user = students[i].uuid;
-			self.addNewResourceNotifier( args, function( error, data ){
-				if ( error ){
-					callback( error , null );
-					return;
-				}
-			});
+		var i = students.length - 1;
+		var students = new Array();
+		var addedStudents = new Array();
+		for(; i >= 0; i-- ){
+			var arg = args;
+			arg.user = students[i].uuid;
+			students.push( arg );
 		}
-		callback( null, students );
+		async.forEachSeries( students, function( student, callback){
+			self.addNewResourceNotifier( student, function( error, data ){
+				if ( error ){
+					callback( error );
+				} else {
+					addedStudents.push( data );
+				}
+			})
+		, function(err){
+			if ( err ) {
+				callback( err, null );
+			}else {
+				callback( null, addedStudents );
+			}
+	     }
+	    }});
 	});
 }
 

@@ -1,5 +1,6 @@
 var should = require('should');
 var fs      = require("fs")
+var async   = require("async");
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var queries = require('../../../database/db-queries.js');
 
@@ -70,39 +71,41 @@ module.exports = {
 			});
 				
 		}, */
-		/*"Add User Notification" : function( test ){
+	/*	"Add User Notification" : function( test ){
 			args = {
-				listener    : 'B827346H7ASDFG9',
 				target      : 'B857346H7ASDFG9',
 				user        : 'A7S7F8GA7SD11A7SDF8ASD7G',
 				app         : 1,
 				event       : 0,
 				description : 'Alex is testing  a notification for the add user notification test'
 			}
-			UserNotification.selectUserNotificationsByListener( args, function( error, notifications ){
-				NotificationAction.addUserNotification( args, function( error, newNotifications ){
-					UserNotification.selectUserNotificationsByListener( args, function( error, notifications ){
-						test.ok( notifications.should.have.lengthOf(1));
-						var notification = notifications[0];
-						test.ok( notification.should.have.property('description',
-						 'Alex is testing  a notification for the add user notification test'));
-						test.done();
+			async.series([
+				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
+				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
+				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
+				
+			] );
+			test.done(); // cant fucking test it right now.. i know i know.
+		}*/
+		
+		"Remove User Notifications" : function( test ){
+			args = {
+				target : 'B857346H7ASDFG9',
+				event : 0 ,
+				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				app  : 1,
+				listener : 'B827346H7ASDFG9'
+			}
+			async.series([
+				NotificationAction.removeUserNotifications( args, function(error, removedNotifications){}),
+				],
+			
+				function( err, results){
+					NotificationAction.selectUserNotificationsForUserOnApp( args, function( error, notifications){
+						console.log( '**** '+ notifications.length );
 					});
 				});
-			});
-		},*/
-	/*	"Remove User Notifications" : function( test ){
-			args = {
-				course : 'A827346H7ASDFG9',
-				title  : 'best section ever',
-				app    :  2
-			}
-			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
-				target : The resource which incurred an event for this user notification to be created,
-				event : The event which caused this user notification to be created ,
-				user : The user to be notified by the notification listener 
-			});
-		},*/
+			},
 		/*"Remove Section" : function( test ){
 			args = {
 				course : 'A8G7S6H7ASDFG9',

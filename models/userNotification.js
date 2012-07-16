@@ -1,6 +1,7 @@
 var fs  = require("fs");
 var config = JSON.parse( fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
+var async = require('async');
 var db = new Sequelize(
 	 config.mysqlDatabase["db-name"],
 	 config.mysqlDatabase["user"],
@@ -14,8 +15,6 @@ var db = new Sequelize(
 
 var UserNotification = exports.UserNotification = db.define('UserNotification', {
      listener: {type: Sequelize.STRING, allowNull: false },
-	 app : {type:Sequelize.INTEGER, allowNull: false },
-	 user : {type:Sequelize.STRING, allowNull: false },
 	 description: {type:Sequelize.STRING, allowNull: false },
 	 emailSent: {type:Sequelize.BOOLEAN, defaultValue: false },
 	 wait:{ type:Sequelize.INTEGER , allowNULL: false, defaultValue: 0}
@@ -30,7 +29,7 @@ var UserNotification = exports.UserNotification = db.define('UserNotification', 
 	
 	returns all of the notifications under that listener or an error
 */
-exports.selectUserNotificationsByListener = function(args, callback){
+exports.selectUserNotifications = function(args, callback){
 	UserNotification.findAll({ where : {listener : args.listener}
 	}).success( function(notifications){
 		callback( null, notifications );
@@ -40,42 +39,45 @@ exports.selectUserNotificationsByListener = function(args, callback){
 }
 
 /*
-	To select all of the user notifications under a certain listener for a specific user
-	
+	Gets user notifications at a certain time that have been unsent
 	args = {
-		listener : UUID of notificationListener
-		user     : UUID of the user 
+		wait : 0-3 time when email should be sent
 	}
-	
-	returns all of the notifications under that listener or an error
+	returns an error or an array of unsent notifications set to go off at a certain time
 */
-
-exports.selectUserNotificationsForUserOnListener = function(args, callback){
-	UserNotification.findAll({ where : {listener : args.listener,
-	                                    user     : args.user }
-	}).success( function(notifications){
-		callback( null, notifications );
+exports.selectUnsentUserNotificationsByTime = function(args, callback){
+	UserNotification.findAll({where : { wait: args.wait, emailSent: false }}).success(function( notifications){
+		callback(null,notifications);
 	}).error(function(error){
-		callback( error, null );
+		callback( error, null);
 	});
 }
 
 /*
-	Get all user notifications for a specific user 
-	 
-	 args = {
-	 	user : UUID of the user  
-	 	app  : ID representing the application
-	 }
-	 returns a set of user objects or error
+    To disable email notification from being sent from the indicated user notifications 
+    
+	args = {
+		usernotifications : notifications to be set to sent	
+	}
+	
+	return the newly updated user notifications
 */
-exports.selectUserNotificationsForUserOnApp = function( args, callback ){
-	UserNotification.findAll({ where : { app : args.app,
-	                                     user : args.user }
-	}).success(function(notifications){
-		callback( null, notifications );
-	}).error(function(error){
-		callback( error, null);
+exports.markAsSentUserNotifications = function( args, callback ){
+	var arr = new Array();
+	async.forEachSeries( args.usernotifications, function( notification, callback ){
+		notification.updateAttributes({ emailSent : true }).error(function(error){
+			callback(error);
+		}).success(function(updatedAttribute){
+			arr.push(updatedAttribute);
+			callback();
+		})
+	}, function ( err ){
+		if ( err ){
+			callback ( err, null );
+		}
+		else {
+			callback( null, arr );
+		}
 	});
 }
 
@@ -83,16 +85,27 @@ exports.selectUserNotificationsForUserOnApp = function( args, callback ){
 	To remove a user notification
 	
 	args = {
-		usernotification : object representation of the user notification to be removed
+		usernotifications : object representation of the user notification to be removed
 	}
 	
 	Returns the removed user notification or an error
 */
-exports.removeUserNotification = function( args, callback) {
-	args.usernotification.destroy().error(function(error){
-		callback( error, null );
-	}).success(function(removedUserNotification){
-		callback( null, removedUserNotification );
+exports.removeUserNotifications = function( args, callback) {
+	var arr = new Array();
+	async.forEachSeries( args.usernotifications, function( userNotification, callback){
+		userNotification.destroy().error(function(error){
+			callback( error );
+		}).success(function(){
+			arr.push( userNotification );
+			callback();
+		});
+			
+	}, function(error){
+		if ( error ){
+			callback( error, null );
+		} else {
+			callback( null, arr );
+		}
 	});
 }
 
@@ -101,9 +114,9 @@ exports.removeUserNotification = function( args, callback) {
 	
 	args = { 
 		listener    : the listener responsible for this notification
-		user        : The user who should be notified
 		description :  The description of the notification
-		app         : The application generating this notification
+		emailSent : false/true
+		wait      : when the email should be sent 0-3
 	}
 	
 	returns either the newly saved user notification or an error

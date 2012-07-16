@@ -64,8 +64,8 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, Star),
 				createTable.bind(undefined, Section),
 				createTable.bind(undefined, SectionMaterial),
-				createTable.bind(undefined, CourseSection)
-				], callback)
+				createTable.bind(undefined, CourseSection)]
+			, callback);
 		}
 	});
 }

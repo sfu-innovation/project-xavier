@@ -89,171 +89,148 @@
 	],
 	"notificationlistener":[
 		 {
-		    "uuid":"B827346H7ASDFG9",
+		    "uuid":"B827346H7fvfvASDFFSDGQEE",
 		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":1,
-		    "target":"B857346H7ASDFG9",
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
 		    "event":0
-		 }
-		,{
-			"uuid":"B857346H7ASDFG9",
+		 },
+		 {
+		    "uuid":"B827qwwqqza346H7ASDFFSDGQEE",
 		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
 		    "app":1,
-		    "target":"B857346H7BSDFG9",
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
 		    "event":1
+		 },
+		 {
+		    "uuid":"B827346Hqw3rwref7ASDFFSDGQEE",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
+		    "event":2
+		 },
+		 {
+		    "uuid":"B827342qe2w6H7ASDFFSDGQEE",
+		    "user":"A7S7F8GA7SD98A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
+		    "event":1
+		 },
+		 {
+		    "uuid":"B827342qe2w6H7ASDFAFSDGQEE",
+		    "user":"A7S7F8GA7SD98A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
+		    "event":3
+		 },
+		 {
+		    "uuid":"B827346H7ASDFFdq2qwSDGQEE",
+		    "user":"A7S7F8GA7SD9ASD8DF89AG",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
+		    "event":1
+		 },
+		 {
+		    "uuid":"B827346H7ASDFQGFdq2qwSDGQEE",
+		    "user":"A7S7F8GA7SD9ASD8DF89AG",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
+		    "event":3
+		 },
+		 {
+		    "uuid":"B8273ASDSAD46H7ewqx2ASDFFSDGQEE",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
+		    "event":0
+		 },
+		 {
+		    "uuid":"GFDGDGDFGFDGW313EREDQWD",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
+		    "event":1
+		 },
+		 {
+		    "uuid":"B827346ADSDSDGFH7ASDFFSDGQEE",
+		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
+		    "app":1,
+		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
+		    "event":2
 		 }
 	],
 	"usernotification":[
 		{
-			"listener": "B857346H7ASDF00",
-			"app": 1,
-			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
-			"emailSent": false,
-			"wait": 0
-		},
+		 "listener": "B827qwwqqza346H7ASDFFSDGQEE",
+		 "description": "Mike commented on a post \n \"Why is the sky blue\"\n",
+		 "emailSent": false,
+		 "wait": 1
+		 },
+		 
 		{
-			"listener" : "B857342H7ASDF01",
-			"app": 0,
-			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 0
-		},
-		{
-			"listener" : "B857342H7ASDF02",
-			"app": 0,
-			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 1
-		},
-		{
-			"listener" : "B857342H7ASDF03",
-			"app": 1,
-			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 3
-		},
-		{
-			"listener" : "B857342H7ASDF04",
-			"app": 2,
-			"user": "A7S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 3
-		},
-		{
-			"listener": "B857346H7ASDF05",
-			"app": 1,
-			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
-			"emailSent": false,
-			"wait": 0
-		},
-		{
-			"listener" : "B857342H7ASDF06",
-			"app": 0,
-			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 1
-		},
-		{
-			"listener" : "B857342H7ASDF07",
-			"app": 0,
-			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 1
-		},
-		{
-			"listener" : "B857342H7ASDF08",
-			"app": 1,
-			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 1
-		},
-		{
-			"listener" : "B857342H7ASDF09",
-			"app": 2,
-			"user": "A7S7F8GA7SD11B7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 3
-		},
-		{
-			"listener": "B857346H7ASDF10",
-			"app": 1,
-			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky blue\"\n",
-			"emailSent": false,
-			"wait": 0
-		},
-		{
-			"listener" : "B857342H7ASDF11",
-			"app": 0,
-			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 1
-		},
-		{
-			"listener" : "B857342H7ASDF12",
-			"app": 0,
-			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 2
-		},
-		{
-			"listener" : "B857342H7ASDF13",
-			"app": 1,
-			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 2
-		},
-		{
-			"listener" : "B857342H7ASDF14",
-			"app": 2,
-			"user": "B9S7F8GA7SD11A7SDF8ASD7G",
-			"description": "alex commented on your post \n \"Why is the sky red\"",
-			"emailSent": false,
-			"wait": 2
-		}
+		 "listener": "B827qwwqqza346H7ASDFFSDGQEE",
+		 "description": "Yukai commented on a post \n \"Thats a dumb question\"\n",
+		 "emailSent": false,
+		 "wait": 1
+		 },
+		 {
+		 "listener": "B827342qe2w6H7ASDFFSDGQEE",
+		 "description": "Alex commented on a post \n \"Guy's cmon...\"\n",
+		 "emailSent": false,
+		 "wait": 2
+		 },
+		 {
+		 
+		 "listener": "B827342qe2w6H7ASDFAFSDGQEE",
+		  "description": "Alex posted a new document\n",
+		 "emailSent": false,
+		 "wait": 3
+		 },
+		 {
+		 
+		 "listener": "B827346H7ASDFFdq2qwSDGQEE",
+		 "description": "Alex commented on a post \n \"Guy's cmon...\"\n",
+		 "emailSent": false,
+		 "wait": 3
+		 },
+		 {
+		 
+		 "listener": "B827346H7ASDFQGFdq2qwSDGQEE",
+		  "description": "Alex posted a new document\n",
+		 "emailSent": false,
+		 "wait": 2
+		 }
 		
 	
 	],
 		"usernotificationsettings": [
 		{
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
-			"app" : 0
-		},
-		{
-			"user":"BSDF787D98A7SDF8ASD7G",
-			"app" : 1
-		},
-		{
-			"user":"BSDF787D98ASDF099D7G",
-			"app" : 2
-		},
-		{
-			"user":"A7S7FSD78FA98A7SDF8ASD7G",
-			"app" : 2
-
-		},
-		{	
-			"user":"A7S7F8GA7SD9ASD8DF89AG",
-			"app" : 0
-		},
-		{
 			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
-			"app" : 1
-		
-		}
+			"app" : 1,
+			
+			"notificationOnLike":1,
+			"notificationOnComment":3,
+			"notificationOnStar":2,
+			"notificationOnNewResource":0
+		 },
+		 {
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"app" : 1,
+			
+			"notificationOnLike":2,
+			"notificationOnComment":1,
+			"notificationOnStar":3,
+			"notificationOnNewResource":1
+		 },
+		 {
+			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"app" : 1,
+			
+			"notificationOnLike":0,
+			"notificationOnComment":1,
+			"notificationOnStar":2,
+			"notificationOnNewResource":3
+		 }
 	],
 
 	"mediafiles": [

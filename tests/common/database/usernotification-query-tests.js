@@ -29,40 +29,50 @@ module.exports = {
 		},		
 		"Select User Notifications": function(test){
 		    var args = {
-				listener : 'B857342H7ASDF07'
+				listener : 'B827qwwqqza346H7ASDFFSDGQEE'
 		    }
 		    UserNotification.selectUserNotifications( args, function(error, userNotifications ){
-		    	test.ok(userNotifications.should.have.lengthOf(1));
+		    	test.ok(userNotifications.should.have.lengthOf(2));
 		    	test.done();
 		    });
 		    
 		},
-		  "Select user notifications for specific user": function(test){
-				args = {
-					listener : 'B857342H7ASDF07',
-					user     : 'A7S7F8GA7SD11B7SDF8ASD7G'
-				}
-				
-			 UserNotification.selectUserNotificationsForUser( args, function(error, userNotifications ){
-		    	test.ok(userNotifications.should.have.lengthOf(1));
-		    	test.done();
-		    });
+		" Get Daily unsent User Notifications":function(test){
+			args = {
+				wait : 1
+			}
+			UserNotification.selectUnsentUserNotificationsByTime( args, function( error, userNotifications){
+				test.ok(userNotifications.should.have.lengthOf(2));
+				test.done();
+			});
 		},
-		
+		" Set Unsent User Notifications to Sent ":function(test){
+			args = {
+				wait : 1
+			}
+			UserNotification.selectUnsentUserNotificationsByTime( args, function( error, userNotifications){
+				args.usernotifications = userNotifications;
+				UserNotification.markAsSentUserNotifications( args, function( error, updatedUserNotifications){
+					console.log( error );
+					test.ok(updatedUserNotifications[0].should.have.property('emailSent', true )) ;
+					test.ok(updatedUserNotifications.should.have.lengthOf(2));
+					test.done();
+				});
+			});
+		},
 		
 	   "Remove User Notification ":function(test){
 			args = {
-				listener : 'B857342H7ASDF07',
-				user     : 'A7S7F8GA7SD11B7SDF8ASD7G'
+				listener : 'B827qwwqqza346H7ASDFFSDGQEE'
 			}
 				
-			 UserNotification.selectUserNotificationsForUser( args, function(error, userNotifications ){
-			 	args.usernotification = userNotifications[0];
-		    	UserNotification.removeUserNotification( args, function(error, removedUserNotification){
-		    		UserNotification.selectUserNotificationsForUser( args, function(error, userNotifications ){
-		    			if ( 0 === userNotifications.length ){
-		    				test.done();
-		    			}
+			 UserNotification.selectUserNotifications( args, function(error, userNotifications ){
+			 	test.ok( userNotifications.should.have.lengthOf(2));
+			 	args.usernotifications = userNotifications;
+		    	UserNotification.removeUserNotifications( args, function(error, removedUserNotification){
+		    		UserNotification.selectUserNotifications( args, function(error, userNotifications ){
+		    			test.ok(userNotifications.should.have.lengthOf(0));
+		    			test.done();
 		    		});
 		    	});
 		    });
@@ -72,14 +82,15 @@ module.exports = {
 			
 			args = {
 				listener    : "B857342H7ASDF01",
-		        user        : "A7S7F8GA7SD11A7SDF8ASD7G",
 		        description : "test description 345",
-		        app         : 2
+		        emailSent         : false,
+				wait              : 2
 			}
+			
 			UserNotification.createUserNotification( args, function(error, newUserNotification ){
-				args.listener = newUserNotification.listener;
-				UserNotification.selectUserNotificationsForUser( args, function(error, userNotifications ){
-		    		test.ok( userNotifications.should.have.lengthOf(2));
+				test.ok(newUserNotification.should.have.property('listener', 'B857342H7ASDF01'));
+				UserNotification.selectUserNotifications( args, function(error, userNotifications ){
+		    		test.ok( userNotifications.should.have.lengthOf(1));
 		    		test.done();
 		    	});
 			});

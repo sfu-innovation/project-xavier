@@ -3,7 +3,9 @@ var config  = require('./../../config.json');
 var express = require('express');
 var server  = require('./../../app-presenter.js');
 var queries = require(__dirname + "/../../database/db-queries.js");
-var User    = require(__dirname + "/../../models/user.js")
+var User    = require(__dirname + "/../../models/user.js");
+var Course  = require(__dirname + "/../../models/course.js");
+var CourseMember = require(__dirname + "/../../models/courseMember.js");
 
 var currentHost = config.presenterServer.host;
 var currentPort = config.presenterServer.port;
@@ -46,7 +48,7 @@ module.exports = {
 							})
 							that.server.use(server);
 							that.server.listen(function() {
-								that.port = this.address().port;
+								that.requestOptions.port = this.address().port;
 								callback();
 							});
 						}
@@ -66,7 +68,6 @@ module.exports = {
 		getUser: function(test){
 
 			this.requestOptions.path = "/api/user/" + this.user.uuid;
-			this.requestOptions.port = this.port;
 			this.requestOptions.method = "GET";
 
 			var request = http.get(this.requestOptions, function(response){
@@ -84,7 +85,6 @@ module.exports = {
 		},
 		queryUsers: function(test){
 			this.requestOptions.path = "/api/users/";
-			this.requestOptions.port = this.port;
 			this.requestOptions.method = "POST";
 
 			var request = http.request(this.requestOptions, function(response){
@@ -112,7 +112,6 @@ module.exports = {
 			var that = this;
 
 			this.requestOptions.path = "/api/user/" + this.user.uuid + "/profile";
-			this.requestOptions.port = this.port;
 			this.requestOptions.method = "GET";
 
 			var request = http.get(this.requestOptions, function(response){
@@ -129,7 +128,6 @@ module.exports = {
 		},
 		setPreferedName: function(test){
 			this.requestOptions.path = "/api/user/setPreferedname";
-			this.requestOptions.port = this.port;
 			this.requestOptions.method = "PUT";
 
 
@@ -151,6 +149,52 @@ module.exports = {
 			request.write(JSON.stringify(newName));
 			request.end();
 
+		},
+		getUserCourses: function(test){
+			
+			var that = this;
+			var newCourse = {
+				"title":"Algorithms",
+				"section":"D100",
+				"subject":"CMPT",
+				"number":307,
+				"instructor":"BSDF787D98A7SDF8ASD7G"
+			}
+
+			// Add student to newly created course, then check to see if the student is 
+			// a member of that course
+			Course.createCourse(newCourse, function(error, course){
+
+				if(course){
+					CourseMember.addCourseMember(that.user.uuid, course.uuid, function(error, result){
+						if(result){
+							that.requestOptions.method = "GET";
+							that.requestOptions.path = "/api/user/courses";
+
+							var request = http.get(that.requestOptions, function(response){
+								var body = "";
+								response.on('data', function (chunk){
+									body += chunk;
+								}).on('end', function(){
+									body = JSON.parse(body);
+									test.ok(body.errorcode === 0 && 
+										Object.keys(body.courses).length === 1 &&
+										body.courses[0].title === "Algorithms");
+									test.done();
+								});
+							});
+						}
+						else{
+							test.ok(false);
+							test.done();
+						}
+					})
+				}
+				else{
+					test.ok(false);
+					test.done();
+				}
+			});
 		}
 	}
 }

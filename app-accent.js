@@ -45,6 +45,7 @@ app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update 
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
+app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 
 //TODO: need update this into document
 app.get('/api/course/:id/members', routesCommon.courseMembers);//get a list of members of a course

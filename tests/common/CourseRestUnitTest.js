@@ -42,7 +42,7 @@ module.exports = {
 							that.server.use(server);
 							that.server.listen(function() {
 
-								that.port = this.address().port;
+								that.requestOptions.port = this.address().port;
 								callback();
 							});
 						}
@@ -61,7 +61,6 @@ module.exports = {
 		// get the details of the question created
 		getCourse: function(test) {
 		
-			this.requestOptions.port = this.port;
 			this.requestOptions.method = "GET";
 			this.requestOptions.path = "/api/course/" + this.course.uuid;
 		
@@ -80,7 +79,6 @@ module.exports = {
 		},
 		courseQuery: function(test){
 
-			this.requestOptions.port   = this.port;
 			this.requestOptions.method = "POST";
 			this.requestOptions.path   = "/api/courses/";
 
@@ -128,7 +126,7 @@ module.exports = {
 			var newUser = {
 				"firstName":"Mike",
 				"lastName":"Klemarewski",
-				"type":1,
+				"type":0,
 				"userID":"mak10",
 				"email":"mak10@sfu.ca"
 			}
@@ -141,7 +139,6 @@ module.exports = {
 							test.done();
 						}
 						else{
-							that.requestOptions.port   = that.port;
 							that.requestOptions.method = "GET";
 							that.requestOptions.path   = "/api/course/" + that.course.uuid + "/members";
 
@@ -157,6 +154,54 @@ module.exports = {
 							});
 						}
 					})
+				}
+				else{
+					test.ok(false);
+					test.done();
+				}
+			});
+		},
+		courseInstructor: function(test){
+			var that = this;
+			var newUser = {
+				"firstName":"Bill",
+				"lastName":"Nye",
+				"type":1,
+				"userID":"bnye",
+				"email":"bnye@sfu.ca"
+			}
+
+			// Create a professor, assign them to a new course
+			// Check to see if the professor is properly assigned to the course
+			User.createUser(newUser, function(error, user){
+				if(user){
+					var newCourse = {
+						"title":"Graphics",
+						"section":"D300",
+						"subject":"CMPT",
+						"number":361,
+						"instructor":user.uuid
+					}
+					Course.createCourse(newCourse, function(error, course){
+						if(course){
+							that.requestOptions.method = "GET";
+							that.requestOptions.path = "/api/course/" + course.uuid + "/instructor";
+							var request = http.get(that.requestOptions, function(response){
+								var body = "";
+								response.on('data', function (chunk){
+									body += chunk;
+								}).on('end', function(){
+									body = JSON.parse(body);
+									test.ok(body.errorcode === 0 && body.instructor.uuid === user.uuid);
+									test.done();
+								});
+							});
+						}
+						else{
+							test.ok(false);
+							test.done();
+						}
+					});
 				}
 				else{
 					test.ok(false);

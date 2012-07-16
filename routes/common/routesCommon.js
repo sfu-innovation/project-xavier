@@ -1,9 +1,8 @@
-var courseModel = require("./../../models/course");
+var User        = require(__dirname + "/../../models/user");
+var UserProfile = require(__dirname + "/../../models/userProfile");
+var Course      = require(__dirname + "/../../models/course");
 
-var User = require("../../models/user");
-var UserProfile = require("../../models/userProfile");
-
-var OrganizationAction = require("../../controller/OrganizationAction");
+var OrganizationAction = require(__dirname + "/../../controller/OrganizationAction");
 
 process.setMaxListeners(0)//LOL issue.
 
@@ -156,7 +155,7 @@ exports.userCourses = function(request, response) {
 	if (request.method === "GET") {
 
 		if(request.session && request.session.user){
-			User.getUserCourses({ user: request.session.user.uuid }, function(error, result) {
+			User.getUserCourses(request.session.user.uuid, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, courses: result }));
@@ -181,7 +180,7 @@ exports.course = function(request, response) {
 	var course_id = request.params.id;
 	
 	if (request.method === "GET") {
-		courseModel.selectCourse({ uuid: course_id }, function(error, result) {
+		Course.selectCourse({ uuid: course_id }, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, course: result }));
@@ -197,7 +196,7 @@ exports.course = function(request, response) {
 exports.courseMembers = function(request,response){
 	var course_id = request.params.id;
 	if (request.method === "GET") {
-		courseModel.getCourseMembers(course_id, function(error, result) {
+		Course.getCourseMembers(course_id, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, members: result }));
@@ -211,7 +210,7 @@ exports.courseMembers = function(request,response){
 
 exports.courseQuery = function(request, response) {
 	if (request.method === "POST" && request.body.where) {
-		courseModel.selectCourses(request.body.where, function(error, result) {
+		Course.selectCourses(request.body.where, function(error, result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, courses: result }));
@@ -220,6 +219,26 @@ exports.courseQuery = function(request, response) {
 				response.end(JSON.stringify({ errorcode: 1, message: "Course not found" }));
 			}
 		});
+	}
+}
+
+exports.courseInstructor = function(request, response){
+	var course_id = request.params.id;
+	if(request.method === "GET"){
+		Course.getInstructor(course_id, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, instructor: result }));
+			}
+			else if(error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Instructor not found" }));
+			}
+		})
 	}
 }
 

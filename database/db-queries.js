@@ -120,10 +120,10 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 			, define: {charset:'utf8'}
 		}
 	);
-	
+
 	var data  = JSON.parse(fs.readFileSync(dataFile));
 
-	async.parallel([
+	async.series([
      	insert.bind(undefined, Course, data.courses),
 		insert.bind(undefined, User, data.users),
 		insert.bind(undefined, CourseMember, data.courseMembers),
@@ -140,14 +140,22 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 }
 
 var insert = function(model, data, callback){
-	async.forEach(data, function(object, callback) {
-		model.create(object).success(function(object){
-			object.save().success(function() {
-				callback(undefined, object)
-			}).error(function(error){
-				callback(error)
-			})
-		})
-	}, callback)
+
+	if(data){
+		async.forEach(data, function(object, callback) {
+
+				model.create(object).success(function(object){
+					object.save().success(function() {
+						callback(undefined, object)
+					}).error(function(error){
+						callback(error)
+					})
+				})
+
+		}, callback)
+	}
+	else{
+		callback(undefined, "no data");
+	}
 
 }

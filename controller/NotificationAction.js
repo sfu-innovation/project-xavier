@@ -46,14 +46,9 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( args, function( error, listeners ){
-		var i = listeners.length - 1;
-		for(; i >= 0; i--){
-			var argWithListener = args;
-			argWithListener.listener = listeners[i].uuid;
-			argsWithListeners.push( argWithListener );
-		}
-		async.forEachSeries( argsWithListeners, function( listener, callback ) {
-			UserNotificationSettings.findNotificationSettings( args, function( error, settings ){
+		async.forEachSeries( listeners, function( listener, callback ) {
+			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
+				console.log( settings.values );
 				switch(args.event){
 					case 0: args.wait = settings.notificationOnLike       ; break;
 					case 1: args.wait = settings.notificationOnComment    ; break;
@@ -120,29 +115,19 @@ NotificationAction.prototype.removeUserNotifications = function( args, callback 
 			callback( "No notification listener could be found", null );
 			return;
 		}
-		args.listener = notificationListener.listener;
+		args.listener = notificationListener.uuid;
 		UserNotification.selectUserNotifications( args, function(error, userNotifications ){
 			if ( error ){
 				callback( error, null );
 				return;
 			}
-			async.forEachSeries( userNotifications,
-				function( userNotification, callback )
-			 	{
-			 		UserNotification.removeUserNotification({ usernotification : userNotification }
-			 		, function( err, removedUserNotification ){
-			 			if ( err ){
-			 				callback( err, null );
-			 			}else {
-			 				removedUserNotifications.push( removedUserNotification );
-			 			}
-			 		  })
-			 		, function( err ){
-			 			callback( err, null );
-			 		    return;
-			 		}
-				}
-			);
+			UserNotification.removeUserNotifications({ usernotifications : userNotifications }, function( err, results ){
+				if ( err ){
+			 		callback( err, null );
+			 	}else {
+			 		callback( null, results);
+			 	}
+			});
 			callback( null, removedUserNotifications );
 		});
 	})
@@ -300,6 +285,7 @@ to be triggered off a "like" event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on,
+	app    : the app id
 	}
 */
 NotificationAction.prototype.addLikeNotifier = function( args, callback){
@@ -504,6 +490,7 @@ To add a user notification when a resource has been liked
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
+	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
@@ -518,6 +505,7 @@ To add a user notification when a resource has been commented on
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
+	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
@@ -532,6 +520,7 @@ To add a user notification when a resource has been starred
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
+	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
@@ -546,6 +535,7 @@ To add a user notification when a resource has been added
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
+	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 

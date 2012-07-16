@@ -33,7 +33,7 @@ module.exports = {
 			});
 		},
 		
-		"Add Notification Listener" : function( test ){
+		/*"Add Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
@@ -71,8 +71,8 @@ module.exports = {
 				});
 			});
 				
-		}, 
-		"Add User Notification" : function( test ){
+		}, */
+	/*	"Add User Notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
 				user        : 'A7S7F8GA7SD98A7SDF8ASD7G',
@@ -80,69 +80,50 @@ module.exports = {
 				event       : 3,
 				description : 'Alex is testing  a notification for the add user notification test'
 			}
-			async.series([
-				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
-				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
-				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
-			], function(err, results){
-				
-				if ( error ){
-					console.log('[ERROR] '+err	 );
-				} 
-				if ( results ) {
-					console.log('[SUCCESS] '+results);
-				}
-			});
 			
-			test.done(); // cant fucking test it right now.. i know i know.
-		} 
+				NotificationAction.addUserNotification( args, function( error, newNotifications ){
+					test.done();
+				});
+			
+		*/
+	//	test.done(); // cant fucking test it right now.. i know i know.
+		//} , 
 		
-		"Remove User Notifications" : function( test ){
+	 /* "Remove User Notifications" : function( test ){
 			args = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event : 1 ,
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
 				app  : 1
-			}
+			}		
 			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
-				console.log( removedNotifications.length );
+				test.done();
+				});
+		
+		*/
+	/*	"Add a like notification" : function( test ){
+			args = {
+				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
+				app         : 1,
+				description : 'The message to be delivered in the notification	'
+			}
+			NotificationAction.addLikeUserNotification( args, function(error, notification){
 				test.done();
 			});
-		}
-		/*"Remove Section" : function( test ){
-			args = {
-				course : 'A8G7S6H7ASDFG9',
-				section : 'A827341H7AFFFFG9'
-			}
-			CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-				test.ok(sectionUUIDs.should.have.lengthOf(1));
-				OrganizationAction.removeSection(args, function(error, newSection){
-					CourseSection.sectionsInCourse( args, function( error, sectionUUIDs ){
-						test.ok(sectionUUIDs.should.have.lengthOf(0));
-						test.done();
-					});
-				});
-			});
-		}, 
-	/*	"Update Section" : function( test ){
+			
+		}, */
+		/*"Add a like notifier " : function( test ){
 			var args = {
-				sections : 'A827346H7AFSSFG9',
-				title : 'section description 1',
-				newtitle : 'super duper section',
-				course : 'A827346H7ASDFG9'
+				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
+				target : 'A7S7FHGA7SD11A7SDF8AS87G',
+				app   : 2
 			}
-			Section.findSection( args, function( error, sectionObj ){
-				test.ok(sectionObj.should.have.property('title', 'section description 1'));
-				OrganizationAction.updateSection( args, function( error, updatedSection ){
-					console.log( args);
-					console.log( error );
-					test.ok(updatedSection.should.have.property('title', 'super duper section'));
-					test.done();
-				});
+			NotificationAction.addLikeNotifier( args, function( error, results ){
+				test.done();
 			});
 			
-		},
-		"Sections in Course" : function( test ){
+		},*/
+	/*	"Sections in Course" : function( test ){
 			var args = {
 				course : 'A827346H7ASDFG9'
 			}

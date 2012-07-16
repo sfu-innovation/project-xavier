@@ -6,7 +6,6 @@ var Section = require('../models/section.js');
 var SectionMaterial = require('../models/sectionMaterial.js');	
 var SectionImpl = require('../models/section.js').Section;
 var Resource    = require('../models/resource.js').Resource;
-var QueryES = require('./queryES.js');
 var OrganizationAction = function(){};
 
 /*
@@ -253,8 +252,8 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 				retResources.push( resources[x] );
 			}
 
-			//search for resource uuids in ES
-			QueryES.getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
+			//search for resource uuids in ES, friggin circular dependency
+			require('./queryES.js').getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
 				if(result){
 					retResources.push.apply(retResources, result);
 					callback(null, retResources);

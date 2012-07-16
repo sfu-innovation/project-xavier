@@ -247,15 +247,17 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
+	//should check if adding to a section is really needed. rqra dont need it
+	args.section = data.sectionUuid;
+	args.resource = data._id;
+
+	delete data.sectionUuid;
+
+	console.log("Creating new")
+	notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 		if(result){
 			document.set(data, function(err, req, data){
 				if(data){
-					args.section = data.sectionUuid;
-					args.resource = data._id;
-
-					//should check if adding to a section is really needed. rqra dont need it
-
 					organizationAction.addResourceToSection(args, callback);
 				}else{
 					callback(undefined);
@@ -508,23 +510,46 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
+	self.updateStatus(data.target_uuid, appType, function(updateResult){
+		if(updateResult){
+			document.set(data, function(err, req, esData){
+				if (esData) {
 
-		self.updateStatus(data.target_uuid, appType, function(updateResult){
+					var args = {
+						target:data.target_uuid
+						,app:appType
+						,user:data.user
+						,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
+					};
 
-			if(updateResult){
-				document.set(data, function(err, req, data){
-					if (data) {
-						callback(data);
-					}else {
-						callback(undefined);
-					}
-				});
-			}else{
-				callback(undefined);
-			}
-		});
+					notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+						if(usrNotificationResult){
+							console.log("successfully added usr comment notification");
+
+							delete args.description;
+							notification.addCommentNotifier(args, function(err, result){
+								if(result){
+									console.log("successfully added comment notification");
+									callback(esData);
+								}else{
+									callback(undefined);
+								}
+							});
+
+						}else{
+							callback(undefined);
+						}
+					});
+				}else {
+					callback(undefined);
+				}
+			});
+		}else{
+			callback(undefined);
+		}
 	});
+
+
 }
 
 //update comment body based on commentID

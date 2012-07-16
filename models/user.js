@@ -33,7 +33,6 @@ exports.createUser = function(user, callback){
 	User.create(user).error(function(error){
 		callback(error, null);
 	}).success(function(){
-		console.log("saved user");
 		callback(null, user);
 	})
 }

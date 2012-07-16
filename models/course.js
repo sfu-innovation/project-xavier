@@ -53,8 +53,8 @@ exports.selectCourses = function(args, callback){
 	});
 }
 
-exports.getInstructor = function(args, callback){
-	Course.find({where: args}).success(function(course){
+exports.getInstructor = function(courseUUID, callback){
+	Course.find({where: {uuid: courseUUID}}).success(function(course){
 		var CourseUser = require('./user.js').User;
 		CourseUser.find({where: {uuid: course.instructor}}).success(function(courseInstructor){
 			callback(null, courseInstructor);

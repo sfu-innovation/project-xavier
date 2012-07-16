@@ -254,6 +254,8 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 					args.section = data.sectionUuid;
 					args.resource = data._id;
 
+					//should check if adding to a section is really needed. rqra dont need it
+
 					organizationAction.addResourceToSection(args, callback);
 				}else{
 					callback(undefined);

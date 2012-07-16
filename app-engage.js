@@ -92,7 +92,7 @@ app.delete("/api/section", routesCommon.removeSection);
 
 //misc
 app.post("/api/section/course", routesCommon.sectionsInCourse);
-app.post("/api/section/resources", routesCommon.resourcesInSection);
+app.post("/api/section/resources", routesCommon.engageResourcesInSection);
 app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 

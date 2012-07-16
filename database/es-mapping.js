@@ -1,7 +1,7 @@
 var es = require('com.izaakschroeder.elasticsearch'),
 	db = es.connect('localhost'),
 	async = require('async'),
-	indice = ['presenter', 'accent'];
+	indice = ['presenter', 'accent', 'engage'];
 
 var map = function(appType, callback){
 	var path = "/" + appType;

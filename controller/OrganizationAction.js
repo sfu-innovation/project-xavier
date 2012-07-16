@@ -6,7 +6,8 @@ var Section = require('../models/section.js');
 var SectionMaterial = require('../models/sectionMaterial.js');	
 var SectionImpl = require('../models/section.js').Section;
 var Resource    = require('../models/resource.js').Resource;
-var OrganizationAction = function(){}
+var QueryES = require('./queryES.js');
+var OrganizationAction = function(){};
 
 /*
 	To add a resource to a section. Resources must be added to a section,
@@ -232,6 +233,7 @@ OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 /*
    To get all of the resources in a section
 	args = {
+		appType : (for ES)
 		section : UUID of section
 	}
 	Returns the resources in a section
@@ -243,13 +245,24 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 		for(; i >= 0; i-- ){
 			resourcesInSection.push(sectionMaterials[i].material);
 		}
+
 		Resource.findAll({ where : { uuid : resourcesInSection }}).success(function( resources ){
 			var retResources = new Array();
 			var x = resources.length - 1;
 			for( ; x >= 0; x-- ){
 				retResources.push( resources[x] );
 			}
-			callback( null, retResources );
+
+			//search for resource uuids in ES
+			QueryES.getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
+				if(result){
+					retResources.push.apply(retResources, result);
+					callback(null, retResources);
+				}else{
+					callback( error, null );
+				}
+			});
+
 		}).error(function(error){
 			callback( error, null );
 		});

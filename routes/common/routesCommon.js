@@ -340,9 +340,17 @@ exports.sectionsInCourse = function(request, response){
 	}
 }
 
-exports.resourcesInSection = function(request, response){
+/*	DO NOT USE this method for REST API.
+	See:
+		- accentResourcesInSection
+		- engageResourcesInSection
+*/
+exports.resourcesInSection = function(appType, request, response){
 	if(request.method === "POST"){
-		OrganizationAction.resourcesInSection(request.body, function(error, result){
+		var args = request.body;
+		args.appType = appType;
+
+		OrganizationAction.resourcesInSection(args, function(error, result){
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, resourcesInSection: result }));
@@ -352,6 +360,14 @@ exports.resourcesInSection = function(request, response){
 			}
 		})
 	}
+}
+
+exports.accentResourcesInSection = function(request, response){
+	exports.resourcesInSection(1, request, response);
+}
+
+exports.engageResourcesInSection = function(request, response){
+	exports.resourcesInSection(2, request, response);
 }
 
 exports.numberOfResourcesInCourse = function(request, response){

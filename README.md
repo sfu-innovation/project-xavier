@@ -5,10 +5,7 @@
 ## Info
 
 ### Elasticsearch database
-* In your root folder: run these files in order: 
-  * node database\es-mapping.js
   * node database\es-insert.js
 
 ### NLP redis database
-* In your root folder: run these files in order: 
   * node database\dict_to_db.js

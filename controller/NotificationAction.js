@@ -101,6 +101,7 @@ var args = {
 	target : The resource which incurred an event for this user notification to be created,
 	event : The event which caused this user notification to be created ,
 	user : The user to be notified by the notification listener
+	app  : app id
 }
 	returns a list of the notifiers of the removed notifications
 */
@@ -142,6 +143,7 @@ args = {
 	user   : The user who will be alerted
 	target : The resource which has changed
 	event  : The event which has happened on that resource
+	app    : app id 
 }
 
 returns an array of any user notifications which may have been removed as a result
@@ -237,6 +239,7 @@ This prepares a user notification to be sent out as an email. Aftwards the notif
 will still exist in the user notifications table but will not be sent out again. 
 It can only be removed when the user sees the user notification.
 
+	args = UserNotification object
 message needs to be of type "UserNotification" or else when we try to save it will throw
 an error 
 */
@@ -300,6 +303,7 @@ to be triggered off a comment event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on,
+	app    : the app id
 	}
 */
 NotificationAction.prototype.addCommentNotifier = function( args, callback){
@@ -314,6 +318,7 @@ to be triggered off a star event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on,
+	app    : the app id
 	}
 */
 NotificationAction.prototype.addStarNotifier = function( args, callback){
@@ -343,6 +348,7 @@ to be triggered off a new resource event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on
+	app    : app id
 	}
 */
 
@@ -358,6 +364,7 @@ to be triggered off a new comment event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on
+	app    : app id
 	}
 */
 
@@ -373,6 +380,7 @@ to be triggered off a star event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on
+	app    : app id
 	}
 */
 
@@ -388,6 +396,7 @@ to be triggered off a new resource event.
 args = {
 	user : user that will be alerted,
 	target : resource that was acted on
+	app    : app id
 	}
 */
 
@@ -403,6 +412,7 @@ NotificationAction.prototype.removeNewResourceNotifier = function( args, callbac
 	args = {
 		user : user that will be alerted,
 		target : resource that was acted on
+		app    : app id
 	}
 	
 	returns an array of the listeners

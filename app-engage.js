@@ -7,8 +7,10 @@ var app = module.exports = express.createServer();
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
+	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
+	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
 		}));
@@ -31,9 +33,7 @@ app.dynamicHelpers({
 	}
 });
 
-// routing
-app.get('/', routesCommon.index);
-app.get('/login', routesCommon.login);
+
 
 // user
 app.get('/api/user/:id', routesCommon.user); // get user by id
@@ -92,3 +92,18 @@ app.delete("/api/section", routesCommon.removeSection);
 app.post("/api/section/course", routesCommon.sectionsInCourse);
 app.post("/api/section/resources", routesCommon.resourcesInSection);
 app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
+
+
+
+//very important, do not touch!
+
+//non-REST calls
+// routing
+app.get('/login', routesCommon.login);
+
+app.get('/', routesEngage.index);
+
+
+//article - this is resource
+
+app.get('/article/:id', routesEngage.articleView);

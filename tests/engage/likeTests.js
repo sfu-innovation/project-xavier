@@ -7,7 +7,7 @@ var queries  = require(__dirname + '/../../database/db-queries');
 var Resource = require(__dirname + '/../../models/resource');
 var User     = require(__dirname + '/../../models/user');
 var Like     = require(__dirname + '/../../models/like');
-var dataFile = 'tests/testing-data.json';
+var dataFile = 'tests/engage/testing-data.json';
 var testData = JSON.parse(fs.readFileSync(dataFile));
 
 module.exports = {

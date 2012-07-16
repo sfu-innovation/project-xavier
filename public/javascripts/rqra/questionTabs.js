@@ -48,8 +48,6 @@ function displayNew(page) {
 					+ "<p>" + item._source.body  + "</p>"
 					+ "</div>";
 			});
-		} else {
-			questionList.innerHTML = "failure";
 		}
 	});
 }
@@ -70,8 +68,6 @@ function displayUnanswered(page) {
 					+ "<p>" + item._source.body  + "</p>"
 					+ "</div>";
 			});
-		} else {
-			questionList.innerHTML = "failure";
 		}
 	});
 }
@@ -92,8 +88,6 @@ function displayAll(page) {
 					+ "<p>" + item._source.body  + "</p>"
 					+ "</div>";
 			});
-		} else {
-			questionList.innerHTML = "failure";
 		}
 	});
 }

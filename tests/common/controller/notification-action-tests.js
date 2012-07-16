@@ -33,19 +33,18 @@ module.exports = {
 			});
 		},
 		
-		/*"Add Notification Listener" : function( test ){
+		"Add Notification Listener" : function( test ){
 			var args = {
-				user : 'AQWRHIQWDQIO8424RQHEIO2',
-				target : 'ADAD32F3E1E21EW',
+				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
+				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
 				event : 0,
 				app   : 2
 			}
 			NotificationListener.findNotificationListener( args, function( error, listener) {
 				NotificationAction.addNotifier( args, function( error, newListener){
-				console.log( newListener );
 					NotificationListener.findNotificationListener( args, function( error, listener) {
-						test.ok( listener.should.have.property('user', 'AQWRHIQWDQIO8424RQHEIO2'));
-						test.ok( listener.should.have.property('target', 'ADAD32F3E1E21EW'));
+						test.ok( listener.should.have.property('user', 'A7S7F8GA7SD98A7SDF8ASD7G'));
+						test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8ASD7G'));
 						test.done();
 					});
 				});
@@ -55,12 +54,14 @@ module.exports = {
 		"Remove Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
-				target : 'B857346H7ASDFG9',
-				event : 0
+				target : 'A7S7FHGA7SD11A7SDF8AS87G',
+				event : 1,
+				app : 1
 			}
 			NotificationListener.findNotificationListener( args, function( error, listener ){
 				test.ok( listener.should.have.property('user', 'A7S7F8GA7SD11A7SDF8ASD7G'));
-				test.ok( listener.should.have.property('target', 'B857346H7ASDFG9'));
+				test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8AS87G'));
+				args.listener = listener.uuid;
 				NotificationAction.removeNotifier( args, function( error, removedListener ){
 					NotificationListener.findNotificationListener( args, function( error, listener ){
 						if ( null === listener ){
@@ -70,42 +71,44 @@ module.exports = {
 				});
 			});
 				
-		}, */
-	/*	"Add User Notification" : function( test ){
+		}, 
+		"Add User Notification" : function( test ){
 			args = {
-				target      : 'B857346H7ASDFG9',
-				user        : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
+				user        : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				app         : 1,
-				event       : 0,
+				event       : 3,
 				description : 'Alex is testing  a notification for the add user notification test'
 			}
 			async.series([
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){}),
+			], function(err, results){
 				
-			] );
+				if ( error ){
+					console.log('[ERROR] '+err	 );
+				} 
+				if ( results ) {
+					console.log('[SUCCESS] '+results);
+				}
+			});
+			
 			test.done(); // cant fucking test it right now.. i know i know.
-		}*/
+		} 
 		
 		"Remove User Notifications" : function( test ){
 			args = {
-				target : 'B857346H7ASDFG9',
-				event : 0 ,
+				target : 'A7S7FHGA7SD11A7SDF8AS87G',
+				event : 1 ,
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
-				app  : 1,
-				listener : 'B827346H7ASDFG9'
+				app  : 1
 			}
-			async.series([
-				NotificationAction.removeUserNotifications( args, function(error, removedNotifications){}),
-				],
-			
-				function( err, results){
-					NotificationAction.selectUserNotificationsForUserOnApp( args, function( error, notifications){
-						console.log( '**** '+ notifications.length );
-					});
-				});
-			},
+			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
+				console.log( removedNotifications.length );
+				test.done();
+			});
+		}
 		/*"Remove Section" : function( test ){
 			args = {
 				course : 'A8G7S6H7ASDFG9',
@@ -121,7 +124,7 @@ module.exports = {
 				});
 			});
 		}, 
-		"Update Section" : function( test ){
+	/*	"Update Section" : function( test ){
 			var args = {
 				sections : 'A827346H7AFSSFG9',
 				title : 'section description 1',

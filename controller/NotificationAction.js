@@ -105,26 +105,23 @@ after they are removed.
 var args = {
 	target : The resource which incurred an event for this user notification to be created,
 	event : The event which caused this user notification to be created ,
-	user : The user to be notified by the notification listener 
-	
-	listener : B827346H7ASDFG9
+	user : The user to be notified by the notification listener
 }
 	returns a list of the notifiers of the removed notifications
 */
 NotificationAction.prototype.removeUserNotifications = function( args, callback ){ 
 	var removedUserNotifications = new Array();
 	NotificationListener.findNotificationListener( args, function(error, notificationListener ){
-		
 		if ( error ){
 			callback( error, null );
 			return;
 		}
-		if ( null === notificationListener){
+		if ( null === notificationListener.listener){
 			callback( "No notification listener could be found", null );
 			return;
 		}
 		args.listener = notificationListener.listener;
-		UserNotification.selectUserNotificationsByListener( args, function(error, userNotifications ){
+		UserNotification.selectUserNotifications( args, function(error, userNotifications ){
 			if ( error ){
 				callback( error, null );
 				return;
@@ -157,9 +154,9 @@ This is when a user no longer wants specific kinds of notifications.
 This is similar to someone "unfollowing" a post for example.
 
 args = { 
-	user : The user who should be notified
-	target : The resource that has incurred a specific event
-	event : The type event on a specific target
+	user   : The user who will be alerted
+	target : The resource which has changed
+	event  : The event which has happened on that resource
 }
 
 returns an array of any user notifications which may have been removed as a result
@@ -187,7 +184,7 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 				return;
 			}
 			args.listener = args.notificationlistener.listener;
-			UserNotification.selectUserNotificationsByListener( args, function( error, userNotifications ){
+			UserNotification.selectUserNotifications( args, function( error, userNotifications ){
 				if ( error ){
 					callback( error, null );
 					return;
@@ -196,26 +193,15 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 					callback( "No user notifications were found matching your parameters", null );
 					return;
 				}
-				var removedUserNotifications = new Array();
-				var args2;
-				var i = userNotifications.length - 1;
-				for ( ; i >= 0; i-- ){
-					args2 = {
-						usernotification : userNotifications[i]
+				args.usernotifications = userNotifications;
+				UserNotification.removeUserNotifications( args, function( error, removedUserNotifications){
+					if ( error ){
+						callback( error, null );
+						return;
+					}else {
+						callback( null, removedUserNotifications);
 					}
-					UserNotification.removeUserNotification( args2, function(error, removedUserNotification ){
-						if ( error ){
-							callback( error, null );
-							return;
-						}
-						if ( null === removedUserNotification ){
-							callback( "No user notification was removed", null );
-							return;
-						}	
-						removedUserNotifications.push(removedUserNotification);
-					});
-				}
-				callback( null, removedUserNotifications );
+				});
 			});
 		});
 	});
@@ -508,7 +494,7 @@ NotificationAction.prototype.setupCourseMaterialNotifiers = function( args, call
 				callback( null, addedStudents );
 			}
 	     }
-	    }});
+	    });
 	});
 }
 

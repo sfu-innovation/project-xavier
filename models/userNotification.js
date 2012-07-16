@@ -85,7 +85,7 @@ exports.markAsSentUserNotifications = function( args, callback ){
 	To remove a user notification
 	
 	args = {
-		usernotifications : object representation of the user notification to be removed
+		usernotifications : object representations of the user notification to be removed
 	}
 	
 	Returns the removed user notification or an error

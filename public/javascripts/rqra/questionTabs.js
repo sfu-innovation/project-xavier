@@ -35,7 +35,7 @@ function displayAsked(page) {
 function displayNew(page) {
 	var rqra = new coreApi.Presenter();
 	var questionList = document.getElementById("questionList");
-	rqra.getNewQuestions(function (data) {
+	rqra.getNewQuestions(page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.length > 0) {
 			if (page === 0) {
 				questionList.innerHTML = "";
@@ -57,7 +57,7 @@ function displayNew(page) {
 function displayUnanswered(page) {
 	var rqra = new coreApi.Presenter();
 	var questionList = document.getElementById("questionList");
-	rqra.getUnansweredQuestions(function (data) {
+	rqra.getUnansweredQuestions(page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.length > 0) {
 			if (page === 0) {
 				questionList.innerHTML = "";
@@ -79,7 +79,7 @@ function displayUnanswered(page) {
 function displayAll(page) {
 	var rqra = new coreApi.Presenter();
 	var questionList = document.getElementById("questionList");
-	rqra.getAllQuestions(function (data) {
+	rqra.getAllQuestions(page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.length > 0) {
 			if (page === 0) {
 				questionList.innerHTML = "";

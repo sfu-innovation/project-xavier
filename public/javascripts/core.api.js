@@ -240,10 +240,10 @@ coreApi._construct = function () {
 
 		}
 
-		this.getAllQuestions = function (callback) {
+		this.getAllQuestions = function (page, callback) {
 			console.log("API - getAllQuestions");
 			$.ajax({
-				url:'/api/questions',
+				url:'/api/questions/page/' + page,
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -251,10 +251,10 @@ coreApi._construct = function () {
 			});
 		}
 		
-		this.getNewQuestions = function (callback) {
+		this.getNewQuestions = function (page, callback) {
 			console.log("API - getNewQuestions");
 			$.ajax({
-				url:'/api/questions/new',
+				url:'/api/questions/new/page/' + page,
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -262,10 +262,10 @@ coreApi._construct = function () {
 			});
 		}
 		
-		this.getUnansweredQuestions = function (callback) {
+		this.getUnansweredQuestions = function (page, callback) {
 			console.log("API - getUnansweredQuestions");
 			$.ajax({
-				url:'/api/questions/unanswered',
+				url:'/api/questions/unanswered/page/' + page,
 				type:'GET',
 				success:function (data) {
 					callback(data);

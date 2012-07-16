@@ -19,7 +19,7 @@ exports.questionRoute = function(appType, request, response) {
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
 			}
 		});
-		
+
 	}
 
 	//post a new question
@@ -84,9 +84,8 @@ exports.question = function(request, response) {
 }
 
 exports.questionsRoute = function(appType, request, response){
-
 	if (request.method === "GET") {
-		queryES.getAllQuestions( appType, function(result) {
+		queryES.getAllQuestions( appType, request.params.page, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -106,7 +105,7 @@ exports.questions = function(request, response) {
 
 exports.questionsUnansweredRoute = function(appType, request, response){
 	if (request.method === "GET") {
-		queryES.getAllUnansweredQuestions( appType, function(result) {
+		queryES.getAllUnansweredQuestions( appType, request.params.page, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -124,7 +123,7 @@ exports.questionsUnanswered = function(request, response){
 
 exports.questionsNewRoute = function(appType, request, response){
 	if (request.method === "GET") {
-		queryES.getAllNewQuestions( appType, function(result) {
+		queryES.getAllNewQuestions( appType, request.params.page, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -142,7 +141,7 @@ exports.questionsNew = function(request, response){
 
 exports.questionsAnsweredRoute = function(appType, request, response){
 	if (request.method === "GET") {
-		queryES.getAllRecentlyAnsweredQuestions( appType, function(result) {
+		queryES.getAllRecentlyAnsweredQuestions( appType, request.params.page,function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -162,7 +161,7 @@ exports.questionsByUserRoute = function(appType, request, response) {
 	var userId = request.params.uid;
 
 	if (request.method === "GET") {
-		queryES.getAllQuestionByUserID(userId, appType, function(result) {
+		queryES.getAllQuestionByUserID(userId, request.params.page, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, questions: result }));
@@ -269,7 +268,7 @@ exports.questionStatus = function(request, response) {
 
 exports.commentRoute = function(appType, request, response) {
 	var comment_id = request.params.uid;
-	
+
 	if (request.method === "GET") {
 		queryES.getComment(comment_id, appType, function(result) {
 			if (result) {
@@ -313,7 +312,7 @@ exports.commentRoute = function(appType, request, response) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});
-		
+
 	} else if (request.method === "DELETE") {
 		queryES.deleteComment(comment_id, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -329,7 +328,7 @@ exports.comment = function(request, response) {
 
 exports.commentsRoute = function(appType,request,response){
 	if (request.method === "GET") {
-		queryES.getAllComments(appType, function(result) {
+		queryES.getAllComments(appType, request.params.page,function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
@@ -350,9 +349,9 @@ exports.comments = function(request, response) {
 
 exports.commentsByUserRoute = function(appType, request, response) {
 	var userId = request.params.uid;
-	
+
 	if (request.method === "GET") {
-		queryES.getAllCommentByUserID(userId, appType, function(result) {
+		queryES.getAllCommentByUserID(userId, request.params.page, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
@@ -382,7 +381,7 @@ exports.commentVoteRoute = function(appType, request, response) {
 	var direction = request.params.dir;
 
 	console.log(direction);
-	
+
 	if (request.method === "POST") {
 		queryES.updateVote(commentId, direction, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -397,7 +396,7 @@ exports.commentVote = function(request, response) {
 
 exports.commentAnsweredRoute = function(appType, request, response) {
 	var commentId = request.params.uid;
-	
+
 	if (request.method === "PUT") {
 		queryES.updateIsAnswered(commentId, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -414,7 +413,7 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 	var question_id = request.params.uid;
 
 	if (request.method === "GET") {
-		queryES.getCommentByTarget_uuid(question_id, appType, function(result) {
+		queryES.getCommentByTarget_uuid(question_id, request.params.page, appType, function(result) {
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
@@ -432,14 +431,14 @@ exports.commentsByQuestion = function(request, response) {
 
 exports.searchRoute = function(appType, request, response) {
 	var query = request.body.query;
-	console.log('the query sent is: ' + query);
+
 
 	if (request.method === "POST") {
 
 		nlp(query, function(query){
 			console.log('query after nlp parsing is: ' + query);
 
-			queryES.searchAll(query, appType, function(result) {
+			queryES.searchAll(query, request.params.page, appType, function(result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, questions: result }));

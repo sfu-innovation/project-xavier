@@ -36,6 +36,7 @@ app.dynamicHelpers({
 
 
 // user
+app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses
 app.get('/api/user/:id', routesCommon.user); // get user by id
 app.post('/api/users/', routesCommon.userQuery); // get a list of users based on a custom query
 app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update users prefered name

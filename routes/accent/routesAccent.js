@@ -1,56 +1,56 @@
-var routesPresenter = require("./../rqra/routesPresenter.js");
+var routesRqra = require('./../rqra/routesRqra.js');
 
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
 
 exports.question = function(request, response) {
-	routesPresenter.questionRoute(1, request, response);
+	routesRqra.questionRoute(1, request, response);
 }
 
 exports.questions = function(request, response) {
-	routesPresenter.questionsRoute(1, request, response);
+	routesRqra.questionsRoute(1, request, response);
 }
 
 exports.questionsByUser = function(request, response) {
-	routesPresenter.questionsByUserRoute(1, request, response);
+	routesRqra.questionsByUserRoute(1, request, response);
 }
 
 exports.followQuestion = function(request, response) {
-	routesPresenter.followQuestionRoute(1, request, response);
+	routesRqra.followQuestionRoute(1, request, response);
 }
 
 exports.questionStatus = function(request, response) {
-	routesPresenter.questionStatusRoute(1, request, response);
+	routesRqra.questionStatusRoute(1, request, response);
 }
 
 
 
 exports.comment = function(request, response) {
-	routesPresenter.commentRoute(1, request, response);
+	routesRqra.commentRoute(1, request, response);
 }
 
 exports.comments = function(request, response) {
-	routesPresenter.commentsRoute(1, request, response);
+	routesRqra.commentsRoute(1, request, response);
 }
 
 exports.commentsByUser = function(request, response) {
-	routesPresenter.commentsByUserRoute(1, request, response);
+	routesRqra.commentsByUserRoute(1, request, response);
 }
 
 exports.commentVote = function(request, response) {
-	routesPresenter.commentVoteRoute(1, request, response);
+	routesRqra.commentVoteRoute(1, request, response);
 }
 
 exports.commentAnswered = function(request, response) {
-	routesPresenter.commentAnsweredRoute(1, request, response);
+	routesRqra.commentAnsweredRoute(1, request, response);
 }
 
 exports.commentsByQuestion = function(request, response) {
-	routesPresenter.commentsByQuestionRoute(1, request, response);
+	routesRqra.commentsByQuestionRoute(1, request, response);
 }
 
 exports.search = function(request, response) {
-	routesPresenter.searchRoute(1, request, response);
+	routesRqra.searchRoute(1, request, response);
 }
 
 exports.followQuestion = function(request, response) {
@@ -58,7 +58,7 @@ exports.followQuestion = function(request, response) {
 }
 
 exports.unfollowQuestion = function(request, response) {
-	routesPresenter.unfollowQuestionRoute(1, request, response);
+	routesRqra.unfollowQuestionRoute(1, request, response);
 }
 
 

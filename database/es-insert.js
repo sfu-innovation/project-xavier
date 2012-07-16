@@ -4,7 +4,7 @@ var es = require('com.izaakschroeder.elasticsearch')
 	,esMapping = require('./es-mapping');
 
 var importToEs = function(){
-    fs.readFile('qs.json', function (err, data) {
+    fs.readFile('database/qs.json', function (err, data) {
 		if (err) {
 			throw err;
         }else {

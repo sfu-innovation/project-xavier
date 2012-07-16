@@ -156,7 +156,7 @@ exports.userCourses = function(request, response) {
 	if (request.method === "GET") {
 
 		if(request.session && request.session.user){
-			User.getUserCourses({ user: request.session.user.uuid }, function(error, result) {
+			User.getUserCourses(request.session.user.uuid, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, courses: result }));

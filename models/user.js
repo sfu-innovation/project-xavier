@@ -57,8 +57,8 @@ exports.selectUsers = function(args, callback){
 }
 
 //Gets all the courses associated with a certain user
-exports.getUserCourses = function(args, callback){
-	CourseMember.findAll({where: args}).success(function(memberRows){
+exports.getUserCourses = function(userUUID, callback){
+	CourseMember.findAll({where: {user:userUUID}}).success(function(memberRows){
 		
 		//Build the list of course uuids
 		if(memberRows.length > 0){

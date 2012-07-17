@@ -450,6 +450,8 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
+			//TODO: sectionUuid
+			newQuestion.sectionUuid = request.body.sectionUuid;		//frontend
 
 			QueryES.addQuestion(newQuestion, appType, function(error, result) {
 				if (result) {

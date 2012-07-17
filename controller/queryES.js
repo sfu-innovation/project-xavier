@@ -123,6 +123,7 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 
 //get all question
 QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
+	var self = this;
 
 	var data = {
 		query: {
@@ -137,7 +138,34 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits); //only need the hits.hits part
+			var result = [];
+
+			async.forEach(data.hits.hits, function(questionObj, callback){
+
+				user.selectUser({"uuid":questionObj._source.user}, function(error, user){
+					if(user){
+						questionObj.user = user;
+						result.push(questionObj);
+					}
+					callback();
+				});
+			}, function(err){
+				//TODO: comments
+
+				async.forEach(result, function(resultObj, callback){
+						self.getCommentCount(resultObj._id, appType, function(total){
+
+							resultObj.totalComments = total;
+
+							callback();
+						})
+					}
+				, function(err){
+					callback(result);
+				});
+
+
+			});
 		}
 		else{
 			callback(undefined);
@@ -305,8 +333,8 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.created = data.timestamp;
 
 	//should check if adding to a section is really needed. rqra dont need it
-	args.section = data.sectionUuid;
-	args.resource = data._id;
+	args.section = data.sectionUuid;	//section uuid
+	args.resource = data._id;	//question uuid
 
 	delete data.sectionUuid;
 
@@ -491,16 +519,15 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	
 	var data = {
 		  query: {
-		    query_string: {
-		      "fields": [
-		        "target_uuid"
-		      ],
-		      "query": ptarget_uuid
-		    }
+			  term: {
+				  target_uuid: ptarget_uuid
+			  }
 		  },
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
+
+
 
 	switchIndex(appType);
 	switchMapping(1);
@@ -532,6 +559,28 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
 			callback(data.hits.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
+QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
+	var data = {
+		query: {
+			term: {
+				target_uuid: questionUuid
+			}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(data.hits){
+			callback(data.hits.total);
 		}
 		else{
 			callback(undefined);

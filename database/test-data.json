@@ -48,7 +48,7 @@
 			"type":1,
 			"userID":"aka87",
 			"email":"aka87@sfu.ca"
-		
+
 		}
 	],
 	"courses":[
@@ -89,74 +89,74 @@
 	],
 	"notificationlistener":[
 		 {
-		    "uuid":"B827346H7fvfvASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":0
+			"uuid":"B827346H7fvfvASDFFSDGQEE",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":0
 		 },
 		 {
-		    "uuid":"B827qwwqqza346H7ASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":1
+			"uuid":"B827qwwqqza346H7ASDFFSDGQEE",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":1
 		 },
 		 {
-		    "uuid":"B827346Hqw3rwref7ASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":2
+			"uuid":"B827346Hqw3rwref7ASDFFSDGQEE",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":2
 		 },
 		 {
-		    "uuid":"B827342qe2w6H7ASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD98A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":1
+			"uuid":"B827342qe2w6H7ASDFFSDGQEE",
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":1
 		 },
 		 {
-		    "uuid":"B827342qe2w6H7ASDFAFSDGQEE",
-		    "user":"A7S7F8GA7SD98A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":3
+			"uuid":"B827342qe2w6H7ASDFAFSDGQEE",
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":3
 		 },
 		 {
-		    "uuid":"B827346H7ASDFFdq2qwSDGQEE",
-		    "user":"A7S7F8GA7SD9ASD8DF89AG",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":1
+			"uuid":"B827346H7ASDFFdq2qwSDGQEE",
+			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":1
 		 },
 		 {
-		    "uuid":"B827346H7ASDFQGFdq2qwSDGQEE",
-		    "user":"A7S7F8GA7SD9ASD8DF89AG",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8AS87G",
-		    "event":3
+			"uuid":"B827346H7ASDFQGFdq2qwSDGQEE",
+			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8AS87G",
+			"event":3
 		 },
 		 {
-		    "uuid":"B8273ASDSAD46H7ewqx2ASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
-		    "event":0
+			"uuid":"B8273ASDSAD46H7ewqx2ASDFFSDGQEE",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
+			"event":0
 		 },
 		 {
-		    "uuid":"GFDGDGDFGFDGW313EREDQWD",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
-		    "event":1
+			"uuid":"GFDGDGDFGFDGW313EREDQWD",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
+			"event":1
 		 },
 		 {
-		    "uuid":"B827346ADSDSDGFH7ASDFFSDGQEE",
-		    "user":"A7S7F8GA7SD11A7SDF8ASD7G",
-		    "app":1,
-		    "target":"A7S7FHGA7SD11A7SDF8ASD7G",
-		    "event":2
+			"uuid":"B827346ADSDSDGFH7ASDFFSDGQEE",
+			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"app":1,
+			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
+			"event":2
 		 }
 	],
 	"usernotification":[
@@ -166,7 +166,7 @@
 		 "emailSent": false,
 		 "wait": 1
 		 },
-		 
+
 		{
 		 "listener": "B827qwwqqza346H7ASDFFSDGQEE",
 		 "description": "Yukai commented on a post \n \"Thats a dumb question\"\n",
@@ -180,34 +180,34 @@
 		 "wait": 2
 		 },
 		 {
-		 
+
 		 "listener": "B827342qe2w6H7ASDFAFSDGQEE",
 		  "description": "Alex posted a new document\n",
 		 "emailSent": false,
 		 "wait": 3
 		 },
 		 {
-		 
+
 		 "listener": "B827346H7ASDFFdq2qwSDGQEE",
 		 "description": "Alex commented on a post \n \"Guy's cmon...\"\n",
 		 "emailSent": false,
 		 "wait": 3
 		 },
 		 {
-		 
+
 		 "listener": "B827346H7ASDFQGFdq2qwSDGQEE",
 		  "description": "Alex posted a new document\n",
 		 "emailSent": false,
 		 "wait": 2
 		 }
-		
-	
+
+
 	],
 		"usernotificationsettings": [
 		{
 			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
 			"app" : 1,
-			
+
 			"notificationOnLike":1,
 			"notificationOnComment":3,
 			"notificationOnStar":2,
@@ -216,7 +216,7 @@
 		 {
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
 			"app" : 1,
-			
+
 			"notificationOnLike":2,
 			"notificationOnComment":1,
 			"notificationOnStar":3,
@@ -225,7 +225,7 @@
 		 {
 			"user":"A7S7F8GA7SD9ASD8DF89AG",
 			"app" : 1,
-			
+
 			"notificationOnLike":0,
 			"notificationOnComment":1,
 			"notificationOnStar":2,
@@ -314,7 +314,7 @@
 			"app": 2
 		}
 	],
-	
+
 	"sectionmaterials":[
 		{
 			"section": "A827346H7AFSSFG9",
@@ -329,56 +329,142 @@
 			"material": "A7S7FHGA7SD11A7SDF8ASD7G"
 		}
 	],
-    "resources":[
-    	{
-    		"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
-    		"course": "A827346H7ASDFG9",
-    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
-    		"title" : "Test resource title",
-    		"description" : "Test resource description",
-    		"resourceType" : 2,
-    		"fileType" : "mp4",
-    		"likes" : 2, 
-    		"url" : "http://www.google.com"
-    		
-    	},
-    	{
-    		"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
-    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
-    		"course": "A827346H7ASDFG9",
-    		"title" : "Test resource title1",
-    		"description" : "Test resource description",
-    		"resourceType" : 2,
-    		"fileType" : "mp4",
-    		"likes" : 2, 
-    		"url" : "http://www.google.com"
-    		
-    	},
-    	{
-    		"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
-    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
-    		"course": "A827346H7ASDFG9",
-    		"title" : "Test resource title2",
-    		"description" : "Test resource description",
-    		"resourceType" : 2,
-    		"fileType" : "mp4",
-    		"likes" : 2, 
-    		"url" : "http://www.google.com"
-    		
-    	},
-    	{
-    		"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
-    		"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
-    		"course": "A827346H7ASDFG9",
-    		"title" : "Test resource title2",
-    		"description" : "Test resource description",
-    		"resourceType" : 2,
-    		"fileType" : "mp4",
-    		"likes" : 2, 
-    		"url" : "http://www.google.com"
-    		
-    	}
-    ],
+	"resources":[
+		{
+			"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"title" : "Test resource title",
+			"description" : "Test resource description",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"path" : "/resources/articles/1.html",
+			"url" : "http://www.google.com"
+
+		},
+		{
+			"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "Test resource title1",
+			"description" : "Test resource description",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"path" : "/resources/articles/1.html",
+			"url" : "http://www.google.com"
+
+		},
+		{
+			"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "Test resource title2",
+			"description" : "Test resource description",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"path" : "/resources/articles/1.html",
+			"url" : "http://www.google.com"
+
+		},
+		{
+			"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "Test resource title2",
+			"description" : "Test resource description",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"path" : "/resources/articles/1.html",
+			"url" : "http://www.google.com"
+
+
+		},
+		{
+			"uuid" : "1",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "South Korea unveils 'scientific' whaling proposal",
+			"author" : "Richard Black",
+			"publishedDate": "4 July 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/science-environment-18716300.html",
+			"resourceType" : 2,
+			"fileType" : "html",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+
+		} ,
+		{
+			"uuid" : "2",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "How To Create an Abstract Geometric Mosaic Text Effect",
+			"author" : "Chris Spooner",
+			"publishedDate": "28 June 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/how-to-interview-effectively.html",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+
+		},
+		{
+			"uuid" : "3",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "How To Interview Effectively",
+			"author" : "Richard Black",
+			"publishedDate": "28 June 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/how-to-create-an-abstract-geometric-mosaic-text-effect.html",
+			"resourceType" : 2,
+			"fileType" : "html",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+
+		},
+		{
+			"uuid" : "4",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "How To Interview Effectively",
+			"author" : "Victor Lipman",
+			"publishedDate": "28 June 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/how-to-interview-effectively.html",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+
+		},
+		{
+			"uuid" : "5",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "How To Interview Effectively",
+			"author" : "Victor Lipman",
+			"publishedDate": "28 June 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/how-to-interview-effectively.html",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+
+		}
+
+	],
 	"tags": [
 		{
 			"uuid":"bbc0",

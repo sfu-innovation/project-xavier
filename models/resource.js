@@ -24,7 +24,13 @@ var Resource = exports.Resource = db.define('Resource', {
 	, resourceType: {type: Sequelize.INTEGER, allowNull: false}
 	, fileType: {type: Sequelize.STRING, allowNull: true}
 	, likes: {type: Sequelize.INTEGER, defaultValue: 0}
-	, url: {type: Sequelize.STRING, allowNull: false}
+	, url: {type: Sequelize.STRING, allowNull: false}   // this is the url of the original page (for engage)
+	, path: {type: Sequelize.STRING, allowNull: false}  // this is the file path of the html page we parsed (for engage)
+	, author : {type: Sequelize.STRING, allowNull: true} //this is the original author of the article (for engage)
+	, publishedDate : {type: Sequelize.STRING, allowNull: true} //this is the original published date of the article (for engage)
+	, excerpt : {type: Sequelize.TEXT, allowNull:true} // A short extract from a film, broadcast, or piece of music or writing. (for engage)
+
+
 });
 
 //Fetch the resource with the given UUID

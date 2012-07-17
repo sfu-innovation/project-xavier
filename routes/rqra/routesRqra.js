@@ -26,7 +26,7 @@ exports.questionRoute = function(appType, request, response) {
 	else if (request.method === "POST"){
 		//if not log in, cannot create a question
 		if(request.session && request.session.user){
-			console.log(request.body.question);
+			console.log(request.session.user);
 			//user, title, body, category
 			var newQuestion = new question(request.session.user.uuid
 			,request.body.question.title

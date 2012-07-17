@@ -209,6 +209,37 @@ coreApi._construct = function () {
 
 		}
 
+		this.likeResource = function(resource_uuid,callback){
+			console.log("API - likeResource");
+			$.ajax({
+
+				url:'/api/resource/'+ resource_uuid+'/like',
+				type:'POST',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+		this.dislikeResource = function(resource_uuid,callback){
+			console.log("API - dislikeResource");
+			$.ajax({
+
+				url:'/api/resource/'+ resource_uuid+'/like',
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+
 		this.starResource = function(resource_uuid,callback){
 			console.log("API - starResource");
 			$.ajax({
@@ -238,6 +269,23 @@ coreApi._construct = function () {
 			})
 
 		}
+
+		this.getStarredResources = function(callback){
+			console.log("API - unstarResource");
+			$.ajax({
+
+				url:'/api/resources/starred',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+
 
 
 

@@ -46,7 +46,7 @@ exports.createResource = function(request, response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -72,7 +72,7 @@ exports.starredResources = function(request, response){
 			Star.getStarredResources(request.session.user.uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, star: result }));
+					response.end(JSON.stringify({ errorcode: 0, resources: result }));
 				}
 				else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -81,7 +81,7 @@ exports.starredResources = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -102,7 +102,7 @@ exports.starResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -125,7 +125,7 @@ exports.unstarResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -133,9 +133,10 @@ exports.unstarResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.likeResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			Like.likeResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Like.likeResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -146,7 +147,7 @@ exports.likeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -154,9 +155,10 @@ exports.likeResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.unlikeResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'DELETE'){
 		if(request.session && request.session.user){
-			Like.unlikeResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Like.unlikeResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -167,12 +169,14 @@ exports.unlikeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
 }
 
+
+//don't think this is needed.
 exports.getLikes = function(request, response){
 	if(request.method === 'GET'){
 		Resource.getLikesByUUID(request.params.uuid, function(error, resourceLikes){

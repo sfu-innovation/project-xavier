@@ -1,318 +1,231 @@
-/* Header Panel */
-
 body {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	display: -moz-box;
-	-moz-box-orient: vertical;
-	display: box;
-	box-orient: vertical;
-	padding: 0px;
-	margin: 5px;
-	
-	font-family: Comic Sans, Comic Sans MS, cursive;
-}
-
-div#logoContainer {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-}
-
-div#logo {
-	margin: 5px;
-}
-
-div#pageContainer {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	display: -moz-box;
-	-moz-box-orient: vertical;
-	display: box;
-	box-orient: vertical;
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	box-flex: 1;
-}
-
-ul.toolbar > li:hover {
-	background: #AAAAFF;
-}
-
-div#mainMenu {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-}
-
-div.mainMenuButton { 
-	margin: 2px;
-	padding: 5px;
-	width: 100px;
-	cursor: pointer;
-}
-
-div.mainMenuButtonText {
-	background: #AAAAAA;
-	text-align: center;
-	box-shadow: 2px 2px 5px #555555;
-}
-
-div.mainMenuButtonText:hover { 
-	background: #AAAAFF;
-}
-
-div.dropMenu {
-	position: absolute;
-	visibility: hidden;
 	margin: 0px;
-	padding: 0px;
-	border: 1px solid black;
-	background: #AAAAAA;
+	font-family:"Arial",Georgia,Sans;
+	background: #ffffff;
+	color: #4d4d4d;
 }
 
-div#mainMenuSpace {
+a {
+	color: #1b88d0;
+}
+
+div#header {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	padding: 20px;
+	padding-top: 10px;
+	padding-bottom: 6px;
+	border-bottom: 2px solid #1b88d0;
+}
+
+div#askQuestion {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	margin: 25px;
+	border-bottom: 1px solid black;
+}
+
+div#profile {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#profileText {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+	text-align: right;
+	margin-top: 8px;
+}
+
+div#profileName {
+	font-weight: bold;
+}
+
+div#profile img {
+	width: 64px;
+	height: 64px;
+	margin-left: 10px;
+	border: 1px solid black;
+}
+
+div#bodyContainer {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#timeline {
+	width: 100px;
+}
+
+div#content {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	margin-right: 25px;
+}
+
+div#courseList {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	margin-bottom: 35px;
+}
+
+div.spacer {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
 }
 
-div#askButton {
-	margin: 2px;
-	padding: 5px;
-	width: 100px;
-	text-align: center;
+div.courseButton {
+	color: white;
+	background: #394161;
+	padding: 6px;
+	border-bottom: 4px solid white;
 	cursor: pointer;
 }
 
-/* Drop down menus */
-div#browserButtonMenu {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-	padding: 10px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	float: left;
-	position: relative;
-	top: 5px;
-	left: 0px;
-	width: 350px;
-	border: 0px solid #666666;
-	box-shadow: 2px 2px 5px #555555;
+div.courseButtonSelected {
+	color: white;
+	background: #1b88d0;
+	padding: 6px;
+	border-bottom: 4px solid #4d4d4d;
+	cursor: pointer;
 }
 
-div#browserButtonMenu h3 {
-	margin-top: 0px;
-	margin-bottom: 0px;
-}
-
-div#menuTopics {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	display: -moz-box;
-	-moz-box-orient: vertical;
-	display: box;
-	box-orient: vertical;
-}
-
-div#menuTopics h3, div#menuCourses h3 {
-	text-align: left;
-}
-
-div#menuTopics div, div#menuCourses div {
-	margin: 3px;
-}
-
-div#menuTopics div.table {
-	display: -webkit-box; 
-	-webkit-box-orient: horizontal;
-	display: -moz-box; 
-	-moz-box-orient: horizontal;
-	display: box; 
-	box-orient: horizontal;
-}
-
-div#browserButtonMenu div.column1 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	display: -moz-box;
-	-moz-box-orient: vertical;
-	display: box;
-	box-orient: vertical;
-}
-
-div#browserButtonMenu div.column2 {
-	display: -webkit-box; 
-	-webkit-box-orient: vertical;
-	display: -moz-box; 
-	-moz-box-orient: vertical;
-	display: box; 
-	box-orient: vertical;
-}
-
-div#menuCourses {
-	display: -webkit-box; 
-	-webkit-box-orient: vertical;
-	display: -moz-box; 
-	-moz-box-orient: vertical;
-	display: box; 
-	box-orient: vertical;
-}
-
-div#searchButtonMenu {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-	float: left;
-	position: relative;
-	top: 5px;
-	left: 0px;
-	border: 0px solid #666666;
-	box-shadow: 2px 2px 5px #555555;
-}
-
-div#searchButtonMenu div {
-	box-shadow: 0px 0px 0px #000000;
-}
-
-/* Body */
-div#bodyContainer {
-	display: -webkit-box; 
-	-webkit-box-orient: horizontal;
-	display: -moz-box; 
-	-moz-box-orient: horizontal;
-	display: box; 
-	box-orient: horizontal;
-}
-
-/* Side Panel */
-div#infoPanel {
-	width: 250px;
-	padding: 10px;
-	margin: 3px;
-	background: #DDDDDD;
-	box-shadow: 2px 2px 5px #777777;
-}
-
-div#profileImageContainer {
-	background: #222222;
-	box-shadow: 2px 2px 5px #555555;
-}
-
-img#profileImage {
-	display: block;
-	margin-left: auto;
-    margin-right: auto;
-	height: 150px;
+h1#courseTitle {
+	font-weight: normal;
+	font-size: 0.8em;
+	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-span.profileInfo {
-	font-weight:bold;
+span.inserted {
+	text-decoration:underline;
 }
 
-div#profile h2 {
-	margin-top: 0px;
+h2#sectionTitle {
+	font-weight: bold;
+	font-size: 2em;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
-ol {
-	padding: 0px;
-	list-style: none;
+span#sectionName {
+	font-weight: normal;
 }
 
-ol#recentlyAddedList > li, ol#recentlyAnsweredList > li {
-	height: 64px;
-	padding: 5px;
-	background: #AAAAAA;
-	margin: 5px;
-	box-shadow: 2px 2px 5px #555555;
-	cursor: pointer;
-}
-
-ol#recentlyAddedList > li:hover, ol#recentlyAnsweredList > li:hover {
-	height: 64px;
-	padding: 5px;
-	background: #AAAAFF;
-}
-
-div.listItemImage {
-	position: relative;
-	float: left;
-	height: 64px;
-	width: 64px;
-}
-
-div.listItemText {
-	height: 64px;
-	margin-left: 80px;
-	padding-left: 10px;
-}
-
-/* Content Panel */
-div#contentPanel {
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	box-flex: 1;
-	margin: 3px;
-}
-
-div#contentMenu {
-	display: -webkit-box; 
+div#questionHeader {
+	display: -webkit-box;
 	-webkit-box-orient: horizontal;
-	display: -moz-box; 
+	display: -moz-box;
 	-moz-box-orient: horizontal;
-	display: box; 
+	display: box;
 	box-orient: horizontal;
 }
 
-div.contentMenuButton { 
-	margin: 2px;
-	margin-left: 5px;
-	padding: 0px;
-	width: 100px;
-	text-align: center;
-	background: #AAAAAA;
-	box-shadow: 2px 2px 5px #555555;
-	cursor: pointer;
+div#questionCount {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	font-size: 2em;
+	font-weight: bold;
+	margin-top: 70px;
+	margin-right: 10px;
 }
 
-div.contentMenuButton:hover { 
-	background: #AAAAFF;
+div#questionCountNumber {
+	margin-right: 5px;
 }
 
-div#questionList {
-	display: -webkit-box; 
+div#questionCountText {
+	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	display: -moz-box; 
+	display: -moz-box;
 	-moz-box-orient: vertical;
-	display: box; 
+	display: box;
 	box-orient: vertical;
+	font-size: 0.5em;
+	font-weight: normal;
+}
+
+div#questionTabs {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#questionTabs div.tab {
+	margin: 5px;
+	font-size: 0.8em;
+}
+
+div.questionPromoted {
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #ffe450;
+	width: 700px;
 }
 
 div.question {
-	box-shadow: 2px 2px 5px #555555;
-	background: #AAAAAA;
-	padding: 5px;
-	margin: 2px;
-	margin-top: 8px;
-	margin-bottom: 8px;
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
-div#moreQuestionsButton {
-	margin-left: auto;
-	margin-right: auto;
-	width: 200px;
+div.questionText {
+	margin: 5px;
+}
+
+div.questionData {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div.questionData div {
+	margin: 5px;
+	padding: 2px;
+}
+
+div.profResponsesRecent {
+	background: #ffe450;
+}
+
+div#pageNumber {
+	padding-bottom: 20px;
+}
+
+div#pageNumber img {
+	width: 12px;
 }

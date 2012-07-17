@@ -693,8 +693,14 @@ exports.commentRoute = function(appType, request, response) {
 
 	} else if (request.method === "DELETE") {
 		QueryES.deleteComment(comment_id, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, result: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, error: "Couldn't delete resource!"}));	
+			}
 		});
 	}
 }

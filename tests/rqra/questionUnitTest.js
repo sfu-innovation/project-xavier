@@ -3,7 +3,6 @@ var express   = require('express');
 var fs        = require('fs');
 var config    = require('./../../config.json');
 var question  = require('./../../models/question.js');
-var comment   = require('./../../models/comment.js');
 var server    = require('./../../app-rqra.js');
 var queries   = require(__dirname + '/../../database/db-queries');
 var Direction = { Down: 0, Up: 1 };
@@ -11,7 +10,7 @@ var dataFile  = 'tests/engage/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
 // question variables
-var questionUid = "SomeUid";
+var questionID = "pJfznhheQuOicWWAjx7F00";
 var userUid = "SomeUserUid";
 var questionTitle = "SomeTitle";
 var questionBody = "SomeQuestion";
@@ -95,7 +94,6 @@ module.exports = {
 		*/
 		// get the details of the question created
 		getQuestion: function(test) {	
-			var questionID = "pJfznhheQuOicWWAjx7F00";
 			this.requestOptions.method = "GET";
 			this.requestOptions.path   = "/api/question/" + questionID;
 
@@ -113,7 +111,6 @@ module.exports = {
 		
 		// update the question
 		updateQuestion: function(test) {
-			var questionID = "pJfznhheQuOicWWAjx7F00";
 			this.requestOptions.method = "PUT";
 			this.requestOptions.path   = "/api/question/" + questionID;
 
@@ -137,7 +134,6 @@ module.exports = {
 		
 		// delete a question
 		deleteQuestion: function(test) {
-			var questionID = "pJfznhheQuOicWWAjx7F00";
 			this.requestOptions.method = "DELETE";
 			this.requestOptions.path   = "/api/question/" + questionID;
 			

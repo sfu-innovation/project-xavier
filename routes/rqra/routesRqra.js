@@ -280,7 +280,6 @@ exports.commentRoute = function(appType, request, response) {
 			}
 		});
 	} else if (request.method === "POST"){
-
 		if(request.session && request.session.user){
 			//target_uuid, user, objectType, title, body
 			var newComment = new comment(request.body.comment.target_uuid
@@ -309,14 +308,27 @@ exports.commentRoute = function(appType, request, response) {
 		var commentTitle = request.body.title;
 		var commentBody = request.body.body;
 		queryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Couldn't update comment" }));
+			}
+
 		});
 
 	} else if (request.method === "DELETE") {
 		queryES.deleteComment(comment_id, appType, function(result) {
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 0 }));
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, result: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, error: "Couldn't delete comment" }));
+			}
 		});
 	}
 }

@@ -296,6 +296,16 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 	});
 }
 
+/*
+    Gets list of all of the resources in particular course.
+    
+	args = {
+		course : UUID of course
+	}
+	
+	Returns the of list of resource
+*/
+
 OrganizationAction.prototype.getResourcesByCourseUUID = function( args, callback ){
 	
 	var async = require('async');	

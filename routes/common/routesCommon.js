@@ -243,6 +243,26 @@ exports.courseInstructor = function(request, response){
 	}
 }
 
+exports.courseResources = function(request, response){
+	var course_id = request.params.id;
+	if(request.method === "GET"){
+		OrganizationAction.getResourcesByCourseUUID({course:course_id}, function(error, result){
+			if(result){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, instructor: result }));
+			}
+			else if(error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Instructor not found" }));
+			}
+		})
+	}
+}
+
 //section materials
 exports.addResourceToSection = function(request, response){
 	if(request.method === "POST"){

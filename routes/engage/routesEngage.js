@@ -399,7 +399,7 @@ exports.index = function(req, res){
 
 exports.starred = function (req, res) {
 	if (req.session && req.session.user) {
-		console.log("???");
+
 		res.render("engage/starred", { 	title: "SFU ENGAGE",
 			user :  userobject,
 			status : "logged in" })
@@ -407,7 +407,7 @@ exports.starred = function (req, res) {
 
 
 	else {
-		console.log("!!!");
+
 		res.redirect("/login");
 	}
 

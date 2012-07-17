@@ -73,8 +73,8 @@ app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resourc
 app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource
 
 //Like resources
-app.post('/api/like', routesEngage.likeResource);		//like a resource
-app.delete('/api/like', routesEngage.unlikeResource);	//unlike a resource
+app.post('/api/resource/:id/like', routesEngage.likeResource);		//like a resource
+app.delete('/api/resource/:id/like', routesEngage.unlikeResource);	//unlike a resource
 
 //userprofile
 

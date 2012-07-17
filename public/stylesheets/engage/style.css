@@ -1,6 +1,6 @@
 div#header{
 	background-color: rgba(0,0,0,0.1);
-	padding-bottom: 5px;
+
 }
 div#nav li{
 	background-color: rgba(0,0,0,0);
@@ -44,6 +44,7 @@ li#courselist a{
 
 div#userbox{
 	text-align : right;
+	padding-bottom: 5px;
 }
 
 
@@ -117,3 +118,77 @@ div.post_details span.coursename{
 div.post_details span.coursename:hover{
 	cursor: pointer;
 	}
+	
+div.likescomments{
+	text-align: right;
+	padding-top: 10px;
+}
+div.likescomments span{
+	font-size: 12px;
+	padding-left: 10px;
+	vertical-align: text-top;
+	
+	}
+	
+div.likescomments span.typicn.star{
+	color:white;
+	-webkit-text-stroke: 1px black;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+div.likescomments span.typicn.star:hover{
+	color: yellow;
+	
+}
+	
+div#article_container{
+	padding-top: 2em;
+}
+div#article_container #article{
+
+	padding: 1em 3em 4em;
+	font-size: 14px;
+	word-spacing: -0.05em;
+	line-height: 1.3em;
+
+}
+#article_options{
+	padding: 0em 3em 0em;
+	}
+	
+#article_options #back{
+	font-weight: bold;
+	}
+	
+#article_options #options{
+	margin-left:10px;
+	
+}
+#article_options #options a{	
+	margin-left: 10px;
+	margin-right: 10px;
+	}
+	
+#article_options span#course{
+	float: right;
+}	
+div#article_container #article h1{
+	font-size: 24px;
+}
+
+div#article_container #article h2{
+	font-size: 20px;
+}
+
+
+div#article_container #comments{
+
+	}
+	
+div#footer{
+	margin-top: 20px;
+	padding-top:10px;
+	background-color: rgba(0,0,0,0.1);
+	text-align: center;
+}

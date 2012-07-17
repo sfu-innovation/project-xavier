@@ -197,7 +197,9 @@ var article_1 = {
 	host : "http://www.bbc.co.uk",
 	path : "/resources/articles/science-environment-18716300.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "May 6 2012,  12:30 PM PST"
+	uploaded_on : "May 6 2012,  12:30 PM PST",
+	course: "CMPT 120",
+	week : "1"
 }
 
 var article_2 = {
@@ -209,7 +211,9 @@ var article_2 = {
 	host : "http://blog.spoongraphics.co.uk",
 	path : "/resources/articles/how-to-create-an-abstract-geometric-mosaic-text-effect.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "Jun 6 2012,  12:30 PM PST"
+	uploaded_on : "July 16 2012,  12:30 AM PST",
+	course: "CMPT 120",
+	week : "4"
 }
 
 var article_3 = {
@@ -221,7 +225,9 @@ var article_3 = {
 	host : "http://www.bbc.co.uk",
 	path : "/resources/articles/science-environment-18716300.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST"
+	uploaded_on : "July 12 2012,  12:30 PM PST",
+	course: "IAT 200",
+	week : "4"
 }
 
 
@@ -234,7 +240,9 @@ var article_4 = {
 	host : "http://www.bbc.co.uk",
 	path : "/resources/articles/science-environment-18716300.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST"
+	uploaded_on : "July 12 2012,  12:30 PM PST",
+	course: "BUS 100",
+	week : "1"
 }
 
 var article_5 = {
@@ -247,8 +255,8 @@ var article_5 = {
 	path : "/resources/articles/how-to-interview-effectively.html",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 15 2012,  12:30 PM PST",
-	course: "cmpt120",
-	week : "3"
+	course: "IAT 200",
+	week : "2"
 
 }
 
@@ -261,7 +269,7 @@ var userobject = {
 	courses : {
 		"CMPT 120" : [article_1, article_2],
 		"BUS 100" : [article_4],
-		"IAT 200" : [article_3, article_5, article_1]
+		"IAT 200" : [article_3, article_5]
 	}
 }
 

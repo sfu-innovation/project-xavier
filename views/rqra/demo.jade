@@ -40,19 +40,13 @@ body
 						span#sectionName Perception &amp; Pattern Recognition
 					
 					div#questionTabs
-						div.tab
-							a(href="") Latest Questions
-						div.tab
-							a(href="") Popular Questions
-						div.tab
-							a(href="") Instructor Answered
-						div.tab
-							a(href="") Most Viewed
-						div.tab
-							a(href="") Unanswered Questions
-						div.tab
-							a(href="") My Questions
-			
+						div.pageNumberButton(onclick="displayNew(0)") Latest Questions
+						div.pageNumberButton Popular Questions
+						div.pageNumberButton Instructor Answered
+						div.pageNumberButton Most Viewed
+						div.pageNumberButton(onclick="displayUnanswered(0)") Unanswered Questions
+						div.pageNumberButton My Questions
+							
 			div#questionList
 				div.questionPromoted
 					div.questionText Kiam estas la finalo ekzameno?
@@ -82,16 +76,18 @@ body
 							span  by 
 							span.inserted Alexino
 				
-				div#pageNumber
-					img(src="images/rqra/prev.png", alt="previous")
-					a(href="") 1
-					a(href="") 2
-					a(href="") 3
-					a(href="") 4
-					img(src="images/rqra/next.png", alt="next")
+			div#pageNumber
+				img(src="images/rqra/prev.png", alt="previous")
+				div.pageNumberButton(onclick="displayNew(0)") 1
+				div.pageNumberButton(onclick="displayNew(1)") 2
+				div.pageNumberButton(onclick="displayNew(2)") 3
+				div.pageNumberButton(onclick="displayNew(3)") 4
+				img(src="images/rqra/next.png", alt="next")
 		
 		div#questionCount
 			div#questionCountNumber 25
 			div#questionCountText
 				div#questionCountText1 Questions
 				div#questionCountText2 for this Week
+				
+		script(type="text/javascript", src="javascripts/rqra/questionTabs.js")

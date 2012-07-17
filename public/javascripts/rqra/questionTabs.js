@@ -1,102 +1,38 @@
-// keeps track of the current page
-var display = displayAll;
-var lastPage = 0;
+var rqra = new coreApi.Presenter();
+var display = displayNew;
 
-// resets the page tracking
-function getFirstAsked() {
-	lastPage = 0;
-	displayAsked(lastPage);
-	display = displayAsked;
+function formatQuestion(question) {
+	return "<div class='question'>"
+			+ "<div id='questionText'>" + question._source.body + "</div>"
+			+ "<div class='questionData'>"
+				+ "<div class='profResponsesRecent'>5 <img src='images/rqra/prof.png' alt='Instructor Responses'/></div>"
+				+ "<div class='replies'>5 <img src='images/rqra/reply.png' alt='Replies'/></div>"
+				+ "<div class='views'>5 <img src='images/rqra/view.png' alt='Views'/></div>"
+				+ "<div>Asked "
+					+ "<span class='inserted'>" + new Date(question._source.timestamp).toLocaleString() + "</span> "
+					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
+			+ "</div>";
 }
 
-function getFirstNew() {
-	lastPage = 0;
-	displayNew(lastPage);
-	display = displayNew;
-}
-
-function getFirstUnanswered() {
-	lastPage = 0;
-	displayUnanswered(lastPage);
-	display = displayUnanswered;
-}
-
-function getFirstAll() {
-	lastPage = 0;
-	displayAll(lastPage);
-	display = displayAll;
-}
-
-// appends data to the list
-function displayAsked(page) {
-
+function callDisplay(page, displayCallback) {
+	var questionList = document.getElementById("questionList");
+	displayCallback(page, function (data) {
+		if (data && data.errorcode === 0 && data.questions.length > 0) {
+			questionList.innerHTML = "";
+			$.each(data.questions, function (index, item) {
+				questionList.innerHTML += formatQuestion(item);
+			});
+		}
+	});
 }
 
 function displayNew(page) {
-	var rqra = new coreApi.Presenter();
-	var questionList = document.getElementById("questionList");
-	rqra.getNewQuestions(page, function (data) {
-		if (data && data.errorcode === 0 && data.questions.length > 0) {
-			if (page === 0) {
-				questionList.innerHTML = "";
-			}
-			$.each(data.questions, function (index, item) {
-				questionList.innerHTML += "<div class='question'>"
-					+ "<h2>" + item._source.title + "</h2>"
-					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
-					+ "<div>AskedBy: " + item._source.user + "</div>"
-					+ "<p>" + item._source.body  + "</p>"
-					+ "</div>";
-			});
-		}
-	});
+	callDisplay(page, rqra.getNewQuestions);
 }
 
 function displayUnanswered(page) {
-	var rqra = new coreApi.Presenter();
-	var questionList = document.getElementById("questionList");
-	rqra.getUnansweredQuestions(page, function (data) {
-		if (data && data.errorcode === 0 && data.questions.length > 0) {
-			if (page === 0) {
-				questionList.innerHTML = "";
-			}
-			$.each(data.questions, function (index, item) {
-				questionList.innerHTML += "<div class='question'>"
-					+ "<h2>" + item._source.title + "</h2>"
-					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
-					+ "<div>AskedBy: " + item._source.user + "</div>"
-					+ "<p>" + item._source.body  + "</p>"
-					+ "</div>";
-			});
-		}
-	});
-}
-
-function displayAll(page) {
-	var rqra = new coreApi.Presenter();
-	var questionList = document.getElementById("questionList");
-	rqra.getAllQuestions(page, function (data) {
-		if (data && data.errorcode === 0 && data.questions.length > 0) {
-			if (page === 0) {
-				questionList.innerHTML = "";
-			}
-			$.each(data.questions, function (index, item) {
-				questionList.innerHTML += "<div class='question'>"
-					+ "<h2>" + item._source.title + "</h2>"
-					+ "<div>Time: " + new Date(item._source.timestamp).toLocaleString() + "</div>"
-					+ "<div>AskedBy: " + item._source.user + "</div>"
-					+ "<p>" + item._source.body  + "</p>"
-					+ "</div>";
-			});
-		}
-	});
-}
-
-// gets more of the current page
-function displayMore() {
-	lastPage++;
-	display(lastPage);
+	callDisplay(page, rqra.getUnansweredQuestions);
 }
 
 // displays asked questions on page load
-displayAll(0);
+displayNew(0);

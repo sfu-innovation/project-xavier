@@ -67,7 +67,8 @@ app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 //Star resources
-app.get('/api/star', routesEngage.starredResources);	//get all starred resources
+app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
 app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resource
 app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource
 

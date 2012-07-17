@@ -41,7 +41,7 @@ exports.createResource = function(request, response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -67,7 +67,7 @@ exports.starredResources = function(request, response){
 			Star.getStarredResources(request.session.user.uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, star: result }));
+					response.end(JSON.stringify({ errorcode: 0, resources: result }));
 				}
 				else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -76,7 +76,7 @@ exports.starredResources = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -97,7 +97,7 @@ exports.starResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -120,7 +120,7 @@ exports.unstarResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -141,7 +141,7 @@ exports.likeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -162,7 +162,7 @@ exports.unlikeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}

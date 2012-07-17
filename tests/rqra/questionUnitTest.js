@@ -5,12 +5,13 @@ var config    = require('./../../config.json');
 var question  = require('./../../models/question.js');
 var server    = require('./../../app-rqra.js');
 var queries   = require(__dirname + '/../../database/db-queries');
+var esQuery   = require(__dirname + '/../../database/es-query');
 var Direction = { Down: 0, Up: 1 };
-var dataFile  = 'tests/engage/testing-data.json';
+var dataFile  = 'tests/rqra/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
 // question variables
-var questionID = "pJfznhheQuOicWWAjx7F00";
+var questionID = "pJfzndwdadddQuOicWWAjx7F05";
 var userUid = "SomeUserUid";
 var questionTitle = "SomeTitle";
 var questionBody = "SomeQuestion";
@@ -30,32 +31,33 @@ module.exports = {
 					"content-type": "application/json"
 				}
 			}
+			esQuery('database/qs.json', function(result){
+				queries.dropDB(config.mysqlDatabase['db-name'], function(){
+					queries.createDB(config.mysqlDatabase["db-name"], function(){
 
-			queries.dropDB(config.mysqlDatabase['db-name'], function(){
-				queries.createDB(config.mysqlDatabase["db-name"], function(){
-				
-					queries.insertData(
-						dataFile,
-						config.mysqlDatabase["db-name"],
-						config.mysqlDatabase["user"],
-						config.mysqlDatabase["password"],
-						config.mysqlDatabase["host"],
-						function(){
-							that.user     = testData.users[0];
-							that.server   = express.createServer();
-							that.server.use(function(req, res, next) {
-								req.session = {
-									user: that.user
-								}
-								next();
-							})
-							that.server.use(server);
-							that.server.listen(function() {
-								that.requestOptions.port = this.address().port;
-								callback();
-							});
-						}
-					);
+						queries.insertData(
+							dataFile,
+							config.mysqlDatabase["db-name"],
+							config.mysqlDatabase["user"],
+							config.mysqlDatabase["password"],
+							config.mysqlDatabase["host"],
+							function(){
+								that.user     = testData.users[0];
+								that.server   = express.createServer();
+								that.server.use(function(req, res, next) {
+									req.session = {
+										user: that.user
+									}
+									next();
+								})
+								that.server.use(server);
+								that.server.listen(function() {
+									that.requestOptions.port = this.address().port;
+									callback();
+								});
+							}
+						);
+					});
 				});
 			});
 		},
@@ -102,6 +104,7 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
+					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();

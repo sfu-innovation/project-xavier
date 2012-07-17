@@ -665,7 +665,6 @@ exports.commentRoute = function(appType, request, response) {
 			var newComment = new comment(request.body.comment.target_uuid
 				,request.session.user.uuid
 				,request.body.comment.objectType
-				,request.body.comment.title
 				,request.body.comment.body);
 
 			QueryES.addComment(newComment, appType, function(result) {
@@ -685,9 +684,9 @@ exports.commentRoute = function(appType, request, response) {
 
 
 	} else if (request.method === "PUT") {
-		var commentTitle = request.body.title;
+
 		var commentBody = request.body.body;
-		QueryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
+		QueryES.updateComment(comment_id, commentBody, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));
 		});

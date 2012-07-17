@@ -396,22 +396,18 @@ coreApi._construct = function () {
 		}
 
 
-		this.createComment = function (target_id, comment_title, comment_body, callback) {
+		this.createComment = function (target_id, comment_body, callback) {
 			console.log("API - createComment");
 
 			var body = {};
 			var comment = {};
 
 			comment.body = comment_body;
-//			comment.status = 'unanswered';
-			comment.title = comment_title;
 
 			//TODO:need to fix this to dynamic input
 			comment.objectType = 'question';
 
 			comment.target_uuid = target_id;
-//			comment.timestamp = '2008-10-21';
-//			comment.followup = [];
 			body.comment = comment;
 
 
@@ -445,7 +441,6 @@ coreApi._construct = function () {
 		this.updateCommentById = function (id, commentTitle, commentBody, callback) {
 			console.log("API - updateCommentById");
 			var body = {};
-			body.title = commentTitle;
 			body.body = commentBody;
 			$.ajax({
 				url:'/api/comment/' + id,

@@ -329,10 +329,10 @@ $(document).ready(function () {
 
 	$('#createComment').click(function (event) {
 		var target_id = $('#new_comment_target_id').val();
-		var title = $('#new_comment_title').val();
+
 		var body = $('#new_comment_body').val();
-		if (target_id && title && body) {
-			rqra.createComment(target_id, title, body, function (data) {
+		if (target_id && body) {
+			rqra.createComment(target_id, body, function (data) {
 				if (data) {
 					if (data.errorcode === 0) {
 						alert('OK OK REFRESH NOW');

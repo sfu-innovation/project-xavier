@@ -18,10 +18,6 @@ div#nav li{
 	padding-right: 20px;
 	
 }
-div#nav ul{
-	display: inline-block;
-	width: 100%
-	}
 
 div#nav li a{
 	color: black !important;
@@ -47,16 +43,25 @@ li#courselist a{
 	padding-right:0;
 }
 
-ul#course-nav{
-	list-style: none;
-}
+
 ul#mobile-nav {
 	list-style: none;
 	margin: 0;
+	margin-bottom: 10px;
+	text-align: center;
 }
 
 ul#mobile-nav li{
 	display: inline;
+}
+
+ul#mobile-nav .button{
+	padding: 8px;
+}
+
+ul#mobile-nav li.course{
+	display: inline;
+	width: 120px;
 }
 #header .nav-bar{
 	margin-top: 5px !important;
@@ -87,6 +92,8 @@ div#contents div.columns{
 	padding-right: 5px;
 	margin-top: 6px;
 }
+
+
 div#contents div.columns:last-child{
 	float: left !important;
 	}
@@ -95,16 +102,38 @@ div.innercontents{
 	margin: 5px;
 	padding: 10px;
 	background-color: rgba(166,165,165,0.1) ;
+	height: 380px;
 }
 
+div.innercontents form textarea{
+	height: 229px;
+	resize: none; 
+	}
+
+div.innercontents#submitnew{
+	height: auto;
+}
 
 div.innercontents h5{
-	style : min-height: 36px;
+	height: 36px;
+	width:100%;
+	overflow: hidden;
+
 	}
 div.innercontents img{
 	height: 160px;
 	}
 
+
+div.post_details {
+	white-space: nowrap;
+	overflow: hidden;
+	
+}
+div.innercontents .post_time{
+	white-space: nowrap;
+	overflow: hidden;
+	}
 div.innercontents #prof{
 	background-color: #2BA6CB;
 	border-radius: 10px;
@@ -131,22 +160,30 @@ div.articlepreview{
 div.articlepreview p{
 	font-size: 12px !important;
 	line-height: 1.2 !important;
+	text-overflow: ellipsis
 }
+
+
 
 div.selectcourse{
 	display: inline;
 	float: left;
-	margin-left: 10px;
 	}
+	
+	
 #sumbitrow{
 	display: inline-block;
 	width: 100%;
+
+}
+
+#sumbitrow .small.button{
+	width : 54px;
 }
 div.submit{
 	display: inline;
 	position: relative;
 	float: right;
-	margin-right: 10px;
 	margin-top: 2px;
 }
 
@@ -187,6 +224,15 @@ div.likescomments span.typicn.star:hover{
 	color: yellow;
 	
 }
+div.likescomments span.typicn.starred{
+	color: yellow;
+}
+
+div.likescomments span.typicn.starred:hover{
+	color: white;
+}
+
+
 	
 div#article_container{
 	padding-top: 2em;

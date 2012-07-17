@@ -242,6 +242,7 @@ var article_1 = {
 	week : "1",
 	likes: 5,
 	description : "please read this for the midterm.",
+	starred : 0
 
 }
 
@@ -260,6 +261,7 @@ var article_2 = {
 	week : "4",
 	likes: 2,
 	description : "what?!",
+	starred : 1
 
 }
 
@@ -278,6 +280,7 @@ var article_3 = {
 	week : "4",
 	likes: 10,
 	description : "Check out this article",
+	starred : 0
 }
 
 
@@ -296,6 +299,7 @@ var article_4 = {
 	week : "1",
 	likes: 7,
 	description : "wow cool",
+	starred : 0
 }
 
 var article_5 = {
@@ -313,6 +317,7 @@ var article_5 = {
 	week : "2",
 	likes: 6,
 	description : "what?!",
+	starred : 1
 
 }
 

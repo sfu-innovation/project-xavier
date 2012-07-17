@@ -3,11 +3,12 @@ extends layout
 block content
 	div.row#contents
 		div.three.columns
-			div.innercontents
+			div.innercontents#submitnew
 				form(name="add_article", action="/",enctype="multipart/form-data", method="post", onsubmit="return validateForm()", style="margin-bottom : 0", class="custom")
 					label Share a resource!
 					input(name="article_url",type="text", id="article_url", placeholder="http://")
-					input(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+					textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+					
 					div#sumbitrow
 						div.selectcourse
 							select(class="customDropdown", name="article_course", value="select a course")
@@ -24,7 +25,7 @@ block content
 			each article in name
 				if article.user.type == 1
 					dataclass = "prof"
-				div.three.columns#articleboxes(data-id="id-#{counter}", class=" #{dataclass}")
+				div.three.columns
 					div.innercontents
 						b #{article.user.firstName} #{article.user.lastName}
 						if article.user.type == 1
@@ -39,8 +40,11 @@ block content
 						div.imgpreview(id="img_#{counter}")
 						div.articlepreview(id = "preview_#{counter}")
 						div.likescomments
-							span.typicn.star
-							span Like (1)
+							if article.starred == 1
+								span.typicn.star.starred
+							else
+								span.typicn.star
+							span Like (#{article.likes})
 							span Comment (5)
 						script(type='text/javascript')
 							var now = new Date();

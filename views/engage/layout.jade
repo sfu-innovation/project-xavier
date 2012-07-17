@@ -7,7 +7,7 @@ html
 	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 	head
 		title= title
-		link(rel='stylesheet', href='/stylesheets/engage/style.css')
+		
 		script(src="http://code.jquery.com/jquery-latest.js")
 		script(src="/javascripts/engage/prettydate.js")
 		script(src="/javascripts/engage/datetime.js")
@@ -24,6 +24,7 @@ html
 		link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
 		link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
+		link(rel='stylesheet', href='/stylesheets/engage/style.css')
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
 		<![endif]-->
@@ -70,21 +71,29 @@ html
 							a(href="#") INSTRUCTOR POSTS
 				div.two.columns
 					ul.nav-bar
-						li
+						li.has-flyout#courselist
 							a(href="#") COURSES
+							a(href="#", class="flyout-toggle")
+								span
+							ul.flyout
+								each name , course in user.courses
+									li.courses
+										a(href="#") #{course}
+
 										
 			div.row.show-for-small
-				div.button-bar.twelve.columns
+				div.button-bar.ten.columns
 					ul.button-group#mobile-nav
 						li
 							a.button(href="#") ALL
 						li
 							a.button(href="#") YOURS
 						li
-							a.button(href="#") STARRED
+							a.button(href="#") STAR
 						li
 							a.button(href="#") PROF
-					ul.button-group#course-nav
+							
+						br
 						each name , course in user.courses
 							li.courses
 								a.button(href="#") #{course}

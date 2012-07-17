@@ -1,6 +1,14 @@
+.row{
+	width: 1280px !important;
+}
 div#header{
 	background-color: rgba(0,0,0,0.1);
-	padding-bottom: 5px;
+
+}
+
+div#header h1{
+	margin: 0;
+	padding: 0;
 }
 div#nav li{
 	background-color: rgba(0,0,0,0);
@@ -8,7 +16,12 @@ div#nav li{
 	border: 0px;
 	text-align: left;
 	padding-right: 20px;
+	
 }
+div#nav ul{
+	display: inline-block;
+	width: 100%
+	}
 
 div#nav li a{
 	color: black !important;
@@ -28,13 +41,23 @@ div#nav ul#options li:hover a{
 
 li#courselist{
 	float: right;
+	padding-right:0 !important;
 }
 li#courselist a{
 	padding-right:0;
 }
 
+ul#course-nav{
+	list-style: none;
+}
+ul#mobile-nav {
+	list-style: none;
+	margin: 0;
+}
 
-
+ul#mobile-nav li{
+	display: inline;
+}
 #header .nav-bar{
 	margin-top: 5px !important;
 	background-color: rgba(0,0,0,0) !important;
@@ -44,6 +67,8 @@ li#courselist a{
 
 div#userbox{
 	text-align : right;
+	padding-top : 5px;
+	padding-bottom: 5px;
 }
 
 
@@ -94,10 +119,14 @@ div.selectcourse{
 	display: inline;
 	float: left;
 	margin-left: 10px;
+	}
+#sumbitrow{
+	display: inline-block;
+	width: 100%;
 }
-
 div.submit{
 	display: inline;
+	position: relative;
 	float: right;
 	margin-right: 10px;
 	margin-top: 2px;
@@ -117,3 +146,77 @@ div.post_details span.coursename{
 div.post_details span.coursename:hover{
 	cursor: pointer;
 	}
+	
+div.likescomments{
+	text-align: right;
+	padding-top: 10px;
+}
+div.likescomments span{
+	font-size: 12px;
+	padding-left: 10px;
+	vertical-align: text-top;
+	
+	}
+	
+div.likescomments span.typicn.star{
+	color:white;
+	-webkit-text-stroke: 1px black;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+div.likescomments span.typicn.star:hover{
+	color: yellow;
+	
+}
+	
+div#article_container{
+	padding-top: 2em;
+}
+div#article_container #article{
+
+	padding: 1em 3em 4em;
+	font-size: 14px;
+	word-spacing: -0.05em;
+	line-height: 1.3em;
+
+}
+#article_options{
+	padding: 0em 3em 0em;
+	}
+	
+#article_options #back{
+	font-weight: bold;
+	}
+	
+#article_options #options{
+	margin-left:10px;
+	
+}
+#article_options #options a{	
+	margin-left: 10px;
+	margin-right: 10px;
+	}
+	
+#article_options span#course{
+	float: right;
+}	
+div#article_container #article h1{
+	font-size: 24px;
+}
+
+div#article_container #article h2{
+	font-size: 20px;
+}
+
+
+div#article_container #comments{
+
+	}
+	
+div#footer{
+	margin-top: 20px;
+	padding-top:10px;
+	background-color: rgba(0,0,0,0.1);
+	text-align: center;
+}

@@ -41,6 +41,112 @@ exports.getResourceByUUID = function(resourceUUID, callback){
 	})
 }
 
+var fetchResource = function(resourceID, callback) {
+	console.log("resource IDs = " +  resourceID.material);
+	module.exports.getResourceByUUID(resourceID.material, function(error, resource) {
+
+	});
+}
+
+var fetchMaterialIDs = function(sectionID, callback) {
+	var async = require('async');
+	console.log("section ID = " + sectionID);
+	var sectionMaterials = require('./sectionMaterial.js');
+
+	var resources = [];
+
+	sectionMaterials.findAllMaterialsInSection({section:sectionID}, function(error, sectionMaterial) {
+		async.forEach(sectionMaterial, function(resourceID, callback) {
+			console.log("resource IDs = " +  resourceID.material);
+			module.exports.getResourceByUUID(resourceID.material, function(error, resource) {				
+				resources.push(resource);
+			})
+		}, function(err){
+		    // if any of the saves produced an error, err would equal that error
+		    console.log("error = " + err);
+		});
+
+		console.log("Resource:");
+		console.log(resources);
+		callback(resources);
+
+		/*
+		for(var j = 0; j < sectionMaterial.length; j++) {
+			console.log(sectionMaterial[j].material);
+		}		
+		*/
+
+		//module.exports.getResourceByUUID();
+	})
+}
+
+//Fetch the list of resources with the given course UUID
+exports.getResourceByCourseUUID = function(args, callback){
+	var async = require('async');
+	var CourseSection = require('./courseSection.js');
+
+	var resources = [];	
+
+	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {
+		//Get the section ids
+		if(sectionUUIDs){									
+			async.forEach(sectionUUIDs, function(sectionID, callback) {				
+				console.log("section ID = " + sectionID);
+				var sectionMaterials = require('./sectionMaterial.js');				
+
+				sectionMaterials.findAllMaterialsInSection({section:sectionID}, function(error, sectionMaterial) {
+					async.forEach(sectionMaterial, function(resourceID, callback) {
+						console.log("resource IDs = " +  resourceID.material);
+						module.exports.getResourceByUUID(resourceID.material, function(error, resource) {				
+							console.log("how many times");
+							resources.push(resource);	
+							callback();																												
+						})
+					}, function(err){					    
+					    console.log("Section Material error = " + err);
+					    callback();
+					});									
+				})				
+			}, function(err){
+			    // if any of the saves produced an error, err would equal that error
+			    console.log("Course Section error = " + err);
+			    callback(null, resources);
+			});			
+						
+			/*
+			var sectionMaterials = require('./sectionMaterial.js');								
+			for(var i=0; i<sectionUUIDs.length; i++){				
+				sectionMaterials.findAllMaterialsInSection({section:sectionUUIDs[i]}, function(error, sectionMaterial) {
+
+					for(var j = 0; j < sectionMaterial.length; j++) {
+						Resource.find({where:{uuid:sectionMaterial[j].material}}).success(function(resource){
+							if(resource){								
+								resources.push(resource)	
+
+								console.log("just call back earlier contionously...");
+								callback(null, resources);								
+							}
+						}).error(function(error){
+							callback(error, null);
+						})
+					}							
+				})
+			}
+			*/
+			
+
+			// wanted to call back here
+			// console.log("called at the very end...");
+			// callback(null, resources);	
+		}
+
+		//No resources were found
+		else{
+			callback(error, []);
+		}
+	})
+}
+
 //Creates a new resources and saves it to the database
 //userUUID is the uuid of the user submitting the resource
 exports.createResource = function(userUUID, args, callback){

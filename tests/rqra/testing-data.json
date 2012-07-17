@@ -1,0 +1,49 @@
+{
+	"users": [
+		{
+			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"firstName":"Mike",
+			"lastName":"Klemarewski",
+			"type":1,
+			"userID":"mak10",
+			"email":"mak10@sfu.ca"
+		},
+		{
+			"uuid":"BSDF787D98A7SDF8ASD7G",
+			"firstName":"Ted",
+			"lastName":"Kirkpatrick",
+			"type":0,
+			"userID":"ted",
+			"email":"ted@sfu.ca"
+		}
+	],
+	"courses":[
+		{
+			"uuid":"A8G7S6H7ASDFG9",
+			"title":"Algorithms",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":307,
+			"instructor":"BSDF787D98A7SDF8ASD7G"
+		}
+	],
+	"courseMembers":[
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"A7S7F8GA7SD98A7SDF8ASD7G"
+		}
+	],
+	"resources":[
+		{
+			"uuid":"VDBJ3771VOEMQ50BV13",
+			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"course": "A8G7S6H7ASDFG9",
+			"title" : "Awesome Test Resource",
+			"description" : "The test resource that will enable total world domination!",
+			"resourceType" : 2,
+			"fileType" : ".ppt",
+			"likes" : 2, 
+			"url" : "/media/documents/ppt"
+		}
+	]
+}

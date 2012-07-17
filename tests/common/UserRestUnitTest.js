@@ -1,7 +1,7 @@
 var http    = require('http');
 var config  = require('./../../config.json');
 var express = require('express');
-var server  = require('./../../app-presenter.js');
+var server  = require('./../../app-rqra.js');
 var queries = require(__dirname + "/../../database/db-queries.js");
 var User    = require(__dirname + "/../../models/user.js");
 var Course  = require(__dirname + "/../../models/course.js");

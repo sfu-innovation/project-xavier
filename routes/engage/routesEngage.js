@@ -2,6 +2,11 @@ var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var routesCommon = require('./../common/routesCommon.js');
+var http = require('http');
+var request = require('request');
+var fs = require('fs');
+var jsdom = require('jsdom'), html5 = require('html5');
+
 
 exports.followQuestion = function(request, response) {
 	routesCommon.followQuestionRoute(2, request, response);
@@ -276,21 +281,125 @@ function mediaPath(path, host){
 }
 
 
+function walk(node, cb) {
+
+	var check = false;
+	if (node.nodeType !== node.ELEMENT_NODE) {
+		return;
+	}
+
+	for(var i = 0; i < node.childNodes.length; ++i){
+		if (node.childNodes[i].tagName === 'SCRIPT' || node.childNodes[i].tagName === 'NOSCRIPT') {
+			node.removeChild(node.childNodes[i]);
+		}
+		else if (node.childNodes[i].textContent.length/node.textContent.length > 0.55) {	
+			walk(node.childNodes[i], cb);
+			check = true;
+		}
+	}
+
+	if (!check) {
+		cb(node); 
+	}
+}
+
+function listTypes(node) {
+	var article = null
+
+	walk(node, function(node) {
+		for (var j = 0; j < node.childNodes.length; ++j) {
+			var current = node.childNodes[j];
+			//console.log('child node: '+current)
+			if (current.nodeType === current.ELEMENT_NODE) {
+				current.removeAttribute('class');
+				current.removeAttribute('id');
+				current.removeAttribute('style');
+			}
+		}		
+		article = node;		
+	})
+	return article;
+}
+
+/*
+function articlize(document) {
+	var article = listTypes(document.documentElement)
+}
+*/
+
+function get_article(document, name) {
+
+	var stream = fs.createWriteStream("./public/resources/articles/"+name+".xml");
+	stream.once('open', function(fd) {
+
+		stream.write('<title>'+document.querySelector('H1').textContent+'</title>\n')
+		stream.write('<content>'+html5.serialize(listTypes(document.documentElement))+'</content>');
+
+	})
+/*
+	//for testing----------------
+	return document.querySelectorAll(tag).map(function(node) {
+		return "<p>"+node.textContent+"</p>";
+	}).join("");
+	//---------------------------
+*/
+}
+
+
+
+
+
 exports.index = function(req, res){
 
-	res.render("engage/index", { 	title: "SFU ENGAGE",
-		user :  userobject,
-		status : "logged in" })
+	if (!req.body.article_url) {
+		var error = "";
+		if (req.method === 'POST') {
+			error ="please enter an URL" ;
+		}
+		res.render("engage/index", { 	
+							title: "SFU ENGAGE",
+							user :  userobject, 
+							status : "logged in",
+							errormsg : error })
+		return;
+	}
 
+	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
+	//console.log(req.body.article_url.split("/"));
+	var parse_url = req.body.article_url.split("/");
+
+	request(req.body.article_url, function (error, response, body) {
+
+		if (response.statusCode == 200) {	
+			var 
+				window = jsdom.jsdom(null, null, {
+					parser: html5,
+					features: {
+						QuerySelector: true
+					}
+				}).createWindow(),
+				parser = new html5.Parser({document: window.document});
+
+			parser.parse(body);
+
+			get_article(window.document, parse_url[parse_url.length-1]);
+			
+		}
+		
+		res.render("engage/index", { 	title: "SFU ENGAGE",
+								user :  userobject, 
+								status : "logged in",
+								errormsg : error })
+	});
 };
 
-exports.articleView = function(req, res){
+exports.article_view = function(req, res){
 	var pickedArticle = articles[req.params.id - 1];
-
+	
 	res.render("engage/article", { title: "SFU ENGAGE",
-		article : pickedArticle,
-		user :  userobject,
-		status : "logged in"	 })
+							article : pickedArticle,
+							user :  userobject,  
+							status : "logged in"	 })
 }
 
 

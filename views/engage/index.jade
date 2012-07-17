@@ -15,6 +15,9 @@ block content
 									option #{course}
 						div.submit
 							input(type="submit", value="add", class="small button")
+				if(typeof errormsg != 'undefined')
+					p #{errormsg}
+
 		- var counter = 0 
 		each name , course in user.courses
 			- var coursename = course

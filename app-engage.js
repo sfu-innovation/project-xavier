@@ -106,7 +106,7 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 app.get('/login', routesCommon.login);
 
 app.get('/', routesEngage.index);
-
+app.post('/', routesEngage.index);
 
 //article - this is resource
 

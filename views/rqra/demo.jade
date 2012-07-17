@@ -1,106 +1,93 @@
-div#logoContainer
-	div#logo
-		img(src="images/img.png", alt="logo image")
+body
+	div#header
+		img#logo(src="images/img.png", alt="logo")
+		div#askQuestion Ask a Question
+		div#profile
+			div#profileText
+				div#profileGreeting Hey There,
+				div#profileName Mary Li
+			img(src="images/img.png", alt="profile")
 	
-	div#pageContainer
-		<!-- header panel -->
-		div#headerPanel
-			div#mainMenu
-				div#browseButton(class="mainMenuButton", onmouseover="openMenu('browserButtonMenu')")
-					div.mainMenuButtonText Browse
-					div#browserButtonMenu(class="dropMenu")
-						div#menuTopics
-							h3 Topics
-							div.table
-								div.column1
-									div
-										a(href="#") Color Theory
-									div
-										a(href="#") Icon Design
-									div
-										a(href="#") Interface Design
-								div.column2
-									div
-										a(href="#") Web Design
-									div
-										a(href="#") CSS
-									div
-										a(href="#") JQuery
-						div#menuCourses
-							h3 Courses
-							div
-								a(href="#") IAT 200
-							div
-								a(href="#") IAT 231
-							div
-								a(href="#") IAT 334
-				div#searchButton(class="mainMenuButton", onmouseover="openMenu('searchButtonMenu')")
-					div.mainMenuButtonText Search
-					div#searchButtonMenu(class="dropMenu")
-						input(type="textbox")
-						div.mainMenuButtonText
-							img(src="images/search.png", alt="search")
-				div.inviteButton(class="mainMenuButton")
-					div.mainMenuButtonText Invite
-				div.profileButton(class="mainMenuButton")
-					div.mainMenuButtonText Profile
-				div#mainMenuSpace
-				div#askButton
-					div.mainMenuButtonText Ask
+	div#bodyContainer
+		div#timeline
+			div#timelineButton1(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") All
+			div#timelineButton2(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week1
+			div#timelineButton3(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week2
+			div#timelineButton4(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week3
+			div#timelineButton5(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week4
+			div#timelineButton6(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week5
+			div#timelineButton7(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week6
+			div#timelineButton8(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week7
+			div#timelineButton9(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week8
+			div#timelineButton10(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week9
+			div#timelineButton11(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week10
+			div#timelineButton12(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week11
+			div#timelineButton13(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week12
 		
-		div#bodyContainer
-			<!-- Main Content Panel -->
-			div#contentPanel
-				<!-- content menu -->
-				div#contentMenu					
-					div#askedButton(class="contentMenuButton", onclick="getFirstAsked()") Asked
-					div#newButton(class="contentMenuButton", onclick="getFirstNew()") New
-					div#unansweredButton(class="contentMenuButton", onclick="getFirstUnanswered()") Unanswered
-					div#seeAllButton(class="contentMenuButton", onclick="getFirstAll()") See All
+		div#content
+			div#courseList
+				div.courseButtonSelected PSYC221
+				div.courseButton PSYC260
+				div.courseButton PSYC268
+				div.courseButton PSYC308
+		
+			div#questionHeader
+				div#listInfo
+					h1#courseTitle Questions for 
+						span.inserted PSYC221 Introduction to Cognitive Psychology
+						from
+					h2#sectionTitle Week 2 - 
+						span#sectionName Perception &amp; Pattern Recognition
 					
-				<!-- list of questions -->
-				div#questionList(onload="displayAsked()")
-			
-				div#moreQuestionsButton(class="contentMenuButton", onclick="displayMore()") Get More Questions
-			
-				script(type="text/javascript", src="javascripts/rqra/questionTabs.js")
-			
-			<!-- Info Panel -->
-			div#infoPanel
-				div#profile
-					h2 Profile
-					div#profileImageContainer
-						img#profileImage(src="images/img.png", alt="ProfilePicture")
-					span.profileInfo Name:
-					span#profileName Argonius
-				hr
-				<!-- List of questions -->
-				div#recentlyAdded
-					h2 Recently Added
-					ol#recentlyAddedList
-						li
-							div.listItemImage
-								img(src="images/img.png", alt="Item Image")
-							div.listItemText sed hendrerit ante lacinia
-						li
-							div.listItemImage
-								img(src="images/img.png", alt="Item Image")
-							div.listItemText sagittis augue condimentum
-						li
-							div.listItemImage
-								img(src="images/img.png", alt="Item Image")
-							div.listItemText auctor in lobortis vitae
-				hr
+					div#questionTabs
+						div.pageNumberButton(onclick="displayNew(0)") Latest Questions
+						div.pageNumberButton Popular Questions
+						div.pageNumberButton Instructor Answered
+						div.pageNumberButton Most Viewed
+						div.pageNumberButton(onclick="displayUnanswered(0)") Unanswered Questions
+						div.pageNumberButton My Questions
+							
+			div#questionList
+				div.questionPromoted
+					div.questionText Kiam estas la finalo ekzameno?
+					div.questionData 
+						div.profResponsesRecent 1
+							img(src="images/rqra/prof.png", alt="Instructor Responses")
+						div.replies 2
+							img(src="images/rqra/reply.png", alt="Replies")
+						div.views 12
+							img(src="images/rqra/view.png", alt="Views")
+						div Asked 
+							span.inserted 25 minutes ago
+							span  by 
+							span.inserted Martano
 				
-				<!-- List of questions -->
-				div#recentlyAnswered
-					h2 Recently Answered
-					ol#recentlyAnsweredList
-						li
-							div.listItemImage
-								img(src="images/img.png", alt="Item Image")
-							div.listItemText Nunc vitae orci dui
-						li
-							div.listItemImage
-								img(src="images/img.png", alt="Item Image")
-							div.listItemText sagittis a et est
+				div.question
+					div.questionText kia muziko vi auskultu?
+					div.questionData 
+						div.profResponsesRecent 2
+							img(src="images/rqra/prof.png", alt="Instructor Responses")
+						div.replies 8
+							img(src="images/rqra/reply.png", alt="Replies")
+						div.views 38
+							img(src="images/rqra/view.png", alt="Views")
+						div Asked 
+							span.inserted 25 minutes ago
+							span  by 
+							span.inserted Alexino
+				
+			div#pageNumber
+				img(src="images/rqra/prev.png", alt="previous")
+				div.pageNumberButton(onclick="displayNew(0)") 1
+				div.pageNumberButton(onclick="displayNew(1)") 2
+				div.pageNumberButton(onclick="displayNew(2)") 3
+				div.pageNumberButton(onclick="displayNew(3)") 4
+				img(src="images/rqra/next.png", alt="next")
+		
+		div#questionCount
+			div#questionCountNumber 25
+			div#questionCountText
+				div#questionCountText1 Questions
+				div#questionCountText2 for this Week
+				
+		script(type="text/javascript", src="javascripts/rqra/questionTabs.js")

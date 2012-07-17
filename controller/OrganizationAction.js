@@ -6,7 +6,6 @@ var Section = require('../models/section.js');
 var SectionMaterial = require('../models/sectionMaterial.js');	
 var SectionImpl = require('../models/section.js').Section;
 var Resource    = require('../models/resource.js').Resource;
-var QueryES = require('./queryES.js');
 var OrganizationAction = function(){};
 
 /*
@@ -253,8 +252,8 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 				retResources.push( resources[x] );
 			}
 
-			//search for resource uuids in ES
-			QueryES.getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
+			//search for resource uuids in ES, friggin circular dependency
+			require('./queryES.js').getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
 				if(result){
 					retResources.push.apply(retResources, result);
 					callback(null, retResources);
@@ -295,6 +294,50 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 			}
 		});
 	});
+}
+
+/*
+    Gets list of all of the resources in particular course.
+    
+	args = {
+		course : UUID of course
+	}
+	
+	Returns the of list of resource
+*/
+
+OrganizationAction.prototype.getResourcesByCourseUUID = function( args, callback ){
+	
+	var async = require('async');	
+	var resources = [];	
+
+	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {		
+		if(sectionUUIDs){									
+			async.forEach(sectionUUIDs, function(sectionUUID, callback) {												
+				SectionMaterial.findAllMaterialsInSection({section:sectionUUID}, function(error, sectionMaterial) {
+					async.forEach(sectionMaterial, function(resourceID, callback) {						
+						var Resource = require('../models/resource.js');
+						Resource.getResourceByUUID(resourceID.material, function(error, resource) {											
+							resources.push(resource);	
+							// once the result is retrieved pass it to the callback
+							callback();																												
+						})
+					}, function(err){					    
+					    // passed the result to outer loop
+					    callback();
+					});									
+				})				
+			}, function(err){
+			    // pass the completed result to a callback			    
+			    callback(null, resources);
+			});										
+		}
+
+		//No sectionUUIDs were found
+		else{
+			callback(error, null);
+		}
+	})
 }
 
 module.exports = new OrganizationAction;

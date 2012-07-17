@@ -1,64 +1,67 @@
-var routesPresenter = require("./../rqra/routesPresenter.js");
-
+var routesCommon = require('./../common/routesCommon.js');
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
 
 exports.question = function(request, response) {
-	routesPresenter.questionRoute(1, request, response);
+	routesCommon.questionRoute(1, request, response);
 }
 
 exports.questions = function(request, response) {
-	routesPresenter.questionsRoute(1, request, response);
+	routesCommon.questionsRoute(1, request, response);
 }
 
 exports.questionsByUser = function(request, response) {
-	routesPresenter.questionsByUserRoute(1, request, response);
+	routesCommon.questionsByUserRoute(1, request, response);
 }
 
 exports.followQuestion = function(request, response) {
-	routesPresenter.followQuestionRoute(1, request, response);
+	routesCommon.followQuestionRoute(1, request, response);
 }
 
 exports.questionStatus = function(request, response) {
-	routesPresenter.questionStatusRoute(1, request, response);
+	routesCommon.questionStatusRoute(1, request, response);
 }
 
 
 
 exports.comment = function(request, response) {
-	routesPresenter.commentRoute(1, request, response);
+	routesCommon.commentRoute(1, request, response);
 }
 
 exports.comments = function(request, response) {
-	routesPresenter.commentsRoute(1, request, response);
+	routesCommon.commentsRoute(1, request, response);
 }
 
 exports.commentsByUser = function(request, response) {
-	routesPresenter.commentsByUserRoute(1, request, response);
+	routesCommon.commentsByUserRoute(1, request, response);
 }
 
 exports.commentVote = function(request, response) {
-	routesPresenter.commentVoteRoute(1, request, response);
+	routesCommon.commentVoteRoute(1, request, response);
 }
 
 exports.commentAnswered = function(request, response) {
-	routesPresenter.commentAnsweredRoute(1, request, response);
+	routesCommon.commentAnsweredRoute(1, request, response);
 }
 
 exports.commentsByQuestion = function(request, response) {
-	routesPresenter.commentsByQuestionRoute(1, request, response);
+	routesCommon.commentsByQuestionRoute(1, request, response);
 }
 
 exports.search = function(request, response) {
-	routesPresenter.searchRoute(1, request, response);
+	routesCommon.searchRoute(1, request, response);
 }
 
 exports.followQuestion = function(request, response) {
-	routesPresenter.followQuestionRoute(1, request, response);
+	routesCommon.followQuestionRoute(1, request, response);
 }
 
 exports.unfollowQuestion = function(request, response) {
-	routesPresenter.unfollowQuestionRoute(1, request, response);
+	routesCommon.unfollowQuestionRoute(1, request, response);
+}
+
+exports.resourcesInSection = function(request, response){
+	routesCommon.resourcesInSection(1, request, response);
 }
 
 
@@ -83,7 +86,7 @@ exports.tag = function(request,response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 	else if (request.method === 'GET'){
@@ -198,7 +201,7 @@ exports.mediafile = function(request,response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 	else if (request.method === 'GET'){	

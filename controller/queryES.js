@@ -8,6 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	organizationAction = require('./OrganizationAction.js'),
 	async = require('async'),
+	user = require('../models/user.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -53,6 +54,60 @@ QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, call
 	})
 }
 
+
+QueryES.prototype.questionViewCount = function(questionID, appType, callback){
+	var data;
+	var link = '/' + switchIndex(appType) + '/questions/' + questionID +'/_update';
+
+	data = {
+		'script':'ctx._source.viewCount += viewCount',
+		'params':{
+			'viewCount':1
+		}
+	}
+
+	//increment the vote found at commentID
+	db.post(link, data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
+	})
+}
+
+QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
+	var data = {
+			"query": {
+				"term": {
+					"isInstructor": "true"
+				}
+			},
+			"sort": [
+				{
+					"timestamp": {
+						"order": "desc"
+					}
+				}
+			],
+		from: paging(pageNum),
+		size: sizeOfResult
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits); //only need the hits.hits part
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
 //get a question
 QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
@@ -68,6 +123,7 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 
 //get all question
 QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
+	var self = this;
 
 	var data = {
 		query: {
@@ -82,7 +138,34 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits); //only need the hits.hits part
+			var result = [];
+
+			async.forEach(data.hits.hits, function(questionObj, callback){
+
+				user.selectUser({"uuid":questionObj._source.user}, function(error, user){
+					if(user){
+						questionObj.user = user;
+						result.push(questionObj);
+					}
+					callback();
+				});
+			}, function(err){
+				//TODO: comments
+
+				async.forEach(result, function(resultObj, callback){
+						self.getCommentCount(resultObj._id, appType, function(total){
+
+							resultObj.totalComments = total;
+
+							callback();
+						})
+					}
+				, function(err){
+					callback(result);
+				});
+
+
+			});
 		}
 		else{
 			callback(undefined);
@@ -121,7 +204,9 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, ca
 QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callback){
 	var data = {
 		query: {
-			term:{status:"unanswered"}
+			term:{
+				status:"unanswered"
+			}
 		},
 		from: paging(pageNum),
 		size: sizeOfResult
@@ -247,16 +332,34 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	notification.createNewQuestion({user:data.user, target:questionUuid, app:appType}, function(err, result){
-		if(result){
+	//should check if adding to a section is really needed. rqra dont need it
+	args.section = data.sectionUuid;	//section uuid
+	args.resource = data._id;	//question uuid
+
+	delete data.sectionUuid;
+
+	user.selectUser({"uuid":data.user}, function(error, user){
+		if(user){
+			if(user.type === 1){
+				data.isInstructor = 'true';
+			}else{
+				data.isInstructor = 'false';
+			}
+
 			document.set(data, function(err, req, data){
 				if(data){
-					args.section = data.sectionUuid;
-					args.resource = data._id;
-
-					//should check if adding to a section is really needed. rqra dont need it
-
-					organizationAction.addResourceToSection(args, callback);
+					console.log('Added question to ES');
+					organizationAction.addResourceToSection(args, function(err, result){
+						console.log('Added question resource to section');
+						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+							if(result){
+								console.log('Added question notification');
+								callback(data);
+							}else{
+								callback(undefined);
+							}
+						});
+					});
 				}else{
 					callback(undefined);
 				}
@@ -264,8 +367,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 		}else{
 			callback(undefined);
 		}
-
-	});
+	})
 }
 
 //Add a new follower
@@ -417,16 +519,15 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	
 	var data = {
 		  query: {
-		    query_string: {
-		      "fields": [
-		        "target_uuid"
-		      ],
-		      "query": ptarget_uuid
-		    }
+			  term: {
+				  target_uuid: ptarget_uuid
+			  }
 		  },
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
+
+
 
 	switchIndex(appType);
 	switchMapping(1);
@@ -458,6 +559,28 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
 			callback(data.hits.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}
+
+QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
+	var data = {
+		query: {
+			term: {
+				target_uuid: questionUuid
+			}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(data.hits){
+			callback(data.hits.total);
 		}
 		else{
 			callback(undefined);
@@ -508,35 +631,57 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	notification.addCommentNotifier({user:data.user, target:data.target_uuid, app:appType}, function(err, result){
+	self.updateStatus(data.target_uuid, appType, function(updateResult){
+		if(updateResult){
+			document.set(data, function(err, req, esData){
+				if (esData) {
 
-		self.updateStatus(data.target_uuid, appType, function(updateResult){
+					var args = {
+						target:data.target_uuid
+						,app:appType
+						,user:data.user
+						,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
+					};
 
-			if(updateResult){
-				document.set(data, function(err, req, data){
-					if (data) {
-						callback(data);
-					}else {
-						callback(undefined);
-					}
-				});
-			}else{
-				callback(undefined);
-			}
-		});
+					notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+						if(usrNotificationResult){
+							console.log("successfully added usr comment notification");
+
+							delete args.description;
+							notification.addCommentNotifier(args, function(err, result){
+								if(result){
+									console.log("successfully added comment notification");
+									callback(esData);
+								}else{
+									callback(undefined);
+								}
+							});
+
+						}else{
+							callback(undefined);
+						}
+					});
+				}else {
+					callback(undefined);
+				}
+			});
+		}else{
+			callback(undefined);
+		}
 	});
+
+
 }
 
 //update comment body based on commentID
-QueryES.prototype.updateComment = function(commentID, commentTitle, commentBody, appType, callback){	
+QueryES.prototype.updateComment = function(commentID, commentBody, appType, callback){
 
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 	var date = new Date().toISOString();
 
 	var data = {
-		'script':'ctx._source.title = title; ctx._source.body = body; ctx._source.timestamp = date',
+		'script':'ctx._source.body = body; ctx._source.timestamp = date',
 		'params':{
-			'title':commentTitle,
 			'body':commentBody,
 			'date':date
 		}

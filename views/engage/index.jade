@@ -8,20 +8,23 @@ block content
 					label Share a resource!
 					input(name="article_url",type="text", id="article_url", placeholder="http://")
 					input(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
-					div.row
+					div#sumbitrowx
 						div.selectcourse
 							select(class="customDropdown", name="article_course", value="select a course")
 								each name , course in user.courses
 									option #{course}
 						div.submit
 							input(type="submit", value="add", class="small button")
+				if(typeof errormsg != 'undefined')
+					p #{errormsg}
+
 		- var counter = 0 
 		each name , course in user.courses
 			- var coursename = course
 			each article in name
 				div.three.columns
 					div.innercontents
-						b #{article.uploaded_by}
+						b #{article.user.firstName} #{article.user.lastName}
 						div.post_details 
 							p Posted in 
 								span.coursename #{coursename}
@@ -31,6 +34,7 @@ block content
 							a(href="/article/#{article.id}") #{article.title}
 						div.articlepreview(id = "preview_#{counter}")
 						div.likescomments
+							span.typicn.star
 							span Like (1)
 							span Comment (5)
 						script(type='text/javascript')

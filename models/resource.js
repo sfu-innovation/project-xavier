@@ -24,7 +24,13 @@ var Resource = exports.Resource = db.define('Resource', {
 	, resourceType: {type: Sequelize.INTEGER, allowNull: false}
 	, fileType: {type: Sequelize.STRING, allowNull: true}
 	, likes: {type: Sequelize.INTEGER, defaultValue: 0}
-	, url: {type: Sequelize.STRING, allowNull: false}
+	, url: {type: Sequelize.STRING, allowNull: false}   // this is the url of the original page (for engage)
+	, path: {type: Sequelize.STRING, allowNull: false}  // this is the file path of the html page we parsed (for engage)
+	, author : {type: Sequelize.STRING, allowNull: true} //this is the original author of the article (for engage)
+	, publishedDate : {type: Sequelize.STRING, allowNull: true} //this is the original published date of the article (for engage)
+	, excerpt : {type: Sequelize.TEXT, allowNull:true} // A short extract from a film, broadcast, or piece of music or writing. (for engage)
+
+
 });
 
 //Fetch the resource with the given UUID
@@ -40,6 +46,52 @@ exports.getResourceByUUID = function(resourceUUID, callback){
 		callback(error, null);
 	})
 }
+
+// To be deprecated
+/*
+//Fetch the list of resources with the given course UUID
+exports.getResourceByCourseUUID = function(args, callback){
+	var async = require('async');
+	var CourseSection = require('./courseSection.js');
+
+	var resources = [];	
+
+	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {		
+		if(sectionUUIDs){									
+			async.forEach(sectionUUIDs, function(sectionUUID, callback) {				
+				console.log("section ID = " + sectionUUID);
+				var sectionMaterials = require('./sectionMaterial.js');				
+
+				sectionMaterials.findAllMaterialsInSection({section:sectionUUID}, function(error, sectionMaterial) {
+					async.forEach(sectionMaterial, function(resourceID, callback) {
+						console.log("resource IDs = " +  resourceID.material);
+						module.exports.getResourceByUUID(resourceID.material, function(error, resource) {											
+							resources.push(resource);	
+
+							// once the result is retrieved pass it to the callback
+							callback();																												
+						})
+					}, function(err){					    
+					    console.log("Section Material error = " + err);
+
+					    // passed the result to outer loop
+					    callback();
+					});									
+				})				
+			}, function(err){
+			    // if any of the saves produced an error, err would equal that error
+			    console.log("Course Section error = " + err);
+			    callback(null, resources);
+			});										
+		}
+
+		//No sectionUUIDs were found
+		else{
+			callback(error, []);
+		}
+	})
+}
+*/
 
 //Creates a new resources and saves it to the database
 //userUUID is the uuid of the user submitting the resource

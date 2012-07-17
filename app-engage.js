@@ -1,3 +1,4 @@
+process.setMaxListeners(0);//annoying.
 var express = require('express');
 var routesCommon = require('./routes/common/routesCommon.js');
 var routesEngage = require('./routes/engage/routesEngage.js');
@@ -47,6 +48,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
+app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
 
 
@@ -65,13 +67,14 @@ app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 //Star resources
-app.get('/api/star', routesEngage.starredResources);	//get all starred resources
-app.post('/api/star', routesEngage.starResource);		//star a resource
-app.delete('/api/star', routesEngage.unstarResource);	//unstar a resource
+app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
+app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resource
+app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource
 
 //Like resources
-app.post('/api/like', routesEngage.likeResource);		//like a resource
-app.delete('/api/like', routesEngage.unlikeResource);	//unlike a resource
+app.post('/api/resource/:id/like', routesEngage.likeResource);		//like a resource
+app.delete('/api/resource/:id/like', routesEngage.unlikeResource);	//unlike a resource
 
 //userprofile
 
@@ -97,14 +100,17 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 
 
-//very important, do not touch!
+
 
 //non-REST calls
 // routing
 app.get('/login', routesCommon.login);
 
 app.get('/', routesEngage.index);
+app.post('/', routesEngage.index);
 
+
+app.get('/starred', routesEngage.starred);
 
 //article - this is resource
 

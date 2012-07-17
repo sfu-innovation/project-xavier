@@ -397,13 +397,32 @@ exports.index = function(req, res){
 	});
 };
 
-exports.article_view = function(req, res){
+exports.starred = function (req, res) {
+	if (req.session && req.session.user) {
+		console.log("???");
+		res.render("engage/starred", { 	title: "SFU ENGAGE",
+			user :  userobject,
+			status : "logged in" })
+	}
+
+
+	else {
+		console.log("!!!");
+		res.redirect("/login");
+	}
+
+}
+
+exports.article_view = function (req, res) {
 	var pickedArticle = articles[req.params.id - 1];
-	
-	res.render("engage/article", { title: "SFU ENGAGE",
-							article : pickedArticle,
-							user :  userobject,  
-							status : "logged in"	 })
+
+
+	res.render("engage/article", { title:"SFU ENGAGE",
+
+		user:userobject,
+		status:"logged in"     })
+
+
 }
 
 

@@ -109,6 +109,9 @@ app.get('/login', routesCommon.login);
 app.get('/', routesEngage.index);
 app.post('/', routesEngage.index);
 
+
+app.get('/starred', routesEngage.starred);
+
 //article - this is resource
 
 app.get('/article/:id', routesEngage.articleView);

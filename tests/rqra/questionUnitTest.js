@@ -104,7 +104,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();

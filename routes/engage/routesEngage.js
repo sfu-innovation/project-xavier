@@ -2,6 +2,11 @@ var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var routesCommon = require('./../common/routesCommon.js');
+var http = require('http');
+var request = require('request');
+var fs = require('fs');
+var jsdom = require('jsdom'), html5 = require('html5');
+
 
 exports.followQuestion = function(request, response) {
 	routesCommon.followQuestionRoute(2, request, response);
@@ -41,7 +46,7 @@ exports.createResource = function(request, response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -67,7 +72,7 @@ exports.starredResources = function(request, response){
 			Star.getStarredResources(request.session.user.uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, star: result }));
+					response.end(JSON.stringify({ errorcode: 0, resources: result }));
 				}
 				else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -76,16 +81,17 @@ exports.starredResources = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
 
 //resource uuid = request.body.uuid
 exports.starResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			Star.starResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Star.starResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, star: result }));
@@ -96,7 +102,7 @@ exports.starResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -104,10 +110,11 @@ exports.starResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.unstarResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'DELETE'){
 
 		if(request.session && request.session.user){
-			Star.unstarResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Star.unstarResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, star: result }));
@@ -118,7 +125,7 @@ exports.unstarResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -126,9 +133,10 @@ exports.unstarResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.likeResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			Like.likeResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Like.likeResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -139,7 +147,7 @@ exports.likeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
@@ -147,9 +155,10 @@ exports.likeResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.unlikeResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'DELETE'){
 		if(request.session && request.session.user){
-			Like.unlikeResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Like.unlikeResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, resource: result }));
@@ -160,12 +169,14 @@ exports.unlikeResource = function(request, response){
 			});
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 
 	}
 }
 
+
+//don't think this is needed.
 exports.getLikes = function(request, response){
 	if(request.method === 'GET'){
 		Resource.getLikesByUUID(request.params.uuid, function(error, resourceLikes){
@@ -274,21 +285,144 @@ function mediaPath(path, host){
 }
 
 
+function walk(node, cb) {
+
+	var check = false;
+	if (node.nodeType !== node.ELEMENT_NODE) {
+		return;
+	}
+
+	for(var i = 0; i < node.childNodes.length; ++i){
+		if (node.childNodes[i].tagName === 'SCRIPT' || node.childNodes[i].tagName === 'NOSCRIPT') {
+			node.removeChild(node.childNodes[i]);
+		}
+		else if (node.childNodes[i].textContent.length/node.textContent.length > 0.55) {	
+			walk(node.childNodes[i], cb);
+			check = true;
+		}
+	}
+
+	if (!check) {
+		cb(node); 
+	}
+}
+
+function listTypes(node) {
+	var article = null
+
+	walk(node, function(node) {
+		for (var j = 0; j < node.childNodes.length; ++j) {
+			var current = node.childNodes[j];
+			//console.log('child node: '+current)
+			if (current.nodeType === current.ELEMENT_NODE) {
+				current.removeAttribute('class');
+				current.removeAttribute('id');
+				current.removeAttribute('style');
+			}
+		}		
+		article = node;		
+	})
+	return article;
+}
+
+/*
+function articlize(document) {
+	var article = listTypes(document.documentElement)
+}
+*/
+
+function get_article(document, name) {
+
+	var stream = fs.createWriteStream("./public/resources/articles/"+name+".xml");
+	stream.once('open', function(fd) {
+
+		stream.write('<title>'+document.querySelector('H1').textContent+'</title>\n')
+		stream.write('<content>'+html5.serialize(listTypes(document.documentElement))+'</content>');
+
+	})
+/*
+	//for testing----------------
+	return document.querySelectorAll(tag).map(function(node) {
+		return "<p>"+node.textContent+"</p>";
+	}).join("");
+	//---------------------------
+*/
+}
+
+
+
+
+
 exports.index = function(req, res){
 
-	res.render("engage/index", { 	title: "SFU ENGAGE",
-		user :  userobject,
-		status : "logged in" })
+	if (!req.body.article_url) {
+		var error = "";
+		if (req.method === 'POST') {
+			error ="please enter an URL" ;
+		}
+		res.render("engage/index", { 	
+							title: "SFU ENGAGE",
+							user :  userobject, 
+							status : "logged in",
+							errormsg : error })
+		return;
+	}
 
+	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
+	//console.log(req.body.article_url.split("/"));
+	var parse_url = req.body.article_url.split("/");
+
+	request(req.body.article_url, function (error, response, body) {
+
+		if (response.statusCode == 200) {	
+			var 
+				window = jsdom.jsdom(null, null, {
+					parser: html5,
+					features: {
+						QuerySelector: true
+					}
+				}).createWindow(),
+				parser = new html5.Parser({document: window.document});
+
+			parser.parse(body);
+
+			get_article(window.document, parse_url[parse_url.length-1]);
+			
+		}
+		
+		res.render("engage/index", { 	title: "SFU ENGAGE",
+								user :  userobject, 
+								status : "logged in",
+								errormsg : error })
+	});
 };
 
-exports.articleView = function(req, res){
+exports.starred = function (req, res) {
+	if (req.session && req.session.user) {
+
+		res.render("engage/starred", { 	title: "SFU ENGAGE",
+			user :  userobject,
+			status : "logged in" })
+	}
+
+
+	else {
+
+		res.redirect("/login");
+	}
+
+}
+
+exports.article_view = function (req, res) {
 	var pickedArticle = articles[req.params.id - 1];
 
-	res.render("engage/article", { title: "SFU ENGAGE",
-		article : pickedArticle,
-		user :  userobject,
-		status : "logged in"	 })
+
+	res.render("engage/article", { title:"SFU ENGAGE",
+
+		user:userobject,
+		status:"logged in"     })
+
+
 }
 
 

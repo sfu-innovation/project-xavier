@@ -2,11 +2,11 @@
 	{
 	"_index":"presenter",
 	"_type":"questions",
-	"_id":"pJfznhheQuOicWWAjx7F00",
+	"_id":"pJfznhheQuOicWWAjx7F01",
 	"_score":1,
 	"_source":
 		{"user":"jbo1",
-		"title":"When can we register for courses?",
+		"title":"kia muziko vi auskultu?",
 		"body":"some description",
 		"category":"academic",
 		"status":"unanswered",
@@ -18,50 +18,14 @@
 		}
 	},
 	{
-	"_index":"presenter",
-	"_type":"comments",
-	"_id":"qJfznhheQuOicWWAjx7F05",
-	"_score":1,
-	"_source":
-		{"user":"mcs3",
-			"upvote":7,
-			"downvote":0,
-			"body":"some description",
-			"target_uuid":"pJfznhheQuOicWWAjx7F00",
-			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
-			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true"
-		}
-	},
-	{
-		"_index":"presenter",
-		"_type":"comments",
-		"_id":"qJfzggggguOicWWAjx7F05",
-		"_score":1,
-		"_source":
-		{"user":"mcs3",
-			"upvote":5,
-			"downvote":0,
-			"body":"some description",
-			"target_uuid":"pJfznhheQuOicWWAjx7F00",
-			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
-			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true"
-		}
-	},
-	{
 		"_index":"presenter",
 		"_type":"questions",
-		"_id":"pJfzndwdadddQuOicWWAjx7F00",
+		"_id":"pJfzndwdadddQuOicWWAjx7F04",
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"What the **** dude?",
-			"body":"some description",
+			"title":"Kiam estas la finalo ekzameno?",
+			"body":"Kiam estas la finalo ekzameno?",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -72,9 +36,171 @@
 		}
 	},
 	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F05",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"kio ludoj vi ludas?",
+			"body":"kio ludoj vi ludas?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F06",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
+			"body":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F07",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":5231
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F21",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":1,
+			"downvote":125,
+			"body":"Vi devas fari la asigno sola. Mi satus vidi vin en mia oficejo post klaso.",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F07",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"true"
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F08",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
+			"body":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":100
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F20",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":5,
+			"downvote":2,
+			"body":"dekduedro!",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F08",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"false"
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F09",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Chu ke iu povas klarigi la diagramo sur pago 125?",
+			"body":"Chu ke iu povas klarigi la diagramo sur pago 125?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":423
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F10",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":0,
+			"downvote":25,
+			"body":"Mi ne komprenas ke diagramon chu",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F09",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"false",
+			"isInstructor":"false"
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F11",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":25,
+			"downvote":0,
+			"body":"La diagramo estas bildo de kato portante cilindra capelo. Gi simbolas la lukton de la homaro kontrau naturo. Ankau gi estas amuzega.",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F09",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"false"
+		}
+	},
+	{
 		"_index":"accent",
 		"_type":"questions",
-		"_id":"aJfznhseQuOicWWAjx7F00",
+		"_id":"aJfznhseQuOicWWAjx7F12",
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
@@ -92,7 +218,7 @@
 	{
 		"_index":"accent",
 		"_type":"comments",
-		"_id":"aJfznhheQuOicWWAjx7F05",
+		"_id":"aJfznhheQuOicWWAjx7F13",
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
@@ -110,7 +236,7 @@
 	{
 		"_index":"accent",
 		"_type":"comments",
-		"_id":"aJfzggggguOicWWAjx7F05",
+		"_id":"aJfzggggguOicWWAjx7F14",
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
@@ -128,7 +254,7 @@
 	{
 		"_index":"accent",
 		"_type":"questions",
-		"_id":"aJfzndwdadddQuOicWWAjx7F00",
+		"_id":"aJfzndwdadddQuOicWWAjx7F15",
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
@@ -146,7 +272,7 @@
 	{
 		"_index":"engage",
 		"_type":"questions",
-		"_id":"A7S7FWGA8SD11A7SDF8ASD7G",
+		"_id":"A7S7FWGA8SD11A7SDF8ASD16",
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
@@ -164,7 +290,7 @@
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfznhheQuOicWWAjx7F05",
+		"_id":"eJfznhheQuOicWWAjx7F17",
 		"_score":1,
 		"_source":
 		{"user":"mcs3",
@@ -182,7 +308,7 @@
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfzggggguOicWWAjx7F05",
+		"_id":"eJfzggggguOicWWAjx7F18",
 		"_score":1,
 		"_source":
 		{"user":"mcs3",

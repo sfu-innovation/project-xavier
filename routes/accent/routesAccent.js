@@ -86,7 +86,7 @@ exports.tag = function(request,response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 	else if (request.method === 'GET'){
@@ -201,7 +201,7 @@ exports.mediafile = function(request,response){
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 	else if (request.method === 'GET'){	

@@ -67,13 +67,14 @@ app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 //Star resources
-app.get('/api/star', routesEngage.starredResources);	//get all starred resources
-app.post('/api/star', routesEngage.starResource);		//star a resource
-app.delete('/api/star', routesEngage.unstarResource);	//unstar a resource
+app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
+app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resource
+app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource
 
 //Like resources
-app.post('/api/like', routesEngage.likeResource);		//like a resource
-app.delete('/api/like', routesEngage.unlikeResource);	//unlike a resource
+app.post('/api/resource/:id/like', routesEngage.likeResource);		//like a resource
+app.delete('/api/resource/:id/like', routesEngage.unlikeResource);	//unlike a resource
 
 //userprofile
 
@@ -99,14 +100,17 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 
 
-//very important, do not touch!
+
 
 //non-REST calls
 // routing
 app.get('/login', routesCommon.login);
 
 app.get('/', routesEngage.index);
+app.post('/', routesEngage.index);
 
+
+app.get('/starred', routesEngage.starred);
 
 //article - this is resource
 

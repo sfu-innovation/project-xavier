@@ -378,7 +378,6 @@ exports.resourcesInSection = function(appType, request, response){
 	}
 }
 
-
 exports.numberOfResourcesInCourse = function(request, response){
 	if(request.method === "POST"){
 		OrganizationAction.numberOfResourcesInCourse(request.body, function(error, result){
@@ -390,6 +389,38 @@ exports.numberOfResourcesInCourse = function(request, response){
 				response.end(JSON.stringify({ errorcode: 1, message: "Failed to get count of resources in a course" }));
 			}
 		})
+	}
+}
+
+
+exports.questionViewCountRoute = function(appType, request, response){
+	if (request.method === "PUT") {
+		var uuid = request.params.uid;
+		QueryES.questionViewCount(uuid, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+
+	}
+}
+
+exports.instructorQuestionsRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getInstructorQuestion(appType, request.params.page, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+
 	}
 }
 
@@ -715,7 +746,7 @@ exports.commentVoteRoute = function(appType, request, response) {
 
 	console.log(direction);
 
-	if (request.method === "POST") {
+	if (request.method === "PUT") {
 		QueryES.updateVote(commentId, direction, appType, function(result) {
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 0 }));

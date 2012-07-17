@@ -55,6 +55,12 @@ var map = function(appType, callback){
 					"followup": {
 						"type": "string",
 						"index": "not_analyzed"
+					},
+					"isInstructor": {
+						"type": "string"
+					},
+					"viewCount": {
+						"type": "integer"
 					}
 				}
 			},
@@ -110,6 +116,9 @@ var map = function(appType, callback){
 						"type" : "string"
 					},			
 					"isAnswered": {
+						"type": "string"
+					},
+					"isInstructor": {
 						"type": "string"
 					}
 				}

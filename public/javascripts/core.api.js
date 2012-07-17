@@ -517,7 +517,7 @@ coreApi._construct = function () {
 
 			$.ajax({
 				url :'/api/comment/'+id+'/vote/'+dir,
-				type: 'POST',
+				type: 'PUT',
 				dataType:'json',
 				contentType:"application/json",
 					success: function(data){

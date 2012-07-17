@@ -48,11 +48,12 @@ html
 	body
 		div#header
 			div.row
-				div.ten.columns
-					h1 #{title}
-				div.two.columns#userbox
-					h5  #{ user.name }
-					a log out
+				div.nine.columns
+					h1
+						a(href="/") #{title}
+				div.three.columns#userbox
+					span  #{ user.name }
+						a  log out
 				
 			div.row.hide-for-small#nav
 				div.nine.columns
@@ -67,13 +68,28 @@ html
 							a(href="#") INSTRUCTOR POSTS
 				div.two.columns
 					ul.nav-bar
-						li.has-flyout#courselist
+						li
 							a(href="#") COURSES
-							a(href="#", class="flyout-toggle")
-								span
-							ul.flyout
-								each name , course in user.courses
-									li.courses
-										a(href="#") #{course}
+										
+			div.row.show-for-small
+				div.button-bar.twelve.columns
+					ul.button-group#mobile-nav
+						li
+							a.button(href="#") ALL
+						li
+							a.button(href="#") YOURS
+						li
+							a.button(href="#") STARRED
+						li
+							a.button(href="#") PROF
+					ul.button-group#course-nav
+						each name , course in user.courses
+							li.courses
+								a.button(href="#") #{course}
 										
 		block content
+		
+		div#footer
+			div.row
+				div.twelve.columns
+					p SFU Mobile - Semester in Innovation

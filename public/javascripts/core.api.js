@@ -209,6 +209,38 @@ coreApi._construct = function () {
 
 		}
 
+		this.starResource = function(resource_uuid,callback){
+			console.log("API - starResource");
+			$.ajax({
+
+				url:'/api/resource/'+ resource_uuid+'/star',
+				type:'POST',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+		this.unstarResource = function(resource_uuid,callback){
+			console.log("API - unstarResource");
+			$.ajax({
+
+				url:'/api/resource/'+ resource_uuid+'/star',
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+
+
 	}
 
 	function Presenter() {

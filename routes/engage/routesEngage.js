@@ -83,9 +83,10 @@ exports.starredResources = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.starResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			Star.starResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Star.starResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, star: result }));
@@ -104,10 +105,11 @@ exports.starResource = function(request, response){
 
 //resource uuid = request.body.uuid
 exports.unstarResource = function(request, response){
+	var resource_uuid = request.params.id;
 	if(request.method === 'DELETE'){
 
 		if(request.session && request.session.user){
-			Star.unstarResource(request.session.user.uuid, request.body.uuid, function(error, result){
+			Star.unstarResource(request.session.user.uuid, resource_uuid, function(error, result){
 				if(result){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, star: result }));

@@ -1,0 +1,38 @@
+[
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F07",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":5231
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F21",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":1,
+			"downvote":125,
+			"body":"Vi devas fari la asigno sola. Mi satus vidi vin en mia oficejo post klaso.",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F07",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"true"
+		}
+	}
+]

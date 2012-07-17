@@ -11,14 +11,9 @@ var dataFile  = 'tests/rqra/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
 // question variables
-var questionID = "pJfzndwdadddQuOicWWAjx7F05";
-var userUid = "SomeUserUid";
-var questionTitle = "SomeTitle";
-var questionBody = "SomeQuestion";
-var updatedQuestionTitle = "SomeUpdatedTitle";
-var updatedQuestionBody = "SomeUpdatedQuestion";
-var commentTitle = "SomeCommentTitle";
-var commentBody = "SomeCommentBody";
+var questionID = "pJfzndwdadddQuOicWWAjx7F07";
+var questionTitle = "Test question Title";
+var questionBody  = "Do radioactive cats have 18 half-lives?"
 
 module.exports = {
 
@@ -31,7 +26,7 @@ module.exports = {
 					"content-type": "application/json"
 				}
 			}
-			esQuery('database/qs.json', function(result){
+			esQuery('tests/rqra/es-test-data.json', function(result){
 				queries.dropDB(config.mysqlDatabase['db-name'], function(){
 					queries.createDB(config.mysqlDatabase["db-name"], function(){
 
@@ -68,7 +63,7 @@ module.exports = {
 
 		// create a question for some user
 		
-		/*Broken because of crazy notification shit
+
 		createQuestion: function(test) {
 			var newQuestion = {
 				title: questionTitle,
@@ -93,7 +88,6 @@ module.exports = {
 			request.write(JSON.stringify({ question: newQuestion }));
 			request.end();
 		},
-		*/
 		// get the details of the question created
 		getQuestion: function(test) {	
 			this.requestOptions.method = "GET";

@@ -1,10 +1,11 @@
 var User        = require(__dirname + "/../../models/user");
 var UserProfile = require(__dirname + "/../../models/userProfile");
 var Course      = require(__dirname + "/../../models/course");
-
 var OrganizationAction = require(__dirname + "/../../controller/OrganizationAction");
-
-process.setMaxListeners(0)//LOL issue.
+var QueryES = require('./../../controller/queryES.js');
+var nlp = require('./../../controller/nlp.js');
+var question = require('./../../models/question.js');
+var comment = require('./../../models/comment.js');
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -340,11 +341,6 @@ exports.sectionsInCourse = function(request, response){
 	}
 }
 
-/*	DO NOT USE this method for REST API.
-	See:
-		- accentResourcesInSection
-		- engageResourcesInSection
-*/
 exports.resourcesInSection = function(appType, request, response){
 	if(request.method === "POST"){
 		var args = request.body;
@@ -362,13 +358,6 @@ exports.resourcesInSection = function(appType, request, response){
 	}
 }
 
-exports.accentResourcesInSection = function(request, response){
-	exports.resourcesInSection(1, request, response);
-}
-
-exports.engageResourcesInSection = function(request, response){
-	exports.resourcesInSection(2, request, response);
-}
 
 exports.numberOfResourcesInCourse = function(request, response){
 	if(request.method === "POST"){
@@ -383,3 +372,382 @@ exports.numberOfResourcesInCourse = function(request, response){
 		})
 	}
 }
+
+exports.questionRoute = function(appType, request, response) {
+	var question_id = request.params.uid;
+	if (request.method === "GET") {
+		QueryES.getQuestion(question_id, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+
+	}
+
+	//post a new question
+	else if (request.method === "POST"){
+		//if not log in, cannot create a question
+		if(request.session && request.session.user){
+			console.log(request.body.question);
+			//user, title, body, category
+			var newQuestion = new question(request.session.user.uuid
+				,request.body.question.title
+				,request.body.question.body
+				,request.body.question.category);
+
+
+			QueryES.addQuestion(newQuestion, appType, function(error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, question: result}));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
+
+	}
+
+	else if (request.method === "PUT") {
+		//TODO: need update document and unit-test
+		var questionTitle = request.body.title;
+		var questionBody = request.body.body;
+
+		QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+
+	} else if (request.method === "DELETE") {
+		QueryES.deleteQuestion(question_id, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getAllQuestions( appType, request.params.page, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+
+}
+
+exports.questionsUnansweredRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getAllUnansweredQuestions( appType, request.params.page, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsNewRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getAllNewQuestions( appType, request.params.page, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsAnsweredRoute = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getAllRecentlyAnsweredQuestions( appType, request.params.page,function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.questionsByUserRoute = function(appType, request, response) {
+	var userId = request.params.uid;
+
+	if (request.method === "GET") {
+		QueryES.getAllQuestionByUserID(userId, request.params.page, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+	//deprecated, used POST for question in questionRoute
+
+//	} else if (request.method === "POST") {
+//		queryES.addQuestion(request.body.question, appType, function(result) {
+//			if (result) {
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 0, question: result}));
+//			} else {
+//				response.writeHead(200, { 'Content-Type': 'application/json' });
+//				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+//			}
+//		});
+//	}
+}
+
+exports.followQuestionRoute = function(appType, request, response) {
+	var questionId = request.params.uid;
+
+	if (request.method === "PUT") {
+
+		if(request.session && request.session.user){
+			QueryES.addFollower(questionId, request.session.user.uuid, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, question: result}));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Duplicated Follower" }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
+
+	}
+}
+
+exports.unfollowQuestionRoute = function(appType, request, response) {
+	var questionId = request.params.uid;
+
+	if (request.method === "PUT") {
+
+		if(request.session && request.session.user){
+			QueryES.removeFollower(questionId, request.session.user.uuid, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, question: result}));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Duplicated Follower" }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
+	}
+}
+
+exports.questionStatusRoute = function(appType, request, response) {
+	var questionId = request.params.uid;
+
+	if (request.method === "PUT") {
+		QueryES.updateStatus(questionId, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, question: result}));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.commentRoute = function(appType, request, response) {
+	var comment_id = request.params.uid;
+
+	if (request.method === "GET") {
+		QueryES.getComment(comment_id, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	} else if (request.method === "POST"){
+
+		if(request.session && request.session.user){
+			//target_uuid, user, objectType, title, body
+			var newComment = new comment(request.body.comment.target_uuid
+				,request.session.user.uuid
+				,request.body.comment.objectType
+				,request.body.comment.title
+				,request.body.comment.body);
+
+			QueryES.addComment(newComment, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, comment: result}));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
+
+
+	} else if (request.method === "PUT") {
+		var commentTitle = request.body.title;
+		var commentBody = request.body.body;
+		QueryES.updateComment(comment_id, commentTitle, commentBody, appType, function(result) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 0 }));
+		});
+
+	} else if (request.method === "DELETE") {
+		QueryES.deleteComment(comment_id, appType, function(result) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 0 }));
+		});
+	}
+}
+
+exports.commentsRoute = function(appType,request,response){
+	if (request.method === "GET") {
+		QueryES.getAllComments(appType, request.params.page,function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+
+}
+
+exports.commentsByUserRoute = function(appType, request, response) {
+	var userId = request.params.uid;
+
+	if (request.method === "GET") {
+		QueryES.getAllCommentByUserID(userId, request.params.page, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+
+	//deprecated, used POST in commentRoute instead
+
+//	else if (request.method === "POST") {
+//		queryES.addComment(request.body.comment, appType, function(result) {
+//			response.writeHead(200, { 'Content-Type': 'application/json' });
+//			response.end(JSON.stringify({ errorcode: 0 }));
+//		});
+//	}
+}
+
+exports.commentVoteRoute = function(appType, request, response) {
+	var commentId = request.params.uid;
+	var direction = request.params.dir;
+
+	console.log(direction);
+
+	if (request.method === "POST") {
+		QueryES.updateVote(commentId, direction, appType, function(result) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 0 }));
+		});
+	}
+}
+
+exports.commentAnsweredRoute = function(appType, request, response) {
+	var commentId = request.params.uid;
+
+	if (request.method === "PUT") {
+		QueryES.updateIsAnswered(commentId, appType, function(result) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 0 }));
+		});
+	}
+}
+
+exports.commentsByQuestionRoute = function(appType, request, response) {
+	var question_id = request.params.uid;
+
+	if (request.method === "GET") {
+		QueryES.getCommentByTarget_uuid(question_id, request.params.page, appType, function(result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+			}
+		});
+	}
+}
+
+exports.searchRoute = function(appType, request, response) {
+	var query = request.body.query;
+
+	if (request.method === "POST") {
+
+		nlp(query, function(query){
+			console.log('query after nlp parsing is: ' + query);
+
+			QueryES.searchAll(query, request.params.page, appType, function(result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
+		});
+	}
+}
+

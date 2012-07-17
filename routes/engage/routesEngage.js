@@ -1,14 +1,14 @@
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
-var routesRqra = require("./../rqra/routesRqra.js");
+var routesCommon = require('./../common/routesCommon.js');
 
 exports.followQuestion = function(request, response) {
-	routesRqra.followQuestionRoute(2, request, response);
+	routesCommon.followQuestionRoute(2, request, response);
 }
 
 exports.unfollowQuestion = function(request, response) {
-	routesRqra.unfollowQuestionRoute(2, request, response);
+	routesCommon.unfollowQuestionRoute(2, request, response);
 }
 
 exports.getResource = function(request, response){
@@ -179,8 +179,9 @@ exports.getLikes = function(request, response){
 	}
 }
 
-
-
+exports.resourcesInSection = function(request, response){
+	routesCommon.resourcesInSection(2, request, response);
+}
 
 
 

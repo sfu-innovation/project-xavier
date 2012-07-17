@@ -266,17 +266,17 @@ var article_2 = {
 var article_3 = {
 	id : 3,
 	user : user_1,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "3South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
+	url : "http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
+	title :  "Naked rambler walks free from Perth Prison",
+	author: "",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/uk-scotland-tayside-central-18873631.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST",
+	uploaded_on : "July 17 2012,  12:00 PM PST",
 	course: "IAT 200",
 	week : "4",
-	likes: 1,
+	likes: 10,
 	description : "Check out this article",
 }
 
@@ -284,17 +284,17 @@ var article_3 = {
 var article_4 = {
 	id : 4,
 	user : userobject,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "4South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
+	url : "http://www.bbc.co.uk/news/business-18867054",
+	title :  "HSBC used by 'drug kingpins', says US Senate",
+	author: "Paul Adams",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/business-18867054.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST",
+	uploaded_on : "July 17 2012,  12:30 PM PST",
 	course: "BUS 100",
 	week : "1",
-	likes: 4,
+	likes: 7,
 	description : "wow cool",
 }
 
@@ -455,12 +455,12 @@ exports.starred = function (req, res) {
 
 }
 
-exports.article_view = function (req, res) {
+exports.articleView = function (req, res) {
 	var pickedArticle = articles[req.params.id - 1];
 
 
 	res.render("engage/article", { title:"SFU ENGAGE",
-
+		article : pickedArticle,
 		user:userobject,
 		status:"logged in"     })
 

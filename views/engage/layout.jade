@@ -37,6 +37,8 @@ html
 		
 		<!-- Included JS Files -->
 		script(src="/javascripts/jquery-1.7.2.min.js")
+		script(src="/javascripts/engage/quicksand/jquery.quicksand.js")
+		script(src="/javascripts/engage/quicksand/script.js")
 		script(src="/javascripts/engage/jquery.reveal.js")
 		script(src="/javascripts/engage/jquery.orbit-1.4.0.js")
 		script(src="/javascripts/engage/jquery.customforms.js")
@@ -52,19 +54,19 @@ html
 					h1
 						a(href="/") #{title}
 				div.three.columns#userbox
-					span  #{ user.name }
+					span  #{ user.firstName }  #{ user.lastName }
 						a  log out
 				
 			div.row.hide-for-small#nav
 				div.nine.columns
 					ul.nav-bar#options
-						li
+						li(data-value="all")
 							a(href="#") ALL RESOURCES
-						li
+						li(data-value="yours")
 							a(href="#") YOUR CONTRIBUTIONS
-						li
+						li(data-value="starred")
 							a(href="#") STARRED
-						li
+						li(data-value="prof")
 							a(href="#") INSTRUCTOR POSTS
 				div.two.columns
 					ul.nav-bar

@@ -9,12 +9,30 @@
 			"title":"Neniu scias la respondon al hejmtasko demando kvin?",
 			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
 			"category":"academic",
-			"status":"unanswered",
+			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":5231
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F04",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Kiam estas la finalo ekzameno?",
+			"body":"Kiam estas la finalo ekzameno?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":0
 		}
 	},
 	{

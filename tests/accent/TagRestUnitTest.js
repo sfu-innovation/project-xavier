@@ -12,6 +12,7 @@ var TagAction  = require(__dirname + "/../../controller/TagAction.js");
 var currentHost = config.accentServer.host;
 var currentPort = config.accentServer.port;
 
+var deletedTagID = '';
 
 module.exports = {
 	courseTest:{
@@ -67,8 +68,8 @@ module.exports = {
 			this.server.close();
 			callback();
 		},
-		// get the details of the question created
-		getCourse: function(test) {
+		// get the details of the tag created
+		getTag: function(test) {
 		
 			this.requestOptions.method = "GET";
 			this.requestOptions.path = "/api/tag/" + this.tag.uuid;
@@ -82,6 +83,70 @@ module.exports = {
 					test.ok(body.errorcode === 0 &&
 					body.tag.title === "mario kart" &&
 					body.tag.description === 'luigi');
+					test.done();
+				});
+			});
+		},
+		// update the details of the tag
+		updateTag: function(test) {
+		
+			this.requestOptions.method = "PUT";
+			this.requestOptions.path = "/api/tag/" + this.tag.uuid;
+		
+			var updatedTag = {
+				'title':'samba dance', 
+				'shared':true
+			};
+
+			var request = http.request(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);
+					console.log("sexy body:");
+					console.log(body);
+					test.ok(body.errorcode === 0 &&
+						body.tag.title === updatedTag.title);
+					test.done();
+				});
+			});
+			request.write(JSON.stringify(updatedTag));
+			request.end();
+
+		},
+		// delete a tag
+		deleteTag: function(test) {
+			this.requestOptions.method = "DELETE";
+			this.requestOptions.path   = "/api/tag/" + this.tag.uuid + "/";
+			
+			var request = http.request(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);
+					deletedTagID = body.tag.uuid;
+					console.log("deleted tag id = " + deletedTagID);
+					test.ok(body.errorcode === 0);
+					test.done();
+				});
+			});
+			request.end();
+		},
+		// double check to ensure tag's deletion
+		getDeletedTag: function(test) {
+		
+			this.requestOptions.method = "GET";
+			this.requestOptions.path = "/api/tag/" + deletedTagID;
+		
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);					
+					test.ok(body.errorcode === 1);
 					test.done();
 				});
 			});

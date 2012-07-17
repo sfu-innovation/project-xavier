@@ -8,7 +8,7 @@ block content
 					label Share a resource!
 					input(name="article_url",type="text", id="article_url", placeholder="http://")
 					input(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
-					div.row
+					div#sumbitrow
 						div.selectcourse
 							select(class="customDropdown", name="article_course", value="select a course")
 								each name , course in user.courses

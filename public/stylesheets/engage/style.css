@@ -1,6 +1,14 @@
+.row{
+	width: 1280px !important;
+}
 div#header{
 	background-color: rgba(0,0,0,0.1);
 
+}
+
+div#header h1{
+	margin: 0;
+	padding: 0;
 }
 div#nav li{
 	background-color: rgba(0,0,0,0);
@@ -8,7 +16,12 @@ div#nav li{
 	border: 0px;
 	text-align: left;
 	padding-right: 20px;
+	
 }
+div#nav ul{
+	display: inline-block;
+	width: 100%
+	}
 
 div#nav li a{
 	color: black !important;
@@ -28,13 +41,23 @@ div#nav ul#options li:hover a{
 
 li#courselist{
 	float: right;
+	padding-right:0 !important;
 }
 li#courselist a{
 	padding-right:0;
 }
 
+ul#course-nav{
+	list-style: none;
+}
+ul#mobile-nav {
+	list-style: none;
+	margin: 0;
+}
 
-
+ul#mobile-nav li{
+	display: inline;
+}
 #header .nav-bar{
 	margin-top: 5px !important;
 	background-color: rgba(0,0,0,0) !important;
@@ -44,6 +67,7 @@ li#courselist a{
 
 div#userbox{
 	text-align : right;
+	padding-top : 5px;
 	padding-bottom: 5px;
 }
 
@@ -95,10 +119,14 @@ div.selectcourse{
 	display: inline;
 	float: left;
 	margin-left: 10px;
+	}
+#sumbitrow{
+	display: inline-block;
+	width: 100%;
 }
-
 div.submit{
 	display: inline;
+	position: relative;
 	float: right;
 	margin-right: 10px;
 	margin-top: 2px;

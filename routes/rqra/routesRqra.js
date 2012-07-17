@@ -4,6 +4,14 @@ exports.demo = function(request, response) {
 	response.render('rqra/demo', { title: "Demo" });
 }
 
+exports.questionViewCount = function(request, response){
+	routesCommon.questionViewCountRoute(0, request, response);
+}
+
+exports.instructorQuestions = function(request, response){
+	routesCommon.instructorQuestionsRoute(0, request, response);
+}
+
 exports.question = function(request, response) {
 	routesCommon.questionRoute(0, request, response);
 }

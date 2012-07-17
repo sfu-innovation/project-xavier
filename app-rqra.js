@@ -59,6 +59,8 @@ app.post("/api/question", routesRqra.question); // post a new question by user i
 
 
 //TODO: need update this into document
+app.put("/api/questions/view/:uid", routesRqra.questionViewCount); // increase view count
+app.get("/api/questions/instructor/page/:page", routesRqra.instructorQuestions);	//get all instructor questions
 app.get("/api/questions/page/:page", routesRqra.questions); //P, get all questions
 app.get("/api/questions/unanswered/page/:page", routesRqra.questionsUnanswered); //P, get all unanswered questions
 app.get("/api/questions/new/page/:page", routesRqra.questionsNew); //P get all new questions
@@ -99,7 +101,7 @@ app.get("/api/user/:uid/comments/:page", routesRqra.commentsByUser); //P gets a 
 
 //deprecated
 //app.post("/api/user/:uid/comments", routesRqra.commentsByUser); // user posts a comment
-app.post("/api/comment/:uid/vote/:dir", routesRqra.commentVote); // votes on a comment
+app.put("/api/comment/:uid/vote/:dir", routesRqra.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesRqra.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments/:page", routesRqra.commentsByQuestion); // P get all of the comments for a question
 

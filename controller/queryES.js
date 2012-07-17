@@ -8,6 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	organizationAction = require('./OrganizationAction.js'),
 	async = require('async'),
+	user = require('../models/user.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -51,6 +52,60 @@ QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, call
 		}
 		callback(questions);
 	})
+}
+
+
+QueryES.prototype.questionViewCount = function(questionID, appType, callback){
+	var data;
+	var link = '/' + switchIndex(appType) + '/questions/' + questionID +'/_update';
+
+	data = {
+		'script':'ctx._source.viewCount += viewCount',
+		'params':{
+			'viewCount':1
+		}
+	}
+
+	//increment the vote found at commentID
+	db.post(link, data, function(err, req, data){
+		if (data) {
+			callback(data);
+		}
+		else {
+			callback(undefined);
+		}
+	})
+}
+
+QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
+	var data = {
+			"query": {
+				"term": {
+					"isInstructor": "true"
+				}
+			},
+			"sort": [
+				{
+					"timestamp": {
+						"order": "desc"
+					}
+				}
+			],
+		from: paging(pageNum),
+		size: sizeOfResult
+	};
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits); //only need the hits.hits part
+		}
+		else{
+			callback(undefined);
+		}
+	});
 }
 
 //get a question
@@ -121,7 +176,9 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, ca
 QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callback){
 	var data = {
 		query: {
-			term:{status:"unanswered"}
+			term:{
+				status:"unanswered"
+			}
 		},
 		from: paging(pageNum),
 		size: sizeOfResult
@@ -253,12 +310,28 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	delete data.sectionUuid;
 
-	console.log("Creating new")
-	notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
-		if(result){
+	user.selectUser({"uuid":data.user}, function(error, user){
+		if(user){
+			if(user.type === 1){
+				data.isInstructor = 'true';
+			}else{
+				data.isInstructor = 'false';
+			}
+
 			document.set(data, function(err, req, data){
 				if(data){
-					organizationAction.addResourceToSection(args, callback);
+					console.log('Added question to ES');
+					organizationAction.addResourceToSection(args, function(err, result){
+						console.log('Added question resource to section');
+						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+							if(result){
+								console.log('Added question notification');
+								callback(data);
+							}else{
+								callback(undefined);
+							}
+						});
+					});
 				}else{
 					callback(undefined);
 				}
@@ -266,8 +339,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 		}else{
 			callback(undefined);
 		}
-
-	});
+	})
 }
 
 //Add a new follower

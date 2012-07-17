@@ -12,7 +12,9 @@
 		"status":"unanswered",
 		"created":"2012-07-09T18:19:31.204Z",
 		"timestamp":"2012-07-09T18:19:31.204Z",
-		"followup":[]
+		"followup":[],
+		"isInstructor":"true",
+		"viewCount":0
 		}
 	},
 	{
@@ -30,7 +32,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -48,7 +51,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -58,13 +62,15 @@
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"What the fuck dude?",
+			"title":"What the **** dude?",
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"followup":[]
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	},
 	{
@@ -80,7 +86,9 @@
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"followup":[]
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	},
 	{
@@ -98,7 +106,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -116,7 +125,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -126,13 +136,15 @@
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"What the fuck dude?",
+			"title":"What the muck dude?",
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"followup":[]
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	},
 	{
@@ -148,7 +160,9 @@
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"followup":[]
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	},
 	{
@@ -166,7 +180,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -184,7 +199,8 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false"
+			"isAnswered":"false",
+			"isInstructor":"true"
 		}
 	},
 	{
@@ -194,13 +210,15 @@
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"What the fuck dude?",
+			"title":"What the duck dude?",
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"followup":[]
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	}
 ]

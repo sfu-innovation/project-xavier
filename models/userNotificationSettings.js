@@ -42,17 +42,27 @@ function contains(a, obj) {
   	usernotificationsettings : the object representation of the user notification setting
   	to be updated
   	
-  	motificationsOnResource :
-  	notificationOnLike      :
-  	notificationOnComment   :
-  	notificationOnStar      :
+  	motificationsOnResource : 0 - 3
+  	notificationOnLike      : 0 - 3
+  	notificationOnComment   : 0 - 3
+  	notificationOnStar      : 0 - 3
   	
   }
   
   returns an error if not possible to update or else the updated user notification settings
 */
 exports.updateUserNotificationSettings = function(args, callback){
-	//console.log( args.
+	var containsAllProperties = (args.hasOwnProperty('usernotificationsettings') &&
+	                              args.hasOwnProperty('notificationOnNewResource') &&
+		                               args.hasOwnProperty('notificationOnLike') &&
+		                           args.hasOwnProperty('notificationOnComment')  &&
+		                            args.hasOwnProperty('notificationOnStar'));
+		
+	if ( args === null || !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
 	args.usernotificationsettings.updateAttributes({
 		notificationOnNewResource : args.notificationOnNewResource,
 		notificationOnLike        : args.notificationOnLike,
@@ -77,9 +87,25 @@ args = {
 Returns the notification setting that was created or a user
 */
 exports.addNotificationSetting = function( args, callback){
-	this.findNotificationSettings( args, function( error, notificationSettings ){
+
+	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('app'));
+		
+	if ( args === null || !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+		
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.app  = args.app;
+	
+	// we want to check if we can see see this setting, if it doesnt exist then we will
+	// create a new user notification setting for this app
+	
+	this.findNotificationSettings( arg, function( error, notificationSettings ){
 		if ( null === notificationSettings ){
-			var newSettings = UserNotificationSettings.build(args);
+			var newSettings = UserNotificationSettings.build(arg);
 			newSettings.save().error(function(error){
 				callback( error, null);
 			}).success(function( setting ){
@@ -99,10 +125,24 @@ exports.addNotificationSetting = function( args, callback){
 	returns the notification settings(array) or an error
 */
 exports.findNotificationSettings = function(args, callback ) {
-
-	UserNotificationSettings.find({where : { user : args.user,
-                                                app : args.app }
-    }).success(function(notificationSettings ){
+	if ( args === null || args === undefined){
+		callback("args is null", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') &&
+	                             args.hasOwnProperty('app'));
+		
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;	
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.app  = args.app;
+	
+	UserNotificationSettings.find({where : arg 
+	}).success(function(notificationSettings ){
     	callback( null, notificationSettings );
     }).error(function(error){
     	callback( error, null );

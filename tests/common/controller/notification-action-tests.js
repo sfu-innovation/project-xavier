@@ -33,7 +33,7 @@ module.exports = {
 			});
 		},
 		
-		/*"Add Notification Listener" : function( test ){
+	/*	"Add Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
@@ -50,7 +50,8 @@ module.exports = {
 				});
 			});
 		},
-		
+		*/
+		/*
 		"Remove Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
@@ -62,9 +63,11 @@ module.exports = {
 				test.ok( listener.should.have.property('user', 'A7S7F8GA7SD11A7SDF8ASD7G'));
 				test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8AS87G'));
 				args.listener = listener.uuid;
-				NotificationAction.removeNotifier( args, function( error, removedListener ){
+				NotificationAction.removeNotifier( args, function( error, removedUserNotifications ){
+					
 					NotificationListener.findNotificationListener( args, function( error, listener ){
 						if ( null === listener ){
+							test.ok(removedUserNotifications.should.have.lengthOf(2));
 							test.done();
 						}
 					});
@@ -72,20 +75,28 @@ module.exports = {
 			});
 				
 		}, */
-	/*	"Add User Notification" : function( test ){
+		"Add User Notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
 				user        : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				app         : 1,
-				event       : 3,
+				event       : 1,
 				description : 'Alex is testing  a notification for the add user notification test'
 			}
 			
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){
-					test.done();
+					if ( newNotifications ){
+						console.log( newNotifications);
+						test.done();
+					}
+					else {
+						console.log("ERROR "+ error );
+						test.done();
+					}
+					//test.done();
 				});
 			
-		*/
+		},
 	//	test.done(); // cant fucking test it right now.. i know i know.
 		//} , 
 		

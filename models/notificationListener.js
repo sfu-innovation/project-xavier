@@ -38,8 +38,26 @@ args = {
 returns the newNotificationListener or an error
 */
 exports.createNotificationListener = function( args, callback){
-	args.uuid = UUID.generate();
-	var newNotification = NotificationListener.build(args);
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('target') &&
+		args.hasOwnProperty('event') );
+	if (  !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+		
+	}
+	
+	var arg = new Object();
+	arg.user   = args.user;
+	arg.target = args.target;
+	arg.event  = args.event;
+	arg.app    = args.app;
+	
+	arg.uuid = UUID.generate();
+	var newNotification = NotificationListener.build(arg);
 	newNotification.save().error(function(error){
 		callback( error, null );
 	}).success(function( newNotificationListener ){
@@ -58,6 +76,16 @@ args = {
 */
 
 exports.removeNotificationListener = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('notificationlistener'));
+	if (!containsAllProperties || args.notificationlistener === null){
+		callback("Invalid args ", null );
+		return;
+		
+	}
 	args.notificationlistener.destroy().success( function( removedElement ){
 		callback(null, removedElement);
 	}).error(function(error){
@@ -78,6 +106,19 @@ exports.removeNotificationListener = function( args, callback ){
 	of target and event OR an error
 */
 exports.findAllNotificationListeners = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('app') && args.hasOwnProperty('target') &&
+		args.hasOwnProperty('event') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;
+		
+	}
+	
 	NotificationListener.findAll({where : { app : args.app,
 	                                        target : args.target,
 	                                        event : args.event}
@@ -94,6 +135,7 @@ exports.findAllNotificationListeners = function( args, callback ){
 			user : The user who will be alerted
 			target : The resource which has changed
 			event : The event which has happened on that resource
+			app   : appId
 		}
 		
 	Returns the requested notification listener ( you will still need to check for null)
@@ -101,9 +143,22 @@ exports.findAllNotificationListeners = function( args, callback ){
 	
 	*/
 exports.findNotificationListener = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('target') &&
+		args.hasOwnProperty('event') && args.hasOwnProperty('app'));
+		
+	if (!containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+		
+	}
 	NotificationListener.find( { where : { user : args.user,
 								   target : args.target,
-								   event : args.event }
+								   event : args.event,
+								   app    : args.app }
 	}).success( function(notification) {
 		callback(null, notification);
 	}).error(function(error){

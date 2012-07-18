@@ -30,6 +30,17 @@ var UserNotification = exports.UserNotification = db.define('UserNotification', 
 	returns all of the notifications under that listener or an error
 */
 exports.selectUserNotifications = function(args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('listener'));
+		                            
+	if (!containsAllProperties || args.listener === null){
+		callback("Invalid args ", null );
+		return;
+	}
+	
 	UserNotification.findAll({ where : {listener : args.listener}
 	}).success( function(notifications){
 		callback( null, notifications );
@@ -46,6 +57,16 @@ exports.selectUserNotifications = function(args, callback){
 	returns an error or an array of unsent notifications set to go off at a certain time
 */
 exports.selectUnsentUserNotificationsByTime = function(args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('wait'));
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
 	UserNotification.findAll({where : { wait: args.wait, emailSent: false }}).success(function( notifications){
 		callback(null,notifications);
 	}).error(function(error){
@@ -63,6 +84,17 @@ exports.selectUnsentUserNotificationsByTime = function(args, callback){
 	return the newly updated user notifications
 */
 exports.markAsSentUserNotifications = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('usernotifications'));
+		                            
+	if (  !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
 	var arr = new Array();
 	async.forEachSeries( args.usernotifications, function( notification, callback ){
 		notification.updateAttributes({ emailSent : true }).error(function(error){
@@ -91,6 +123,17 @@ exports.markAsSentUserNotifications = function( args, callback ){
 	Returns the removed user notification or an error
 */
 exports.removeUserNotifications = function( args, callback) {
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('usernotifications'));
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
 	var arr = new Array();
 	async.forEachSeries( args.usernotifications, function( userNotification, callback){
 		userNotification.destroy().error(function(error){
@@ -122,7 +165,29 @@ exports.removeUserNotifications = function( args, callback) {
 	returns either the newly saved user notification or an error
 */
 exports.createUserNotification = function( args, callback ) {
-	var userNotification = UserNotification.build(args);
+	
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('listener') &&
+	                              args.hasOwnProperty('description') &&
+		                               args.hasOwnProperty('emailSent') &&
+		                           args.hasOwnProperty('wait'));
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
+	var arg = new Object();
+	
+	arg.listener    = args.listener;
+	arg.description = args.description;
+	arg.emailSent   = args.emailSent;
+	arg.wait        = args.wait;
+	
+	var userNotification = UserNotification.build( arg );
 	userNotification.save().error(function(error){
 		callback( error, null );
 	}).success(function(savedUserNotification){

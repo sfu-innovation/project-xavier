@@ -32,7 +32,8 @@ block content
 							span.typicn.tick#prof(title="instructor")
 						div.post_details 
 							p Posted in 
-								span.coursename #{coursename}
+								span.coursename 
+									a(href="/course/#{coursename}) #{coursename}
 								span.post_time(id="post_time_#{counter}") 
 								
 						h5

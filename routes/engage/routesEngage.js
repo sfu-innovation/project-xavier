@@ -232,14 +232,14 @@ var article_1 = {
 	id : 1,
 	user : user_1,
 	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "1South Korea unveils 'scientific' whaling proposal",
+	title :  "South Korea unveils 'scientific' whaling proposal",
 	author: "Richard Black",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
 	path : "/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "May 6 2012,  12:30 PM PST",
-	course: "CMPT 120",
+	course: "CMPT120",
 	week : "1",
 	likes: 5,
 	description : "please read this for the midterm.",
@@ -258,7 +258,7 @@ var article_2 = {
 	path : "/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 16 2012,  12:30 AM PST",
-	course: "CMPT 120",
+	course: "CMPT120",
 	week : "4",
 	likes: 2,
 	description : "what?!",
@@ -277,7 +277,7 @@ var article_3 = {
 	path : "/resources/articles/f1311fc37403ff7518ab0a1b77c69804.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 17 2012,  12:00 PM PST",
-	course: "IAT 200",
+	course: "IAT200",
 	week : "4",
 	likes: 10,
 	description : "Check out this article",
@@ -296,7 +296,7 @@ var article_4 = {
 	path : "/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 17 2012,  12:30 PM PST",
-	course: "BUS 100",
+	course: "BUS100",
 	week : "1",
 	likes: 7,
 	description : "wow cool",
@@ -314,7 +314,7 @@ var article_5 = {
 	path : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 15 2012,  12:30 PM PST",
-	course: "IAT 200",
+	course: "IAT200",
 	week : "2",
 	likes: 6,
 	description : "what?!",
@@ -323,9 +323,9 @@ var article_5 = {
 }
 
 userobject.courses = {
-		"CMPT 120" : [article_1, article_2],
-		"BUS 100" : [article_4],
-		"IAT 200" : [article_3, article_5]
+		"CMPT120" : [article_1, article_2],
+		"BUS100" : [article_4],
+		"IAT200" : [article_3, article_5]
 	};
 
 
@@ -525,4 +525,21 @@ exports.contributions = function (req, res) {
 		user:userobject,
 		contributions : myarticles,
 		status:"logged in"     })
+}
+exports.courseView = function (req, res) {
+	var selectedCourse = req.params.id;
+	var courseArticles = [];
+	for (i in articles) {
+		if (articles[i].course === selectedCourse){
+			courseArticles.push(articles[i])
+		}
+	}
+
+	res.render("engage/course", { title:"SFU ENGAGE",
+		course : selectedCourse,
+		user:userobject,
+		courseArticles : courseArticles,
+		status:"logged in"     })
+
+
 }

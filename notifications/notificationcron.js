@@ -22,13 +22,13 @@ var flag = process.argv[2];
 var waitTime;
 switch( flag ){
 	case "--day" :
-		waitTime = "day";
+		waitTime = 1;
 		break;
 	case "--week" :
-		waitTime = "week";
+		waitTime = 2;
 		break;
 	case "--month" :
-		var waitTime = "month";
+		var waitTime = 3;
 		break;
 	default :
 		console.log(' not a valid time :( '+flag);
@@ -44,20 +44,19 @@ function contains(a, obj) {
     }
     return -1;
 }
-var apps = ["accent", "RQRA", "Engage"];
-
+var visible_apps = ["RQRA", "Accent", "Engage"];
+var apps = [ 0, 1, 2];
 
 function compileEmail( arr ){
 	User.find({ where: { UUID: arr[0].user}}).success( function( user ){
 		if ( user != null ) {
-			console.log( user.email );
 			var i = 0;
 			var str = "";
-			str+=("You have "+arr.length+ " " + arr[0].app + " notification(s)\n==================\n");
+			str+=("You have "+arr.length+ " " + visible_apps[arr[0].app] + " notification(s)\n==================\n");
 			for (; i < arr.length; i++){
 				str+=( i+") "+arr[i].description +"\n");
 			}
-			str+=("\n\n Thanks for using our service,\n\tSFU Mobile team\n\n");
+			str+=("\n\n Thanks for using our service,\n\t"+visible_apps[arr[0].app] +" team\n\n");
 			console.log( str );
 		
 			if ( !debug ) {

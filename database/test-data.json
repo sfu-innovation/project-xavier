@@ -390,6 +390,26 @@
 		{
 			"section": "A827341H7AFFFFG9",
 			"material": "A7S7FHGA7SD11A7SDF8ASD7G"
+		},
+		{
+			"section": "1",
+			"material": "1"
+		},
+		{
+			"section": "2",
+			"material": "2"
+		},
+		{
+			"section": "2",
+			"material": "3"
+		},
+		{
+			"section": "2",
+			"material": "4"
+		},
+		{
+			"section": "2",
+			"material": "5"
 		}
 	],
 	"resources":[

@@ -109,7 +109,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -128,7 +129,8 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":100,
-			"commentCount":1
+			"commentCount":1,
+			"commentParent":""
 		}
 	},
 	{
@@ -146,7 +148,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
 	{
@@ -183,7 +186,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
 	{
@@ -201,7 +205,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F10"
 		}
 	},
 	{
@@ -238,7 +243,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -256,7 +262,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -312,7 +319,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -330,7 +338,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{

@@ -513,5 +513,16 @@ exports.articleView = function (req, res) {
 
 
 }
-
-
+exports.contributions = function (req, res) {
+	var myarticles = [];
+	for (i in articles) {
+		if (articles[i].user === userobject){
+			myarticles.push(articles[i])
+		}
+	}
+	console.log(myarticles);
+	res.render("engage/contributions", { title:"SFU ENGAGE",
+		user:userobject,
+		contributions : myarticles,
+		status:"logged in"     })
+}

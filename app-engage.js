@@ -113,6 +113,8 @@ app.post('/', routesEngage.index);
 
 app.get('/starred', routesEngage.starred);
 
+app.get('/mine', routesEngage.contributions);
+
 //article - this is resource
 
 app.get('/article/:id', routesEngage.articleView);

@@ -37,14 +37,17 @@ app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 app.get('/logout', routesCommon.logout);
 
+// main views
+app.get('/questions', routesRqra.questionListPage);
+
 // components
-app.get('/header', routesRqra.header);
-app.get('/courses', routesRqra.courseList);
-app.get('/timeline', routesRqra.timeline);
-app.get('/questions', routesRqra.questionList);
-app.get('/question', routesRqra.questionDetails);
-app.get('/new', routesRqra.questionForm);
-app.get('/notification', routesRqra.notificationList);
+app.get('/component/header', routesRqra.header);
+app.get('/component/courses', routesRqra.courseList);
+app.get('/component/timeline', routesRqra.timeline);
+app.get('/component/questions', routesRqra.questionList);
+app.get('/component/question', routesRqra.questionDetails);
+app.get('/component/new', routesRqra.questionForm);
+app.get('/component/notification', routesRqra.notificationList);
 
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses
@@ -101,8 +104,8 @@ app.post("/api/search/page/:page", routesRqra.search); // search based on a quer
 //TODO: need update this into document
 app.post("/api/comment",routesRqra.comment); // post a new comment by user id stored in seesion object
 
-app.get("/api/comments/:page", routesRqra.comments); //P get all comments
-
+app.get("/api/comments/page/:page", routesRqra.comments); //P get all comments
+app.get("/api/comment/count/:uid", routesRqra.commentCount);
 app.get("/api/comment/:uid", routesRqra.comment); // get a comment by id
 app.put("/api/comment/:uid", routesRqra.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesRqra.comment); //deletes a comment by id

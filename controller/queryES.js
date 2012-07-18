@@ -581,7 +581,7 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	});
 }
 
-QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
+QueryES.prototype.getCommentCount = function(appType, questionUuid, callback){
 	var data = {
 		query: {
 			term: {
@@ -595,10 +595,10 @@ QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits){
-			addUsersToData(data, callback);
+			callback(null, parseInt(data.hits.total));
 		}
 		else{
-			callback(undefined);
+			callback(err);
 		}
 	});
 }
@@ -648,7 +648,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		if(updateResult){
 			document.set(data, function(err, req, esData){
 				if (esData) {
-/*Alex's stuff
+/*
 					var args = {
 						target:data.target_uuid
 						,app:appType
@@ -663,17 +663,16 @@ QueryES.prototype.addComment = function(data, appType, callback){
 							notification.addCommentNotifier(args, function(err, result){
 								if(result){
 									console.log("successfully added comment notification");
-									callback(esData);
+									callback(null, esData);
 								}else{
-									callback(undefined);
+									callback(err);
 								}
 							});
 						}else{
-							callback(undefined);
+							callback(err);
 						}
-					});
- */
-					callback(null, esData);
+					});*/
+					callback(null, esData); //remember to remove this when adding alex's notification
 				}else {
 					callback(err);
 				}
@@ -682,8 +681,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 			callback(err);
 		}
 	});
-
-
 }
 
 //update comment body based on commentID

@@ -26,11 +26,11 @@
 		"port":""
 	},
 	"emailsettings" :{
-		 "user": "",
+		 "user": "sfu.mobile.innovation@gmail.com",
 		 "password": "",
-		 "host": "",
-		 "ssl": "",
-		 "from": ""
+		 "host": "smtp.gmail.com",
+		 "ssl": true"",
+		 "from": "Administrator"
 	},
 	"dictionaryDB":{
 		"host":"",

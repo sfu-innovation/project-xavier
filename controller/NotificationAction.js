@@ -71,9 +71,9 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( arg, function( error, listeners ){
-		
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
+
 				if ( settings == undefined || settings === null){
 					callback("error occurred "+error, null);
 					return;
@@ -94,7 +94,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				}
 				arg.user     = listener.user;
 				arg.listener = listener.uuid;
-				
+
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);
@@ -342,7 +342,6 @@ message needs to be of type "UserNotification" or else when we try to save it wi
 an error 
 */
 function compileEmail( args, callback ){
-
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);
 		return;
@@ -355,6 +354,7 @@ function compileEmail( args, callback ){
 		callback("Invalid args ", null );
 		return;
 	}
+	
 	if ( 0 != args.wait ){
 		callback(null, 1);
 		return;
@@ -374,19 +374,20 @@ function compileEmail( args, callback ){
 			str+=("You have 1 " + title + " notification!\n==================\n");
 				str+=( 1+") "+ msg.description +"\n");
 			str+=("\n\n Thanks for using our service,\n\t"+title+" Mobile team\n\n");
+			
+			
 			var message = {
    				text:    str,
    				from:    config.emailsettings.from,
    				to:      userFound.firstName+ " " +userFound.lastName+"<"+userFound.email+">",
    				subject: title +" notification"
 		 	};
+		 	
 		 	server.send(message, function(err, message){
 		 		if ( err ){
 		 			callback( err, null );
-		 		//	return;
 		 		} else {
 		 			callback( null, message );
-		 		//	return;
 		 		}
 		 		
 		  	});
@@ -967,6 +968,33 @@ NotificationAction.prototype.selectUserNotificationsForUserOnApp = function( arg
 		}
 		else {
 			callback( null, notifications );
+		}
+	});
+}
+
+NotificationAction.prototype.createUserNotificationSettings = function( args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('app') &&
+	                              args.hasOwnProperty('user'));
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
+	var arg = new Object();
+	arg.app = args.app;
+	arg.user = args.user;
+	
+	UserNotificationSettings.addNotificationSetting( arg, functino( error, newSettings ){
+		if( error){
+			callback(error, null);
+		}
+		else {
+			callback(null, newSettings);
 		}
 	});
 }

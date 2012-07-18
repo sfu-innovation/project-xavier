@@ -17,6 +17,11 @@ exports.questionList = function(request, response) {
 	response.render('rqra/component/questionList', { title: "Demo" });
 }
 
+exports.questionListPage = function(request, response) {
+	response.render('rqra/questionsPage', { title: "Demo" });
+}
+
+
 exports.questionDetails = function(request, response) {
 	response.render('rqra/component/questionDetails', { title: "Demo" });
 }

@@ -137,3 +137,7 @@ div.pageNumberButton {
 	text-decoration:underline;
 	cursor: pointer;
 }
+
+div.votes img {
+	width: 12px;
+}

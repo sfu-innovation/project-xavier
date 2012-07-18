@@ -33,7 +33,7 @@ module.exports = {
 			});
 		},
 		
-		"Add Notification Listener" : function( test ){
+	/*	"Add Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
@@ -74,7 +74,7 @@ module.exports = {
 				});
 			});
 				
-		}, 
+		}, */
 		"Add User Notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
@@ -102,7 +102,7 @@ module.exports = {
 				});
 			
 		}, 
-	   "Remove User Notifications" : function( test ){
+	  /* "Remove User Notifications" : function( test ){
 			args = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event : 1 ,
@@ -164,6 +164,6 @@ module.exports = {
 			
 			
 		}
-		
+		*/
 	}
 }

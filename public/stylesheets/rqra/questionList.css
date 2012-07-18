@@ -1,0 +1,123 @@
+div#content {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	margin-right: 25px;
+}
+
+h1#courseTitle {
+	font-weight: normal;
+	font-size: 0.8em;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+span.inserted {
+	text-decoration:underline;
+}
+
+h2#sectionTitle {
+	font-weight: bold;
+	font-size: 2em;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+span#sectionName {
+	font-weight: normal;
+}
+
+div#questionHeader {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#questionCount {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	font-size: 2em;
+	font-weight: bold;
+	margin-top: 70px;
+	margin-right: 10px;
+}
+
+div#questionCountNumber {
+	margin-right: 5px;
+}
+
+div#questionCountText {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
+	font-size: 0.5em;
+	font-weight: normal;
+}
+
+div#questionTabs {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#questionTabs div.tab {
+	margin: 5px;
+	font-size: 0.8em;
+}
+
+div.questionPromoted {
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #ffe450;
+	width: 700px;
+}
+
+div.question {
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+div.questionText {
+	margin: 5px;
+}
+
+div.questionData {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div.questionData div {
+	margin: 5px;
+	padding: 2px;
+}
+
+div.profResponsesRecent {
+	background: #ffe450;
+}
+
+div#pageNumber {
+	padding-bottom: 20px;
+}
+
+div#pageNumber img {
+	width: 12px;
+}

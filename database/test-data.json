@@ -1,6 +1,22 @@
 {
 	"users": [
 		{
+			"uuid":"1",
+			"firstName":"Mark",
+			"lastName":"Ni",
+			"type":1,
+			"userID":"xna2",
+			"email":"xna2@sfu.ca"
+		},
+		{
+			"uuid":"2",
+			"firstName":"Cathrine",
+			"lastName":"Tan",
+			"type":1,
+			"userID":"llt3",
+			"email":"llt3@sfu.ca"
+		},
+		{
 			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G",
 			"firstName":"Mike",
 			"lastName":"Klemarewski",
@@ -67,6 +83,14 @@
 			"subject":"CMPT",
 			"number":371,
 			"instructor":"BSDF787D98ASDF099D7G"
+		},
+		{
+			"uuid":"11",
+			"title":"Graphic Design",
+			"section":"D100",
+			"subject":"IAT",
+			"number":102,
+			"instructor":"BSDF787D98ASDF099D7G"
 		}
 	],
 	"courseMembers":[
@@ -85,6 +109,22 @@
 		{
 			"course":"A827346H7ASDFG9",
 			"user":"A7S7F8GA7SD98A7SDF8ASD7G"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"1"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"2"
+		},
+		{
+			"course":"11",
+			"user":"1"
+		},
+		{
+			"course":"11",
+			"user":"2"
 		}
 	],
 	"notificationlistener":[
@@ -290,6 +330,15 @@
 			"course"  : "A8G7S6H7ASDFG9",
 			"section" : "A827341H7AFFFFG9",
 			"app"       : 2
+		},
+		{
+			"course"  : "11",
+			"section" : "1",
+			"app"       : 2
+		},		{
+			"course"  : "11",
+			"section" : "2",
+			"app"       : 2
 		}
 	],
 	"sections":[
@@ -311,6 +360,20 @@
 		{
 			"uuid": "A827341H7AFFFFG9",
 			"title": "section description 4",
+			"app": 2
+		},
+		{
+			"uuid": "A827341H7AFFFFG9",
+			"title": "section description 4",
+			"app": 2
+		},
+		{
+			"uuid": "1",
+			"title": "WEEK 1",
+			"app": 2
+		},		{
+			"uuid": "2",
+			"title": "WEEK 2",
 			"app": 2
 		}
 	],
@@ -385,7 +448,7 @@
 		},
 		{
 			"uuid" : "1",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "1",
 			"course": "A827346H7ASDFG9",
 			"title" : "South Korea unveils 'scientific' whaling proposal",
 			"author" : "Richard Black",
@@ -396,12 +459,13 @@
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/1/1.jpg"
 
 		} ,
 		{
 			"uuid" : "2",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "1",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Create an Abstract Geometric Mosaic Text Effect",
 			"author" : "Chris Spooner",
@@ -412,12 +476,13 @@
 			"fileType" : "mp4",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/2/1.jpg"
 
 		},
 		{
 			"uuid" : "3",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "2",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Interview Effectively",
 			"author" : "Richard Black",
@@ -428,12 +493,13 @@
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/3/1.jpg"
 
 		},
 		{
 			"uuid" : "4",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "2",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -444,12 +510,13 @@
 			"fileType" : "mp4",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/4/1.jpg"
 
 		},
 		{
 			"uuid" : "5",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "BSDF787D98A7SDF8ASD7G",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -460,9 +527,28 @@
 			"fileType" : "mp4",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/5/1.jpg"
+
+		},
+		{
+			"uuid" : "6",
+			"user" : "BSDF787D98A7SDF8ASD7G",
+			"course": "A827346H7ASDFG9",
+			"title" : "How To Interview Effectively",
+			"author" : "Victor Lipman",
+			"publishedDate": "28 June 2012",
+			"description" : "Test resource description",
+			"path" : "/resources/articles/how-to-interview-effectively.html",
+			"resourceType" : 2,
+			"fileType" : "mp4",
+			"likes" : 2,
+			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"thumbnail": "/resources/thumbnails/6/1.jpg"
 
 		}
+
 
 	],
 	"tags": [
@@ -526,5 +612,32 @@
 			"reviewlater":true,
 			"shared":false
 		}
+	] ,
+	"stars": [
+		{
+			"user": 1,
+			"resource" : 1
+		},
+		{
+			"user": 1,
+			"resource" : 2
+		},
+		{
+			"user": 1,
+			"resource" : 3
+		},
+		{
+			"user": 2,
+			"resource" : 1
+		},
+		{
+			"user": 2,
+			"resource" : 4
+		},
+		{
+			"user": 2,
+			"resource" : 5
+		}
+
 	]
 }

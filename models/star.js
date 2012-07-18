@@ -110,6 +110,7 @@ exports.getStarredResources = function (userUUID, callback) {
 											})
 										}
 										, function (err) {
+											console.log(parsedResult);
 
 											callback(null, parsedResult);
 										});

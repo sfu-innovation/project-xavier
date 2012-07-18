@@ -76,50 +76,60 @@ exports.getStarredResources = function (userUUID, callback) {
 			if (resourceUUIDs) {
 				Resource.findAll({where:{uuid:resourceUUIDs}}).success(
 					function (resources) {
-
-						async.forEach(resources, function (resource, callback) {
-							Course.selectCourse({'uuid':resource.course}, function (error, course) {
-								if (course) {
-									resource.course = course;
-								}
-								callback();
-							})
-
-						}, function (err) {
-							async.forEach(resources, function (resource, callback) {
-
-									User.selectUser({"uuid":resource.user}, function (error, user) {
-										if (user) {
-											resource.user = user;
+						var parsedResult;
+						async.series({
+							one: function(callback){
+								async.forEach(resources, function (resource, callback) {
+									Course.selectCourse({'uuid':resource.course}, function (error, course) {
+										if (course) {
+											resource.course = course;
 										}
 										callback();
-									});
-								},
-								function (err) {
+									})
 
+								}, function (err) {callback(err)})
 
-									var parsedResult = JSON.parse(JSON.stringify(resources));
+							},
 
-									async.forEach(parsedResult, function (resource, callback) {
-											ES.getCommentCount(resource.uuid, 2, function (total) {
+							two: function(callback){
+								async.forEach(resources, function (resource, callback) {
 
-												resource.totalComments = total;
-
-
-												callback();
-											})
-										}
-										, function (err) {
-											console.log(parsedResult);
-
-											callback(null, parsedResult);
+										User.selectUser({"uuid":resource.user}, function (error, user) {
+											if (user) {
+												resource.user = user;
+											}
+											callback();
 										});
-								});
+									},
+									function (err) {callback(err)})
 
 
-						});
-//
-					}).error(function (error) {
+							},
+
+							three: function(callback){
+								parsedResult = JSON.parse(JSON.stringify(resources));
+								async.forEach(parsedResult, function (resource, callback) {
+										ES.getCommentCount(resource.uuid, 2, function (total) {
+
+											resource.totalComments = total;
+
+
+											callback();
+										})
+									}
+									, function (err) {callback(err) })
+							}
+
+
+						}, function(err){
+							console.log(parsedResult);
+
+							callback(null, parsedResult);
+
+						}) ;
+
+
+				}).error(function (error) {
 						callback(error, null);
 					})
 			}

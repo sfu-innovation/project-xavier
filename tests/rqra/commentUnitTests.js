@@ -66,7 +66,7 @@ module.exports = {
 		},
 		
 		// create a comment for some user
-		createComment: function(test) {
+		"create comment": function(test) {
 			
 			var newComment = {
 				target_uuid: questionUUID,
@@ -96,7 +96,7 @@ module.exports = {
 		},
 		
 		// get the details of a comment
-		getComment: function(test) {
+		"get comment": function(test) {
 			this.requestOptions.method = "GET";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 		
@@ -113,9 +113,22 @@ module.exports = {
 				});
 			});
 		},
-		
+		"get all comments": function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path   = "/api/comments/0";
+
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					test.ok(body.errorcode === 0);
+					test.done();
+				})
+			})
+		},
 		// update a comment
-		updateComment: function(test) {
+		"update comment": function(test) {
 			this.requestOptions.method = "PUT";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 
@@ -133,10 +146,8 @@ module.exports = {
 			request.write(JSON.stringify({ commentBody: commentBody }));
 			request.end();
 		},
-
-		
 		// delete a comment
-		deleteComment: function(test) {
+		"delete comment": function(test) {
 			this.requestOptions.method = "DELETE";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 			
@@ -152,6 +163,7 @@ module.exports = {
 				});
 			});
 			request.end();
-		}
+		},
+
 	}
 }

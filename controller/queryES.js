@@ -603,7 +603,7 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -831,7 +831,7 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 
 	mapping.search(data, function(err, data){
 		if(data) {
-			callback(data.hits);
+			getUserObj(data, callback);
 		} else {
 			callback(undefined);
 		}

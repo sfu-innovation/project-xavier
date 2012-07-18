@@ -11,6 +11,12 @@ exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
 }
 
+exports.logout = function(request, response) {
+	console.log('loging out...');	
+	request.session.destroy();	
+	response.redirect('home');
+}
+
 exports.login = function(request, response) {
 	var CAS = require('mikeklem-cas');
 	var cas = new CAS({base_url: 'https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/serviceValidate', service: 'http://'+request.headers['host']+'/login'});
@@ -18,6 +24,7 @@ exports.login = function(request, response) {
 	
 	//Pass ticket to CAS Validation url, or redirect to the CAS login page to get a ticket
 	var ticket = request.query["ticket"];
+	
 	if (ticket) {
 		cas.validate(ticket, function(err, status, username) {
 			if (err) {
@@ -44,7 +51,7 @@ exports.login = function(request, response) {
 	        					}
 	        					else{
 	        						request.session.user = user;
-									response.send(request.session);
+									response.send(request.session);									
 	        					}
 	        				})
 
@@ -52,7 +59,7 @@ exports.login = function(request, response) {
 						else{
 							//what to do if user is found in database
 							request.session.user = user;
-							response.send(request.session);
+							response.send(request.session);							
 						}
 	        		}
 	        		else{

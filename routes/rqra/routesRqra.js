@@ -2,31 +2,31 @@ var routesCommon = require('./../common/routesCommon.js');
 
 // frontend
 exports.header = function(request, response) {
-	response.render('rqra/header', { title: "Demo" });
+	response.render('rqra/component/header', { title: "Demo" });
 }
 
 exports.courseList = function(request, response) {
-	response.render('rqra/courseList', { title: "Demo" });
+	response.render('rqra/component/courseList', { title: "Demo" });
 }
 
 exports.timeline = function(request, response) {
-	response.render('rqra/timeline', { title: "Demo" });
+	response.render('rqra/component/timeline', { title: "Demo" });
 }
 
 exports.questionList = function(request, response) {
-	response.render('rqra/questionList', { title: "Demo" });
+	response.render('rqra/component/questionList', { title: "Demo" });
 }
 
 exports.questionDetails = function(request, response) {
-	response.render('rqra/questionDetails', { title: "Demo" });
+	response.render('rqra/component/questionDetails', { title: "Demo" });
 }
 
 exports.questionForm = function(request, response) {
-	response.render('rqra/questionForm', { title: "Demo" });
+	response.render('rqra/component/questionForm', { title: "Demo" });
 }
 
 exports.notificationList = function(request, response) {
-	response.render('rqra/notificationList', { title: "Demo" });
+	response.render('rqra/component/notificationList', { title: "Demo" });
 }
 
 // backend

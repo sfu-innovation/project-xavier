@@ -128,8 +128,7 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 			match_all:{}
 		},
 		from: paging(pageNum),
-		size: sizeOfResult,
-		sort: [{"commentCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}]
+		size: sizeOfResult
 	};
 
 	switchIndex(appType);

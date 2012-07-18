@@ -450,7 +450,9 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-
+			//TODO: sectionUuid
+			//newQuestion.sectionUuid = request.body.sectionUuid;		//frontend
+			newQuestion.sectionUuid = 'someTestSection';
 			QueryES.addQuestion(newQuestion, appType, function(error, result) {
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -499,9 +501,10 @@ exports.questionRoute = function(appType, request, response) {
 exports.questionsRoute = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getAllQuestions( appType, request.params.page, function(result) {
+			console.log(result);
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				response.end(JSON.stringify({ errorcode: 0, total: result.total,questions: result.hits }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
@@ -807,3 +810,31 @@ exports.searchRoute = function(appType, request, response) {
 	}
 }
 
+
+/****NEW Question sort stuff*/
+exports.searchQuestions = function(appType, request, response){
+	var queryData = request.body;
+
+	if (request.method === "POST") {
+
+		nlp(queryData.searchQuery, function(query){
+			console.log('query after nlp parsing is: ' + query);
+
+			queryData.searchQuery = query;
+
+			QueryES.searchQuestions(appType, request.params.page, queryData, function(result){
+				if (result) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, total: result.total, questions: result.hits }));
+				} else {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				}
+			});
+
+			QueryES.searchAll(query, request.params.page, appType, function(result) {
+
+			});
+		});
+	}
+}

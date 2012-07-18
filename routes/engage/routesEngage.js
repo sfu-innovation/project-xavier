@@ -201,89 +201,135 @@ exports.resourcesInSection = function(request, response){
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
 
+
+
+var user_1 = {
+	type: 0,
+	firstName : "Gracey",
+	lastName : "Mesina",
+	userID : "3010123456",
+	email : "gmesina@sfu.ca"
+}
+
+var user_2 = {
+	type: 1,
+	firstName : "Ted",
+	lastName : "Kirkpatrick",
+	userID : "3010111111",
+	email : "ted@sfu.ca"
+}
+
+var userobject = {
+	type : 0,
+	firstName : "Catherine",
+	lastName : "Tan",
+	userID : 301078676,
+	email : "llt3@sfu.ca",
+	courses : {}
+	}
+
 var article_1 = {
 	id : 1,
+	user : user_1,
 	url : "http://www.bbc.co.uk/news/science-environment-18716300",
 	title :  "1South Korea unveils 'scientific' whaling proposal",
 	author: "Richard Black",
-	published_date : "4 July 2012",
+	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
 	path : "/resources/articles/science-environment-18716300.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "May 6 2012,  12:30 PM PST"
+	uploaded_on : "May 6 2012,  12:30 PM PST",
+	course: "CMPT 120",
+	week : "1",
+	likes: 5,
+	description : "please read this for the midterm.",
+	starred : 0
+
 }
 
 var article_2 = {
 	id : 2,
+	user : user_2,
 	url : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect",
 	title :  "How To Create an Abstract Geometric Mosaic Text Effect",
 	author: "Chris Spooner",
-	published_date : "4 July 2012",
+	publishedDate : "4 July 2012",
 	host : "http://blog.spoongraphics.co.uk",
 	path : "/resources/articles/how-to-create-an-abstract-geometric-mosaic-text-effect.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "Jun 6 2012,  12:30 PM PST"
+	uploaded_on : "July 16 2012,  12:30 AM PST",
+	course: "CMPT 120",
+	week : "4",
+	likes: 2,
+	description : "what?!",
+	starred : 1
+
 }
 
 var article_3 = {
 	id : 3,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "3South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
-	published_date : "4 July 2012",
+	user : user_1,
+	url : "http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
+	title :  "Naked rambler walks free from Perth Prison",
+	author: "",
+	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/uk-scotland-tayside-central-18873631.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST"
+	uploaded_on : "July 17 2012,  12:00 PM PST",
+	course: "IAT 200",
+	week : "4",
+	likes: 10,
+	description : "Check out this article",
+	starred : 0
 }
 
 
 var article_4 = {
 	id : 4,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "4South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
-	published_date : "4 July 2012",
+	user : userobject,
+	url : "http://www.bbc.co.uk/news/business-18867054",
+	title :  "HSBC used by 'drug kingpins', says US Senate",
+	author: "Paul Adams",
+	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/business-18867054.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST"
+	uploaded_on : "July 17 2012,  12:30 PM PST",
+	course: "BUS 100",
+	week : "1",
+	likes: 7,
+	description : "wow cool",
+	starred : 0
 }
 
 var article_5 = {
 	id : 5,
+	user : userobject,
 	url : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively",
 	title :  "How To Interview Effectively",
 	author: "Victor Lipman",
-	published_date : "28 June 2012",
+	publishedDate : "28 June 2012",
 	host : "http://www.forbes.com",
 	path : "/resources/articles/how-to-interview-effectively.html",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 15 2012,  12:30 PM PST",
-	course: "cmpt120",
-	week : "3"
+	course: "IAT 200",
+	week : "2",
+	likes: 6,
+	description : "what?!",
+	starred : 1
 
 }
+
+userobject.courses = {
+		"CMPT 120" : [article_1, article_2],
+		"BUS 100" : [article_4],
+		"IAT 200" : [article_3, article_5]
+	};
 
 
 var articles = [article_1,  article_2,  article_3,  article_4,  article_5]
-
-var userobject = {
-	name : "Catherine Tan",
-	id : 301078676,
-	courses : {
-		"CMPT 120" : [article_1, article_2],
-		"BUS 100" : [article_4],
-		"IAT 200" : [article_3, article_5, article_1]
-	}
-}
-
-function mediaPath(path, host){
-	if (path.charAt(0)== "/"){
-		return "http://" + host + path
-	}
-	else return path
-}
 
 function update_link(node, host) {
 	var attrs = [
@@ -402,6 +448,7 @@ exports.index = function(req, res){
 		return;
 	}
 
+
 	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
 	//console.log(req.body.article_url.split("/"));
 	
@@ -447,12 +494,12 @@ exports.starred = function (req, res) {
 
 }
 
-exports.article_view = function (req, res) {
+exports.articleView = function (req, res) {
 	var pickedArticle = articles[req.params.id - 1];
 
 
 	res.render("engage/article", { title:"SFU ENGAGE",
-
+		article : pickedArticle,
 		user:userobject,
 		status:"logged in"     })
 

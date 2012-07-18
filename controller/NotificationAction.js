@@ -36,6 +36,7 @@ args = {
 	app         : the id of the app
 	event       : 0 - 3
 	description : The message to be delivered in the notification	
+	user        : user id of the person adding the notification
 }
 
 returns a list of teh new user notifications created
@@ -48,21 +49,31 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	NotificationListener.findAllNotificationListeners( args, function( error, listeners ){
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
-				console.log( settings.values );
-				switch(args.event){
-					case 0: args.wait = settings.notificationOnLike       ; break;
-					case 1: args.wait = settings.notificationOnComment    ; break;
-					case 2: args.wait = settings.notificationOnStar       ; break;
-					case 3: args.wait = settings.notificationOnNewResource; break;
-				}
-				//by default email notification has not been sent yet
-				if ( 0 == args.wait ) {
-					args.emailSent = true;
-				} else {
-					args.emailSent = false;
+				//omg, if no user found then what? settings will be null..
+				if(settings){
+					switch(args.event){
+						case 0: args.wait = settings.notificationOnLike       ; break;
+						case 1: args.wait = settings.notificationOnComment    ; break;
+						case 2: args.wait = settings.notificationOnStar       ; break;
+						case 3: args.wait = settings.notificationOnNewResource; break;
+					}
+					//by default email notification has not been sent yet
+					if ( 0 == args.wait ) {
+						args.emailSent = true;
+					} else {
+						args.emailSent = false;
+					}
 				}
 				delete args.target;
 				delete args.event;
+
+				//O M G. pls let me fix more things
+				delete args.app;
+				delete args.user;
+				args.listener = listener;		//not sure, too many bugs
+
+				//where the fuck is the callback?!, i just added it below,
+				//this function will never return on a successful result
 				async.series([ 
 					UserNotification.createUserNotification( args, function( error, newNotification ){
 						if ( error ){
@@ -79,7 +90,9 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							addedUserNotifications.push( newNotification );
 						}
 					})
-				]);
+				],function(err, results) {
+					//?????added this for you cuz u need it to ensure both functions are completed
+				});
 			});
 		} , function( err ){
 			if ( err ){

@@ -77,3 +77,8 @@ exports.commentsByQuestion = function(request, response) {
 exports.search = function(request, response) {
 	routesCommon.searchRoute(0, request, response);
 }
+
+/***NEW ROUTES */
+exports.searchQuestions = function(request, response){
+	routesCommon.searchQuestions(0, request, response);
+}

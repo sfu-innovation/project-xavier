@@ -38,13 +38,13 @@ app.get('/login', routesCommon.login);
 app.get('/logout', routesCommon.logout);
 
 // components
-app.get('/header', routesRqra.header);
-app.get('/courses', routesRqra.courseList);
-app.get('/timeline', routesRqra.timeline);
-app.get('/questions', routesRqra.questionList);
-app.get('/question', routesRqra.questionDetails);
-app.get('/new', routesRqra.questionForm);
-app.get('/notification', routesRqra.notificationList);
+app.get('/component/header', routesRqra.header);
+app.get('/component/courses', routesRqra.courseList);
+app.get('/component/timeline', routesRqra.timeline);
+app.get('/component/questions', routesRqra.questionList);
+app.get('/component/question', routesRqra.questionDetails);
+app.get('/component/new', routesRqra.questionForm);
+app.get('/component/notification', routesRqra.notificationList);
 
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses

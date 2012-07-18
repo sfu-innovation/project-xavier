@@ -504,7 +504,7 @@ exports.questionsRoute = function(appType, request, response){
 
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, total: result.total,questions: result.hits }));
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
@@ -825,7 +825,7 @@ exports.searchQuestions = function(appType, request, response){
 			QueryES.searchQuestions(appType, request.params.page, queryData, function(result){
 				if (result) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, total: result.total, questions: result.hits }));
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));
 				} else {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));

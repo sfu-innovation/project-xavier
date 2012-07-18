@@ -36,11 +36,10 @@ var paging = function(pageNum){
 
 var getUserObj = function(data, callback){
 	var result = {};
-	result.hits = [];
 	result.total = data.hits.total;
+	result.hits = [];
 
 	async.forEach(data.hits.hits, function(obj, done){
-
 		user.selectUser({"uuid":obj._source.user}, function(error, user){
 			if(user){
 				obj.user = user;
@@ -53,7 +52,6 @@ var getUserObj = function(data, callback){
 			done();
 		});
 	}, function(err){
-
 		callback(result);
 	});
 }
@@ -186,7 +184,7 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, ca
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -210,7 +208,7 @@ QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callbac
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits); //only need the hits.hits part
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -240,7 +238,7 @@ QueryES.prototype.getAllNewQuestions = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits); //only need the hits.hits part
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -272,7 +270,7 @@ QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, pageNum, c
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits); //only need the hits.hits part
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -305,7 +303,7 @@ QueryES.prototype.searchAll = function(search, pageNum, appType, callback){
 
 	index.search(data, function(err, data){
 		if(data && data.hits.total !== 0) {
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		} else { 
 			callback(undefined);
 		}
@@ -417,7 +415,7 @@ QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callba
 
 	mapping.search(data, function(err, data){
 		if(data && data.hits.total !== 0) {
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		} else {
 			callback(undefined);
 		}
@@ -528,7 +526,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		}
 		else{
 			//console.log("Specified target_uuid does not contain any comments");
@@ -552,7 +550,7 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			callback(data.hits.hits);
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -574,7 +572,7 @@ QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits){
-			callback(data.hits.total);
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);

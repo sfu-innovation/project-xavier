@@ -777,6 +777,20 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 	}
 }
 
+exports.commentCount = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getCommentCount(appType, request.params.uid, function(err, result) {
+			if (result) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+			} else {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		});
+	}
+}
+
 exports.searchRoute = function(appType, request, response) {
 	var query = request.body.query;
 

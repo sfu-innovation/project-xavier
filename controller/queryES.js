@@ -581,7 +581,7 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	});
 }
 
-QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
+QueryES.prototype.getCommentCount = function(appType, questionUuid, callback){
 	var data = {
 		query: {
 			term: {
@@ -598,7 +598,7 @@ QueryES.prototype.getCommentCount = function(questionUuid, appType, callback){
 			addUsersToData(data, callback);
 		}
 		else{
-			callback(undefined);
+			callback(err);
 		}
 	});
 }

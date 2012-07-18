@@ -112,3 +112,5 @@ app.get("/api/question/:uid/comments/:page", routesRqra.commentsByQuestion); // 
 app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
+/***NEW ROUTES */
+app.post("/api/questions/search/page/:page", routesRqra.searchQuestions);

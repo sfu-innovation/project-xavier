@@ -123,14 +123,13 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 
 //get all question
 QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
-	var self = this;
-
 	var data = {
 		query: {
 			match_all:{}
 		},
 		from: paging(pageNum),
-		size: sizeOfResult
+		size: sizeOfResult,
+		sort: [{"commentCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}]
 	};
 
 	switchIndex(appType);
@@ -138,33 +137,26 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			var result = [];
+			var result = {};
+			result.hits = [];
+			result.total = data.hits.total;
 
 			async.forEach(data.hits.hits, function(questionObj, callback){
 
 				user.selectUser({"uuid":questionObj._source.user}, function(error, user){
 					if(user){
 						questionObj.user = user;
-						result.push(questionObj);
 					}
+					else{
+						questionObj.user = "User not found: " + questionObj._source.user;
+					}
+
+					result.hits.push(questionObj);
 					callback();
 				});
 			}, function(err){
-				//TODO: comments
 
-				async.forEach(result, function(resultObj, callback){
-						self.getCommentCount(resultObj._id, appType, function(total){
-
-							resultObj.totalComments = total;
-
-							callback();
-						})
-					}
-				, function(err){
-					callback(result);
-				});
-
-
+				callback(result);
 			});
 		}
 		else{
@@ -334,7 +326,7 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	//should check if adding to a section is really needed. rqra dont need it
 	args.section = data.sectionUuid;	//section uuid
-	args.resource = data._id;	//question uuid
+	args.resource = questionUuid;	//question uuid
 
 	delete data.sectionUuid;
 
@@ -346,15 +338,15 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 				data.isInstructor = 'false';
 			}
 
-			document.set(data, function(err, req, data){
-				if(data){
+			document.set(data, function(err, req, esResult){
+				if(esResult){
 					console.log('Added question to ES');
-					organizationAction.addResourceToSection(args, function(err, result){
+					organizationAction.addResourceToSection(args, function(err, orgResult){
 						console.log('Added question resource to section');
 						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 							if(result){
 								console.log('Added question notification');
-								callback(data);
+								callback(null, esResult);
 							}else{
 								callback(undefined);
 							}
@@ -478,10 +470,11 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	var date = new Date().toISOString();
 
 	var data = {
-		'script':'ctx._source.status = status; ctx._source.timestamp = date;',
+		'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
 		'params':{
 			'status':'answered',
-			'date':date
+			'date':date,
+			'count':1
 		}
 	}
 
@@ -635,14 +628,13 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		if(updateResult){
 			document.set(data, function(err, req, esData){
 				if (esData) {
-
+/*Alex's stuff
 					var args = {
 						target:data.target_uuid
 						,app:appType
 						,user:data.user
 						,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
 					};
-
 					notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 						if(usrNotificationResult){
 							console.log("successfully added usr comment notification");
@@ -656,11 +648,12 @@ QueryES.prototype.addComment = function(data, appType, callback){
 									callback(undefined);
 								}
 							});
-
 						}else{
 							callback(undefined);
 						}
 					});
+ */
+					callback(esData);
 				}else {
 					callback(undefined);
 				}
@@ -771,6 +764,133 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 			callback(undefined);
 		}
 	})
+}
+
+
+/***NEW METHODS OMG***/
+
+QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callback){
+	var self = this;
+	/// course, week, , searchQuery, searchType
+	if(!searchObj.searchQuery && searchObj.searchType !== 'myQuestions' &&
+		searchObj.searchType !== 'viewed' && searchObj.searchType !== 'replied'){
+		console.log('searchQuery is undefined');
+		callback(undefined);
+		return;
+	}
+
+	var data = {
+		query: {
+			bool:{
+				must:[
+					{
+				flt:{
+				"fields":["title", "body"]
+				, "like_text":searchObj.searchQuery
+				}}
+				]
+			}
+		},
+		//sort:[{"title.untouched":{"order":"asc"}}],
+		from: paging(pageNum),
+		size: sizeOfResult
+	};
+
+
+	//{ Lastest, Replied(numOfComments), Instructor, Viewed, Unanswered, MyQuestions }
+	switch(searchObj.searchType){
+		case 'latest':{
+			data = latestQuestion(data);
+			break;
+		}
+		case 'instructor':{
+			data = instructorQuestion(data);
+			break;
+		}
+		case 'unanswered':{
+			data = unansweredQuestion(data);
+			break;
+		}
+		case 'myQuestions':{
+			//TODO: change to use session user
+			data = myQuestion(data, searchObj);
+			break;
+		}
+		case 'viewed':{
+			data = viewed(data, searchObj);
+			break;
+		}
+		case 'replied':{
+			data = replied(data, searchObj);
+			break;
+		}
+	}
+
+
+	switchIndex(appType);
+	switchMapping(0);
+
+	mapping.search(data, function(err, data){
+		if(data) {
+			callback(data.hits);
+		} else {
+			callback(undefined);
+		}
+	});
+}
+
+//get questions sorted by comment count
+var replied = function(data, searchObj){
+	if(searchObj.searchQuery === ''){
+		console.log("search query is empty");
+		data.query.bool.must = [{match_all:{}}];
+	}
+	data.sort = [{"commentCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
+
+	return data;
+}
+
+//get the latest question sorted by create date
+var latestQuestion = function(data){
+	data.sort = [{"created":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
+	return data;
+}
+
+//get all instructor posted question
+var instructorQuestion = function(data){
+	data.query.bool.must.push({"term":{"isInstructor": "true"}});
+	//sort
+	return data;
+}
+
+//get all unanswered question
+var unansweredQuestion = function(data){
+	data.query.bool.must.push({"term":{"status": "unanswered"}});
+	//sort
+	return data;
+}
+
+//get question sorted by user uuid
+var myQuestion = function(data, searchObj){
+	if(searchObj.searchQuery === ''){
+		console.log("search query is empty");
+		data.query.bool.must = [{match_all:{}}];
+	}
+
+	data.query.bool.must.push({"term":{"user": searchObj.user}});
+
+	return data;
+}
+
+//get questions sorted by view count
+var viewed = function(data, searchObj){
+	if(searchObj.searchQuery === ''){
+		console.log("search query is empty");
+		data.query.bool.must = [{match_all:{}}];
+	}
+
+	data.sort = [{"viewCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
+	return data;
 }
 
 module.exports = new QueryES;

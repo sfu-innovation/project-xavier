@@ -135,7 +135,8 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, Resource, data.resources),
 		insert.bind(undefined, CourseSection, data.coursesections),
 		insert.bind(undefined, Section, data.sections),
-		insert.bind(undefined, SectionMaterial, data.sectionmaterials)
+		insert.bind(undefined, SectionMaterial, data.sectionmaterials),
+		insert.bind(undefined, Star, data.stars)
 		], callback);
 }
 

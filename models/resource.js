@@ -29,6 +29,7 @@ var Resource = exports.Resource = db.define('Resource', {
 	, author : {type: Sequelize.STRING, allowNull: true} //this is the original author of the article (for engage)
 	, publishedDate : {type: Sequelize.STRING, allowNull: true} //this is the original published date of the article (for engage)
 	, excerpt : {type: Sequelize.TEXT, allowNull:true} // A short extract from a film, broadcast, or piece of music or writing. (for engage)
+	, thumbnail : {type: Sequelize.STRING, allowNull:true} // a preview image for resource (for engage)
 
 
 });

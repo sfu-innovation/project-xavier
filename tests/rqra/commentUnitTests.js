@@ -7,7 +7,7 @@ var comment   = require('./../../models/comment.js');
 var server    = require('./../../app-rqra.js');
 var esQuery   = require(__dirname + '/../../database/es-query');
 var queries   = require(__dirname + '/../../database/db-queries');
-var direction = { down: 0, up: 1 };
+var direction = { up: 0, down: 1 };
 var dataFile  = 'tests/rqra/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
@@ -108,8 +108,8 @@ module.exports = {
 				}).on('end', function() {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
-						body.comment.body &&
-						body.comment.user);
+						body.comment._source.body &&
+						body.comment._source.user);
 					test.done();
 				});
 			});
@@ -172,7 +172,7 @@ module.exports = {
 					test.done();
 				});
 			});
-			request.write(JSON.stringify({ commentBody: commentBody }));
+			request.write(JSON.stringify({ body: commentBody }));
 			request.end();
 		},
 		// delete a comment

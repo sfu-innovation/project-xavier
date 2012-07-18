@@ -253,12 +253,12 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 			}
 
 			//search for resource uuids in ES, friggin circular dependency
-			require('./queryES.js').getAllQuestionsByUuids(resourcesInSection, args.appType, function(result){
+			require('./queryES.js').getAllQuestionsByUuids(resourcesInSection, args.appType, function(err, result){
 				if(result){
 					retResources.push.apply(retResources, result);
 					callback(null, retResources);
 				}else{
-					callback( error, null );
+					callback( err, null );
 				}
 			});
 

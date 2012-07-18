@@ -259,7 +259,7 @@ module.exports = {
 		},
 		"unfollow question": function(test){
 			var that = this;
-			QueryES.addFollower(questionID, this.user.uuid, appType, function(result) {
+			QueryES.addFollower(questionID, this.user.uuid, appType, function(err, result) {
 				if(result){
 					that.requestOptions.method = "PUT";
 					that.requestOptions.path = "/api/question/" + questionID + "/unfollow";

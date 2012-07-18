@@ -31,7 +31,18 @@ var Section = exports.Section = db.define('Section', {
 	returns the UUID of the new section
 */
 exports.createSection = function( args, callback ){
-	
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('title') && args.hasOwnProperty('sections') &&
+		args.hasOwnProperty('app') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Section.find({ where : { uuid : args.sections, title : args.title }}).success(function( section ){
 		if ( null === section ){
 			var newUUID = UUID.generate();
@@ -60,6 +71,17 @@ exports.createSection = function( args, callback ){
 	returns strings based on if it worked or not 
 */
 exports.removeSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('section');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Section.find({ where : { uuid : args.section }}).success(function(sectionToBeRemoved){
 		if ( null === sectionToBeRemoved ){
 			callback("This section does not exist " + args.section , null );
@@ -85,6 +107,18 @@ exports.removeSection = function( args, callback ){
 	returns the section which matchces the section UUID and section title
 */
 exports.findSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('sections') &&
+		args.hasOwnProperty('title') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Section.find({ where : { uuid : args.sections, title : args.title }}).success(function( section ){
 		callback( null, section );
 	}).error( function ( error ){
@@ -104,6 +138,17 @@ exports.findSection = function( args, callback ){
 */
 
 exports.updateSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('sectionObject') && args.hasOwnProperty('title'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	args.sectionObject.updateAttributes({ title : args.title }).error(function(error ){
 		callback( error, null );
 	}).success( function ( section ){

@@ -29,6 +29,18 @@ var CourseSection = exports.CourseSection = db.define('CourseSection', {
 	}
 */
 exports.createCourseSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('course') && args.hasOwnProperty('section') &&
+		args.hasOwnProperty('app') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.create( { course : args.course, section : args.section, app : args.app })
 	.success(function(newCourseSection){
 		callback( null, newCourseSection );
@@ -47,6 +59,17 @@ exports.createCourseSection = function( args, callback ){
 	Returns all of the UUIDs of each section in the course.
 */
 exports.sectionsInCourse = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('course');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.findAll({ where : { course : args.course }}).success( function( courseSections ){
 		var sectionID = new Array();
 		var i = courseSections.length - 1;
@@ -69,6 +92,17 @@ exports.sectionsInCourse = function( args, callback ){
 	}
 */
 exports.removeCourseSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('section');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.find({ where : { section : args.section }}).success( function( courseSection ){
 		if ( null === courseSection ){
 			callback("The section doesn't exist", null );

@@ -49,11 +49,12 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 		return;
 	}
 	
-	var containsAllProperties = (args.hasOwnProperty('user') &&
-	                              args.hasOwnProperty('target') &&
+	var containsAllProperties =  (
+	                                   args.hasOwnProperty('target') &&
 		                               args.hasOwnProperty('event') &&
 		                               args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('description'));
+		                               args.hasOwnProperty('description')
+		                        );
 		                            
 	if (!containsAllProperties ){
 		callback("Invalid args ", null );
@@ -65,16 +66,16 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	arg.app = args.app;
 	arg.event = args.event;
 	arg.description = args.description;
-	arg.user = args.user;
 	
 	var self = this;
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( arg, function( error, listeners ){
+		
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
-				if ( error ){
-					callback("error occured "+error, null);
+				if ( settings == undefined || settings === null){
+					callback("error occurred "+error, null);
 					return;
 				}
 				if(settings){
@@ -91,37 +92,25 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 						arg.emailSent = false;
 					}
 				}
-				delete arg.target;
-				delete arg.event;
-
+				arg.user     = listener.user;
 				arg.listener = listener.uuid;
-
-				async.series([ 
-					UserNotification.createUserNotification( arg, function( error, newNotification ){
+				
+				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);
 							
+							
 						}else {
-							callback( null, newNotification );
+							addedUserNotifications.push( newNotification );
+							callback( null, newNotification);
 						}
-					}),
-					compileEmail( arg, function( error, newNotification ){
+				});
+				
+				compileEmail( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);
 							return;
 						}
-						else {
-							addedUserNotifications.push( newNotification );
-							callback( null, newNotification);
-						}
-					})
-				],function(err, results) {
-					if ( err ){
-						callback( err, null );
-					} else {
-						callback( null, results);
-					}
-					
 				});
 			});
 		} , function( err, results ){
@@ -138,7 +127,8 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 /*
 Designed to remove the user notifications out of the user notifications table.
 This means that the user will no longer see these particular removed notifications ever
-after they are removed.
+after they are removed. Its ok if user is required to remove this notification as 
+the notification has to already be associtaed with a specific user in order to remove it
 
 var args = {
 	target : The resource which incurred an event for this user notification to be created,
@@ -357,7 +347,6 @@ function compileEmail( args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
-	
 	var containsAllProperties = (args.hasOwnProperty('user') &&
 	                              args.hasOwnProperty('description') &&
 		                               args.hasOwnProperty('wait'));
@@ -370,6 +359,7 @@ function compileEmail( args, callback ){
 		callback(null, 1);
 		return;
 	}
+	
 	var msg = args;
 	
 	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
@@ -393,8 +383,12 @@ function compileEmail( args, callback ){
 		 	server.send(message, function(err, message){
 		 		if ( err ){
 		 			callback( err, null );
-		 			return;
+		 		//	return;
+		 		} else {
+		 			callback( null, message );
+		 		//	return;
 		 		}
+		 		
 		  	});
 		}
 		else {
@@ -820,29 +814,25 @@ To add a user notification when a resource has been liked
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
-	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
 NotificationAction.prototype.addLikeUserNotification = function( args, callback){
+	
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('user') &&
 		                           args.hasOwnProperty('description'));
-		                            
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
 	}
-	
 	var arg = new Object();
 	arg.target = args.target;
 	arg.app = args.app;
-	arg.user = args.user;
 	arg.description = args.description;
 	arg.event = 0;
 	
@@ -855,7 +845,6 @@ To add a user notification when a resource has been commented on
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
-	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
@@ -866,7 +855,6 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('user') &&
 		                           args.hasOwnProperty('description'));
 		                            
 	if ( !containsAllProperties ){
@@ -877,7 +865,6 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	var arg = new Object();
 	arg.target = args.target;
 	arg.app = args.app;
-	arg.user = args.user;
 	arg.description = args.description;
 	arg.event = 1;
 	
@@ -890,7 +877,6 @@ To add a user notification when a resource has been starred
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
-	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 */
@@ -901,7 +887,6 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('user') &&
 		                           args.hasOwnProperty('description'));
 		                            
 	if ( !containsAllProperties ){
@@ -912,7 +897,6 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	var arg = new Object();
 	arg.target = args.target;
 	arg.app = args.app;
-	arg.user = args.user;
 	arg.description = args.description;
 	arg.event = 2;
 	
@@ -925,7 +909,6 @@ To add a user notification when a resource has been added
 args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
-	user        : UUID of the user 
 	description : The message to be delivered in the notification	
 }
 
@@ -937,7 +920,6 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('user') &&
 		                           args.hasOwnProperty('description'));
 		                            
 	if (  !containsAllProperties ){
@@ -948,7 +930,6 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	var arg = new Object();
 	arg.target = args.target;
 	arg.app = args.app;
-	arg.user = args.user;
 	arg.description = args.description;
 	arg.event = 3;
 	

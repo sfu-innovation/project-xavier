@@ -52,13 +52,17 @@ function contains(a, obj) {
   returns an error if not possible to update or else the updated user notification settings
 */
 exports.updateUserNotificationSettings = function(args, callback){
+	if ( args === null || args === undefined){
+		callback("args is null", null);
+		return;
+	}
 	var containsAllProperties = (args.hasOwnProperty('usernotificationsettings') &&
 	                              args.hasOwnProperty('notificationOnNewResource') &&
 		                               args.hasOwnProperty('notificationOnLike') &&
 		                           args.hasOwnProperty('notificationOnComment')  &&
 		                            args.hasOwnProperty('notificationOnStar'));
 		
-	if ( args === null || !containsAllProperties ){
+	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
 	}
@@ -87,10 +91,14 @@ args = {
 Returns the notification setting that was created or a user
 */
 exports.addNotificationSetting = function( args, callback){
-
+	if ( args === null || args === undefined){
+		callback("args is null", null);
+		return;
+	}
+	
 	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('app'));
 		
-	if ( args === null || !containsAllProperties ){
+	if (!containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
 		
@@ -111,6 +119,8 @@ exports.addNotificationSetting = function( args, callback){
 			}).success(function( setting ){
 				callback(null, setting );
 			});
+		} else {
+			callback("setting already exists", null );
 		}
 	});
 }

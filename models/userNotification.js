@@ -137,13 +137,13 @@ exports.removeUserNotifications = function( args, callback) {
 	var arr = new Array();
 	async.forEachSeries( args.usernotifications, function( userNotification, callback){
 		userNotification.destroy().error(function(error){
-			callback( error );
+			callback( error,null );
 		}).success(function(){
 			arr.push( userNotification );
-			callback();
+			callback( null, userNotification);
 		});
 			
-	}, function(error){
+	}, function(error, results){
 		if ( error ){
 			callback( error, null );
 		} else {
@@ -152,6 +152,13 @@ exports.removeUserNotifications = function( args, callback) {
 	});
 }
 
+exports.findAllUserNotifications = function( args, callback ){
+	UserNotification.findAll().success( function(notifications){
+		callback( null, notifications);
+	}).error(function( error ){
+		callback( error, null);
+	});
+}
 /*
 	To create a user notification 
 	

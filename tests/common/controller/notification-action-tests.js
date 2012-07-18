@@ -33,7 +33,7 @@ module.exports = {
 			});
 		},
 		
-	/*	"Add Notification Listener" : function( test ){
+		"Add Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
@@ -50,8 +50,8 @@ module.exports = {
 				});
 			});
 		},
-		*/
-		/*
+		
+		
 		"Remove Notification Listener" : function( test ){
 			var args = {
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
@@ -67,102 +67,103 @@ module.exports = {
 					
 					NotificationListener.findNotificationListener( args, function( error, listener ){
 						if ( null === listener ){
-							test.ok(removedUserNotifications.should.have.lengthOf(2));
-							test.done();
+							test.done();	
+												
 						}
 					});
 				});
 			});
 				
-		}, */
+		}, 
 		"Add User Notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
-				user        : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				app         : 1,
 				event       : 1,
 				description : 'Alex is testing  a notification for the add user notification test'
 			}
-			
+				UserNotification.findAllUserNotifications( args, function( error, notifications){
+					test.ok(notifications.should.have.lengthOf(6));
+				});
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){
 					if ( newNotifications ){
-						console.log( newNotifications);
+						test.ok( newNotifications.should.have.lengthOf(3));
+						UserNotification.findAllUserNotifications( args, function( error, notifications){
+							if( notifications ){
+								test.ok(notifications.should.have.lengthOf(9));
+							}
+						});
 						test.done();
 					}
 					else {
 						console.log("ERROR "+ error );
 						test.done();
 					}
-					//test.done();
 				});
 			
-		},
-	//	test.done(); // cant fucking test it right now.. i know i know.
-		//} , 
-		
-	 /* "Remove User Notifications" : function( test ){
+		}, 
+	   "Remove User Notifications" : function( test ){
 			args = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event : 1 ,
 				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
 				app  : 1
 			}		
-			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
-				test.done();
+			UserNotification.findAllUserNotifications( args, function( error, notifications){
+					test.ok(notifications.should.have.lengthOf(6));
 				});
+			NotificationAction.removeUserNotifications( args, function(error, removedNotifications){
+				if ( removedNotifications ){
+					UserNotification.findAllUserNotifications( args, function( error, notifications){
+					if ( notifications ){
+						test.ok(notifications.should.have.lengthOf(5));
+					}
+				});
+					test.done();
+				}
+			});
 		
-		*/
-	/*	"Add a like notification" : function( test ){
+		},
+		
+		"Add a like notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
 				app         : 1,
 				description : 'The message to be delivered in the notification	'
 			}
 			NotificationAction.addLikeUserNotification( args, function(error, notification){
-				test.done();
+				if( error ){
+					console.log(error);
+				}
+				if( notification ){
+					test.done();
+				}
 			});
 			
-		}, */
-		/*"Add a like notifier " : function( test ){
+		}, 
+		"Add a like notifier " : function( test ){
+			var testArg = {
+				target : 'A7S7FHGA7SD11A7SDF8AS87G',
+				event :0,
+				app   : 2
+			}
 			var args = {
 				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				app   : 2
 			}
-			NotificationAction.addLikeNotifier( args, function( error, results ){
-				test.done();
+			NotificationListener.findAllNotificationListeners( testArg, function( error, results){
+				test.ok( results.should.have.lengthOf(0));
+				NotificationAction.addLikeNotifier( args, function( error, results ){
+					NotificationListener.findAllNotificationListeners( testArg, function( error, results2){
+						test.ok( results2.should.have.lengthOf(1));
+						test.done();
+					});
+				});
 			});
 			
-		},*/
-	/*	"Sections in Course" : function( test ){
-			var args = {
-				course : 'A827346H7ASDFG9'
-			}
 			
-			OrganizationAction.sectionsInCourse( args, function( error, sections ){
-				test.ok(sections.should.have.lengthOf(1));
-				test.done();
-			});
-		}, 
-		
-		"Materials in Section " : function(test){
-			var args = {
-				section : 'A827346H7AFSSFG9'
-			}
-			OrganizationAction.resourcesInSection(args, function(error, resources){
-				test.ok(resources.should.have.lengthOf(2));
-				test.done();
-			});	
-		}, 
-		"Number of Resources in Course":function(test){
-			var args = {
-				course : 'A827346H7ASDFG9'
-			}
-			OrganizationAction.numberOfResourcesInCourse( args, function( error, numOfResources){
-				test.ok(numOfResources.should.equal(2));
-				test.done();
-			});
-		}*/
+		}
 		
 	}
 }

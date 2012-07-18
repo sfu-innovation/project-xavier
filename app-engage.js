@@ -105,6 +105,7 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 //non-REST calls
 // routing
 app.get('/login', routesCommon.login);
+app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
 app.post('/', routesEngage.index);

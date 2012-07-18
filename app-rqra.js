@@ -36,7 +36,15 @@ app.dynamicHelpers({
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 app.get('/logout', routesCommon.logout);
-app.get('/demo', routesRqra.demo);
+
+// components
+app.get('/header', routesRqra.header);
+app.get('/courses', routesRqra.courseList);
+app.get('/timeline', routesRqra.timeline);
+app.get('/questions', routesRqra.questionList);
+app.get('/question', routesRqra.questionDetails);
+app.get('/new', routesRqra.questionForm);
+app.get('/notification', routesRqra.notificationList);
 
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses

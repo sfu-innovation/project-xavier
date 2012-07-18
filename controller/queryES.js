@@ -648,7 +648,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		if(updateResult){
 			document.set(data, function(err, req, esData){
 				if (esData) {
-
+/*
 					var args = {
 						target:data.target_uuid
 						,app:appType
@@ -671,9 +671,8 @@ QueryES.prototype.addComment = function(data, appType, callback){
 						}else{
 							callback(err);
 						}
-					});
-
-					callback(null, esData);
+					});*/
+					callback(null, esData); //remember to remove this when adding alex's notification
 				}else {
 					callback(err);
 				}

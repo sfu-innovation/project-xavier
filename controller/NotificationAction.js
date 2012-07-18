@@ -71,9 +71,10 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( arg, function( error, listeners ){
-		
+
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
+
 				if ( settings == undefined || settings === null){
 					callback("error occurred "+error, null);
 					return;
@@ -94,7 +95,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				}
 				arg.user     = listener.user;
 				arg.listener = listener.uuid;
-				
+
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);

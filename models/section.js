@@ -13,7 +13,7 @@ var db = new Sequelize(
 );
 
 var Section = exports.Section = db.define('Section', {
-	uuid: {type: Sequelize.STRING, allowNull: false},
+	uuid: {type: Sequelize.STRING, allowNull: false,  primaryKey: true},
 	title: {type: Sequelize.STRING, allowNull: false},
 	app  : {type: Sequelize.INTEGER, allowNull: false}
 });
@@ -96,6 +96,28 @@ exports.removeSection = function( args, callback ){
 		}
 	});
 }
+
+
+//To find section object by given sectioid
+
+///	args = {
+// 		uuid : uuid of the section
+//
+//}
+
+exports.findSectionById= function(args, callback){
+
+	Section.find({ where : { uuid : args.uuid }}).success(function( section ){
+		callback( null, section );
+	}).error( function ( error ){
+		callback( error, null );
+	});
+
+}
+
+// ...oh dear...WTF is this shit...who need to find it if i already know the title....
+
+// do not rename things , it's called uuid not sectionssssssss !
 
 /*
     To find one section which matches the given section UUID and title 

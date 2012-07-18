@@ -331,6 +331,14 @@ userobject.courses = {
 
 var articles = [article_1,  article_2,  article_3,  article_4,  article_5]
 
+function mediaPath(path, host){
+	if (path.charAt(0)== "/"){
+		return "http://" + host + path
+	}
+	else return path
+}
+
+
 function update_link(node, host) {
 	var attrs = [
 		'href',

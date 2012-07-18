@@ -70,10 +70,13 @@ module.exports = {
 			 	test.ok( userNotifications.should.have.lengthOf(2));
 			 	args.usernotifications = userNotifications;
 		    	UserNotification.removeUserNotifications( args, function(error, removedUserNotification){
-		    		UserNotification.selectUserNotifications( args, function(error, userNotifications ){
-		    			test.ok(userNotifications.should.have.lengthOf(0));
-		    			test.done();
-		    		});
+		    		if ( removedUserNotification ){
+		    			UserNotification.selectUserNotifications( args, function(error, userNotifications ){
+		    				test.ok(userNotifications.should.have.lengthOf(0));
+		    				test.done();
+		    			});
+		    		}
+		    		
 		    	});
 		    });
 		},

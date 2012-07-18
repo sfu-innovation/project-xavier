@@ -595,7 +595,7 @@ QueryES.prototype.getCommentCount = function(appType, questionUuid, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits){
-			addUsersToData(data, callback);
+			callback(null, parseInt(data.hits.total));
 		}
 		else{
 			callback(err);
@@ -648,7 +648,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		if(updateResult){
 			document.set(data, function(err, req, esData){
 				if (esData) {
-/*Alex's stuff
+
 					var args = {
 						target:data.target_uuid
 						,app:appType
@@ -663,16 +663,16 @@ QueryES.prototype.addComment = function(data, appType, callback){
 							notification.addCommentNotifier(args, function(err, result){
 								if(result){
 									console.log("successfully added comment notification");
-									callback(esData);
+									callback(null, esData);
 								}else{
-									callback(undefined);
+									callback(err);
 								}
 							});
 						}else{
-							callback(undefined);
+							callback(err);
 						}
 					});
- */
+
 					callback(null, esData);
 				}else {
 					callback(err);

@@ -34,6 +34,29 @@ var paging = function(pageNum){
 	return pageBeg;
 }
 
+var getUserObj = function(data, callback){
+	var result = {};
+	result.hits = [];
+	result.total = data.hits.total;
+
+	async.forEach(data.hits.hits, function(obj, done){
+		
+		user.selectUser({"uuid":obj._source.user}, function(error, user){
+			if(user){
+				obj.user = user;
+			}
+			else{
+				obj.user = "User not found: " + obj._source.user;
+			}
+
+			result.hits.push(obj);
+			done();
+		});
+	}, function(err){
+
+		callback(result);
+	});
+}
 //
 QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, callback){
 	var self = this;
@@ -53,7 +76,6 @@ QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, call
 		callback(questions);
 	})
 }
-
 
 QueryES.prototype.questionViewCount = function(questionID, appType, callback){
 	var data;
@@ -136,27 +158,7 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 
 	mapping.search(data, function(err, data){
 		if(data.hits.total !== 0){
-			var result = {};
-			result.hits = [];
-			result.total = data.hits.total;
-
-			async.forEach(data.hits.hits, function(questionObj, callback){
-
-				user.selectUser({"uuid":questionObj._source.user}, function(error, user){
-					if(user){
-						questionObj.user = user;
-					}
-					else{
-						questionObj.user = "User not found: " + questionObj._source.user;
-					}
-
-					result.hits.push(questionObj);
-					callback();
-				});
-			}, function(err){
-
-				callback(result);
-			});
+			getUserObj(data, callback);
 		}
 		else{
 			callback(undefined);
@@ -463,7 +465,7 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 }
 
 
-//change the status of a question from unanswered to answered
+//change the status of a question from unanswered to answered, increments comment count
 QueryES.prototype.updateStatus = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();

@@ -1,116 +1,8 @@
-body {
-	margin: 0px;
-	font-family:"Arial",Georgia,Sans;
-	background: #ffffff;
-	color: #4d4d4d;
-}
-
-a {
-	color: #1b88d0;
-}
-
-div#header {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-	padding: 20px;
-	padding-top: 10px;
-	padding-bottom: 6px;
-	border-bottom: 2px solid #1b88d0;
-}
-
-div#askQuestion {
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	box-flex: 1;
-	margin: 25px;
-	border-bottom: 1px solid black;
-}
-
-div#profile {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-}
-
-div#profileText {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	display: -moz-box;
-	-moz-box-orient: vertical;
-	display: box;
-	box-orient: vertical;
-	text-align: right;
-	margin-top: 8px;
-}
-
-div#profileName {
-	font-weight: bold;
-}
-
-div#profile img {
-	width: 64px;
-	height: 64px;
-	margin-left: 10px;
-	border: 1px solid black;
-}
-
-div#bodyContainer {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-}
-
-div#timeline {
-	width: 100px;
-}
-
 div#content {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
 	margin-right: 25px;
-}
-
-div#courseList {
-	display: -webkit-box;
-	-webkit-box-orient: horizontal;
-	display: -moz-box;
-	-moz-box-orient: horizontal;
-	display: box;
-	box-orient: horizontal;
-	margin-bottom: 35px;
-}
-
-div.spacer {
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	box-flex: 1;
-}
-
-div.courseButton {
-	color: white;
-	background: #394161;
-	padding: 6px;
-	border-bottom: 4px solid white;
-	cursor: pointer;
-}
-
-div.courseButtonSelected {
-	color: white;
-	background: #1b88d0;
-	padding: 6px;
-	border-bottom: 4px solid #4d4d4d;
-	cursor: pointer;
 }
 
 h1#courseTitle {
@@ -184,6 +76,9 @@ div#questionTabs {
 div#questionTabs div.tab {
 	margin: 5px;
 	font-size: 0.8em;
+	color: #1b88d0;
+	text-decoration:underline;
+	cursor: pointer;
 }
 
 div.questionPromoted {

@@ -1,0 +1,23 @@
+body {
+	margin: 0px;
+	font-family:"Arial",Georgia,Sans;
+	background: #ffffff;
+	color: #4d4d4d;
+}
+
+a {
+	color: #1b88d0;
+}
+
+div#bodyContainer {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div#timeline {
+	width: 100px;
+}

@@ -236,7 +236,7 @@ var article_1 = {
 	author: "Richard Black",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "May 6 2012,  12:30 PM PST",
 	course: "CMPT 120",
@@ -255,7 +255,7 @@ var article_2 = {
 	author: "Chris Spooner",
 	publishedDate : "4 July 2012",
 	host : "http://blog.spoongraphics.co.uk",
-	path : "/resources/articles/how-to-create-an-abstract-geometric-mosaic-text-effect.html",
+	path : "/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 16 2012,  12:30 AM PST",
 	course: "CMPT 120",
@@ -274,7 +274,7 @@ var article_3 = {
 	author: "",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/uk-scotland-tayside-central-18873631.html",
+	path : "/resources/articles/f1311fc37403ff7518ab0a1b77c69804.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 17 2012,  12:00 PM PST",
 	course: "IAT 200",
@@ -293,7 +293,7 @@ var article_4 = {
 	author: "Paul Adams",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/business-18867054.html",
+	path : "/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 17 2012,  12:30 PM PST",
 	course: "BUS 100",
@@ -311,7 +311,7 @@ var article_5 = {
 	author: "Victor Lipman",
 	publishedDate : "28 June 2012",
 	host : "http://www.forbes.com",
-	path : "/resources/articles/how-to-interview-effectively.html",
+	path : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
 	uploaded_by : "Catherine Tan",
 	uploaded_on : "July 15 2012,  12:30 PM PST",
 	course: "IAT 200",
@@ -330,6 +330,14 @@ userobject.courses = {
 
 
 var articles = [article_1,  article_2,  article_3,  article_4,  article_5]
+
+function mediaPath(path, host){
+	if (path.charAt(0)== "/"){
+		return "http://" + host + path
+	}
+	else return path
+}
+
 
 function update_link(node, host) {
 	var attrs = [
@@ -405,13 +413,13 @@ function listTypes(node, host) {
 
 
 function articlize(document, name) {
-
-	var published_date = document.querySelector('TIME').textContent,
-		url = name.split("/"),
+	//var published_date = document.querySelector('TIME').textContent
+	var url = name.split("/"),
 		fileName = crypto.createHash('md5').update(url[url.length-1]).digest('hex'),
 		path = "./public/resources/articles/"+fileName+".xml",
-		host = url[2];
-		title = document.querySelector('H1').textContent;
+		host = url[2],
+		title = document.querySelector('H1').textContent,
+		published_date = "";
 	
 
 	var stream = fs.createWriteStream(path);

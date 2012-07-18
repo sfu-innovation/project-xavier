@@ -7,7 +7,7 @@ var comment   = require('./../../models/comment.js');
 var server    = require('./../../app-rqra.js');
 var esQuery   = require(__dirname + '/../../database/es-query');
 var queries   = require(__dirname + '/../../database/db-queries');
-var Direction = { Down: 0, Up: 1 };
+var direction = { up: 0, down: 1 };
 var dataFile  = 'tests/rqra/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
@@ -17,6 +17,8 @@ var questionUUID = "pJfzndwdadddQuOicWWAjx7F07";
 var commentUUID  = "qJfzggggguOicWWAjx7F21";
 var commentTitle = "Here's my number";
 var commentBody  = "call me maybe?";
+var userID       = "mcs3";
+
 
 module.exports = {
 
@@ -66,7 +68,7 @@ module.exports = {
 		},
 		
 		// create a comment for some user
-		createComment: function(test) {
+		"create comment": function(test) {
 			
 			var newComment = {
 				target_uuid: questionUUID,
@@ -84,7 +86,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 						body.comment);
@@ -96,7 +97,7 @@ module.exports = {
 		},
 		
 		// get the details of a comment
-		getComment: function(test) {
+		"get comment": function(test) {
 			this.requestOptions.method = "GET";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 		
@@ -107,15 +108,57 @@ module.exports = {
 				}).on('end', function() {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
-						body.comment.body &&
-						body.comment.user);
+						body.comment._source.body &&
+						body.comment._source.user);
 					test.done();
 				});
 			});
 		},
-		
+		"get all comments": function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path   = "/api/comments/0";
+
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				});
+			});
+		},
+		"get comments by user": function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path   = "/api/user/" + userID + "/comments/0";
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				});
+			});
+		},
+		"get comments by question": function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path   = "/api/question/" + questionUUID + "/comments/0";
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				});
+			});
+		},
 		// update a comment
-		updateComment: function(test) {
+		"update comment": function(test) {
 			this.requestOptions.method = "PUT";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 
@@ -124,19 +167,16 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
 				});
 			});
-			request.write(JSON.stringify({ commentBody: commentBody }));
+			request.write(JSON.stringify({ body: commentBody }));
 			request.end();
 		},
-
-		
 		// delete a comment
-		deleteComment: function(test) {
+		"delete comment": function(test) {
 			this.requestOptions.method = "DELETE";
 			this.requestOptions.path   = "/api/comment/" + commentUUID;
 			
@@ -152,6 +192,36 @@ module.exports = {
 				});
 			});
 			request.end();
-		}
+		},
+		"upvote comment": function(test){
+			this.requestOptions.method = "PUT";
+			this.requestOptions.path   = "/api/comment/" + commentUUID + "/vote/" + direction.up;
+
+			var request = http.request(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				})
+			}).end();
+		},
+		"downvote comment": function(test){
+			this.requestOptions.method = "PUT";
+			this.requestOptions.path   = "/api/comment/" + commentUUID + "/vote/" + direction.down;
+
+			var request = http.request(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function(chunk){
+					body += chunk;
+				}).on('end', function(){
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0);
+					test.done();
+				})
+			}).end();
+		},
 	}
 }

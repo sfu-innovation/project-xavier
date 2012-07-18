@@ -35,6 +35,7 @@ app.dynamicHelpers({
 // routing
 app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
+app.get('/logout', routesCommon.logout);
 
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses

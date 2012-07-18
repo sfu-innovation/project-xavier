@@ -14,7 +14,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":5231
+			"viewCount":5231,
+			"commentCount":1
 		}
 	},
 	{
@@ -32,7 +33,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"false",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":1
 		}
 	},
 	{
@@ -50,7 +52,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"viewCount":0
 		}
 	}
 ]

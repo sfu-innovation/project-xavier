@@ -67,6 +67,17 @@ exports.removeMaterialFromSection = function( args, callback ){
 	returns the specific material/resource if it is found
 */
 exports.findAMaterialInSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('resource') && args.hasOwnProperty('section'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.find({ where : { material : args.resource, section  : args.section }}).success( function ( sectionMaterial ){
 		callback( null, sectionMaterial );
 	}).error(function(error){
@@ -84,6 +95,17 @@ exports.findAMaterialInSection = function( args, callback ){
 	returns all of the materials associated with a section
 */
 exports.findAllMaterialsInSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('section');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.findAll({ where: { section : args.section }}).success(function(sectionmaterials){
 		callback( null, sectionmaterials );
 	}).error(function(error){
@@ -102,6 +124,18 @@ exports.findAllMaterialsInSection = function( args, callback ){
 	returns the sectionmaterial created unless there is an error
 */
 exports.createSectionMaterial = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('section') &&
+		args.hasOwnProperty('resource') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.create({ section : args.section, material : args.resource}).success( function ( savedMaterial ){
 		callback( null, savedMaterial );
 	}).error( function ( error ){
@@ -120,6 +154,18 @@ exports.createSectionMaterial = function( args, callback ){
 	returns the move section material
 */
 exports.updateSectionMaterial = function( args, callback ) {
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('newsection') &&
+		args.hasOwnProperty('sectionmaterial') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
     args.sectionmaterial.updateAttributes({ section : args.newsection }).error(function(error ){
 		callback( error, null );
 	}).success(function(updatedSectionMaterial){

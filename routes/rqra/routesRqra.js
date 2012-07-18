@@ -100,6 +100,10 @@ exports.commentsByQuestion = function(request, response) {
 	routesCommon.commentsByQuestionRoute(0, request, response);
 }
 
+exports.commentCount = function(request, response){
+	routesCommon.commentCount(0, request, response);
+}
+
 exports.search = function(request, response) {
 	routesCommon.searchRoute(0, request, response);
 }

@@ -24,7 +24,18 @@ var OrganizationAction = function(){};
 	The newly added resource UUID.
 */
 OrganizationAction.prototype.addResourceToSection = function( args, callback ){
-	
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('section') &&
+		args.hasOwnProperty('resource'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial){
 		if ( null === sectionMaterial ) {
 			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial){
@@ -48,6 +59,18 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	returns the default section uuid for that course.
 */
 OrganizationAction.prototype.removeResourceFromSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('section') &&
+		args.hasOwnProperty('resource'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
     SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
     	var argsToRemove = {
     		sectionmaterial : sectionMaterial
@@ -74,6 +97,18 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 	returns the default section uuid for that course.
 */
 OrganizationAction.prototype.updateResourceFromSectionToSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('section') && args.hasOwnProperty('newsection') &&
+		args.hasOwnProperty('resource') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
 		args.sectionmaterial = sectionMaterial;
 		SectionMaterial.updateSectionMaterial( args, function( error, updatedMaterial ){
@@ -96,6 +131,18 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 	returns the UUID of the new section
 */
 OrganizationAction.prototype.addSection = function( args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('title') && args.hasOwnProperty('course') &&
+		args.hasOwnProperty('app') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.sectionsInCourse( args, function( error, courseSectionUUIDs){
 		if ( error ){
 			callback( error, null );
@@ -143,6 +190,17 @@ OrganizationAction.prototype.addSection = function( args, callback){
 	returns the UUID of the deleted section
 */
 OrganizationAction.prototype.removeSection = function( args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('section');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.removeCourseSection( args, function( error, removedCourseSection ){
 		if ( error ){
 					callback( error, null );
@@ -184,6 +242,18 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 	returns the UUID of the deleted section
 */
 OrganizationAction.prototype.updateSection = function( args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('newtitle') && args.hasOwnProperty('course') &&
+		args.hasOwnProperty('title') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
     CourseSection.sectionsInCourse( args, function( error, courseSections ){
     	if ( error ){
     			callback( error, null );
@@ -214,6 +284,17 @@ OrganizationAction.prototype.updateSection = function( args, callback){
 	Returns an array of all the sections associated with the course
 */
 OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('course');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.sectionsInCourse( args, function( error, courseSections ){
 		SectionImpl.findAll({ where : { uuid : courseSections }}).success(function( sections ){
 			var retSections = new Array();
@@ -238,6 +319,17 @@ OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 	Returns the resources in a section
 */
 OrganizationAction.prototype.resourcesInSection = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('appType') && args.hasOwnProperty('section'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
 		var resourcesInSection = new Array();
 		var i = sectionMaterials.length - 1;
@@ -279,6 +371,17 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 */
 
 OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('course');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	CourseSection.sectionsInCourse( args, function( error, courseSections ){
 		if ( error ) {
 			callback( error, null );
@@ -307,7 +410,17 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 */
 
 OrganizationAction.prototype.getResourcesByCourseUUID = function( args, callback ){
-	
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('course');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	var async = require('async');	
 	var resources = [];	
 

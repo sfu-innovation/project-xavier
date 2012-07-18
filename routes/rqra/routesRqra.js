@@ -1,9 +1,35 @@
 var routesCommon = require('./../common/routesCommon.js');
 
-exports.demo = function(request, response) {
-	response.render('rqra/demo', { title: "Demo" });
+// frontend
+exports.header = function(request, response) {
+	response.render('rqra/header', { title: "Demo" });
 }
 
+exports.courseList = function(request, response) {
+	response.render('rqra/courseList', { title: "Demo" });
+}
+
+exports.timeline = function(request, response) {
+	response.render('rqra/timeline', { title: "Demo" });
+}
+
+exports.questionList = function(request, response) {
+	response.render('rqra/questionList', { title: "Demo" });
+}
+
+exports.questionDetails = function(request, response) {
+	response.render('rqra/questionDetails', { title: "Demo" });
+}
+
+exports.questionForm = function(request, response) {
+	response.render('rqra/questionForm', { title: "Demo" });
+}
+
+exports.notificationList = function(request, response) {
+	response.render('rqra/notificationList', { title: "Demo" });
+}
+
+// backend
 exports.questionViewCount = function(request, response){
 	routesCommon.questionViewCountRoute(0, request, response);
 }

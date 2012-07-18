@@ -76,6 +76,9 @@ div#questionTabs {
 div#questionTabs div.tab {
 	margin: 5px;
 	font-size: 0.8em;
+	color: #1b88d0;
+	text-decoration:underline;
+	cursor: pointer;
 }
 
 div.questionPromoted {
@@ -115,9 +118,22 @@ div.profResponsesRecent {
 }
 
 div#pageNumber {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
 	padding-bottom: 20px;
 }
 
 div#pageNumber img {
 	width: 12px;
+}
+
+div.pageNumberButton {
+	padding: 2px;
+	color: #1b88d0;
+	text-decoration:underline;
+	cursor: pointer;
 }

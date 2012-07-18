@@ -62,7 +62,7 @@ html
 				div.nine.columns
 					ul.nav-bar#options
 						li(data-value="all")
-							a(href="#") ALL RESOURCES
+							a(href="/") ALL RESOURCES
 						li(data-value="yours")
 							a(href="/mine") YOUR CONTRIBUTIONS
 						li(data-value="starred")
@@ -78,14 +78,14 @@ html
 							ul.flyout
 								each name , course in user.courses
 									li.courses
-										a(href="#") #{course}
+										a(href="course/#{course}") #{course}
 
 										
 			div.row.show-for-small
 				div.button-bar.ten.columns
 					ul.button-group#mobile-nav
 						li
-							a.button(href="#") ALL
+							a.button(href="/") ALL
 						li
 							a.button(href="/mine") YOURS
 						li
@@ -96,7 +96,7 @@ html
 						br
 						each name , course in user.courses
 							li.courses
-								a.button(href="#") #{course}
+								a.button(href="course/#{course}") #{course}
 										
 		block content
 		

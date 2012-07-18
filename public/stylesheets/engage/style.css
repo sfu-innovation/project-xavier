@@ -83,7 +83,6 @@ div#userbox{
 	
 	
 div#contents{
-	padding-left: 10px;
 	padding-top: 10px;
 }
 
@@ -94,7 +93,7 @@ div#contents div.columns{
 }
 
 
-div#contents div.columns:last-child{
+div.columns:last-child{
 	float: left !important;
 	}
 
@@ -102,23 +101,24 @@ div.innercontents{
 	margin: 5px;
 	padding: 10px;
 	background-color: rgba(166,165,165,0.1) ;
-	height: 380px;
+	height: 345px;
 }
 
 div.innercontents form textarea{
-	height: 229px;
+	height: 200px;
 	resize: none; 
 	}
 
 div.innercontents#submitnew{
-	height: auto;
+
 }
 
 div.innercontents h5{
-	height: 36px;
+	height: 39px;
 	width:100%;
 	overflow: hidden;
-
+	margin-top : 5px;
+	margin-bottom: 5px;
 	}
 div.innercontents img{
 	height: 160px;
@@ -128,6 +128,7 @@ div.innercontents img{
 div.post_details {
 	white-space: nowrap;
 	overflow: hidden;
+	height: 20px
 	
 }
 div.innercontents .post_time{
@@ -193,9 +194,6 @@ div.post_details p{
 }
 
 div.post_details span.coursename{
-	border: 1px solid black;
-	padding-left: 1px;
-	padding-right: 1px;
 }
 
 div.post_details span.coursename:hover{
@@ -280,6 +278,23 @@ div#article_container #article h2{
 
 div#article_container #comments{
 
+	}
+	
+div#courseinfo	{	
+	padding-top: 10px;
+	
+}
+
+div#courseinfo div.innercontents{
+	height: 250px;
+	
+}
+div#courseinfo ul{
+	list-style: none;
+}
+
+div#courseinfo ul li span{
+	font-weight: bold;
 	}
 	
 div#footer{

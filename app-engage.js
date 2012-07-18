@@ -116,5 +116,6 @@ app.get('/starred', routesEngage.starred);
 app.get('/mine', routesEngage.contributions);
 
 //article - this is resource
+app.get('/course/:id', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);

@@ -681,8 +681,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 			callback(err);
 		}
 	});
-
-
 }
 
 //update comment body based on commentID

@@ -71,7 +71,6 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( arg, function( error, listeners ){
-
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
 

@@ -12,7 +12,8 @@ var dataFile  = 'tests/rqra/testing-data.json';
 var testData  = JSON.parse(fs.readFileSync(dataFile));
 
 // question variables
-var questionUUID = "pJfzndwdadddQuOicWWAjx7F05";
+var questionUUID = "pJfzndwdadddQuOicWWAjx7F07";
+
 var commentUUID  = "qJfzggggguOicWWAjx7F21";
 var commentTitle = "Here's my number";
 var commentBody  = "call me maybe?";
@@ -28,7 +29,8 @@ module.exports = {
 					"content-type": "application/json"
 				}
 			}
-			esQuery('database/qs.json', function(result){
+			esQuery('tests/rqra/es-test-data.json', function(result){
+
 				queries.dropDB(config.mysqlDatabase['db-name'], function(){
 					queries.createDB(config.mysqlDatabase["db-name"], function(){
 
@@ -82,6 +84,7 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
+					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 						body.comment);
@@ -149,6 +152,6 @@ module.exports = {
 				});
 			});
 			request.end();
-		},
+		}
 	}
 }

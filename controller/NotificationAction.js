@@ -36,6 +36,7 @@ args = {
 	app         : the id of the app
 	event       : 0 - 3
 	description : The message to be delivered in the notification	
+	user        : user id of the person adding the notification
 }
 
 returns a list of teh new user notifications created

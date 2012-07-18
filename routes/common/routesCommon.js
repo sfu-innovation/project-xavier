@@ -501,6 +501,7 @@ exports.questionRoute = function(appType, request, response) {
 exports.questionsRoute = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getAllQuestions( appType, request.params.page, function(result) {
+			console.log(result);
 			if (result) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, total: result.total,questions: result.hits }));

@@ -37,6 +37,9 @@ app.get('/', routesCommon.index);
 app.get('/login', routesCommon.login);
 app.get('/logout', routesCommon.logout);
 
+// main views
+app.get('/questions', routesRqra.questionListPage);
+
 // components
 app.get('/component/header', routesRqra.header);
 app.get('/component/courses', routesRqra.courseList);

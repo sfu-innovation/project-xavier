@@ -1,14 +1,16 @@
-var fs      = require("fs")
-var config  = JSON.parse(fs.readFileSync("config.json"));
-var Sequelize = require('sequelize');
+var fs           = require("fs")
+var config       = JSON.parse(fs.readFileSync("config.json"));
+var Sequelize    = require('sequelize');
+var UUID         = require('com.izaakschroeder.uuid');
 var CourseMember = require('./courseMember.js').CourseMember;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
 	config.mysqlDatabase["password"],
+	
 	{
-		host: config.mysqlDatabase["host"],
-		//logging: false
+		port: config.mysqlDatabase["port"],
+		host: config.mysqlDatabase["host"]
 	}
 );
 
@@ -22,6 +24,16 @@ var Course = exports.Course = db.define('Course', {
 	instructor: {type: Sequelize.STRING, allowNull: false},
 	meetingtimes: {type: Sequelize.TEXT}
 });
+
+exports.createCourse = function(newCourse, callback){
+	newCourse.uuid = UUID.generate();
+	Course.create(newCourse).success(function(course){
+		callback(null, course);
+	}).error(function(error){
+		callback(error, null);
+	})
+
+}
 
 exports.selectCourse = function(args, callback){
 	Course.find({where: args}).success(function(course){
@@ -41,8 +53,8 @@ exports.selectCourses = function(args, callback){
 	});
 }
 
-exports.getInstructor = function(args, callback){
-	Course.find({where: args}).success(function(course){
+exports.getInstructor = function(courseUUID, callback){
+	Course.find({where: {uuid: courseUUID}}).success(function(course){
 		var CourseUser = require('./user.js').User;
 		CourseUser.find({where: {uuid: course.instructor}}).success(function(courseInstructor){
 			callback(null, courseInstructor);
@@ -52,10 +64,12 @@ exports.getInstructor = function(args, callback){
 	})
 }
 
-exports.getCourseMembers = function(args, callback){
-		var User = require('./user.js').User;
-
-		CourseMember.findAll({where: args}).success(function(memberRows){
+//Gets all users that are associated to a certain course
+exports.getCourseMembers = function(courseUUID, callback){
+	var User = require('./user.js').User;
+	CourseMember.findAll({where: {course: courseUUID}}).success(function(memberRows){
+		
+		//Build list of user uuids
 		if(memberRows.length > 0){
 			var i;
 			var userUUIDs = [];
@@ -64,6 +78,7 @@ exports.getCourseMembers = function(args, callback){
 			}
 		}
 
+		//If there are any users, get them
 		if(userUUIDs){
 			User.findAll({where: {uuid: userUUIDs}}).success(function(users){
 				callback(null, users);
@@ -77,7 +92,7 @@ exports.getCourseMembers = function(args, callback){
 		}
 
 	}).error(function(error){
-		callback(error, null);
 		console.log("Can't find course " + error);
+		callback(error, null);
 	})
 }

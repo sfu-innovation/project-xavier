@@ -1,0 +1,106 @@
+doctype 5
+html
+	<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+	<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	head
+		title= title
+		
+		script(src="http://code.jquery.com/jquery-latest.js")
+		script(src="/javascripts/engage/prettydate.js")
+		script(src="/javascripts/engage/datetime.js")
+
+		link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet', type='text/css')
+		meta(charset="utf-8")
+
+		<!-- Set the viewport width to device width for mobile -->
+		meta(name="viewport", content="width=device-width")
+		
+		
+
+		<!-- Included CSS Files -->
+		link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
+		link(rel="stylesheet", href="/stylesheets/engage/app.css")
+		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
+		link(rel='stylesheet', href='/stylesheets/engage/style.css')
+		<!--[if lt IE 9]>
+		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
+		<![endif]-->
+		
+		script(src="/javascripts/engage/modernizr.foundation.js")
+		
+		<!-- IE Fix for HTML5 Tags -->
+		<!--[if lt IE 9]>
+		script(src="http://html5shiv.googlecode.com/svn/trunk/html5.js")
+		<![endif]-->
+		
+		<!-- Included JS Files -->
+		script(src="/javascripts/jquery-1.7.2.min.js")
+		script(src="/javascripts/engage/quicksand/jquery.quicksand.js")
+		script(src="/javascripts/engage/quicksand/script.js")
+		script(src="/javascripts/engage/jquery.reveal.js")
+		script(src="/javascripts/engage/jquery.orbit-1.4.0.js")
+		script(src="/javascripts/engage/jquery.customforms.js")
+		script(src="/javascripts/engage/jquery.placeholder.min.js")
+		script(src="/javascripts/engage/jquery.tooltips.js")
+		script(src="/javascripts/core.api.js")
+		script(src="/javascripts/engage/app.js")
+		
+	body
+		div#header
+			div.row
+				div.nine.columns
+					h1
+						a(href="/") #{title}
+				div.three.columns#userbox
+					span  #{ user.firstName }  #{ user.lastName }
+						a  log out
+				
+			div.row.hide-for-small#nav
+				div.nine.columns
+					ul.nav-bar#options
+						li(data-value="all")
+							a(href="#") ALL RESOURCES
+						li(data-value="yours")
+							a(href="#") YOUR CONTRIBUTIONS
+						li(data-value="starred")
+							a(href="#") STARRED
+						li(data-value="prof")
+							a(href="#") INSTRUCTOR POSTS
+				div.two.columns
+					ul.nav-bar
+						li.has-flyout#courselist
+							a(href="#") COURSES
+							a(href="#", class="flyout-toggle")
+								span
+							ul.flyout
+								each name , course in user.courses
+									li.courses
+										a(href="#") #{course}
+
+										
+			div.row.show-for-small
+				div.button-bar.ten.columns
+					ul.button-group#mobile-nav
+						li
+							a.button(href="#") ALL
+						li
+							a.button(href="#") YOURS
+						li
+							a.button(href="#") STAR
+						li
+							a.button(href="#") PROF
+							
+						br
+						each name , course in user.courses
+							li.courses
+								a.button(href="#") #{course}
+										
+		block content
+		
+		div#footer
+			div.row
+				div.twelve.columns
+					p SFU Mobile - Semester in Innovation

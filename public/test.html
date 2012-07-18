@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
+	<style>
+		.comments_li {background-color: #ffffee;}
+		.questions_li {background-color: #f4f4f4;}
+	</style>
+	<script src="http://code.jquery.com/jquery-1.6.1.min.js" ></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="/javascripts/core.api.js" ></script>
+	<script src="/javascripts/main.js?v=2" ></script>
+</head>
+<body>
+
+<div id="error" style="color:red"></div>
+<div id="login" style="position: absolute; right:0; top:0; z-index: 9000; background-color: white;"><a id="btn_login" href="/login" >login</a></div>
+<div class id='tabs'>
+	<ul>
+		<li><a href="#searchpage">Search</a> </li>
+		<li><a href="#question">Question</a></li>
+		<li><a href="#comment">Comment</a></li>
+		<li><a href="#course">Course</a></li>
+		<li><a href="#user">User</a></li>
+		<li><a href="#userp">User Profile</a></li>
+		<li><a href="#tag">Tag</a></li>
+		<li><a href="#mediafile">Media File</a></li>
+		<li><a href="#resource">Resource</a></li>
+		<li><a href="#notification">Notification</a></li>
+
+	</ul>
+
+	<div id="searchpage">
+		<div>
+
+			<button id="search">Search a question</button>
+			<input type = "text" size="100" placeholder="search something" id="searchQuery" >
+			<ol id="search_results"></ol>
+
+
+		</div>
+	</div>
+
+	<div id="question">
+
+		<div>
+			<button id="getALLQuestions">Refresh All Questions</button>
+			<ol id="questions"></ol>
+		</div>
+		<hr>
+		<div>
+			<button id="getQuestionById">Get this question by id</button>
+			<button id="updateQuestionById">Update this question by id</button>
+			<button id="deleteQuestionById">Delete this question by id</button>
+			<button id="getCommentsByTargetId">Load the comments of this question</button>
+
+			<button id="followQuestionById">Follow</button>
+			<button id="unfollowQuestionById">Unfollow</button>
+
+			<br />
+
+			<input id="question_id" type="text" size="50" placeholder="id">
+
+			<input id="question_title" type="text" size="100" placeholder="question title">
+			<textarea id="question_body" type="text"  rows="10" cols="200" placeholder="question_body"></textarea>
+
+			<ol id="question_comments"></ol>
+
+
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="getQuestionsByUserId">Get Questions asked by this user:</button>
+			<input id="question_user_id" type="text" size="20" placeholder="user id">
+
+			<ol id="user_questions">
+
+
+			</ol>
+
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="createQuestion">Create a new question</button>
+			<input type = "text" placeholder="question title" id="new_question_title">
+			<input type= "text" placeholder="question body"  id="new_question_body">
+		</div>
+
+		<hr>
+
+
+
+	</div>
+
+
+	<div id="comment">
+
+		<div>
+			<button id="getALLComments">Refresh All Comments</button>
+			<ol id="comments"></ol>
+		</div>
+		<hr>
+		<div>
+			<button id="getCommentById">Get this comment by id</button>
+			<button id="updateCommentById">Update this comment by id</button>
+			<button id="deleteCommentById">Delete this comment by id</button>
+			<button id="upVoteCommentById">+</button>
+			<button id="downVoteCommentById">-</button>
+
+
+
+
+			<input id="comment_id" type="text" size="50" placeholder="id">
+
+			<input id="comment_title" type="text" size="100" placeholder="comment title">
+			<textarea id="comment_body" type="text"  rows="10" cols="200" placeholder="comment_body"></textarea>
+
+
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="getCommentsByUserId">Get Comments submited by this user:</button>
+			<input id="comment_user_id" type="text" size="20" placeholder="user id">
+
+			<ol id="user_comments">
+
+
+			</ol>
+		</div>
+
+		<hr>
+
+
+		<div>
+			<button id="createComment">Create a new comment</button>
+			<input type = "text" placeholder="target question id" id="new_comment_target_id">
+			<input type= "text" placeholder="comment body"  id="new_comment_body">
+		</div>
+
+		<hr>
+
+
+
+	</div>
+
+	<div id="course">
+
+		<div>
+			<button id="getCourseById" >Get this Course by id</button>
+
+			<br />
+
+			<input id="course_uuid" type="text" size="40" placeholder="uuid" value="A827346H7ASDFG9" >
+
+
+			<input id="course_title" type="text" size="20" placeholder="title" disabled="disabled">
+
+			<input id="course_section" type="text" size="20" placeholder="section" disabled="disabled">
+			<input id="course_subject" type="text" size="20" placeholder="subject" disabled="disabled">
+			<input id="course_number" type="text" size="20" placeholder="number" disabled="disabled">
+			<input id="course_instructor" type="text" size="20" placeholder="instructor" disabled="disabled">
+			<input id="course_created" type="text" size="20" placeholder="created at" disabled="disabled">
+			<input id="course_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
+
+		</div>
+
+	</div>
+	<div id="user">
+		<div>
+			<button id="getUserById" >Get this question by id</button>
+			<!--<button id="updateQuestionById">Update this question by id</button>-->
+			<!--<button id="deleteQuestionById">Delete this question by id</button>-->
+			<!--<button id="getCommentsByTargetId">Load the comments of this question</button>-->
+			<br />
+
+			<input id="user_uuid" type="text" size="40" placeholder="uuid" value="A7S7F8GA7SD98A7SDF8ASD7G" >
+			<input id="user_user_id" type="text" size="20" placeholder="id" disabled="disabled">
+
+			<input id="user_type" type="text" size="20" placeholder="type" disabled="disabled">
+
+			<input id="user_first_name" type="text" size="20" placeholder="first name" disabled="disabled">
+			<input id="user_last_name" type="text" size="20" placeholder="last name" disabled="disabled">
+			<input id="user_email" type="text" size="20" placeholder="email" disabled="disabled">
+			<input id="user_created" type="text" size="20" placeholder="created at" disabled="disabled">
+			<input id="user_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
+
+
+		</div>
+
+
+	</div>
+
+
+	<div id="userp">
+		<button id="getUserProfileById">Get User Profile</button>
+		<button id="updateUserProfileById">Update User Profile</button>
+		<input id="userp_user" type="text" size="40" placeholder="profile picture" value="A7S7F8GA7SD98A7SDF8ASD7G" >
+		<input id="userp_profile_picture" type="text" size="20" placeholder="profile picture" >
+		<input id="userp_bio" type="text" size="20" placeholder="profile bio" >
+		<input id="userp_last_watched_tag" type="text" size="20" placeholder="last watched" disabled="disabled">
+		<input id="userp_created" type="text" size="20" placeholder="created at" disabled="disabled">
+		<input id="userp_updated" type="text" size="20" placeholder="updated at" disabled="disabled">
+
+
+	</div>
+	<div id="tag">
+		<p>Only works in Accent!!!!</p>
+		<div>
+			<button id="createTag">Create a New Tag</button>
+			<button id="getTagById">Get</button>
+			<button id="updateTagById">Update</button>
+			<button id="deleteTagById">Delete</button>
+
+			<input id="tag_uuid" type="text" size="100" placeholder="uuid, fill this only when get/update/delete">
+			<input id="tag_user" type="text" size="20" placeholder="user" disabled="disabled">
+			<input id="tag_start" type="text" size="20" placeholder="start" >
+			<input id="tag_end" type="text" size="20" placeholder="end" >
+			<input id="tag_type" type="text" size="20" placeholder="type" >
+			<input id="tag_target_uuid" type="text" size="20" placeholder="target uuid" >
+			<input id="tag_title" type="text" size="20" placeholder="title" >
+			<input id="tag_description" type="text" size="20" placeholder="description" >
+			<input id="tag_question" type="text" size="20" placeholder="question" >
+
+			<input id="tag_important" type="text" size="20" placeholder="important" >
+			<input id="tag_interest" type="text" size="20" placeholder="interest" >
+			<input id="tag_examable" type="text" size="20" placeholder="examable" >
+			<input id="tag_reviewlater" type="text" size="20" placeholder="review later" >
+			<input id="tag_shared" type="text" size="20" placeholder="shared" >
+			<input id="tag_created" type="text" size="20" placeholder="created" disabled="disabled">
+			<input id="tag_updated" type="text" size="20" placeholder="updated"  disabled="disabled">
+		</div>
+
+	</div>
+
+	<div id="mediafile">
+		<button id="createMediaFile">Create a New MediaFile</button>
+		<button id="getMediaFileById">Get</button>
+		<button id="updateMediaFileById">Update</button>
+		<button id="deleteMediaFileById">Delete</button>
+		<button id="getTagsByMediaFileId">Get All Tags By Id</button>
+
+		<input id="mediafile_uuid" type="text" size="100" placeholder="uuid, fill this only when get/update/delete">
+		<input id="mediafile_user" type="text" size="20" placeholder="user" disabled="disabled">
+		<input id="mediafile_type" type="text" size="20" placeholder="type" >
+		<input id="mediafile_path" type="text" size="20" placeholder="path" >
+		<input id="mediafile_title" type="text" size="20" placeholder="title" >
+		<input id="mediafile_description" type="text" size="20" placeholder="description" >
+		<input id="mediafile_created" type="text" size="20" placeholder="created" disabled="disabled">
+		<input id="mediafile_updated" type="text" size="20" placeholder="updated"  disabled="disabled">
+
+		<ol id="mediafile_tags">
+
+		</ol>
+	</div>
+
+
+
+	<div id="resource">
+		<p>Only works in Engage!!!!</p>
+		<div>
+			<button id="createResource" disabled="disabled">Create a New Recourse</button>
+			<input id="resource_course" type="text" size="20" placeholder="course id" >
+
+			<input id="resource_title" type="text" size="20" placeholder="title" >
+			<input id="resource_description" type="text" size="20" placeholder="description" >
+			<input id="resource_resource_type" type="text" size="20" placeholder="resource type" >
+			<input id="resource_file_type" type="text" size="20" placeholder="file type" >
+			<input id="resource_url" type="text" size="20" placeholder="url" >
+
+		</div>
+
+	</div>
+
+	<div id="notification">
+
+	</div>
+
+
+
+
+</div>
+</body>
+</html>

@@ -7,7 +7,7 @@
 		"host":"localhost",
 		"port":3001
 	},
-	"presenterServer" : {
+	"rqraServer" : {
 		"host":"localhost",
 		"port":3002
 	},
@@ -15,12 +15,26 @@
 		"host":"",
 		"user":"",
 		"password":"",
-		"db-name":""
+		"db-name":"",
+		"port":""
 	},
 	"mysqlTestDatabase":{
 		"host":"",
 		"user":"",
 		"password":"",
-		"db-name":""
+		"db-name":"",
+		"port":""
+	},
+	"emailsettings" :{
+		 "user": "",
+		 "password": "",
+		 "host": "",
+		 "ssl": "",
+		 "from": ""
+	},
+	"dictionaryDB":{
+		"host":"",
+		"port": 0,
+		"db-num": 0
 	}
 }

@@ -1,13 +1,13 @@
 //question Model
-var Question = function(uuid, user, title, body, category, timestamp){
-	this.id = uuid;
+var Question = function(user, title, body, category){
 	this.user = user;
 	this.body = body;
 	this.category = category;
 	this.status = 'unanswered';
 	this.title = title;
-	this.timestamp = timestamp;
 	this.followup = [];
+	this.viewCount = 0;
+	this.commentCount = 0;
 }
 
 module.exports = Question;

@@ -1,13 +1,21 @@
 {
 	"name":"project-xavier",
 	"version":"0.0.1",
-	"dependencies":{
+	"dependencies": {
 		"sequelize":">=0.0.1",
 		"mysql":">=0.0.1",
-		"express":">=0.0.1",
+		"express":"2.5.11", 
 		"should":">=0.0.1",
 		"mikeklem-cas":">=0.0.1",
 		"com.izaakschroeder.elasticsearch": ">=0.0.1",
-        "optimist": "*"
+		"com.izaakschroeder.uuid": ">=0.0.1",
+        "emailjs":">=0.0.1",
+        "async":">=0.0.1",
+		"redis":">=0.0.1",
+		"natural":">=0.0.1",
+		"jade":">=0.0.1",
+		"request" : ">=0.0.1",
+		"jsdom" : ">=0.0.1",
+		"html5" : ">=0.0.1"
 	}
 }

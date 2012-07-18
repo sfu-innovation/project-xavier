@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	div.row#article_container
+		div.nine.columns
+			div#article_options
+				
+				a(href="/")#back BACK
+				span#options
+					a 
+						span.typicn.star
+						| Star
+					a 
+						span.typicn.thumbsUp
+						|Like
+					a 
+						span.typicn.brightness
+						|Day/Night
+					a 
+						span.typicn.plus
+						|Text Size
+					a(href="#{article.url}") View Original
+				
+				span#course #{article.course} in week #{article.week}
+			div#article
+			script(type='text/javascript')
+				$('div#article').load("#{article.path}");
+		div.two.columns#comments
+			p comments goes here

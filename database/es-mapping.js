@@ -1,10 +1,9 @@
-//THIS IS USED FOR DEFINING MAPPING(to return sorted results)
-//Do not have to run this.
-
 var es = require('com.izaakschroeder.elasticsearch'),
-	db = es.connect('localhost');
+	db = es.connect('localhost'),
+	async = require('async'),
+	indice = ['presenter', 'accent', 'engage'];
 
-var map = function(appType){
+var map = function(appType, callback){
 	var path = "/" + appType;
 
 	var data = {
@@ -45,6 +44,10 @@ var map = function(appType){
 							}
 						}
 					},
+					"created": {
+						"type": "date",
+						"format":"dateOptionalTime"
+					},
 					"timestamp": {
 						"type": "date",
 						"format":"dateOptionalTime"
@@ -52,6 +55,12 @@ var map = function(appType){
 					"followup": {
 						"type": "string",
 						"index": "not_analyzed"
+					},
+					"isInstructor": {
+						"type": "string"
+					},
+					"viewCount": {
+						"type": "integer"
 					}
 				}
 			},
@@ -71,10 +80,14 @@ var map = function(appType){
 						}
 					},
 					"upvote": {
-						"type": "string"
+						"type": "integer"
 					},
 					"downvote": {
-						"type": "string"
+						"type": "integer"
+					},
+					"created": {
+						"type": "date",
+						"format":"dateOptionalTime"
 					},
 					"timestamp": {
 						"type": "date",
@@ -104,15 +117,27 @@ var map = function(appType){
 					},			
 					"isAnswered": {
 						"type": "string"
+					},
+					"isInstructor": {
+						"type": "string"
 					}
 				}
 			}
 		}
 	}
 	db.post(path, data, function(err, req, data){
-		console.log(data);
+		console.log('Mapping to: %s...... %s', appType, JSON.stringify(data));
+		callback();
 	})
 };
 
-map("presenter");
-map("accent");
+module.exports = function(callback){
+	async.forEach(indice, function(index, callback){
+		map(index, callback);
+	}, function(err){
+		console.log('-Mapping complete-');
+		console.log();
+		callback();
+	})
+}
+

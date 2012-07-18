@@ -132,11 +132,11 @@ function loadStarredArticles(){
 					var article =
 						'<div class="three columns">'
 							+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-							+ '<span class="uploader">' + 'Fake Catherine'+ '</span>'
+							+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName+ '</span>'
 							+ '<div class="post_details"> '
-							+ '<p>"Posted in '
-							+ '<span class="coursename">' + 'Fake 101' + '</span>'
-							+ '<span class="post_time">' + item.createdAt + '</span>'
+							+ '<p>Posted in '
+							+ '<span class="coursename">' + item.course.subject +" "+ item.course.number + '</span>'
+							+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 							+ '</p>'
 							+ '</div>'
 							+ '<h5 style="height:54px;">'
@@ -144,7 +144,10 @@ function loadStarredArticles(){
 							+ '<div class="articlepreview">' + '<p>' + item.excerpt + '</p>'
 							+ '</div>'
 							+ '<div class="likescomments">'
+							+ '<span class="typicn star"></span>'
+
 							+ '<span> Like ('+ item.likes +') </span>'
+							+ '<span> Comments ('+ item.totalComments +') </span>'
 							+ '</div>'
 							+ '</div>'
 							+ '</div>';
@@ -184,4 +187,12 @@ function activateTab($tab) {
 	//Show Tab Content
 	$(contentLocation).closest('.tabs-content').children('li').hide();
 	$(contentLocation).css('display', 'block');
+}
+
+
+function formartDate(old_date){
+	var now = new Date();
+	var post_time = new Date(Date.parse(old_date));
+	var prettytime = formatAgo(post_time, null, now);
+	return prettytime;
 }

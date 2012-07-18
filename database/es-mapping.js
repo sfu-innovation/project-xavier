@@ -61,6 +61,9 @@ var map = function(appType, callback){
 					},
 					"viewCount": {
 						"type": "integer"
+					},
+					"commentCount": {
+						"type": "integer"
 					}
 				}
 			},
@@ -119,6 +122,9 @@ var map = function(appType, callback){
 						"type": "string"
 					},
 					"isInstructor": {
+						"type": "string"
+					},
+					"commentParent": {
 						"type": "string"
 					}
 				}

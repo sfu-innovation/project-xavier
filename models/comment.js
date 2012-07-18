@@ -8,6 +8,7 @@ var Comment = function(target_uuid, user, objectType, body){
 	this.body = body;
 	this.objectType = objectType;
 	this.isAnswered = 'false';
+	this.commentParent = '';
 }
 
 module.exports = Comment;

@@ -5,16 +5,17 @@
 	"_id":"pJfznhheQuOicWWAjx7F01",
 	"_score":1,
 	"_source":
-		{"user":"jbo1",
+		{"user":"lol1user",
 		"title":"kia muziko vi auskultu?",
 		"body":"some description",
 		"category":"academic",
 		"status":"unanswered",
-		"created":"2012-07-09T18:19:31.204Z",
-		"timestamp":"2012-07-09T18:19:31.204Z",
+		"created":"2012-07-10T18:19:31.204Z",
+		"timestamp":"2012-07-10T18:19:31.204Z",
 		"followup":[],
 		"isInstructor":"true",
-		"viewCount":0
+		"viewCount":0,
+		"commentCount":0
 		}
 	},
 	{
@@ -23,16 +24,17 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F04",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"lol1user",
 			"title":"Kiam estas la finalo ekzameno?",
 			"body":"Kiam estas la finalo ekzameno?",
 			"category":"academic",
-			"status":"unanswered",
+			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -46,11 +48,12 @@
 			"body":"kio ludoj vi ludas?",
 			"category":"academic",
 			"status":"unanswered",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T15:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -68,7 +71,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -78,7 +82,7 @@
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"title":"chu scias la respondon al hejmtasko demando kvin?",
 			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
 			"category":"academic",
 			"status":"unanswered",
@@ -86,7 +90,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":5231
+			"viewCount":5231,
+			"commentCount":1
 		}
 	},
 	{
@@ -104,7 +109,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -114,7 +120,7 @@
 		"_score":1,
 		"_source":
 		{"user":"jbo1",
-			"title":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
+			"title":"chu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
 			"body":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
 			"category":"academic",
 			"status":"unanswered",
@@ -122,7 +128,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":100
+			"viewCount":100,
+			"commentCount":1
 		}
 	},
 	{
@@ -140,7 +147,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
 	{
@@ -158,7 +166,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":423
+			"viewCount":423,
+			"commentCount":2
 		}
 	},
 	{
@@ -176,7 +185,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
 	{
@@ -194,7 +204,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false"
+			"isInstructor":"false",
+			"commentParent":"qJfzggggguOicWWAjx7F10"
 		}
 	},
 	{
@@ -212,7 +223,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -230,7 +242,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -248,7 +261,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -266,7 +280,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -284,7 +299,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	},
 	{
@@ -302,7 +318,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -320,7 +337,8 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true"
+			"isInstructor":"true",
+			"commentParent":""
 		}
 	},
 	{
@@ -338,7 +356,8 @@
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
-			"viewCount":0
+			"viewCount":0,
+			"commentCount":0
 		}
 	}
 ]

@@ -1,0 +1,60 @@
+[
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F07",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"category":"academic",
+			"status":"answered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":5231,
+			"commentCount":1
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F04",
+		"_score":1,
+		"_source":
+		{"user":"jbo1",
+			"title":"Kiam estas la finalo ekzameno?",
+			"body":"Kiam estas la finalo ekzameno?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":0,
+			"commentCount":1
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"qJfzggggguOicWWAjx7F21",
+		"_score":1,
+		"_source":
+		{"user":"mcs3",
+			"upvote":1,
+			"downvote":125,
+			"body":"Vi devas fari la asigno sola. Mi satus vidi vin en mia oficejo post klaso.",
+			"target_uuid":"pJfzndwdadddQuOicWWAjx7F07",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":1
+		}
+	}
+]

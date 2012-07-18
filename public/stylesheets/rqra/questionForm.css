@@ -1,0 +1,22 @@
+div.formButton {
+	color: white;
+	background: #1b88d0;
+	padding: 6px;
+	cursor: pointer;
+	padding: 10px;
+	float: right;
+	font-weight: bold;
+}
+
+div.askFormField {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+div.askFormFieldName {
+	width: 120px;
+}

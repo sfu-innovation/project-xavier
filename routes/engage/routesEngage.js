@@ -6,6 +6,7 @@ var http = require('http');
 var request = require('request');
 var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
+var crypto = require('crypto');
 
 
 exports.followQuestion = function(request, response) {
@@ -122,7 +123,7 @@ exports.unstarResource = function(request, response){
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: error }));
 				}
-			});
+			}); 
 		}else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
@@ -242,6 +243,7 @@ var article_1 = {
 	week : "1",
 	likes: 5,
 	description : "please read this for the midterm.",
+	starred : 0
 
 }
 
@@ -260,42 +262,45 @@ var article_2 = {
 	week : "4",
 	likes: 2,
 	description : "what?!",
+	starred : 1
 
 }
 
 var article_3 = {
 	id : 3,
 	user : user_1,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "3South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
+	url : "http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
+	title :  "Naked rambler walks free from Perth Prison",
+	author: "",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/uk-scotland-tayside-central-18873631.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST",
+	uploaded_on : "July 17 2012,  12:00 PM PST",
 	course: "IAT 200",
 	week : "4",
-	likes: 1,
+	likes: 10,
 	description : "Check out this article",
+	starred : 0
 }
 
 
 var article_4 = {
 	id : 4,
 	user : userobject,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "4South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
+	url : "http://www.bbc.co.uk/news/business-18867054",
+	title :  "HSBC used by 'drug kingpins', says US Senate",
+	author: "Paul Adams",
 	publishedDate : "4 July 2012",
 	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/science-environment-18716300.html",
+	path : "/resources/articles/business-18867054.html",
 	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 12 2012,  12:30 PM PST",
+	uploaded_on : "July 17 2012,  12:30 PM PST",
 	course: "BUS 100",
 	week : "1",
-	likes: 4,
+	likes: 7,
 	description : "wow cool",
+	starred : 0
 }
 
 var article_5 = {
@@ -313,6 +318,7 @@ var article_5 = {
 	week : "2",
 	likes: 6,
 	description : "what?!",
+	starred : 1
 
 }
 
@@ -325,62 +331,98 @@ userobject.courses = {
 
 var articles = [article_1,  article_2,  article_3,  article_4,  article_5]
 
+function update_link(node, host) {
+	var attrs = [
+		'href',
+		'src'];
 
-function walk(node, cb) {
+	for (var i in attrs) {
+		if (node.hasAttribute(attrs[i])) {
+			var path = node.getAttribute(attrs[i])
+			node.setAttribute(attrs[i], mediaPath(path, host));
+		}
+	}
+}
+
+function walk(node, host, cb) {
+	//console.log(host)
+	var notAllowed = [
+		'SCRIPT',
+		'NOSCRIPT',
+		'H1'
+		];
 
 	var check = false;
+
 	if (node.nodeType !== node.ELEMENT_NODE) {
 		return;
 	}
-
+	if (node.hasAttribute('src') || node.hasAttribute('href')) {
+		update_link(node, host);
+	}
+	//console.log('in walk: '+node.tagName)
 	for(var i = 0; i < node.childNodes.length; ++i){
-		if (node.childNodes[i].tagName === 'SCRIPT' || node.childNodes[i].tagName === 'NOSCRIPT') {
+
+		if (~notAllowed.indexOf(node.childNodes[i].tagName) || node.childNodes[i].textContent.length === 0) {
 			node.removeChild(node.childNodes[i]);
 		}
-		else if (node.childNodes[i].textContent.length/node.textContent.length > 0.55) {	
-			walk(node.childNodes[i], cb);
-			check = true;
-		}
-	}
+		else if (typeof cb === 'function') {
 
-	if (!check) {
+			if (node.childNodes[i].textContent.length/node.textContent.length > .65) {	
+				walk(node.childNodes[i], host, cb);
+				check = true;
+			}
+		} else if (typeof cb === 'number') {
+
+			//console.log('going into: '+node.childNodes[i].tagName)
+			node.removeAttribute('class');
+			node.removeAttribute('id');
+			node.removeAttribute('style');
+			walk(node.childNodes[i], host, cb);
+		}
+
+
+	}//------------end child loop
+
+	if (typeof cb === 'function' && !check) {
 		cb(node); 
 	}
 }
 
-function listTypes(node) {
+function listTypes(node, host) {
+
 	var article = null
 
-	walk(node, function(node) {
-		for (var j = 0; j < node.childNodes.length; ++j) {
-			var current = node.childNodes[j];
-			//console.log('child node: '+current)
-			if (current.nodeType === current.ELEMENT_NODE) {
-				current.removeAttribute('class');
-				current.removeAttribute('id');
-				current.removeAttribute('style');
-			}
-		}		
-		article = node;		
+	walk(node, host, function(node) {
+			
+		//console.log(node.tagName)		
+		article = node;	
+		walk(article, host, 0);	
 	})
 	return article;
 }
 
-/*
-function articlize(document) {
-	var article = listTypes(document.documentElement)
-}
-*/
 
-function get_article(document, name) {
 
-	var stream = fs.createWriteStream("./public/resources/articles/"+name+".xml");
+function articlize(document, name) {
+
+	var published_date = document.querySelector('TIME').textContent,
+		url = name.split("/"),
+		fileName = crypto.createHash('md5').update(url[url.length-1]).digest('hex'),
+		path = "./public/resources/articles/"+fileName+".xml",
+		host = url[2];
+		title = document.querySelector('H1').textContent;
+	
+
+	var stream = fs.createWriteStream(path);
 	stream.once('open', function(fd) {
 
-		stream.write('<title>'+document.querySelector('H1').textContent+'</title>\n')
-		stream.write('<content>'+html5.serialize(listTypes(document.documentElement))+'</content>');
+		stream.write('<title>'+title+'</title>\n')
+		stream.write('<content>'+html5.serialize(listTypes(document.documentElement, host))+'</content>');
 
 	})
+
+
 /*
 	//for testing----------------
 	return document.querySelectorAll(tag).map(function(node) {
@@ -389,9 +431,6 @@ function get_article(document, name) {
 	//---------------------------
 */
 }
-
-
-
 
 
 exports.index = function(req, res){
@@ -412,7 +451,7 @@ exports.index = function(req, res){
 
 	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
 	//console.log(req.body.article_url.split("/"));
-	var parse_url = req.body.article_url.split("/");
+	
 
 	request(req.body.article_url, function (error, response, body) {
 
@@ -428,7 +467,7 @@ exports.index = function(req, res){
 
 			parser.parse(body);
 
-			get_article(window.document, parse_url[parse_url.length-1]);
+			articlize(window.document, req.body.article_url);
 			
 		}
 		
@@ -455,12 +494,12 @@ exports.starred = function (req, res) {
 
 }
 
-exports.article_view = function (req, res) {
+exports.articleView = function (req, res) {
 	var pickedArticle = articles[req.params.id - 1];
 
 
 	res.render("engage/article", { title:"SFU ENGAGE",
-
+		article : pickedArticle,
 		user:userobject,
 		status:"logged in"     })
 

@@ -1,0 +1,31 @@
+div#courseList {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+	margin-bottom: 35px;
+}
+
+div.spacer {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+}
+
+div.courseButton {
+	color: white;
+	background: #394161;
+	padding: 6px;
+	border-bottom: 4px solid white;
+	cursor: pointer;
+}
+
+div.courseButtonSelected {
+	color: white;
+	background: #1b88d0;
+	padding: 6px;
+	border-bottom: 4px solid #4d4d4d;
+	cursor: pointer;
+}

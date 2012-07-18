@@ -16,7 +16,7 @@ var questionID    = "pJfzndwdadddQuOicWWAjx7F07";
 var questionTitle = "Test question Title";
 var questionBody  = "Do radioactive cats have 18 half-lives?"
 var userID        = "jbo1";
-var appType      = 0;
+var appType       = 0;
 
 module.exports = {
 

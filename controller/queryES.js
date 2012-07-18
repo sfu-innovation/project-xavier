@@ -40,7 +40,7 @@ var getUserObj = function(data, callback){
 	result.total = data.hits.total;
 
 	async.forEach(data.hits.hits, function(obj, done){
-		
+
 		user.selectUser({"uuid":obj._source.user}, function(error, user){
 			if(user){
 				obj.user = user;
@@ -769,7 +769,7 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 
 
 /***NEW METHODS OMG***/
-
+//searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
 QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callback){
 	var self = this;
 	/// course, week, , searchQuery, searchType
@@ -797,8 +797,6 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 		size: sizeOfResult
 	};
 
-
-	//{ Lastest, Replied(numOfComments), Instructor, Viewed, Unanswered, MyQuestions }
 	switch(searchObj.searchType){
 		case 'latest':{
 			data = latestQuestion(data);

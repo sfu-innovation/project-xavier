@@ -778,34 +778,28 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 }
 
 
-/***NEW METHODS OMG***/
 //searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
 QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callback){
-	var self = this;
 	/// course, week, , searchQuery, searchType
-	if(!searchObj.searchQuery && searchObj.searchType !== 'myQuestions' &&
-		searchObj.searchType !== 'viewed' && searchObj.searchType !== 'replied'){
-		console.log('searchQuery is undefined');
-		callback(undefined);
-		return;
-	}
-
 	var data = {
 		query: {
 			bool:{
-				must:[
-					{
-				flt:{
-				"fields":["title", "body"]
-				, "like_text":searchObj.searchQuery
-				}}
-				]
+				must:[]
 			}
 		},
-		//sort:[{"title.untouched":{"order":"asc"}}],
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
+
+	if(searchObj.searchQuery){
+		data.query.bool.must.push({
+			flt:{
+				"fields":["title", "body"]
+				, "like_text":searchObj.searchQuery
+			}});
+	}else{
+		data.query.bool.must.push({match_all:{}});
+	}
 
 	switch(searchObj.searchType){
 		case 'latest':{
@@ -843,19 +837,14 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 		if(data) {
 			addUsersToData(data, callback);
 		} else {
-			callback(undefined);
+			callback(err);
 		}
 	});
 }
 
 //get questions sorted by comment count
 var replied = function(data, searchObj){
-	if(searchObj.searchQuery === ''){
-		console.log("search query is empty");
-		data.query.bool.must = [{match_all:{}}];
-	}
 	data.sort = [{"commentCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
-
 	return data;
 }
 
@@ -881,23 +870,12 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestion = function(data, searchObj){
-	if(searchObj.searchQuery === ''){
-		console.log("search query is empty");
-		data.query.bool.must = [{match_all:{}}];
-	}
-
 	data.query.bool.must.push({"term":{"user": searchObj.user}});
-
 	return data;
 }
 
 //get questions sorted by view count
 var viewed = function(data, searchObj){
-	if(searchObj.searchQuery === ''){
-		console.log("search query is empty");
-		data.query.bool.must = [{match_all:{}}];
-	}
-
 	data.sort = [{"viewCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
 	return data;
 }

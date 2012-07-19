@@ -39,6 +39,7 @@ app.get('/logout', routesCommon.logout);
 
 // main views
 app.get('/questions', routesRqra.questionListPage);
+app.get('/question', routesRqra.questionDetailsPage);
 
 // components
 app.get('/component/header', routesRqra.header);

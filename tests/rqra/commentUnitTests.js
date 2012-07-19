@@ -116,7 +116,7 @@ module.exports = {
 		},
 		"get all comments": function(test){
 			this.requestOptions.method = "GET";
-			this.requestOptions.path   = "/api/comments/0";
+			this.requestOptions.path   = "/api/comments/page/0";
 
 			var request = http.get(this.requestOptions, function(response){
 				var body = "";
@@ -124,35 +124,38 @@ module.exports = {
 					body += chunk;
 				}).on('end', function(){
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 &&
+						body.comments);
 					test.done();
 				});
 			});
 		},
 		"get comments by user": function(test){
 			this.requestOptions.method = "GET";
-			this.requestOptions.path   = "/api/user/" + userID + "/comments/0";
+			this.requestOptions.path   = "/api/user/" + userID + "/comments/page/0";
 			var request = http.get(this.requestOptions, function(response){
 				var body = "";
 				response.on('data', function(chunk){
 					body += chunk;
 				}).on('end', function(){
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 &&
+						body.comments);
 					test.done();
 				});
 			});
 		},
 		"get comments by question": function(test){
 			this.requestOptions.method = "GET";
-			this.requestOptions.path   = "/api/question/" + questionUUID + "/comments/0";
+			this.requestOptions.path   = "/api/question/" + questionUUID + "/comments/page/0";
 			var request = http.get(this.requestOptions, function(response){
 				var body = "";
 				response.on('data', function(chunk){
 					body += chunk;
 				}).on('end', function(){
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 &&
+						body.comments);
 					test.done();
 				});
 			});

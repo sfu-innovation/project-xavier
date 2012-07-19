@@ -57,7 +57,7 @@ module.exports = {
 		starResource: function(test){
 			var that = this;
 			this.requestOptions.method = "POST";
-			this.requestOptions.path   = "/api/star";
+			this.requestOptions.path   = "/api/resource/"+this.resource.uuid+"/star";
 
 			var request = http.request(this.requestOptions, function(response){
 				body = "";
@@ -71,7 +71,6 @@ module.exports = {
 					test.done();
 				});
 			});
-			request.write(JSON.stringify({uuid: this.resource.uuid}));
 			request.end();
 		},
 		unstarResource: function(test){
@@ -84,7 +83,7 @@ module.exports = {
 				}
 				else{
 					that.requestOptions.method = "DELETE";
-					that.requestOptions.path   = "/api/star";
+					that.requestOptions.path   = "/api/resource/"+that.resource.uuid+"/star";
 
 					var request = http.request(that.requestOptions, function(response){
 						var body = "";
@@ -99,7 +98,6 @@ module.exports = {
 						});
 					});
 
-					request.write(JSON.stringify({uuid: that.resource.uuid}));
 					request.end();
 				}
 			});

@@ -7,8 +7,8 @@ var User    = require(__dirname + "/../../models/user.js");
 var Course  = require(__dirname + "/../../models/course.js");
 var CourseMember = require(__dirname + "/../../models/courseMember.js");
 
-var currentHost = config.presenterServer.host;
-var currentPort = config.presenterServer.port;
+var currentHost = config.rqraServer.host;
+var currentPort = config.rqraServer.port;
 
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
 			var that = this;
 
 			this.requestOptions = {
-				host:config.presenterServer.host,
+				host:config.rqraServer.host,
 				headers: {
 					"content-type": "application/json"
 				}

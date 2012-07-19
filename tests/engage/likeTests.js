@@ -58,7 +58,7 @@ module.exports = {
 		likeResource: function(test){
 			var that = this;
 			this.requestOptions.method = "POST";
-			this.requestOptions.path   = "/api/like";
+			this.requestOptions.path   = "/api/resource/"+this.resource.uuid+"/like";
 
 			var request = http.request(this.requestOptions, function(response){
 				var body = "";
@@ -73,7 +73,6 @@ module.exports = {
 				});
 			});
 
-			request.write(JSON.stringify({uuid: this.resource.uuid}));
 			request.end();
 		},
 		// First like a resource, then unlike it and test the result
@@ -83,7 +82,7 @@ module.exports = {
 			Like.likeResource(this.user.uuid, this.resource.uuid, function(error, result){
 
 				that.requestOptions.method = "DELETE";
-				that.requestOptions.path   = "/api/like";
+				that.requestOptions.path   = "/api/resource/"+that.resource.uuid+"/like";
 				
 				var request = http.request(that.requestOptions, function(response){
 					var body = "";
@@ -98,7 +97,6 @@ module.exports = {
 					});
 				});
 
-				request.write(JSON.stringify({uuid: that.resource.uuid}));
 				request.end();
 			});
 		},

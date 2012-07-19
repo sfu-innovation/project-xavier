@@ -62,13 +62,13 @@ html
 				div.nine.columns
 					ul.nav-bar#options
 						li(data-value="all")
-							a(href="/") ALL RESOURCES
+							a#all_btn(href="/") ALL RESOURCES
 						li(data-value="yours")
-							a(href="/mine") YOUR CONTRIBUTIONS
+							a#contruibutions_btn(href="/mine") YOUR CONTRIBUTIONS
 						li(data-value="starred")
-							a(href="/starred") STARRED
+							a#starred_btn(href="/starred") STARRED
 						li(data-value="prof")
-							a(href="#") INSTRUCTOR POSTS
+							a#instructor_btn(href="/instructor") INSTRUCTOR POSTS
 				div.two.columns
 					ul.nav-bar
 						li.has-flyout#courselist
@@ -89,9 +89,9 @@ html
 						li
 							a.button(href="/mine") YOURS
 						li
-							a.button(href="#") STAR
+							a.button(href="/starred") STAR
 						li
-							a.button(href="#") PROF
+							a.button(href="/instructor") PROF
 							
 						br
 						each name , course in user.courses

@@ -35,6 +35,12 @@ exports.notificationList = function(request, response) {
 }
 
 // backend
+//login
+exports.login = function(request, response){
+	routesCommon.login(0, request, response);
+}
+
+
 exports.questionViewCount = function(request, response){
 	routesCommon.questionViewCountRoute(0, request, response);
 }

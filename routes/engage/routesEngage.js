@@ -8,6 +8,9 @@ var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
 
+exports.login = function(request, response){
+	routesCommon.login(2, request, response);
+}
 
 exports.followQuestion = function(request, response) {
 	routesCommon.followQuestionRoute(2, request, response);

@@ -34,7 +34,7 @@ app.dynamicHelpers({
 
 // routing
 app.get('/', routesCommon.index);
-app.get('/login', routesCommon.login);
+app.get('/login', routesRqra.login);
 app.get('/logout', routesCommon.logout);
 
 // main views

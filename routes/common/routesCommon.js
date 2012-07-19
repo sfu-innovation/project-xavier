@@ -6,6 +6,7 @@ var QueryES = require('./../../controller/queryES.js');
 var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
+var Notification = require(__dirname + "/../../controller/NotificationAction");
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -17,7 +18,19 @@ exports.logout = function(request, response) {
 	response.redirect('home');
 }
 
-exports.login = function(request, response) {
+var createUserNotification = function(args, callback){
+	//add user notification settings
+	Notification.createUserNotificationSettings(args, function(err, result){
+		if(result){
+			callback(null, result);
+		}else{
+			callback(err);
+		}
+	});
+}
+
+//apptype is used to setup inital user notification setting
+exports.login = function(appType, request, response) {
 	var CAS = require('mikeklem-cas');
 	var cas = new CAS({base_url: 'https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/serviceValidate', service: 'http://'+request.headers['host']+'/login'});
 	console.log('http://'+request.headers['host']+request.url);
@@ -48,18 +61,36 @@ exports.login = function(request, response) {
 	        				User.createUser(newUser, function(error, user){
 	        					if(error){
 		        					response.send(error);
-	        					}
-	        					else{
-	        						request.session.user = user;
-									response.send(request.session);									
+	        					}else{
+									var args= {
+										app:appType,
+										user:user.uuid
+									}
+									createUserNotification(args, function(err, result){
+										if(err){
+											response.send(error);
+										}else{
+											request.session.user = user;
+											response.send(request.session);
+										}
+									})
 	        					}
 	        				})
 
 	        			}
 						else{
-							//what to do if user is found in database
-							request.session.user = user;
-							response.send(request.session);							
+							//another createUserNotification here cuz users can have diff settings
+							//across all apps
+							var args= {
+								app:appType,
+								user:user.uuid
+							}
+							createUserNotification(args, function(err, result){
+								//err means the usr settings already exists for this app
+								request.session.user = user;
+								response.send(request.session);
+
+							})
 						}
 	        		}
 	        		else{

@@ -98,8 +98,6 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);
-							
-							
 						}else {
 							addedUserNotifications.push( newNotification );
 							callback( null, newNotification);
@@ -308,13 +306,14 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 	arg.target = args.target;
 	arg.event  = args.event;
 	arg.app    = args.app;
-	
+
 	NotificationListener.findNotificationListener( arg, function(error, listener){
 		if ( error ){
 			callback( error, null );
 			return;
 		}
 		if ( null === listener ){
+			console.log("NULL");
 			NotificationListener.createNotificationListener(arg, function(error, newListener){
 				if ( error ){
 					callback(error, null );
@@ -323,7 +322,8 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 				if ( null == newListener ){
 					callback( "No new listener was created", null);
 					return;
-				}	
+				}
+
 				callback( null, newListener );
 			});
 		} else {
@@ -989,7 +989,7 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 	arg.app = args.app;
 	arg.user = args.user;
 	
-	UserNotificationSettings.addNotificationSetting( arg, functino( error, newSettings ){
+	UserNotificationSettings.addNotificationSetting( arg, function( error, newSettings ){
 		if( error){
 			callback(error, null);
 		}

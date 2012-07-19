@@ -33,6 +33,10 @@ exports.questionForm = function(request, response) {
 	response.render('rqra/component/questionForm', { title: "Demo" });
 }
 
+exports.questionFormPage = function(request, response) {
+	response.render('rqra/questionFormPage', { title: "Demo" });
+}
+
 exports.notificationList = function(request, response) {
 	response.render('rqra/component/notificationList', { title: "Demo" });
 }

@@ -6,7 +6,6 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	mapping = index.mapping('questions'),
 	UUID = require('com.izaakschroeder.uuid'),
 	notification = require('./NotificationAction.js'),
-	organizationAction = require('./OrganizationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
 	sizeOfResult = 5;
@@ -367,7 +366,8 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 			document.set(data, function(err, req, esResult){
 				if(esResult){
 					console.log('Added question to ES');
-					organizationAction.addResourceToSection(args, function(err, orgResult){
+
+					require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 						console.log('Added question resource to section');
 						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 							if(result){

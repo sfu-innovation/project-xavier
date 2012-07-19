@@ -17,6 +17,7 @@ var questionTitle = "Test question Title";
 var questionBody  = "Do radioactive cats have 18 half-lives?"
 var userID        = "jbo1";
 var appType       = 0;
+var section   = "someSection";
 
 module.exports = {
 
@@ -69,7 +70,8 @@ module.exports = {
 			var newQuestion = {
 				title: questionTitle,
 				body: questionBody,
-				category: 'life'
+				category: 'life',
+				sectionUuid: section
 			}
 			
 			this.requestOptions.method = "POST";

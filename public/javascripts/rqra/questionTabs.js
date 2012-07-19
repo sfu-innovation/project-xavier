@@ -3,7 +3,7 @@ var prevSearchQuery = "";
 var prevSearchType = "latest";
 
 function formatQuestion(question) {
-	return "<div class='question'>"
+	return "<div class='question' onclick='gotoQuestionPage()'>"
 			+ "<div id='questionText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
@@ -47,6 +47,10 @@ function displayPageNumbers(total) {
 		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 	}
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";
+}
+
+function gotoQuestionPage() {
+	document.location.href = "/question";
 }
 
 // displays asked questions on page load

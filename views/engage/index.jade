@@ -12,8 +12,8 @@ block content
 					div#sumbitrow
 						div.selectcourse
 							select(class="customDropdown", name="article_course", value="select a course")
-								each name , course in user.courses
-									option #{course}
+								each item in courses
+									option(value=item.uuid) #{item.subject+item.number}
 						div.submit
 							input(type="submit", value="add", class="small button")
 				if(typeof errormsg != 'undefined')

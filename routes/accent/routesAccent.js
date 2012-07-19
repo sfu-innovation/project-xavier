@@ -255,7 +255,7 @@ exports.mediafile = function(request,response){
 exports.mediafileTag = function(request,response){	
 	if (request.method === 'GET'){
 		var targetID = request.params.tid;								
-		MediaAction.getMediaFileTags({'target':targetID}, function(error, result){
+		MediaAction.getMediaFileTags({'uuid':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tags: result }));

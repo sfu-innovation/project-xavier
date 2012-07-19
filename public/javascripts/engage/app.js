@@ -167,9 +167,29 @@ function initUI() {
 }
 
 function loadInstructorArticles(engage) {
+
+	var	cached_json = localStorage.getItem('allArticles');
+	if(cached_json){
+		var data = JSON.parse(cached_json);
+		$.each(data.resources, function (index, item) {
+
+			console.log(item);
+			if (item.user.type === 0) {
+				article = renderArticlePreviewBox(item);
+				$('#contents').append(article);
+			}
+
+		});
+	}
+
 	engage.getResourcesByCourseUUIDs(function (data) {
+
 		if (data) {
+
+
 			if (data.errorcode == 0) {
+				localStorage.setItem('allArticles', JSON.stringify(data));
+				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
 				$.each(data.resources, function (index, item) {
@@ -198,10 +218,26 @@ function loadInstructorArticles(engage) {
 
 
 function loadMyArticles(engage) {
+	var	cached_json = localStorage.getItem('myArticles');
+	if(cached_json){
+		var data = JSON.parse(cached_json);
+		$.each(data.resources, function (index, item) {
+
+			console.log(item);
+
+			article = renderArticlePreviewBox(item);
+			$('#contents').append(article);
+
+
+		});
+	}
 
 	engage.getResourcesByCurrentUserId(function (data) {
 		if (data) {
+
 			if (data.errorcode == 0) {
+				localStorage.setItem('myArticles', JSON.stringify(data));
+				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
 				$.each(data.resources, function (index, item) {
@@ -229,10 +265,25 @@ function loadMyArticles(engage) {
 
 
 function loadAllArticles(engage) {
+	var	cached_json = localStorage.getItem('allArticles');
+	if(cached_json){
+		var data = JSON.parse(cached_json);
+		$.each(data.resources, function (index, item) {
+
+			console.log(item);
+
+			article = renderArticlePreviewBox(item);
+			$('#contents').append(article);
+
+
+		});
+	}
 
 	engage.getResourcesByCourseUUIDs(function (data) {
 		if (data) {
 			if (data.errorcode == 0) {
+				localStorage.setItem('allArticles', JSON.stringify(data));
+				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
 				$.each(data.resources, function (index, item) {
@@ -259,11 +310,26 @@ function loadAllArticles(engage) {
 }
 
 function loadStarredArticles(engage) {
+	var	cached_json = localStorage.getItem('starredArticles');
+	if(cached_json){
+		var data = JSON.parse(cached_json);
+		$.each(data.resources, function (index, item) {
+
+			console.log(item);
+
+			article = renderArticlePreviewBox(item);
+			$('#contents').append(article);
+
+
+		});
+	}
 
 	engage.getStarredResources(function (data) {
 //	engage.getResourcesByCourseUUIDs(function(data){
 		if (data) {
 			if (data.errorcode == 0) {
+				localStorage.setItem('starredArticles', JSON.stringify(data));
+				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
 				$.each(data.resources, function (index, item) {
@@ -291,7 +357,7 @@ function loadStarredArticles(engage) {
 
 function renderArticlePreviewBox(item) {
 	var article =
-		'<div class="three columns">'
+		'<div class="three columns articlebox">'
 			+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 			+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName + '</span>'
 			+ isProf(item.user.type) //return nothing if not

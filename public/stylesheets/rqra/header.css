@@ -16,7 +16,12 @@ div#askQuestion {
 	-moz-box-flex: 1;
 	box-flex: 1;
 	margin: 25px;
+	margin-top: 10px;
 	border-bottom: 1px solid black;
+}
+
+input#askQuestionInput {
+	width: 100%;
 }
 
 div#profile {

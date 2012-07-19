@@ -100,16 +100,19 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							callback( error, null);
 						}else {
 							addedUserNotifications.push( newNotification );
-							callback( null, newNotification);
+							compileEmail( arg, function( error, newNotification ){
+								if ( error ){
+									callback( error, null);
+									return;
+								}else{
+									callback( null, newNotification);
+								}
+							});
 						}
 				});
 				
-				compileEmail( arg, function( error, newNotification ){
-						if ( error ){
-							callback( error, null);
-							return;
-						}
-				});
+				
+				
 			});
 		} , function( err, results ){
 			if ( err ){

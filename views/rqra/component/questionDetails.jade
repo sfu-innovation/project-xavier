@@ -7,7 +7,7 @@ div#content
 			h2#sectionTitle Week 2 - 
 				span#sectionName Perception &amp; Pattern Recognition
 			
-	div.question
+	div#detailedQuestion
 		div.questionText Chu ke iu povas klarigi la diagramo sur pago 125?
 		div.questionData 
 			div.profResponsesRecent 2
@@ -46,10 +46,15 @@ div#content
 				div.votes 38
 					img(src="../images/rqra/down.png", alt="DownVotes")
 		
-		hr
-			
-		div
-			div Add a Reply
+	hr
+		
+	div#askForm
+		div Add a Reply
+		div 
 			textarea(rows="4", cols="40")
+		div 
 			input(type="text")
-			div#formButton Reply
+		div
+			div.formButton Reply
+			
+script(type="text/javascript", src="../javascripts/rqra/questionDetails.js")

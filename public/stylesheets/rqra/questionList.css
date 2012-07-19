@@ -47,6 +47,7 @@ div#questionCount {
 	font-weight: bold;
 	margin-top: 70px;
 	margin-right: 10px;
+	float: right;
 }
 
 div#questionCountNumber {
@@ -95,6 +96,16 @@ div.question {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	cursor: pointer;
+}
+
+div.detailedQuestion {
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+div.questionId {
+	display: none;
 }
 
 div.questionText {

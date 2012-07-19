@@ -199,11 +199,46 @@ exports.resourcesInSection = function(request, response){
 	routesCommon.resourcesInSection(2, request, response);
 }
 
+exports.resourcesInCourses = function(req,res){
+	var CourseUUIDs = [];
+
+	var Courses = req.session.courses;
+	for (index in Courses) {
+		CourseUUIDs.push(Courses[index].uuid);
+	}
+
+
+	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function(error, result){
+
+		if(result){
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify({ errorcode: 0, resources: result }));
+		}else{
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify({ errorcode: 1, message: error }));
+		}
+
+
+	})
+}
+
+
+
+
+
 
 
 
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
+
+
+
+
+
+
+
+
 
 
 

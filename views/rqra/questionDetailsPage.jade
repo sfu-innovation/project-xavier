@@ -1,4 +1,6 @@
 include ./component/header
-include ./component/timeline
-include ./component/courseList
-include ./component/questionDetails
+div#bodyContainer
+	include ./component/timeline
+	div#innerBody
+		include ./component/courseList
+		include ./component/questionDetails

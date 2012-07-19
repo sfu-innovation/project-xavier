@@ -33,7 +33,7 @@ app.dynamicHelpers({
 });
 
 // routing
-app.get('/', routesCommon.index);
+app.get('/', routesRqra.index);
 app.get('/login', routesRqra.login);
 app.get('/logout', routesCommon.logout);
 
@@ -111,13 +111,13 @@ app.get("/api/comment/count/:uid", routesRqra.commentCount);
 app.get("/api/comment/:uid", routesRqra.comment); // get a comment by id
 app.put("/api/comment/:uid", routesRqra.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesRqra.comment); //deletes a comment by id
-app.get("/api/user/:uid/comments/:page", routesRqra.commentsByUser); //P gets a list of comments posted by a user
+app.get("/api/user/:uid/comments/page/:page", routesRqra.commentsByUser); //P gets a list of comments posted by a user
 
 //deprecated
 //app.post("/api/user/:uid/comments", routesRqra.commentsByUser); // user posts a comment
 app.put("/api/comment/:uid/vote/:dir", routesRqra.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesRqra.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments/:page", routesRqra.commentsByQuestion); // P get all of the comments for a question
+app.get("/api/question/:uid/comments/page/:page", routesRqra.commentsByQuestion); // P get all of the comments for a question
 
 
 
@@ -127,4 +127,4 @@ app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
 /***NEW ROUTES */
-app.post("/api/questions/search/page/:page", routesRqra.searchQuestions);
+app.post("/api/questions/search/page/:page", routesRqra.searchQuestionsRoute);

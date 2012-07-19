@@ -111,12 +111,10 @@ QueryES.prototype.questionViewCount = function(questionID, appType, callback){
 
 	//increment the vote found at commentID
 	db.post(link, data, function(err, req, data){
-		if (data) {
-			callback(null, data);
-		}
-		else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -125,7 +123,7 @@ QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
 	var data = {
 			"query": {
 				"term": {
-					"isInstructor": "true"
+					"isInstructor": true
 				}
 			},
 			"sort": [
@@ -143,12 +141,11 @@ QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			callback(null, data.hits.hits); //only need the hits.hits part
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+		console.log(data.hits.total);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -157,11 +154,10 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
 	
 	db.get(link, {}, function(err, req, data){
-		if (data) {
-			addUserToData(data, callback);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUserToData(data, callback);
 	});
 }
 
@@ -181,7 +177,6 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 	mapping.search(data, function(err, data){
 		if (err)
 			return callback(err);
-
 
 		addUsersToData(data, callback);
 	});
@@ -231,12 +226,10 @@ QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callbac
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(undefined);
-		}
+		if(err)
+			callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -505,11 +498,10 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 
 	//add new comment to the document found at uid
 	db.post(link, data, function(err, req, data){
-		if(data){
-			callback(null, data);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -777,7 +769,7 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 
 
 //searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
-QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callback){
+QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, callback){
 	/// course, week, , searchQuery, searchType
 	var data = {
 		query: {
@@ -832,11 +824,10 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data) {
-			addUsersToData(data, callback);
-		} else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -854,7 +845,7 @@ var latestQuestion = function(data){
 
 //get all instructor posted question
 var instructorQuestion = function(data){
-	data.query.bool.must.push({"term":{"isInstructor": "true"}});
+	data.query.bool.must.push({"term":{"isInstructor": true}});
 	//sort
 	return data;
 }

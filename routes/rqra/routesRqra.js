@@ -1,5 +1,27 @@
 var routesCommon = require('./../common/routesCommon.js');
 
+exports.index = function(req, res){
+	if (req.session && req.session.user) {
+		res.render("rqra/questionsPage", { 	title: "SFU RQRA",
+			user : req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, function(err, rendered){
+
+				// console.log(rendered);
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+		//login with demo user, remove when everything is set.
+	}
+
+};
+
 // frontend
 exports.header = function(request, response) {
 	response.render('rqra/component/header', { title: "Demo" });
@@ -127,6 +149,6 @@ exports.search = function(request, response) {
 }
 
 /***NEW ROUTES */
-exports.searchQuestions = function(request, response){
-	routesCommon.searchQuestions(0, request, response);
+exports.searchQuestionsRoute = function(request, response){
+	routesCommon.searchQuestionsRoute(0, request, response);
 }

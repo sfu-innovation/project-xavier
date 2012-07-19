@@ -2,13 +2,26 @@ jQuery(document).ready(function ($) {
 
 	initUI();
 
+	var engage = new coreApi.Engage();
 
-	if (window.location.toString()==="http://localhost:3000/starred/"){
+
+	if (window.location.toString().indexOf('starred')!= -1){
 		//if starred
 		//TODO: change to a better method later
+		$('#starred_btn').addClass('active');
+		loadStarredArticles(engage);
 
-		loadStarredArticles();
+	}
+	else if (window.location.toString().indexOf('instructor')!= -1){
+		//if starred
+		//TODO: change to a better method later
+		$('#instructor_btn').addClass('active');
+		loadInstructorArticles(engage);
 
+	}
+	else{
+		$('#all_btn').addClass('active');
+		loadAllArticles(engage);
 	}
 
 
@@ -118,9 +131,8 @@ function initUI(){
 
 }
 
-function loadStarredArticles(){
-	var engage = new coreApi.Engage();
-	engage.getStarredResources(function(data){
+function loadInstructorArticles(engage){
+	engage.getResourcesByCourseUUIDs(function(data){
 		if(data){
 			if (data.errorcode == 0){
 				//$('#contents').empty();
@@ -128,29 +140,39 @@ function loadStarredArticles(){
 				$.each(data.resources, function (index, item) {
 
 					console.log(item);
+					if(item.user.type === 0){
+						article = renderArticlePreviewBox(item);
+						$('#contents').append(article);
+					}
 
-					var article =
-						'<div class="three columns">'
-							+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-							+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName+ '</span>'
-							+ '<div class="post_details"> '
-							+ '<p>Posted in '
-							+ '<span class="coursename">' + item.course.subject +" "+ item.course.number + '</span>'
-							+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
-							+ '</p>'
-							+ '</div>'
-							+ '<h5 style="height:54px;">'
-							+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-							+ '<div class="articlepreview">' + '<p>' + item.excerpt + '</p>'
-							+ '</div>'
-							+ '<div class="likescomments">'
-							+ '<span class="typicn star"></span>'
+				});
 
-							+ '<span> Like ('+ item.likes +') </span>'
-							+ '<span> Comments ('+ item.totalComments +') </span>'
-							+ '</div>'
-							+ '</div>'
-							+ '</div>';
+			}
+
+			else{
+
+			}
+		}
+		else{
+
+		}
+
+
+	})
+}
+
+function loadAllArticles(engage){
+
+	engage.getResourcesByCourseUUIDs(function(data){
+		if(data){
+			if (data.errorcode == 0){
+				//$('#contents').empty();
+				console.log(data);
+				$.each(data.resources, function (index, item) {
+
+					console.log(item);
+					article = renderArticlePreviewBox(item);
+
 
 					$('#contents').append(article);
 				});
@@ -167,6 +189,70 @@ function loadStarredArticles(){
 
 
 	})
+}
+
+function loadStarredArticles(engage){
+
+	engage.getStarredResources(function(data){
+//	engage.getResourcesByCourseUUIDs(function(data){
+		if(data){
+			if (data.errorcode == 0){
+				//$('#contents').empty();
+				console.log(data);
+				$.each(data.resources, function (index, item) {
+
+					console.log(item);
+					article = renderArticlePreviewBox(item);
+
+
+					$('#contents').append(article);
+				});
+
+			}
+
+			else{
+
+			}
+		}
+		else{
+
+		}
+
+
+	})
+}
+
+function renderArticlePreviewBox(item){
+	var article =
+		'<div class="three columns">'
+			+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName+ '</span>'
+			+ isProf(item.user.type) //return nothing if not
+			+ '<div class="post_details"> '
+			+ '<p>Posted in '
+			+ '<span class="coursename">' +'<a>' + item.course.subject +" "+ item.course.number
+			+ '-'  + (item.section.title).replace('WEEK ',"WK")  + '</a>'
+			+ '</span>'
+			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ '</p>'
+			+ '</div>'
+			+ '<h5>'
+			+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+			+ '<div class="imgpreview">'
+			+ '<img src="'+ item.thumbnail + '" alt="'+ item.title + '" />'
+			+ '</div>'
+			+ '<div class="articlepreview">' + '<p>' + item.excerpt + '</p>'
+			+ '</div>'
+			+ '<div class="likescomments">'
+			+ '<span class="typicn star starred"></span>'
+
+			+ '<span> Like ('+ item.likes +') </span>'
+			+ '<span> Comments ('+ item.totalComments +') </span>'
+			+ '</div>'
+			+ '</div>'
+			+ '</div>';
+	return article;
+
 }
 
 
@@ -195,4 +281,13 @@ function formartDate(old_date){
 	var post_time = new Date(Date.parse(old_date));
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
+}
+
+function isProf(user_type){
+	if (user_type === 0){
+		 return '<span id="prof" title="instructor" class="typicn tick"></span>'
+	}
+	else {
+		return '';
+	}
 }

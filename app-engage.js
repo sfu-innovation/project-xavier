@@ -35,7 +35,6 @@ app.dynamicHelpers({
 });
 
 
-
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses
 app.get('/api/user/:id', routesCommon.user); // get user by id
@@ -59,6 +58,9 @@ app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+//TODO: need update this into document
+app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
+
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here
 app.post('/api/resource/create', routesEngage.createResource);
@@ -104,7 +106,7 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 //non-REST calls
 // routing
-app.get('/login', routesCommon.login);
+app.get('/login', routesEngage.login);
 app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
@@ -115,7 +117,11 @@ app.get('/starred', routesEngage.starred);
 
 app.get('/mine', routesEngage.contributions);
 
+app.get('/instructor', routesEngage.instructor);
+
 //article - this is resource
 app.get('/course/:id', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
+
+app.get('/demo', routesEngage.demoPage); //this will login you with a demo user

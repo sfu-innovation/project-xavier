@@ -2,6 +2,10 @@ var routesCommon = require('./../common/routesCommon.js');
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
 
+exports.login = function(request, response){
+	routesCommon.login(1, request, response);
+}
+
 exports.question = function(request, response) {
 	routesCommon.questionRoute(1, request, response);
 }
@@ -251,7 +255,7 @@ exports.mediafile = function(request,response){
 exports.mediafileTag = function(request,response){	
 	if (request.method === 'GET'){
 		var targetID = request.params.tid;								
-		MediaAction.getMediaFileTags({'target':targetID}, function(error, result){
+		MediaAction.getMediaFileTags({'uuid':targetID}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tags: result }));

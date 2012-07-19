@@ -86,11 +86,14 @@ module.exports = {
 					test.ok(notifications.should.have.lengthOf(6));
 				});
 				NotificationAction.addUserNotification( args, function( error, newNotifications ){
+					NotificationAction.addUserNotification( args, function( error, newNotifications ){
+					
+					
 					if ( newNotifications ){
 						test.ok( newNotifications.should.have.lengthOf(3));
 						UserNotification.findAllUserNotifications( args, function( error, notifications){
 							if( notifications ){
-								test.ok(notifications.should.have.lengthOf(9));
+								test.ok(notifications.should.have.lengthOf(12));
 							}
 						});
 						test.done();
@@ -99,6 +102,7 @@ module.exports = {
 						console.log("ERROR "+ error );
 						test.done();
 					}
+					});
 				});
 			
 		}, 

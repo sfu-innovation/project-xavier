@@ -14,7 +14,7 @@ var server = email.server.connect({
 			 user     : config.emailsettings.user
 			,password : config.emailsettings.password
 			,host     : config.emailsettings.host
-			,ssl      : config.emailsettings.ssl
+			,ssl      : Boolean(config.emailsettings.ssl)
 		});
 var UUID = require('com.izaakschroeder.uuid');
 var Course = require('../models/course.js');
@@ -98,18 +98,19 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
 							callback( error, null);
-							
-							
 						}else {
 							addedUserNotifications.push( newNotification );
-							callback( null, newNotification);
-						}
-				});
-				
-				compileEmail( arg, function( error, newNotification ){
-						if ( error ){
-							callback( error, null);
-							return;
+
+							//The root of the problem lies here.
+							console.log("Computing email")
+							compileEmail( arg, function( error, newNotification ){
+								if ( error ){
+									console.log("Error compiling email");
+									callback( error, null);
+								} else{
+									callback( null, newNotification);
+								}
+							});
 						}
 				});
 			});
@@ -308,7 +309,7 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 	arg.target = args.target;
 	arg.event  = args.event;
 	arg.app    = args.app;
-	
+
 	NotificationListener.findNotificationListener( arg, function(error, listener){
 		if ( error ){
 			callback( error, null );
@@ -323,11 +324,12 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 				if ( null == newListener ){
 					callback( "No new listener was created", null);
 					return;
-				}	
+				}
+
 				callback( null, newListener );
 			});
 		} else {
-			callback( "This specific listener already exists" , null );
+			callback( null, listener );
 		}
 	});
 }
@@ -361,7 +363,6 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	
 	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
@@ -382,9 +383,11 @@ function compileEmail( args, callback ){
    				to:      userFound.firstName+ " " +userFound.lastName+"<"+userFound.email+">",
    				subject: title +" notification"
 		 	};
-		 	
+
+			console.log("Trying to send email..");
 		 	server.send(message, function(err, message){
 		 		if ( err ){
+					 console.log("Can't send email: " + JSON.stringify(err));
 		 			callback( err, null );
 		 		} else {
 		 			callback( null, message );
@@ -989,7 +992,7 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 	arg.app = args.app;
 	arg.user = args.user;
 	
-	UserNotificationSettings.addNotificationSetting( arg, functino( error, newSettings ){
+	UserNotificationSettings.addNotificationSetting( arg, function( error, newSettings ){
 		if( error){
 			callback(error, null);
 		}

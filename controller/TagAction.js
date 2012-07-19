@@ -4,7 +4,6 @@ var UUID = require('com.izaakschroeder.uuid');
 
 // Accent
 var Tag = require('../models/tag.js');
-//var MediaFile = require('../models/mediafile.js');
 
 // Presenter
 var queryES = require('./queryES.js');		
@@ -35,7 +34,21 @@ args = {
 
 */
 TagAction.prototype.addTag = function( args, callback ){
-
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('start') && 
+		args.hasOwnProperty('end') && args.hasOwnProperty('type') && args.hasOwnProperty('target') &&
+		args.hasOwnProperty('title') && args.hasOwnProperty('description') && args.hasOwnProperty('question') &&
+		args.hasOwnProperty('important') && args.hasOwnProperty('interest') && args.hasOwnProperty('examable') &&
+		args.hasOwnProperty('reviewlater') && args.hasOwnProperty('shared'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+	
 	Tag.createTag(args, function(error, newTag){		
 		if (!error) {
 			callback(null, newTag);	
@@ -49,29 +62,27 @@ TagAction.prototype.addTag = function( args, callback ){
 
 /*
 
-View all tags based on a user specified properties.
+Get a tags based on a tag id.
 
-args = {
-	user			: <user id from the User model - primary key>,
+args = {	
 	uuid 			: <id belonging to a tag>,
-	start			: <start time (seconds) of a video that user want to tag>
-	end				: <end time (seconds) of a video that user want to tag>
-	type			: <type of tag (not yet determined)>
-	target		: <id that links between Tag and MediaFile>
-	title			: <tag title>
-	description		: <tag description>
-	question	: <question belonging to a tag>
-	important		: <boolean value of a video whether it is important>
-	interest		: <boolean value of a video whether it is interesting>
-	examable		: <boolean value of a video whether it is examable>
-	reviewlater		: <boolean value of a video whether it is worth reviewing it later>
-	shared			: <boolean value of a video whether it is shared by an instructor>
 }
 
 TO-DO: Maybe it would be beneficial to sort the tag based on the properties.
 */
 
 TagAction.prototype.getTagById = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('uuid');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Tag.selectTag(args, function(error, tags){
 		if (!error) {
 			callback(null, tags);
@@ -83,7 +94,38 @@ TagAction.prototype.getTagById = function( args, callback ){
 	})
 }
 
+/*
+
+View all tags based on a user specified properties.
+
+args = {
+	user			: <user id from the User model - primary key>,
+	uuid 			: <id belonging to a tag>,
+	type			: <type of tag (not yet determined)>		
+	important		: <boolean value of a video whether it is important>
+	interest		: <boolean value of a video whether it is interesting>
+	examable		: <boolean value of a video whether it is examable>
+	reviewlater		: <boolean value of a video whether it is worth reviewing it later>
+	shared			: <boolean value of a video whether it is shared by an instructor>
+}
+
+TO-DO: Maybe it would be beneficial to sort the tag based on the properties.
+*/
+
 TagAction.prototype.viewTags = function( args, callback ){ 
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('uuid') || args.hasOwnProperty('user') ||
+		args.hasOwnProperty('type') || args.hasOwnProperty('important') || args.hasOwnProperty('interest') ||
+		args.hasOwnProperty('examable') || args.hasOwnProperty('reviewlater') || args.hasOwnProperty('shared'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Tag.selectTags(args, function(error, tags){		
 		if (!error) {
 			callback(null, tags);	
@@ -106,7 +148,17 @@ args = {
 */
 
 TagAction.prototype.viewQuestionTagged = function( args, callback ){ 
-	console.log(args.question)	
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('question');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	queryES.getQuestion(args.question, 0, function(result){
 		if (result) {
 			callback(null, result);
@@ -188,7 +240,31 @@ args = {
 
 */
 
-TagAction.prototype.updateTag = function( uuid , args, callback ){ 	
+TagAction.prototype.updateTag = function( uuid , args, callback ){	
+	if ( uuid === null || uuid === undefined ){		
+		callback("UUID is not existent", null);
+		return;
+	}	
+	if ( args === null || args === undefined ){
+		console.log('not here args')
+		callback("Args is not existent", null);
+		return;
+	}
+
+	console.log('inside uuid =' + uuid);
+	console.log('args = ' + args);
+
+	var containsAllProperties = (args.hasOwnProperty('start') || 
+		args.hasOwnProperty('end') || args.hasOwnProperty('type') || args.hasOwnProperty('target') ||
+		args.hasOwnProperty('title') || args.hasOwnProperty('description') || args.hasOwnProperty('question') ||
+		args.hasOwnProperty('important') || args.hasOwnProperty('interest') || args.hasOwnProperty('examable') ||
+		args.hasOwnProperty('reviewlater') || args.hasOwnProperty('shared'));
+
+	if (  !containsAllProperties ){
+		callback("Need to contain at least one valid args ", null );
+		return;		
+	}
+	
 	Tag.updateTag(uuid, args, function(error, updatedTag){		
 		if (!error) {
 			callback(null, updatedTag);	
@@ -210,7 +286,18 @@ args = {
 
 */
 
-TagAction.prototype.deleteTag = function( args, callback ){ 	
+TagAction.prototype.deleteTag = function( args, callback ){ 
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('uuid');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	Tag.deleteTag( args, function(error, deletedTag){		
 		if (!error) {
 			callback(null, deletedTag);	
@@ -266,89 +353,6 @@ var newTag = {
 	"reviewlater":true,
 	"shared":false
 }
-*/
-
-
-var tagAction = new TagAction();
-
-var updatedTag = {
-	'title':'samba dance', 
-	'shared':true
-};
-/*
-tagAction.viewTags(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.addTag(newTag, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.updateTag(object, updatedTag, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data.title + ' ' + data.shared);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.getTaggedUser(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data.lastName + ' ' + data.firstName);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.viewQuestionTagged(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ JSON.stringify(data));
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.viewCommentTagged(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ JSON.stringify(data));
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.deleteTag(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
 */
 
 module.exports = new TagAction;

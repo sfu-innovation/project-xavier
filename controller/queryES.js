@@ -179,7 +179,7 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
+		if(data){
 			addUsersToData(data, callback);
 		}
 		else{

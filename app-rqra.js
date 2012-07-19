@@ -33,7 +33,7 @@ app.dynamicHelpers({
 });
 
 // routing
-app.get('/', routesCommon.index);
+app.get('/', routesRqra.index);
 app.get('/login', routesRqra.login);
 app.get('/logout', routesCommon.logout);
 

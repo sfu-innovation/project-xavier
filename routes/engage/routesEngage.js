@@ -16,7 +16,7 @@ exports.login = function(request, response){
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
 		res.render("engage/index", { 	title: "SFU ENGAGE",
-			user :  userobject,
+			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){
 

@@ -594,7 +594,7 @@ QueryES.prototype.getCommentCount = function(appType, questionUuid, callback){
 	switchMapping(1);
 
 	mapping.search(data, function(err, data){
-		if(data.hits){
+		if(data){
 			callback(null, parseInt(data.hits.total));
 		}
 		else{

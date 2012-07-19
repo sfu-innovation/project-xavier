@@ -332,7 +332,9 @@ userobject.courses = {
 	};
 
 
-var articles = [article_1,  article_2,  article_3,  article_4,  article_5]
+var articles = [article_1,  article_2,  article_3,  article_4,  article_5]  ;
+var fake_user_1 = {uuid:1,firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
+var fake_user_2 = {uuid:2,firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
 
 function mediaPath(path, host){
 	if (path.charAt(0)== "/"){
@@ -499,8 +501,18 @@ exports.starred = function (req, res) {
 
 
 	else {
+		//to avoid login to testing, this is comment out, using fake user instead
 
-		res.redirect("/login");
+
+//		res.redirect("/login");
+
+		//login with demo user, remove when everything is set.
+
+		req.session.user = fake_user_2;
+		res.render("engage/starred", { 	title: "SFU ENGAGE",
+			user :  userobject,
+			status : "logged in" })
+
 	}
 
 }

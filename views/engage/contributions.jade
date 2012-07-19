@@ -12,48 +12,10 @@ block content
 					div#sumbitrow
 						div.selectcourse
 							select(class="customDropdown", name="article_course", value="select a course")
-								each name , course in user.courses
-									option #{course}
+								each item in courses
+									option(value=item.uuid) #{item.subject+item.number}
 						div.submit
 							input(type="submit", value="add", class="small button")
 				if(typeof errormsg != 'undefined')
 					p #{errormsg}
 		
-		- var counter = 0 
-		each article in contributions
-			- var coursename = i.course
-		
-			if article.user.type == 1
-				dataclass = "prof"
-			div.three.columns
-				div.innercontents
-					b #{article.user.firstName} #{article.user.lastName}
-					if article.user.type == 1
-						span.typicn.tick#prof(title="instructor")
-					div.post_details 
-						p Posted in 
-							span.coursename #{coursename}
-							span.post_time(id="post_time_#{counter}") 
-							
-					h5
-						a(href="/article/#{article.id}") #{article.title}
-					div.imgpreview(id="img_#{counter}")
-					div.articlepreview(id = "preview_#{counter}")
-					div.likescomments
-						if article.starred == 1
-							span.typicn.star.starred
-						else
-							span.typicn.star
-						span Like (#{article.likes})
-						span Comment (5)
-					script(type='text/javascript')
-						var now = new Date();
-						var post_time = new Date(Date.parse(" #{article.uploaded_on} "));
-						var prettytime = formatAgo(post_time, null, now);
-						$('span#post_time_#{counter}').append(prettytime);
-						$('div#preview_#{counter}').load("#{article.path} p");
-						$('div#img_#{counter}').load("#{article.path} img:first");
-					
-					- counter = counter +1	
-			
-

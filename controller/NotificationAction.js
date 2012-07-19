@@ -14,7 +14,7 @@ var server = email.server.connect({
 			 user     : config.emailsettings.user
 			,password : config.emailsettings.password
 			,host     : config.emailsettings.host
-			,ssl      : config.emailsettings.ssl
+			,ssl      : Boolean(config.emailsettings.ssl)
 		});
 var UUID = require('com.izaakschroeder.uuid');
 var Course = require('../models/course.js');
@@ -101,17 +101,16 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 						}else {
 							addedUserNotifications.push( newNotification );
 
-							/*The root of the problem lies here.
+							//The root of the problem lies here.
 							console.log("Computing email")
 							compileEmail( arg, function( error, newNotification ){
 								if ( error ){
 									console.log("Error compiling email");
 									callback( error, null);
 								} else{
-
+									callback( null, newNotification);
 								}
-							});*/
-							callback( null, newNotification);
+							});
 						}
 				});
 			});
@@ -330,7 +329,7 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 				callback( null, newListener );
 			});
 		} else {
-			callback( "This specific listener already exists" , null );
+			callback( null, listener );
 		}
 	});
 }
@@ -388,7 +387,7 @@ function compileEmail( args, callback ){
 			console.log("Trying to send email..");
 		 	server.send(message, function(err, message){
 		 		if ( err ){
-					 console.log("Can't send email");
+					 console.log("Can't send email: " + JSON.stringify(err));
 		 			callback( err, null );
 		 		} else {
 		 			callback( null, message );

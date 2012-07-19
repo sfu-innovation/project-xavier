@@ -271,10 +271,27 @@ coreApi._construct = function () {
 		}
 
 		this.getStarredResources = function(callback){
-			console.log("API - unstarResource");
+			console.log("API - getStarredResources");
 			$.ajax({
 
 				url:'/api/resources/starred',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+
+
+		this.getResourcesByCourseUUIDs = function(callback){
+			console.log("API - getResourcesByCourseUUIDs");
+			$.ajax({
+
+				url:'/api/resources/',
 				type:'GET',
 				success:function (data) {
 					callback(data);

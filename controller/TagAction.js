@@ -4,7 +4,6 @@ var UUID = require('com.izaakschroeder.uuid');
 
 // Accent
 var Tag = require('../models/tag.js');
-//var MediaFile = require('../models/mediafile.js');
 
 // Presenter
 var queryES = require('./queryES.js');		
@@ -44,16 +43,12 @@ TagAction.prototype.addTag = function( args, callback ){
 		args.hasOwnProperty('title') && args.hasOwnProperty('description') && args.hasOwnProperty('question') &&
 		args.hasOwnProperty('important') && args.hasOwnProperty('interest') && args.hasOwnProperty('examable') &&
 		args.hasOwnProperty('reviewlater') && args.hasOwnProperty('shared'));
-	
-	console.log("not yet passed the argument test");
-
+		
 	if (  !containsAllProperties ){
 		callback("Invalid args "+args.value, null );
 		return;		
 	}
-
-	console.log("passed the argument test");
-
+	
 	Tag.createTag(args, function(error, newTag){		
 		if (!error) {
 			callback(null, newTag);	
@@ -246,8 +241,7 @@ args = {
 */
 
 TagAction.prototype.updateTag = function( uuid , args, callback ){	
-	if ( uuid === null || uuid === undefined ){
-		console.log('not here uuid')
+	if ( uuid === null || uuid === undefined ){		
 		callback("UUID is not existent", null);
 		return;
 	}	
@@ -256,6 +250,9 @@ TagAction.prototype.updateTag = function( uuid , args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
+
+	console.log('inside uuid =' + uuid);
+	console.log('args = ' + args);
 
 	var containsAllProperties = (args.hasOwnProperty('start') || 
 		args.hasOwnProperty('end') || args.hasOwnProperty('type') || args.hasOwnProperty('target') ||
@@ -356,89 +353,6 @@ var newTag = {
 	"reviewlater":true,
 	"shared":false
 }
-*/
-
-
-var tagAction = new TagAction();
-
-var updatedTag = {
-	'title':'samba dance', 
-	'shared':true
-};
-/*
-tagAction.viewTags(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.addTag(newTag, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.updateTag(object, updatedTag, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data.title + ' ' + data.shared);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.getTaggedUser(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data.lastName + ' ' + data.firstName);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.viewQuestionTagged(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ JSON.stringify(data));
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.viewCommentTagged(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ JSON.stringify(data));
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-tagAction.deleteTag(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
 */
 
 module.exports = new TagAction;

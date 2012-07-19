@@ -1,9 +1,9 @@
 div#content
 	div#questionHeader
 		div#listInfo
-			h1#courseTitle Questions for
+			h1#courseTitle Questions for 
 				span.inserted PSYC221 Introduction to Cognitive Psychology
-				span from
+				span  from
 			h2#sectionTitle Week 2 - 
 				span#sectionName Perception &amp; Pattern Recognition
 			
@@ -51,10 +51,10 @@ div#content
 	div#askForm
 		div Add a Reply
 		div 
-			textarea(rows="4", cols="40")
-		div 
+			textarea#askFormText(rows="4", cols="40")
+		div
 			input(type="text")
 		div
-			div.formButton Reply
+			div.formButton(onclick="postComment()") Reply
 			
 script(type="text/javascript", src="../javascripts/rqra/questionDetails.js")

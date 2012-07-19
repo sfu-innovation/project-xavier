@@ -5,11 +5,6 @@ var UUID = require('com.izaakschroeder.uuid');
 // Accent
 var MediaFile = require('../models/mediafile.js');
 
-// Presenter
-//var queryES = require('./queryES.js');
-//var question = require('../models/question.js');
-//var comment = require('../models/comment.js');
-		
 var MediaAction = function() {	
 }
 
@@ -27,7 +22,19 @@ args = {
 
 */
 
-MediaAction.prototype.addMediaFile = function( args, callback ){	 
+MediaAction.prototype.addMediaFile = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('title') &&
+		args.hasOwnProperty('path') && args.hasOwnProperty('type'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	MediaFile.createMediaFile(args, function(error, newMediaFile){		
 		if (!error) {
 			callback(null, newMediaFile);	
@@ -41,14 +48,10 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 
 /*
 
-View all mediafiles based on a user specified properties.
+Get a media file based on a media file id.
 
 args = {
-	uuid		: <MediaFile uuid - primary key>
-	user		: <user uuid from the User model>
-	title			: <mediafile title>
-	path			: <the url path of a mediafile>
-	type			: <type of mediafile (not yet determined)>
+	uuid			: <MediaFile uuid - primary key>
 }
 
 TO-DO: Maybe it would be beneficial to sort the mediafiles based on the properties.
@@ -56,6 +59,17 @@ TO-DO: Maybe it would be beneficial to sort the mediafiles based on the properti
 
 
 MediaAction.prototype.getMediaFileById = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('uuid');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	MediaFile.selectMediaFile(args, function(error, tags){
 		if (!error) {
 			callback(null, tags);
@@ -68,8 +82,32 @@ MediaAction.prototype.getMediaFileById = function( args, callback ){
 }
 
 
+/*
+
+View all mediafiles based on a user specified properties.
+
+args = {
+	uuid			: <MediaFile uuid - primary key>
+	user			: <user uuid from the User model>
+	type			: <type of mediafile (not yet determined)>
+}
+
+TO-DO: Maybe it would be beneficial to sort the mediafiles based on the properties.
+*/
 
 MediaAction.prototype.viewMedia = function( args, callback ){ 
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('uuid') || args.hasOwnProperty('user') ||
+		args.hasOwnProperty('type'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	MediaFile.selectMediaFiles(args, function(error, tags){		
 		if (!error) {
 			callback(null, tags);	
@@ -92,7 +130,18 @@ args = {
 
 */
 
-MediaAction.prototype.getMediaFileTags = function( args, callback ){ 	
+MediaAction.prototype.getMediaFileTags = function( args, callback ){ 
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('uuid');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	MediaFile.getMediaFileTags(args, function(error, mediaFileTags){		
 		if (!error) {
 			callback(null, mediaFileTags);	
@@ -113,7 +162,18 @@ args = {
 }
 
 */
-MediaAction.prototype.getMediaFileUser = function( args, callback ){ 	
+MediaAction.prototype.getMediaFileUser = function( args, callback ){ 
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('user');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}
+
 	MediaFile.getMediaFileUser(args, function(error, mediaFileUser){		
 		if (!error) {
 			callback(null, mediaFileUser);	
@@ -130,10 +190,10 @@ MediaAction.prototype.getMediaFileUser = function( args, callback ){
 Update a specific mediafile based on a uuid.
 
 args = {
- 	uuid		: <MediaFile uuid - primary key>
+ 		uuid			: <MediaFile uuid - primary key>
 
 	allowed field: 
-		user		: <user uuid from the User model>		
+		user			: <user uuid from the User model>		
 		title			: <mediafile title>
 		path			: <the url path of a mediafile>
 		type			: <type of mediafile (not yet determined)>	
@@ -141,7 +201,24 @@ args = {
 
 */
 
-MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){
+MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){	
+	if ( uuid === null || uuid === undefined ){		
+		callback("UUID is not existent", null);
+		return;
+	}
+
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') || args.hasOwnProperty('title') || 
+	args.hasOwnProperty('path') || args.hasOwnProperty('type'));
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	}	
+
 	MediaFile.updateMediaFile(uuid, args, function(error, updatedMediaFile){
 		if (!error) {
 			callback(null, updatedMediaFile);	
@@ -163,7 +240,19 @@ args = {
 
 */
 
-MediaAction.prototype.deleteMediaFile = function( args, callback ){ 	
+MediaAction.prototype.deleteMediaFile = function( args, callback ){
+	/*
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('uuid');
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;		
+	*/
+
 	MediaFile.deleteMediaFile( args, function(error, deletedMediaFile){		
 		if (!error) {
 			callback(null, deletedMediaFile);	
@@ -173,108 +262,5 @@ MediaAction.prototype.deleteMediaFile = function( args, callback ){
 		}		
 	})	
 }
-
-var object = {
-		//"type":12	
-		//'uuid':'abc1232'
-		'target':'abc1232'
-		//'user':'BSDF787D98A7SDF8ASD7G'
-  };
-
-var mediaAction = new MediaAction();
-/*
-mediaAction.getMediaFileTags(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-var newMediaFile = {
-	user:"A7S7F8GA7SD98A7SDF8ASD7G",				
-	title:"How to make buble tea",
-	path:"http://www.youtube.com/bt",
-	type:1
-};
-
-var updatedMediaFile = {
-	'title':'torfino kick', 
-	'path':'www.torfino.com'
-};
-
-/*
-mediaAction.viewMedia(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - ");
-		for(i=0; i<data.length; ++i){			
-			console.log(data[i].title + ' ' + data[i].path);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-mediaAction.getMediaFileTags(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - ");
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title + ' ' + data[i].description);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-
-/*
-mediaAction.getMediaFileUser(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - " + data.firstName + ' ' + data.lastName);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-mediaAction.addMediaFile(newMediaFile, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data);
-		for(i=0; i<data.length; ++i){
-			console.log(data[i].title);
-		}
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
-
-/*
-mediaAction.updateMediaFile(object, updatedMediaFile, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - "+ data.title + ' ' + data.path);
-	} else {
-		console.log( "[ERROR] - "+ err);
-	}
-});
-*/
-
-/*
-mediaAction.deleteMediaFile(object, function( err, data){
-	if (data) {
-		console.log( "[SUCCESS] - " + data);
-	} else {
-		console.log( "[ERROR] - "+err);
-	}
-});
-*/
 
 module.exports = new MediaAction;

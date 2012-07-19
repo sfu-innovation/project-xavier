@@ -67,7 +67,7 @@ exports.getMediaFileUser = function(args, callback){
 //Gets all the tags that belongs to a media file
 exports.getMediaFileTags = function(args, callback){
 	var Tag = require('./tag.js').Tag;
-	Tag.findAll({where: args}).success(function(tags){
+	Tag.findAll({where: {target: args.uuid}}).success(function(tags){
 		callback(null, tags);
 	}).error(function(error){
 		callback(error, null);

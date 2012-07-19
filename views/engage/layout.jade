@@ -76,9 +76,9 @@ html
 							a(href="#", class="flyout-toggle")
 								span
 							ul.flyout
-								each name , course in user.courses
+								each item in courses
 									li.courses
-										a(href="../course/#{course}") #{course}
+										a(href="../course/#{item.uuid}") #{item.subject+item.number}
 
 										
 			div.row.show-for-small

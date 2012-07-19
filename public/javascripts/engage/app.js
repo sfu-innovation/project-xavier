@@ -121,6 +121,7 @@ function initUI(){
 function loadStarredArticles(){
 	var engage = new coreApi.Engage();
 	engage.getStarredResources(function(data){
+//	engage.getResourcesByCourseUUIDs(function(data){
 		if(data){
 			if (data.errorcode == 0){
 				//$('#contents').empty();

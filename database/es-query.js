@@ -12,14 +12,13 @@ var importToEs = function(fileName, callback){
             var json_data = JSON.parse(data);
 
 			async.forEach(json_data, function(data, done){
-				data_index = data._index;
+				data_index   = data._index;
 				data_mapping = data._type;
-				data_id = data._id;
-				data_source = data._source;
+				data_id      = data._id;
+				data_source  = data._source;
 
-				index = db.index(data_index),
-					mapping = index.mapping(data_mapping);
-
+				index   = db.index(data_index),
+				mapping = index.mapping(data_mapping);
 				mapping.document(data_id).set(data_source, function(err, req, data){
 					done();
 				});

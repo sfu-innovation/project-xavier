@@ -81,7 +81,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -101,7 +100,7 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.question);
 					test.done();
 				});
 			});
@@ -116,7 +115,7 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.questions);
 					test.done();
 				});
 			});
@@ -170,9 +169,8 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.questions);
 					test.done();
 				});
 			});
@@ -186,7 +184,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -202,7 +199,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -218,7 +214,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -234,7 +229,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();

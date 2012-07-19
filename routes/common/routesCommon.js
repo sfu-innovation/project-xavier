@@ -484,7 +484,6 @@ exports.questionRoute = function(appType, request, response) {
 	else if (request.method === "POST"){
 		//if not log in, cannot create a question
 		if(request.session && request.session.user){
-			console.log(request.body.question);
 			//user, title, body, category
 			var newQuestion = new question(request.session.user.uuid
 				,request.body.question.title
@@ -539,8 +538,6 @@ exports.questionRoute = function(appType, request, response) {
 	}
 }
 
-var util = require('util');
-
 exports.questionsRoute = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getAllQuestions( appType, request.params.page, function(err, result) {
@@ -564,13 +561,18 @@ exports.questionsRoute = function(appType, request, response){
 //TODO:deprecated
 exports.questionsUnansweredRoute = function(appType, request, response){
 	if (request.method === "GET") {
-		QueryES.getAllUnansweredQuestions( appType, request.params.page, function(result) {
-			if (result) {
+		QueryES.getAllUnansweredQuestions( appType, request.params.page, function(err, result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));					
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
 	}
@@ -737,7 +739,7 @@ exports.commentRoute = function(appType, request, response) {
 exports.commentsRoute = function(appType,request,response){
 	if (request.method === "GET") {
 		QueryES.getAllComments(appType, request.params.page, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {
@@ -752,7 +754,7 @@ exports.commentsRoute = function(appType,request,response){
 exports.commentsByUserRoute = function(appType, request, response) {
 	if (request.method === "GET") {
 		QueryES.getAllCommentByUserID(request.params.uid, request.params.page, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {
@@ -775,9 +777,9 @@ exports.commentsByUserRoute = function(appType, request, response) {
 exports.commentVoteRoute = function(appType, request, response) {
 	if (request.method === "PUT") {
 		QueryES.updateVote(request.params.uid, request.params.dir, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
@@ -790,7 +792,7 @@ exports.commentVoteRoute = function(appType, request, response) {
 exports.commentAnsweredRoute = function(appType, request, response) {
 	if (request.method === "PUT") {
 		QueryES.updateIsAnswered(request.params.uid, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comment: result }));
 			} else {
@@ -804,7 +806,7 @@ exports.commentAnsweredRoute = function(appType, request, response) {
 exports.commentsByQuestionRoute = function(appType, request, response) {
 	if (request.method === "GET") {
 		QueryES.getCommentByTarget_uuid(request.params.uid, request.params.page, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {
@@ -818,7 +820,7 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 exports.commentCount = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getCommentCount(appType, request.params.uid, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, comments: result }));
 			} else {

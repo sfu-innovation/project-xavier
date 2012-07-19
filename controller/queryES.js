@@ -648,7 +648,6 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		if(updateResult){
 			document.set(data, function(err, req, esData){
 				if (esData) {
-/*
 					var args = {
 						target:data.target_uuid
 						,app:appType
@@ -657,22 +656,22 @@ QueryES.prototype.addComment = function(data, appType, callback){
 					};
 					notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 						if(usrNotificationResult){
-							console.log("successfully added usr comment notification");
-
 							delete args.description;
+
 							notification.addCommentNotifier(args, function(err, result){
 								if(result){
-									console.log("successfully added comment notification");
+									console.log("passed");
 									callback(null, esData);
 								}else{
+									console.log(err);	//THIS IS ONE ERROR YOU WILL WANT TO AVOID
 									callback(err);
 								}
 							});
 						}else{
 							callback(err);
 						}
-					});*/
-					callback(null, esData); //remember to remove this when adding alex's notification
+					});
+					//callback(null, esData); //remember to remove this when adding alex's notification
 				}else {
 					callback(err);
 				}

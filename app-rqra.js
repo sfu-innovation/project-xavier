@@ -40,6 +40,7 @@ app.get('/logout', routesCommon.logout);
 // main views
 app.get('/questions', routesRqra.questionListPage);
 app.get('/question/:id', routesRqra.questionDetailsPage);
+app.get('/new', routesRqra.questionFormPage);
 
 // components
 app.get('/component/header', routesRqra.header);

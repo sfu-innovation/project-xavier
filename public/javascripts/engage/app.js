@@ -135,7 +135,9 @@ function loadStarredArticles(){
 							+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName+ '</span>'
 							+ '<div class="post_details"> '
 							+ '<p>Posted in '
-							+ '<span class="coursename">' + item.course.subject +" "+ item.course.number + '</span>'
+							+ '<span class="coursename">' +'<a>' + item.course.subject +" "+ item.course.number
+							+ '-'  + (item.section.title).replace('WEEK ',"WK")  + '</a>'
+							+ '</span>'
 							+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 							+ '</p>'
 							+ '</div>'
@@ -144,7 +146,7 @@ function loadStarredArticles(){
 							+ '<div class="articlepreview">' + '<p>' + item.excerpt + '</p>'
 							+ '</div>'
 							+ '<div class="likescomments">'
-							+ '<span class="typicn star"></span>'
+							+ '<span class="typicn star starred"></span>'
 
 							+ '<span> Like ('+ item.likes +') </span>'
 							+ '<span> Comments ('+ item.totalComments +') </span>'

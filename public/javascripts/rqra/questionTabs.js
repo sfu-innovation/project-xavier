@@ -9,7 +9,7 @@ function formatQuestion(question) {
 				+ "<div class='replies'>5 <img src='../images/rqra/reply.png' alt='Replies'/></div>"
 				+ "<div class='views'>5 <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
-					+ "<span class='inserted'>" + new Date(question._source.timestamp).toLocaleString() + "</span> "
+					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
 			+ "</div>";
 }

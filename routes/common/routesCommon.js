@@ -70,12 +70,12 @@ exports.login = function(appType, request, response) {
 											response.send(error);
 										}else{
 											request.session.user = user;
-											response.send(request.session);
+											response.redirect('/');
+
 										}
 									})
 	        					}
 	        				})
-
 	        			}
 						else{
 							//another createUserNotification here cuz users can have diff settings
@@ -88,9 +88,18 @@ exports.login = function(appType, request, response) {
 								//err means the usr settings already exists for this app
 								console.log(err);
 								request.session.user = user;
-								response.send(request.session);
-
-							})
+								//Store users courses in session for fast access
+								User.getUserCourses(user.uuid, function(error, courses) {
+									if(!error){
+										request.session.courses = courses;
+										response.redirect('/');
+									}
+									else{
+										request.session.courses = null;
+										response.redirect('/');	
+									}
+								});
+							});
 						}
 	        		}
 	        		else{

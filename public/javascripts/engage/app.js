@@ -19,6 +19,10 @@ jQuery(document).ready(function ($) {
 		loadInstructorArticles(engage);
 
 	}
+	else if (window.location.toString().indexOf('design')!= -1){
+
+
+	}
 	else{
 		$('#all_btn').addClass('active');
 		loadAllArticles(engage);

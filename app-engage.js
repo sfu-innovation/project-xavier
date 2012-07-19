@@ -110,8 +110,9 @@ app.get('/login', routesEngage.login);
 app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
-app.post('/', routesEngage.index);
 
+app.post('/design', routesEngage.design);
+app.get('/design', routesEngage.design);
 
 app.get('/starred', routesEngage.starred);
 

@@ -126,4 +126,4 @@ app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
 /***NEW ROUTES */
-app.post("/api/questions/search/page/:page", routesRqra.searchQuestions);
+app.post("/api/questions/search/page/:page", routesRqra.searchQuestionsRoute);

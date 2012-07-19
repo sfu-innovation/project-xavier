@@ -123,6 +123,6 @@ exports.search = function(request, response) {
 }
 
 /***NEW ROUTES */
-exports.searchQuestions = function(request, response){
-	routesCommon.searchQuestions(0, request, response);
+exports.searchQuestionsRoute = function(request, response){
+	routesCommon.searchQuestionsRoute(0, request, response);
 }

@@ -535,23 +535,33 @@ exports.questionRoute = function(appType, request, response) {
 		var questionTitle = request.body.title;
 		var questionBody = request.body.body;
 
-		QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(result) {
-			if (result) {
+		QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, question: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, question: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, question: "Failed to update question" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: "Object not found" }));
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
 
 	} else if (request.method === "DELETE") {
 		QueryES.deleteQuestion(question_id, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, question: err }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, question: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, question: "Failed to delete question" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -602,11 +612,16 @@ exports.questionsUnansweredRoute = function(appType, request, response){
 exports.questionsNewRoute = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getAllNewQuestions( appType, request.params.page, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -657,11 +672,16 @@ exports.followQuestionRoute = function(appType, request, response) {
 	if (request.method === "PUT") {
 		if(request.session && request.session.user){
 			QueryES.addFollower(request.params.uid, request.session.user.uuid, appType, function(err, result) {
-				if (result) {
+				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, question: result}));
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, question: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, question: "Failed to follow question" }));
+					}
 				} else {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.writeHead(500, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: err }));
 				}
 			});
@@ -678,11 +698,16 @@ exports.unfollowQuestionRoute = function(appType, request, response) {
 	if (request.method === "PUT") {
 		if(request.session && request.session.user){
 			QueryES.removeFollower(request.params.uid, request.session.user.uuid, appType, function(err, result) {
-				if (result) {
+				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, question: result}));
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, question: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, question: "Failed to unfollow question" }));
+					}
 				} else {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.writeHead(500, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: err }));
 				}
 			});
@@ -716,11 +741,16 @@ exports.questionStatusRoute = function(appType, request, response) {
 exports.commentRoute = function(appType, request, response) {
 	if (request.method === "GET") {
 		QueryES.getComment(request.params.uid, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -733,11 +763,16 @@ exports.commentRoute = function(appType, request, response) {
 				,request.body.comment.body);
 
 			QueryES.addComment(newComment, appType, function(err, result) {
-				if (result) {
+				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, comment: result}));
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, comment: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
+					}
 				} else {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.writeHead(500, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 1, message: err }));
 				}
 			});
@@ -748,24 +783,33 @@ exports.commentRoute = function(appType, request, response) {
 		}
 	} else if (request.method === "PUT") {
 		QueryES.updateComment(request.params.uid, request.body.body, appType, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update comment" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
 
 	} else if (request.method === "DELETE") {
 		QueryES.deleteComment(request.params.uid, appType, function(err, result) {
-			if(result){
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, result: result }));
-			}
-			else{
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, error: err}));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to delete comment" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
 	}
@@ -776,11 +820,17 @@ exports.commentsRoute = function(appType,request,response){
 		QueryES.getAllComments(appType, request.params.page, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
+
 		});
 	}
 
@@ -791,22 +841,18 @@ exports.commentsByUserRoute = function(appType, request, response) {
 		QueryES.getAllCommentByUserID(request.params.uid, request.params.page, appType, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
 	}
-
-	//deprecated, used POST in commentRoute instead
-
-//	else if (request.method === "POST") {
-//		queryES.addComment(request.body.comment, appType, function(result) {
-//			response.writeHead(200, { 'Content-Type': 'application/json' });
-//			response.end(JSON.stringify({ errorcode: 0 }));
-//		});
-//	}
 }
 
 exports.commentVoteRoute = function(appType, request, response) {
@@ -814,9 +860,14 @@ exports.commentVoteRoute = function(appType, request, response) {
 		QueryES.updateVote(request.params.uid, request.params.dir, appType, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update vote" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -829,9 +880,14 @@ exports.commentAnsweredRoute = function(appType, request, response) {
 		QueryES.updateIsAnswered(request.params.uid, appType, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -843,9 +899,14 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 		QueryES.getCommentByTarget_uuid(request.params.uid, request.params.page, appType, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});
@@ -857,9 +918,14 @@ exports.commentCount = function(appType, request, response){
 		QueryES.getCommentCount(appType, request.params.uid, function(err, result) {
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});

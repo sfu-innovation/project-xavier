@@ -190,7 +190,7 @@ module.exports = {
 				}).on('end', function() {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
-						body.result._id === commentUUID);
+						body.comment._id === commentUUID);
 					test.done();
 				});
 			});

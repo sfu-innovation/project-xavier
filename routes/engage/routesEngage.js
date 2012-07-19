@@ -537,6 +537,7 @@ exports.index = function(req, res){
 		res.render("engage/index", { 	title: "SFU ENGAGE",
 								user :  userobject, 
 								status : "logged in",
+								courses : req.session.courses,
 								errormsg : error })
 	});
 };

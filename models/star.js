@@ -65,6 +65,25 @@ exports.unstarResource = function (userUUID, resourceUUID, callback) {
 		})
 }
 
+// determine if a resource is stared by user
+//args{
+//	user:    user uuid
+//	resource:         resource uuid
+//}
+
+exports.isResourceStarred = function(args,callback){
+	Star.find({where:{user:args.user, resource:args.resource}}).success(function(result){
+				callback(null,result);
+
+
+
+
+
+
+	}).error(function(error){callback(error, null);});
+
+}
+
 exports.getStarredResources = function (userUUID, callback) {
 	Star.findAll({where:{user:userUUID}}).success(
 		function (resources) {
@@ -77,18 +96,9 @@ exports.getStarredResources = function (userUUID, callback) {
 			}
 			if (resourceUUIDs) {
 				Resource.getResourcesByUUIDs({uuids:resourceUUIDs},function(err,resources){
-					Resource.resourceHelper(resources, callback);
+					callback(null,resources);
 				})
-//				Resource.({where:{uuid:resourceUUIDs}}).success(
-//					function (resources) {
-//						console.log(Resource);
-//						Resource.resourceHelper(resources, callback);
-//
-//
-////
-//					}).error(function (error) {
-//						callback(error, null);
-//					})
+
 			}
 			else {
 				callback("No starred resources found", null);

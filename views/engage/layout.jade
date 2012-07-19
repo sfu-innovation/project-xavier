@@ -78,7 +78,7 @@ html
 							ul.flyout
 								each item in courses
 									li.courses
-										a(href="../course/#{item.uuid}") #{item.subject+item.number}
+										a(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
 
 										
 			div.row.show-for-small
@@ -94,9 +94,9 @@ html
 							a.button(href="/instructor") PROF
 							
 						br
-						each name , course in user.courses
+						each item in courses
 							li.courses
-								a.button(href="../course/#{course}") #{course}
+								a.button(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
 										
 		block content
 		

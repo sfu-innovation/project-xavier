@@ -71,22 +71,24 @@ exports.deleteResource = function(request, response){
 }
 
 
-exports.starredResources = function(request, response){
-	if(request.method === 'GET'){
-		if(request.session && request.session.user){
-			Star.getStarredResources(request.session.user.uuid, function(error, result){
+exports.starredResources = function(req, res){
+	if(req.method === 'GET'){
+		if(req.session && req.session.user){
+			Star.getStarredResources(req.session.user.uuid, function(error, result){
 				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, resources: result }));
+					Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
+						res.writeHead(200, { 'Content-Type': 'application/json' });
+						res.end(JSON.stringify({ errorcode: 0, resources: result }));
+					})
 				}
 				else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
+					res.writeHead(200, { 'Content-Type': 'application/json' });
+					res.end(JSON.stringify({ errorcode: 1, message: error }));
 				}
 			});
 		}else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
 	}
 }
@@ -211,8 +213,10 @@ exports.resourcesInCourses = function(req,res){
 	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function(error, result){
 
 		if(result){
-			res.writeHead(200, { 'Content-Type': 'application/json' });
-			res.end(JSON.stringify({ errorcode: 0, resources: result }));
+			Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 0, resources: result }));
+			})
 		}else{
 			res.writeHead(200, { 'Content-Type': 'application/json' });
 			res.end(JSON.stringify({ errorcode: 1, message: error }));
@@ -686,3 +690,8 @@ exports.demoPage = function (req,res){
 
 	});
 }
+
+
+
+
+

@@ -6,7 +6,8 @@ var ES = require('../controller/queryES.js');
 var Course = require('../models/course.js');
 var async = require('async');
 var User = require('../models/user.js');
-var Section = require(__dirname + '/section.js')
+var Section = require(__dirname + '/section.js');
+var Star = require(__dirname + '/star.js');
 var SectionMaterial = require(__dirname + '/sectionMaterial.js');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
@@ -57,8 +58,8 @@ exports.getResourceByUserId = function (args, callback){
 exports.getResourcesByCourseUUIDs = function(args, callback){
 	Resource.findAll({where:{course:args.uuids}}).success(function(resources){
 		if(resources){
-			resourceHelper(resources,callback);
-			//callback(null, resources);
+//			resourceHelper(resources,callback);
+			callback(null, resources);
 		}
 		else{
 			callback("No Resources", null);
@@ -209,7 +210,7 @@ exports.getLikesByUUID = function(resourceUUID, callback){
 }
 
 
-var resourceHelper = exports.resourceHelper = function(resources,callback){
+var resourceHelper = exports.resourceHelper = function(currentUser,resources,callback){
 
 	var parsedResult;
 	async.series({
@@ -295,6 +296,31 @@ var resourceHelper = exports.resourceHelper = function(resources,callback){
 
 						callback();
 					})
+				}
+				, function (err) {
+					callback(err)
+				})
+		}
+		,
+		findIsStarred:function (callback) {
+
+
+			async.forEach(parsedResult, function (resource, callback) {
+					Star.isResourceStarred({user:currentUser, resource:resource.uuid},function(err,result){
+						if  (result){
+							resource.starred = true
+						}
+						else{
+
+							resource.starred = false;
+						}
+
+						callback(err);
+
+
+
+					})
+
 				}
 				, function (err) {
 					callback(err)

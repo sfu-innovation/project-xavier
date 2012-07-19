@@ -235,7 +235,7 @@ function renderArticlePreviewBox(item){
 			+ '<div class="post_details"> '
 			+ '<p>Posted in '
 			+ '<span class="coursename">' +'<a>' + item.course.subject +" "+ item.course.number
-			+ '-'  + (item.section.title).replace('WEEK ',"WK")  + '</a>'
+			+ '-'  + renameSectionName(item)  + '</a>'
 			+ '</span>'
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ '</p>'
@@ -243,12 +243,12 @@ function renderArticlePreviewBox(item){
 			+ '<h5>'
 			+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
 			+ '<div class="imgpreview">'
-			+ '<img src="'+ item.thumbnail + '" alt="'+ item.title + '" />'
+			+  renderPreviewImage(item)
 			+ '</div>'
-			+ '<div class="articlepreview">' + '<p>' + item.excerpt + '</p>'
+			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
 			+ '<div class="likescomments">'
-			+ '<span class="typicn star starred"></span>'
+			+ renderStar(item.starred)
 
 			+ '<span> Like ('+ item.likes +') </span>'
 			+ '<span> Comments ('+ item.totalComments +') </span>'
@@ -287,11 +287,53 @@ function formartDate(old_date){
 	return prettytime;
 }
 
+function renameSectionName(item) {
+	if (item.section && item.section.title && item.section.title.indexOf('WEEK')!== -1) {
+		return (item.section.title).replace('WEEK ',"WK");
+	}
+	else {
+		return "?";
+	}
+
+}
+
 function isProf(user_type){
 	if (user_type === 0){
 		 return '<span id="prof" title="instructor" class="typicn tick"></span>'
 	}
 	else {
 		return '';
+	}
+}
+
+function renderStar(starred){
+	if (starred){
+		return '<span class="typicn star starred"></span>';
+	}
+	else {
+		return '<span class="typicn star"></span>'
+	}
+}
+
+
+function renderPreviewImage(item){
+	if (item.thumbnail){
+
+		return '<img src="'+ item.thumbnail + '" alt="'+ item.title + '" />';
+	}
+	else{
+		return '<img src="http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg" alt="'+ item.title + '" />' ;
+	}
+
+
+}
+
+function renderExcerpt(excerpt){
+	if (excerpt){
+
+		return excerpt;
+	}
+	else{
+		return 'Australia\'s Prime Minister Julia Gillard and New Zealand\'s Foreign Minister Murray McCully give their reaction (whaling footage courtesy of' ;
 	}
 }

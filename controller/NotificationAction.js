@@ -989,7 +989,7 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 	arg.app = args.app;
 	arg.user = args.user;
 	
-	UserNotificationSettings.addNotificationSetting( arg, functino( error, newSettings ){
+	UserNotificationSettings.addNotificationSetting( arg, function( error, newSettings ){
 		if( error){
 			callback(error, null);
 		}

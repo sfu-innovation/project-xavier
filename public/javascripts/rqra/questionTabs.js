@@ -3,8 +3,9 @@ var prevSearchQuery = "";
 var prevSearchType = "latest";
 
 function formatQuestion(question) {
-	return "<div class='question' onclick='gotoQuestionPage()'>"
-			+ "<div id='questionText'>" + question._source.body + "</div>"
+	return "<div class='question' onclick='gotoQuestionPage(this)'>"
+			+ "<div class='questionId'>" + question._id + "</div>"
+			+ "<div class='questionText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
@@ -49,8 +50,9 @@ function displayPageNumbers(total) {
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";
 }
 
-function gotoQuestionPage() {
-	document.location.href = "/question";
+function gotoQuestionPage(clicked) {
+	var questionId = clicked.firstChild.innerHTML;
+	document.location.href = "/question/" + questionId;
 }
 
 // displays asked questions on page load

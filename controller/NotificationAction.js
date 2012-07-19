@@ -330,7 +330,7 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 				callback( null, newListener );
 			});
 		} else {
-			callback( "This specific listener already exists" , null );
+			callback( null, listener );
 		}
 	});
 }

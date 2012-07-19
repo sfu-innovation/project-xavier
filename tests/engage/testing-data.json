@@ -43,7 +43,8 @@
 			"resourceType" : 2,
 			"fileType" : ".ppt",
 			"likes" : 2, 
-			"url" : "/media/documents/ppt"
+			"url" : "http://somecoolurl.com",
+			"path": "/media/store"
 		}
 	]
 }

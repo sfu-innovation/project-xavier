@@ -85,7 +85,8 @@ module.exports = {
 				description : "CATS!",
 				resourceType : 1,
 				likes : 100000, 
-				url : "http://youtube.com/amazing-cats-lolz"
+				url : "http://youtube.com/amazing-cats-lolz",
+				path: "/path/to/kittens"
 			}
 
 			this.requestOptions.method = "POST";

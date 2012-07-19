@@ -21,9 +21,12 @@ exports.questionListPage = function(request, response) {
 	response.render('rqra/questionsPage', { title: "Demo" });
 }
 
-
 exports.questionDetails = function(request, response) {
 	response.render('rqra/component/questionDetails', { title: "Demo" });
+}
+
+exports.questionDetailsPage = function(request, response) {
+	response.render('rqra/questionDetailsPage', { title: "Demo" });
 }
 
 exports.questionForm = function(request, response) {

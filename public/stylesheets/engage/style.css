@@ -31,6 +31,10 @@ div#nav #options li a{
 	
 }
 
+div#nav #options li a.active{
+	border-bottom: 3px solid #2BA6CB;
+}
+
 div#nav ul#options li:hover a{
 	border-bottom: 3px solid #2BA6CB;
 }

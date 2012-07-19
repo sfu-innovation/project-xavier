@@ -118,3 +118,5 @@ app.get('/mine', routesEngage.contributions);
 app.get('/course/:id', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
+
+app.get('/demo', routesEngage.demoPage); //this will login you with a demo user

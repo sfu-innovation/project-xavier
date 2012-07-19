@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 	initUI();
 
 
-	if (window.location.toString()==="http://localhost:3000/starred/"){
+	if (window.location.toString().indexOf('starred')!= -1){
 		//if starred
 		//TODO: change to a better method later
 
@@ -133,6 +133,7 @@ function loadStarredArticles(){
 						'<div class="three columns">'
 							+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 							+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName+ '</span>'
+							+ isProf(item.user.type) //return nothing if not
 							+ '<div class="post_details"> '
 							+ '<p>Posted in '
 							+ '<span class="coursename">' +'<a>' + item.course.subject +" "+ item.course.number
@@ -200,4 +201,13 @@ function formartDate(old_date){
 	var post_time = new Date(Date.parse(old_date));
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
+}
+
+function isProf(user_type){
+	if (user_type === 0){
+		 return '<span id="prof" title="instructor" class="typicn tick"></span>'
+	}
+	else {
+		return '';
+	}
 }

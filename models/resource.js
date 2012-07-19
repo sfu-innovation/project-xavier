@@ -2,6 +2,12 @@ var fs = require('fs');
 var config = JSON.parse(fs.readFileSync("config.json"));
 var UUID = require('com.izaakschroeder.uuid');
 var Sequelize = require('sequelize');
+var ES = require('../controller/queryES.js');
+var Course = require('../models/course.js');
+var async = require('async');
+var User = require('../models/user.js');
+var Section = require(__dirname + '/section.js')
+var SectionMaterial = require(__dirname + '/sectionMaterial.js');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
@@ -13,6 +19,7 @@ var db = new Sequelize(
 		//logging: false
 	}
 );
+
 
 
 var Resource = exports.Resource = db.define('Resource', {
@@ -33,6 +40,47 @@ var Resource = exports.Resource = db.define('Resource', {
 
 
 });
+
+exports.getResourceByUserId = function (args, callback){
+	Resource.findAll({where:{user:args.user}}).success(function(resources){
+		if(resources){
+			callback(null, resources);
+		}
+		else{
+			callback("No Resources", null);
+		}
+	}).error(function(error){
+			callback(error, null);
+		})
+}
+
+exports.getResourcesByCourseUUIDs = function(args, callback){
+	Resource.findAll({where:{course:args.uuids}}).success(function(resources){
+		if(resources){
+			resourceHelper(resources,callback);
+			//callback(null, resources);
+		}
+		else{
+			callback("No Resources", null);
+		}
+	}).error(function(error){
+			callback(error, null);
+		})
+
+}
+
+exports.getResourcesByUUIDs = function (args, callback){
+	Resource.findAll({where:{uuid:args.uuids}}).success(function(resources){
+		if(resources){
+			callback(null, resources);
+		}
+		else{
+			callback("No Resources", null);
+		}
+	}).error(function(error){
+			callback(error, null);
+		})
+}
 
 //Fetch the resource with the given UUID
 exports.getResourceByUUID = function(resourceUUID, callback){
@@ -158,4 +206,108 @@ exports.getLikesByUUID = function(resourceUUID, callback){
 	}).error(function(error){
 		callback(error, null);
 	})
+}
+
+
+var resourceHelper = exports.resourceHelper = function(resources,callback){
+
+	var parsedResult;
+	async.series({
+		findCourseInfo:function (callback) {
+			async.forEach(resources, function (resource, callback) {
+				Course.selectCourse({'uuid':resource.course}, function (error, course) {
+					if (course) {
+						resource.course = course;
+					}
+					callback();
+				})
+
+			}, function (err) {
+				callback(err)
+			})
+
+		},
+
+		findUserInfo:function (callback) {
+			async.forEach(resources, function (resource, callback) {
+
+					User.selectUser({"uuid":resource.user}, function (error, user) {
+						if (user) {
+							resource.user = user;
+						}
+						callback();
+					});
+				},
+				function (err) {
+
+					callback(err)
+				})
+
+
+		},
+
+		findSectionId:function (callback) {
+			parsedResult = JSON.parse(JSON.stringify(resources));
+			async.forEach(parsedResult , function (resource, callback) {
+
+					SectionMaterial.findSectionIdByMaterialId({"material":resource.uuid}, function (err, result) {
+						if (result) {
+							resource.section = result.section;
+						}
+						callback(err);
+					});
+				},
+				function (err) {
+
+					callback(err)
+				})
+
+		},
+
+		findSectionInfo:function (callback){
+			async.forEach(parsedResult , function (resource, callback) {
+
+					Section.findSectionById({"uuid":resource.section}, function (err, result) {
+						if (result) {
+
+							resource.section = result;
+						}
+						callback(err);
+					});
+				},
+				function (err) {
+					callback(err)
+				})
+
+		},
+
+		// notice we cannot directly attach to json a totalcomments because it's a squalize object
+		// so we need to stringfy first then parse....so hacky...
+
+		findTotalComments:function (callback) {
+
+
+			async.forEach(parsedResult, function (resource, callback) {
+					ES.getCommentCount(2, resource.uuid, function (err, result) {
+
+						resource.totalComments = result;
+
+
+						callback();
+					})
+				}
+				, function (err) {
+					callback(err)
+				})
+		}
+
+
+	}, function(err){
+
+
+		callback(null, parsedResult);
+
+	}) ;
+
+
 }

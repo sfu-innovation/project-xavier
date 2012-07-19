@@ -21,9 +21,12 @@ exports.questionListPage = function(request, response) {
 	response.render('rqra/questionsPage', { title: "Demo" });
 }
 
-
 exports.questionDetails = function(request, response) {
 	response.render('rqra/component/questionDetails', { title: "Demo" });
+}
+
+exports.questionDetailsPage = function(request, response) {
+	response.render('rqra/questionDetailsPage', { title: "Demo" });
 }
 
 exports.questionForm = function(request, response) {
@@ -35,6 +38,12 @@ exports.notificationList = function(request, response) {
 }
 
 // backend
+//login
+exports.login = function(request, response){
+	routesCommon.login(0, request, response);
+}
+
+
 exports.questionViewCount = function(request, response){
 	routesCommon.questionViewCountRoute(0, request, response);
 }

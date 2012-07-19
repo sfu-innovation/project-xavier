@@ -6,10 +6,10 @@ function formatQuestion(question) {
 			+ "<div id='questionText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
-				+ "<div class='replies'>5 <img src='../images/rqra/reply.png' alt='Replies'/></div>"
-				+ "<div class='views'>5 <img src='../images/rqra/view.png' alt='Views'/></div>"
+				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
+				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
-					+ "<span class='inserted'>" + new Date(question._source.timestamp).toLocaleString() + "</span> "
+					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
 			+ "</div>";
 }
@@ -17,6 +17,7 @@ function formatQuestion(question) {
 function callDisplay(page, displayCallback) {
 	var questionList = document.getElementById("questionsList");
 	displayCallback(page, function (data) {
+		console.log(data);
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);

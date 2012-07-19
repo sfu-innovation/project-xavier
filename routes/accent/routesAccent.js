@@ -2,6 +2,10 @@ var routesCommon = require('./../common/routesCommon.js');
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
 
+exports.login = function(request, response){
+	routesCommon.login(1, request, response);
+}
+
 exports.question = function(request, response) {
 	routesCommon.questionRoute(1, request, response);
 }

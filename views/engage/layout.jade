@@ -66,7 +66,7 @@ html
 						li(data-value="yours")
 							a(href="/mine") YOUR CONTRIBUTIONS
 						li(data-value="starred")
-							a(href="#") STARRED
+							a(href="/starred") STARRED
 						li(data-value="prof")
 							a(href="#") INSTRUCTOR POSTS
 				div.two.columns
@@ -78,7 +78,7 @@ html
 							ul.flyout
 								each name , course in user.courses
 									li.courses
-										a(href="course/#{course}") #{course}
+										a(href="../course/#{course}") #{course}
 
 										
 			div.row.show-for-small
@@ -96,7 +96,7 @@ html
 						br
 						each name , course in user.courses
 							li.courses
-								a.button(href="course/#{course}") #{course}
+								a.button(href="../course/#{course}") #{course}
 										
 		block content
 		

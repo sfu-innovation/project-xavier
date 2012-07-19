@@ -6,6 +6,8 @@ var ES = require('../controller/queryES.js');
 var Course = require('../models/course.js');
 var async = require('async');
 var User = require('../models/user.js');
+var Section = require(__dirname + '/section.js')
+var SectionMaterial = require(__dirname + '/sectionMaterial.js');
 
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],
@@ -78,7 +80,7 @@ exports.getStarredResources = function (userUUID, callback) {
 					function (resources) {
 						var parsedResult;
 						async.series({
-							one: function(callback){
+							findCourseInfo:function (callback) {
 								async.forEach(resources, function (resource, callback) {
 									Course.selectCourse({'uuid':resource.course}, function (error, course) {
 										if (course) {
@@ -87,11 +89,13 @@ exports.getStarredResources = function (userUUID, callback) {
 										callback();
 									})
 
-								}, function (err) {callback(err)})
+								}, function (err) {
+									callback(err)
+								})
 
 							},
 
-							two: function(callback){
+							findUserInfo:function (callback) {
 								async.forEach(resources, function (resource, callback) {
 
 										User.selectUser({"uuid":resource.user}, function (error, user) {
@@ -101,35 +105,81 @@ exports.getStarredResources = function (userUUID, callback) {
 											callback();
 										});
 									},
-									function (err) {callback(err)})
+									function (err) {
+
+										callback(err)
+									})
 
 
 							},
 
-							three: function(callback){
+							findSectionId:function (callback) {
 								parsedResult = JSON.parse(JSON.stringify(resources));
-								async.forEach(parsedResult, function (resource, callback) {
-										ES.getCommentCount(resource.uuid, 2, function (total) {
+								async.forEach(parsedResult , function (resource, callback) {
 
-											resource.totalComments = total;
+										SectionMaterial.findSectionIdByMaterialId({"material":resource.uuid}, function (err, result) {
+											if (result) {
+												resource.section = result.section;
+											}
+											callback(err);
+										});
+									},
+									function (err) {
+
+										callback(err)
+									})
+
+							},
+
+							findSectionInfo:function (callback){
+								async.forEach(parsedResult , function (resource, callback) {
+
+										Section.findSectionById({"uuid":resource.section}, function (err, result) {
+											if (result) {
+
+												resource.section = result;
+											}
+											callback(err);
+										});
+									},
+									function (err) {
+										callback(err)
+									})
+
+							},
+
+							// notice we cannot directly attach to json a totalcomments because it's a squalize object
+							// so we need to stringfy first then parse....so hacky...
+
+							findTotalComments:function (callback) {
+
+
+								async.forEach(parsedResult, function (resource, callback) {
+										ES.getCommentCount(2, resource.uuid, function (err, result) {
+
+											resource.totalComments = result;
 
 
 											callback();
 										})
 									}
-									, function (err) {callback(err) })
+									, function (err) {
+										callback(err)
+									})
 							}
 
 
 						}, function(err){
-							console.log(parsedResult);
+
 
 							callback(null, parsedResult);
 
 						}) ;
 
 
-				}).error(function (error) {
+
+//
+					}).error(function (error) {
 						callback(error, null);
 					})
 			}

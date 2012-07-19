@@ -56,11 +56,31 @@ exports.removeMaterialFromSection = function( args, callback ){
 	});
 	callback( null, args.sectionMaterial );
 }
-	
+
+
+//To find what section the material belongs to
+
+//args = {
+//	material : UUID of the material to add
+//
+//}
+
+
+exports.findSectionIdByMaterialId = function (args, callback) {
+	SectionMaterial.find({ where:{ material:args.material}}).success(
+		function (result) {
+			callback(null, result);
+		}).error(function (error) {
+			callback(error, null);
+			console.log("cannot find this section material relationship", error);
+		});
+
+};
+
 /*
-    To find if a specific material/resource is associated with a target section
+    To find if a specific material is associated with a target section
 	args = {
-		resource : UUID of the resource to add
+		resource : UUID of the material to add
 		section  : UUID of the section to associate the resource to
 	}
 	
@@ -71,14 +91,16 @@ exports.findAMaterialInSection = function( args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('resource') && args.hasOwnProperty('section'));
+	var containsAllProperties = (args.hasOwnProperty('material') && args.hasOwnProperty('section'));
 		
 	if (  !containsAllProperties ){
 		callback("Invalid args "+args.value, null );
 		return;		
 	}
 
-	SectionMaterial.find({ where : { material : args.resource, section  : args.section }}).success( function ( sectionMaterial ){
+	console.log(section);
+
+	SectionMaterial.find({ where : { material : args.material, section  : args.section }}).success( function ( sectionMaterial ){
 		callback( null, sectionMaterial );
 	}).error(function(error){
 		callback( error, null );
@@ -118,7 +140,7 @@ exports.findAllMaterialsInSection = function( args, callback ){
 	
 	args = {
 		section : UUID of the section
-		resource : UUID of the resource
+		resource : UUID of the material
 	}
 	
 	returns the sectionmaterial created unless there is an error
@@ -129,14 +151,14 @@ exports.createSectionMaterial = function( args, callback ){
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		args.hasOwnProperty('resource') );
+		args.hasOwnProperty('material') );
 		
 	if (  !containsAllProperties ){
 		callback("Invalid args "+args.value, null );
 		return;		
 	}
 
-	SectionMaterial.create({ section : args.section, material : args.resource}).success( function ( savedMaterial ){
+	SectionMaterial.create({ section : args.section, material : args.material}).success( function ( savedMaterial ){
 		callback( null, savedMaterial );
 	}).error( function ( error ){
 		callback( error, null );

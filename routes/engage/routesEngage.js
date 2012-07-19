@@ -226,6 +226,32 @@ exports.resourcesInCourses = function(req,res){
 	})
 }
 
+// get resources that uploaded by current user
+exports.resourcesOfCurrentUser = function(req,res){
+	if (req.session && req.session.user){
+		Resource.getResourceByUserId({user:req.session.user.uuid}, function(error, result){
+
+			if(result){
+				Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
+					res.writeHead(200, { 'Content-Type': 'application/json' });
+					res.end(JSON.stringify({ errorcode: 0, resources: result }));
+				})
+			}else{
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+
+
+		})
+
+	}
+	else{
+		response.writeHead(401, { 'Content-Type': 'application/json' });
+		response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	}
+
+}
+
 
 
 

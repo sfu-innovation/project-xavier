@@ -60,6 +60,8 @@ app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a foll
 // Resource
 //TODO: need update this into document
 app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
+//TODO: need update this into document
+app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resources uploaded by current user;
 
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here

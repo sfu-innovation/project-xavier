@@ -42,6 +42,8 @@ var Resource = exports.Resource = db.define('Resource', {
 
 });
 
+
+
 exports.getResourceByUserId = function (args, callback){
 	Resource.findAll({where:{user:args.user}}).success(function(resources){
 		if(resources){

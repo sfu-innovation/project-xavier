@@ -302,6 +302,22 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCurrentUserId = function(callback){
+			console.log("API - getResourcesByCurrentUserId");
+			$.ajax({
+
+				url:'/api/resources/my',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+
+		}
+
 
 
 

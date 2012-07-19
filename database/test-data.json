@@ -410,6 +410,10 @@
 		{
 			"section": "2",
 			"material": "5"
+		},
+		{
+			"section": "2",
+			"material": "6"
 		}
 	],
 	"resources":[
@@ -480,7 +484,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/1/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		} ,
 		{
@@ -497,7 +501,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/2/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -514,7 +518,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/3/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -531,7 +535,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/4/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -548,7 +552,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/5/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -565,7 +569,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "/resources/thumbnails/6/1.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		}
 

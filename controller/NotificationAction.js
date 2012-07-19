@@ -100,7 +100,8 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							callback( error, null);
 						}else {
 							addedUserNotifications.push( newNotification );
-							/*
+
+							/*The root of the problem lies here.
 							console.log("Computing email")
 							compileEmail( arg, function( error, newNotification ){
 								if ( error ){

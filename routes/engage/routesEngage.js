@@ -1,6 +1,7 @@
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
+var User = require(__dirname + "/../../models/user");
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
 var request = require('request');
@@ -333,8 +334,8 @@ userobject.courses = {
 
 
 var articles = [article_1,  article_2,  article_3,  article_4,  article_5]  ;
-var fake_user_1 = {uuid:1,firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
-var fake_user_2 = {uuid:2,firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
+
+
 
 function mediaPath(path, host){
 	if (path.charAt(0)== "/"){
@@ -453,11 +454,25 @@ exports.index = function(req, res){
 		if (req.method === 'POST') {
 			error ="please enter an URL" ;
 		}
-		res.render("engage/index", { 	
-							title: "SFU ENGAGE",
-							user :  userobject, 
-							status : "logged in",
-							errormsg : error })
+
+		if (req.session && req.session.user) {
+
+
+			res.render("engage/index", {
+				title: "SFU ENGAGE",
+				user :  userobject,
+				status : "logged in",
+				courses : req.session.courses,
+				errormsg : error })
+		}
+		else {
+			//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+			res.redirect("/demo");
+
+			//login with demo user, remove when everything is set.
+		}
+
 		return;
 	}
 
@@ -492,69 +507,109 @@ exports.index = function(req, res){
 };
 
 exports.starred = function (req, res) {
+
 	if (req.session && req.session.user) {
-
-		res.render("engage/starred", { 	title: "SFU ENGAGE",
-			user :  userobject,
-			status : "logged in" })
-	}
-
-
+			res.render("engage/starred", { 	title: "SFU ENGAGE",
+				user :  userobject,
+				courses : req.session.courses,
+				status : "logged in" })
+   	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
-
-
 //		res.redirect("/login");
+		res.redirect("/demo");
 
 		//login with demo user, remove when everything is set.
-
-		req.session.user = fake_user_2;
-		res.render("engage/starred", { 	title: "SFU ENGAGE",
-			user :  userobject,
-			status : "logged in" })
-
 	}
 
 }
 
 exports.articleView = function (req, res) {
-	var pickedArticle = articles[req.params.id - 1];
+
+	if (req.session && req.session.user) {
+		var pickedArticle = articles[req.params.id - 1];
+		res.render("engage/article", { title:"SFU ENGAGE",
+			article : pickedArticle,
+			user:userobject,
+			courses : req.session.courses,
+			status:"logged in"     })
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
+	}
 
 
-	res.render("engage/article", { title:"SFU ENGAGE",
-		article : pickedArticle,
-		user:userobject,
-		status:"logged in"     })
+
 
 
 }
 exports.contributions = function (req, res) {
-	var myarticles = [];
-	for (i in articles) {
-		if (articles[i].user === userobject){
-			myarticles.push(articles[i])
+
+	if (req.session && req.session.user) {
+		var myarticles = [];
+		for (i in articles) {
+			if (articles[i].user === userobject){
+				myarticles.push(articles[i])
+			}
 		}
+		//console.log(myarticles);
+		res.render("engage/contributions", { title:"SFU ENGAGE",
+			user:userobject,
+			contributions : myarticles,
+			courses : req.session.courses,
+			status:"logged in"     })
 	}
-	console.log(myarticles);
-	res.render("engage/contributions", { title:"SFU ENGAGE",
-		user:userobject,
-		contributions : myarticles,
-		status:"logged in"     })
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
+	}
+
 }
 exports.courseView = function (req, res) {
-	var selectedCourse = req.params.id;
-	var courseArticles = [];
-	for (i in articles) {
-		if (articles[i].course === selectedCourse){
-			courseArticles.push(articles[i])
+	if (req.session && req.session.user) {
+		var selectedCourse = req.params.id;
+		var courseArticles = [];
+		for (i in articles) {
+			if (articles[i].course === selectedCourse){
+				courseArticles.push(articles[i])
+			}
 		}
+
+		res.render("engage/course", { title:"SFU ENGAGE",
+			course : selectedCourse,
+			user:userobject,
+			courseArticles : courseArticles,
+			courses : req.session.courses,
+			status:"logged in"     })
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
 	}
 
-	res.render("engage/course", { title:"SFU ENGAGE",
-		course : selectedCourse,
-		user:userobject,
-		courseArticles : courseArticles,
-		status:"logged in"     })
 
 
+
+}
+
+exports.demoPage = function (req,res){
+	var fake_user_1 = {uuid:1,firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
+	var fake_user_2 = {uuid:2,firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
+
+	req.session.user= fake_user_2;
+	User.getUserCourses(req.session.user.uuid,function(err,result){
+		req.session.courses = result;
+		res.redirect('/');
+
+	});
 }

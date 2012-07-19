@@ -539,14 +539,21 @@ exports.questionRoute = function(appType, request, response) {
 	}
 }
 
+var util = require('util');
+
 exports.questionsRoute = function(appType, request, response){
 	if (request.method === "GET") {
 		QueryES.getAllQuestions( appType, request.params.page, function(err, result) {
-			if (result) {
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, questions: result }));					
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
+				}
 			} else {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
 		});

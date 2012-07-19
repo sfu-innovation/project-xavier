@@ -100,14 +100,17 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							callback( error, null);
 						}else {
 							addedUserNotifications.push( newNotification );
+							/*
+							console.log("Computing email")
+							compileEmail( arg, function( error, newNotification ){
+								if ( error ){
+									console.log("Error compiling email");
+									callback( error, null);
+								} else{
+
+								}
+							});*/
 							callback( null, newNotification);
-						}
-				});
-				
-				compileEmail( arg, function( error, newNotification ){
-						if ( error ){
-							callback( error, null);
-							return;
 						}
 				});
 			});
@@ -313,7 +316,6 @@ NotificationAction.prototype.addNotifier = function( args, callback){
 			return;
 		}
 		if ( null === listener ){
-			console.log("NULL");
 			NotificationListener.createNotificationListener(arg, function(error, newListener){
 				if ( error ){
 					callback(error, null );
@@ -361,7 +363,6 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	
 	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
@@ -382,9 +383,11 @@ function compileEmail( args, callback ){
    				to:      userFound.firstName+ " " +userFound.lastName+"<"+userFound.email+">",
    				subject: title +" notification"
 		 	};
-		 	
+
+			console.log("Trying to send email..");
 		 	server.send(message, function(err, message){
 		 		if ( err ){
+					 console.log("Can't send email");
 		 			callback( err, null );
 		 		} else {
 		 			callback( null, message );

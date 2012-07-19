@@ -566,7 +566,13 @@ exports.design = function(req,res){
 			user :  userobject,
 			status : "logged in",
 			courses : req.session.courses,
-			errormsg : error })
+			errormsg : error }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 	});
 }
 
@@ -576,7 +582,13 @@ exports.index = function(req, res){
 		res.render("engage/index", { 	title: "SFU ENGAGE",
 			user :  userobject,
 			courses : req.session.courses,
-			status : "logged in" })
+			status : "logged in" }, function(err, rendered){
+
+				// console.log(rendered);
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -594,7 +606,13 @@ exports.starred = function (req, res) {
 			res.render("engage/starred", { 	title: "SFU ENGAGE",
 				user :  userobject,
 				courses : req.session.courses,
-				status : "logged in" })
+				status : "logged in" }, function(err, rendered){
+
+				// console.log(rendered);
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+			})
    	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -612,7 +630,13 @@ exports.instructor = function (req, res) {
 		res.render("engage/instructor", { 	title: "SFU ENGAGE",
 			user :  userobject,
 			courses : req.session.courses,
-			status : "logged in" })
+			status : "logged in" }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -635,7 +659,13 @@ exports.articleView = function (req, res) {
 			article : pickedArticle,
 			user:userobject,
 			courses : req.session.courses,
-			status:"logged in"     })
+			status:"logged in"     }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -664,7 +694,13 @@ exports.contributions = function (req, res) {
 			user:userobject,
 			contributions : myarticles,
 			courses : req.session.courses,
-			status:"logged in"     })
+			status:"logged in"     }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -690,7 +726,13 @@ exports.courseView = function (req, res) {
 			user:userobject,
 			courseArticles : courseArticles,
 			courses : req.session.courses,
-			status:"logged in"     })
+			status:"logged in"     }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead

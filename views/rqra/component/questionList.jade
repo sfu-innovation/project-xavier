@@ -7,21 +7,21 @@ div#content
 			h2#sectionTitle Week 2 - 
 				span#sectionName Perception &amp; Pattern Recognition
 			div#questionTabs
-				div.tab(onclick="displayNew(0)") Latest Questions
-				div.tab(onclick="displayNew(0)") Instructor Answered
-				div.tab(onclick="displayNew(0)") Most Responses
-				div.tab(onclick="displayNew(0)") Most Viewed
-				div.tab(onclick="displayUnanswered(0)") Unanswered Questions
-				div.tab(onclick="displayNew(0)") My Questions
+				div.tab(onclick="displayQuestions('latest', 0)") Latest Questions
+				div.tab(onclick="displayQuestions('instructor', 0)") Instructor Answered
+				div.tab(onclick="displayQuestions('replied', 0)") Most Responses
+				div.tab(onclick="displayQuestions('viewed', 0)") Most Viewed
+				div.tab(onclick="displayQuestions('unanswered', 0)") Unanswered Questions
+				div.tab(onclick="displayQuestions('myQuestions', 0)") My Questions
 				
 	div#questionsList		
 					
 	div#pageNumber
 		img(src="../images/rqra/prev.png", alt="previous")
-		div.pageNumberButton(onclick="displayNew(0)") 1
-		div.pageNumberButton(onclick="displayNew(1)") 2
-		div.pageNumberButton(onclick="displayNew(2)") 3
-		div.pageNumberButton(onclick="displayNew(3)") 4
+		div.pageNumberButton(onclick='changePage(0)') 1
+		div.pageNumberButton(onclick='changePage(1)') 2
+		div.pageNumberButton(onclick='changePage(2)') 3
+		div.pageNumberButton(onclick='changePage(3)') 4
 		img(src="../images/rqra/next.png", alt="next")
 					
 div#questionCount

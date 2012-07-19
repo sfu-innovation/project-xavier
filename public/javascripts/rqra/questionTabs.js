@@ -1,5 +1,6 @@
 var rqra = new coreApi.Presenter();
-var display = displayNew;
+var prevSearchQuery = "";
+var prevSearchType = "latest";
 
 function formatQuestion(question) {
 	return "<div class='question'>"
@@ -14,10 +15,11 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
-function callDisplay(page, displayCallback) {
+function displayQuestions(searchType, page) {
+	var searchQuery = "";
+	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	displayCallback(page, function (data) {
-		console.log(data);
+	rqra.searchSortedQuestions(searchQuery, searchType, page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
@@ -29,12 +31,8 @@ function callDisplay(page, displayCallback) {
 	});
 }
 
-function displayNew(page) {
-	callDisplay(page, rqra.getNewQuestions);
-}
-
-function displayUnanswered(page) {
-	callDisplay(page, rqra.getUnansweredQuestions);
+function changePage(page) {
+	displayQuestions(prevSearchType, page);
 }
 
 function displayTotal(total) {
@@ -46,10 +44,10 @@ function displayPageNumbers(total) {
 	var pageNumbers = document.getElementById("pageNumber");
 	pageNumbers.innerHTML = "<img src='../images/rqra/prev.png' alt='previous'>";
 	for(var i = 0; i < total/5; i++) {
-		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='displayNew(" + i + ")'>" + (i+1) + "</div>";
+		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 	}
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";
 }
 
 // displays asked questions on page load
-displayNew(0);
+displayQuestions("latest", 0);

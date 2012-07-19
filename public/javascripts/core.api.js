@@ -418,13 +418,24 @@ coreApi._construct = function () {
 				success:function (data) {
 					callback(data);
 				}
-
-
 			})
-
-
 		}
 
+		this.searchSortedQuestions = function(searchQuery, searchType, page, callback) {
+			console.log("API - searchSortedQuestions");
+			var body = { "searchQuery": searchQuery, "searchType": searchType };
+			$.ajax({
+				url:'/api/questions/search/page/' + page,
+				type:'POST',
+				dataType:'json',
+				contentType:'application/json',
+				data:JSON.stringify(body),
+				success:function(data) {
+					callback(data);
+				}
+			});
+		}
+		
 	   //comments
 
 		this.getCommentsByTargetId = function (target_id, callback){

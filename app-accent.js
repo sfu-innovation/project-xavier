@@ -134,3 +134,4 @@ app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile
 
 //non-REST calls
 app.get('/', routesAccent.index);
+app.get('/demo', routesAccent.demoPage); //this will login you with a demo user

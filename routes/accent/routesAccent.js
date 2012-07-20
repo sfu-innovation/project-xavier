@@ -1,6 +1,7 @@
 var routesCommon = require('./../common/routesCommon.js');
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
+var User = require(__dirname + "/../../models/user");
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -219,12 +220,12 @@ exports.mediafileTag = function(request,response){
 }
 
 exports.index = function(req, res){
-	//if (req.session && req.session.user) {
+	if (req.session && req.session.user) {
 		console.log('i am being called and being rendered here');
-		res.render("accent/index", { 	title: "SFU Accent"},
-			/* user :  req.session.user,
+		res.render("accent/index", { 	title: "SFU Accent",
+			user :  req.session.user,
 			courses : req.session.courses,
-			status : "logged in" }, */
+			status : "logged in" }, 
 			function(err, rendered){
 
 				console.log('am i being rendered = ' + rendered);
@@ -232,14 +233,20 @@ exports.index = function(req, res){
 				res.end(rendered);
 
 		})
-		/*
+		
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
-		res.redirect("/demo");
-
-		//login with demo user, remove when everything is set.
-	}
-	*/
+		res.redirect("/demo");		
+	}	
 };
+
+exports.demoPage = function (req,res){
+	var temp_user = {uuid:1,firstName:"Jihoon",lastName:"Choi",userID:"jhc20",email:"jhc20@sfu.ca"}
+
+	req.session.user= temp_user;
+	User.getUserCourses(req.session.user.uuid,function(err,result){
+		req.session.courses = result;
+		res.redirect('/');
+
+	});
+}

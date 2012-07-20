@@ -5,15 +5,19 @@ html
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
 	head
 		title= title
-		
+		<meta content='True' name='HandheldFriendly' />
+		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+		<meta name="viewport" content="width=device-width" />
 		script(src="http://code.jquery.com/jquery-latest.js")
 		script(src="/javascripts/engage/prettydate.js")
 		script(src="/javascripts/engage/datetime.js")
 
 		link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet', type='text/css')
 		meta(charset="utf-8")
+		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900', rel='stylesheet', type='text/css')
 
 		<!-- Set the viewport width to device width for mobile -->
 		meta(name="viewport", content="width=device-width")
@@ -52,8 +56,8 @@ html
 		div#header
 			div.row
 				div.nine.columns
-					h1
-						a(href="/") #{title}
+					
+					img(href="/", src="/images/engage/SFUEngage_draft3-03.png") 
 				div.three.columns#userbox
 					span  #{ user.firstName }  #{ user.lastName }
 						a  log out
@@ -69,7 +73,7 @@ html
 							a#starred_btn(href="/starred") STARRED
 						li(data-value="prof")
 							a#instructor_btn(href="/instructor") INSTRUCTOR POSTS
-				div.two.columns
+				div.three.columns
 					ul.nav-bar
 						li.has-flyout#courselist
 							a(href="#") COURSES
@@ -99,8 +103,4 @@ html
 								a.button(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
 										
 		block content
-		
-		div#footer
-			div.row
-				div.twelve.columns
-					p SFU Mobile - Semester in Innovation
+

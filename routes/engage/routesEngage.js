@@ -526,7 +526,13 @@ exports.design = function(req,res){
 				user :  userobject,
 				status : "logged in",
 				courses : req.session.courses,
-				errormsg : error })
+				errormsg : error }, function(err, rendered){
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end(rendered);
+
+		})
 		}
 		else {
 			//to avoid login to testing, this is comment out, using fake user instead

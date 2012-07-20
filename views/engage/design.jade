@@ -1,58 +1,69 @@
 extends layout
 
 block content
-	div.row#contents
-		div.three.columns
-			div.innercontents#submitnew
-				form(name="add_article", action="/design",enctype="multipart/form-data", method="post", onsubmit="return validateForm()", style="margin-bottom : 0", class="custom")
-					label Share a resource!
-					input(name="article_url",type="text", id="article_url", placeholder="http://")
-					textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+	div#wrap
+		div.row#contents
+			div.three.columns
+				div.innercontents#submitnew
+					form(name="add_article", action="/design",enctype="multipart/form-data", method="post", onsubmit="return validateForm()", style="margin-bottom : 0", class="custom")
+						label Share a resource!
+						input(name="article_url",type="text", id="article_url", placeholder="http://")
+						textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+	
+						div#sumbitrow
+							div.selectcourse
+								select(class="customDropdown", name="article_course", value="select a course")
+									each name , course in user.courses
+										option #{course}
+							div.submit
+								input(type="submit", value="add", class="small button")
+					if(typeof errormsg != 'undefined')
+						p #{errormsg}
+	
+			- var counter = 0 
+			each name , course in user.courses
+				- var coursename = course
+				each article in name
+					if article.user.type == 1
+						dataclass = "prof"
+					div.three.columns
+						div.innercontents
+							img.avatar(src="https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png")
 
-					div#sumbitrow
-						div.selectcourse
-							select(class="customDropdown", name="article_course", value="select a course")
-								each name , course in user.courses
-									option #{course}
-						div.submit
-							input(type="submit", value="add", class="small button")
-				if(typeof errormsg != 'undefined')
-					p #{errormsg}
+							div.post_details
+ 
+								span #{article.user.firstName} #{article.user.lastName}
+								if article.user.type == 1
+									span.typicn.tick#prof(title="instructor")
+								p Posted 
+									span.post_time(id="post_time_#{counter}") 
+									| 
+									| in
+									| 
+									span.coursename 
+										a(href="/course/#{coursename})  #{coursename}
+							div.innerwrap
+										
+								h5
+									a(href="/article/#{article.id}") #{article.title}
+									
+							div.articlepreview(id = "preview_#{counter}")
+							div.likescomments
+								if article.starred == 1
+									span.typicn.star.starred
+								else
+									span.typicn.star
+								span Like (#{article.likes})
+								span Comment (5)
+							script(type='text/javascript')
+								var now = new Date();
+								var post_time = new Date(Date.parse(" #{article.uploaded_on} "));
+								var prettytime = formatAgo(post_time, null, now);
+								$('span#post_time_#{counter}').append(prettytime);
+								$('div#preview_#{counter}').load("#{article.path} p");
+								$('div#img_#{counter}').css("#{article.path} img:first");
+	
+							- counter = counter +1	
 
-		- var counter = 0 
-		each name , course in user.courses
-			- var coursename = course
-			each article in name
-				if article.user.type == 1
-					dataclass = "prof"
-				div.three.columns
-					div.innercontents
-						b #{article.user.firstName} #{article.user.lastName}
-						if article.user.type == 1
-							span.typicn.tick#prof(title="instructor")
-						div.post_details 
-							p Posted in 
-								span.coursename 
-									a(href="/course/#{coursename}) #{coursename}
-								span.post_time(id="post_time_#{counter}") 
-
-						h5
-							a(href="/article/#{article.id}") #{article.title}
-						div.imgpreview(id="img_#{counter}")
-						div.articlepreview(id = "preview_#{counter}")
-						div.likescomments
-							if article.starred == 1
-								span.typicn.star.starred
-							else
-								span.typicn.star
-							span Like (#{article.likes})
-							span Comment (5)
-						script(type='text/javascript')
-							var now = new Date();
-							var post_time = new Date(Date.parse(" #{article.uploaded_on} "));
-							var prettytime = formatAgo(post_time, null, now);
-							$('span#post_time_#{counter}').append(prettytime);
-							$('div#preview_#{counter}').load("#{article.path} p");
-							$('div#img_#{counter}').load("#{article.path} img:first");
-
-						- counter = counter +1	
+			div.clear
+				

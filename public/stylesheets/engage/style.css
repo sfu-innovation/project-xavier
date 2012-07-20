@@ -1,14 +1,21 @@
-.row{
-	width: 1280px !important;
+.clear{
+	
+	clear: both;
+}
+
+.row{	
+	width: 1280px;
 }
 div#header{
 	background-color: rgba(0,0,0,0.1);
+	font-family: "Lato", sans-serif;
 
 }
 
 div#header h1{
 	margin: 0;
 	padding: 0;
+	
 }
 div#nav li{
 	background-color: rgba(0,0,0,0);
@@ -84,28 +91,36 @@ div#userbox{
 .nav-bar > li.has-flyout > a:first-child::after {
 	border: 0 !important;
 	}
-	
+
+div#wrap{
+	margin: 0 auto;
+	background-color: #f5f5f5 ;
+	padding-bottom: 20px;
+
+}
 	
 div#contents{
-	padding-top: 10px;
+	font-family: "Lato", sans-serif;
+	
 }
 
 div#contents div.columns{
-	padding-left: 5px;
-	padding-right: 5px;
-	margin-top: 6px;
+	margin-top: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width:297px;
 }
 
-
-div.columns:last-child{
+div.columns:last-child{;  
 	float: left !important;
 	}
 
 div.innercontents{
-	margin: 5px;
-	padding: 10px;
-	background-color: rgba(166,165,165,0.1) ;
-	height: 345px;
+	background-color: #fffffb ;
+	height: 355px;
+	position: relative;
+	border-top: 4px solid #d35f5e;
+	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 }
 
 div.innercontents form textarea{
@@ -113,32 +128,78 @@ div.innercontents form textarea{
 	resize: none; 
 	}
 
-div.innercontents#submitnew{
+
+div.innerwrap{
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg");
+	background-repeat: repeat-x, no-repeat;
+	background-position: top, center;
+	background-size: auto, cover;
+	height: 200px;
+	position: relative;
+	opacity: 0.90;
+	padding: 0;
+	
 
 }
 
 div.innercontents h5{
-	height: 39px;
 	width:100%;
 	overflow: hidden;
 	margin-top : 5px;
 	margin-bottom: 5px;
+	padding-bottom: 5px;
+	padding: 18px;
+	position: absolute;
+	bottom: 0;
 	}
-div.innercontents img{
-	height: 160px;
-	}
-
-
-div.post_details {
-	white-space: nowrap;
-	overflow: hidden;
-	height: 20px
 	
+div.innercontents h5 a{
+	font-size: 30px;
+	font-family: "Cambria";
+	color: white;	
+	text-shadow: 1px 1px 5px black;
 }
+div.post_details {
+	padding-left: 50px;
+	height: 65px;
+	padding-top: 10px;
+	}
+div.innercontents img.avatar{
+	height: 49px;
+	position: absolute;
+	margin-left: -5px;
+	margin-top:8px;
+}
+
+div.post_details{
+	font-family: "Lato", sans-serif;
+	color: #9e9e9e;
+}
+
+div.post_details span{
+	font-weight: 900;
+}
+
+div.post_details p{
+	font-weight: 400;
+	margin:0;
+	padding:0;
+	padding-top: 5px;
+}
+div.post_details p a{
+	color: #d35f5e;
+	font-weight: 900;
+	padding-left: 2px;
+	}
+
+
+
 div.innercontents .post_time{
 	white-space: nowrap;
 	overflow: hidden;
+	font-weight: 400;
 	}
+	
 div.innercontents #prof{
 	background-color: #2BA6CB;
 	border-radius: 10px;
@@ -149,18 +210,17 @@ div.innercontents #prof{
 	padding-bottom: 0;
 	float: right;
 }
-div.innercontents:hover{
-	background-color: rgba(43,166,203,0.1) ;
-	-webkit-transition: all 300ms linear;
-	-moz-transition: all 300ms linear;
-	-o-transition: all 300ms linear;
-	-ms-transition: all 300ms linear;
-	transition: all 300ms linear; 
-	}
+
 
 div.articlepreview{
+	padding: 18px;
+	padding-top: 12px;
 	max-height: 55px;
 	overflow: hidden;
+	font-family: "Lato", sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	opacity: 0.5;
 	}
 div.articlepreview p{
 	font-size: 12px !important;
@@ -174,7 +234,9 @@ div.selectcourse{
 	display: inline;
 	float: left;
 	}
-	
+div.innercontents#submitnew{
+	padding: 10px;
+}
 	
 #sumbitrow{
 	display: inline-block;
@@ -184,17 +246,20 @@ div.selectcourse{
 
 #sumbitrow .small.button{
 	width : 54px;
+	background-color: gray;
+	border: 0;
 }
 div.submit{
 	display: inline;
 	position: relative;
 	float: right;
 	margin-top: 2px;
+
 }
 
 div.post_details p{
 	font-size:12px !important;
-	padding-top: 2px;
+	margin-top: 2px;
 }
 
 div.post_details span.coursename{
@@ -206,7 +271,8 @@ div.post_details span.coursename:hover{
 	
 div.likescomments{
 	text-align: right;
-	padding-top: 10px;
+	padding: 10px;
+	
 }
 div.likescomments span{
 	font-size: 12px;

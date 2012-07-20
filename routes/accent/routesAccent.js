@@ -220,15 +220,12 @@ exports.mediafileTag = function(request,response){
 }
 
 exports.index = function(req, res){
-	if (req.session && req.session.user) {
-		console.log('i am being called and being rendered here');
+	if (req.session && req.session.user) {		
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, 
-			function(err, rendered){
-
-				console.log('am i being rendered = ' + rendered);
+			function(err, rendered){			
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
 
@@ -241,7 +238,7 @@ exports.index = function(req, res){
 };
 
 exports.demoPage = function (req,res){
-	var temp_user = {uuid:1,firstName:"Jihoon",lastName:"Choi",userID:"jhc20",email:"jhc20@sfu.ca"}
+	var temp_user = {uuid:"jhc20",firstName:"Jihoon",lastName:"Choi",userID:"jhc20",email:"jhc20@sfu.ca"}
 
 	req.session.user= temp_user;
 	User.getUserCourses(req.session.user.uuid,function(err,result){

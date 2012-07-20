@@ -17,7 +17,7 @@ function formatQuestion(question) {
 }
 
 function displayQuestions(searchType, page) {
-	var searchQuery = "";
+	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
 	rqra.searchSortedQuestions(searchQuery, searchType, page, function (data) {
@@ -31,6 +31,15 @@ function displayQuestions(searchType, page) {
 		}
 	});
 }
+
+function updateSearch() {
+	var inputbox = document.getElementById("askQuestionInput");
+	if (inputbox.value != prevSearchQuery) {
+		prevSearchQuery = inputbox.value;
+		changePage(0);
+	}
+}
+setInterval(updateSearch, 500);
 
 function changePage(page) {
 	displayQuestions(prevSearchType, page);

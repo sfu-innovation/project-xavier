@@ -8,6 +8,7 @@ var app = module.exports = express.createServer();
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
+	app.set('view options', { layout: true });
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
 	app.use(express.session({ secret: "keyboard cat",
@@ -33,7 +34,6 @@ app.dynamicHelpers({
 });
 
 // routing
-app.get('/', routesCommon.index);
 app.get('/login', routesAccent.login);
 app.get('/logout', routesCommon.logout);
 
@@ -131,3 +131,6 @@ app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediaf
 
 app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
+
+//non-REST calls
+app.get('/', routesAccent.index);

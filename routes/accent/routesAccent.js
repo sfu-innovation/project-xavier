@@ -136,56 +136,6 @@ exports.tag = function(request,response){
 
 }
 
-
-//
-//exports.taggedQuestion = function(request,response){
-//	if (request.method === 'GET'){
-//		var questionID = request.params.qid;
-//		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, question: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
-//
-//exports.taggedComment = function(request,response){
-//	if (request.method === 'GET'){
-//		var commentID = request.params.cid;
-//		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, comment: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
-//
-//exports.taggedUser = function(request,response){
-//	if (request.method === 'GET'){
-//		var userId = request.params.uid;
-//		TagAction.getTaggedUser({'user':userId}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
-
 // MediaFile
 exports.mediafile = function(request,response){
 
@@ -268,33 +218,28 @@ exports.mediafileTag = function(request,response){
 	}
 }
 
-//exports.mediafileUser = function(request,response){
-//	if (request.method === 'GET'){
-//		var userId = request.params.uid;
-//		MediaAction.getMediaFileUser({'user':userId}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
+exports.index = function(req, res){
+	//if (req.session && req.session.user) {
+		console.log('i am being called and being rendered here');
+		res.render("accent/index", { 	title: "SFU Accent"},
+			/* user :  req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, */
+			function(err, rendered){
 
-//deprecated
+				console.log('am i being rendered = ' + rendered);
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
 
-//exports.follower = function(request, response) {
-//	var question_id = request.params.uid;
-//	var follower_id = request.params.follower;
-//
-//	if (request.method === "PUT") {
-//		response.writeHead(500, { 'Content-Type': 'application/json' });
-//		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-//	} else if (request.method === "DELETE") {
-//		response.writeHead(500, { 'Content-Type': 'application/json' });
-//		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-//	}
-//}
+		})
+		/*
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
+	}
+	*/
+};

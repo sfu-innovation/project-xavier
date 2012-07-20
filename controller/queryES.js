@@ -342,12 +342,13 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 		if(error)
 			return callback(error);
 
-
 		if(user.type === 1){
 			data.isInstructor = 'true';
 		}else{
 			data.isInstructor = 'false';
 		}
+
+		//TODO:ADD COURSE & WEEK FOR PRESENTER
 
 		document.set(data, function(err, req, esResult){
 			if(err)
@@ -730,8 +731,18 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 	})
 }
 
-
+//JSON searchObj:	{searchType, user, course, week}
 //searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
+//EXAMPLE:
+/*
+ {
+ "searchQuery" : "",
+ "searchType":"viewed",
+ "course":"cmpt300",
+ "week": "1",
+ "user":""
+ }
+ */
 QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, callback){
 	/// course, week, , searchQuery, searchType
 	var data = {
@@ -779,6 +790,16 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		case 'replied':{
 			data = replied(data, searchObj);
 			break;
+		}
+	}
+
+	//check to see which type its in
+	if(searchObj.course){
+		console.log("ES search- course param provided")
+		data.query.bool.must.push({"term":{"course": searchObj.course}});
+		if(searchObj.week){
+			console.log("ES search - week param provided")
+			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
 		}
 	}
 

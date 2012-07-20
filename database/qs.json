@@ -15,7 +15,9 @@
 		"followup":[],
 		"isInstructor":"true",
 		"viewCount":0,
-		"commentCount":0
+		"commentCount":0,
+		"course":"CMPT300",
+		"week":0
 		}
 	},
 	{
@@ -34,7 +36,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"CMPT300",
+			"week":1
 		}
 	},
 	{
@@ -53,7 +57,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"CMPT470",
+			"week":0
 		}
 	},
 	{
@@ -72,7 +78,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"CMPT470",
+			"week":0
 		}
 	},
 	{
@@ -91,7 +99,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":5231,
-			"commentCount":1
+			"commentCount":1,
+			"course":"CMPT300",
+			"week":0
 		}
 	},
 	{
@@ -129,7 +139,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":100,
-			"commentCount":1
+			"commentCount":1,
+			"course":"CMPT300",
+			"week":0
 		}
 	},
 	{
@@ -167,7 +179,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":423,
-			"commentCount":2
+			"commentCount":2,
+			"course":"CMPT470",
+			"week":0
 		}
 	},
 	{

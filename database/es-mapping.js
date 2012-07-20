@@ -64,6 +64,12 @@ var map = function(appType, callback){
 					},
 					"commentCount": {
 						"type": "integer"
+					},
+					"course": {
+						"type": "string"
+					},
+					"week": {
+						"type": "integer"
 					}
 				}
 			},

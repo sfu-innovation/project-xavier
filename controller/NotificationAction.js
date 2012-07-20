@@ -126,6 +126,44 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 }
 
 /*
+	Removing all of the user notifications for a specific user under a specific app
+	
+	args = {
+		user :  the UUID of hte user
+		app  : The ID of the app
+	}
+	
+	returns all of the user notifications which were removed
+
+*/
+NotificationAction.prototype.removeUserNotifcations = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('user') &&
+		                         args.hasOwnProperty('app'));
+		                            
+	if (  !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.app  = args.app;
+	
+	NotificationListeners.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
+		if ( null != notificationListeners ){
+			UserNotificationImpl.findAll({ where : { listener : notificationListeners }}).success(function( notifications ){
+				callback( null, notifications );
+			}).error(function( error ){
+				callback( error, null );
+			});
+		}
+	});
+}	
+/*
 Designed to remove the user notifications out of the user notifications table.
 This means that the user will no longer see these particular removed notifications ever
 after they are removed. Its ok if user is required to remove this notification as 
@@ -975,6 +1013,67 @@ NotificationAction.prototype.selectUserNotificationsForUserOnApp = function( arg
 	});
 }
 
+/*
+	To update the settings for specific users to get certain types of notifications
+	
+	args = {
+		app                     : Identifier for the application
+		user                    : UUID of the user who owns these notification settings
+		notificationsOnResource : 0 - 3 , time to send
+		notificationOnLike      : 0 - 3 , time to send
+		notificationOnComment   : 0 - 3, time to send
+		notificationOnStar      : 0 - 3 , time to send
+	}
+	
+	Returns the newly updated user notification settings 
+*/
+NotificationAction.prototype.updateUserNotificationSettings = function( args, callback){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('app') &&
+	                              args.hasOwnProperty('user') &&
+	                              args.hasOwnProperty('notificationsOnResource') &&
+	                              args.hasOwnProperty('notificationOnLike') &&
+	                              args.hasOwnProperty('notificationOnComment') &&
+	                              args.hasOwnProperty('notificationOnStar') );
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
+	var arg = new Object();
+	arg.notificationsOnResource = args.notificationsOnResource;
+	arg.notificationOnLike = args.notificationOnLike;
+	arg.notificationOnComment = args.notificationOnComment;
+	arg.notificationOnStar = args.notificationOnStar;
+	arg.app = args.app;
+	arg.user = args.user;
+	
+
+	UserNotificationSettings.updateUserNotificationSettings(args, function( error, updatedSettings ){
+		if ( error ){
+			callback( error, null );
+		} else {
+			callback( null, updatedSettings );
+		}
+	});
+	
+	
+}
+/*
+
+	To create a new set of user notification settings for a specific app for the user
+	
+	args = {
+		app : Identifier of the application
+		user : UUID of the user whose notification settings you are creating
+	}	
+	
+	returns the created user notification settings
+*/
 NotificationAction.prototype.createUserNotificationSettings = function( args, callback){
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);

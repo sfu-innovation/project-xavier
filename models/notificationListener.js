@@ -94,6 +94,40 @@ exports.removeNotificationListener = function( args, callback ){
 }
 
 /*
+
+    To get all of the notificationListeners for a specific app for a specific user 
+	args = {
+		app : The application which corresponds with the requested notifications
+		user : The user whom the notifications are for
+	}
+}
+	
+	returns the list of notifiers for that user in this specific app
+*/
+exports.findUserSpecificNotificationListeners = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('app') && args.hasOwnProperty('user') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;
+		
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.app = args.app;
+	
+	NotificationListener.findAll({ where : arg }).success(function( listeners ){
+		callback( null, listeners );
+	}).error(function(error){
+		callback( error, null );
+	});
+}
+/*
 	To alert all users that are listening to a specific event in an app
 	
 	args = {

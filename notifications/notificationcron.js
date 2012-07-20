@@ -4,6 +4,7 @@ var NotificationListener = require('../models/notificationListener.js').Notifica
 var User             = require('../models/user.js').User;
 var email            = require('emailjs');
 var fs      = require("fs");
+var async   = require("async");
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var server = email.server.connect({
 			 user     : config.emailsettings.user
@@ -93,20 +94,55 @@ function compileEmail( userObj, notifications ){
    					subject: userObj.app + " : end of "+visible_apps[waitTime]+ " notification(s)"
 		 		};
 		
-		 		server.send(message, function(err, message){
-		 			console.log(err || message);
-		  		});
-		  		i = 0;
-		  		for (; i < notifications.length; i++){
-		  			notifications[i].emailSent = true;
+		 		//server.send(message, function(err, message){
+		 		//	console.log(err || message);
+		  		//});
+		  		var uuids = new Array();
+		  		var i = notifications.length - 1;
+		  		for (; i >= 0; i--){
+		  			console.log(notifications[i][0].listener);
+		  			uuids.push(notifications[i][0].listener);
 		  		}
+		  		console.log( "[UUIDS] = "+ uuids );
+		  		UserNotification.findAll({ where : { listener : uuids }}).success( function( usernotifications ){
+		  			async.forEachSeries( usernotifications, function( userNotification, callback ){
+		  				console.log("attempting to update");
+		  				userNotification.updateAttributes({
+		  					emailSent : true
+		  				}).success(function(updateSettings){
+		  					console.log("[SUCCESS]");
+		  					callback( null, updateSettings );
+		  				}).error(function(error){
+		  					console.log("[ERROR] "+error);
+		  					callback( error, null );
+		  				});
+		  			
+		  				}, function( errors, results) {
+		  					if ( errors ){
+		  						console.log("[errors ] "+errors);
+		  					}
+		  					else {
+		  						console.log(" all set ");
+		  					}
+		  				});
+		  		}).error(function (error){
+		  			console.log("Error");
+		  		});
+		  		
 		  	}
-		  	
-		  	
 		}
 		
 	});
-	
+	/*args.usernotificationsettings.updateAttributes({
+		notificationOnNewResource : args.notificationOnNewResource,
+		notificationOnLike        : args.notificationOnLike,
+		notificationOnComment     : args.notificationOnComment,
+		notificationOnStar        : args.notificationOnStar
+	}).success(function(updatedSettings){
+		callback( null, updatedSettings );
+	}).error(function( error ){
+		callback( error, null );
+	});*/
 }
 function associateUsersToNotifications( arg, callback ){
 	if( arg === undefined || arg === null){

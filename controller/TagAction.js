@@ -38,16 +38,6 @@ TagAction.prototype.addTag = function( args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('start') && 
-		args.hasOwnProperty('end') && args.hasOwnProperty('type') && args.hasOwnProperty('target') &&
-		args.hasOwnProperty('title') && args.hasOwnProperty('description') && args.hasOwnProperty('question') &&
-		args.hasOwnProperty('important') && args.hasOwnProperty('interest') && args.hasOwnProperty('examable') &&
-		args.hasOwnProperty('reviewlater') && args.hasOwnProperty('shared'));
-		
-	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
-		return;		
-	}
 	
 	Tag.createTag(args, function(error, newTag){		
 		if (!error) {

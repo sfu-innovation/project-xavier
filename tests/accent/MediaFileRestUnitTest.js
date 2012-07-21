@@ -9,6 +9,8 @@ var MediaAction  = require(__dirname + "/../../controller/MediaAction.js");
 var currentHost = config.accentServer.host;
 var currentPort = config.accentServer.port;
 
+var userID       = "A7S7F8GA7SD98A7SDF8ASD7G";
+var courseID     = "A8G7S6H7ASDFG9";
 var deletedTagID = '';
 
 module.exports = {
@@ -27,8 +29,9 @@ module.exports = {
 				queries.createDB(config.mysqlDatabase["db-name"], function(){
 					
 					var newMediaFile = {
-						user:"A7S7F8GA7SD98A7SDF8ASD7G",				
+						user: userID,				
 						title:"How to make buble tea",
+						course: courseID,
 						path:"http://www.youtube.com/bt",
 						type:1
 					}
@@ -68,9 +71,26 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
-					console.log(body);
 					test.ok(body.errorcode === 0 &&
 					body.mediafile.title === "How to make buble tea");
+					test.done();
+				});
+			});
+		},
+		getCourseMedia: function(test) {
+		
+			this.requestOptions.method = "GET";
+			this.requestOptions.path = "/api/mediafiles/course/" + courseID;
+		
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					console.log(body);
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0 &&
+						Object.keys(body.media).length === 1);
 					test.done();
 				});
 			});

@@ -28,6 +28,18 @@ coreApi._construct = function () {
 			});
 
 		}
+		
+		// gets a list of courses for the current logged in user
+		this.getUserCourses = function(id,callback ) {
+			console.log("API - getUserCourses");
+			$.ajax({
+				url:'/api/user/courses',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 		this.getUserProfileById = function(id,callback){
 			console.log("API - getUserProfileById");

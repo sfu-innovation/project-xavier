@@ -42,7 +42,7 @@ function contains(a, obj) {
   	usernotificationsettings : the object representation of the user notification setting
   	to be updated
   	
-  	motificationsOnResource : 0 - 3
+  	notificationsOnResource : 0 - 3
   	notificationOnLike      : 0 - 3
   	notificationOnComment   : 0 - 3
   	notificationOnStar      : 0 - 3

@@ -5,5 +5,11 @@ div#header
 	div#profile
 		div#profiletext
 			div#profileGreeting Hey there,
-			div#profileName Mary Li
-		img(src="../images/img.png", alt="profile")
+			div#profileName #{user.firstName} #{user.lastName}
+		div#profilePicture
+			img(src="../images/img.png", alt="profile", onclick="showNotificationMenu()")
+			div#newNotificationCount 1
+			nav#notificationList
+				include ./notificationList
+			
+script(type="text/javascript", src="../javascripts/rqra/notificationMenu.js")

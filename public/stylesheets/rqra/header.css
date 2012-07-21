@@ -7,7 +7,7 @@ div#header {
 	box-orient: horizontal;
 	padding: 20px;
 	padding-top: 10px;
-	padding-bottom: 6px;
+	padding-bottom: 0px;
 	border-bottom: 2px solid #1b88d0;
 }
 
@@ -53,4 +53,34 @@ div#profile img {
 	height: 64px;
 	margin-left: 10px;
 	border: 1px solid black;
+}
+
+div#profilePicture {
+	position: relative;
+}
+
+div#newNotificationCount {
+	display: block;
+	position: absolute;
+	top: 45px;
+	left: -5px;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background: #1b88d0;
+	color: white;
+	border-radius: 15px;
+	box-shadow: 1px 1px 4px black;
+}
+
+nav#notificationList {
+	display: block;
+	opacity: 0;
+	position: absolute;
+	top: 70px;
+	left: -220px;
+	width: 200px;
+	height: 100px;
+	cursor: default;
+	-webkit-transition: all 400ms linear;
 }

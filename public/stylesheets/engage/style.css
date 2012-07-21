@@ -3,56 +3,66 @@
 	clear: both;
 }
 
+body{
+	color: #9e9e9e !important;
+}
+
 .row{	
 	width: 1280px;
 }
 div#header{
 	background-color: rgba(0,0,0,0.1);
 	font-family: "Lato", sans-serif;
-
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
 }
 
-div#header h1{
+div#header img{
 	margin: 0;
-	padding: 0;
-	
+	padding: 5px;
+	padding-top: 15px;
+	height: 60px;	
 }
+
+div#nav{	
+}
+div#nav ul{
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
 div#nav li{
 	background-color: rgba(0,0,0,0);
 	color: black !important;
-	border: 0px;
+	border: 0;
 	text-align: left;
 	padding-right: 20px;
+	padding-bottom: 0px;
 	
 }
 
 div#nav li a{
-	color: black !important;
+	color: #9e9e9e !important;
 	text-align: left;
+	border: 0;
 }
 
 div#nav #options li a{
-	color: black !important;
+	color: #9e9e9e !important;
 	text-align: left;
 	padding: 0;
 	
 }
 
 div#nav #options li a.active{
-	border-bottom: 3px solid #2BA6CB;
+	border-bottom: 4px solid #9e9e9e;
 }
 
 div#nav ul#options li:hover a{
-	border-bottom: 3px solid #2BA6CB;
+	border-bottom: 4px solid #9e9e9e;
 }
 
-li#courselist{
-	float: right;
-	padding-right:0 !important;
-}
-li#courselist a{
-	padding-right:0;
-}
 
 
 ul#mobile-nav {
@@ -81,14 +91,37 @@ ul#mobile-nav li.course{
 
 
 
-div#userbox{
-	text-align : right;
+div.dropdown{
+
 	padding-top : 5px;
 	padding-bottom: 5px;
 }
 
 
+div.dropdown ul{
+	float: right;
+	border: 0;
+	background-color: white;
+	}
+	
+div.dropdown ul li{
+	border: 0;
+	color: #9e9e9e !important;
+	width: 146px !important;
+	background-color: whiteSmoke;
+	text-align: right;
+	}
+	
+	
+div.dropdown ul li a{
+	color: #9e9e9e !important;
+	}	
+	
 .nav-bar > li.has-flyout > a:first-child::after {
+	border: 0 !important;
+	}
+	
+.nav-bar > li:last-child {
 	border: 0 !important;
 	}
 

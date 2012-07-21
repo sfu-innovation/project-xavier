@@ -55,34 +55,47 @@ html
 	body
 		div#header
 			div.row
-				div.nine.columns
+				div.ten.columns
 					
 					img(href="/", src="/images/engage/SFUEngage_draft3-03.png") 
-				div.three.columns#userbox
-					span  #{ user.firstName }  #{ user.lastName }
-						a  log out
+				div.two.columns.dropdown
+					ul.nav-bar
+						li.has-flyout
+							a(href="#") #{ user.firstName } #{ user.lastName }
+							a(href="#").flyout-toggle
+								span
+							ul.flyout.small
+								li
+									a(href="#") preference
+								li
+									a(href="#") log out
 				
 			div.row.hide-for-small#nav
-				div.nine.columns
+				div.ten.columns
 					ul.nav-bar#options
 						li(data-value="all")
-							a#all_btn(href="/") ALL RESOURCES
+							a#all_btn(href="/") All Resources
 						li(data-value="yours")
-							a#contruibutions_btn(href="/mine") YOUR CONTRIBUTIONS
+							a#contruibutions_btn(href="/mine") Your Contributions
 						li(data-value="starred")
-							a#starred_btn(href="/starred") STARRED
+							a#starred_btn(href="/starred") Starred
 						li(data-value="prof")
-							a#instructor_btn(href="/instructor") INSTRUCTOR POSTS
-				div.three.columns
+							a#instructor_btn(href="/instructor") Instructor Posts
+				div.two.columns.dropdown
 					ul.nav-bar
-						li.has-flyout#courselist
+						li.has-flyout
 							a(href="#") COURSES
-							a(href="#", class="flyout-toggle")
+							a(href="#").flyout-toggle
 								span
-							ul.flyout
+							ul.flyout.small
 								each item in courses
 									li.courses
 										a(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
+									li.courses
+										a(href="../course/#{item.subject+item.number}") CMPT 130
+									li.courses
+										a(href="../course/#{item.subject+item.number}") CMPT 134
+												
 
 										
 			div.row.show-for-small

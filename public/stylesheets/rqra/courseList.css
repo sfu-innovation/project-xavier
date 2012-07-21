@@ -6,6 +6,7 @@ div#courseList {
 	display: box;
 	box-orient: horizontal;
 	margin-bottom: 35px;
+	z-index: -100;
 }
 
 div.spacer {

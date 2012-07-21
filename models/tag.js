@@ -111,3 +111,16 @@ exports.getUserTag = function(args, callback){
 }
 
 
+exports.getQuestionUUIDS = function(mediaUUID, callback){
+	Tag.findAll({where: {target: mediaUUID}}).success(function(tags){
+		var questions = [];
+		for(tag in tags){
+			if(tags[tag].question){
+				questions.push(tags[tag].question);
+			}
+		}
+		callback(null, questions);
+	}).error(function(error){
+		callback(error, null);
+	})
+}

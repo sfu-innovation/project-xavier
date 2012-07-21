@@ -298,6 +298,30 @@ TagAction.prototype.deleteTag = function( args, callback ){
 	})	
 }
 
+
+
+TagAction.prototype.getQuestionsByMedia = function(mediaUUID, callback){
+	Tag.getQuestionUUIDS(mediaUUID, function(error, uuids){
+		if(!error){
+			queryES.getAllQuestionsByUuids(uuids, config.appID.accent ,function(error, result){
+				if(!error){
+					callback(null, result);
+				}
+				else{
+					callback(error, null);
+				}
+			})
+		}
+		else{
+			callback(error, null);
+		}
+	})
+}
+
+
+
+
+
 var object = {
 		//"type":12
 		//"start":2,

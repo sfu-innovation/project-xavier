@@ -3,6 +3,7 @@ var express = require('express');
 var server  = require('./../../app-accent.js');
 var config  = require('./../../config.json');
 var queries = require(__dirname + "/../../database/db-queries.js");
+var esQuery = require(__dirname + '/../../database/es-query');
 var User    = require(__dirname + "/../../models/user.js");
 var MediaAction  = require(__dirname + "/../../controller/MediaAction.js");
 
@@ -27,36 +28,38 @@ module.exports = {
 					"content-type": "application/json"
 				}
 			}
+			esQuery('tests/accent/es-test-data.json', function(result){
 
-			queries.dropDB(config.mysqlDatabase["db-name"], function(){
-				queries.createDB(config.mysqlDatabase["db-name"], function(){
-					queries.insertData(
-						dataFile,
-						config.mysqlDatabase["db-name"],
-						config.mysqlDatabase["user"],
-						config.mysqlDatabase["password"],
-						config.mysqlDatabase["host"],
-						function(){
+				queries.dropDB(config.mysqlDatabase["db-name"], function(){
+					queries.createDB(config.mysqlDatabase["db-name"], function(){
+						queries.insertData(
+							dataFile,
+							config.mysqlDatabase["db-name"],
+							config.mysqlDatabase["user"],
+							config.mysqlDatabase["password"],
+							config.mysqlDatabase["host"],
+							function(){
 
 
-							User.selectUserByUUID(userID, function(error, user){
-								that.user = user;
-								that.server = express.createServer();
-								that.server.use(function(req, res, next) {
-									req.session = {
-										user: user
-									}
-									next();
+								User.selectUserByUUID(userID, function(error, user){
+									that.user = user;
+									that.server = express.createServer();
+									that.server.use(function(req, res, next) {
+										req.session = {
+											user: user
+										}
+										next();
+									})
+									that.server.use(server);
+									that.server.listen(function() {
+										that.requestOptions.port = this.address().port;
+										callback();
+									});
 								})
-								that.server.use(server);
-								that.server.listen(function() {
-									that.requestOptions.port = this.address().port;
-									callback();
-								});
-							})
 						});
 					});
 				});
+			});
 		},
 		tearDown: function(callback){
 			this.server.close();
@@ -73,7 +76,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 					body.mediafile.title === mediaFileText);
@@ -91,7 +93,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 						Object.keys(body.media).length === 1);
@@ -124,10 +125,25 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body)
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
 					body.tags);
+					test.done();
+				});
+			});
+		},
+		// get the questions about a certain mediafile
+		getQuestionsByMedia: function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path = "/api/questions/mediafile/" + mediaFileID;
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0 &&
+						Object.keys(body.questions).length === 2);
 					test.done();
 				});
 			});

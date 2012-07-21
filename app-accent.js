@@ -62,6 +62,7 @@ app.put("/api/question/:uid/unfollow", routesAccent.unfollowQuestion); // a foll
 app.post("/api/question", routesAccent.question); // post a new question by user id stored in seesion
 //TODO: need update this into document
 app.get("/api/questions", routesAccent.questions); // get all questions
+app.get("/api/questions/mediafile/:id", routesAccent.getQuestionsByMedia); // get all questions related to a mediafile
 
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id

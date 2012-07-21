@@ -78,7 +78,6 @@ exports.getMediaFileTags = function(mediaUUID, callback){
 
 // Get all the users tags for the specified media file
 exports.getUserTagsByMedia = function(userUUID, mediaUUID, callback){
-	console.log(userUUID + " " + mediaUUID)
 	Tag.findAll({where: {user: userUUID, target: mediaUUID}}).success(function(tags){
 		callback(null, tags);
 	}).error(function(error){

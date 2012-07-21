@@ -162,7 +162,6 @@ exports.mediafile = function(request,response){
 	}
 	else if (request.method === 'GET'){	
 		var uuid = request.params.id;
-		console.log(uuid)
 		MediaAction.getMediaFileById({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -223,7 +222,6 @@ exports.mediafileTag = function(request,response){
 
 exports.userTagsByMedia = function(request, response){
 	if(request.method === "GET"){
-		console.log(request.session.user.uuid);
 		if(request.session && request.session.user){
 			MediaFile.getUserTagsByMedia(request.session.user.uuid, request.params.id, function(error, result){
 				if(!error){
@@ -240,6 +238,21 @@ exports.userTagsByMedia = function(request, response){
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 		}
+	}
+}
+
+exports.getQuestionsByMedia = function(request, response){
+	if(request.method === "GET"){
+		TagAction.getQuestionsByMedia(request.params.id, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});
 	}
 }
 

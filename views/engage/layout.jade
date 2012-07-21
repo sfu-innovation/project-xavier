@@ -26,9 +26,11 @@ html
 
 		<!-- Included CSS Files -->
 		link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
-		link(rel="stylesheet", href="/stylesheets/engage/app.css")
+
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
-		link(rel='stylesheet', href='/stylesheets/engage/style.css')
+
+		link(rel='stylesheet', href='/stylesheets/engage/style.css?v3')
+				link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
 		<![endif]-->
@@ -57,10 +59,11 @@ html
 			div.row.clearfix
 				div.ten.columns
 					
-					img(href="/", src="/images/engage/SFUEngage_draft3-03.png") 
+					img( src="/images/engage/SFUEngage_draft3-03.png")
 				div.two.columns.dropdown
-					ul.nav-bar
+					ul.nav-bar#user_options_list
 						li.has-flyout
+
 							a(href="#") #{ user.firstName } #{ user.lastName }
 							a(href="#").flyout-toggle
 								span
@@ -82,9 +85,9 @@ html
 						li(data-value="prof")
 							a#instructor_btn(href="/instructor") Instructor Posts
 				div.two.columns.dropdown
-					ul.nav-bar
+					ul.nav-bar#courses_list
 						li.has-flyout
-							a(href="#") COURSES
+							a(href="#") Courses
 							a(href="#").flyout-toggle
 								span
 							ul.flyout.small

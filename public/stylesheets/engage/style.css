@@ -101,14 +101,29 @@ ul#mobile-nav li.course{
 	display: inline;
 	width: 120px;
 }
+
 #header .nav-bar{
-	margin-top: 5px !important;
-	background-color: rgba(0,0,0,0) !important;
+	margin-top: 5px;
+	background-color: rgba(0,0,0,0)
 }
+
+#header .nav-bar li{
+	padding-right: 0;
+}
+
+#options.nav-bar li{
+	margin-right: 20px;
+}
+
 
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */
+
+#header .dropdown .nav-bar{
+	margin-top: 5px !important;
+	background-color: #f2f2f2 ;
+}
 
 div.dropdown{
 
@@ -126,9 +141,9 @@ div.dropdown ul{
 div.dropdown ul li{
 	border: 0;
 	color: #9e9e9e !important;
-	width: 146px !important;
-	background-color: whiteSmoke;
-	text-align: right;
+	width: 166.667px !important;
+	/*background-color: whiteSmoke;*/
+	/*text-align: right;*/
 	}
 	
 	
@@ -137,12 +152,26 @@ div.dropdown ul li a{
 	}	
 	
 .nav-bar > li.has-flyout > a:first-child::after {
-	border: 0 !important;
+	/*this is for the down arrow*/
+	border-color: #b3b3b3 transparent transparent transparent;
 	}
 	
 .nav-bar > li:last-child {
 	border: 0 !important;
 	}
+
+
+.nav-bar#user_options_list{
+
+
+}
+
+
+
+/* -----------------------------------------
+   box container of articles previews
+----------------------------------------- */
+
 
 div#wrap{
 	margin: 0 auto;
@@ -350,6 +379,8 @@ div.selectcourse{
 div.innercontents#submitnew{
 	padding: 10px;
 }
+
+
 	
 #sumbitrow{
 	display: inline-block;
@@ -446,9 +477,10 @@ div#info ul li span{
 	
 	
 #weeks-bar {
+
 	display: inline;
 	text-align: center;
-	margin: 10px;
+	margin: 20px 0 10px 0;
 	}
 #weeks-bar ul{
 	list-style: none;

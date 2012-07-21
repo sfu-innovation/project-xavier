@@ -58,10 +58,19 @@ app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+
+//resource listings
+
 //TODO: need update this into document
 app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
 //TODO: need update this into document
 app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resources uploaded by current user;
+
+app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
+app.get('/api/resources/user/:id', routesEngage.starredResources);	//get all  resources by user id
+
+
 
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here
@@ -70,8 +79,7 @@ app.get('/api/resource/:uuid', routesEngage.getResource);
 app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
-//Star resources
-app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
 
 app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resource
 app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource

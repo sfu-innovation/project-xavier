@@ -103,30 +103,30 @@ function compileEmail( userObj, notifications ){
 		  			console.log(notifications[i][0].listener);
 		  			uuids.push(notifications[i][0].listener);
 		  		}
-		  		console.log( "[UUIDS] = "+ uuids );
+		  		//console.log( "[UUIDS] = "+ uuids );
 		  		UserNotification.findAll({ where : { listener : uuids }}).success( function( usernotifications ){
 		  			async.forEachSeries( usernotifications, function( userNotification, callback ){
-		  				console.log("attempting to update");
+		  			//	console.log("attempting to update");
 		  				userNotification.updateAttributes({
 		  					emailSent : true
 		  				}).success(function(updateSettings){
-		  					console.log("[SUCCESS]");
+		  				//	console.log("[SUCCESS]");
 		  					callback( null, updateSettings );
 		  				}).error(function(error){
-		  					console.log("[ERROR] "+error);
+		  				//	console.log("[ERROR] "+error);
 		  					callback( error, null );
 		  				});
 		  			
 		  				}, function( errors, results) {
 		  					if ( errors ){
-		  						console.log("[errors ] "+errors);
+		  				//		console.log("[errors ] "+errors);
 		  					}
 		  					else {
-		  						console.log(" all set ");
+		  					//	console.log(" all set ");
 		  					}
 		  				});
 		  		}).error(function (error){
-		  			console.log("Error");
+		  		//	console.log("Error");
 		  		});
 		  		
 		  	}

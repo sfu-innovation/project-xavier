@@ -18,6 +18,10 @@ div#bodyContainer {
 	box-orient: horizontal;
 }
 
+div#innerBody {
+	z-index: -100;
+}
+
 div#timeline {
 	width: 100px;
 }

@@ -17,6 +17,7 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 	uuid: {type: Sequelize.STRING, primaryKey: true, allowNull: false}, //MARK, UUID not ID OMG
 	user: {type: Sequelize.STRING, allowNull: false},
 	title: {type: Sequelize.STRING, allowNull: false},
+	course: {type: Sequelize.STRING, allowNull: false},
 	description :{type:Sequelize.STRING},//TODO: update this to graph
 	path: {type: Sequelize.STRING, allowNull: false},
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}	

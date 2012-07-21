@@ -1,59 +1,86 @@
+.clearfix:after {
+	visibility: hidden;
+	font-size: 0.1em;
+	display: block;
+	line-height: 0;
+	height: 0.1px;
+	content: " ";
+	clear: both;
+}
+
 .clear{
 	
 	clear: both;
 }
 
+body{
+	color: #9e9e9e !important;
+}
+
 .row{	
 	width: 1280px;
 }
+
+
+/* -----------------------------------------
+   Header and Navigation
+----------------------------------------- */
 div#header{
 	background-color: rgba(0,0,0,0.1);
 	font-family: "Lato", sans-serif;
-
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
 }
 
-div#header h1{
+div#header img{
 	margin: 0;
-	padding: 0;
-	
+	padding: 5px;
+	padding-top: 15px;
+	height: 60px;	
 }
+
+div#nav{	
+}
+div#nav ul{
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
 div#nav li{
 	background-color: rgba(0,0,0,0);
 	color: black !important;
-	border: 0px;
+	border: 0;
 	text-align: left;
 	padding-right: 20px;
+	padding-bottom: 0px;
 	
 }
 
 div#nav li a{
-	color: black !important;
+	color: #9e9e9e !important;
 	text-align: left;
+	border: 0;
 }
 
 div#nav #options li a{
-	color: black !important;
+	color: #9e9e9e !important;
 	text-align: left;
 	padding: 0;
 	
 }
 
 div#nav #options li a.active{
-	border-bottom: 3px solid #2BA6CB;
+	border-bottom: 4px solid #9e9e9e;
 }
 
 div#nav ul#options li:hover a{
-	border-bottom: 3px solid #2BA6CB;
+	border-bottom: 4px solid #9e9e9e;
 }
 
-li#courselist{
-	float: right;
-	padding-right:0 !important;
-}
-li#courselist a{
-	padding-right:0;
-}
-
+/* -----------------------------------------
+   mobile view of navigation bar
+----------------------------------------- */
 
 ul#mobile-nav {
 	list-style: none;
@@ -74,23 +101,79 @@ ul#mobile-nav li.course{
 	display: inline;
 	width: 120px;
 }
+
 #header .nav-bar{
+	margin-top: 5px;
+	background-color: rgba(0,0,0,0)
+}
+
+#header .nav-bar li{
+	padding-right: 0;
+}
+
+#options.nav-bar li{
+	margin-right: 20px;
+}
+
+
+/* -----------------------------------------
+   right section of the HEADER, course and user box
+----------------------------------------- */
+
+#header .dropdown .nav-bar{
 	margin-top: 5px !important;
-	background-color: rgba(0,0,0,0) !important;
+	background-color: #f2f2f2 ;
 }
 
 
+/*too general, will affect everydrop down*/
+/*div.dropdown{*/
 
-div#userbox{
-	text-align : right;
-	padding-top : 5px;
-	padding-bottom: 5px;
-}
+	/*padding-top : 5px;*/
+	/*padding-bottom: 5px;*/
+/*}*/
 
 
+div.dropdown ul{
+	float: right;
+	border: 0;
+	background-color: white;
+	}
+	
+div.dropdown ul li{
+	border: 0;
+	color: #9e9e9e !important;
+	width: 166.667px !important;
+	/*background-color: whiteSmoke;*/
+	/*text-align: right;*/
+	}
+	
+	
+div.dropdown ul li a{
+	color: #9e9e9e !important;
+	}	
+	
 .nav-bar > li.has-flyout > a:first-child::after {
+	/*this is for the down arrow*/
+	border-color: #b3b3b3 transparent transparent transparent;
+	}
+	
+.nav-bar > li:last-child {
 	border: 0 !important;
 	}
+
+
+.nav-bar#user_options_list{
+
+
+}
+
+
+
+/* -----------------------------------------
+   box container of articles previews
+----------------------------------------- */
+
 
 div#wrap{
 	margin: 0 auto;
@@ -115,13 +198,27 @@ div.columns:last-child{;
 	float: left !important;
 	}
 
+
+/* -----------------------------------------
+   box container of articles previews
+----------------------------------------- */
+
 div.innercontents{
 	background-color: #fffffb ;
 	height: 355px;
 	position: relative;
-	border-top: 4px solid #d35f5e;
+
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 }
+
+div.innercontents.box-style-1{
+	border-top: 4px solid #d35f5e;
+}
+
+div.innercontents.box-style-2{
+	border-top: 4px solid #2BA6CB;
+}
+
 
 div.innercontents form textarea{
 	height: 200px;
@@ -229,34 +326,6 @@ div.articlepreview p{
 }
 
 
-
-div.selectcourse{
-	display: inline;
-	float: left;
-	}
-div.innercontents#submitnew{
-	padding: 10px;
-}
-	
-#sumbitrow{
-	display: inline-block;
-	width: 100%;
-
-}
-
-#sumbitrow .small.button{
-	width : 54px;
-	background-color: gray;
-	border: 0;
-}
-div.submit{
-	display: inline;
-	position: relative;
-	float: right;
-	margin-top: 2px;
-
-}
-
 div.post_details p{
 	font-size:12px !important;
 	margin-top: 2px;
@@ -300,6 +369,42 @@ div.likescomments span.typicn.starred:hover{
 	color: white;
 }
 
+
+/* -----------------------------------------
+   Article sharing box
+----------------------------------------- */
+
+div.selectcourse{
+	display: inline;
+	float: left;
+	}
+div.innercontents#submitnew{
+	padding: 10px;
+}
+
+
+	
+#sumbitrow{
+	display: inline-block;
+	width: 100%;
+
+}
+
+#sumbitrow .small.button{
+	width : 54px;
+	background-color: gray;
+	border: 0;
+}
+div.submit{
+	display: inline;
+	position: relative;
+	float: right;
+	margin-top: 2px;
+
+}
+/* -----------------------------------------
+   Article
+----------------------------------------- */
 
 	
 div#article_container{
@@ -349,27 +454,73 @@ div#article_container #article h2{
 div#article_container #comments{
 
 	}
+
+/* -----------------------------------------
+   courses
+----------------------------------------- */
 	
-div#courseinfo	{	
-	padding-top: 10px;
+div#course	{	
+	margin-top: 20px;
+	font-family: "Lato", sans-serif;
 	
 }
 
-div#courseinfo div.innercontents{
-	height: 250px;
+div#info {
+	padding: 10px;
 	
 }
-div#courseinfo ul{
+div#info ul{
 	list-style: none;
 }
 
-div#courseinfo ul li span{
+div#info ul li span{
 	font-weight: bold;
 	}
 	
-div#footer{
-	margin-top: 20px;
-	padding-top:10px;
-	background-color: rgba(0,0,0,0.1);
+	
+#weeks-bar {
+
+	display: inline;
 	text-align: center;
+	margin: 20px 0 10px 0;
+	}
+#weeks-bar ul{
+	list-style: none;
+	text-align: center;
+	position: relative;
+	display: inline;
+}
+
+#weeks-bar ul li{
+	display: inline;
+	margin: 2px;
+	}
+	
+	
+#weeks-bar ul li a{
+	font-family: "Lato", sans-serif;
+	font-size: 12px;
+	display: inline-block;
+	width: 48px;
+	height: 30px;
+	border-top: #9e9e9e 5px solid;
+	/*background-color: #9e9e9e;*/
+	opacity: 0.5;
+	color: #9e9e9e;
+	padding-top: 5px;
+}
+
+#weeks-bar ul li a#week{
+	/*background-color: transparent;*/
+	border-top: none;
+	color: #9e9e9e;
+	padding-top: 5px;
+}
+
+#weeks-bar ul li:hover a{
+	opacity: 1;
+}
+
+#weeks-bar ul li a:active{
+	opacity: 1;
 }

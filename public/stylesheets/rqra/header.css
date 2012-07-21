@@ -75,14 +75,27 @@ div#newNotificationCount {
 	box-shadow: 1px 1px 4px black;
 }
 
+@-webkit-keyframes notification-menu-animation {
+	0% { 
+		top: -200px;
+		opacity: 0; 
+	}
+	1% {
+		top: 50px;
+		opacity: 0;
+	}
+	100% { 
+		top: 70px;
+		opacity: 1;
+	}
+}
+
 nav#notificationList {
-	display: block;
-	opacity: 0;
+	//opacity: 100;
 	position: absolute;
-	top: 70px;
+	top: -200px;
 	left: -220px;
-	width: 200px;
 	height: 100px;
-	cursor: default;
-	-webkit-transition: all 400ms linear;
+	-webkit-animation: notification-menu-animation 200ms 0ms infinite alternate forwards;
+	-webkit-animation-play-state: paused;
 }

@@ -754,8 +754,8 @@ exports.courseView = function (req, res) {
 }
 
 exports.demoPage = function (req,res){
-	var fake_user_1 = {uuid:1,firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:2,firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
+	var fake_user_1 = {uuid:'xna2',firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3',firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
 
 	req.session.user= fake_user_2;
 	User.getUserCourses(req.session.user.uuid,function(err,result){

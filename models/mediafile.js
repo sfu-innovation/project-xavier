@@ -2,6 +2,7 @@ var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
 var UUID = require('com.izaakschroeder.uuid');
+var Tag = require('./tag.js').Tag;
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
@@ -53,7 +54,7 @@ exports.selectMediaFiles = function(args, callback){
 	});
 }
 
-//Gets a mediaFile that is created by user
+//Gets the user of a specific media file
 exports.getMediaFileUser = function(args, callback){
 	MediaFile.find({where: args}).success(function(mediaFile){		
 		var MediaFileUser = require('./user.js').User;
@@ -66,13 +67,21 @@ exports.getMediaFileUser = function(args, callback){
 }
 
 //Gets all the tags that belongs to a media file
-exports.getMediaFileTags = function(args, callback){
-	var Tag = require('./tag.js').Tag;
-	Tag.findAll({where: {target: args.uuid}}).success(function(tags){
+exports.getMediaFileTags = function(mediaUUID, callback){
+	Tag.findAll({where: {target: mediaUUID}}).success(function(tags){
 		callback(null, tags);
 	}).error(function(error){
 		callback(error, null);
 		console.log("Couldn't find media file tags " + error);
+	})
+}
+
+// Get all the users tags for the specified media file
+exports.getUserTagsByMedia = function(userUUID, mediaUUID, callback){
+	Tag.findAll({where: {user: userUUID, target: mediaUUID}}).success(function(tags){
+		callback(null, tags);
+	}).error(function(error){
+		callback(error, null);
 	})
 }
 

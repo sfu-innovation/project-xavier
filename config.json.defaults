@@ -1,4 +1,9 @@
 {
+	"appID":{
+		"rqra": 0,
+		"accent": 1,
+		"engage": 2
+	},
 	"engageServer" : {
 		"host":"localhost",
 		"port":3000

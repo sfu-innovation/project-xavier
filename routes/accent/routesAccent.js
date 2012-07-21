@@ -219,6 +219,22 @@ exports.mediafileTag = function(request,response){
 	}
 }
 
+exports.courseMediaFiles = function(request, response){
+	if(request.method === "GET"){
+		var courseID = request.params.id;
+		MediaAction.getMediaByCourse(courseID, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, media: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
+}
+
 exports.index = function(req, res){
 	if (req.session && req.session.user) {		
 		res.render("accent/index", { 	title: "SFU Accent",

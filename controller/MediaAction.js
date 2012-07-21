@@ -27,13 +27,6 @@ MediaAction.prototype.addMediaFile = function( args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('user') && args.hasOwnProperty('title') &&
-		args.hasOwnProperty('path') && args.hasOwnProperty('type'));
-		
-	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
-		return;		
-	}
 
 	MediaFile.createMediaFile(args, function(error, newMediaFile){		
 		if (!error) {
@@ -81,6 +74,17 @@ MediaAction.prototype.getMediaFileById = function( args, callback ){
 	})
 }
 
+// Fetches all the media files uploaded for a certain course
+MediaAction.prototype.getMediaByCourse = function(courseID, callback){
+	MediaFile.selectMediaFiles({course: courseID}, function(error, mediaFiles){
+		if(!error){
+			callback(null, mediaFiles);
+		}
+		else{
+			callback(error, null);
+		}
+	})
+}
 
 /*
 
@@ -211,13 +215,6 @@ MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('user') || args.hasOwnProperty('title') || 
-	args.hasOwnProperty('path') || args.hasOwnProperty('type'));
-		
-	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
-		return;		
-	}	
 
 	MediaFile.updateMediaFile(uuid, args, function(error, updatedMediaFile){
 		if (!error) {

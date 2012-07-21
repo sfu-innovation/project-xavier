@@ -330,13 +330,15 @@
 			"user":"mak10",
 			"uuid":"abc1230",
 			"title":"How to dunk like MJ",
+			"course":"A8G7S6H7ASDFG9",
 			"path":"http://www.youtube.com/mj",
 			"type":0
 		},
 		{
 			"user":"BSDF787D98A7SDF8ASD7G",
 			"uuid":"abc1231",
-			"title":"How to dribble like Lionel",			
+			"title":"How to dribble like Lionel",
+			"course":"A8G7S6H7ASDFG9",	
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
 		},
@@ -344,20 +346,23 @@
 			"user":"BSDF787D98ASDF099D7G",
 			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
+			"course":"A827346H7ASDFG9",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
 		},
 		{
 			"user":"jhc20",
 			"uuid":"abc1233",
-			"title":"Preparation for linear algebra",			
+			"title":"Preparation for linear algebra",
+			"course":"A8G7S6H7ASDFG9",		
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
 		},
 		{
 			"user":"jhc20",
 			"uuid":"abc1234",
-			"title":"Making videos",			
+			"title":"Making videos",
+			"course":"A827346H7ASDFG9",		
 			"path":"http://www.youtube.com/yt",
 			"type":0
 		}

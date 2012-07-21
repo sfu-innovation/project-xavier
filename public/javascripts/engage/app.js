@@ -370,11 +370,13 @@ function renderArticlePreviewBox(item) {
 			+ '<span>' + item.user.firstName + " " + item.user.lastName + '</span>'
 			+ isProf(item.user.type) //return nothing if not
 
-			+ '<p>Posted in '
-			+ '<span class="coursename">' + '<a>' + item.course.subject + " " + item.course.number
-			+ '-' + renameSectionName(item) + '</a>'
-			+ '</span>'
+			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ ' in '
+			+ '<span class="coursename">' + '<a href="/course/'+  item.course.subject+item.course.number+'/week/'+weekConverter(item.createdAt,'2012-05-09')+'">' + item.course.subject + " " + item.course.number
+			+ '-WK' + weekConverter(item.createdAt,'2012-05-09') + '</a>'
+			+ '</span>'
+
 			+ '</p>'
 			+ '</div>'
 			//end of post_details
@@ -424,15 +426,7 @@ function formartDate(old_date) {
 	return prettytime;
 }
 
-function renameSectionName(item) {
-	if (item.section && item.section.title && item.section.title.indexOf('WEEK') !== -1) {
-		return (item.section.title).replace('WEEK ', "WK");
-	}
-	else {
-		return "?";
-	}
 
-}
 
 function isProf(user_type) {
 	if (user_type === 1) {
@@ -514,6 +508,22 @@ function stylePicker() {
 		}
 
 	}
+
+
+}
+
+//2012-07-21T00:00:24.000Z
+function weekConverter(post_date, semester_start_date){
+
+	Date.prototype.getWeek = function() {
+		var onejan = new Date(this.getFullYear(),0,1);
+		return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+	}
+
+	var one_week =  7 * 24 * 60 * 60 * 1000;
+	var post_date = new Date(Date.parse(post_date));
+	var semester_start_date = new Date(Date.parse(semester_start_date));
+	return post_date.getWeek() - semester_start_date.getWeek();
 
 
 }

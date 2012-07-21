@@ -125,11 +125,13 @@ ul#mobile-nav li.course{
 	background-color: #f2f2f2 ;
 }
 
-div.dropdown{
 
-	padding-top : 5px;
-	padding-bottom: 5px;
-}
+/*too general, will affect everydrop down*/
+/*div.dropdown{*/
+
+	/*padding-top : 5px;*/
+	/*padding-bottom: 5px;*/
+/*}*/
 
 
 div.dropdown ul{

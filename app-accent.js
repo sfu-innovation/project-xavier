@@ -123,7 +123,7 @@ app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile 
 
 
 app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags by mediafile id
-
+app.get("/api/mediafiles/course/:id", routesAccent.courseMediaFiles);// get all media files for a course
 //to be deprecated, use Get API for each Model instead
 app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
 

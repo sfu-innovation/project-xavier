@@ -756,7 +756,8 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 	};
 
 	if(searchObj.searchQuery){
-		data.query.bool.must.push({
+		data.query.bool.must.push(
+			{
 			flt:{
 				"fields":["title", "body"]
 				, "like_text":searchObj.searchQuery

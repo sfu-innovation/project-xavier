@@ -119,9 +119,18 @@ div.innercontents{
 	background-color: #fffffb ;
 	height: 355px;
 	position: relative;
-	border-top: 4px solid #d35f5e;
+
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 }
+
+div.innercontents.box-style-1{
+	border-top: 4px solid #d35f5e;
+}
+
+div.innercontents.box-style-2{
+	border-top: 4px solid #2BA6CB;
+}
+
 
 div.innercontents form textarea{
 	height: 200px;

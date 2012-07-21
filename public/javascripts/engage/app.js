@@ -1,8 +1,12 @@
+var stylePicker = new stylePicker();
+
 jQuery(document).ready(function ($) {
 
 	initUI();
 
 	var engage = new coreApi.Engage();
+
+
 
 
 	if (window.location.toString().indexOf('starred') != -1) {
@@ -358,7 +362,7 @@ function loadStarredArticles(engage) {
 function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
-			+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<div class="innercontents '+ stylePicker.getStyle(item.course.subject) +'" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 			+ '<img src="'+'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png'+'<" class="avatar"/>'
 
 
@@ -486,3 +490,30 @@ function renderExcerpt(excerpt) {
 	}
 }
 
+
+// a class that choose unique box color style for given subject
+// if the subject is new, give a new color, otherwise use the old one;
+
+function stylePicker() {
+	var available_styles = ['box-style-1', 'box-style-2'];
+	var subjects = {};
+
+	this.getStyle = function (subject) {
+
+		if (subjects[subject]) {
+			return subjects[subject]
+
+		}
+		else {
+			var result  = available_styles.shift();
+			if(!result){
+				result = "box-style-1";
+			}
+			subjects[subject] = result;
+			return result;
+		}
+
+	}
+
+
+}

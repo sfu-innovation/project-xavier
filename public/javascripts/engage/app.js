@@ -463,7 +463,7 @@ function renderPreviewImage(item) {
 		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
 		+'</div>'
 
-	console.log(previewImage);
+
 
 
 	return  previewImage

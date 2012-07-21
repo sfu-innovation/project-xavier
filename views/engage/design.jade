@@ -2,7 +2,7 @@ extends layout
 
 block content
 	div#wrap
-		div.row#contents
+		div.row.clearfix#contents
 			div.three.columns
 				div.innercontents#submitnew
 					form(name="add_article", action="/design",enctype="multipart/form-data", method="post", onsubmit="return validateForm()", style="margin-bottom : 0", class="custom")

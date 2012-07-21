@@ -1,4 +1,12 @@
-
+.clearfix:after {
+	visibility: hidden;
+	font-size: 0.1em;
+	display: block;
+	line-height: 0;
+	height: 0.1px;
+	content: " ";
+	clear: both;
+}
 
 .clear{
 	

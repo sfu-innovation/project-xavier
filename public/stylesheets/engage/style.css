@@ -460,8 +460,9 @@ div#info ul li span{
 	font-size: 12px;
 	display: inline-block;
 	width: 48px;
-	height: 5px;
-	background-color: #9e9e9e;
+	height: 30px;
+	border-top: #9e9e9e 5px solid;
+	/*background-color: #9e9e9e;*/
 	opacity: 0.5;
 	color: #9e9e9e;
 	padding-top: 5px;

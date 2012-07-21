@@ -24,7 +24,7 @@ exports.index = function(req, res){
 
 // frontend
 exports.header = function(request, response) {
-	response.render('rqra/component/header', { title: "Demo" });
+	response.render('rqra/component/header', { title: "Demo", user: request.session.user });
 }
 
 exports.courseList = function(request, response) {
@@ -40,7 +40,7 @@ exports.questionList = function(request, response) {
 }
 
 exports.questionListPage = function(request, response) {
-	response.render('rqra/questionsPage', { title: "Demo" });
+	response.render('rqra/questionsPage', { title: "Demo", user: request.session.user });
 }
 
 exports.questionDetails = function(request, response) {
@@ -48,7 +48,7 @@ exports.questionDetails = function(request, response) {
 }
 
 exports.questionDetailsPage = function(request, response) {
-	response.render('rqra/questionDetailsPage', { title: "Demo" });
+	response.render('rqra/questionDetailsPage', { title: "Demo", user: request.session.user });
 }
 
 exports.questionForm = function(request, response) {
@@ -56,7 +56,7 @@ exports.questionForm = function(request, response) {
 }
 
 exports.questionFormPage = function(request, response) {
-	response.render('rqra/questionFormPage', { title: "Demo" });
+	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user });
 }
 
 exports.notificationList = function(request, response) {

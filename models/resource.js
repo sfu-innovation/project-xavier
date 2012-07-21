@@ -212,6 +212,8 @@ exports.getLikesByUUID = function(resourceUUID, callback){
 }
 
 
+
+
 var resourceHelper = exports.resourceHelper = function(currentUser,resources,callback){
 
 	var parsedResult;

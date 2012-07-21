@@ -373,8 +373,8 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a href="/course/'+  item.course.subject+item.course.number+'/week/'+weekConverter(item.createdAt,'2012-05-09')+'">' + item.course.subject + " " + item.course.number
-			+ '-WK' + weekConverter(item.createdAt,'2012-05-09') + '</a>'
+			+ '<span class="coursename">' + '<a href="/course/'+  item.course.subject+item.course.number+'/week/'+weekConverter(item.createdAt,'2012-05-07T07:00:00.000Z')+'">' + item.course.subject + " " + item.course.number
+			+ '-WK' + weekConverter(item.createdAt,'2012-05-07T07:00:00.000Z') + '</a>'
 			+ '</span>'
 
 			+ '</p>'
@@ -523,7 +523,7 @@ function weekConverter(post_date, semester_start_date){
 	var one_week =  7 * 24 * 60 * 60 * 1000;
 	var post_date = new Date(Date.parse(post_date));
 	var semester_start_date = new Date(Date.parse(semester_start_date));
-	return post_date.getWeek() - semester_start_date.getWeek();
+	return post_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
 }

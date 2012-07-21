@@ -46,6 +46,15 @@ exports.selectUser = function(args, callback){
 	});
 }
 
+exports.selectUserByUUID = function(userUUID, callback){
+	User.find({where: {uuid: userUUID}}).success(function(user) {
+		callback(null, user);
+	}).error(function(error) {
+		callback(error, null);
+		console.log("Couldn't find user " + error);
+	});
+}
+
 exports.selectUsers = function(args, callback){
 	User.findAll({where: args}).success(function(users){
 		callback(null, users);

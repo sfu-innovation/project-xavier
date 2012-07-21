@@ -1,6 +1,7 @@
 var routesCommon = require('./../common/routesCommon.js');
 var TagAction = require("./../../controller/TagAction.js");
 var MediaAction = require("./../../controller/MediaAction.js");
+var MediaFile  = require(__dirname + "/../../models/mediafile.js");
 var User = require(__dirname + "/../../models/user");
 
 exports.login = function(request, response){
@@ -161,6 +162,7 @@ exports.mediafile = function(request,response){
 	}
 	else if (request.method === 'GET'){	
 		var uuid = request.params.id;
+		console.log(uuid)
 		MediaAction.getMediaFileById({'uuid':uuid}, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -206,7 +208,7 @@ exports.mediafile = function(request,response){
 exports.mediafileTag = function(request,response){	
 	if (request.method === 'GET'){
 		var targetID = request.params.tid;								
-		MediaAction.getMediaFileTags({'uuid':targetID}, function(error, result){
+		MediaFile.getMediaFileTags(targetID, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tags: result }));
@@ -216,6 +218,28 @@ exports.mediafileTag = function(request,response){
 				response.end(JSON.stringify({ errorcode: 1, message: error }));
 			}
 		});		
+	}
+}
+
+exports.userTagsByMedia = function(request, response){
+	if(request.method === "GET"){
+		console.log(request.session.user.uuid);
+		if(request.session && request.session.user){
+			MediaFile.getUserTagsByMedia(request.session.user.uuid, request.params.id, function(error, result){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tags: result }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			})
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		}
 	}
 }
 

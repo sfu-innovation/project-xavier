@@ -111,6 +111,7 @@ app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagge
 app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
 app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
+app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
 
 

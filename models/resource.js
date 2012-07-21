@@ -73,23 +73,39 @@ exports.getResourcesByCourseUUIDs = function(args, callback){
 
 }
 
-//exports.getResourcesByCourseUUIDsAndWeek = function (args,callback){
-//	var week = weekHelper(args.week);
-//
-//	Resource.findAll({where:{course:args.uuids}}).success(function(resources){
-//		if(resources){
-//
-//			callback(null, resources);
-//		}
-//		else{
-//			callback("No Resources", null);
-//		}
-//	}).error(function(error){
-//			callback(error, null);
-//		})
-//
-//
-//}
+exports.getResourcesByCourseUUIDsAndWeek = function (args,callback){
+	var week = weekHelper(args.week);   //get the range of the requested week
+
+	// generating the IN clause, i can't not find a syntax to do this complex query
+	var UUIDs = "(";
+	for (var i = 0; i<args.uuids.length;i++){
+		UUIDs += '"'+args.uuids[i]+'"';
+		if (i != args.uuids.length - 1){
+			UUIDs += ','
+		}
+		else {
+			UUIDs += ')'
+		}
+
+	}
+
+	var statement = 'SELECT * FROM `Resources` WHERE createdAt >= "'+ week.start + '" AND createdAt <= "'+week.end+'" AND course IN '+ UUIDs;
+
+	//custom query
+	db.query(statement, Resource).success(function(resources){
+		if(resources){
+
+			callback(null, resources);
+		}
+		else{
+			callback("No Resources", null);
+		}
+	}).error(function(error){
+			callback(error, null);
+		})
+
+
+}
 
 
 exports.getResourcesByUUIDs = function (args, callback){

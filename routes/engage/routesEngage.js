@@ -638,22 +638,21 @@ exports.starred = function (req, res) {
 
 	if (req.session && req.session.user) {
 			res.render("engage/starred", { 	title: "SFU ENGAGE",
-				user :  userobject,
+				user :  req.session.user,
 				courses : req.session.courses,
 				status : "logged in" }, function(err, rendered){
 
-				// console.log(rendered);
+
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
 
 			})
    	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
+
 	}
 
 }
@@ -662,22 +661,19 @@ exports.instructor = function (req, res) {
 
 	if (req.session && req.session.user) {
 		res.render("engage/instructor", { 	title: "SFU ENGAGE",
-			user :  userobject,
+			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){
 
-			// console.log(rendered);
+
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(rendered);
 
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
 
 }
@@ -761,31 +757,20 @@ exports.articleView = function (req, res) {
 exports.contributions = function (req, res) {
 
 	if (req.session && req.session.user) {
-		var myarticles = [];
-		for (i in articles) {
-			if (articles[i].user === userobject){
-				myarticles.push(articles[i])
-			}
-		}
-		//console.log(myarticles);
+
 		res.render("engage/contributions", { title:"SFU ENGAGE",
-			user:userobject,
-			contributions : myarticles,
+			user:req.session.user,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){
 
-			// console.log(rendered);
+
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(rendered);
 
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
-
-		//login with demo user, remove when everything is set.
 	}
 
 }
@@ -801,7 +786,7 @@ exports.courseView = function (req, res) {
 
 		res.render("engage/course", { title:"SFU ENGAGE",
 			course : selectedCourse,
-			user:userobject,
+			user:req.session.user,
 			courseArticles : courseArticles,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){
@@ -813,11 +798,9 @@ exports.courseView = function (req, res) {
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
 
 

@@ -135,51 +135,6 @@ exports.getResourceByUUID = function(resourceUUID, callback){
 	})
 }
 
-// To be deprecated
-/*
-//Fetch the list of resources with the given course UUID
-exports.getResourceByCourseUUID = function(args, callback){
-	var async = require('async');
-	var CourseSection = require('./courseSection.js');
-
-	var resources = [];	
-
-	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {		
-		if(sectionUUIDs){									
-			async.forEach(sectionUUIDs, function(sectionUUID, callback) {				
-				console.log("section ID = " + sectionUUID);
-				var sectionMaterials = require('./sectionMaterial.js');				
-
-				sectionMaterials.findAllMaterialsInSection({section:sectionUUID}, function(error, sectionMaterial) {
-					async.forEach(sectionMaterial, function(resourceID, callback) {
-						console.log("resource IDs = " +  resourceID.material);
-						module.exports.getResourceByUUID(resourceID.material, function(error, resource) {											
-							resources.push(resource);	
-
-							// once the result is retrieved pass it to the callback
-							callback();																												
-						})
-					}, function(err){					    
-					    console.log("Section Material error = " + err);
-
-					    // passed the result to outer loop
-					    callback();
-					});									
-				})				
-			}, function(err){
-			    // if any of the saves produced an error, err would equal that error
-			    console.log("Course Section error = " + err);
-			    callback(null, resources);
-			});										
-		}
-
-		//No sectionUUIDs were found
-		else{
-			callback(error, []);
-		}
-	})
-}
-*/
 
 //Creates a new resources and saves it to the database
 //userUUID is the uuid of the user submitting the resource
@@ -314,7 +269,8 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 		},
-
+		// notice we cannot directly attach to json a totalcomments because it's a squalize object
+		// so we need to stringfy first then parse....so hacky...
 		findUserProfile: function(callback){
 			parsedResult = JSON.parse(JSON.stringify(resources));
 			async.forEach(parsedResult, function (resource, callback) {
@@ -367,8 +323,7 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 //
 //		},
 
-		// notice we cannot directly attach to json a totalcomments because it's a squalize object
-		// so we need to stringfy first then parse....so hacky...
+
 
 		findTotalComments:function (callback) {
 

@@ -132,7 +132,7 @@ app.get('/mine', routesEngage.contributions);
 app.get('/instructor', routesEngage.instructor);
 
 //article - this is resource
-app.get('/course/:id', routesEngage.courseView);
+app.get('/course/:name', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
 

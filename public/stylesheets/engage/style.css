@@ -542,3 +542,7 @@ div#info ul li span{
 #weeks-bar ul li a:active{
 	opacity: 1;
 }
+
+#weeks-bar ul li a.active{
+	opacity: 1;
+}

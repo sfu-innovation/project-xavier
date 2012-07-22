@@ -1,3 +1,5 @@
+var common = new coreApi.Common();
+
 function setSelected(button, select) {
 	var selectorTop = button.querySelector(".courseButtonSelectorTop");
 	if (selectorTop) {
@@ -32,3 +34,25 @@ function selectButton(selectedButton) {
 		}
 	});
 }
+
+function formatButton(name) {
+	return "<div class='courseButton' onclick='selectButton(this)'>"
+		+ "<div class='courseButtonSelectorTop'></div>"
+		+ "<div class='courseButtonText'>" + name + "</div>"
+		+ "<div class='courseButtonSelectorBottom'></div>"
+		+ "</div>";
+}
+
+function displayCourseList() {
+	common.getUserCourses("A7S7F8GA7SD98A7SDF8ASD7G", function(data) {
+		if (data && data.errorcode === 0) {
+			var menu = document.getElementById("courseList");
+			menu.innerHTML = "";
+			data.courses.forEach(function(course) {
+				menu.innerHTML += formatButton(course.subject + "" + course.number);
+			});
+		}
+	});
+}
+
+displayCourseList();

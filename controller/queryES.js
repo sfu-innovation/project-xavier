@@ -8,6 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
+	userProfile = require('../models/userprofile.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -51,8 +52,16 @@ var addUsersToData = function(data, callback){
 				obj.user = "User not found: " + obj._source.user;
 			}
 
-			result.hits.push(obj);
-			done();
+			userProfile.getUserProfile(obj._source.user, function(err, profile){
+				if(err)
+					done(err);
+
+				if(profile){
+					obj.profile = profile.profilePicture;
+				}
+				result.hits.push(obj);
+				done();
+			})
 		});
 	}, function(err){
 		callback(err, result);
@@ -626,19 +635,29 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-
+				console.log("document added");
+			/*
 				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
-					if(err)
+					if(err){
+						console.log(err);
 						return callback(err);
+					}
 
 					delete args.description;
 					notification.addCommentNotifier(args, function(err, result){
-						if(err)
+						if(err){
+							console.log(err);
 							callback(err);
+						}
+
+						console.log('complete');
 
 						callback(null, esData);
 					});
 				});
+			*/
+
+			callback(null, esData);
 		});
 
 	});

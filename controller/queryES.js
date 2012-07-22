@@ -8,7 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
-	userProfile = require('../models/userprofile.js'),
+	userProfile = require('../models/userProfile.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -618,7 +618,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		target:data.target_uuid
 		,app:appType
 		,user:data.user
-		,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
+		,description:data.body
 	};
 
 	switchIndex(appType);
@@ -636,7 +636,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 			if(err)
 				return callback(err);
 				console.log("document added");
-			/*
+
 				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 					if(err){
 						console.log(err);
@@ -655,9 +655,9 @@ QueryES.prototype.addComment = function(data, appType, callback){
 						callback(null, esData);
 					});
 				});
-			*/
 
-			callback(null, esData);
+
+			//callback(null, esData);
 		});
 
 	});

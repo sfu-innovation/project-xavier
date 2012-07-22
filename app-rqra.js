@@ -16,7 +16,7 @@ app.configure(function() {
 				"lastName":"Fox",
 				"type":0,
 				"userID":"jrf2",
-				"email":"yukaih@sfu.ca"
+				"email":"jrf2@sfu.ca"
 			}
 		}
 		next();

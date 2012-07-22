@@ -46,6 +46,7 @@ var addUsersToData = function(data, callback){
 			if(error){throw error;}
 
 			if(user){
+				console.log("user found")
 				obj.user = user;
 			}
 			else{
@@ -57,6 +58,7 @@ var addUsersToData = function(data, callback){
 					done(err);
 
 				if(profile){
+					console.log('profile exists')
 					obj.profile = profile.profilePicture;
 				}
 				result.hits.push(obj);
@@ -64,6 +66,7 @@ var addUsersToData = function(data, callback){
 			})
 		});
 	}, function(err){
+		console.log(JSON.stringify(result))
 		callback(err, result);
 	});
 }
@@ -342,10 +345,10 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.created = data.timestamp;
 
 	//should check if adding to a section is really needed. rqra dont need it
-	args.section = data.sectionUuid;	//section uuid
+	args.section = data.week;	//section uuid
 	args.resource = questionUuid;	//question uuid
 
-	delete data.sectionUuid;
+	delete data.week;
 
 	user.selectUser({"uuid":data.user}, function(error, user){
 		if(error)
@@ -527,7 +530,11 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 			  }
 		  },
 		from: paging(pageNum),
-		size: sizeOfResult
+		size: sizeOfResult,
+		"sort": [
+			{"upvote": {"order": "desc"}},
+			{"downvote": {"order": "desc"}}
+		]
 	};
 
 	switchIndex(appType);
@@ -863,7 +870,7 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestion = function(data, searchObj){
-	data.query.bool.must.push({"term":{"user": searchObj.user}});
+	data.query.bool.must.push({"term":{"user": searchObj.uuid}});
 	return data;
 }
 

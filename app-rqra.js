@@ -10,12 +10,12 @@ app.configure(function() {
 	app.use(function(req, res, next) {
 		req.session = {
 			user: {
-				"uuid":"A7S7F8GA7SD98A7SDF8ASD7G",
-				"firstName":"Mike",
-				"lastName":"Klemarewski",
-				"type":1,
-				"userID":"mak10",
-				"email":"mak10@sfu.ca"
+				"uuid":"jrf2",
+				"firstName":"Jordan",
+				"lastName":"Fox",
+				"type":0,
+				"userID":"jrf2",
+				"email":"jrf2@sfu.ca"
 			}
 		}
 		next();

@@ -33,12 +33,13 @@ div#header{
 	box-shadow: 0 0 5px #9e9e9e;
 }
 
-div#header img{
+div#header img.logo{
 	margin: 0;
 	padding: 5px;
 	padding-top: 15px;
 	height: 60px;	
 }
+
 
 div#nav{	
 }
@@ -54,6 +55,7 @@ div#nav li{
 	text-align: left;
 	padding-right: 20px;
 	padding-bottom: 0px;
+	position: relative;
 	
 }
 
@@ -126,13 +128,9 @@ ul#mobile-nav li.course{
 }
 
 
-/*too general, will affect everydrop down*/
-/*div.dropdown{*/
-
-	/*padding-top : 5px;*/
-	/*padding-bottom: 5px;*/
-/*}*/
-
+div.dropdown#user_options{
+	margin-top: 10px;
+}
 
 div.dropdown ul{
 	float: right;
@@ -144,8 +142,6 @@ div.dropdown ul li{
 	border: 0;
 	color: #9e9e9e !important;
 	width: 166.667px !important;
-	/*background-color: whiteSmoke;*/
-	/*text-align: right;*/
 	}
 	
 	
@@ -168,8 +164,30 @@ div.dropdown ul li a{
 
 }
 
+.nav-bar#user_options_list li:hover{
+	background-color: inherit;
+	color: inherit;
+	}
+#user_options_list img.avatar{
+	height: 38px;
+	position: absolute;
+	margin-left: -60px;
+}
 
 
+.dropdown ul#courses_list{
+	height: 30px !important;
+	
+}
+
+.dropdown ul#courses_list li{
+	line-height: 30px !important;
+	
+	}
+	
+.dropdown ul#courses_list ul{
+	margin-top: -9px;
+}
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */

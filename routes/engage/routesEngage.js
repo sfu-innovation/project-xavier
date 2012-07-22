@@ -249,6 +249,34 @@ exports.resourcesInCourses = function(req,res){
 	})
 }
 
+
+exports.resourcesInCoursesByWeek = function(req,res){
+	var CourseUUIDs = [];
+
+	var Courses = req.session.courses;
+	for (index in Courses) {
+		CourseUUIDs.push(Courses[index].uuid);
+	}
+
+	var weekNum = req.params.week;
+	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum,uuids:CourseUUIDs}, function(error, result){
+
+		if(result){
+			Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 0, resources: result }));
+			})
+
+		}else{
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify({ errorcode: 1, message: error }));
+		}
+
+
+	})
+}
+
+
 // get resources that uploaded by current user
 exports.resourcesOfCurrentUser = function(req,res){
 	if (req.session && req.session.user){

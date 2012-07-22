@@ -524,7 +524,7 @@
 		{
 			"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
 			"course": "A827346H7ASDFG9",
-			"user" : "BSDF787D98ASDF099D7G",
+			"user" : "ted",
 			"title" : "Totaly Ties",
 			"description" : "How to best match your tie with your suit",
 			"resourceType" : 2,
@@ -644,7 +644,7 @@
 		},
 		{
 			"uuid" : "5",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -661,7 +661,7 @@
 		},
 		{
 			"uuid" : "6",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",

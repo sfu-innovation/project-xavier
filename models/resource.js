@@ -269,7 +269,7 @@ var weekHelper = exports.weekHelper = function(weekNumber){
 		return {start:semesterStart.yyyymmdd(),end:firstWeekEnd.yyyymmdd()};
 	}
 	else{
-		var weekStart = new Date( firstWeekEnd.getTime()+ (weekNumber-2)* oneWeek + 24*60*60*1000);
+		var weekStart = new Date( firstWeekEnd.getTime()+ (weekNumber-2)* oneWeek);
 		var weekEnd  =  new Date( firstWeekEnd.getTime()+ (weekNumber-1)* oneWeek);
 		return {start:weekStart.yyyymmdd(), end:weekEnd.yyyymmdd()};
 

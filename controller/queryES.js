@@ -8,7 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
-	userProfile = require('../models/userprofile.js'),
+	userProfile = require('../models/userProfile.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {

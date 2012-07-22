@@ -618,7 +618,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		target:data.target_uuid
 		,app:appType
 		,user:data.user
-		,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
+		,description:data.body
 	};
 
 	switchIndex(appType);

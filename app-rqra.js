@@ -2,6 +2,7 @@ process.setMaxListeners(0);//annoying.
 var express = require('express');
 var routesCommon = require('./routes/common/routesCommon.js');
 var routesRqra = require('./routes/rqra/routesRqra.js');
+//var Notification = require("./controller/NotificationAction.js");
 
 var app = module.exports = express.createServer();
 
@@ -15,7 +16,7 @@ app.configure(function() {
 				"lastName":"Fox",
 				"type":0,
 				"userID":"jrf2",
-				"email":"jrf2@sfu.ca"
+				"email":"yukaih@sfu.ca"
 			}
 		}
 		next();

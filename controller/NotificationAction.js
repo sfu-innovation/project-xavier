@@ -439,8 +439,7 @@ function compileEmail( args, callback ){
 			str+=("You have 1 " + title + " notification!\n==================\n");
 				str+=( 1+") "+ msg.description +"\n");
 			str+=("\n\n Thanks for using our service,\n\t"+title+" Mobile team\n\n");
-			
-			
+
 			var message = {
    				text:    str,
    				from:    config.emailsettings.from,

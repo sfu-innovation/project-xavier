@@ -636,7 +636,7 @@ QueryES.prototype.addComment = function(data, appType, callback){
 			if(err)
 				return callback(err);
 				console.log("document added");
-			/*
+
 				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 					if(err){
 						console.log(err);
@@ -655,9 +655,9 @@ QueryES.prototype.addComment = function(data, appType, callback){
 						callback(null, esData);
 					});
 				});
-			*/
 
-			callback(null, esData);
+
+			//callback(null, esData);
 		});
 
 	});

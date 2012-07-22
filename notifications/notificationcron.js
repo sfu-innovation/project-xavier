@@ -94,9 +94,9 @@ function compileEmail( userObj, notifications ){
    					subject: userObj.app + " : end of "+visible_apps[waitTime]+ " notification(s)"
 		 		};
 		
-		 		//server.send(message, function(err, message){
-		 		//	console.log(err || message);
-		  		//});
+		 		server.send(message, function(err, message){
+		 			console.log(err || message);
+		  		});
 		  		var uuids = new Array();
 		  		var i = notifications.length - 1;
 		  		for (; i >= 0; i--){

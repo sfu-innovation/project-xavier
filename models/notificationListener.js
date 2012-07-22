@@ -94,6 +94,35 @@ exports.removeNotificationListener = function( args, callback ){
 }
 
 /*
+	This gets all of the notification listeners by the what 
+*/
+exports.findAllNotificationListenersByTarget = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	
+	var containsAllProperties = (args.hasOwnProperty('app') &&
+	                             args.hasOwnProperty('target') &&
+	                             args.hasOwnProperty('user'));
+	
+	if ( !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;
+	}
+	
+	var arg = new Object();
+	arg.app = args.app;
+	arg.target = args.target;
+	arg.user = args.user;
+	
+	NotificationListener.findAll({ where : arg }).success(function( listeners ){
+		callback( null, listeners );
+	}).error(function(error){
+		callback( error, null );
+	});
+}
+/*
 
     To get all of the notificationListeners for a specific app for a specific user 
 	args = {

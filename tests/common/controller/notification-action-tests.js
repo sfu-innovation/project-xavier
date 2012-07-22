@@ -35,7 +35,7 @@ module.exports = {
 		
 		"Add Notification Listener" : function( test ){
 			var args = {
-				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
+				user : 'mak10',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
 				event : 0,
 				app   : 2
@@ -43,7 +43,7 @@ module.exports = {
 			NotificationListener.findNotificationListener( args, function( error, listener) {
 				NotificationAction.addNotifier( args, function( error, newListener){
 					NotificationListener.findNotificationListener( args, function( error, listener) {
-						test.ok( listener.should.have.property('user', 'A7S7F8GA7SD98A7SDF8ASD7G'));
+						test.ok( listener.should.have.property('user', 'mak10'));
 						test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8ASD7G'));
 						test.done();
 					});
@@ -54,13 +54,13 @@ module.exports = {
 		
 		"Remove Notification Listener" : function( test ){
 			var args = {
-				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user : 'aka87',
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event : 1,
 				app : 1
 			}
 			NotificationListener.findNotificationListener( args, function( error, listener ){
-				test.ok( listener.should.have.property('user', 'A7S7F8GA7SD11A7SDF8ASD7G'));
+				test.ok( listener.should.have.property('user', 'aka87'));
 				test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8AS87G'));
 				args.listener = listener.uuid;
 				NotificationAction.removeNotifier( args, function( error, removedUserNotifications ){
@@ -74,7 +74,7 @@ module.exports = {
 				});
 			});
 				
-		}, */
+		}, 
 		"Add User Notification" : function( test ){
 			args = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
@@ -106,11 +106,11 @@ module.exports = {
 				});
 			
 		}, 
-	  /* "Remove User Notifications" : function( test ){
+	   "Remove User Notifications" : function( test ){
 			args = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event : 1 ,
-				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user : 'aka87',
 				app  : 1
 			}		
 			UserNotification.findAllUserNotifications( args, function( error, notifications){
@@ -152,7 +152,7 @@ module.exports = {
 				app   : 2
 			}
 			var args = {
-				user : 'A7S7F8GA7SD98A7SDF8ASD7G',
+				user : 'mak10',
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				app   : 2
 			}

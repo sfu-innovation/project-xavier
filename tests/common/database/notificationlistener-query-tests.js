@@ -50,7 +50,7 @@ module.exports = {
 		
 		"Find Notification Listener": function(test){
 			var args = {
-				user    : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user    : 'aka87',
 		    	event  : 0,
 		    	target : 'A7S7FHGA7SD11A7SDF8AS87G',
 		    	app     : 1
@@ -61,7 +61,7 @@ module.exports = {
 					console.log( error );
 				}
 				
-				test.ok( notificationListener.should.have.property( 'user', 'A7S7F8GA7SD11A7SDF8ASD7G') );
+				test.ok( notificationListener.should.have.property( 'user', 'aka87') );
 				test.done();
 			});
 		},
@@ -85,7 +85,7 @@ module.exports = {
 		},
 		"Remove Notification Listener ":function(test){
 			var args = {
-				user    : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user    : 'aka87',
 		    	event  : 0,
 		    	target : 'A7S7FHGA7SD11A7SDF8AS87G',
 		    	app    : 1

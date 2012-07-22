@@ -114,6 +114,47 @@ exports.markAsSentUserNotifications = function( args, callback ){
 }
 
 /*
+	To remove a user notifications
+	
+	args = {
+		notificationlisteners : array of UUIDs
+	}
+	
+	Returns the removed user notifications or an error
+*/
+/*
+exports.removeUserNotificationsByListeners = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('notificationlisteners'));
+		                            
+	if ( !containsAllProperties ){
+		callback("Invalid args ", null );
+		return;
+	}
+	
+	UserNotification.findAll({ where : { listener: args.notificationlisteners }}).success(function( notifications ){
+		if ( notifications != null ){
+			var arg = new Object();
+			arg.usernotifications = notifications;
+			removeUserNotifications( arg, function( error, results ){
+				if ( results ){
+					callback( null, results );
+				}else {
+					callback( error, null );
+				}
+			});
+		} else {
+			callback("There were no notifications to retrieve");
+		}
+	}).error( function ( error ){
+		callback( error, null );
+	});
+}
+*/
+/*
 	To remove a user notification
 	
 	args = {

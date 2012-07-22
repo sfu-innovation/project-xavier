@@ -73,23 +73,39 @@ exports.getResourcesByCourseUUIDs = function(args, callback){
 
 }
 
-//exports.getResourcesByCourseUUIDsAndWeek = function (args,callback){
-//	var week = weekHelper(args.week);
-//
-//	Resource.findAll({where:{course:args.uuids}}).success(function(resources){
-//		if(resources){
-//
-//			callback(null, resources);
-//		}
-//		else{
-//			callback("No Resources", null);
-//		}
-//	}).error(function(error){
-//			callback(error, null);
-//		})
-//
-//
-//}
+exports.getResourcesByCourseUUIDsAndWeek = function (args,callback){
+	var week = weekHelper(args.week);   //get the range of the requested week
+
+	// generating the IN clause, i can't not find a syntax to do this complex query
+	var UUIDs = "(";
+	for (var i = 0; i<args.uuids.length;i++){
+		UUIDs += '"'+args.uuids[i]+'"';
+		if (i != args.uuids.length - 1){
+			UUIDs += ','
+		}
+		else {
+			UUIDs += ')'
+		}
+
+	}
+
+	var statement = 'SELECT * FROM `Resources` WHERE createdAt >= "'+ week.start + '" AND createdAt <= "'+week.end+'" AND course IN '+ UUIDs;
+
+	//custom query
+	db.query(statement, Resource).success(function(resources){
+		if(resources){
+
+			callback(null, resources);
+		}
+		else{
+			callback("No Resources", null);
+		}
+	}).error(function(error){
+			callback(error, null);
+		})
+
+
+}
 
 
 exports.getResourcesByUUIDs = function (args, callback){
@@ -119,51 +135,6 @@ exports.getResourceByUUID = function(resourceUUID, callback){
 	})
 }
 
-// To be deprecated
-/*
-//Fetch the list of resources with the given course UUID
-exports.getResourceByCourseUUID = function(args, callback){
-	var async = require('async');
-	var CourseSection = require('./courseSection.js');
-
-	var resources = [];	
-
-	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {		
-		if(sectionUUIDs){									
-			async.forEach(sectionUUIDs, function(sectionUUID, callback) {				
-				console.log("section ID = " + sectionUUID);
-				var sectionMaterials = require('./sectionMaterial.js');				
-
-				sectionMaterials.findAllMaterialsInSection({section:sectionUUID}, function(error, sectionMaterial) {
-					async.forEach(sectionMaterial, function(resourceID, callback) {
-						console.log("resource IDs = " +  resourceID.material);
-						module.exports.getResourceByUUID(resourceID.material, function(error, resource) {											
-							resources.push(resource);	
-
-							// once the result is retrieved pass it to the callback
-							callback();																												
-						})
-					}, function(err){					    
-					    console.log("Section Material error = " + err);
-
-					    // passed the result to outer loop
-					    callback();
-					});									
-				})				
-			}, function(err){
-			    // if any of the saves produced an error, err would equal that error
-			    console.log("Course Section error = " + err);
-			    callback(null, resources);
-			});										
-		}
-
-		//No sectionUUIDs were found
-		else{
-			callback(error, []);
-		}
-	})
-}
-*/
 
 //Creates a new resources and saves it to the database
 //userUUID is the uuid of the user submitting the resource
@@ -253,7 +224,7 @@ var weekHelper = exports.weekHelper = function(weekNumber){
 		return {start:semesterStart.yyyymmdd(),end:firstWeekEnd.yyyymmdd()};
 	}
 	else{
-		var weekStart = new Date( firstWeekEnd.getTime()+ (weekNumber-2)* oneWeek + 24*60*60*1000);
+		var weekStart = new Date( firstWeekEnd.getTime()+ (weekNumber-2)* oneWeek);
 		var weekEnd  =  new Date( firstWeekEnd.getTime()+ (weekNumber-1)* oneWeek);
 		return {start:weekStart.yyyymmdd(), end:weekEnd.yyyymmdd()};
 
@@ -298,7 +269,8 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 		},
-
+		// notice we cannot directly attach to json a totalcomments because it's a squalize object
+		// so we need to stringfy first then parse....so hacky...
 		findUserProfile: function(callback){
 			parsedResult = JSON.parse(JSON.stringify(resources));
 			async.forEach(parsedResult, function (resource, callback) {
@@ -351,8 +323,7 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 //
 //		},
 
-		// notice we cannot directly attach to json a totalcomments because it's a squalize object
-		// so we need to stringfy first then parse....so hacky...
+
 
 		findTotalComments:function (callback) {
 

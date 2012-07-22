@@ -4,7 +4,6 @@ block content
 	div.row.clearfix#article_container
 		div.nine.columns
 			div#article_options
-				
 				a(href="/")#back BACK
 				span#options
 					a 
@@ -20,10 +19,36 @@ block content
 						span.typicn.plus
 						|Text Size
 					a(href="#{article.url}") View Original
-				
-				span#course #{article.course} in week #{article.week}
 			div#article
 			script(type='text/javascript')
 				$('div#article').load("#{article.path}");
-		div.two.columns#comments
-			p comments goes here
+		div.three.columns#comments
+			h5 Comments
+			div#owner_comment
+				span.name #{article.user.firstName} #{article.user.lastName}
+				p #{ article.description }
+				span Posted 1 day ago
+				span.like_reply
+					a like (3) 
+					a reply 
+						span.typicn.forward
+			each comment in comments
+				div.comment 
+					span.name #{comment.user.firstName} #{comment.user.lastName}
+					p #{comment.msg}
+					span.post_time Posted #{comment.time}
+					span.like_reply
+						a like (3) 
+						a reply 
+							span.typicn.forward
+				each reply in comment.replies
+					div.replies
+						span.name #{reply.user.firstName} #{reply.user.lastName}				
+						p #{reply.msg}
+						span.post_time Posted #{comment.time}
+						span.like_reply
+							a like (3) 
+							a reply 
+								span.typicn.forward
+			
+			

@@ -63,6 +63,7 @@ app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a foll
 
 //TODO: need update this into document
 app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
+app.get('/api/resources/week/:week', routesEngage.resourcesInCoursesByWeek);
 //TODO: need update this into document
 app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resources uploaded by current user;
 
@@ -131,7 +132,7 @@ app.get('/mine', routesEngage.contributions);
 app.get('/instructor', routesEngage.instructor);
 
 //article - this is resource
-app.get('/course/:id', routesEngage.courseView);
+app.get('/course/:name', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
 

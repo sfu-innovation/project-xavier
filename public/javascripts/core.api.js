@@ -28,6 +28,18 @@ coreApi._construct = function () {
 			});
 
 		}
+		
+		// gets a list of courses for the current logged in user
+		this.getUserCourses = function(id,callback ) {
+			console.log("API - getUserCourses");
+			$.ajax({
+				url:'/api/user/courses',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 		this.getUserProfileById = function(id,callback){
 			console.log("API - getUserProfileById");
@@ -302,6 +314,20 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCourseUUIDsAndWeek = function(week, callback){
+			console.log("API - getResourcesByCourseUUIDsAndWeek");
+			$.ajax({
+
+				url:'/api/resources/week/'+week,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
+
 		this.getResourcesByCurrentUserId = function(callback){
 			console.log("API - getResourcesByCurrentUserId");
 			$.ajax({
@@ -474,7 +500,7 @@ coreApi._construct = function () {
 		this.getCommentsByTargetId = function (target_id, page, callback){
 			console.log("API - getCommentsByTargetId");
 			$.ajax({
-				url:'/api/question/'+target_id+'/comments/' + page,
+				url:'/api/question/'+target_id+'/comments/page/' + page,
 				type:'GET',
 				success:function (data) {
 					callback(data);

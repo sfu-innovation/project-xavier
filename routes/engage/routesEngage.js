@@ -249,6 +249,34 @@ exports.resourcesInCourses = function(req,res){
 	})
 }
 
+
+exports.resourcesInCoursesByWeek = function(req,res){
+	var CourseUUIDs = [];
+
+	var Courses = req.session.courses;
+	for (index in Courses) {
+		CourseUUIDs.push(Courses[index].uuid);
+	}
+
+	var weekNum = req.params.week;
+	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum,uuids:CourseUUIDs}, function(error, result){
+
+		if(result){
+			Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 0, resources: result }));
+			})
+
+		}else{
+			res.writeHead(200, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify({ errorcode: 1, message: error }));
+		}
+
+
+	})
+}
+
+
 // get resources that uploaded by current user
 exports.resourcesOfCurrentUser = function(req,res){
 	if (req.session && req.session.user){
@@ -610,22 +638,21 @@ exports.starred = function (req, res) {
 
 	if (req.session && req.session.user) {
 			res.render("engage/starred", { 	title: "SFU ENGAGE",
-				user :  userobject,
+				user :  req.session.user,
 				courses : req.session.courses,
 				status : "logged in" }, function(err, rendered){
 
-				// console.log(rendered);
+
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
 
 			})
    	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
+
 	}
 
 }
@@ -634,22 +661,19 @@ exports.instructor = function (req, res) {
 
 	if (req.session && req.session.user) {
 		res.render("engage/instructor", { 	title: "SFU ENGAGE",
-			user :  userobject,
+			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){
 
-			// console.log(rendered);
+
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(rendered);
 
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
 
 }
@@ -658,11 +682,55 @@ exports.instructor = function (req, res) {
 
 
 exports.articleView = function (req, res) {
-
+	comment_1 = {
+		msg : "Where is it?",
+		user : userobject,
+		time : "1 hour ago",
+		replies : []
+		}
+	comment_2 = {
+		msg : "I like this" ,
+		user : userobject,
+		time : "5 mins ago",
+		replies : []
+		}
+		
+		
+	reply_comment_1 = {
+		msg : "No idea",
+		reply_to : comment_1,
+		user : user_1,
+		time : "10 mins ago"
+	}
+	reply_comment_2 = {
+		msg : "States?",
+		reply_to : comment_1,
+		user : user_2,
+		time : "5 mins ago"
+	}
+	
+	reply_comment_3 = {
+		msg : "No i dont think so",
+		reply_to : comment_1,
+		user : user_1,
+		time : "5 mins ago"
+	}
+	
+	reply_comment_4 = {
+		msg : "Yah me too",
+		reply_to : comment_2,
+		user : user_2,
+		time : "2 mins ago"
+	}
+	
+	comment_1.replies = [reply_comment_1,reply_comment_2,reply_comment_3];
+	comment_2.replies =  [reply_comment_4];
+		
 	if (req.session && req.session.user) {
 		var pickedArticle = articles[req.params.id - 1];
 		res.render("engage/article", { title:"SFU ENGAGE",
 			article : pickedArticle,
+			comments : [comment_1, comment_2],
 			user:userobject,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){
@@ -689,31 +757,20 @@ exports.articleView = function (req, res) {
 exports.contributions = function (req, res) {
 
 	if (req.session && req.session.user) {
-		var myarticles = [];
-		for (i in articles) {
-			if (articles[i].user === userobject){
-				myarticles.push(articles[i])
-			}
-		}
-		//console.log(myarticles);
+
 		res.render("engage/contributions", { title:"SFU ENGAGE",
-			user:userobject,
-			contributions : myarticles,
+			user:req.session.user,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){
 
-			// console.log(rendered);
+
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(rendered);
 
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
-
-		//login with demo user, remove when everything is set.
 	}
 
 }
@@ -729,7 +786,7 @@ exports.courseView = function (req, res) {
 
 		res.render("engage/course", { title:"SFU ENGAGE",
 			course : selectedCourse,
-			user:userobject,
+			user:req.session.user,
 			courseArticles : courseArticles,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){
@@ -741,11 +798,9 @@ exports.courseView = function (req, res) {
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
 
 

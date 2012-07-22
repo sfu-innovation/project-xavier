@@ -1,6 +1,22 @@
 {
 	"users": [
 		{
+			"uuid":"mcs3",
+			"firstName":"es",
+			"lastName":"test",
+			"type":0,
+			"userID":"es",
+			"email":"ttttt@sfu.ca"
+		},
+		{
+			"uuid":"jrf2",
+			"firstName":"Jordan",
+			"lastName":"Fox",
+			"type":0,
+			"userID":"jrf2",
+			"email":"jrf2@sfu.ca"
+		},
+		{
 			"uuid":"xna2",
 			"firstName":"Mark",
 			"lastName":"Ni",
@@ -25,7 +41,7 @@
 			"email":"mak10@sfu.ca"
 		},
 		{
-			"uuid":"BSDF787D98A7SDF8ASD7G",
+			"uuid":"ted",
 			"firstName":"Ted",
 			"lastName":"Kirkpatrick",
 			"type":1,
@@ -33,12 +49,20 @@
 			"email":"ted@sfu.ca"
 		},
 		{
-			"uuid":"BSDF787D98ASDF099D7G",
+			"uuid":"bernie",
 			"firstName":"Bernie",
 			"lastName":"Maroney",
 			"type":1,
 			"userID":"bernie",
 			"email":"bernie@sfu.ca"
+		},
+		{
+			"uuid":"ntakei",
+			"firstName":"Naoko",
+			"lastName":"Takei",
+			"type":1,
+			"userID":"ntakei",
+			"email":"ntakei@sfu.ca"
 		},
 		{
 			"uuid":"jhc20",
@@ -74,21 +98,12 @@
 			"email":"mis2@sfu.ca"
 		},
 		{
-			"uuid":"jrf2",
-			"firstName":"Jordan",
-			"lastName":"Fox",
-			"type":0,
-			"userID":"jrf2",
-			"email":"jrf2@sfu.ca"
-		},
-		{
 			"uuid":"aka87",
 			"firstName":"Alex",
 			"lastName":"Kwan",
 			"type":0,
 			"userID":"aka87",
 			"email":"aka87@sfu.ca"
-
 		}
 	],
 	"courses":[
@@ -115,9 +130,41 @@
 			"subject":"IAT",
 			"number":102,
 			"instructor":"BSDF787D98ASDF099D7G"
+		},
+		{
+			"uuid":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"title":"Beginners Japanese II",
+			"section":"D100",
+			"subject":"JAPN",
+			"number":101,
+			"instructor":"ntakei"
+		},
+		{
+			"uuid":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
+			"title":"Introduction to Cognitive Psychology",
+			"section":"D100",
+			"subject":"PSYC",
+			"number":221,
+			"instructor":"bernie"
 		}
 	],
 	"courseMembers":[
+		{
+			"course":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
+			"user":"jrf2"
+		},
+		{
+			"course":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"user":"jrf2"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"jrf2"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"jrf2"
+		},
 		{
 			"course":"A8G7S6H7ASDFG9",
 			"user":"jhc20"
@@ -477,7 +524,7 @@
 		{
 			"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
 			"course": "A827346H7ASDFG9",
-			"user" : "BSDF787D98ASDF099D7G",
+			"user" : "ted",
 			"title" : "Totaly Ties",
 			"description" : "How to best match your tie with your suit",
 			"resourceType" : 2,
@@ -597,7 +644,7 @@
 		},
 		{
 			"uuid" : "5",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -614,7 +661,7 @@
 		},
 		{
 			"uuid" : "6",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",

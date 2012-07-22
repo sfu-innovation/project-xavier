@@ -72,7 +72,7 @@ div#newNotificationCount {
 	background: #1b88d0;
 	color: white;
 	border-radius: 15px;
-	box-shadow: 1px 1px 4px black;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.7);
 }
 
 @-webkit-keyframes notification-menu-animation {
@@ -88,6 +88,10 @@ div#newNotificationCount {
 		top: 50px;
 		opacity: 0;
 	}
+	95% { 
+		top: 70px;
+		opacity: 1;
+	}
 	100% { 
 		top: 70px;
 		opacity: 1;
@@ -95,11 +99,10 @@ div#newNotificationCount {
 }
 
 nav#notificationList {
-	//opacity: 100;
 	position: absolute;
 	top: -200px;
 	left: -220px;
-	height: 100px;
-	-webkit-animation: notification-menu-animation 200ms 0ms infinite alternate forwards;
+	-webkit-animation: notification-menu-animation 300ms 0ms infinite alternate forwards;
 	-webkit-animation-play-state: paused;
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.7);
 }

@@ -514,6 +514,12 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
+			//newQuestion.course = body.question.course;
+			//newQuestion.week = body.question.week;
+
+			newQuestion.course = 'test course';
+			newQuestion.week = parseInt('0');		//remember to parse to int
+
 			//TODO: sectionUuid
 			//newQuestion.sectionUuid = request.body.sectionUuid;		//frontend
 			newQuestion.sectionUuid = 'someTestSection';
@@ -979,7 +985,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 			if(query){
 		 		queryData.searchQuery = query + " " + queryData.searchQuery;
 			}*/
-
+			queryData.uuid = request.session.user.uuid;
 			QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
 				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });

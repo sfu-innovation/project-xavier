@@ -8,6 +8,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	notification = require('./NotificationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
+	userProfile = require('../models/userprofile.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -51,8 +52,16 @@ var addUsersToData = function(data, callback){
 				obj.user = "User not found: " + obj._source.user;
 			}
 
-			result.hits.push(obj);
-			done();
+			userProfile.getUserProfile(obj._source.user, function(err, profile){
+				if(err)
+					done(err);
+
+				if(profile){
+					obj.profile = profile.profilePicture;
+				}
+				result.hits.push(obj);
+				done();
+			})
 		});
 	}, function(err){
 		callback(err, result);

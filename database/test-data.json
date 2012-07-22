@@ -1,6 +1,14 @@
 {
 	"users": [
 		{
+			"uuid":"mcs3",
+			"firstName":"es",
+			"lastName":"test",
+			"type":0,
+			"userID":"es",
+			"email":"ttttt@sfu.ca"
+		},
+		{
 			"uuid":"xna2",
 			"firstName":"Mark",
 			"lastName":"Ni",

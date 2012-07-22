@@ -111,7 +111,8 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);										
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 &&
+						body.tags.length === 4);
 					test.done();
 				});
 			});
@@ -127,7 +128,7 @@ module.exports = {
 				}).on('end', function() {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
-					body.tags);
+					body.tags.length === 3);
 					test.done();
 				});
 			});
@@ -143,7 +144,7 @@ module.exports = {
 				}).on('end', function() {
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0 &&
-						Object.keys(body.questions).length === 2);
+						body.questions.length === 2);
 					test.done();
 				});
 			});

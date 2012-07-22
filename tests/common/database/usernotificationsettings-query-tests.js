@@ -30,7 +30,7 @@ module.exports = {
 		"Find user notification settings": function(test){
 		  
 		    var args = {
-				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user : 'aka87',
 				app  : 1
 		    }
 		    
@@ -43,7 +43,7 @@ module.exports = {
 		
     	"Add user notification settings": function(test){
 			var args = {
-				user : 'A7S7FSD78FA98A7SDF8ASD7G',
+				user : 'yk38',
 				app  : 3
 			}
 			
@@ -59,7 +59,7 @@ module.exports = {
 		
 			"Upate user notification settings ":function(test){
 			var args = {
-				user : 'A7S7F8GA7SD11A7SDF8ASD7G',
+				user : 'aka87',
 				app  : 1,
 		    	
 		    	notificationOnNewResource : 3,

@@ -1,8 +1,9 @@
 var routesCommon = require('./../common/routesCommon.js');
-var TagAction = require("./../../controller/TagAction.js");
-var MediaAction = require("./../../controller/MediaAction.js");
-var MediaFile  = require(__dirname + "/../../models/mediafile.js");
-var User = require(__dirname + "/../../models/user");
+var TagAction    = require("./../../controller/TagAction.js");
+var MediaAction  = require("./../../controller/MediaAction.js");
+var MediaFile    = require(__dirname + "/../../models/mediafile.js");
+var User         = require(__dirname + "/../../models/user");
+var Tag          = require(__dirname + "/../../models/tag");
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -110,7 +111,7 @@ exports.tag = function(request,response){
 	}
 	else if (request.method === 'PUT'){		
 		var uuid = request.params.id;
-		TagAction.updateTag({'uuid':uuid}, request.body, function(error, result){
+		TagAction.updateTag(uuid, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tag: result }));
@@ -135,6 +136,40 @@ exports.tag = function(request,response){
 		})
 	}
 
+
+}
+
+exports.lastWatched = function(request, response){
+	if(request.session && request.session.user){
+		if(request.method === "GET"){
+			Tag.getLastWatched(request.session.user.uuid, function(error, tag){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tag: tag }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, error: error }));
+				}
+			});
+		}
+		else if(request.method === "PUT"){
+			Tag.updateLastWatched(request.session.user.uuid, request.body, function(error, tag){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tag: tag }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, error: error }));
+				}
+			})
+		}
+	}
+	else{
+		response.writeHead(200, { 'Content-Type': 'application/json' });
+		response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	}
 
 }
 

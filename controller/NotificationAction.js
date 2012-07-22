@@ -163,17 +163,35 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 			var listenerArray = new Array();
 			var i = listeners.length - 1;
 			for ( ; i >= 0 ; i--){
-				listenerArray.push( listeners[i] );
+				listenerArray.push( listeners[i].uuid );
 			}
+			var listeners = new Object();
+			listeners.uuids = listenerArray; 
 			
-			UserNotificationImpl.findAll({ where : { listener : listenerArray }}).success(function( notifications ){
-				callback( null, notifications );
-			}).error(function( error ){
-				callback( error, null );
+			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
+			
+				if ( error ){
+					callback ( error, null );
+				}
+				else {
+					var notifications = new Object();
+					notifications.usernotifications = usernotifications;
+					
+					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+						if ( error ){
+							callback( error , null );
+						}
+						else {
+							callback( null, removedNotifications );
+						}
+					});
+				}
 			});
+		} else {
+			callback( null, new Array() );
 		}
 	});
-}
+}	
 /*
 	Removing all of the user notifications for a specific user under a specific app
 	
@@ -185,7 +203,7 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 	returns all of the user notifications which were removed
 
 */
-NotificationAction.prototype.removeUserNotifcationsByUser = function( args, callback ){
+NotificationAction.prototype.removeUserNotificationsByUser = function( args, callback ){
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);
 		return;
@@ -202,80 +220,41 @@ NotificationAction.prototype.removeUserNotifcationsByUser = function( args, call
 	arg.user = args.user;
 	arg.app  = args.app;
 	
-	NotificationListeners.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
+	NotificationListener.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
 		if ( null != notificationListeners ){
-			UserNotificationImpl.findAll({ where : { listener : notificationListeners }}).success(function( notifications ){
-				callback( null, notifications );
-			}).error(function( error ){
-				callback( error, null );
+			var i = notificationListeners.length - 1;
+			var arr = new Array();
+			for (; i>=0; i-- ){
+				arr.push( notificationListeners[i].uuid );
+			}	
+			
+			var listeners = new Object();
+			listeners.uuids = arr;
+			
+			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
+			
+				if ( error ){
+					callback ( error, null );
+				}
+				else {
+					var notifications = new Object();
+					notifications.usernotifications = usernotifications;
+					
+					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+						if ( error ){
+							callback( error , null );
+						}
+						else {
+							callback( null, removedNotifications );
+						}
+					});
+				}
 			});
+		} else {
+			callback( null, new Array() );
 		}
 	});
 }	
-/*
-Designed to remove the user notifications out of the user notifications table.
-This means that the user will no longer see these particular removed notifications ever
-after they are removed. Its ok if user is required to remove this notification as 
-the notification has to already be associtaed with a specific user in order to remove it
-
-var args = {
-	target : The resource which incurred an event for this user notification to be created,
-	event : The event which caused this user notification to be created ,
-	user : The user to be notified by the notification listener
-	app  : app id
-}
-	returns a list of the notifiers of the removed notifications
-*/
-NotificationAction.prototype.removeUserNotifications = function( args, callback ){ 
-
-	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
-		return;
-	}
-	var containsAllProperties = (args.hasOwnProperty('user') &&
-	                              args.hasOwnProperty('target') &&
-		                               args.hasOwnProperty('event') &&
-		                               args.hasOwnProperty('app'));
-		                            
-	if (  !containsAllProperties ){
-		callback("Invalid args ", null );
-		return;
-	}
-	
-	var arg = new Object();
-	arg.target = args.target;
-	arg.event = args.event;
-	arg.user = args.user;
-	arg.app  = args.app;
-	
-	var removedUserNotifications = new Array();
-	NotificationListener.findNotificationListener( arg, function(error, notificationListener ){
-		if ( error ){
-			callback( error, null );
-			return;
-		}
-		if ( null === notificationListener.listener){
-			callback( "No notification listener could be found", null );
-			return;
-		}
-		arg.listener = notificationListener.uuid;
-		UserNotification.selectUserNotifications( arg, function(error, userNotifications ){
-			if ( error ){
-				callback( error, null );
-				return;
-			}
-			UserNotification.removeUserNotifications({ usernotifications : userNotifications }, function( err, results ){
-				if ( err ){
-			 		callback( err, null );
-			 	}else {
-			 		callback( null, results);
-			 	}
-			});
-			callback( null, removedUserNotifications );
-		});
-	})
-	
-}
 
 /*
 This is when a user no longer wants specific kinds of notifications.
@@ -302,8 +281,7 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 	var containsAllProperties = (args.hasOwnProperty('user') &&
 	                              args.hasOwnProperty('target') &&
 		                               args.hasOwnProperty('event') &&
-		                               args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('listener'));
+		                               args.hasOwnProperty('app'));
 		                            
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
@@ -315,7 +293,6 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 	arg.target = args.target;
 	arg.event = args.event;
 	arg.app = args.app;
-	arg.listener = args.listener;
 	
 	NotificationListener.findNotificationListener( arg, function( error, notificationListener ){
 		if ( error ){
@@ -674,10 +651,9 @@ NotificationAction.prototype.removeCommentNotifier = function( args, callback){
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('user') &&
-	                              args.hasOwnProperty('target') &&
-		                               args.hasOwnProperty('app'));
-		                            
+	var containsAllProperties = (args.hasOwnProperty('user')   &&
+	                             args.hasOwnProperty('target') &&
+		                         args.hasOwnProperty('app'));                       
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
@@ -800,15 +776,19 @@ NotificationAction.prototype.createNewResource = function( args, callback ){
 	arg.event = 0;
 	var notificationArray = new Array();
 	self.addNotifier( arg, function( error, likeListener){
-		args.event = 1;
+		arg.event = 1;
 		notificationArray.push( likeListener );
 		self.addNotifier( arg, function( error, commentListener){
-			args.event = 2;
+			arg.event = 2;
 			notificationArray.push(commentListener );
 			self.addNotifier( arg, function( error, starListener){
 				notificationArray.push( starListener );
-				callback(null, notificationArray);
-			} );
+				if ( notificationArray.length == 3 ){
+					callback( null, notificationArray );
+				} else {
+					callback( error, null );
+				}
+			});
 		});
 	});
 }
@@ -871,31 +851,37 @@ NotificationAction.prototype.setupCourseMaterialNotifiers = function( args, call
 		return;
 	}
 	var self = this;
-	Course.getCourseMembers( { course : args.target }, function( err, students ){
-		var i = students.length - 1;
+	Course.getCourseMembers( args.target , function( err, studentsInCourse ){
+		var i = studentsInCourse.length - 1;
 		var students = new Array();
 		var addedStudents = new Array();
 		for(; i >= 0; i-- ){
-			var arg = args;
-			arg.user = students[i].uuid;
+			var arg = new Object();
+			arg.target = args.target;
+			arg.user = studentsInCourse[i].userID;
+			arg.app  = args.app;
 			students.push( arg );
 		}
 		async.forEachSeries( students, function( student, callback){
 			self.addNewResourceNotifier( student, function( error, data ){
 				if ( error ){
-					callback( error );
+					console.log('### -> '+error);
+					callback( error, null );
 				} else {
 					addedStudents.push( data );
+					callback(null, data );
+					console.log("## RA");
 				}
-			})
-		, function(err){
+			});
+		
+	    }, function(err, results){
 			if ( err ) {
 				callback( err, null );
 			}else {
+			    console.log("done!!");
 				callback( null, addedStudents );
 			}
-	     }
-	    });
+	     } );
 	});
 }
 
@@ -1027,47 +1013,12 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	this.addUserNotification(arg,callback);
 }
 
-/*
-	Get all of the user notifications on a particular app for a certain user 
-	args = {
-		app :  ID of the app
-		user : UUID of the user
-	}
-	Get a list of the notifications in the specific app geared the the user.
-*/
-NotificationAction.prototype.selectUserNotificationsForUserOnApp = function( args, callback ){
-	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
-		return;
-	}
-	var containsAllProperties = (args.hasOwnProperty('app') &&
-	                              args.hasOwnProperty('user'));
-		                            
-	if ( !containsAllProperties ){
-		callback("Invalid args ", null );
-		return;
-	}
-	
-	var arg = new Object();
-	arg.app = args.app;
-	arg.user = args.user;
-	
-	UserNotification.selectUserNotificationsForUserOnApp( arg , function( error, notifcations ){
-		if ( error ){
-			callback( error , null );
-		}
-		else {
-			callback( null, notifications );
-		}
-	});
-}
 
 /*
 	To update the settings for specific users to get certain types of notifications
 	
 	args = {
-		app                     : Identifier for the application
-		user                    : UUID of the user who owns these notification settings
+		usernotificationsettings: object representation of user notification settings
 		notificationsOnResource : 0 - 3 , time to send
 		notificationOnLike      : 0 - 3 , time to send
 		notificationOnComment   : 0 - 3, time to send
@@ -1081,28 +1032,25 @@ NotificationAction.prototype.updateUserNotificationSettings = function( args, ca
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('app') &&
-	                              args.hasOwnProperty('user') &&
-	                              args.hasOwnProperty('notificationsOnResource') &&
+	var containsAllProperties = (
+								  args.hasOwnProperty('usernotificationsettings') &&
+	                              args.hasOwnProperty('notificationOnNewResource') &&
 	                              args.hasOwnProperty('notificationOnLike') &&
 	                              args.hasOwnProperty('notificationOnComment') &&
-	                              args.hasOwnProperty('notificationOnStar') );
-		                            
+	                              args.hasOwnProperty('notificationOnStar') );               
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
 	}
 	
 	var arg = new Object();
-	arg.notificationsOnResource = args.notificationsOnResource;
+	arg.notificationOnNewResource = args.notificationOnNewResource;
 	arg.notificationOnLike = args.notificationOnLike;
 	arg.notificationOnComment = args.notificationOnComment;
 	arg.notificationOnStar = args.notificationOnStar;
-	arg.app = args.app;
-	arg.user = args.user;
-	
+	arg.usernotificationsettings = args.usernotificationsettings;
 
-	UserNotificationSettings.updateUserNotificationSettings(args, function( error, updatedSettings ){
+	UserNotificationSettings.updateUserNotificationSettings(arg, function( error, updatedSettings ){
 		if ( error ){
 			callback( error, null );
 		} else {

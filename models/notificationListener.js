@@ -94,7 +94,16 @@ exports.removeNotificationListener = function( args, callback ){
 }
 
 /*
-	This gets all of the notification listeners by the what 
+	This gets all of the notification listeners of a specific target from
+	a specific app for a specific user 
+	
+	args = {
+		app    : UUID of the app
+		target : UUID of the target we want to listen on
+		user   : UUID of the user 
+	}
+	
+	returns an array of all of the notification listeners
 */
 exports.findAllNotificationListenersByTarget = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -149,10 +158,12 @@ exports.findUserSpecificNotificationListeners = function( args, callback ){
 	var arg = new Object();
 	arg.user = args.user;
 	arg.app = args.app;
-	
+	console.log("**** " + arg.values);
 	NotificationListener.findAll({ where : arg }).success(function( listeners ){
+		console.log("[fdsf] "+ listeners );
 		callback( null, listeners );
 	}).error(function(error){
+		console.log('***% = '+ error );
 		callback( error, null );
 	});
 }
@@ -229,3 +240,11 @@ exports.findNotificationListener = function( args, callback ){
 	});
 }
 
+// test function to get every notifcationListener
+exports.findEveryNotificationListener = function( args, callback){
+	NotificationListener.findAll().success(function( listeners ){
+		callback( null, listeners );
+	}).error(function(error){
+		callback( error, null);
+	});
+}	

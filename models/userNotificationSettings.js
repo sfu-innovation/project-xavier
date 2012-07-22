@@ -42,7 +42,7 @@ function contains(a, obj) {
   	usernotificationsettings : the object representation of the user notification setting
   	to be updated
   	
-  	notificationsOnResource : 0 - 3
+  	notificationOnNewResource : 0 - 3
   	notificationOnLike      : 0 - 3
   	notificationOnComment   : 0 - 3
   	notificationOnStar      : 0 - 3
@@ -61,12 +61,13 @@ exports.updateUserNotificationSettings = function(args, callback){
 		                               args.hasOwnProperty('notificationOnLike') &&
 		                           args.hasOwnProperty('notificationOnComment')  &&
 		                            args.hasOwnProperty('notificationOnStar'));
-		
+	console.log( containsAllProperties);
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
 	}
 	
+	console.log("properly updated");
 	args.usernotificationsettings.updateAttributes({
 		notificationOnNewResource : args.notificationOnNewResource,
 		notificationOnLike        : args.notificationOnLike,
@@ -101,7 +102,6 @@ exports.addNotificationSetting = function( args, callback){
 	if (!containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
-		
 	}
 	
 	var arg = new Object();
@@ -159,6 +159,11 @@ exports.findNotificationSettings = function(args, callback ) {
     });
 }
 
-    
-
+exports.findAllNotificationSettings = function( args, callback ){
+	UserNotificationSettings.findAll().success(function(settings){
+		callback( null, settings );
+	}).error(function(error){
+		callback( error, null );
+	});
+}
 

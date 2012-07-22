@@ -107,6 +107,31 @@ module.exports = {
 					});
 				});
 			});	
+		},
+		
+		"Find Notifications by User and Target ":function(test){
+			var args = {
+				user    : 'mak10',
+		    	target : 'A7S7FHGA7SD11A7SDF8AS87G',
+		    	app    : 1
+			}
+			
+			NotificationListener.findAllNotificationListenersByTarget(args, function(error, notificationListeners ){
+				test.ok(notificationListeners.should.have.lengthOf(2));
+				test.done();
+			});
+		},
+		
+		"Find Notifications for specific user ":function(test){
+			var args = {
+				user    : 'aka87',
+		    	app    : 1
+			}
+			
+			NotificationListener.findUserSpecificNotificationListeners(args, function(error, notificationListeners ){
+				test.ok(notificationListeners.should.have.lengthOf(6));
+				test.done();
+			});
 		}
 	}
 }

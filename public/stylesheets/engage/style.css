@@ -171,7 +171,7 @@ div.dropdown ul li a{
 #user_options_list img.avatar{
 	height: 38px;
 	position: absolute;
-	margin-left: -60px;
+	margin-left: -58px;
 }
 
 
@@ -212,7 +212,7 @@ div#contents div.columns{
 	min-width:297px;
 }
 
-div.columns:last-child{;  
+div#contents div.columns:last-child{;  
 	float: left !important;
 	}
 
@@ -270,7 +270,7 @@ div.innercontents h5{
 	
 div.innercontents h5 a{
 	font-size: 30px;
-	font-family: "Cambria";
+	font-family: "Cambria", sans-serif;
 	color: white;	
 	text-shadow: 1px 1px 5px black;
 }
@@ -426,14 +426,20 @@ div.submit{
 
 	
 div#article_container{
-	padding-top: 2em;
+	font-family: "Lato", sans-serif;
+	margin-top: 40px;
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
+	background-color:  rgba(0,0,0,0.05);
+	
 }
 div#article_container #article{
-
 	padding: 1em 3em 4em;
 	font-size: 14px;
 	word-spacing: -0.05em;
 	line-height: 1.3em;
+	
 
 }
 
@@ -441,6 +447,7 @@ div#article_container #article img{
 	display: block;
 	}
 #article_options{
+	margin-top: 30px;
 	padding: 0em 3em 0em;
 	}
 	
@@ -450,6 +457,7 @@ div#article_container #article img{
 	
 #article_options #options{
 	margin-left:10px;
+	float: right;
 	
 }
 #article_options #options a{	
@@ -461,17 +469,87 @@ div#article_container #article img{
 	float: right;
 }	
 div#article_container #article h1{
+	font-family: "Cambria", sans-serif;
 	font-size: 24px;
 }
 
-div#article_container #article h2{
+#article h2, #article h3,#article h4,#article h5,#article h6{
+	font-family: "Cambria", sans-serif;
 	font-size: 20px;
 }
 
 
+div#article_container .columns:first-child{
+	background-color: #f9f9f9;
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
+}
+
+
 div#article_container #comments{
+	margin: 0;
+	padding: 0;
+
+}
+
+div#article_container #comments #owner_comment{
+	padding: 10px;
+	-moz-box-shadow: 0 0 1px #9e9e9e;
+	-webkit-box-shadow: 0 0 1px #9e9e9e;
+	box-shadow: 0 0 1px #9e9e9e;
+	background-color:  rgba(0,0,0,0.05);
 
 	}
+
+div#article_container #comments h5{
+	padding: 10px;
+}
+
+
+div#article_container #comments span.name{
+	font-size: inherit;
+	font-weight: 700;
+	font-style: normal;
+}
+
+div#article_container #comments span{
+	font-size: 12px;
+	font-weight: 300;
+	font-style: italic;
+}
+
+div#article_container #comments span.like_reply{
+	float: right;
+	font-style: normal;
+	color: #9e9e9e;
+	}
+	
+#comments span.like_reply a{
+	color: #9e9e9e;
+	}
+
+div#article_container #comments div{
+	margin: 0;
+	padding: 10px;
+	}
+
+div#article_container #comments .comment{
+	padding: 10px;
+	-moz-box-shadow: 0 0 1px #9e9e9e;
+	-webkit-box-shadow: 0 0 1px #9e9e9e;
+	box-shadow: 0 0 1px #9e9e9e;
+	background-color:  rgba(0,0,0,0.05);
+	
+}
+div#article_container #comments .replies{
+	padding: 10px;
+	-moz-box-shadow: 0 0 1px #9e9e9e;
+	-webkit-box-shadow: 0 0 1px #9e9e9e;
+	box-shadow: 0 0 1px #9e9e9e;
+	padding-left: 40px !important;
+	}
+
 
 /* -----------------------------------------
    courses

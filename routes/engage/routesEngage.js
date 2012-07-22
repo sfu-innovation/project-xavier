@@ -686,11 +686,55 @@ exports.instructor = function (req, res) {
 
 
 exports.articleView = function (req, res) {
-
+	comment_1 = {
+		msg : "Where is it?",
+		user : userobject,
+		time : "1 hour ago",
+		replies : []
+		}
+	comment_2 = {
+		msg : "I like this" ,
+		user : userobject,
+		time : "5 mins ago",
+		replies : []
+		}
+		
+		
+	reply_comment_1 = {
+		msg : "No idea",
+		reply_to : comment_1,
+		user : user_1,
+		time : "10 mins ago"
+	}
+	reply_comment_2 = {
+		msg : "States?",
+		reply_to : comment_1,
+		user : user_2,
+		time : "5 mins ago"
+	}
+	
+	reply_comment_3 = {
+		msg : "No i dont think so",
+		reply_to : comment_1,
+		user : user_1,
+		time : "5 mins ago"
+	}
+	
+	reply_comment_4 = {
+		msg : "Yah me too",
+		reply_to : comment_2,
+		user : user_2,
+		time : "2 mins ago"
+	}
+	
+	comment_1.replies = [reply_comment_1,reply_comment_2,reply_comment_3];
+	comment_2.replies =  [reply_comment_4];
+		
 	if (req.session && req.session.user) {
 		var pickedArticle = articles[req.params.id - 1];
 		res.render("engage/article", { title:"SFU ENGAGE",
 			article : pickedArticle,
+			comments : [comment_1, comment_2],
 			user:userobject,
 			courses : req.session.courses,
 			status:"logged in"     }, function(err, rendered){

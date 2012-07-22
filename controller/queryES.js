@@ -635,19 +635,29 @@ QueryES.prototype.addComment = function(data, appType, callback){
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-
+				console.log("document added");
+			/*
 				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
-					if(err)
+					if(err){
+						console.log(err);
 						return callback(err);
+					}
 
 					delete args.description;
 					notification.addCommentNotifier(args, function(err, result){
-						if(err)
+						if(err){
+							console.log(err);
 							callback(err);
+						}
+
+						console.log('complete');
 
 						callback(null, esData);
 					});
 				});
+			*/
+
+			callback(null, esData);
 		});
 
 	});

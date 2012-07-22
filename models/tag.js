@@ -32,7 +32,7 @@ var Tag = exports.Tag = db.define('Tag', {
 
 //Saves tag to database
 //Tag gets passed in as a JSON object
-exports.createTag = function(tag, callback){
+var createTag = exports.createTag = function(tag, callback){
 
 	tag.uuid = UUID.generate();
 	var newTag = Tag.build(tag);
@@ -63,8 +63,8 @@ exports.selectTags = function(args, callback){
 
 
 //Update a tag with specified attributes
-exports.updateTag = function(uuid, args, callback){
-	Tag.find({where: uuid}).success(function(tag) {
+var updateTag =exports.updateTag = function(uuid, args, callback){
+	Tag.find({where: {uuid: uuid}}).success(function(tag) {
 		tag.updateAttributes(args).success(function(updatedTag) {
 			callback(null, updatedTag);
 		});
@@ -94,10 +94,6 @@ exports.deleteTag = function(args, callback) {
 		});
 }
 
-
-
-
-
 //Gets a tag that belongs to a user
 exports.getUserTag = function(args, callback){
 	Tag.find({where: args}).success(function(tag){		
@@ -122,5 +118,52 @@ exports.getQuestionUUIDS = function(mediaUUID, callback){
 		callback(null, questions);
 	}).error(function(error){
 		callback(error, null);
+	})
+}
+
+var getLastWatched = exports.getLastWatched = function(userUUID, callback){
+	var Profile = require(__dirname + "/userProfile.js").UserProfile;
+	Profile.find({where: {user:userUUID}}).success(function(profile){
+		if(profile.lastWatchedTag){
+			Tag.find({where: {uuid:profile.lastWatchedTag}}).success(function(tag){
+				callback(null, tag);
+			}).error(function(error){
+				callback(error, null);
+			});
+		}
+		else{
+			callback(null, null);
+		}
+	}).error(function(error){
+		callback(error, null);
+	});
+}
+
+exports.updateLastWatched = function(userUUID, args, callback){
+	getLastWatched(userUUID, function(error, tag){
+		if(!error){
+			if(tag){
+				updateTag(tag.uuid, args, function(error, tag){
+					callback(error, tag);
+				});
+			}
+			else{
+				var Profile = require(__dirname + "/userProfile.js");
+				args.user   = userUUID;
+				createTag(args, function(error, tag){
+					Profile.updateProfile(userUUID, {'lastWatchedTag':tag.uuid}, function(error, profile){
+						if(!error){
+							callback(null, tag);
+						}
+						else{
+							callback(error, null);
+						}					
+					})
+				});
+			}
+		}
+		else{
+			callback(error, null);
+		}
 	})
 }

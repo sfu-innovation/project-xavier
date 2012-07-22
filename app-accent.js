@@ -100,9 +100,12 @@ app.get("/api/question/:uid/comments", routesAccent.commentsByQuestion); // get 
 //tags
 
 app.post("/api/tag", routesAccent.tag); // create a new tag
+app.get("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
+app.put("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
 app.get("/api/tag/:id", routesAccent.tag); // get a tag by id
 app.put("/api/tag/:id", routesAccent.tag); // update a tag by id
 app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
+app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
 
 
@@ -112,7 +115,6 @@ app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagge
 app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
 app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
-app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
 
 

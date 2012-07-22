@@ -43,8 +43,8 @@ exports.getUserProfile = function(userUUID, callback){
 
 exports.updateProfile = function(userUUID, args, callback){
 	UserProfile.find({where: {user: userUUID}}).success(function(profile){
-		profile.updateAttributes(args).success(function(thing){
-			callback(null, thing);
+		profile.updateAttributes(args).success(function(profile){
+			callback(null, profile);
 		}).error(function(error){
 			callback(error, null);
 		})

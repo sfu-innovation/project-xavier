@@ -12,13 +12,13 @@ jQuery(document).ready(function ($) {
 	if (window.location.toString().indexOf('starred') != -1) {
 		//if starred
 		//TODO: change to a better method later
+
 		$('#starred_btn').addClass('active');
+
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		//if starred
-		//TODO: change to a better method later
 		$('#instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
@@ -35,7 +35,22 @@ jQuery(document).ready(function ($) {
 	}
 	else {
 		$('#all_btn').addClass('active');
+		$('#weeks-bar a').removeClass('active');
+
 		loadAllArticles(engage);
+
+		$('#weeks-bar a').bind('click',function(){
+			var weekObj = $(this);
+			var week = weekObj.attr('data-week');
+			if (week){
+				$('#weeks-bar a').removeClass('active');
+				weekObj.addClass('active');
+				loadAllArticles(engage,week);
+			}
+
+
+
+		})
 	}
 
 	$('span.typicn.star').live('click', function () {
@@ -268,7 +283,7 @@ function loadMyArticles(engage) {
 }
 
 
-function loadAllArticles(engage) {
+function loadAllArticles(engage, week) {
 	var	cached_json = localStorage.getItem('allArticles');
 	if(cached_json){
 		var data = JSON.parse(cached_json);
@@ -282,35 +297,66 @@ function loadAllArticles(engage) {
 
 		});
 	}
+	if (week){
+		engage.getResourcesByCourseUUIDsAndWeek(week, function(data){
+			if (data) {
+				if (data.errorcode == 0) {
+					localStorage.setItem('allArticles', JSON.stringify(data));
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
 
-	engage.getResourcesByCourseUUIDs(function (data) {
-		if (data) {
-			if (data.errorcode == 0) {
-				localStorage.setItem('allArticles', JSON.stringify(data));
-				$('.articlebox').remove();
-				//$('#contents').empty();
-				console.log(data);
-				$.each(data.resources, function (index, item) {
-
-					console.log(item);
-					article = renderArticlePreviewBox(item);
+						console.log(item);
+						article = renderArticlePreviewBox(item);
 
 
-					$('#contents').append(article);
-				});
+						$('#contents').append(article);
+					});
 
+				}
+
+				else {
+
+				}
 			}
-
 			else {
 
 			}
-		}
-		else {
+		})
 
-		}
+	}
+	else{
+		engage.getResourcesByCourseUUIDs(function (data) {
+			if (data) {
+				if (data.errorcode == 0) {
+					localStorage.setItem('allArticles', JSON.stringify(data));
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
+
+						console.log(item);
+						article = renderArticlePreviewBox(item);
 
 
-	})
+						$('#contents').append(article);
+					});
+
+				}
+
+				else {
+
+				}
+			}
+			else {
+
+			}
+
+
+		})
+	}
+
 }
 
 function loadStarredArticles(engage) {

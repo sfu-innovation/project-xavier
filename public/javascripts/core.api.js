@@ -302,6 +302,20 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCourseUUIDsAndWeek = function(week, callback){
+			console.log("API - getResourcesByCourseUUIDsAndWeek");
+			$.ajax({
+
+				url:'/api/resources/week/'+week,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
+
 		this.getResourcesByCurrentUserId = function(callback){
 			console.log("API - getResourcesByCurrentUserId");
 			$.ajax({

@@ -46,6 +46,8 @@ jQuery(document).ready(function ($) {
 				loadAllArticles(engage, week);
 			}
 
+			return false;
+
 
 		})
 	}
@@ -72,6 +74,9 @@ jQuery(document).ready(function ($) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
 					self.removeClass('starred');
+					if (window.location.toString().indexOf('starred') != -1) {
+						self.parent().parent().parent().fadeOut('slow', function(){ $(this).remove();});
+					}
 				}
 
 			})

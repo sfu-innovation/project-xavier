@@ -127,7 +127,7 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F05",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"kio ludoj vi ludas?",
 			"body":"kio ludoj vi ludas?",
 			"category":"academic",
@@ -148,7 +148,7 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F06",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
 			"body":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
 			"category":"academic",
@@ -169,7 +169,7 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F07",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"chu scias la respondon al hejmtasko demando kvin?",
 			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
 			"category":"academic",
@@ -209,7 +209,7 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F08",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"chu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
 			"body":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
 			"category":"academic",
@@ -249,7 +249,7 @@
 		"_id":"pJfzndwdadddQuOicWWAjx7F09",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"Chu ke iu povas klarigi la diagramo sur pago 125?",
 			"body":"Chu ke iu povas klarigi la diagramo sur pago 125?",
 			"category":"academic",
@@ -308,7 +308,7 @@
 		"_id":"aJfznhseQuOicWWAjx7F12",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"When can we register for courses?",
 			"body":"some description",
 			"category":"academic",
@@ -365,7 +365,7 @@
 		"_id":"aJfzndwdadddQuOicWWAjx7F15",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"What the muck dude?",
 			"body":"some description",
 			"category":"academic",
@@ -384,7 +384,7 @@
 		"_id":"A7S7FWGA8SD11A7SDF8ASD16",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"When can we register for courses?",
 			"body":"some description",
 			"category":"academic",
@@ -441,7 +441,7 @@
 		"_id":"bd9e5ca1-26fe-4429-a5b0-46cffa6b5c2b",
 		"_score":1,
 		"_source":
-		{"user":"jbo1",
+		{"user":"jhc20",
 			"title":"What the duck dude?",
 			"body":"some description",
 			"category":"academic",

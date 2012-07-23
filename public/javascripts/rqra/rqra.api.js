@@ -305,7 +305,12 @@ rqra._construct = function () {
 
 		})
 
-	}		
+	}
+
+	this.test = function(id, callback) {
+		console.log('yo whats wrong......')
+		callback('sweet gentle')
+	}
 }
 
 rqra._construct();

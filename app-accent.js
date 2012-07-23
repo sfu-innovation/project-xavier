@@ -67,7 +67,7 @@ app.get("/api/questions/mediafile/:id", routesAccent.getQuestionsByMedia); // ge
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
-app.get("/api/user/:uid/questions", routesAccent.questionsByUser); // get all questions for a user
+app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
 //deprecated
 //app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question

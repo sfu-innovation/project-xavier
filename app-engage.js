@@ -71,8 +71,8 @@ app.get('/api/resources/starred', routesEngage.starredResources);	//get all star
 
 app.get('/api/resources/user/:id', routesEngage.starredResources);	//get all  resources by user id
 
-app.get('/api/course/:id/resources/',routesEngage.resourcesInCourse);
-
+app.get('/api/course/:id/resources/',routesEngage.resourcesInCourse);  //get all resources in a course, not using common one as it does not meet engage requirement.
+app.get('/api/course/:id/resources/week/:week',routesEngage.resourcesInCourseByWeek);
 
 
 app.post('/api/resource', routesEngage.createResource);

@@ -230,18 +230,19 @@ exports.resourcesInSection = function (request, response) {
 
 exports.resourcesInCourse = function (req, res) {
 
-	if (req.session && req.session.user && req.session.courses){
+	if (req.session && req.session.user && req.session.courses) {
 		var course_uuid = req.params.id;
 		var user_uuid = req.session.user.uuid;
 		var courses = req.session.courses;
 		var found = 0;
-		courses.forEach(function(course){
-			if (course.uuid === course_uuid){
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
 				found = 1;
-			};
+			}
+			;
 		})
 
-		if (found){
+		if (found) {
 			Resource.getResourcesByCourseUUIDs({uuids:[course_uuid]}, function (error, result) {
 
 				if (result) {
@@ -258,7 +259,7 @@ exports.resourcesInCourse = function (req, res) {
 			})
 		}
 
-		else{
+		else {
 			res.writeHead(401, { 'Content-Type':'application/json' });
 			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
 		}
@@ -271,6 +272,53 @@ exports.resourcesInCourse = function (req, res) {
 
 
 }
+
+exports.resourcesInCourseByWeek = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses) {
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		var weekNum = req.params.week;
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
+				found = 1;
+			}
+			;
+		})
+
+		if (found) {
+			Resource.getResourcesByCourseUUIDsAndWeek({week: weekNum, uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					Resource.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else {
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
 
 
 

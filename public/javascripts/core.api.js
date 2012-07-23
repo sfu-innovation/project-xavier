@@ -312,6 +312,19 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCourseUUIDAndWeek = function(id, week, callback){
+			console.log("API - getResourcesByCourseUUIDAndWeek");
+			$.ajax({
+
+				url:'/api/course/'+id+'/resources/week/'+week,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
 
 		this.getResourcesByCourseUUIDs = function(callback){
 			console.log("API - getResourcesByCourseUUIDs");

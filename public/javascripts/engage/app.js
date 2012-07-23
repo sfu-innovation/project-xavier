@@ -38,6 +38,20 @@ jQuery(document).ready(function ($) {
 
 		loadCourseArticles(engage);
 
+		$('#weeks-bar a').bind('click', function () {
+			var weekObj = $(this);
+			var week = weekObj.attr('data-week');
+			if (week) {
+				$('#weeks-bar a').removeClass('active');
+				weekObj.addClass('active');
+				loadCourseArticles(engage, week);
+			}
+
+			return false;
+
+
+		})
+
 
 	}
 	else {
@@ -269,40 +283,70 @@ function loadMyArticles(engage) {
 }
 
 
-function loadCourseArticles(engage) {
+function loadCourseArticles(engage, week) {
 	var id =  $('#hidden-info').attr('data-course-id');
 
 	if(id){
+		if(week){
+			engage.getResourcesByCourseUUIDAndWeek(id,week, function (data) {
+				if (data) {
+					if (data.errorcode == 0) {
 
-		engage.getResourcesByCourseUUID(id, function (data) {
-			if (data) {
+						$('.articlebox').remove();
+						//$('#contents').empty();
+						console.log(data);
+						$.each(data.resources, function (index, item) {
 
-				if (data.errorcode == 0) {
-
-					$('.articlebox').remove();
-					//$('#contents').empty();
-					console.log(data);
-					$.each(data.resources, function (index, item) {
-
-						console.log(item);
-						article = renderArticlePreviewBox(item);
+							console.log(item);
+							article = renderArticlePreviewBox(item);
 
 
-						$('#contents').append(article);
-					});
+							$('#contents').append(article);
+						});
 
+					}
+
+					else {
+
+					}
 				}
-
 				else {
 
 				}
-			}
-			else {
+			})
+		}
+		else{
+			engage.getResourcesByCourseUUID(id, function (data) {
+				if (data) {
 
-			}
+					if (data.errorcode == 0) {
+
+						$('.articlebox').remove();
+						//$('#contents').empty();
+						console.log(data);
+						$.each(data.resources, function (index, item) {
+
+							console.log(item);
+							article = renderArticlePreviewBox(item);
 
 
-		})
+							$('#contents').append(article);
+						});
+
+					}
+
+					else {
+
+					}
+				}
+				else {
+
+				}
+
+
+			})
+		}
+
 
 
 	}

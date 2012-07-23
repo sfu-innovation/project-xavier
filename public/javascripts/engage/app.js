@@ -37,10 +37,12 @@ jQuery(document).ready(function ($) {
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
-		loadCourseArticles(engage,weekNum);
+		loadCourseArticles(engage, weekNum);
 
-
-
+		$(window).bind( 'hashchange', function(e) {
+			var weekNum = (window.location.toString().split('#week'))[1];
+			loadCourseArticles(engage, weekNum);
+		});
 
 		$('#weeks-bar a').bind('click', function () {
 			var weekObj = $(this);
@@ -52,8 +54,6 @@ jQuery(document).ready(function ($) {
 			}
 
 
-
-
 		})
 
 
@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
-		loadAllArticles(engage,weekNum);
+		loadAllArticles(engage, weekNum);
 
 
 		$('#weeks-bar a').bind('click', function () {
@@ -74,8 +74,6 @@ jQuery(document).ready(function ($) {
 				weekObj.addClass('active');
 				loadAllArticles(engage, week);
 			}
-
-
 
 
 		})
@@ -104,7 +102,9 @@ jQuery(document).ready(function ($) {
 				if (data && data.errorcode === 0) {
 					self.removeClass('starred');
 					if (window.location.toString().indexOf('starred') != -1) {
-						self.parent().parent().parent().fadeOut('slow', function(){ $(this).remove();});
+						self.parent().parent().parent().fadeOut('slow', function () {
+							$(this).remove();
+						});
 					}
 				}
 
@@ -219,7 +219,6 @@ function initUI() {
 function loadInstructorArticles(engage) {
 
 
-
 	engage.getResourcesByCourseUUIDs(function (data) {
 
 		if (data) {
@@ -290,11 +289,11 @@ function loadMyArticles(engage) {
 
 
 function loadCourseArticles(engage, week) {
-	var id =  $('#hidden-info').attr('data-course-id');
+	var id = $('#hidden-info').attr('data-course-id');
 
-	if(id){
-		if(week){
-			engage.getResourcesByCourseUUIDAndWeek(id,week, function (data) {
+	if (id) {
+		if (week) {
+			engage.getResourcesByCourseUUIDAndWeek(id, week, function (data) {
 				if (data) {
 					if (data.errorcode == 0) {
 
@@ -321,7 +320,7 @@ function loadCourseArticles(engage, week) {
 				}
 			})
 		}
-		else{
+		else {
 			engage.getResourcesByCourseUUID(id, function (data) {
 				if (data) {
 
@@ -352,7 +351,6 @@ function loadCourseArticles(engage, week) {
 
 			})
 		}
-
 
 
 	}
@@ -474,7 +472,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-'+ item.course.number + '-' + item.course.section + '#week' + week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + week + '">' + item.course.subject + " " + item.course.number
 			+ '-WK' + week + '</a>'
 			+ '</span>'
 
@@ -559,15 +557,6 @@ function renderPreviewImage(item) {
 
 
 	return  previewImage
-
-
-//	if (item.thumbnail) {
-//
-//		return '<img src="' + item.thumbnail + '" alt="' + item.title + '" />';
-//	}
-//	else {
-//		return '<img src="http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg" alt="' + item.title + '" />';
-//	}
 
 
 }

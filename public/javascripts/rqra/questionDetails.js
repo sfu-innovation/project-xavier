@@ -2,7 +2,8 @@ var rqra = new coreApi.Presenter();
 
 function formatQuestion(question) {
 	return "<div class='detailedQuestion'>"
-			+ "<div class='questionText'>" + question._source.body + "</div>"
+			+ "<div class='questionTitle'>" + question._source.title + "</div>"
+			+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
@@ -14,14 +15,14 @@ function formatQuestion(question) {
 }
 
 function formatComment(comment) {
-	return "<div class='comment'>"
-			+ "<div class='questionText'>" + comment._source.body + "</div>"
+	return "<div class='detailedQuestion'>"
+			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + comment._source.user + "</span></div>"
-				+ "<div class='votes'><img src='../images/rqra/up.png' alt='UpVotes'/>" + comment._source.upvote + " </div>"
-				+ "<div class='votes'><img src='../images/rqra/down.png' alt='DownVotes'/>" + comment._source.downvote + " </div>"
+				+ "<div class='votes'>" + comment._source.upvote + " <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
+				+ "<div class='votes'>" + comment._source.downvote + " <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
 			+ "</div>";
 }
 

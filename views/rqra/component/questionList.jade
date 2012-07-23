@@ -1,4 +1,10 @@
-div#content
+div#questionListContent
+	div#questionCount
+		div#questionCountNumber 25
+		div#questionCountText
+			div#questionCountText1 Questions
+			div#questionCountText2 for this Week
+			
 	div#questionHeader
 		div#listInfo
 			h1#courseTitle Questions for 
@@ -13,12 +19,6 @@ div#content
 				div.tab(onclick="displayQuestions('viewed', 0)") Most Viewed
 				div.tab(onclick="displayQuestions('unanswered', 0)") Unanswered Questions
 				div.tab(onclick="displayQuestions('myQuestions', 0)") My Questions
-	
-	div#questionCount
-		div#questionCountNumber 25
-		div#questionCountText
-			div#questionCountText1 Questions
-			div#questionCountText2 for this Week
 	
 	div#questionsList		
 					

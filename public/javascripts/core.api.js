@@ -536,6 +536,19 @@ coreApi._construct = function () {
 				}
 			});
 		}
+
+		this.getCommentsByQuestion = function(questionUUID, callback) {
+			console.log("API - getCommentsByQuestion");
+						
+			$.ajax({
+				url:'/api/question/' + questionUUID + '/comments/page/0',
+				type:'GET',				
+				contentType:'application/json',				
+				success:function(data) {
+					callback(data);
+				}
+			});
+		}
 		
 	   //comments
 
@@ -670,19 +683,6 @@ coreApi._construct = function () {
 				}
 			});
 		}
-
-		this.getCommentsByUserId = function (user_id, callback) {
-			console.log("API - getCommentsByUserId");
-			$.ajax({
-				url:'/api/user/' + user_id + '/comments',
-				type:'GET',
-				success:function (data) {
-					callback(data);
-
-				}
-			});
-		}
-
 
 		this.upVoteCommentById = function(id, callback){
 			console.log('API - upVoteCommentById');

@@ -318,7 +318,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"SIAT270",
+			"week":0
 		}
 	},
 	{
@@ -375,7 +377,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
 		}
 	},
 	{
@@ -394,7 +398,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"CMPT307",
+			"week":0
 		}
 	},
 	{
@@ -451,7 +457,9 @@
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
-			"commentCount":0
+			"commentCount":0,
+			"course":"IAT100",
+			"week":0
 		}
 	}
 ]

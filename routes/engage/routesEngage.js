@@ -1,3 +1,5 @@
+var EngageAction =   require('../../controller/EngageAction');
+
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
@@ -102,7 +104,7 @@ exports.starredResources = function (req, res) {
 		if (req.session && req.session.user) {
 			Star.getStarredResources(req.session.user.uuid, function (error, result) {
 				if (result) {
-					Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+					EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -246,7 +248,7 @@ exports.resourcesInCourse = function (req, res) {
 			Resource.getResourcesByCourseUUIDs({uuids:[course_uuid]}, function (error, result) {
 
 				if (result) {
-					Resource.resourceHelper(user_uuid, result, function (error, result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -289,10 +291,11 @@ exports.resourcesInCourseByWeek = function (req, res) {
 		})
 
 		if (found) {
-			Resource.getResourcesByCourseUUIDsAndWeek({week: weekNum, uuids:[course_uuid]}, function (error, result) {
+			var week = EngageAction.weekHelper(weekNum);
+			Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:[course_uuid]}, function (error, result) {
 
 				if (result) {
-					Resource.resourceHelper(user_uuid, result, function (error, result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -334,7 +337,7 @@ exports.resourcesInCourses = function (req, res) {
 	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -357,10 +360,11 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 	}
 
 	var weekNum = req.params.week;
-	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum, uuids:CourseUUIDs}, function (error, result) {
+	var week = EngageAction.weekHelper(weekNum);
+	Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -381,7 +385,7 @@ exports.resourcesOfCurrentUser = function (req, res) {
 		Resource.getResourceByUserId({user:req.session.user.uuid}, function (error, result) {
 
 			if (result) {
-				Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 					res.writeHead(200, { 'Content-Type':'application/json' });
 					res.end(JSON.stringify({ errorcode:0, resources:result }));
 				})

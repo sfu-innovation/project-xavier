@@ -47,7 +47,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
-app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
+//app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
 
 
@@ -70,6 +70,8 @@ app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resource
 app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
 
 app.get('/api/resources/user/:id', routesEngage.starredResources);	//get all  resources by user id
+
+app.get('/api/course/:id/resources/',routesEngage.resourcesInCourse);
 
 
 

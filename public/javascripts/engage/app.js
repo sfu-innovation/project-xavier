@@ -31,6 +31,15 @@ jQuery(document).ready(function ($) {
 
 
 	}
+	else if (window.location.toString().indexOf('course') != -1) {
+
+		$('#all_btn').addClass('active');
+		$('#weeks-bar a').removeClass('active');
+
+		loadCourseArticles(engage);
+
+
+	}
 	else {
 		$('#all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
@@ -189,19 +198,7 @@ function initUI() {
 
 function loadInstructorArticles(engage) {
 
-	var cached_json = localStorage.getItem('allArticles');
-	if (cached_json) {
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
 
-			console.log(item);
-			if (item.user.type === 1) {
-				article = renderArticlePreviewBox(item);
-				$('#contents').append(article);
-			}
-
-		});
-	}
 
 	engage.getResourcesByCourseUUIDs(function (data) {
 
@@ -209,7 +206,7 @@ function loadInstructorArticles(engage) {
 
 
 			if (data.errorcode == 0) {
-				localStorage.setItem('allArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
@@ -239,25 +236,12 @@ function loadInstructorArticles(engage) {
 
 
 function loadMyArticles(engage) {
-	var cached_json = localStorage.getItem('myArticles');
-	if (cached_json) {
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
-
-			console.log(item);
-
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
-
-
-		});
-	}
 
 	engage.getResourcesByCurrentUserId(function (data) {
 		if (data) {
 
 			if (data.errorcode == 0) {
-				localStorage.setItem('myArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
@@ -285,25 +269,55 @@ function loadMyArticles(engage) {
 }
 
 
-function loadAllArticles(engage, week) {
-	var cached_json = localStorage.getItem('allArticles');
-	if (cached_json) {
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
+function loadCourseArticles(engage) {
+	var id =  $('#hidden-info').attr('data-course-id');
 
-			console.log(item);
+	if(id){
 
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
+		engage.getResourcesByCourseUUID(id, function (data) {
+			if (data) {
+
+				if (data.errorcode == 0) {
+
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
+
+						console.log(item);
+						article = renderArticlePreviewBox(item);
 
 
-		});
+						$('#contents').append(article);
+					});
+
+				}
+
+				else {
+
+				}
+			}
+			else {
+
+			}
+
+
+		})
+
+
 	}
+
+
+}
+
+
+function loadAllArticles(engage, week) {
+
 	if (week) {
 		engage.getResourcesByCourseUUIDsAndWeek(week, function (data) {
 			if (data) {
 				if (data.errorcode == 0) {
-					localStorage.setItem('allArticles', JSON.stringify(data));
+
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
@@ -332,7 +346,7 @@ function loadAllArticles(engage, week) {
 		engage.getResourcesByCourseUUIDs(function (data) {
 			if (data) {
 				if (data.errorcode == 0) {
-					localStorage.setItem('allArticles', JSON.stringify(data));
+
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
@@ -362,25 +376,13 @@ function loadAllArticles(engage, week) {
 }
 
 function loadStarredArticles(engage) {
-	var cached_json = localStorage.getItem('starredArticles');
-	if (cached_json) {
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
 
-			console.log(item);
-
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
-
-
-		});
-	}
 
 	engage.getStarredResources(function (data) {
 //	engage.getResourcesByCourseUUIDs(function(data){
 		if (data) {
 			if (data.errorcode == 0) {
-				localStorage.setItem('starredArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);

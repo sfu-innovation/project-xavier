@@ -297,6 +297,20 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCourseUUID = function(id,callback){
+			console.log("API - getResourcesByCourseUUID");
+			$.ajax({
+
+				url:'/api/course/'+id+'/resources/',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
 
 
 		this.getResourcesByCourseUUIDs = function(callback){

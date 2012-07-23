@@ -3,6 +3,7 @@ var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
 var Course = require(__dirname + "/../../models/course");
+var CourseMember = require(__dirname + "/../../models/courseMember");
 
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
@@ -225,6 +226,53 @@ exports.getLikes = function (request, response) {
 exports.resourcesInSection = function (request, response) {
 	routesCommon.resourcesInSection(2, request, response);
 }
+
+
+exports.resourcesInCourse = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses){
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		courses.forEach(function(course){
+			if (course.uuid === course_uuid){
+				found = 1;
+			};
+		})
+
+		if (found){
+			Resource.getResourcesByCourseUUIDs({uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					Resource.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else{
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
+
 
 exports.resourcesInCourses = function (req, res) {
 	var CourseUUIDs = [];

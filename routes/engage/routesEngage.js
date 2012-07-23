@@ -2,7 +2,7 @@ var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
-var Course = require(__dirname + "/../../models/user");
+var Course = require(__dirname + "/../../models/course");
 
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
@@ -763,6 +763,7 @@ exports.courseView = function (req, res) {
 					res.render("engage/course", { title:"SFU ENGAGE",
 						courseName:courseName,
 						user:req.session.user,
+						course:result,
 
 						courses:req.session.courses
 					}, function (err, rendered) {

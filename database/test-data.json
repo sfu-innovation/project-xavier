@@ -26,7 +26,7 @@
 		},
 		{
 			"uuid":"llt3",
-			"firstName":"Cathrine",
+			"firstName":"Catherine",
 			"lastName":"Tan",
 			"type":0,
 			"userID":"llt3",
@@ -588,7 +588,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/61369000/jpg/_61369079_minke_spl.jpg"
 
 		} ,
 		{
@@ -601,10 +601,10 @@
 			"description" : "Test resource description",
 			"path" : "/resources/articles/how-to-interview-effectively.html",
 			"resourceType" : 2,
-			"fileType" : "mp4",
+			"fileType" : "html",
 			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
+			"url" : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect" ,
+			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect.",
 			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
@@ -620,9 +620,9 @@
 			"resourceType" : 2,
 			"fileType" : "html",
 			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"url" : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively/" ,
+			"excerpt": "Job interviews are a common source of anxiety, and can at times be as pleasant as a trip to the dentist.",
+			"thumbnail": "http://blogs-images.forbes.com/victorlipman/files/2012/06/300x1942.jpg"
 
 		},
 		{

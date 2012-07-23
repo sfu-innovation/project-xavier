@@ -1,23 +1,45 @@
 var routesCommon = require('./../common/routesCommon.js');
 
+//TODO: remove when everything is setup
+var fakeUserNotification = function(callback){
+	var args= {
+		app:0,
+		user:"jrf2"
+	}
+	require('../../controller/NotificationAction.js').createUserNotificationSettings(args, function(err, result){
+		if(err)
+			console.log(err);
+
+		if(result)
+			console.log("created: " + result)
+
+		callback();
+	});
+}
+
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
+		console.log(JSON.stringify(req.session.user))
 		res.render("rqra/questionsPage", { 	title: "SFU RQRA",
 			user : req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){
 
-				// console.log(rendered);
+			fakeUserNotification(function(){
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
-
+			})
 		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
 //		res.redirect("/login");
-		res.redirect("/demo");
+
 		//login with demo user, remove when everything is set.
+		fakeUserNotification(function(){
+			console.log("redirect");
+			res.redirect("/questions");
+		})
 	}
 
 };
@@ -61,6 +83,10 @@ exports.questionFormPage = function(request, response) {
 
 exports.notificationList = function(request, response) {
 	response.render('rqra/component/notificationList', { title: "Demo" });
+}
+
+exports.updateUserNotifications = function(request, response){
+	routesCommon.updateUserNotifications(0, request, response);
 }
 
 // backend

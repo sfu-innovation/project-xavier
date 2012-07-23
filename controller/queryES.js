@@ -46,7 +46,6 @@ var addUsersToData = function(data, callback){
 			if(error){throw error;}
 
 			if(user){
-				console.log("user found")
 				obj.user = user;
 			}
 			else{
@@ -58,7 +57,6 @@ var addUsersToData = function(data, callback){
 					done(err);
 
 				if(profile){
-					console.log('profile exists')
 					obj.profile = profile.profilePicture;
 				}
 				result.hits.push(obj);

@@ -19,7 +19,7 @@ var fakeUserNotification = function(callback){
 
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
-		console.log(JSON.stringify(req.session.user))
+
 		res.render("rqra/questionsPage", { 	title: "SFU RQRA",
 			user : req.session.user,
 			courses : req.session.courses,
@@ -83,6 +83,10 @@ exports.questionFormPage = function(request, response) {
 
 exports.notificationList = function(request, response) {
 	response.render('rqra/component/notificationList', { title: "Demo" });
+}
+
+exports.updateUserNotifications = function(request, response){
+	routesCommon.updateUserNotifications(0, request, response);
 }
 
 // backend

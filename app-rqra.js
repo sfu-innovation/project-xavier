@@ -81,7 +81,7 @@ app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses ba
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 
 // notification
-
+app.put("/api/user/notification", routesRqra.updateUserNotifications);
 // questions
 
 //TODO: need update this into document

@@ -1,22 +1,25 @@
 var common = new coreApi.Common();
 
 function setSelected(button, select) {
+	var buttonText = button.querySelector(".courseButtonText");
 	var selectorTop = button.querySelector(".courseButtonSelectorTop");
 	if (selectorTop) {
 		if (!select) {
 			selectorTop.style.height = "0%";
+			buttonText.style.fontWeight = "normal";
 		} else {
 			selectorTop.style.height = "100%";
+			buttonText.style.fontWeight = "bold";
 		}
 	}
 	
 	var selectorBottom = button.querySelector(".courseButtonSelectorBottom");
 	if (selectorBottom) {
 		if (!select) {
-			selectorBottom.style.top = "35px";
+			selectorBottom.style.top = "2.5em";
 			selectorBottom.style.opacity = "0";
 		} else {
-			selectorBottom.style.top = "30px";
+			selectorBottom.style.top = "2.1em";
 			selectorBottom.style.opacity = "100";
 		}
 	}

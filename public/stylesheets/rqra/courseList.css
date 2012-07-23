@@ -5,7 +5,7 @@ div#courseList {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	margin-bottom: 35px;
+	margin-bottom: 2.75em;
 	z-index: -100;
 }
 
@@ -19,9 +19,9 @@ div.courseButton {
 	position: relative;
 	color: white;
 	background: #394161;
-	padding: 0px;
-	height: 30px;
-	width: 100px;
+	padding: 0em;
+	height: 2.1em;
+	width: 6.4em;
 	border-bottom: 4px solid white;
 	cursor: pointer;
 }
@@ -29,9 +29,9 @@ div.courseButton {
 div.courseButtonSelectorTop {
 	position: absolute;
 	display: block;
-	top: 0px;
-	left: 0px;
-	height: 0px;
+	top: 0em;
+	left: 0em;
+	height: 0em;
 	width: 100%;
 	background: #1b88d0;
 	-webkit-transition: all 200ms linear;
@@ -40,9 +40,9 @@ div.courseButtonSelectorTop {
 div.courseButtonSelectorBottom {
 	position: absolute;
 	display: block;
-	top: 35px;
-	left: 0px;
-	height: 5px;
+	top: 2.1em;
+	left: 0em;
+	height: 0.3em;
 	opacity: 0;
 	width: 100%;
 	background: #4d4d4d;
@@ -51,15 +51,11 @@ div.courseButtonSelectorBottom {
 
 div.courseButtonText {
 	position: absolute;
-	left: 15px;
-	top: 5px;
+	left: 0.95em;
+	top: 0.45em;
 	text-align: center;
 }
 
 div.courseButtonSelected {
-	color: white;
-	background: #1b88d0;
-	padding: 6px;
-	border-bottom: 4px solid #4d4d4d;
-	cursor: pointer;
+	font-weight: bold;
 }

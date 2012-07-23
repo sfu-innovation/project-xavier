@@ -64,7 +64,7 @@ var addUsersToData = function(data, callback){
 			})
 		});
 	}, function(err){
-		console.log(JSON.stringify(result))
+		//console.log(JSON.stringify(result))
 		callback(err, result);
 	});
 }

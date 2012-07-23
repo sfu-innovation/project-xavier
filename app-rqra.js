@@ -89,7 +89,7 @@ app.post("/api/question", routesRqra.question); // post a new question by user i
 
 
 //TODO: need update this into document
-app.put("/api/questions/view/:uid", routesRqra.questionViewCount); // increase view count
+app.put("/api/questions/:uid/views", routesRqra.questionViewCount); // increase view count
 app.get("/api/questions/instructor/page/:page", routesRqra.instructorQuestions);	//get all instructor questions
 app.get("/api/questions/page/:page", routesRqra.questions); //P, get all questions
 app.get("/api/questions/unanswered/page/:page", routesRqra.questionsUnanswered); //P, get all unanswered questions

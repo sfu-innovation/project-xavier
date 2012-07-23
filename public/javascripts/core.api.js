@@ -466,6 +466,21 @@ coreApi._construct = function () {
 				}
 			});
 		}
+		
+		this.updateQuestionViews = function (id, callback) {
+			console.log("API - updateQuestionViews");
+			var body = {};
+			$.ajax({
+				url:'/api/questions/' + id + '/views/',
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 		this.deleteQuestionById = function (id, callback) {

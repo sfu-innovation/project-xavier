@@ -25,10 +25,15 @@ function formatComment(comment) {
 			+ "</div>";
 }
 
-function loadPage() {
+function loadPage(first) {
 	var questionId = window.location.pathname.replace("/question/", "");
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
+	
+	// updates page view count
+	if (first) {
+		rqra.updateQuestionViews(questionId, function(data) {});
+	}
 	
 	// get question
 	rqra.getQuestionById(questionId, function(data) {
@@ -57,9 +62,9 @@ function postComment() {
 	rqra.createComment(questionId, commentBody, function(data) {
 		console.log(data);
 		if (data && data.errorcode === 0) {
-			loadPage();
+			loadPage(false);
 		}
 	});
 }
 
-loadPage();
+loadPage(true);

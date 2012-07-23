@@ -1,14 +1,29 @@
-div#timeline
-	div#timelineButton1(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") All
-	div#timelineButton2(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week1
-	div#timelineButton3(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week2
-	div#timelineButton4(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week3
-	div#timelineButton5(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week4
-	div#timelineButton6(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week5
-	div#timelineButton7(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week6
-	div#timelineButton8(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week7
-	div#timelineButton9(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week8
-	div#timelineButton10(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week9
-	div#timelineButton11(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week10
-	div#timelineButton12(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week11
-	div#timelineButton13(class="timelineButton", onmouseover="this.style.width = '75px'; this.style.color = 'rgba(255,255,255,255)';", onmouseout="this.style.width = '15px'; this.style.color = 'rgba(0,0,0,0)';") Week12
+script(type="text/javascript")
+	function timelineMouseOver(timeline) {
+		if (window.event.target !== timeline) {
+			window.event.target.style.width='4.5em'; 
+			window.event.target.style.color = 'rgba(255,255,255,255)';
+		}
+	}
+	
+	function timelineMouseOut(timeline) {
+		if (window.event.target !== timeline) {
+			window.event.target.style.width = '0.8em'; 
+			window.event.target.style.color = 'rgba(0,0,0,0)';
+		}
+	}
+
+div#timeline(onmouseover="timelineMouseOver(this)", onmouseout="timelineMouseOut(this)")
+	div#timelineButton1(class="timelineButton") All
+	div#timelineButton2(class="timelineButton") Week1
+	div#timelineButton3(class="timelineButton") Week2
+	div#timelineButton4(class="timelineButton") Week3
+	div#timelineButton5(class="timelineButton") Week4
+	div#timelineButton6(class="timelineButton") Week5
+	div#timelineButton7(class="timelineButton") Week6
+	div#timelineButton8(class="timelineButton") Week7
+	div#timelineButton9(class="timelineButton") Week8
+	div#timelineButton10(class="timelineButton") Week9
+	div#timelineButton11(class="timelineButton") Week10
+	div#timelineButton12(class="timelineButton") Week11
+	div#timelineButton13(class="timelineButton") Week12

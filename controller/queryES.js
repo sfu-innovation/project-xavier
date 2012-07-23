@@ -509,7 +509,7 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 //get a comment data based on commentID
 QueryES.prototype.getComment = function(commentID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID;
-	
+
 	db.get(link, {}, function(err, req, data){
 		if(err)
 			return callback(err);
@@ -692,16 +692,28 @@ QueryES.prototype.updateComment = function(commentID, commentBody, appType, call
 //delete a comment
 QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	var document;
-
+	var args;
 	switchIndex(appType);
 	switchMapping(1);
 
 	document = mapping.document(commentID);
-	document.delete(function(err, req, data){
+	this.getComment(commentID, 0, function(err, result){
 		if(err)
 			return callback(err);
 
-		callback(null, data);
+		document.delete(function(err, req, data){
+			if(err)
+				return callback(err);
+
+			args = {user:result._source.user, target: result._source.target_uuid, app: appType};
+
+			notification.removeCommentNotifier( args, function(err, result){
+				if(err)
+					return callback(err)
+
+				callback(null, data);
+			});
+		});
 	});
 }
 

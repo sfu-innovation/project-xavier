@@ -5,7 +5,7 @@ var prevSearchType = "latest";
 function formatQuestion(question) {
 	return "<div class='question' onclick='gotoQuestionPage(this)'>"
 			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionText'>" + question._source.body + "</div>"
+			+ "<div class='questionText'>" + question._source.title + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"

@@ -291,7 +291,8 @@ exports.resourcesInCourseByWeek = function (req, res) {
 		})
 
 		if (found) {
-			Resource.getResourcesByCourseUUIDsAndWeek({week: weekNum, uuids:[course_uuid]}, function (error, result) {
+			var week = EngageAction.weekHelper(weekNum);
+			Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:[course_uuid]}, function (error, result) {
 
 				if (result) {
 					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
@@ -359,7 +360,8 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 	}
 
 	var weekNum = req.params.week;
-	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum, uuids:CourseUUIDs}, function (error, result) {
+	var week = EngageAction.weekHelper(weekNum);
+	Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:CourseUUIDs}, function (error, result) {
 
 		if (result) {
 			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {

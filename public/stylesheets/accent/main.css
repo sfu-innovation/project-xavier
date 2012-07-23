@@ -11,7 +11,7 @@ body {
 
 @font-face {
     font-family: Futura;
-    src: url(FuturaLight.ttf);
+    src: url(font/FuturaLight.ttf);
     font-weight:400;
 }
 

@@ -496,9 +496,9 @@ coreApi._construct = function () {
 
 
 		this.getQuestionsByUserId = function (user_id, callback) {
-			console.log("API - getQuestionsByUserId");
+			console.log("API - getQuestionsByUserId");			
 			$.ajax({
-				url:'/api/user/' + user_id + '/questions',
+				url:'/api/user/' + user_id + '/questions/page/0',
 				type:'GET',
 				success:function (data) {
 					callback(data);

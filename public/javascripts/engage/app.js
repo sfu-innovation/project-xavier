@@ -36,7 +36,11 @@ jQuery(document).ready(function ($) {
 		$('#all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
-		loadCourseArticles(engage);
+		var weekNum = (window.location.toString().split('#week'))[1];
+		loadCourseArticles(engage,weekNum);
+
+
+
 
 		$('#weeks-bar a').bind('click', function () {
 			var weekObj = $(this);
@@ -47,7 +51,7 @@ jQuery(document).ready(function ($) {
 				loadCourseArticles(engage, week);
 			}
 
-			return false;
+
 
 
 		})
@@ -58,7 +62,9 @@ jQuery(document).ready(function ($) {
 		$('#all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
-		loadAllArticles(engage);
+		var weekNum = (window.location.toString().split('#week'))[1];
+		loadAllArticles(engage,weekNum);
+
 
 		$('#weeks-bar a').bind('click', function () {
 			var weekObj = $(this);
@@ -69,7 +75,7 @@ jQuery(document).ready(function ($) {
 				loadAllArticles(engage, week);
 			}
 
-			return false;
+
 
 
 		})
@@ -454,6 +460,7 @@ function loadStarredArticles(engage) {
 }
 
 function renderArticlePreviewBox(item) {
+	var week = weekConverter(item.createdAt, '2012-05-07T07:00:00.000Z');
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
@@ -467,8 +474,8 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + item.course.number + '/week/' + weekConverter(item.createdAt, '2012-05-07T07:00:00.000Z') + '">' + item.course.subject + " " + item.course.number
-			+ '-WK' + weekConverter(item.createdAt, '2012-05-07T07:00:00.000Z') + '</a>'
+			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-'+ item.course.number + '-' + item.course.section + '#week' + week + '">' + item.course.subject + " " + item.course.number
+			+ '-WK' + week + '</a>'
 			+ '</span>'
 
 			+ '</p>'

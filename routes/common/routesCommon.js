@@ -1016,32 +1016,19 @@ exports.updateUserNotifications = function(appType, request, response){
 			, notificationOnComment: request.body.notificationOnComment
 			, notificationOnStar:request.body.notificationOnStar}
 
-		UserNotificationSettings.findNotificationSettings( args, function( error , setting ){
-			if(!error){
+		Notification.updateUserNotificationSettings(args, function(err, result){
+			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
-
-				if(setting){
-					args.usernotificationsettings = setting;
-					Notification.updateUserNotificationSettings(args, function(err, result){
-						if (!err) {
-							if(result){
-								response.end(JSON.stringify({ errorcode: 0, notification: result }));
-							}
-							else{
-								response.end(JSON.stringify({ errorcode: 0, notification: "Failed to update user notification" }));
-							}
-						} else {
-							response.writeHead(500, { 'Content-Type': 'application/json' });
-							response.end(JSON.stringify({ errorcode: 1, message: err }));
-						}
-					});
-				}else{
-					response.end(JSON.stringify({ errorcode: 0, notification: "Failed to find user notification setting"}));
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "Failed to update user notification" }));
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, message: err }));
 			}
-		})
+		});
 	}
 }

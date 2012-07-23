@@ -19,7 +19,7 @@ var fakeUserNotification = function(callback){
 
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
-		console.log(JSON.stringify(req.session.user))
+
 		res.render("rqra/questionsPage", { 	title: "SFU RQRA",
 			user : req.session.user,
 			courses : req.session.courses,

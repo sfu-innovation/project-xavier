@@ -1018,8 +1018,9 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	To update the settings for specific users to get certain types of notifications
 	
 	args = {
-		usernotificationsettings: object representation of user notification settings
-		notificationsOnResource : 0 - 3 , time to send
+		user                      : id of the user
+		app                       : id of the app
+		notificationOnNewResource : 0 - 3 , time to send
 		notificationOnLike      : 0 - 3 , time to send
 		notificationOnComment   : 0 - 3, time to send
 		notificationOnStar      : 0 - 3 , time to send
@@ -1033,7 +1034,8 @@ NotificationAction.prototype.updateUserNotificationSettings = function( args, ca
 		return;
 	}
 	var containsAllProperties = (
-								  args.hasOwnProperty('usernotificationsettings') &&
+								  args.hasOwnProperty('user') &&
+								  args.hasOwnProperty('app') &&
 	                              args.hasOwnProperty('notificationOnNewResource') &&
 	                              args.hasOwnProperty('notificationOnLike') &&
 	                              args.hasOwnProperty('notificationOnComment') &&
@@ -1044,21 +1046,32 @@ NotificationAction.prototype.updateUserNotificationSettings = function( args, ca
 	}
 	
 	var arg = new Object();
+	arg.app                       = args.app;
+	arg.user                      = args.user;
 	arg.notificationOnNewResource = args.notificationOnNewResource;
-	arg.notificationOnLike = args.notificationOnLike;
-	arg.notificationOnComment = args.notificationOnComment;
-	arg.notificationOnStar = args.notificationOnStar;
-	arg.usernotificationsettings = args.usernotificationsettings;
-
-	UserNotificationSettings.updateUserNotificationSettings(arg, function( error, updatedSettings ){
+	arg.notificationOnLike        = args.notificationOnLike;
+	arg.notificationOnComment     = args.notificationOnComment;
+	arg.notificationOnStar        = args.notificationOnStar;
+	
+	
+	UserNotificationSettings.findNotificationSettings( arg, function( error , setting ){
 		if ( error ){
-			callback( error, null );
-		} else {
-			callback( null, updatedSettings );
+			callback( error, null);
+			return;
 		}
+		if ( null === setting ){
+			callback("No setting found to return", null);
+			return;
+		}
+		arg.usernotificationsettings = setting;
+		UserNotificationSettings.updateUserNotificationSettings(arg, function( error, updatedSettings ){
+			if ( error ){
+				callback( error, null );
+			} else {
+				callback( null, updatedSettings );
+			}
+		});
 	});
-	
-	
 }
 /*
 

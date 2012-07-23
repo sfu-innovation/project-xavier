@@ -94,7 +94,7 @@ app.get("/api/user/:uid/comments", routesAccent.commentsByUser); // gets a list 
 
 app.post("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments", routesAccent.commentsByQuestion); // get all of the comments for a question
+app.get("/api/question/:uid/comments/page/:page", routesAccent.commentsByQuestion); // P get all of the comments for a question
 
 
 //tags

@@ -19,8 +19,7 @@ ul#Courses
 			span.Number 209
 		a.Count(href="") 2
 	
-	each course, index in courses
-		- console.log('courses = ' + index);
+	each course, index in courses		
 		li
 			a.Name(href="")
 				span.Prefix #{course.subject}

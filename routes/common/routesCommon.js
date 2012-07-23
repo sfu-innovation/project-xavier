@@ -7,6 +7,7 @@ var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 var Notification = require(__dirname + "/../../controller/NotificationAction");
+var UserNotificationSettings = require('../../models/userNotificationSettings.js');
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -1001,5 +1002,46 @@ exports.searchQuestionsRoute = function(appType, request, response){
 				}
 			});
 		 });
+	}
+}
+
+//Notifications
+exports.updateUserNotifications = function(appType, request, response){
+	if (request.method === "PUT") {
+		args = {
+			user: request.session.user.uuid
+			, app:appType
+			, notificationOnNewResource: request.body.notificationOnNewResource
+			, notificationOnLike: request.body.notificationOnLike
+			, notificationOnComment: request.body.notificationOnComment
+			, notificationOnStar:request.body.notificationOnStar}
+
+		UserNotificationSettings.findNotificationSettings( args, function( error , setting ){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+
+				if(setting){
+					args.usernotificationsettings = setting;
+					Notification.updateUserNotificationSettings(args, function(err, result){
+						if (!err) {
+							if(result){
+								response.end(JSON.stringify({ errorcode: 0, notification: result }));
+							}
+							else{
+								response.end(JSON.stringify({ errorcode: 0, notification: "Failed to update user notification" }));
+							}
+						} else {
+							response.writeHead(500, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 1, message: err }));
+						}
+					});
+				}else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "Failed to find user notification setting"}));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
 	}
 }

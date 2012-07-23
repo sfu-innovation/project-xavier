@@ -85,6 +85,10 @@ exports.notificationList = function(request, response) {
 	response.render('rqra/component/notificationList', { title: "Demo" });
 }
 
+exports.updateUserNotifications = function(request, response){
+	routesCommon.updateUserNotifications(0, request, response);
+}
+
 // backend
 //login
 exports.login = function(request, response){

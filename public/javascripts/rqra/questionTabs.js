@@ -56,6 +56,8 @@ function displayQuestions(searchType, page) {
 				questionList.innerHTML += formatQuestion(item);
 			});
 		} else {
+			displayTotal(0);
+			displayPageNumbers(0);
 			questionList.innerHTML += "No Questions Found!";
 		}
 	});

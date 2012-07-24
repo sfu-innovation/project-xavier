@@ -69,13 +69,15 @@ app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
 app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
+app.get("/api/user/:uid/conversations/", routesAccent.getUserConversations); // Gets all questions that the user has asked or commented on
+
 //deprecated
 //app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
 app.put("/api/question/:uid/follow/:follower", routesAccent.followQuestion); // a follower follows a question
 
 app.put("/api/question/:uid/status", routesAccent.questionStatus); // updates a questions status
 
-app.post("/api/search/", routesAccent.search); // search based on a query
+app.post("/api/search/page/:page", routesAccent.search); // search based on a query
 
 // comments
 //TODO: need update this into document
@@ -87,7 +89,6 @@ app.get("/api/comments", routesAccent.comments); // get all comments
 app.get("/api/comment/:uid", routesAccent.comment); // get a comment by id
 app.put("/api/comment/:uid", routesAccent.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesAccent.comment); //deletes a comment by id
-app.get("/api/user/:uid/comments", routesAccent.commentsByUser); // gets a list of comments posted by a user
 
 //deprecated
 //app.post("/api/user/:uid/comments", routesAccent.commentsByUser); // user posts a comment
@@ -121,6 +122,7 @@ app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 //mediafile
 
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
+app.get("/api/mediafile/:id/conversations", routesAccent.getConversationsByMedia); // get all questions by media
 app.get("/api/mediafile/:id", routesAccent.mediafile); // get a mediafile by id
 app.put("/api/mediafile/:id", routesAccent.mediafile); // update a mediafile by id
 app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile by id
@@ -139,3 +141,6 @@ app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile
 //non-REST calls
 app.get('/', routesAccent.index);
 app.get('/demo', routesAccent.demoPage); //this will login you with a demo user
+
+/***NEW ROUTES */
+app.post("/api/questions/search/page/:page", routesAccent.searchQuestionsRoute);

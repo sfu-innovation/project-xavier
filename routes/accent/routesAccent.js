@@ -1,9 +1,11 @@
 var routesCommon = require('./../common/routesCommon.js');
-var TagAction    = require("./../../controller/TagAction.js");
+var AccentAction = require("./../../controller/AccentAction.js");
 var MediaAction  = require("./../../controller/MediaAction.js");
+var TagAction    = require("./../../controller/TagAction.js");
 var MediaFile    = require(__dirname + "/../../models/mediafile.js");
 var User         = require(__dirname + "/../../models/user");
 var Tag          = require(__dirname + "/../../models/tag");
+var queryES      = require(__dirname + '/../../controller/queryES.js');
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -71,6 +73,26 @@ exports.resourcesInSection = function(request, response){
 	routesCommon.resourcesInSection(1, request, response);
 }
 
+exports.getConversationsByMedia = function(request, response){
+	if(request.method === "GET"){
+		if(request.session && request.session.user){
+			AccentAction.getConversationByMedia(request.session.user.uuid, request.params.id, function(error, media, user){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, mediaQuestions: media, userQuestions: user  }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			})
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		}
+	}
+}
 
 // Tag
 exports.tag = function(request,response){
@@ -308,7 +330,8 @@ exports.courseMediaFiles = function(request, response){
 }
 
 exports.index = function(req, res){
-	if (req.session && req.session.user) {	
+	if (req.session && req.session.user) {
+		console.log(JSON.stringify(req.session.user))	
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
@@ -334,4 +357,9 @@ exports.demoPage = function (req,res){
 		res.redirect('/');
 
 	});
+}
+
+/***NEW ROUTES */
+exports.searchQuestionsRoute = function(request, response){
+	routesCommon.searchQuestionsRoute(0, request, response);
 }

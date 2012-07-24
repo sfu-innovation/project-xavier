@@ -18,28 +18,7 @@ exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
 
-exports.index = function (req, res) {
-	if (req.session && req.session.user) {
-		res.render("engage/index", {     title:"SFU ENGAGE",
-			user:req.session.user,
-			courses:req.session.courses,
-			status:"logged in" }, function (err, rendered) {
 
-			// console.log(rendered);
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
-
-		})
-	}
-	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
-		res.redirect("/demo");
-
-		//login with demo user, remove when everything is set.
-	}
-
-};
 
 exports.followQuestion = function (request, response) {
 	routesCommon.followQuestionRoute(2, request, response);
@@ -780,6 +759,33 @@ exports.design = function (req, res) {
 		})
 	});
 }
+
+
+///////////////////////////////////////////////////////////HEDY'S STUFF ABOVE/////////////////////////////////
+
+
+exports.index = function (req, res) {
+	var currentWeek = EngageAction.weekHelper();
+	if (req.session && req.session.user) {
+		res.render("engage/index", {     title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses}, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
+	}
+
+};
 
 
 exports.starred = function (req, res) {

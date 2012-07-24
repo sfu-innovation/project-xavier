@@ -16,6 +16,28 @@ var Week = exports.Week = db.define('Week', {
 	uuid: {type: Sequelize.STRING, allowNull: false,  primaryKey: true},
 	course : {type: Sequelize.STRING, allowNull: false}, //uuid of the course
 	week: {type: Sequelize.INTEGER, allowNull: false},  //number of the week , ex 1
-	topic : {type: Sequelize.STRING,allowNull: true},   // a topic that will be setted by the prof
+	topic : {type: Sequelize.TEXT,allowNull: true},   // a topic that will be setted by the prof
 	app  : {type: Sequelize.INTEGER, allowNull: false}  //app type , not sure if needed
 });
+
+
+exports.selectWeek = function(args, callback){
+	Week.find({where: args}).success(function(tag) {
+		callback(null, week);
+	}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't find week " + error);
+		});
+}
+
+
+exports.updateWeek = function(uuid, args, callback){
+	Week.find({where: {uuid: uuid}}).success(function(week) {
+		tag.updateAttributes(args).success(function(updatedWeek) {
+			callback(null, updatedWeek);
+		});
+	}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't find week " + error);
+		});
+}

@@ -293,17 +293,21 @@ function loadCourseArticles(engage, week) {
 
 	if (id) {
 		if (week) {
+			var weekbox = renderWeekInfoBox();
+			$('.weekbox').remove();
+			$('#contents').append(weekbox);
+			console.log(weekbox);
 			engage.getResourcesByCourseUUIDAndWeek(id, week, function (data) {
 				if (data) {
 					if (data.errorcode == 0) {
 
 						$('.articlebox').remove();
-						//$('#contents').empty();
+;
 						console.log(data);
 						$.each(data.resources, function (index, item) {
 
 							console.log(item);
-							article = renderArticlePreviewBox(item);
+							var article = renderArticlePreviewBox(item);
 
 
 							$('#contents').append(article);
@@ -455,6 +459,13 @@ function loadStarredArticles(engage) {
 
 
 	})
+}
+
+function renderWeekInfoBox(){
+	var weekBox =
+		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week 4</h4></div></div>'
+
+	return weekBox;
 }
 
 function renderArticlePreviewBox(item) {

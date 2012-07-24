@@ -585,15 +585,15 @@ div#course	{
 	
 }
 
-div#info {
+div#info, div#week-info {
 	padding: 10px;
 	
 }
-div#info ul{
+div#info ul,div#week-info ul{
 	list-style: none;
 }
 
-div#info ul li span{
+div#info ul li span,div#week-info ul li span{
 	font-weight: bold;
 	}
 	

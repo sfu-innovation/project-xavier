@@ -552,7 +552,29 @@ div#article_container #comments .replies{
 	padding-left: 40px !important;
 	}
 
+#comments .reply_box{
+	
+}
 
+#comments .reply_box textarea{
+	width: 80%;
+	display: inline;
+	min-height: 40px;
+	font-size: 12px;
+	margin-top:2px;
+	resize: none; 
+}
+
+#comments .reply_box input{
+	float: right;
+	width: 20%;
+	display: block;
+	min-height: 40px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.05);
+	color: #9e9e9e;
+	
+}
 /* -----------------------------------------
    courses
 ----------------------------------------- */

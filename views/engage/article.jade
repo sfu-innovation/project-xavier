@@ -32,39 +32,39 @@ block content
 					a like (3) 
 					a#reply_click reply 
 						span.typicn.forward
+			- var comment_id = 1
 			each comment in comments
-				div.comment 
+				div.comment(id = "comment_#{comment_id}") 
 					span.name #{comment.user.firstName} #{comment.user.lastName}
 					p #{comment.msg}
 					span.post_time Posted #{comment.time}
 					span.like_reply
 						a like (3) 
-						a.reply_click(onclick = "show_comment_box(0)") reply 
+						a.reply_click(onclick = 'show_comment_box("#{comment_id}_0")') reply 
 							span.typicn.forward
+				- var reply_id = 1
 				each reply in comment.replies
-					- var counter = 1
-					div(id = "replies_#{counter}")
+					div.replies(id = "replies_#{reply_id}")
 						span.name #{reply.user.firstName} #{reply.user.lastName}				
 						p #{reply.msg}
 						span.post_time Posted #{comment.time}
 						span.like_reply
 							a like (3) 
-							a.reply_click(onclick = "show_comment_box(#{counter})") reply 
+							a.reply_click(onclick = 'show_comment_box("#{comment_id}_#{reply_id}")') reply 
 								span.typicn.forward
-					div(id = "reply_#{counter}", style="display: none")
+					div.reply_box(id ="#{comment_id}_#{reply_id}", style="display: none")
 						span replying to #{reply.user.firstName} #{reply.user.lastName}
 						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
 							textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-							input(type="submit", value="comment")			
-				div#reply_0(style="display: none")
+							input(type="submit", value="Post")
+					- reply_id = reply_id + 1			
+				div.reply_box(id = "#{comment_id}_0", style="display: none")
 					span replying to #{comment.user.firstName} #{comment.user.lastName}
 					form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
 						textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-						input(type="submit", value="comment")	
-				script(type='text/javascript')
-					function show_comment_box(id)
-					{
-					$("#reply_" + id).slideToggle();
-					}	
-					
-			
+						input(type="submit", value="Post")
+				- comment_id = comment_id + 1		
+		script(type='text/javascript')
+			function show_comment_box(id){
+				$("#"+ id +"").slideToggle();
+			}

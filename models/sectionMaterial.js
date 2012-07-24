@@ -80,7 +80,7 @@ exports.findSectionIdByMaterialId = function (args, callback) {
 /*
     To find if a specific material is associated with a target section
 	args = {
-		resource : UUID of the material to add
+		material : UUID of the material to add
 		section  : UUID of the section to associate the resource to
 	}
 	
@@ -97,8 +97,6 @@ exports.findAMaterialInSection = function( args, callback ){
 		callback("Invalid args "+args.value, null );
 		return;		
 	}
-
-	console.log(section);
 
 	SectionMaterial.find({ where : { material : args.material, section  : args.section }}).success( function ( sectionMaterial ){
 		callback( null, sectionMaterial );
@@ -140,7 +138,7 @@ exports.findAllMaterialsInSection = function( args, callback ){
 	
 	args = {
 		section : UUID of the section
-		resource : UUID of the material
+		material : UUID of the material
 	}
 	
 	returns the sectionmaterial created unless there is an error

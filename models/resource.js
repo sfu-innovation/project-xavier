@@ -132,46 +132,26 @@ exports.createResource = function (userUUID, args, callback) {
 	var User = require(__dirname + '/user.js');
 	args.user = userUUID;
 	args.uuid = UUID.generate();
-	User.getUserCourses(userUUID, function (error, courses) {
-		var isCourseMember = false;
-		if (error) {
+	Resource.create(args).success(
+		function (resource) {
+			args = {
+				target	: resource.uuid,
+				app		: 2,
+				user	: userUUID
+			};
+			Notification.addNewResourceNotifier(args, function(err, result){
+				if(err)
+					return callback(err)
+
+				callback(null, resource);
+			})
+
+		}).error(function (error) {
+			console.log("can't create resource " + error);
 			callback(error, null);
-		}
+		});
 
-		if (courses.length === 0) {
-			callback("Can't create resource.  No courses found for user.", null);
-		}
 
-		for (index in courses) {
-			if (args.course === courses[index].uuid) {
-				isCourseMember = true;
-			}
-		}
-
-		if (isCourseMember) {
-			Resource.create(args).success(
-				function (resource) {
-					args = {
-						target	: resource.uuid,
-						app		: 2,
-						user	: userUUID
-					}
-					Notification.addNewResourceNotifier(args, function(err, result){
-						if(err)
-							return callback(err)
-
-						callback(null, resource);
-					})
-
-				}).error(function (error) {
-					console.log("can't create resource " + error);
-					callback(error, null);
-				});
-		}
-		else {
-			callback("You can't create a resource for a course you aren't enrolled in", null);
-		}
-	});
 }
 
 //Deletes the resource with the given uuid

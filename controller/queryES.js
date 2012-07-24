@@ -41,7 +41,7 @@ var addUsersToData = function(data, callback){
 	result.hits = [];
 
 	async.forEach(data.hits.hits, function(obj, done){
-		require('../models/user.js').selectUser({"uuid":obj._source.user}, function(error, user){
+		user.selectUser({"uuid":obj._source.user}, function(error, user){
 
 			if(error){throw error;}
 
@@ -71,7 +71,7 @@ var addUsersToData = function(data, callback){
 
 //add a single user object to result
 var addUserToData = function(data, callback){
-	require('../models/user.js').selectUser({"uuid":data._source.user}, function(error, user){
+	user.selectUser({"uuid":data._source.user}, function(error, user){
 
 		if(user){
 			data.user = user;
@@ -766,7 +766,7 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 }
 
 //JSON searchObj:	{searchType, user, course, week}
-//searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
+//searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions, notMyQuestions}
 //EXAMPLE:
 /*
  {
@@ -774,7 +774,6 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
  "searchType":"viewed",
  "course":"cmpt300",
  "week": "1",
- "user":""
  }
  */
 QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, callback){
@@ -815,7 +814,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 		case 'myQuestions':{
 			//TODO: change to use session user
-			data = myQuestion(data, searchObj);
+			data = myQuestions(data, searchObj);
 			break;
 		}
 		case 'viewed':{
@@ -825,6 +824,9 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		case 'replied':{
 			data = replied(data, searchObj);
 			break;
+		}
+		case 'notMyQuestions':{
+			data = notMyQuestions(data, searchObj);
 		}
 	}
 
@@ -878,8 +880,14 @@ var unansweredQuestion = function(data){
 }
 
 //get question sorted by user uuid
-var myQuestion = function(data, searchObj){
+var myQuestions = function(data, searchObj){
 	data.query.bool.must.push({"term":{"user": searchObj.uuid}});
+	return data;
+}
+
+var notMyQuestions = function(data, searchObj){
+	data.query.bool.must_not = []
+	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
 	return data;
 }
 

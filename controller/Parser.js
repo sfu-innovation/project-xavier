@@ -140,7 +140,9 @@ function listTypes(node, host) {
 	}
 //	console.log(articles)
 	strip(candidateNode, tag);
-	candidate.firstParagraph = html5.serialize(candidateNode.querySelector(tag));
+	var str =  candidateNode.querySelectorAll(tag);
+
+	candidate.firstParagraph  = str[0].textContent+' '+str[1].textContent;
 
 	candidate.main = html5.serialize(candidateNode);
 	return candidate;
@@ -191,7 +193,7 @@ var articlize =  exports.articlize = function( urlName, callback) {
 
 			var result = {};
 			result.url = urlName;
-			result.path = path;
+			result.path = fileName + ".xml";
 			result.title = title;
 			result.excerpt = content.firstParagraph;
 

@@ -33,6 +33,7 @@ function selectButton(selectedButton) {
 		if (selectedButton === obj) {
 			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
 			currentCourse = currentCourse.toLowerCase();
+			if (currentCourse === "all") currentCourse = "";
 			refreshQuestionListHeader();
 			refreshQuestionsList();
 			setSelected(obj, true);
@@ -67,6 +68,7 @@ function displayCourseList() {
 		if (data && data.errorcode === 0) {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
+			menu.innerHTML += formatButton("All", "");
 			data.courses.forEach(function(course) {
 				menu.innerHTML += formatButton(course.subject + "" + course.number, course.uuid);
 			});

@@ -131,7 +131,27 @@
 			"number":371,
 			"instructor":"BSDF787D98ASDF099D7G"
 		},
-
+		{	"uuid":"F827346H7ASDFG1",
+			"title":"Introduction to Criminology",
+			"section":"D100",
+			"subject":"CRIM",
+			"number":101,
+			"instructor":"BSDF787D98ASDF099D7G"
+		},
+		{	"uuid":"F827346H7ASDFG2",
+			"title":"Introduction to Poetry",
+			"section":"D100",
+			"subject":"ENG",
+			"number":109,
+			"instructor":"BSDF787D98ASDF099D7G"
+		},
+		{	"uuid":"F827346H7ASDFG3",
+			"title":"Introduction to Complex Matrix",
+			"section":"D100",
+			"subject":"MATH",
+			"number":209,
+			"instructor":"BSDF787D98ASDF099D7G"
+		},
 		{
 			"uuid":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
 			"title":"Beginners Japanese II",
@@ -251,8 +271,20 @@
 			"course":"A827346H7ASDFG9",
 			"user":"hrl1"
 		},
-				{
+		{
 			"course":"A827346H7ASDFG9",
+			"user":"jhc20"
+		},
+		{
+			"course":"F827346H7ASDFG1",
+			"user":"jhc20"
+		},
+		{
+			"course":"F827346H7ASDFG2",
+			"user":"jhc20"
+		},
+		{
+			"course":"F827346H7ASDFG3",
 			"user":"jhc20"
 		},
 				{

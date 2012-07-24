@@ -625,16 +625,15 @@ exports.design = function (req, res) {
 exports.shareResource = function (req,res){
 	Parser.articlize(req.body.article_url, function (err,result) {
 
-		res.render("engage/design", {     title:"SFU ENGAGE",
-			user:userobject,
-			status:"logged in",
-			courses:req.session.courses }, function (err, rendered) {
+		Resource.createResource(req.session.user.uuid, {url:result.url, path:result.path, excerpt:result.excerpt, week:13,course:12,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+			console.log(result);
 
-			// console.log(rendered);
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, resources:result }));
 
 		})
+
+
 
 	});
 }

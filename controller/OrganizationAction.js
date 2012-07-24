@@ -18,10 +18,11 @@ var OrganizationAction = function(){};
 	
 	args = {
 		section : UUID of the section
-		resource : UUID of the resource
+		material : UUID of the resource
 	}	
 	
-	The newly added resource UUID.
+	The newly added resource UUID. If there is an error we return an empty string
+	and we log the error into the server console.
 */
 OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -30,7 +31,7 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		                         args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('material'));
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.addResourceToSection] error - Invalid args");
@@ -41,7 +42,12 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial){
 		if ( null === sectionMaterial ) {
 			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial){
-				callback( null, newSectionMaterial);
+				if ( error ){
+					console.log("[SectionMaterial.findAMaterialInSection] error - "+error);
+					callback( null, "");
+				} else {
+					callback( null, newSectionMaterial);
+				}
 			});
 		}else {
 			console.log("[OrganizationAction.updateResourceFromSectionToSection] error - The section material already exists");
@@ -56,10 +62,11 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	
 	args = {
 		section : UUID of the section
-		resource : UUID of the resource
+		material : UUID of the resource
 	}
 	
-	returns the default section uuid for that course.
+	returns the default section uuid for that course. If this does not exist we 
+	log the error in the server console and return an empty string.
 */
 OrganizationAction.prototype.removeResourceFromSection = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -68,7 +75,7 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		                         args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('material'));
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");
@@ -86,8 +93,13 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
     		sectionmaterial : sectionMaterial
     	}
     	SectionMaterial.removeMaterialFromSection( argsToRemove, function( error, removedMaterial ){
-    		console.log("[SectionMaterial.removeMaterialFromSection] error - "+error);
-		    callback( null, "" );
+    		if ( error ){
+    			console.log("[SectionMaterial.removeMaterialFromSection] error - "+error);
+		    	callback( null, "" );
+    		} else {
+    			callback( null, removedMaterial );
+    		}
+    		
     	});
     }); 
 }
@@ -102,10 +114,11 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 	args = {
 		section : UUID of the section
 		newsection : UUID of the section
-		resource : UUID of the resource
+		material : UUID of the resource
 	}
 	
-	returns the default section uuid for that course.
+	returns the UUID of the new section. If there was an error we return an empty string
+	and we log the error into the server console.
 */
 OrganizationAction.prototype.updateResourceFromSectionToSection = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -115,7 +128,7 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
 	                          args.hasOwnProperty('newsection') &&
-		                         args.hasOwnProperty('resource') );
+		                         args.hasOwnProperty('material') );
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");
@@ -134,8 +147,9 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 			if ( error ){
 				console.log("[SectionMaterial.updateSectionMaterial] error - "+error);
 				callback( null, "" );
+			} else {
+				callback( null, updatedMaterial );
 			}
-			callback( null, updatedMaterial );
 		});
 	});
 }
@@ -151,7 +165,8 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 		app   : enumerated type of the application, refer to enumerated types in docs
 	}
 	
-	returns the UUID of the new section
+	returns the UUID of the new section. If there is an error we return an empty string
+	we then log the issue into the server console.
 */
 OrganizationAction.prototype.addSection = function( args, callback){
 	if ( args === null || args === undefined ){
@@ -178,7 +193,7 @@ OrganizationAction.prototype.addSection = function( args, callback){
 		args.sections = courseSectionUUIDs;
 		Section.findSection( args, function ( error, section ){
 			if ( error ){
-				console.log("[Section.findSection] error - "+error);
+				console.log("[Section.findSecti	on] error - "+error);
 				callback( null, "" );
 				return;
 			}
@@ -217,7 +232,8 @@ OrganizationAction.prototype.addSection = function( args, callback){
 		section : UUID of section to remove
 	}
 	
-	returns the UUID of the deleted section
+	returns the UUID of the deleted section. If there was an error we return an empty
+	string and log the error into the server console.
 */
 OrganizationAction.prototype.removeSection = function( args, callback){
 	if ( args === null || args === undefined ){
@@ -277,7 +293,7 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 		title   : new sectionName
 	}
 	
-	returns the UUID of the deleted section
+	returns the UUID of the deleted section. If there was an error in deleting the 
 */
 OrganizationAction.prototype.updateSection = function( args, callback){
 	if ( args === null || args === undefined ){
@@ -331,7 +347,8 @@ OrganizationAction.prototype.updateSection = function( args, callback){
 		course: UUID of course
 	}
 	
-	Returns an array of all the sections associated with the course
+	Returns an array of all the sections associated with the course. If there was an error
+	we return an empty array and we log the error into the server log.
 */
 OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -375,7 +392,8 @@ OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 		appType : (for ES)
 		section : UUID of section
 	}
-	Returns the resources in a section
+	Returns the resources in a section. If there was an error we return an empty array
+	and log the error in the console.
 */
 OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 	if ( args === null || args === undefined ){
@@ -436,34 +454,35 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 		course : UUID of course
 	}
 	
-	Returns number of materials in resource
+	Returns number of materials in resource. If there was an error we will return -1.
+	We will then write the error to the server console.
 */
 
 OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callback ){
 	if ( args === null || args === undefined ){
 		console.log("[OrganizationAction.numberOfResourcesInCourse] error - Args is not existent");
-		callback( null, 0 );
+		callback( null, -1 );
 		return;
 	}
 	var containsAllProperties = args.hasOwnProperty('course');
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.numberofResourcesInCourse] error - Invalid args");
-		callback( null, 0 );
+		callback( null, -1 );
 		return;		
 	}
 
 	CourseSection.sectionsInCourse( args, function( error, courseSections ){
 		if ( error ) {
 			console.log("[CourseSection.sectionsInCourse] error - "+error);
-			callback( error, 0 );
+			callback( error, -1 );
 			return;
 		}
 		args.section = courseSections;
 		SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
 			if ( error ) {
 				console.log("[CourseSection.findAllMaterialsInSection] error - "+error);
-				callback( error, 0 );
+				callback( error, -1 );
 				return;
 			}
 			else {
@@ -473,9 +492,14 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 	});
 }
 /*
+   This will return the name of the section which owns the indicated resource UUID
+   
 	args = {
 		material : UUID of the resource
 	}
+	
+	This will return a string which represents the title. If there was an error, an empty
+	string will be returned and an error will be logged in the server console.
 
 */
 OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, callback ){
@@ -515,14 +539,13 @@ OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, cal
 					console.log("[Section.findSectionById] error - there was no section");
 					callback( null, "" );
 				}
-			}
-			
+			});	
 		}
 		else{ //sectionUUID was null
 			console.log("[SectionMaterial.findSectionIdByMaterialId] error - the section UUID was null");
 			callback( null, "" );
 		}
-	}
+	});
 
 }
 /*
@@ -532,7 +555,8 @@ OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, cal
 		course : UUID of course
 	}
 	
-	Returns the of list of resource
+	Returns the of list of resource. If there was an error,  we return an empty array
+	and log an error into the server console.
 */
 
 OrganizationAction.prototype.getResourcesByCourseUUID = function( args, callback ){

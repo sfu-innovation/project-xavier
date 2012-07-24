@@ -9,7 +9,7 @@ function formatQuestion(question, callback) {
 				+ "</div>"
 				+ conversation
 				+ "</li>";
-		console.log(questionStr);
+		//console.log(questionStr);
 		callback(questionStr);
 	})
 
@@ -139,7 +139,7 @@ function displayConversations(questionID, callback) {
 
 
 // displays asked questions on page load
-console.log('loaded properly');
+console.log('Loaded properly');
 
 //displayQuestions();
 //displayConversations();

@@ -1,64 +1,22 @@
 div#Right	
-	h1 My Conversations
-	
-	ul.Conversations
-		li.Selected
-			div.Question
-				span.Course CRIM 301
-				a(href="") I don't understand what is meant by the term CPCD?
+	div#myConversations
+		h1 My Conversations		
+		ul.Conversations
+			li.Selected
+				div.Question
+					span.Course CRIM 301
+					a(href="") I don't understand what is meant by the term CPCD?
 
-			div.Conversation
-				div.Top
-					h1 Top responses:
-					div.Message
-						span.Author
-							img(src="../images/accent/bernie.jpg")
-							| Sir Maronie
-						| Yes I was talking about Crime Pooping Controversy Defences. It's some pretty good stuff.
-					div.Message
-						span.Author Kevin Chams
-						| FUCK YEA AMERICKA! That's how we do.	
+				div.Conversation
+					div.Top
 
-				div.All
-					h1 Conversation:
-					div.Message
-						div.Votes
-							a(href="") +5
-						div.Content I am an idiot. Completely disregard this message. LOL!
+					div.All
 
-					div.Message
-						div.Votes
-							a(href="") -88
-						div.Content Once upon a time mary had a little lamb. Then the lamb got killed and eaten. Was pretty tasty.
+			div#myQuestionsList
 
-					div.Message
-						div.Votes
-							a(href="") +3
-						div.Content This is some testing text just typing it out for fun ok gonna keep going for a little bit... and just about there... aannd done.
-
-					input(type="text", placeholder="Add something to the conversation", style="width: 90%; padding: 7px; margin-top: 20px")			
-
-		div#myQuestionsList
-
-	h1 Class Conversations	
-	ul.Conversations
-		li
-			div.Question
-				span.Course CRIM 301	
-				a(href="") Dis class sux
-		li
-			div.Question
-				span.Course CRIM 301	
-				a(href="") Mmmh cheese cake
-		li
-			div.Question
-				span.Course CRIM 301	
-				a(href="") Why is sky so blue?
-		li
-			div.Question
-				span.Course CRIM 301	
-				a(href="") 30,000 lbs of bananas!
-
+	div#classConversations
+		h1 Class Conversations	
+		ul.Conversations
 				
 script(type="text/javascript", src="../javascripts/accent/conversationTabs.js")
 script(type="text/javascript", src="../javascripts/accent/main.js")

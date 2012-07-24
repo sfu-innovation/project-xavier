@@ -14,7 +14,7 @@ app.configure(function() {
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
-		}));
+	}));
 	//app.use(express.csrf());
 	app.use(app.router);
 	app.use(express.static(__dirname + "/public"));
@@ -22,6 +22,11 @@ app.configure(function() {
 
 app.configure('development', function(){
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+	app.use(function(req, res, next) {
+		if (req.session)
+			req.session.courses = [ ];
+		next();
+	})
 });
 
 app.configure('production', function(){
@@ -123,6 +128,7 @@ app.get('/login', routesEngage.login);
 app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
+app.post('/', routesEngage.index);
 
 
 app.post('/design', routesEngage.design);

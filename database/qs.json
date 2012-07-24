@@ -361,6 +361,63 @@
 			"commentParent":""
 		}
 	},
+		{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"aJfznhheQuOicWWAjx7F15",
+		"_score":1,
+		"_source":
+		{"user":"snsd",
+			"upvote":5,
+			"downvote":2,
+			"body":"I am an idiot. Completely disregard this message. LOL!",
+			"target_uuid":"aJfzndwdadddQuOicWWAjx7F15",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"false",
+			"isInstructor":"false",
+			"commentParent":""
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"aJfzggggguOicWWAjx7F16",
+		"_score":1,
+		"_source":
+		{"user":"kara",
+			"upvote":1,
+			"downvote":88,
+			"body":"Once upon a time mary had a little lamb. Then the lamb got killed and eaten. Was pretty tasty",
+			"target_uuid":"aJfzndwdadddQuOicWWAjx7F15",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"false",
+			"isInstructor":"false",
+			"commentParent":""
+		}
+	},
+		{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"aJfzggggguOicWWAjx7F19",
+		"_score":1,
+		"_source":
+		{"user":"4minute",
+			"upvote":3,
+			"downvote":1,
+			"body":"This is some testing text just typing it out for fun ok gonna keep going for a little bit... and just about there... aannd done.",
+			"target_uuid":"aJfzndwdadddQuOicWWAjx7F15",
+			"objectType":"question",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"isAnswered":"false",
+			"isInstructor":"false",
+			"commentParent":""
+		}
+	},
 	{
 		"_index":"accent",
 		"_type":"questions",
@@ -400,6 +457,90 @@
 			"viewCount":0,
 			"commentCount":0,
 			"course":"CMPT307",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F78",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Dis class sux",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F32",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Mmmh cheese cake",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F33",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Why is sky so blue?",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F36",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"30,000 lbs of bananas!",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
 			"week":0
 		}
 	},

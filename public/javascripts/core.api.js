@@ -30,7 +30,7 @@ coreApi._construct = function () {
 		}
 		
 		// gets a list of courses for the current logged in user
-		this.getUserCourses = function(id,callback ) {
+		this.getUserCourses = function(callback) {
 			console.log("API - getUserCourses");
 			$.ajax({
 				url:'/api/user/courses',

@@ -67,6 +67,7 @@ function displayCourseList() {
 		if (data && data.errorcode === 0) {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
+			menu.innerHTML += formatButton("All", "");
 			data.courses.forEach(function(course) {
 				menu.innerHTML += formatButton(course.subject + "" + course.number, course.uuid);
 			});

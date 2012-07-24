@@ -976,6 +976,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
+		console.log(JSON.stringify(request.body))
 		nlp(queryData.searchQuery, function(query){
 			/*
 			if(query){

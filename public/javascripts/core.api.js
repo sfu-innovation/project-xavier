@@ -413,7 +413,8 @@ coreApi._construct = function () {
 	}
 
 	function Presenter() {
-		this.createQuestion = function (questionTitle, questionBody, course, week, callback) {
+		this.myname = "asdf";
+		this.createQuestion = function (questionTitle, questionBody, callback) {
 			console.log("API - createQuestion");
 
 			var body = {};
@@ -423,8 +424,7 @@ coreApi._construct = function () {
 			question.category = 'testcategory'; //TODO need replaced
 			question.title = questionTitle;
 			body.question = question;
-			body.course = course;
-			body.week = week;
+
 
 			$.ajax({
 				url:'/api/question',

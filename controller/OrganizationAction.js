@@ -30,7 +30,7 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		                         args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('material'));
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.addResourceToSection] error - Invalid args");
@@ -41,7 +41,13 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial){
 		if ( null === sectionMaterial ) {
 			SectionMaterial.createSectionMaterial( args, function( error, newSectionMaterial){
-				callback( null, newSectionMaterial);
+				if ( error ){
+					console.log("[ERROR] - "+error);
+				} else {
+					callback( null, newSectionMaterial);
+				}
+				
+				
 			});
 		}else {
 			console.log("[OrganizationAction.updateResourceFromSectionToSection] error - The section material already exists");
@@ -68,7 +74,7 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		                         args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('material'));
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");
@@ -115,7 +121,7 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
 	                          args.hasOwnProperty('newsection') &&
-		                         args.hasOwnProperty('resource') );
+		                         args.hasOwnProperty('material') );
 		
 	if (  !containsAllProperties ){
 		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");

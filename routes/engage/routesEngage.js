@@ -562,7 +562,6 @@ userobject.courses = {
 var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
-
 exports.design = function (req, res) {
 	if (!req.body.article_url) {
 		var error = "";
@@ -600,26 +599,7 @@ exports.design = function (req, res) {
 	//console.log(req.body.article_url.split("/"));
 
 
-	request(req.body.article_url, function (error, response, body) {
-
-		if (response.statusCode == 200) {
-			var
-				window = jsdom.jsdom(null, null, {
-					parser: html5,
-					features: {
-						QuerySelector: true,
-						FetchExternalResources: [ ]
-
-					}
-				}).createWindow(),
-				parser = new html5.Parser({document:window.document});
-
-			parser.parse(body);
-
-			Parser.articlize( req.body.article_url);
-
-		}
-
+	Parser.articlize(req.body.article_url, function (err) {
 		res.render("engage/design", {     title:"SFU ENGAGE",
 			user:userobject,
 			status:"logged in",
@@ -631,12 +611,32 @@ exports.design = function (req, res) {
 			res.end(rendered);
 
 		})
+
 	});
+
+
 }
 
 
 ///////////////////////////////////////////////////////////HEDY'S STUFF ABOVE/////////////////////////////////
 
+
+exports.shareResource = function (req,res){
+	Parser.articlize(req.body.article_url, function (err,result) {
+
+		res.render("engage/design", {     title:"SFU ENGAGE",
+			user:userobject,
+			status:"logged in",
+			courses:req.session.courses }, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+
+	});
+}
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();

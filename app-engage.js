@@ -158,3 +158,7 @@ app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
 
 app.post('/design', routesEngage.design);
 app.get('/design', routesEngage.design);
+
+
+app.post('/resource/share', routesEngage.shareResource);
+app.post('/resource/upload', routesEngage.uploadResource);

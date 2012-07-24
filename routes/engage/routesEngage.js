@@ -423,62 +423,162 @@ function update_link(node, host) {
 	}
 }
 
-function walk(node, host, cb) {
-	//console.log(host)
+function walk(node, host, tab, cb) {
 	var notAllowed = [
-		'SCRIPT',
-		'NOSCRIPT',
-		'H1'
-		];
+			'SCRIPT',
+			'NOSCRIPT',
+			'H1'
+		],
+		tags = { }, test = false;
+//----------------------debugging-----------------
+	if (node.tagName !==undefined /*&& typeof cb === 'number'*/) {
+		var s = ""
+		for (var k=0; k<tab;++k) {
+			s+='\t'
+		}
+	//	console.log(s+node.tagName+'\t'+node.getAttribute('class')+'\t'+node.textContent.length)
+	}
+	
 
-	var check = false;
-
+//------------------------------------------------
 	if (node.nodeType !== node.ELEMENT_NODE) {
 		return;
 	}
-	if (node.hasAttribute('src') || node.hasAttribute('href')) {
-		update_link(node, host);
-	}
-	//console.log('in walk: '+node.tagName)
+	update_link(node, host);
+	node.removeAttribute('class');
+	node.removeAttribute('style');
+	node.removeAttribute('id');
+
+	//console.log('node: '+node.tagName)
+	
 	for(var i = 0; i < node.childNodes.length; ++i){
 
-		if (~notAllowed.indexOf(node.childNodes[i].tagName) || node.childNodes[i].textContent.length === 0) {
-			node.removeChild(node.childNodes[i]);
+		var childNode = node.childNodes[i],
+			tagName = childNode.tagName;
+		
+		if (~notAllowed.indexOf(childNode.tagName)===-1) {
+			node.removeChild(childNode);
+			--i;
 		}
-		else if (typeof cb === 'function') {
+		else if (tagName !== undefined){
 
-			if (node.childNodes[i].textContent.length/node.textContent.length > .65) {	
-				walk(node.childNodes[i], host, cb);
-				check = true;
+			if (childNode.hasAttribute("class")) {
+				tagName += ' '+childNode.getAttribute("class");
 			}
-		} else if (typeof cb === 'number') {
 
-			//console.log('going into: '+node.childNodes[i].tagName)
-			node.removeAttribute('class');
-			node.removeAttribute('id');
-			node.removeAttribute('style');
-			walk(node.childNodes[i], host, cb);
+			var arr = ( (!tags[tagName]) ? tags[tagName] = [] : tags[tagName] );
+			
+			
+
+		//	console.log(arr)
+			arr.push(childNode.textContent.length);
+			//console.log('going into: '+ childNode.tag+' from: '+node.tagName)
+			walk(childNode, host, tab+1, cb);
 		}
-
+	//	console.log(tags)
 
 	}//------------end child loop
 
-	if (typeof cb === 'function' && !check) {
-		cb(node); 
+	var items = Object.getOwnPropertyNames(tags).map(function (name) {
+		var tag = tags[name];
+	//	console.log('tags '+name+' '+tag)
+		return {
+			name: name,
+			len: tag.length,
+			ratio: tag.length/node.childNodes.length,
+			std_dev: deviation(tag),
+			mean: mean(tag),
+			node: node
+		}
+	})
+	//console.log(node.tagName+' '+items.length)
+	if (items.length > 0)
+		cb(items);	
+}
+
+function deviation(set) {
+	var n = set.length,
+		d = set.reduce(function(a, b) { return a + Math.pow(b,2) }, 0)/n,
+		e = Math.pow(set.reduce(function(a, b) { return a + b })/n, 2);
+
+	return Math.sqrt(d - e);
+}
+
+function mean(set) {
+	return set.reduce(function(a, b) { return a + b })/set.length;
+}
+
+function strip(node, tag) {
+//	console.log(node.textContent)
+
+
+	var check = false;
+	for(var i = 0; i < node.childNodes.length; ++i){
+	//	console.log(tag+', '+node.childNodes[i].tagName)
+		var child = node.childNodes[i];
+		//console.log('\tchild: '+child.tagName)
+		//console.log('\ttag: '+tag)
+	/*	if (child.nodeType === node.ELEMENT_NODE) {
+			console.log('element type')
+		
+			if (child.tagName !== undefined)
+					console.log(child.textContent)
+		}*/
+	/*	}else
+			console.log('non element')
+*/
+
+		
+		if (child.tagName === tag) {
+			//console.log('\t\tequal');
+			check = true;
+		}
+		if (!check) {
+			//console.log(check)
+			//console.log('\t\tremove '+child.tagName);
+			node.removeChild(child);
+			--i;
+		}
 	}
 }
 
 function listTypes(node, host) {
 
-	var article = null
+	var articles = [],
+		max = 0,
+		ratio = 0,
+		candidateNode = null,
+		tag;
 
-	walk(node, host, function(node) {
+	walk(node, host, 0, function(tags) {
+		
+		var retval = tags.some(function(item) {
+		//	console.log(tags)
+			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.1;
+			//return item.name === 'slideShow';
+		});
+		if (retval) {
+			articles.push(tags)
+		}
 			
-		//console.log(node.tagName)		
-		article = node;	
-		walk(article, host, 0);	
 	})
-	return article;
+
+
+	for (var i in articles) {
+		
+		articles[i].forEach(function(item) {
+			if(item.len > max && item.ratio > ratio) {
+				tag = item.name.split(' ')[0];
+				candidateNode = item.node;
+				max = item.len;
+				ratio = item.ratio;
+			} 
+		})
+	}
+	console.log(articles)
+	strip(candidateNode, tag);
+//	console.log(candidateNode.textContent)
+	return candidateNode;
 }
 
 
@@ -489,9 +589,11 @@ function articlize(document, name) {
 		fileName = crypto.createHash('md5').update(url[url.length-1]).digest('hex'),
 		path = "./public/resources/articles/"+fileName+".xml",
 		host = url[2],
-		title = document.querySelector('H1').textContent,
+		title = document.querySelector('TITLE').textContent,
 		published_date = "";
 	
+	if (document.querySelector('H1'))
+		title = document.querySelector('H1').textContent;
 
 	var stream = fs.createWriteStream(path);
 	stream.once('open', function(fd) {
@@ -511,7 +613,7 @@ function articlize(document, name) {
 */
 }
 
-exports.design = function(req,res){
+exports.index = function(req,res){
 	if (!req.body.article_url) {
 		var error = "";
 		if (req.method === 'POST') {
@@ -521,7 +623,7 @@ exports.design = function(req,res){
 		if (req.session && req.session.user) {
 
 
-			res.render("engage/design", {
+			res.render("engage/index", {
 				title: "SFU ENGAGE",
 				user :  userobject,
 				status : "logged in",
@@ -539,7 +641,6 @@ exports.design = function(req,res){
 		return;
 	}
 
-
 	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
 	//console.log(req.body.article_url.split("/"));
 
@@ -551,7 +652,8 @@ exports.design = function(req,res){
 				window = jsdom.jsdom(null, null, {
 					parser: html5,
 					features: {
-						QuerySelector: true
+						QuerySelector: true,
+						FetchExternalResources: [ ]
 					}
 				}).createWindow(),
 				parser = new html5.Parser({document: window.document});
@@ -562,7 +664,7 @@ exports.design = function(req,res){
 
 		}
 
-		res.render("engage/design", { 	title: "SFU ENGAGE",
+		res.render("engage/index", { 	title: "SFU ENGAGE",
 			user :  userobject,
 			status : "logged in",
 			courses : req.session.courses,
@@ -570,7 +672,7 @@ exports.design = function(req,res){
 	});
 }
 
-
+/*
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
 		res.render("engage/index", { 	title: "SFU ENGAGE",
@@ -587,7 +689,7 @@ exports.index = function(req, res){
 	}
 
 };
-
+*/
 exports.starred = function (req, res) {
 
 	if (req.session && req.session.user) {
@@ -711,7 +813,7 @@ exports.demoPage = function (req,res){
 
 	req.session.user= fake_user_2;
 	User.getUserCourses(req.session.user.uuid,function(err,result){
-		req.session.courses = result;
+		req.session.courses = [ ];
 		res.redirect('/');
 
 	});

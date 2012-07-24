@@ -522,9 +522,10 @@ coreApi._construct = function () {
 			})
 		}
 
-		this.searchSortedQuestions = function(searchQuery, searchType, page, callback) {
+		this.searchSortedQuestions = function(searchQuery, searchType, courseName, weekNumber, page, callback) {
 			console.log("API - searchSortedQuestions");
-			var body = { "searchQuery": searchQuery, "searchType": searchType };
+			var body = { "searchQuery": searchQuery, "searchType": searchType, "course": courseName, "week": weekNumber };
+			console.log(body);
 			$.ajax({
 				url:'/api/questions/search/page/' + page,
 				type:'POST',

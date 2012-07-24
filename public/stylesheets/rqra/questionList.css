@@ -33,6 +33,7 @@ div#questionHeader {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	width: 120%;
 }
 
 div#questionCount {
@@ -72,7 +73,6 @@ div#questionTabs {
 	display: box;
 	box-orient: horizontal;
 	margin-top: 0em;
-	margin-bottom: 3.5em;
 }
 
 div#questionTabs div.tab {
@@ -82,6 +82,17 @@ div#questionTabs div.tab {
 	color: #1b88d0;
 	text-decoration:underline;
 	cursor: pointer;
+}
+
+div#askNewQuestionText {
+	margin-top: 0.5em;
+	padding: 0.5em;
+	font-size: 1.5em;
+}
+
+div#askNewQuestionText, a#askNewQuestionLink {
+	color: white;
+	background: #1b88d0;
 }
 
 div.question {

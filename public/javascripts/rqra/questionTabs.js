@@ -16,11 +16,11 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
-function displayQuestions(searchType, page) {
+function displayQuestions(searchType, page, course, week) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	rqra.searchSortedQuestions(searchQuery, searchType, page, function (data) {
+	rqra.searchSortedQuestions(searchQuery, searchType, course, week, page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
@@ -65,4 +65,4 @@ function gotoQuestionPage(clicked) {
 }
 
 // displays asked questions on page load
-displayQuestions("latest", 0);
+displayQuestions("latest", 0, "japn101", 0);

@@ -68,4 +68,16 @@ function postComment() {
 	});
 }
 
+function vote(dir) {
+	if (dir === "up") {
+		rqra.upVoteCommentById(id, function(data) { 
+			
+		});
+	} else if (dir === "down") {
+		rqra.downVoteCommentById(id, function(data) { 
+			
+		});
+	}
+}
+
 loadPage(true);

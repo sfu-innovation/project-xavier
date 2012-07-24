@@ -515,14 +515,13 @@ OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, cal
 					console.log("[Section.findSectionById] error - there was no section");
 					callback( null, "" );
 				}
-			}
-			
+			});	
 		}
 		else{ //sectionUUID was null
 			console.log("[SectionMaterial.findSectionIdByMaterialId] error - the section UUID was null");
 			callback( null, "" );
 		}
-	}
+	});
 
 }
 /*

@@ -116,9 +116,9 @@ function listTypes(node, host) {
 		max = 0,
 		candidateNode = null,
 		tag;
+	var candidate = { };
 
 	walk(node, host, function(tags) {
-
 		var retval = tags.some(function(item) {
 			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.17;
 		});
@@ -138,13 +138,16 @@ function listTypes(node, host) {
 			}
 		})
 	}
-	console.log(articles)
+//	console.log(articles)
 	strip(candidateNode, tag);
-	return candidateNode;
+	candidate.firstParagraph = html5.serialize(candidateNode.querySelector(tag));
+
+	candidate.main = html5.serialize(candidateNode);
+	return candidate;
 }
 
 
-var articlize =  exports.articlize = function( urlName) {
+var articlize =  exports.articlize = function( urlName, callback) {
 
 	request(urlName, function (error, response, body) {
 		if (response.statusCode == 200) {
@@ -175,14 +178,25 @@ var articlize =  exports.articlize = function( urlName) {
 			if (document.querySelector('H1'))
 				title = document.querySelector('H1').textContent;
 
+			var content = listTypes(document.documentElement, host);
+
 
 			var stream = fs.createWriteStream(path);
 			stream.once('open', function (fd) {
 
 				stream.write('<title>' + title + '</title>\n')
-				stream.write('<content>' + html5.serialize(listTypes(document.documentElement, host)) + '</content>');
+				stream.write('<content>' + content.main + '</content>');
 
 			})
+
+			var result = {};
+			result.url = urlName;
+			result.path = path;
+			result.title = title;
+			result.excerpt = content.firstParagraph;
+
+
+			callback(error,result);
 
 		}
 	});

@@ -55,7 +55,7 @@ exports.courseList = function(request, response) {
 }
 
 exports.timeline = function(request, response) {
-	response.render('rqra/component/timeline', { title: "Demo" });
+	response.render('rqra/component/timeline', { title: "Demo", user: { uuid: "sadf", name: "jordan" } });
 }
 
 exports.questionList = function(request, response) {

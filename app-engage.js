@@ -135,6 +135,8 @@ app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
 
+app.get('/preference', routesEngage.preference);
+
 app.get('/starred', routesEngage.starred);
 
 app.get('/mine', routesEngage.contributions);
@@ -158,3 +160,7 @@ app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
 
 app.post('/design', routesEngage.design);
 app.get('/design', routesEngage.design);
+
+
+app.post('/resource/share', routesEngage.shareResource);
+app.post('/resource/upload', routesEngage.uploadResource);

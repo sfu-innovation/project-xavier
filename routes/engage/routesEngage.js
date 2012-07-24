@@ -563,7 +563,6 @@ userobject.courses = {
 var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
-
 exports.design = function (req, res) {
 	if (!req.body.article_url) {
 		var error = "";
@@ -601,26 +600,7 @@ exports.design = function (req, res) {
 	//console.log(req.body.article_url.split("/"));
 
 
-	request(req.body.article_url, function (error, response, body) {
-
-		if (response.statusCode == 200) {
-			var
-				window = jsdom.jsdom(null, null, {
-					parser: html5,
-					features: {
-						QuerySelector: true,
-						FetchExternalResources: [ ]
-
-					}
-				}).createWindow(),
-				parser = new html5.Parser({document:window.document});
-
-			parser.parse(body);
-
-			Parser.articlize( req.body.article_url);
-
-		}
-
+	Parser.articlize(req.body.article_url, function (err) {
 		res.render("engage/design", {     title:"SFU ENGAGE",
 			user:userobject,
 			status:"logged in",
@@ -632,12 +612,32 @@ exports.design = function (req, res) {
 			res.end(rendered);
 
 		})
+
 	});
+
+
 }
 
 
 ///////////////////////////////////////////////////////////HEDY'S STUFF ABOVE/////////////////////////////////
 
+
+exports.shareResource = function (req,res){
+	Parser.articlize(req.body.article_url, function (err,result) {
+
+		res.render("engage/design", {     title:"SFU ENGAGE",
+			user:userobject,
+			status:"logged in",
+			courses:req.session.courses }, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+
+	});
+}
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
@@ -869,7 +869,7 @@ exports.courseView = function (req, res) {
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:'llt3', firstName:"Cathrine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
@@ -912,7 +912,27 @@ exports.demoPage = function (req, res) {
 	});
 }
 
+exports.preference = function (req, res){
+	if (req.session && req.session.user) {
+		res.render("engage/preference", 
+			{     
+			title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses
+			}, function (err, rendered) {
 
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+
+		res.redirect("/demo");
+
+
+	}
+}
 
 
 

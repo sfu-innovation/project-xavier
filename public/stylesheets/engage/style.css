@@ -253,8 +253,20 @@ div.innercontents form textarea{
 	}
 
 
+div.innerwrap > img {
+bottom: 0;
+	position: absolute;
+	opacity: 0.4;
+	-webkit-transition: all 0.5s ease-in-out;
+}
+
+div.innerwrap > img:hover {
+	opacity: 1;
+	-webkit-transition: all 0.5s ease-in-out;
+}
+
 div.innerwrap{
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg");
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48)));
 	background-repeat: repeat-x, no-repeat;
 	background-position: top, center;
 	background-size: auto, cover;
@@ -262,6 +274,7 @@ div.innerwrap{
 	position: relative;
 	opacity: 0.90;
 	padding: 0;
+	overflow: hidden;
 	
 
 }
@@ -660,4 +673,94 @@ div#info ul li span,div#week-info ul li span{
 
 #weeks-bar ul li a.active{
 	opacity: 1;
+}
+
+/* -----------------------------------------
+   preference
+----------------------------------------- */
+
+div#preference{
+	font-family: "Lato", sans-serif;
+	margin-top: 30px;
+	padding: 20px;
+	background-color: #F9F9F9;
+}
+
+div#preference_header{
+	padding: 20px;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+div#preference ul.tabs-content{
+	min-height: 400px;
+}
+
+
+div#preference #avatar_column{
+	width: 15%;
+	float: left;
+	
+}
+
+div#preference #edit_info_column{
+	float: left;
+	width: 50%;
+}
+
+div#preference #edit_info_column textarea{
+	resize:none;
+	height: 100px;
+	
+	}
+div#preference #edit_info_column input:focus{
+	background-color: white;
+	}
+div#preference #edit_info_column textarea:focus{
+	background-color: white;
+	}
+div#preference .columns:first-child{
+	padding-right: 25px;
+}
+div#preference img.avatar{
+	width: 100%;
+}
+div#upload_avatar{
+	text-align: center;
+	padding: 5px 10px;
+	border: 1px solid #9e9e9e;
+}
+
+div#preference .columns:first-child a{
+	float: right;	
+	}
+	
+
+div#preference div#edit_box h4{
+	margin-top: 0;
+}
+
+div#preference #edit_info_column input.button{
+
+}
+
+div#preference #notification ul{
+	list-style-type: none;
+}
+div#preference #notification ul li span{
+	margin-left: 5px;
+}
+
+/* -----------------------------------------
+   overwriting fundation's tab
+----------------------------------------- */
+dl.tabs dt{
+	font-weight: bold;
+}
+dl.tabs dd.active{
+	border: none;
+	margin-top: 0;
+}
+dl.tabs dd.active a{
+	background: none; 
+	border: none;
 }

@@ -223,7 +223,7 @@ div#contents div.columns:last-child{;
 ----------------------------------------- */
 
 div.innercontents{
-	background-color: #fffffb ;
+	background-color: rgba(0,0,0,0.02) ;
 	position: relative;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow: :0px 0px 7px rgba(0,0,0,0.35);
@@ -247,10 +247,6 @@ span.coursename a.color-2{
 	color:#2BA6CB;
 
 }
-div.innercontents form textarea{
-	height: 200px;
-	resize: none; 
-	}
 
 
 div.innerwrap > img {
@@ -438,7 +434,7 @@ div.innercontents#submitnew{
 }
 
 #sumbitrow .small.button{
-	width : 54px;
+	width : 60px;
 	background-color: gray;
 	border: 0;
 }
@@ -449,6 +445,12 @@ div.submit{
 	margin-top: 2px;
 
 }
+
+div.innercontents form textarea{
+	height: 226px;
+	resize: none; 
+	}
+
 /* -----------------------------------------
    Article
 ----------------------------------------- */
@@ -776,7 +778,6 @@ div#preference #notification ul li input{
 
 div#preference #notification input.button{
 	display: block !important;
-	width: 120px;
 	text-align: center;
 }
 /* -----------------------------------------

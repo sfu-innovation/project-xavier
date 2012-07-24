@@ -31,37 +31,53 @@ function formatConversation(conversation) {
 
 function displayQuestions() {
 	var questionList = document.getElementById("myQuestionsList");
-	console.log('lets find the questions')
+
+	// Class conversations
+	var classConversationList = $("#classConversations").children(".Conversations");
+
+	var classStr = "<ul class='Conversations'>";
+
 	rqra.getQuestionsByUserId('jhc20', function (data) {
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
-			console.log(data.questions.total);			
+			//console.log(data.questions.total);			
 			questionList.innerHTML = "";
 			
 			$.each(data.questions.hits, function (index, item) {
-				questionList.innerHTML += formatQuestion(item);
-				console.log(item);
+				questionList.innerHTML += formatQuestion(item);				
 			});
 			
 		}
 	});
+
+	rqra.getAllQuestions(0, function(data) {			
+		$.each(data.questions.hits, function (index, item) {			
+			if (item._source.user !== "jhc20") {	
+				console.log(item._source.user);			
+				classStr += formatQuestion(item);
+			}						
+		});
+
+		classStr += "<ul>";
+
+		classConversationList.replaceWith(classStr);
+	})
 }
 
 function displayConversations() {
+	// My conversations
 	var topConversationList = $(".Conversation").children(".Top");
 	var allConversationList = $(".Conversation").children(".All");
-
+	
 	var topStr = "";
-	var allStr = "";
+	var allStr = "";	
 
 	topStr += "<div class='Top'>";
 	topStr += "<h1> Top responses: </h1>";
 
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
-
-	rqra.getCommentsByQuestion('aJfzndwdadddQuOicWWAjx7F15', function(data) {
-		console.log('comments:');	
-	
+				
+	rqra.getCommentsByQuestion('aJfzndwdadddQuOicWWAjx7F15', function(data) {			
 		$.each(data.comments.hits, function (index, item) {			
 			if (item._source.isInstructor === "true") {				
 				topStr += formatResponse(item);
@@ -70,7 +86,7 @@ function displayConversations() {
 				allStr += formatConversation(item);
 			}						
 		});
-		topStr += "</div>";
+		topStr += "</div>";		
 		allStr += "</div>";
 		topConversationList.replaceWith(topStr);
 		allConversationList.replaceWith(allStr);
@@ -81,6 +97,6 @@ function displayConversations() {
 
 // displays asked questions on page load
 console.log('loaded properly');
-displayQuestions();
 
+displayQuestions();
 displayConversations();

@@ -461,6 +461,90 @@
 		}
 	},
 	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F78",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Dis class sux",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F32",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Mmmh cheese cake",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F33",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"Why is sky so blue?",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F36",
+		"_score":1,
+		"_source":
+		{"user":"hot",
+			"title":"30,000 lbs of bananas!",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"BUS101",
+			"week":0
+		}
+	},
+	{
 		"_index":"engage",
 		"_type":"comments",
 		"_id":"eJfznhheQuOicWWAjx7F17",

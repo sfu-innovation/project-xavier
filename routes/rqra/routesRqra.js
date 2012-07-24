@@ -1,8 +1,52 @@
 var routesCommon = require('./../common/routesCommon.js');
 
+//TODO: remove when everything is setup
+var fakeUserNotification = function(callback){
+	var args= {
+		app:0,
+		user:"jrf2"
+	}
+	require('../../controller/NotificationAction.js').createUserNotificationSettings(args, function(err, result){
+		if(err)
+			console.log(err);
+
+		if(result)
+			console.log("created: " + result)
+
+		callback();
+	});
+}
+
+exports.index = function(req, res){
+	if (req.session && req.session.user) {
+
+		res.render("rqra/questionsPage", { 	title: "SFU RQRA",
+			user : req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, function(err, rendered){
+
+			fakeUserNotification(function(){
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+			})
+		})
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+
+		//login with demo user, remove when everything is set.
+		fakeUserNotification(function(){
+			console.log("redirect");
+			res.redirect("/questions");
+		})
+	}
+
+};
+
 // frontend
 exports.header = function(request, response) {
-	response.render('rqra/component/header', { title: "Demo" });
+	response.render('rqra/component/header', { title: "Demo", user: request.session.user });
 }
 
 exports.courseList = function(request, response) {
@@ -18,7 +62,7 @@ exports.questionList = function(request, response) {
 }
 
 exports.questionListPage = function(request, response) {
-	response.render('rqra/questionsPage', { title: "Demo" });
+	response.render('rqra/questionsPage', { title: "Demo", user: request.session.user });
 }
 
 exports.questionDetails = function(request, response) {
@@ -26,15 +70,23 @@ exports.questionDetails = function(request, response) {
 }
 
 exports.questionDetailsPage = function(request, response) {
-	response.render('rqra/questionDetailsPage', { title: "Demo" });
+	response.render('rqra/questionDetailsPage', { title: "Demo", user: request.session.user });
 }
 
 exports.questionForm = function(request, response) {
 	response.render('rqra/component/questionForm', { title: "Demo" });
 }
 
+exports.questionFormPage = function(request, response) {
+	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user });
+}
+
 exports.notificationList = function(request, response) {
 	response.render('rqra/component/notificationList', { title: "Demo" });
+}
+
+exports.updateUserNotifications = function(request, response){
+	routesCommon.updateUserNotifications(0, request, response);
 }
 
 // backend
@@ -123,6 +175,6 @@ exports.search = function(request, response) {
 }
 
 /***NEW ROUTES */
-exports.searchQuestions = function(request, response){
-	routesCommon.searchQuestions(0, request, response);
+exports.searchQuestionsRoute = function(request, response){
+	routesCommon.searchQuestionsRoute(0, request, response);
 }

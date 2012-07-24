@@ -1,0 +1,416 @@
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background: #f0f0f0;
+	font-family: "Arial";
+}
+
+@font-face {
+    font-family: Futura;
+    src: url(font/FuturaLight.ttf);
+    font-weight:400;
+}
+
+#Courses {
+	list-style-type: none;
+	font-family: "Futura";
+	position: relative;
+	display: block;
+	margin-bottom: 13px;
+	padding: 20px;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: end ;
+}
+
+#Courses li {
+	display: block;
+	border-bottom: solid 1px #c0c0c0;
+	margin-left: 4px;
+	padding: 3px 10px;
+	vertical-align: bottom;
+	position: relative;
+}
+
+#Courses a {
+	display: inline-block;
+	vertical-align: middle;
+	text-decoration: none;
+
+}
+
+#Container {
+	width: 1200px;
+	margin: 20px auto;
+	position: relative;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 0 16px rgba(0,0,0,0.2);
+}
+
+#Courses .Name {
+	text-align: center;
+	font-size: 20px;
+	padding-right: 42px;
+	color: #111;
+}
+
+#Courses .All {
+	color: #111;
+	font-size: 20px;
+	padding-right: 20px;
+}
+
+#Courses .Prefix, #Courses.Number {
+	display: block;
+}
+
+#Courses .Count {
+	border-radius: 1em;
+	min-width: 0.8em;
+	height: 1.5em;
+	text-align: center;
+	padding: 0 0.4em;
+	opacity: 0.4;
+	color: #fff;
+	line-height: 1.5em;
+}
+
+#Courses li:after {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #f00;
+	position: absolute;
+	top: 100%;
+	content: " ";
+	left: 50%;
+	margin-left: -10px;
+	margin-top: 4px;
+	-webkit-transition: all 1s linear;
+	opacity: 0.0;
+}
+
+#Courses li.Selected:after {
+	opacity: 1.0;
+}
+
+#Courses li.Selected a, #Courses li:hover a {
+	opacity: 1.0;
+}
+
+#Courses li:nth-child(2) .Count {
+	background: #91C759;
+}
+
+#Courses li:nth-child(2):after {
+	border-top-color: #91C759;
+}
+
+#Courses li:nth-child(2) {
+	border-bottom-color: #91C759;
+}
+
+#Courses li:nth-child(3) {
+	border-bottom-color: #4DBDE5;
+}
+
+#Courses li:nth-child(3) .Count {
+	background: #4DBDE5;
+}
+
+#Courses li:nth-child(4) {
+	border-bottom-color: #FBA239;
+}
+
+#Courses li:nth-child(4) .Count {
+	background: #FBA239;
+}
+
+#Courses li:nth-child(5) {
+	border-bottom-color: #A6373A;
+}
+
+#Courses li:nth-child(5) .Count {
+	background: #A6373A;
+}
+
+#Courses li:nth-child(6) {
+	border-bottom-color: #BF5FFF;
+}
+
+#Courses li:nth-child(6) .Count {
+	background: #BF5FFF;
+}
+
+#Courses li:nth-child(7) {
+	border-bottom-color: #00BFAE;
+}
+
+#Courses li:nth-child(7) .Count {
+	background: #00BFAE;
+}
+
+#Courses:after {
+	display: block;
+	content: " ";
+	border-bottom: solid 1px #c0c0c0;
+	-webkit-box-flex: 1.0;
+}
+
+.Archives {
+	display: block;
+	position: absolute;
+	right: 3px;
+	margin-top: 14px;
+}
+
+.Button {
+	border: solid 1px #c0c0c0;
+	box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	padding: 3px 8px;
+	text-decoration: none;
+	color: #666;
+	border-radius: 5px;
+}
+
+#Session {
+	position: absolute;
+	right: 10px;
+	text-align: right;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	border-radius: 12px;
+	background: rgba(0,0,0,0.3);
+	box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+	padding: 10px 10px 10px 40px;
+	top: 13px;
+}
+
+#Session .Components {
+	display: -webkit-box; 
+	-webkit-box-orient: vertical; 
+	-webkit-box-pack: center;
+}
+
+#Session .Actions a {
+	font-size: 80%;
+	display: inline-block;
+	margin-left: 7px;
+}
+
+#Session .User {
+	color: #aaa;
+}
+
+#Session a {
+	color: #888;
+	text-decoration: none;
+}
+
+#Session a:hover {
+	color: #fff;
+}
+
+#HeaderContainer {
+	background: #222;
+	box-shadow: 0 0 16px rgba(0,0,0,0.2);
+}
+
+#HeaderContainer:after {
+	position: absolute;
+	content: " ";
+	width: 100%;
+	height: 10px;
+	background: url(background.png);
+	background-size: 100%;
+}
+
+#Header {
+	margin: 0 auto;
+	width: 1200px;
+	position: relative;
+	padding: 30px 0;
+}
+
+
+#Header h1 {
+	color: #eee;
+}
+
+#Content {
+	text-align: left;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+}
+
+#Content h1 {
+	font-size: 22px;
+	font-family: "Futura";
+	font-weight: normal;
+}
+
+#Content h2 {
+	font-size: 16px;
+	font-family: "Futura";
+	font-weight: normal;
+}
+
+#Main {
+	-webkit-box-flex: 1.0;
+	padding: 20px;
+}
+
+#Right {
+	width: 280px;
+	padding: 20px;
+}
+
+img.User {
+	height: 3em;
+	width: 3em;
+	margin-left: 10px;
+	box-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+
+#Right > h1 {
+	border-bottom: solid 1px #c0c0c0;
+	margin-bottom: 23px;
+}
+
+.Conversations {
+	list-style-type: none;
+	color: #444;
+	margin-bottom: 40px;
+}
+
+.Conversations .Course {
+	float: right;
+	font-size: 70%;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-bottom: 7px;
+	color: #fff;
+	background: #91C759;
+	border-radius: 4px;
+	padding: 3px;
+}
+
+.Conversations .Message {
+	margin-top: 8px;
+	display: -webkit-box;
+	-webkit-box-direction: reverse;
+	font-size: 80%;
+}
+
+.Conversations .Content {
+	-webkit-box-flex: 1.0;
+}
+
+.Conversations .Votes {
+	width: 50px;
+	text-align: right;
+}
+
+.Conversations h1 {
+	color: #999;
+	font-size: 14px;
+	margin-top: 8px;
+}
+
+
+.Conversations .Author {
+	font-weight: bold;
+}
+
+.Conversations .Author img {
+	float: right;
+	width: 2.5em;
+	height: 2.5em;
+	box-shadow: 0 0 3px rgba(0,0,0,0.7);
+	border: solid 2px #fff;
+	margin-left: 7px;
+	margin-bottom: 7px;
+}
+
+.Conversations li.Selected {
+	margin: 18px auto;
+}
+
+.Conversations .Question {
+	border: solid 1px #c0c0c0;
+	padding: 8px;
+	position: relative;
+}
+
+.Conversations li + li:not(.Selected) .Question {
+	border-top: none;
+}
+
+.Conversations li.Selected ~ li .Question {
+	border-bottom: none;
+}
+
+.Conversations li.Selected ~ li {
+	border-top: solid 1px #c0c0c0;
+}
+
+.Conversations li:last-child:not(.Selected) {
+	border-bottom: solid 1px #c0c0c0;
+}
+
+
+.Conversations .Conversation {
+	display: none;
+}
+
+.Conversations .Question a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.Conversations .Question a:hover {
+	color: #000;
+}
+
+.Conversations li.Selected .Conversation {
+	display: block;
+	margin-bottom: 20px;
+}
+
+.Conversations li.Selected .Question {
+	background: #f0f0f0;
+	border-bottom: solid 1px #c0c0c0;
+}
+
+.Conversations li.Selected .Question:after {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #f0f0f0;
+	position: absolute;
+	top: 100%;
+	content: " ";
+	left: 50%;
+	margin-left: -10px;
+}
+
+.Conversations li.Selected .Question:before {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #c0c0c0;
+	position: absolute;
+	top: 100%;
+	margin-top: 1px;
+	content: " ";
+	left: 50%;
+	margin-left: -10px;
+}

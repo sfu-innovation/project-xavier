@@ -8,6 +8,7 @@ var app = module.exports = express.createServer();
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
+	app.set('view options', { layout: true });
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
 	app.use(express.session({ secret: "keyboard cat",
@@ -33,7 +34,6 @@ app.dynamicHelpers({
 });
 
 // routing
-app.get('/', routesCommon.index);
 app.get('/login', routesAccent.login);
 app.get('/logout', routesCommon.logout);
 
@@ -61,12 +61,13 @@ app.put("/api/question/:uid/unfollow", routesAccent.unfollowQuestion); // a foll
 //TODO: need update this into document
 app.post("/api/question", routesAccent.question); // post a new question by user id stored in seesion
 //TODO: need update this into document
-app.get("/api/questions", routesAccent.questions); // get all questions
+app.get("/api/questions/page/:page", routesAccent.questions); //P, get all questions
+app.get("/api/questions/mediafile/:id", routesAccent.getQuestionsByMedia); // get all questions related to a mediafile
 
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
-app.get("/api/user/:uid/questions", routesAccent.questionsByUser); // get all questions for a user
+app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
 //deprecated
 //app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
@@ -93,15 +94,18 @@ app.get("/api/user/:uid/comments", routesAccent.commentsByUser); // gets a list 
 
 app.post("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments", routesAccent.commentsByQuestion); // get all of the comments for a question
+app.get("/api/question/:uid/comments/page/:page", routesAccent.commentsByQuestion); // P get all of the comments for a question
 
 
 //tags
 
 app.post("/api/tag", routesAccent.tag); // create a new tag
+app.get("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
+app.put("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
 app.get("/api/tag/:id", routesAccent.tag); // get a tag by id
 app.put("/api/tag/:id", routesAccent.tag); // update a tag by id
 app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
+app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
 
 
@@ -123,7 +127,7 @@ app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile 
 
 
 app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags by mediafile id
-
+app.get("/api/mediafiles/course/:id", routesAccent.courseMediaFiles);// get all media files for a course
 //to be deprecated, use Get API for each Model instead
 app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
 
@@ -131,3 +135,7 @@ app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediaf
 
 app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
+
+//non-REST calls
+app.get('/', routesAccent.index);
+app.get('/demo', routesAccent.demoPage); //this will login you with a demo user

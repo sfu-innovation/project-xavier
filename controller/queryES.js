@@ -6,9 +6,9 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	mapping = index.mapping('questions'),
 	UUID = require('com.izaakschroeder.uuid'),
 	notification = require('./NotificationAction.js'),
-	organizationAction = require('./OrganizationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
+	userProfile = require('../models/userProfile.js'),
 	sizeOfResult = 5;
 
 var QueryES = function() {
@@ -52,10 +52,19 @@ var addUsersToData = function(data, callback){
 				obj.user = "User not found: " + obj._source.user;
 			}
 
-			result.hits.push(obj);
-			done();
+			userProfile.getUserProfile(obj._source.user, function(err, profile){
+				if(err)
+					done(err);
+
+				if(profile){
+					obj.profile = profile.profilePicture;
+				}
+				result.hits.push(obj);
+				done();
+			})
 		});
 	}, function(err){
+		//console.log(JSON.stringify(result))
 		callback(err, result);
 	});
 }
@@ -91,11 +100,10 @@ QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, call
 			callback();
 		})
 	}, function(err){
-		if(err){
-			callback(err, null);
-		}else{
-			callback(null, questions);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, questions);
 	})
 }
 
@@ -112,12 +120,10 @@ QueryES.prototype.questionViewCount = function(questionID, appType, callback){
 
 	//increment the vote found at commentID
 	db.post(link, data, function(err, req, data){
-		if (data) {
-			callback(null, data);
-		}
-		else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -126,7 +132,7 @@ QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
 	var data = {
 			"query": {
 				"term": {
-					"isInstructor": "true"
+					"isInstructor": true
 				}
 			},
 			"sort": [
@@ -144,12 +150,10 @@ QueryES.prototype.getInstructorQuestion = function(appType, pageNum, callback){
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			callback(null, data.hits.hits); //only need the hits.hits part
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -158,11 +162,10 @@ QueryES.prototype.getQuestion = function(questionID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID;
 	
 	db.get(link, {}, function(err, req, data){
-		if (data) {
-			addUserToData(data, callback);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUserToData(data, callback);
 	});
 }
 
@@ -180,12 +183,10 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if (err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -208,12 +209,10 @@ QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, ca
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -233,12 +232,10 @@ QueryES.prototype.getAllUnansweredQuestions = function(appType, pageNum, callbac
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(undefined);
-		}
+		if(err)
+			callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -264,12 +261,10 @@ QueryES.prototype.getAllNewQuestions = function(appType, pageNum, callback){
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 
 }
@@ -296,12 +291,10 @@ QueryES.prototype.getAllRecentlyAnsweredQuestions = function(appType, pageNum, c
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -329,11 +322,10 @@ QueryES.prototype.searchAll = function(search, pageNum, appType, callback){
 	switchMapping(0);
 
 	index.search(data, function(err, data){
-		if(data && data.hits.total !== 0) {
-			addUsersToData(data, callback);
-		} else { 
-			callback(undefined);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -351,40 +343,42 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.created = data.timestamp;
 
 	//should check if adding to a section is really needed. rqra dont need it
-	args.section = data.sectionUuid;	//section uuid
+	args.section = data.week;	//section uuid
 	args.resource = questionUuid;	//question uuid
 
-	delete data.sectionUuid;
+	delete data.week;
 
 	user.selectUser({"uuid":data.user}, function(error, user){
-		if(user){
-			if(user.type === 1){
-				data.isInstructor = 'true';
-			}else{
-				data.isInstructor = 'false';
-			}
+		if(error)
+			return callback(error);
 
-			document.set(data, function(err, req, esResult){
-				if(esResult){
-					console.log('Added question to ES');
-					organizationAction.addResourceToSection(args, function(err, orgResult){
-						console.log('Added question resource to section');
-						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
-							if(result){
-								console.log('Added question notification');
-								callback(null, esResult);
-							}else{
-								callback(err);
-							}
-						});
-					});
-				}else{
-					callback(err);
-				}
-			})
+		if(user.type === 1){
+			data.isInstructor = 'true';
 		}else{
-			callback(err);
+			data.isInstructor = 'false';
 		}
+
+		//TODO:ADD COURSE & WEEK FOR PRESENTER
+
+		document.set(data, function(err, req, esResult){
+			if(err)
+				return callback(error);
+
+			console.log('Added question to ES');
+			require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
+				if(err)
+					return callback(err);
+
+				console.log('Added question resource to section');
+				notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+					if(err)
+						return callback(err);
+
+					console.log('Added question notification');
+					callback(null, esResult);
+				});
+			});
+		})
 	})
 }
 
@@ -400,11 +394,10 @@ QueryES.prototype.addFollower = function(questionID, followerID, appType, callba
 	}
 
 	db.post(link, data, function(err, req, data){
-		if(data){
-			callback(null, data);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -420,12 +413,10 @@ QueryES.prototype.removeFollower = function(questionID, followerID, appType, cal
 	}
 
 	db.post(link, data, function(err, req, data){
+		if(err)
+			return callback(err);
 
-		if(data){
-			callback(null, data);
-		}else{
-			callback(err);
-		}
+		callback(null, data);
 	})
 }
 
@@ -441,11 +432,10 @@ QueryES.prototype.getQuestionByFollowerID = function(followerID, appType, callba
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data && data.hits.total !== 0) {
-			addUsersToData(data, callback);
-		} else {
-			callback(undefined);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -464,11 +454,10 @@ QueryES.prototype.updateQuestion = function(questionID, questionTitle, questionB
 	}
 
 	db.post(link, data, function(err, req, data){
-		if(data){
-			callback(data);
-		}else{
-			callback(undefined);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -481,11 +470,10 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 
 	document = mapping.document(questionID);
 	document.delete(function(err, req, data){
-		if(data){
-			callback(null, data);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	});
 }
 
@@ -506,11 +494,10 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 
 	//add new comment to the document found at uid
 	db.post(link, data, function(err, req, data){
-		if(data){
-			callback(null, data);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -522,13 +509,12 @@ QueryES.prototype.updateStatus = function(questionID, appType, callback){
 //get a comment data based on commentID
 QueryES.prototype.getComment = function(commentID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID;
-	
+
 	db.get(link, {}, function(err, req, data){
-		if (data) {
-			addUserToData(data, callback);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUserToData(data, callback);
 	});
 }
 
@@ -542,19 +528,21 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 			  }
 		  },
 		from: paging(pageNum),
-		size: sizeOfResult
+		size: sizeOfResult,
+		"sort": [
+			{"upvote": {"order": "desc"}},
+			{"downvote": {"order": "desc"}}
+		]
 	};
 
 	switchIndex(appType);
 	switchMapping(1);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -572,12 +560,10 @@ QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	switchMapping(1);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -594,12 +580,10 @@ QueryES.prototype.getCommentCount = function(appType, questionUuid, callback){
 	switchMapping(1);
 
 	mapping.search(data, function(err, data){
-		if(data){
-			callback(null, parseInt(data.hits.total));
-		}
-		else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, parseInt(data.hits.total));
 	});
 }
 
@@ -623,11 +607,10 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 	switchMapping(1);
 
 	mapping.search(data, function(err, data){
-		if(data.hits.total !== 0){
-			addUsersToData(data, callback);
-		}else{
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -636,6 +619,12 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	var document;
 	var commentUuid = UUID.generate();
 	var self = this;
+	var args = {
+		target:data.target_uuid
+		,app:appType
+		,user:data.user
+		,description:data.body
+	};
 
 	switchIndex(appType);
 	switchMapping(1);
@@ -644,47 +633,43 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	self.updateStatus(data.target_uuid, appType, function(err, updateResult){
-		if(updateResult){
-			document.set(data, function(err, req, esData){
-				if (esData) {
-					var args = {
-						target:data.target_uuid
-						,app:appType
-						,user:data.user
-						,description:'Yo dawg, i heard you like comments'	//TODO:need meaningful description
-					};
-					notification.addCommentUserNotification(args, function(err, usrNotificationResult){
-						if(usrNotificationResult){
-							delete args.description;
+	self.updateStatus(args.target, appType, function(err, updateResult){
+		if(err)
+			return callback(err);
 
-							notification.addCommentNotifier(args, function(err, result){
-								if(result){
-									console.log("passed");
-									callback(null, esData);
-								}else{
-									console.log(err);	//THIS IS ONE ERROR YOU WILL WANT TO AVOID
-									callback(err);
-								}
-							});
-						}else{
+		document.set(data, function(err, req, esData){
+			if(err)
+				return callback(err);
+				console.log("document added");
+
+				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+					if(err){
+						console.log(err);
+						return callback(err);
+					}
+
+					delete args.description;
+					notification.addCommentNotifier(args, function(err, result){
+						if(err){
+							console.log(err);
 							callback(err);
 						}
+
+						console.log('complete');
+
+						callback(null, esData);
 					});
-					//callback(null, esData); //remember to remove this when adding alex's notification
-				}else {
-					callback(err);
-				}
-			});
-		}else{
-			callback(err);
-		}
+				});
+
+
+			//callback(null, esData);
+		});
+
 	});
 }
 
 //update comment body based on commentID
 QueryES.prototype.updateComment = function(commentID, commentBody, appType, callback){
-
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 	var date = new Date().toISOString();
 
@@ -697,29 +682,38 @@ QueryES.prototype.updateComment = function(commentID, commentBody, appType, call
 	}
 
 	db.post(link, data, function(err, req, data){
-		if (data) {
-			callback(err, data);
-		}else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
 //delete a comment
 QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	var document;
-
+	var args;
 	switchIndex(appType);
 	switchMapping(1);
 
 	document = mapping.document(commentID);
-	document.delete(function(err, req, data){
-		if (data) {
-			callback(null, data);
-		}
-		else {
-			callback(err);
-		}
+	this.getComment(commentID, 0, function(err, result){
+		if(err)
+			return callback(err);
+
+		document.delete(function(err, req, data){
+			if(err)
+				return callback(err);
+
+			args = {user:result._source.user, target: result._source.target_uuid, app: appType};
+
+			notification.removeCommentNotifier( args, function(err, result){
+				if(err)
+					return callback(err)
+
+				callback(null, data);
+			});
+		});
 	});
 }
 
@@ -746,11 +740,10 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 
 	//increment the vote found at commentID
 	db.post(link, data, function(err, req, data){
-		if (data) {
-			callback(null, data);
-		}else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
@@ -767,18 +760,26 @@ QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 
 	//set isAnswered to true for the comment found at commentID
 	db.post(link, data, function(err, req, data){
-		if (data) {
-			callback(null, data);
-		}
-		else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		callback(null, data);
 	})
 }
 
-
+//JSON searchObj:	{searchType, user, course, week}
 //searchObj types: 	{ lastest, replied, instructor, viewed, unanswered, myQuestions }
-QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callback){
+//EXAMPLE:
+/*
+ {
+ "searchQuery" : "",
+ "searchType":"viewed",
+ "course":"cmpt300",
+ "week": "1",
+ "user":""
+ }
+ */
+QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, callback){
 	/// course, week, , searchQuery, searchType
 	var data = {
 		query: {
@@ -791,7 +792,8 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 	};
 
 	if(searchObj.searchQuery){
-		data.query.bool.must.push({
+		data.query.bool.must.push(
+			{
 			flt:{
 				"fields":["title", "body"]
 				, "like_text":searchObj.searchQuery
@@ -828,16 +830,25 @@ QueryES.prototype.searchQuestions = function(appType, pageNum, searchObj, callba
 		}
 	}
 
+	//check to see which type its in
+	if(searchObj.course){
+		console.log("ES search- course param provided")
+		data.query.bool.must.push({"term":{"course": searchObj.course}});
+		if(searchObj.week){
+			console.log("ES search - week param provided")
+			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
+		}
+	}
+
 
 	switchIndex(appType);
 	switchMapping(0);
 
 	mapping.search(data, function(err, data){
-		if(data) {
-			addUsersToData(data, callback);
-		} else {
-			callback(err);
-		}
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
 	});
 }
 
@@ -855,7 +866,7 @@ var latestQuestion = function(data){
 
 //get all instructor posted question
 var instructorQuestion = function(data){
-	data.query.bool.must.push({"term":{"isInstructor": "true"}});
+	data.query.bool.must.push({"term":{"isInstructor": true}});
 	//sort
 	return data;
 }
@@ -869,7 +880,7 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestion = function(data, searchObj){
-	data.query.bool.must.push({"term":{"user": searchObj.user}});
+	data.query.bool.must.push({"term":{"user": searchObj.uuid}});
 	return data;
 }
 

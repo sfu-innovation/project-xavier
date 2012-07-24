@@ -1,70 +1,109 @@
 {
 	"users": [
 		{
-			"uuid":"1",
+			"uuid":"mcs3",
+			"firstName":"es",
+			"lastName":"test",
+			"type":0,
+			"userID":"es",
+			"email":"ttttt@sfu.ca"
+		},
+		{
+			"uuid":"jrf2",
+			"firstName":"Jordan",
+			"lastName":"Fox",
+			"type":0,
+			"userID":"jrf2",
+			"email":"jrf2@sfu.ca"
+		},
+		{
+			"uuid":"xna2",
 			"firstName":"Mark",
 			"lastName":"Ni",
-			"type":1,
+			"type":0,
 			"userID":"xna2",
 			"email":"xna2@sfu.ca"
 		},
 		{
-			"uuid":"2",
-			"firstName":"Cathrine",
+			"uuid":"llt3",
+			"firstName":"Catherine",
 			"lastName":"Tan",
-			"type":1,
+			"type":0,
 			"userID":"llt3",
 			"email":"llt3@sfu.ca"
 		},
 		{
-			"uuid":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"uuid":"mak10",
 			"firstName":"Mike",
 			"lastName":"Klemarewski",
-			"type":1,
+			"type":0,
 			"userID":"mak10",
 			"email":"mak10@sfu.ca"
 		},
 		{
-			"uuid":"BSDF787D98A7SDF8ASD7G",
+			"uuid":"ted",
 			"firstName":"Ted",
 			"lastName":"Kirkpatrick",
-			"type":0,
+			"type":1,
 			"userID":"ted",
 			"email":"ted@sfu.ca"
 		},
 		{
-			"uuid":"BSDF787D98ASDF099D7G",
+			"uuid":"bernie",
 			"firstName":"Bernie",
 			"lastName":"Maroney",
-			"type":0,
+			"type":1,
 			"userID":"bernie",
 			"email":"bernie@sfu.ca"
 		},
 		{
-			"uuid":"A7S7FSD78FA98A7SDF8ASD7G",
-			"firstName":"Jihoon",
-			"lastName":"Klemarewski",
+			"uuid":"ntakei",
+			"firstName":"Naoko",
+			"lastName":"Takei",
 			"type":1,
-			"userID":"jh99",
-			"email":"jh99@sfu.ca"
+			"userID":"ntakei",
+			"email":"ntakei@sfu.ca"
+		},
+		{
+			"uuid":"jhc20",
+			"firstName":"Ji Hoon",
+			"lastName":"Choi",
+			"type":0,
+			"userID":"jhc20",
+			"email":"jhc20@sfu.ca"
 
 		},
 		{	
-			"uuid":"A7S7F8GA7SD9ASD8DF89AG",
+			"uuid":"yk38",
 			"firstName":"Yukai",
 			"lastName":"Hong",
-			"type":1,
+			"type":0,
 			"userID":"yk38",
 			"email":"yk38@sfu.ca"
 		},
+		{	
+			"uuid":"hrl1",
+			"firstName":"Hedy",
+			"lastName":"Liu",
+			"type":0,
+			"userID":"hrl1",
+			"email":"hrl1@sfu.ca"
+		},
+		{	
+			"uuid":"mis2",
+			"firstName":"Izaak",
+			"lastName":"Schroeder",
+			"type":0,
+			"userID":"mis2",
+			"email":"mis2@sfu.ca"
+		},
 		{
-			"uuid":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"uuid":"aka87",
 			"firstName":"Alex",
 			"lastName":"Kwan",
-			"type":1,
+			"type":0,
 			"userID":"aka87",
 			"email":"aka87@sfu.ca"
-
 		}
 	],
 	"courses":[
@@ -91,109 +130,169 @@
 			"subject":"IAT",
 			"number":102,
 			"instructor":"BSDF787D98ASDF099D7G"
+		},
+		{
+			"uuid":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"title":"Beginners Japanese II",
+			"section":"D100",
+			"subject":"JAPN",
+			"number":101,
+			"instructor":"ntakei"
+		},
+		{
+			"uuid":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
+			"title":"Introduction to Cognitive Psychology",
+			"section":"D100",
+			"subject":"PSYC",
+			"number":221,
+			"instructor":"bernie"
 		}
 	],
 	"courseMembers":[
 		{
-			"course":"A8G7S6H7ASDFG9",
-			"user":"A7S7FSD78FA98A7SDF8ASD7G"
+			"course":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
+			"user":"jrf2"
+		},
+		{
+			"course":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"user":"jrf2"
 		},
 		{
 			"course":"A8G7S6H7ASDFG9",
-			"user":"A7S7F8GA7SD9ASD8DF89AG"
+			"user":"jrf2"
 		},
 		{
 			"course":"A827346H7ASDFG9",
-			"user":"A7S7F8GA7SD9ASD8DF89AG"
+			"user":"jrf2"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"jhc20"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"yk38"
 		},
 		{
 			"course":"A827346H7ASDFG9",
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G"
+			"user":"yk38"
+		},
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"mak10"
 		},
 		{
 			"course":"A827346H7ASDFG9",
-			"user":"1"
+			"user":"mak10"
 		},
 		{
 			"course":"A827346H7ASDFG9",
-			"user":"2"
+			"user":"xna2"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"llt3"
 		},
 		{
 			"course":"11",
-			"user":"1"
+			"user":"xna2"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"aka87"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"xna2"
+		},
+		{
+			"course":"A827346H7ASDFG9",
+			"user":"mis2"
+		},
+				{
+			"course":"A827346H7ASDFG9",
+			"user":"hrl1"
+		},
+				{
+			"course":"A827346H7ASDFG9",
+			"user":"jhc20"
+		},
+				{
+			"course":"A827346H7ASDFG9",
+			"user":"jrf2"
 		},
 		{
 			"course":"11",
-			"user":"2"
+			"user":"llt3"
 		}
 	],
 	"notificationlistener":[
 		 {
 			"uuid":"B827346H7fvfvASDFFSDGQEE",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":0
 		 },
 		 {
 			"uuid":"B827qwwqqza346H7ASDFFSDGQEE",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":1
 		 },
 		 {
 			"uuid":"B827346Hqw3rwref7ASDFFSDGQEE",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":2
 		 },
 		 {
 			"uuid":"B827342qe2w6H7ASDFFSDGQEE",
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"user":"mak10",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":1
 		 },
 		 {
 			"uuid":"B827342qe2w6H7ASDFAFSDGQEE",
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"user":"mak10",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":3
 		 },
 		 {
 			"uuid":"B827346H7ASDFFdq2qwSDGQEE",
-			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"user":"yk38",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":1
 		 },
 		 {
 			"uuid":"B827346H7ASDFQGFdq2qwSDGQEE",
-			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"user":"yk38",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":3
 		 },
 		 {
 			"uuid":"B8273ASDSAD46H7ewqx2ASDFFSDGQEE",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
 			"event":0
 		 },
 		 {
 			"uuid":"GFDGDGDFGFDGW313EREDQWD",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
 			"event":1
 		 },
 		 {
 			"uuid":"B827346ADSDSDGFH7ASDFFSDGQEE",
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
 			"event":2
@@ -245,7 +344,7 @@
 	],
 		"usernotificationsettings": [
 		{
-			"user":"A7S7F8GA7SD11A7SDF8ASD7G",
+			"user":"aka87",
 			"app" : 1,
 
 			"notificationOnLike":1,
@@ -254,7 +353,7 @@
 			"notificationOnNewResource":0
 		 },
 		 {
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"user":"mak10",
 			"app" : 1,
 
 			"notificationOnLike":2,
@@ -263,7 +362,7 @@
 			"notificationOnNewResource":1
 		 },
 		 {
-			"user":"A7S7F8GA7SD9ASD8DF89AG",
+			"user":"yk38",
 			"app" : 1,
 
 			"notificationOnLike":0,
@@ -275,16 +374,18 @@
 
 	"mediafiles": [
 		{
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"user":"mak10",
 			"uuid":"abc1230",
 			"title":"How to dunk like MJ",
+			"course":"A8G7S6H7ASDFG9",
 			"path":"http://www.youtube.com/mj",
 			"type":0
 		},
 		{
 			"user":"BSDF787D98A7SDF8ASD7G",
 			"uuid":"abc1231",
-			"title":"How to dribble like Lionel",			
+			"title":"How to dribble like Lionel",
+			"course":"A8G7S6H7ASDFG9",	
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
 		},
@@ -292,20 +393,23 @@
 			"user":"BSDF787D98ASDF099D7G",
 			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
+			"course":"A827346H7ASDFG9",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
 		},
 		{
-			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"user":"jhc20",
 			"uuid":"abc1233",
-			"title":"Preparation for linear algebra",			
+			"title":"Preparation for linear algebra",
+			"course":"A8G7S6H7ASDFG9",		
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
 		},
 		{
-			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"user":"jhc20",
 			"uuid":"abc1234",
-			"title":"Making videos",			
+			"title":"Making videos",
+			"course":"A827346H7ASDFG9",		
 			"path":"http://www.youtube.com/yt",
 			"type":0
 		}
@@ -420,9 +524,9 @@
 		{
 			"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
 			"course": "A827346H7ASDFG9",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
-			"title" : "Test resource title",
-			"description" : "Test resource description",
+			"user" : "ted",
+			"title" : "Totaly Ties",
+			"description" : "How to best match your tie with your suit",
 			"resourceType" : 2,
 			"fileType" : "mp4",
 			"likes" : 2,
@@ -432,7 +536,7 @@
 		},
 		{
 			"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "mak10",
 			"course": "A827346H7ASDFG9",
 			"title" : "Test resource title1",
 			"description" : "Test resource description",
@@ -445,7 +549,7 @@
 		},
 		{
 			"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "mak10",
 			"course": "A827346H7ASDFG9",
 			"title" : "Test resource title2",
 			"description" : "Test resource description",
@@ -458,7 +562,7 @@
 		},
 		{
 			"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
-			"user" : "A7S7F8GA7SD98A7SDF8ASD7G",
+			"user" : "mak10",
 			"course": "A827346H7ASDFG9",
 			"title" : "Test resource title2",
 			"description" : "Test resource description",
@@ -472,7 +576,7 @@
 		},
 		{
 			"uuid" : "1",
-			"user" : "1",
+			"user" : "xna2",
 			"course": "A827346H7ASDFG9",
 			"title" : "South Korea unveils 'scientific' whaling proposal",
 			"author" : "Richard Black",
@@ -484,12 +588,12 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/61369000/jpg/_61369079_minke_spl.jpg"
 
 		} ,
 		{
 			"uuid" : "2",
-			"user" : "1",
+			"user" : "xna2",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Create an Abstract Geometric Mosaic Text Effect",
 			"author" : "Chris Spooner",
@@ -497,16 +601,17 @@
 			"description" : "Test resource description",
 			"path" : "/resources/articles/how-to-interview-effectively.html",
 			"resourceType" : 2,
-			"fileType" : "mp4",
+			"fileType" : "html",
 			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"url" : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect" ,
+			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect.",
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
+			"createdAt" : "2012-06-30T14:32:49.000Z"
 
 		},
 		{
 			"uuid" : "3",
-			"user" : "2",
+			"user" : "llt3",
 			"course": "A827346H7ASDFG9",
 			"title" : "How To Interview Effectively",
 			"author" : "Richard Black",
@@ -516,14 +621,15 @@
 			"resourceType" : 2,
 			"fileType" : "html",
 			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"url" : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively/" ,
+			"excerpt": "Job interviews are a common source of anxiety, and can at times be as pleasant as a trip to the dentist.",
+			"thumbnail": "http://blogs-images.forbes.com/victorlipman/files/2012/06/300x1942.jpg",
+			"createdAt" : "2012-05-11T09:32:49.000Z"
 
 		},
 		{
 			"uuid" : "4",
-			"user" : "2",
+			"user" : "llt3",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -535,12 +641,13 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
+			"createdAt" : "2012-07-03T08:32:49.000Z"
 
 		},
 		{
 			"uuid" : "5",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -552,12 +659,13 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
+			"createdAt" : "2012-06-23T07:32:49.000Z"
 
 		},
 		{
 			"uuid" : "6",
-			"user" : "BSDF787D98A7SDF8ASD7G",
+			"user" : "ted",
 			"course": "11",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
@@ -569,7 +677,8 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
+			"createdAt" : "2012-05-23T21:32:49.000Z"
 
 		}
 
@@ -578,7 +687,7 @@
 	"tags": [
 		{
 			"uuid":"bbc0",
-			"user":"A7S7F8GA7SD98A7SDF8ASD7G",
+			"user":"mak10",
 			"start":20,
 			"end":30,
 			"type":1,
@@ -622,7 +731,7 @@
 			"shared":false
 		},
 		{
-			"user":"A7S7FSD78FA98A7SDF8ASD7G",
+			"user":"jhc20",
 			"uuid":"bbc3",
 			"start":10,
 			"end":30,			
@@ -639,27 +748,27 @@
 	] ,
 	"stars": [
 		{
-			"user": 1,
+			"user": "xna2",
 			"resource" : 1
 		},
 		{
-			"user": 1,
+			"user": "xna2",
 			"resource" : 2
 		},
 		{
-			"user": 1,
+			"user": "xna2",
 			"resource" : 3
 		},
 		{
-			"user": 2,
+			"user": "llt3",
 			"resource" : 1
 		},
 		{
-			"user": 2,
+			"user": "llt3",
 			"resource" : 4
 		},
 		{
-			"user": 2,
+			"user": "llt3",
 			"resource" : 5
 		}
 

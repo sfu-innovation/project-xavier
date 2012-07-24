@@ -94,6 +94,80 @@ exports.removeNotificationListener = function( args, callback ){
 }
 
 /*
+	This gets all of the notification listeners of a specific target from
+	a specific app for a specific user 
+	
+	args = {
+		app    : UUID of the app
+		target : UUID of the target we want to listen on
+		user   : UUID of the user 
+	}
+	
+	returns an array of all of the notification listeners
+*/
+exports.findAllNotificationListenersByTarget = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	
+	var containsAllProperties = (args.hasOwnProperty('app') &&
+	                             args.hasOwnProperty('target') &&
+	                             args.hasOwnProperty('user'));
+	
+	if ( !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;
+	}
+	
+	var arg = new Object();
+	arg.app = args.app;
+	arg.target = args.target;
+	arg.user = args.user;
+	
+	NotificationListener.findAll({ where : arg }).success(function( listeners ){
+		callback( null, listeners );
+	}).error(function(error){
+		callback( error, null );
+	});
+}
+/*
+
+    To get all of the notificationListeners for a specific app for a specific user 
+	args = {
+		app : The application which corresponds with the requested notifications
+		user : The user whom the notifications are for
+	}
+}
+	
+	returns the list of notifiers for that user in this specific app
+*/
+exports.findUserSpecificNotificationListeners = function( args, callback ){
+	if ( args === null || args === undefined ){
+		callback("Args is not existent", null);
+		return;
+	}
+	var containsAllProperties = (args.hasOwnProperty('app') && args.hasOwnProperty('user') );
+		
+	if (  !containsAllProperties ){
+		callback("Invalid args "+args.value, null );
+		return;
+		
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.app = args.app;
+	console.log("**** " + arg.values);
+	NotificationListener.findAll({ where : arg }).success(function( listeners ){
+		console.log("[fdsf] "+ listeners );
+		callback( null, listeners );
+	}).error(function(error){
+		console.log('***% = '+ error );
+		callback( error, null );
+	});
+}
+/*
 	To alert all users that are listening to a specific event in an app
 	
 	args = {
@@ -166,3 +240,11 @@ exports.findNotificationListener = function( args, callback ){
 	});
 }
 
+// test function to get every notifcationListener
+exports.findEveryNotificationListener = function( args, callback){
+	NotificationListener.findAll().success(function( listeners ){
+		callback( null, listeners );
+	}).error(function(error){
+		callback( error, null);
+	});
+}	

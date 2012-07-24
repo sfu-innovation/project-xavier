@@ -1,3 +1,5 @@
+var stylePicker = new stylePicker();
+
 jQuery(document).ready(function ($) {
 
 	initUI();
@@ -8,13 +10,13 @@ jQuery(document).ready(function ($) {
 	if (window.location.toString().indexOf('starred') != -1) {
 		//if starred
 		//TODO: change to a better method later
+
 		$('#starred_btn').addClass('active');
+
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		//if starred
-		//TODO: change to a better method later
 		$('#instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
@@ -29,9 +31,52 @@ jQuery(document).ready(function ($) {
 
 
 	}
+	else if (window.location.toString().indexOf('course') != -1) {
+
+		$('#all_btn').addClass('active');
+		$('#weeks-bar a').removeClass('active');
+
+		var weekNum = (window.location.toString().split('#week'))[1];
+		loadCourseArticles(engage, weekNum);
+
+		$(window).bind( 'hashchange', function(e) {
+			var weekNum = (window.location.toString().split('#week'))[1];
+			loadCourseArticles(engage, weekNum);
+		});
+
+		$('#weeks-bar a').bind('click', function () {
+			var weekObj = $(this);
+			var week = weekObj.attr('data-week');
+			if (week) {
+				$('#weeks-bar a').removeClass('active');
+				weekObj.addClass('active');
+				loadCourseArticles(engage, week);
+			}
+
+
+		})
+
+
+	}
 	else {
 		$('#all_btn').addClass('active');
-		loadAllArticles(engage);
+		$('#weeks-bar a').removeClass('active');
+
+		var weekNum = (window.location.toString().split('#week'))[1];
+		loadAllArticles(engage, weekNum);
+
+
+		$('#weeks-bar a').bind('click', function () {
+			var weekObj = $(this);
+			var week = weekObj.attr('data-week');
+			if (week) {
+				$('#weeks-bar a').removeClass('active');
+				weekObj.addClass('active');
+				loadAllArticles(engage, week);
+			}
+
+
+		})
 	}
 
 	$('span.typicn.star').live('click', function () {
@@ -56,6 +101,11 @@ jQuery(document).ready(function ($) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
 					self.removeClass('starred');
+					if (window.location.toString().indexOf('starred') != -1) {
+						self.parent().parent().parent().fadeOut('slow', function () {
+							$(this).remove();
+						});
+					}
 				}
 
 			})
@@ -168,19 +218,6 @@ function initUI() {
 
 function loadInstructorArticles(engage) {
 
-	var	cached_json = localStorage.getItem('allArticles');
-	if(cached_json){
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
-
-			console.log(item);
-			if (item.user.type === 0) {
-				article = renderArticlePreviewBox(item);
-				$('#contents').append(article);
-			}
-
-		});
-	}
 
 	engage.getResourcesByCourseUUIDs(function (data) {
 
@@ -188,14 +225,14 @@ function loadInstructorArticles(engage) {
 
 
 			if (data.errorcode == 0) {
-				localStorage.setItem('allArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
 				$.each(data.resources, function (index, item) {
 
 					console.log(item);
-					if (item.user.type === 0) {
+					if (item.user.type === 1) {
 						article = renderArticlePreviewBox(item);
 						$('#contents').append(article);
 					}
@@ -218,25 +255,12 @@ function loadInstructorArticles(engage) {
 
 
 function loadMyArticles(engage) {
-	var	cached_json = localStorage.getItem('myArticles');
-	if(cached_json){
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
-
-			console.log(item);
-
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
-
-
-		});
-	}
 
 	engage.getResourcesByCurrentUserId(function (data) {
 		if (data) {
 
 			if (data.errorcode == 0) {
-				localStorage.setItem('myArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
@@ -264,71 +288,149 @@ function loadMyArticles(engage) {
 }
 
 
-function loadAllArticles(engage) {
-	var	cached_json = localStorage.getItem('allArticles');
-	if(cached_json){
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
+function loadCourseArticles(engage, week) {
+	var id = $('#hidden-info').attr('data-course-id');
 
-			console.log(item);
+	if (id) {
+		if (week) {
+			engage.getResourcesByCourseUUIDAndWeek(id, week, function (data) {
+				if (data) {
+					if (data.errorcode == 0) {
 
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
+						$('.articlebox').remove();
+						//$('#contents').empty();
+						console.log(data);
+						$.each(data.resources, function (index, item) {
+
+							console.log(item);
+							article = renderArticlePreviewBox(item);
 
 
-		});
+							$('#contents').append(article);
+						});
+
+					}
+
+					else {
+
+					}
+				}
+				else {
+
+				}
+			})
+		}
+		else {
+			engage.getResourcesByCourseUUID(id, function (data) {
+				if (data) {
+
+					if (data.errorcode == 0) {
+
+						$('.articlebox').remove();
+						//$('#contents').empty();
+						console.log(data);
+						$.each(data.resources, function (index, item) {
+
+							console.log(item);
+							article = renderArticlePreviewBox(item);
+
+
+							$('#contents').append(article);
+						});
+
+					}
+
+					else {
+
+					}
+				}
+				else {
+
+				}
+
+
+			})
+		}
+
+
 	}
 
-	engage.getResourcesByCourseUUIDs(function (data) {
-		if (data) {
-			if (data.errorcode == 0) {
-				localStorage.setItem('allArticles', JSON.stringify(data));
-				$('.articlebox').remove();
-				//$('#contents').empty();
-				console.log(data);
-				$.each(data.resources, function (index, item) {
 
-					console.log(item);
-					article = renderArticlePreviewBox(item);
+}
 
 
-					$('#contents').append(article);
-				});
+function loadAllArticles(engage, week) {
 
+	if (week) {
+		engage.getResourcesByCourseUUIDsAndWeek(week, function (data) {
+			if (data) {
+				if (data.errorcode == 0) {
+
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
+
+						console.log(item);
+						article = renderArticlePreviewBox(item);
+
+
+						$('#contents').append(article);
+					});
+
+				}
+
+				else {
+
+				}
 			}
-
 			else {
 
 			}
-		}
-		else {
+		})
 
-		}
+	}
+	else {
+		engage.getResourcesByCourseUUIDs(function (data) {
+			if (data) {
+				if (data.errorcode == 0) {
+
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
+
+						console.log(item);
+						article = renderArticlePreviewBox(item);
 
 
-	})
+						$('#contents').append(article);
+					});
+
+				}
+
+				else {
+
+				}
+			}
+			else {
+
+			}
+
+
+		})
+	}
+
 }
 
 function loadStarredArticles(engage) {
-	var	cached_json = localStorage.getItem('starredArticles');
-	if(cached_json){
-		var data = JSON.parse(cached_json);
-		$.each(data.resources, function (index, item) {
 
-			console.log(item);
-
-			article = renderArticlePreviewBox(item);
-			$('#contents').append(article);
-
-
-		});
-	}
 
 	engage.getStarredResources(function (data) {
 //	engage.getResourcesByCourseUUIDs(function(data){
 		if (data) {
 			if (data.errorcode == 0) {
-				localStorage.setItem('starredArticles', JSON.stringify(data));
+
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
@@ -356,24 +458,31 @@ function loadStarredArticles(engage) {
 }
 
 function renderArticlePreviewBox(item) {
+	var week = weekConverter(item.createdAt, '2012-05-07T07:00:00.000Z');
 	var article =
 		'<div class="three columns articlebox">'
-			+ '<div class="innercontents" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<span class="uploader">' + item.user.firstName + " " + item.user.lastName + '</span>'
-			+ isProf(item.user.type) //return nothing if not
+			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png' + '<" class="avatar"/>'
+
+
 			+ '<div class="post_details"> '
-			+ '<p>Posted in '
-			+ '<span class="coursename">' + '<a>' + item.course.subject + " " + item.course.number
-			+ '-' + renameSectionName(item) + '</a>'
-			+ '</span>'
+			+ '<span>' + item.user.firstName + " " + item.user.lastName + '</span>'
+			+ isProf(item.user.type) //return nothing if not
+
+			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ ' in '
+			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + week + '">' + item.course.subject + " " + item.course.number
+			+ '-WK' + week + '</a>'
+			+ '</span>'
+
 			+ '</p>'
 			+ '</div>'
-			+ '<h5>'
-			+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-			+ '<div class="imgpreview">'
+			//end of post_details
+
 			+ renderPreviewImage(item)
-			+ '</div>'
+			//end of innerwrap
+
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
 			+ '<div class="likescomments">'
@@ -416,18 +525,9 @@ function formartDate(old_date) {
 	return prettytime;
 }
 
-function renameSectionName(item) {
-	if (item.section && item.section.title && item.section.title.indexOf('WEEK') !== -1) {
-		return (item.section.title).replace('WEEK ', "WK");
-	}
-	else {
-		return "?";
-	}
-
-}
 
 function isProf(user_type) {
-	if (user_type === 0) {
+	if (user_type === 1) {
 		return '<span id="prof" title="instructor" class="typicn tick"></span>'
 	}
 	else {
@@ -446,13 +546,17 @@ function renderStar(starred) {
 
 
 function renderPreviewImage(item) {
-	if (item.thumbnail) {
 
-		return '<img src="' + item.thumbnail + '" alt="' + item.title + '" />';
-	}
-	else {
-		return '<img src="http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg" alt="' + item.title + '" />';
-	}
+	var previewImage = '<div class="innerwrap" style=\'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
+//		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
+		+ '")' + '\'>'
+		+ '<h5>'
+		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+		+ '</div>'
+
+
+	return  previewImage
 
 
 }
@@ -465,4 +569,48 @@ function renderExcerpt(excerpt) {
 	else {
 		return 'Australia\'s Prime Minister Julia Gillard and New Zealand\'s Foreign Minister Murray McCully give their reaction (whaling footage courtesy of';
 	}
+}
+
+
+// a class that choose unique box color style for given subject
+// if the subject is new, give a new color, otherwise use the old one;
+
+function stylePicker() {
+	var available_styles = ['box-style-1', 'box-style-2'];
+	var subjects = {};
+
+	this.getStyle = function (subject) {
+
+		if (subjects[subject]) {
+			return subjects[subject]
+
+		}
+		else {
+			var result = available_styles.shift();
+			if (!result) {
+				result = "box-style-1";
+			}
+			subjects[subject] = result;
+			return result;
+		}
+
+	}
+
+
+}
+
+//2012-07-21T00:00:24.000Z
+function weekConverter(post_date, semester_start_date) {
+
+	Date.prototype.getWeek = function () {
+		var onejan = new Date(this.getFullYear(), 0, 1);
+		return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+	}
+
+	var one_week = 7 * 24 * 60 * 60 * 1000;
+	var post_date = new Date(Date.parse(post_date));
+	var semester_start_date = new Date(Date.parse(semester_start_date));
+	return post_date.getWeek() - semester_start_date.getWeek() + 1;
+
+
 }

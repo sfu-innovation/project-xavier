@@ -18,7 +18,7 @@ var db = new Sequelize(
 var Course = exports.Course = db.define('Course', {
 	uuid: {type: Sequelize.STRING, primaryKey: true},
 	title: {type: Sequelize.STRING, allowNull: false},
-	section: {type: Sequelize.STRING, allowNull: false},
+	section: {type: Sequelize.STRING, allowNull: false},//do not remove this, engage is using it.
 	subject: {type: Sequelize.STRING, allowNull: false},
 	number: {type: Sequelize.INTEGER, allowNull: false},
 	instructor: {type: Sequelize.STRING, allowNull: false},
@@ -61,6 +61,21 @@ exports.getInstructor = function(courseUUID, callback){
 		}).error(function(error){
 			callback(error, null);
 		});
+	})
+}
+
+//TODO: new function
+exports.getCourseByName = function(args,callback){
+	Course.find({where:{subject:args.subject, number:args.number, section:args.section}}).success(function(result){
+		if(result){
+			callback(null, result);
+		}
+		else{
+			callback("Can't find course", null);
+		}
+	}).error(function(error){
+		console.log("Can't find course " + error);
+		callback(error, null);
 	})
 }
 

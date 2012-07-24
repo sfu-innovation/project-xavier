@@ -5,15 +5,19 @@ html
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 	<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 	<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	
 	head
 		title= title
-		
+		<meta content='True' name='HandheldFriendly' />
+		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+		<meta name="viewport" content="width=device-width" />
 		script(src="http://code.jquery.com/jquery-latest.js")
 		script(src="/javascripts/engage/prettydate.js")
 		script(src="/javascripts/engage/datetime.js")
 
 		link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet', type='text/css')
 		meta(charset="utf-8")
+		link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900', rel='stylesheet', type='text/css')
 
 		<!-- Set the viewport width to device width for mobile -->
 		meta(name="viewport", content="width=device-width")
@@ -22,9 +26,11 @@ html
 
 		<!-- Included CSS Files -->
 		link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
-		link(rel="stylesheet", href="/stylesheets/engage/app.css")
+
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
-		link(rel='stylesheet', href='/stylesheets/engage/style.css')
+
+		link(rel='stylesheet', href='/stylesheets/engage/style.css?v3')
+				link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
 		<![endif]-->
@@ -50,35 +56,46 @@ html
 		
 	body
 		div#header
-			div.row
-				div.nine.columns
-					h1
-						a(href="/") #{title}
-				div.three.columns#userbox
-					span  #{ user.firstName }  #{ user.lastName }
-						a  log out
+			div.row.clearfix
+				div.ten.columns
+					
+					img.logo( src="/images/engage/SFUEngage_draft3-03.png")
+				div.two.columns.dropdown#user_options					
+					ul.nav-bar#user_options_list
+						li.has-flyout
+							a(href="#")
+								img.avatar(src="https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png") 
+								| #{ user.firstName } #{ user.lastName }
+							a(href="#").flyout-toggle
+								span
+							ul.flyout.small
+								li
+									a(href="#") preference
+								li
+									a(href="#") log out
 				
 			div.row.hide-for-small#nav
-				div.nine.columns
+				div.ten.columns
 					ul.nav-bar#options
 						li(data-value="all")
-							a#all_btn(href="/") ALL RESOURCES
+							a#all_btn(href="/") All Resources
 						li(data-value="yours")
-							a#contruibutions_btn(href="/mine") YOUR CONTRIBUTIONS
+							a#contruibutions_btn(href="/mine") Your Contributions
 						li(data-value="starred")
-							a#starred_btn(href="/starred") STARRED
+							a#starred_btn(href="/starred") Starred
 						li(data-value="prof")
-							a#instructor_btn(href="/instructor") INSTRUCTOR POSTS
-				div.two.columns
-					ul.nav-bar
-						li.has-flyout#courselist
-							a(href="#") COURSES
-							a(href="#", class="flyout-toggle")
+							a#instructor_btn(href="/instructor") Instructor Posts
+				div.two.columns.dropdown
+					ul.nav-bar#courses_list
+						li.has-flyout
+							a(href="#") Courses
+							a(href="#").flyout-toggle
 								span
-							ul.flyout
+							ul.flyout.small
 								each item in courses
 									li.courses
-										a(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
+										a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+
 
 										
 			div.row.show-for-small
@@ -99,8 +116,4 @@ html
 								a.button(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
 										
 		block content
-		
-		div#footer
-			div.row
-				div.twelve.columns
-					p SFU Mobile - Semester in Innovation
+

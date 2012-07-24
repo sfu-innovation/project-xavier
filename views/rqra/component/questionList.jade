@@ -1,4 +1,10 @@
-div#content
+div#questionListContent
+	div#questionCount
+		div#questionCountNumber 25
+		div#questionCountText
+			div#questionCountText1 Questions
+			div#questionCountText2 for this Week
+			
 	div#questionHeader
 		div#listInfo
 			h1#courseTitle Questions for 
@@ -7,13 +13,15 @@ div#content
 			h2#sectionTitle Week 2 - 
 				span#sectionName Perception &amp; Pattern Recognition
 			div#questionTabs
-				div.tab(onclick="displayQuestions('latest', 0)") Latest Questions
-				div.tab(onclick="displayQuestions('instructor', 0)") Instructor Answered
-				div.tab(onclick="displayQuestions('replied', 0)") Most Responses
-				div.tab(onclick="displayQuestions('viewed', 0)") Most Viewed
-				div.tab(onclick="displayQuestions('unanswered', 0)") Unanswered Questions
-				div.tab(onclick="displayQuestions('myQuestions', 0)") My Questions
-				
+				div.tab(onclick="displayQuestions('latest', 0, 'japn101', 1)") Latest Questions
+				div.tab(onclick="displayQuestions('instructor', 0, 'japn101', 1)") Instructor Answered
+				div.tab(onclick="displayQuestions('replied', 0, 'japn101', 1)") Most Responses
+				div.tab(onclick="displayQuestions('viewed', 0, 'japn101', 1)") Most Viewed
+				div.tab(onclick="displayQuestions('unanswered', 0, 'japn101', 1)") Unanswered Questions
+				div.tab(onclick="displayQuestions('myQuestions', 0, 'japn101', 1)") My Questions
+			div#askNewQuestionText Can't find the Question you were looking for? 
+				a#askNewQuestionLink(href="/new") Ask a new Question!
+	
 	div#questionsList		
 					
 	div#pageNumber
@@ -22,12 +30,6 @@ div#content
 		div.pageNumberButton(onclick='changePage(1)') 2
 		div.pageNumberButton(onclick='changePage(2)') 3
 		div.pageNumberButton(onclick='changePage(3)') 4
-		img(src="../images/rqra/next.png", alt="next")
-					
-div#questionCount
-	div#questionCountNumber 25
-	div#questionCountText
-		div#questionCountText1 Questions
-		div#questionCountText2 for this Week
+		img(src="../images/rqra/next.png", alt="next")		
 		
 script(type="text/javascript", src="../javascripts/rqra/questionTabs.js")

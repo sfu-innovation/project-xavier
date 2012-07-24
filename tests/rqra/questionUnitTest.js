@@ -17,6 +17,7 @@ var questionTitle = "Test question Title";
 var questionBody  = "Do radioactive cats have 18 half-lives?"
 var userID        = "jbo1";
 var appType       = 0;
+var section   = "someSection";
 
 module.exports = {
 
@@ -32,7 +33,6 @@ module.exports = {
 			esInsert('tests/rqra/es-test-data.json', function(result){
 				queries.dropDB(config.mysqlDatabase['db-name'], function(){
 					queries.createDB(config.mysqlDatabase["db-name"], function(){
-
 						queries.insertData(
 							dataFile,
 							config.mysqlDatabase["db-name"],
@@ -69,7 +69,8 @@ module.exports = {
 			var newQuestion = {
 				title: questionTitle,
 				body: questionBody,
-				category: 'life'
+				category: 'life',
+				sectionUuid: section
 			}
 			
 			this.requestOptions.method = "POST";
@@ -80,7 +81,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -100,7 +100,7 @@ module.exports = {
 					body += chunk;
 				}).on('end', function() {
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.question);
 					test.done();
 				});
 			});
@@ -114,9 +114,8 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.questions);
 					test.done();
 				});
 			});
@@ -170,9 +169,8 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
-					test.ok(body.errorcode === 0);
+					test.ok(body.errorcode === 0 && body.questions);
 					test.done();
 				});
 			});
@@ -186,7 +184,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -202,7 +199,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -218,7 +214,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();
@@ -234,7 +229,6 @@ module.exports = {
 				response.on('data', function (chunk) {
 					body += chunk;
 				}).on('end', function() {
-					console.log(body);
 					body = JSON.parse(body);
 					test.ok(body.errorcode === 0);
 					test.done();

@@ -28,6 +28,18 @@ coreApi._construct = function () {
 			});
 
 		}
+		
+		// gets a list of courses for the current logged in user
+		this.getUserCourses = function(id,callback ) {
+			console.log("API - getUserCourses");
+			$.ajax({
+				url:'/api/user/courses',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 		this.getUserProfileById = function(id,callback){
 			console.log("API - getUserProfileById");
@@ -285,7 +297,34 @@ coreApi._construct = function () {
 
 		}
 
+		this.getResourcesByCourseUUID = function(id,callback){
+			console.log("API - getResourcesByCourseUUID");
+			$.ajax({
 
+				url:'/api/course/'+id+'/resources/',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
+		this.getResourcesByCourseUUIDAndWeek = function(id, week, callback){
+			console.log("API - getResourcesByCourseUUIDAndWeek");
+			$.ajax({
+
+				url:'/api/course/'+id+'/resources/week/'+week,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
 
 		this.getResourcesByCourseUUIDs = function(callback){
 			console.log("API - getResourcesByCourseUUIDs");
@@ -300,6 +339,20 @@ coreApi._construct = function () {
 
 			})
 
+		}
+
+		this.getResourcesByCourseUUIDsAndWeek = function(week, callback){
+			console.log("API - getResourcesByCourseUUIDsAndWeek");
+			$.ajax({
+
+				url:'/api/resources/week/'+week,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
 		}
 
 		this.getResourcesByCurrentUserId = function(callback){
@@ -413,6 +466,21 @@ coreApi._construct = function () {
 				}
 			});
 		}
+		
+		this.updateQuestionViews = function (id, callback) {
+			console.log("API - updateQuestionViews");
+			var body = {};
+			$.ajax({
+				url:'/api/questions/' + id + '/views/',
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 		this.deleteQuestionById = function (id, callback) {
@@ -428,9 +496,9 @@ coreApi._construct = function () {
 
 
 		this.getQuestionsByUserId = function (user_id, callback) {
-			console.log("API - getQuestionsByUserId");
+			console.log("API - getQuestionsByUserId");			
 			$.ajax({
-				url:'/api/user/' + user_id + '/questions',
+				url:'/api/user/' + user_id + '/questions/page/0',
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -454,9 +522,10 @@ coreApi._construct = function () {
 			})
 		}
 
-		this.searchSortedQuestions = function(searchQuery, searchType, page, callback) {
+		this.searchSortedQuestions = function(searchQuery, searchType, courseName, weekNumber, page, callback) {
 			console.log("API - searchSortedQuestions");
-			var body = { "searchQuery": searchQuery, "searchType": searchType };
+			var body = { "searchQuery": searchQuery, "searchType": searchType, "course": courseName, "week": weekNumber };
+			console.log(body);
 			$.ajax({
 				url:'/api/questions/search/page/' + page,
 				type:'POST',
@@ -468,13 +537,26 @@ coreApi._construct = function () {
 				}
 			});
 		}
+
+		this.getCommentsByQuestion = function(questionUUID, callback) {
+			console.log("API - getCommentsByQuestion");
+						
+			$.ajax({
+				url:'/api/question/' + questionUUID + '/comments/page/0',
+				type:'GET',				
+				contentType:'application/json',				
+				success:function(data) {
+					callback(data);
+				}
+			});
+		}
 		
 	   //comments
 
-		this.getCommentsByTargetId = function (target_id, callback){
+		this.getCommentsByTargetId = function (target_id, page, callback){
 			console.log("API - getCommentsByTargetId");
 			$.ajax({
-				url:'/api/question/'+target_id+'/comments',
+				url:'/api/question/'+target_id+'/comments/page/' + page,
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -602,19 +684,6 @@ coreApi._construct = function () {
 				}
 			});
 		}
-
-		this.getCommentsByUserId = function (user_id, callback) {
-			console.log("API - getCommentsByUserId");
-			$.ajax({
-				url:'/api/user/' + user_id + '/comments',
-				type:'GET',
-				success:function (data) {
-					callback(data);
-
-				}
-			});
-		}
-
 
 		this.upVoteCommentById = function(id, callback){
 			console.log('API - upVoteCommentById');

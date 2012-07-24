@@ -2,10 +2,26 @@ process.setMaxListeners(0);//annoying.
 var express = require('express');
 var routesCommon = require('./routes/common/routesCommon.js');
 var routesRqra = require('./routes/rqra/routesRqra.js');
+//var Notification = require("./controller/NotificationAction.js");
 
 var app = module.exports = express.createServer();
 
 app.configure(function() {
+	// sets logged in user for testing
+	app.use(function(req, res, next) {
+		req.session = {
+			user: {
+				"uuid":"jrf2",
+				"firstName":"Jordan",
+				"lastName":"Fox",
+				"type":0,
+				"userID":"jrf2",
+				"email":"jrf2@sfu.ca"
+			}
+		}
+		next();
+	});
+
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.cookieParser());
@@ -33,13 +49,14 @@ app.dynamicHelpers({
 });
 
 // routing
-app.get('/', routesCommon.index);
+app.get('/', routesRqra.index);
 app.get('/login', routesRqra.login);
 app.get('/logout', routesCommon.logout);
 
 // main views
 app.get('/questions', routesRqra.questionListPage);
 app.get('/question/:id', routesRqra.questionDetailsPage);
+app.get('/new', routesRqra.questionFormPage);
 
 // components
 app.get('/component/header', routesRqra.header);
@@ -64,7 +81,7 @@ app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses ba
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 
 // notification
-
+app.put("/api/user/notification", routesRqra.updateUserNotifications);
 // questions
 
 //TODO: need update this into document
@@ -72,7 +89,7 @@ app.post("/api/question", routesRqra.question); // post a new question by user i
 
 
 //TODO: need update this into document
-app.put("/api/questions/view/:uid", routesRqra.questionViewCount); // increase view count
+app.put("/api/questions/:uid/views", routesRqra.questionViewCount); // increase view count
 app.get("/api/questions/instructor/page/:page", routesRqra.instructorQuestions);	//get all instructor questions
 app.get("/api/questions/page/:page", routesRqra.questions); //P, get all questions
 app.get("/api/questions/unanswered/page/:page", routesRqra.questionsUnanswered); //P, get all unanswered questions
@@ -110,13 +127,13 @@ app.get("/api/comment/count/:uid", routesRqra.commentCount);
 app.get("/api/comment/:uid", routesRqra.comment); // get a comment by id
 app.put("/api/comment/:uid", routesRqra.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesRqra.comment); //deletes a comment by id
-app.get("/api/user/:uid/comments/:page", routesRqra.commentsByUser); //P gets a list of comments posted by a user
+app.get("/api/user/:uid/comments/page/:page", routesRqra.commentsByUser); //P gets a list of comments posted by a user
 
 //deprecated
 //app.post("/api/user/:uid/comments", routesRqra.commentsByUser); // user posts a comment
 app.put("/api/comment/:uid/vote/:dir", routesRqra.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesRqra.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments/:page", routesRqra.commentsByQuestion); // P get all of the comments for a question
+app.get("/api/question/:uid/comments/page/:page", routesRqra.commentsByQuestion); // P get all of the comments for a question
 
 
 
@@ -126,4 +143,4 @@ app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by
 app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
 /***NEW ROUTES */
-app.post("/api/questions/search/page/:page", routesRqra.searchQuestions);
+app.post("/api/questions/search/page/:page", routesRqra.searchQuestionsRoute);

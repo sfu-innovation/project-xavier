@@ -1,7 +1,12 @@
+var EngageAction =   require('../../controller/EngageAction');
+
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
+var Course = require(__dirname + "/../../models/course");
+var CourseMember = require(__dirname + "/../../models/courseMember");
+
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
 var request = require('request');
@@ -9,174 +14,197 @@ var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
 
-exports.login = function(request, response){
+exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
 
-exports.followQuestion = function(request, response) {
+exports.index = function (req, res) {
+	if (req.session && req.session.user) {
+		res.render("engage/index", {     title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses,
+			status:"logged in" }, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+		//to avoid login to testing, this is comment out, using fake user instead
+//		res.redirect("/login");
+		res.redirect("/demo");
+
+		//login with demo user, remove when everything is set.
+	}
+
+};
+
+exports.followQuestion = function (request, response) {
 	routesCommon.followQuestionRoute(2, request, response);
 }
 
-exports.unfollowQuestion = function(request, response) {
+exports.unfollowQuestion = function (request, response) {
 	routesCommon.unfollowQuestionRoute(2, request, response);
 }
 
-exports.getResource = function(request, response){
-	if(request.method === 'GET'){
-		Resource.getResourceByUUID(request.params.uuid, function(error, resource){
-			if(error){
-				 response.end(JSON.stringify({errorcode: 1, message: error}));
+exports.getResource = function (request, response) {
+	if (request.method === 'GET') {
+		Resource.getResourceByUUID(request.params.uuid, function (error, resource) {
+			if (error) {
+				response.end(JSON.stringify({errorcode:1, message:error}));
 			}
-			else{
-				response.end(JSON.stringify({errorcode: 0, resource: resource}));
+			else {
+				response.end(JSON.stringify({errorcode:0, resource:resource}));
 			}
 		});
 	}
 }
 
-exports.createResource = function(request, response){
-	if(request.method === 'POST'){
+exports.createResource = function (request, response) {
+	if (request.method === 'POST') {
 
-		if(request.session && request.session.user){
-			Resource.createResource(request.session.user.uuid, request.body.resource, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, resource: result }));
+		if (request.session && request.session.user) {
+			Resource.createResource(request.session.user.uuid, request.body.resource, function (error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:0, resource:result }));
 				}
-				else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:error }));
 				}
 			});
 		}
-		else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		else {
+			response.writeHead(200, { 'Content-Type':'application/json' });
+			response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 		}
 	}
 }
 
 //Deletes the resource with the uuid provided in the response
-exports.deleteResource = function(request, response){
-	if(request.method === 'DELETE'){
-		Resource.deleteResource(request.params.uuid, function(error, resource){
-			if(error){
-				response.end(JSON.stringify({ errorcode: 1, message: "Couldn't delete that resource"}));
+exports.deleteResource = function (request, response) {
+	if (request.method === 'DELETE') {
+		Resource.deleteResource(request.params.uuid, function (error, resource) {
+			if (error) {
+				response.end(JSON.stringify({ errorcode:1, message:"Couldn't delete that resource"}));
 			}
-			else{
-				response.end(JSON.stringify({errorcode: 0, message: "DELETED!"}));
+			else {
+				response.end(JSON.stringify({errorcode:0, message:"DELETED!"}));
 			}
 		})
 	}
 }
 
 
-exports.starredResources = function(req, res){
-	if(req.method === 'GET'){
-		if(req.session && req.session.user){
-			Star.getStarredResources(req.session.user.uuid, function(error, result){
-				if(result){
-					Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
-						res.writeHead(200, { 'Content-Type': 'application/json' });
-						res.end(JSON.stringify({ errorcode: 0, resources: result }));
+exports.starredResources = function (req, res) {
+	if (req.method === 'GET') {
+		if (req.session && req.session.user) {
+			Star.getStarredResources(req.session.user.uuid, function (error, result) {
+				if (result) {
+					EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
 				}
-				else{
-					res.writeHead(200, { 'Content-Type': 'application/json' });
-					res.end(JSON.stringify({ errorcode: 1, message: error }));
+				else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
 				}
 			});
-		}else{
-			res.writeHead(200, { 'Content-Type': 'application/json' });
-			res.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		} else {
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 		}
 	}
 }
 
 //resource uuid = request.body.uuid
-exports.starResource = function(request, response){
+exports.starResource = function (request, response) {
 	var resource_uuid = request.params.id;
-	if(request.method === 'POST'){
-		if(request.session && request.session.user){
-			Star.starResource(request.session.user.uuid, resource_uuid, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, star: result }));
-				}else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
+	if (request.method === 'POST') {
+		if (request.session && request.session.user) {
+			Star.starResource(request.session.user.uuid, resource_uuid, function (error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:0, star:result }));
+				} else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:error }));
 				}
 			});
-		}else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
-		}
-
-	}
-}
-
-//resource uuid = request.body.uuid
-exports.unstarResource = function(request, response){
-	var resource_uuid = request.params.id;
-	if(request.method === 'DELETE'){
-
-		if(request.session && request.session.user){
-			Star.unstarResource(request.session.user.uuid, resource_uuid, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, star: result }));
-				}else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
-				}
-			}); 
-		}else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		} else {
+			response.writeHead(200, { 'Content-Type':'application/json' });
+			response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 		}
 
 	}
 }
 
 //resource uuid = request.body.uuid
-exports.likeResource = function(request, response){
+exports.unstarResource = function (request, response) {
 	var resource_uuid = request.params.id;
-	if(request.method === 'POST'){
-		if(request.session && request.session.user){
-			Like.likeResource(request.session.user.uuid, resource_uuid, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, resource: result }));
-				}else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
+	if (request.method === 'DELETE') {
+
+		if (request.session && request.session.user) {
+			Star.unstarResource(request.session.user.uuid, resource_uuid, function (error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:0, star:result }));
+				} else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:error }));
 				}
 			});
-		}else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		} else {
+			response.writeHead(200, { 'Content-Type':'application/json' });
+			response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 		}
 
 	}
 }
 
 //resource uuid = request.body.uuid
-exports.unlikeResource = function(request, response){
+exports.likeResource = function (request, response) {
 	var resource_uuid = request.params.id;
-	if(request.method === 'DELETE'){
-		if(request.session && request.session.user){
-			Like.unlikeResource(request.session.user.uuid, resource_uuid, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, resource: result }));
-				}else{
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: error }));
+	if (request.method === 'POST') {
+		if (request.session && request.session.user) {
+			Like.likeResource(request.session.user.uuid, resource_uuid, function (error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:0, resource:result }));
+				} else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:error }));
 				}
 			});
-		}else{
-			response.writeHead(200, { 'Content-Type': 'application/json' });
-			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		} else {
+			response.writeHead(200, { 'Content-Type':'application/json' });
+			response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+		}
+
+	}
+}
+
+//resource uuid = request.body.uuid
+exports.unlikeResource = function (request, response) {
+	var resource_uuid = request.params.id;
+	if (request.method === 'DELETE') {
+		if (request.session && request.session.user) {
+			Like.unlikeResource(request.session.user.uuid, resource_uuid, function (error, result) {
+				if (result) {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:0, resource:result }));
+				} else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+			});
+		} else {
+			response.writeHead(200, { 'Content-Type':'application/json' });
+			response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 		}
 
 	}
@@ -184,24 +212,120 @@ exports.unlikeResource = function(request, response){
 
 
 //don't think this is needed.
-exports.getLikes = function(request, response){
-	if(request.method === 'GET'){
-		Resource.getLikesByUUID(request.params.uuid, function(error, resourceLikes){
-			if(error){
-				response.end(JSON.stringify({errorcode:1, message: "Couldn't get likes for that resource"}));
+exports.getLikes = function (request, response) {
+	if (request.method === 'GET') {
+		Resource.getLikesByUUID(request.params.uuid, function (error, resourceLikes) {
+			if (error) {
+				response.end(JSON.stringify({errorcode:1, message:"Couldn't get likes for that resource"}));
 			}
-			else{
-				response.end(JSON.stringify({errorcode: 0, likes: resourceLikes}));
+			else {
+				response.end(JSON.stringify({errorcode:0, likes:resourceLikes}));
 			}
 		})
 	}
 }
 
-exports.resourcesInSection = function(request, response){
+exports.resourcesInSection = function (request, response) {
 	routesCommon.resourcesInSection(2, request, response);
 }
 
-exports.resourcesInCourses = function(req,res){
+
+exports.resourcesInCourse = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses) {
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
+				found = 1;
+			}
+			;
+		})
+
+		if (found) {
+			Resource.getResourcesByCourseUUIDs({uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else {
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
+exports.resourcesInCourseByWeek = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses) {
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		var weekNum = req.params.week;
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
+				found = 1;
+			}
+			;
+		})
+
+		if (found) {
+			var week = EngageAction.weekHelper(weekNum);
+			Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else {
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
+
+
+
+exports.resourcesInCourses = function (req, res) {
 	var CourseUUIDs = [];
 
 	var Courses = req.session.courses;
@@ -210,200 +334,213 @@ exports.resourcesInCourses = function(req,res){
 	}
 
 
-	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function(error, result){
+	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function (error, result) {
 
-		if(result){
-			Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
-				res.writeHead(200, { 'Content-Type': 'application/json' });
-				res.end(JSON.stringify({ errorcode: 0, resources: result }));
+		if (result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
-		}else{
-			res.writeHead(200, { 'Content-Type': 'application/json' });
-			res.end(JSON.stringify({ errorcode: 1, message: error }));
+		} else {
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:error }));
 		}
 
 
 	})
 }
 
-// get resources that uploaded by current user
-exports.resourcesOfCurrentUser = function(req,res){
-	if (req.session && req.session.user){
-		Resource.getResourceByUserId({user:req.session.user.uuid}, function(error, result){
 
-			if(result){
-				Resource.resourceHelper(req.session.user.uuid,result,function(error, result){
-					res.writeHead(200, { 'Content-Type': 'application/json' });
-					res.end(JSON.stringify({ errorcode: 0, resources: result }));
+exports.resourcesInCoursesByWeek = function (req, res) {
+	var CourseUUIDs = [];
+
+	var Courses = req.session.courses;
+	for (index in Courses) {
+		CourseUUIDs.push(Courses[index].uuid);
+	}
+
+	var weekNum = req.params.week;
+	var week = EngageAction.weekHelper(weekNum);
+	Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:CourseUUIDs}, function (error, result) {
+
+		if (result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:0, resources:result }));
+			})
+
+		} else {
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:error }));
+		}
+
+
+	})
+}
+
+
+// get resources that uploaded by current user
+exports.resourcesOfCurrentUser = function (req, res) {
+	if (req.session && req.session.user) {
+		Resource.getResourceByUserId({user:req.session.user.uuid}, function (error, result) {
+
+			if (result) {
+				EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:0, resources:result }));
 				})
-			}else{
-				res.writeHead(200, { 'Content-Type': 'application/json' });
-				res.end(JSON.stringify({ errorcode: 1, message: error }));
+			} else {
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:1, message:error }));
 			}
 
 
 		})
 
 	}
-	else{
-		response.writeHead(401, { 'Content-Type': 'application/json' });
-		response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	else {
+		response.writeHead(401, { 'Content-Type':'application/json' });
+		response.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
 	}
 
 }
-
-
-
-
-
-
 
 
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
 
 
-
-
-
-
-
-
-
-
-
 var user_1 = {
-	type: 0,
-	firstName : "Gracey",
-	lastName : "Mesina",
-	userID : "3010123456",
-	email : "gmesina@sfu.ca"
+	type:0,
+	firstName:"Gracey",
+	lastName:"Mesina",
+	userID:"3010123456",
+	email:"gmesina@sfu.ca"
 }
 
 var user_2 = {
-	type: 1,
-	firstName : "Ted",
-	lastName : "Kirkpatrick",
-	userID : "3010111111",
-	email : "ted@sfu.ca"
+	type:1,
+	firstName:"Ted",
+	lastName:"Kirkpatrick",
+	userID:"3010111111",
+	email:"ted@sfu.ca"
 }
 
 var userobject = {
-	type : 0,
-	firstName : "Catherine",
-	lastName : "Tan",
-	userID : 301078676,
-	email : "llt3@sfu.ca",
-	courses : {}
-	}
+	type:0,
+	firstName:"Catherine",
+	lastName:"Tan",
+	userID:301078676,
+	email:"llt3@sfu.ca",
+	courses:{}
+}
 
 var article_1 = {
-	id : 1,
-	user : user_1,
-	url : "http://www.bbc.co.uk/news/science-environment-18716300",
-	title :  "South Korea unveils 'scientific' whaling proposal",
-	author: "Richard Black",
-	publishedDate : "4 July 2012",
-	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
-	uploaded_by : "Catherine Tan",
-	uploaded_on : "May 6 2012,  12:30 PM PST",
-	course: "CMPT120",
-	week : "1",
-	likes: 5,
-	description : "please read this for the midterm.",
-	starred : 0
+	id:1,
+	user:user_1,
+	url:"http://www.bbc.co.uk/news/science-environment-18716300",
+	title:"South Korea unveils 'scientific' whaling proposal",
+	author:"Richard Black",
+	publishedDate:"4 July 2012",
+	host:"http://www.bbc.co.uk",
+	path:"/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
+	uploaded_by:"Catherine Tan",
+	uploaded_on:"May 6 2012,  12:30 PM PST",
+	course:"CMPT120",
+	week:"1",
+	likes:5,
+	description:"please read this for the midterm.",
+	starred:0
 
 }
 
 var article_2 = {
-	id : 2,
-	user : user_2,
-	url : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect",
-	title :  "How To Create an Abstract Geometric Mosaic Text Effect",
-	author: "Chris Spooner",
-	publishedDate : "4 July 2012",
-	host : "http://blog.spoongraphics.co.uk",
-	path : "/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
-	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 16 2012,  12:30 AM PST",
-	course: "CMPT120",
-	week : "4",
-	likes: 2,
-	description : "what?!",
-	starred : 1
+	id:2,
+	user:user_2,
+	url:"http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect",
+	title:"How To Create an Abstract Geometric Mosaic Text Effect",
+	author:"Chris Spooner",
+	publishedDate:"4 July 2012",
+	host:"http://blog.spoongraphics.co.uk",
+	path:"/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
+	uploaded_by:"Catherine Tan",
+	uploaded_on:"July 16 2012,  12:30 AM PST",
+	course:"CMPT120",
+	week:"4",
+	likes:2,
+	description:"what?!",
+	starred:1
 
 }
 
 var article_3 = {
-	id : 3,
-	user : user_1,
-	url : "http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
-	title :  "Naked rambler walks free from Perth Prison",
-	author: "",
-	publishedDate : "4 July 2012",
-	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/f1311fc37403ff7518ab0a1b77c69804.xml",
-	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 17 2012,  12:00 PM PST",
-	course: "IAT200",
-	week : "4",
-	likes: 10,
-	description : "Check out this article",
-	starred : 0
+	id:3,
+	user:user_1,
+	url:"http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
+	title:"Naked rambler walks free from Perth Prison",
+	author:"",
+	publishedDate:"4 July 2012",
+	host:"http://www.bbc.co.uk",
+	path:"/resources/articles/f1311fc37403ff7518ab0a1b77c69804.xml",
+	uploaded_by:"Catherine Tan",
+	uploaded_on:"July 17 2012,  12:00 PM PST",
+	course:"IAT200",
+	week:"4",
+	likes:10,
+	description:"Check out this article",
+	starred:0
 }
 
 
 var article_4 = {
-	id : 4,
-	user : userobject,
-	url : "http://www.bbc.co.uk/news/business-18867054",
-	title :  "HSBC used by 'drug kingpins', says US Senate",
-	author: "Paul Adams",
-	publishedDate : "4 July 2012",
-	host : "http://www.bbc.co.uk",
-	path : "/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
-	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 17 2012,  12:30 PM PST",
-	course: "BUS100",
-	week : "1",
-	likes: 7,
-	description : "wow cool",
-	starred : 0
+	id:4,
+	user:userobject,
+	url:"http://www.bbc.co.uk/news/business-18867054",
+	title:"HSBC used by 'drug kingpins', says US Senate",
+	author:"Paul Adams",
+	publishedDate:"4 July 2012",
+	host:"http://www.bbc.co.uk",
+	path:"/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
+	uploaded_by:"Catherine Tan",
+	uploaded_on:"July 17 2012,  12:30 PM PST",
+	course:"BUS100",
+	week:"1",
+	likes:7,
+	description:"wow cool",
+	starred:0
 }
 
 var article_5 = {
-	id : 5,
-	user : userobject,
-	url : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively",
-	title :  "How To Interview Effectively",
-	author: "Victor Lipman",
-	publishedDate : "28 June 2012",
-	host : "http://www.forbes.com",
-	path : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
-	uploaded_by : "Catherine Tan",
-	uploaded_on : "July 15 2012,  12:30 PM PST",
-	course: "IAT200",
-	week : "2",
-	likes: 6,
-	description : "what?!",
-	starred : 1
+	id:5,
+	user:userobject,
+	url:"http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively",
+	title:"How To Interview Effectively",
+	author:"Victor Lipman",
+	publishedDate:"28 June 2012",
+	host:"http://www.forbes.com",
+	path:"/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
+	uploaded_by:"Catherine Tan",
+	uploaded_on:"July 15 2012,  12:30 PM PST",
+	course:"IAT200",
+	week:"2",
+	likes:6,
+	description:"what?!",
+	starred:1
 
 }
 
 userobject.courses = {
-		"CMPT120" : [article_1, article_2],
-		"BUS100" : [article_4],
-		"IAT200" : [article_3, article_5]
-	};
+	"CMPT120":[article_1, article_2],
+	"BUS100":[article_4],
+	"IAT200":[article_3, article_5]
+};
 
 
-var articles = [article_1,  article_2,  article_3,  article_4,  article_5]  ;
+var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
-
-function mediaPath(path, host){
-	if (path.charAt(0)== "/"){
+function mediaPath(path, host) {
+	if (path.charAt(0) == "/") {
 		return "http://" + host + path
 	}
 	else return path
@@ -423,27 +560,19 @@ function update_link(node, host) {
 	}
 }
 
-function walk(node, host, tab, cb) {
+function walk(node, host, cb) {
 	var notAllowed = [
+
 			'SCRIPT',
 			'NOSCRIPT',
 			'H1'
 		],
-		tags = { }, test = false;
-//----------------------debugging-----------------
-	if (node.tagName !==undefined /*&& typeof cb === 'number'*/) {
-		var s = ""
-		for (var k=0; k<tab;++k) {
-			s+='\t'
-		}
-	//	console.log(s+node.tagName+'\t'+node.getAttribute('class')+'\t'+node.textContent.length)
-	}
-	
+		tags = { };
 
-//------------------------------------------------
 	if (node.nodeType !== node.ELEMENT_NODE) {
 		return;
 	}
+
 	update_link(node, host);
 	node.removeAttribute('class');
 	node.removeAttribute('style');
@@ -465,18 +594,11 @@ function walk(node, host, tab, cb) {
 			if (childNode.hasAttribute("class")) {
 				tagName += ' '+childNode.getAttribute("class");
 			}
-
 			var arr = ( (!tags[tagName]) ? tags[tagName] = [] : tags[tagName] );
-			
-			
 
-		//	console.log(arr)
 			arr.push(childNode.textContent.length);
-			//console.log('going into: '+ childNode.tag+' from: '+node.tagName)
-			walk(childNode, host, tab+1, cb);
+			walk(childNode, host, cb);
 		}
-	//	console.log(tags)
-
 	}//------------end child loop
 
 	var items = Object.getOwnPropertyNames(tags).map(function (name) {
@@ -491,7 +613,6 @@ function walk(node, host, tab, cb) {
 			node: node
 		}
 	})
-	//console.log(node.tagName+' '+items.length)
 	if (items.length > 0)
 		cb(items);	
 }
@@ -509,33 +630,15 @@ function mean(set) {
 }
 
 function strip(node, tag) {
-//	console.log(node.textContent)
-
 
 	var check = false;
 	for(var i = 0; i < node.childNodes.length; ++i){
-	//	console.log(tag+', '+node.childNodes[i].tagName)
 		var child = node.childNodes[i];
-		//console.log('\tchild: '+child.tagName)
-		//console.log('\ttag: '+tag)
-	/*	if (child.nodeType === node.ELEMENT_NODE) {
-			console.log('element type')
-		
-			if (child.tagName !== undefined)
-					console.log(child.textContent)
-		}*/
-	/*	}else
-			console.log('non element')
-*/
-
 		
 		if (child.tagName === tag) {
-			//console.log('\t\tequal');
 			check = true;
 		}
 		if (!check) {
-			//console.log(check)
-			//console.log('\t\tremove '+child.tagName);
 			node.removeChild(child);
 			--i;
 		}
@@ -546,48 +649,41 @@ function listTypes(node, host) {
 
 	var articles = [],
 		max = 0,
-		ratio = 0,
 		candidateNode = null,
 		tag;
 
-	walk(node, host, 0, function(tags) {
+	walk(node, host, function(tags) {
 		
 		var retval = tags.some(function(item) {
-		//	console.log(tags)
-			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.1;
-			//return item.name === 'slideShow';
+			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.17;
 		});
 		if (retval) {
 			articles.push(tags)
 		}
-			
 	})
-
 
 	for (var i in articles) {
 		
 		articles[i].forEach(function(item) {
-			if(item.len > max && item.ratio > ratio) {
+			if(item.len > max) {
 				tag = item.name.split(' ')[0];
 				candidateNode = item.node;
 				max = item.len;
-				ratio = item.ratio;
+
 			} 
 		})
 	}
 	console.log(articles)
 	strip(candidateNode, tag);
-//	console.log(candidateNode.textContent)
 	return candidateNode;
 }
-
 
 
 function articlize(document, name) {
 	//var published_date = document.querySelector('TIME').textContent
 	var url = name.split("/"),
-		fileName = crypto.createHash('md5').update(url[url.length-1]).digest('hex'),
-		path = "./public/resources/articles/"+fileName+".xml",
+		fileName = crypto.createHash('md5').update(url[url.length - 1]).digest('hex'),
+		path = "./public/resources/articles/" + fileName + ".xml",
 		host = url[2],
 		title = document.querySelector('TITLE').textContent,
 		published_date = "";
@@ -595,40 +691,46 @@ function articlize(document, name) {
 	if (document.querySelector('H1'))
 		title = document.querySelector('H1').textContent;
 
-	var stream = fs.createWriteStream(path);
-	stream.once('open', function(fd) {
 
-		stream.write('<title>'+title+'</title>\n')
-		stream.write('<content>'+html5.serialize(listTypes(document.documentElement, host))+'</content>');
+	var stream = fs.createWriteStream(path);
+	stream.once('open', function (fd) {
+
+		stream.write('<title>' + title + '</title>\n')
+		stream.write('<content>' + html5.serialize(listTypes(document.documentElement, host)) + '</content>');
 
 	})
 
 
-/*
-	//for testing----------------
-	return document.querySelectorAll(tag).map(function(node) {
-		return "<p>"+node.textContent+"</p>";
-	}).join("");
-	//---------------------------
-*/
+	/*
+	 //for testing----------------
+	 return document.querySelectorAll(tag).map(function(node) {
+	 return "<p>"+node.textContent+"</p>";
+	 }).join("");
+	 //---------------------------
+	 */
 }
 
-exports.index = function(req,res){
+exports.design = function (req, res) {
 	if (!req.body.article_url) {
 		var error = "";
 		if (req.method === 'POST') {
-			error ="please enter an URL" ;
+			error = "please enter an URL";
 		}
 
 		if (req.session && req.session.user) {
 
+			res.render("engage/design", {
+				title:"SFU ENGAGE",
+				user:userobject,
+				status:"logged in",
+				courses:req.session.courses,
+				errormsg:error }, function (err, rendered) {
 
-			res.render("engage/index", {
-				title: "SFU ENGAGE",
-				user :  userobject,
-				status : "logged in",
-				courses : req.session.courses,
-				errormsg : error })
+				// console.log(rendered);
+				res.writeHead(200, {'Content-Type':'text/html'});
+				res.end(rendered);
+
+			})
 		}
 		else {
 			//to avoid login to testing, this is comment out, using fake user instead
@@ -654,9 +756,10 @@ exports.index = function(req,res){
 					features: {
 						QuerySelector: true,
 						FetchExternalResources: [ ]
+
 					}
 				}).createWindow(),
-				parser = new html5.Parser({document: window.document});
+				parser = new html5.Parser({document:window.document});
 
 			parser.parse(body);
 
@@ -664,46 +767,38 @@ exports.index = function(req,res){
 
 		}
 
-		res.render("engage/index", { 	title: "SFU ENGAGE",
-			user :  userobject,
-			status : "logged in",
-			courses : req.session.courses,
-			errormsg : error })
+		res.render("engage/design", {     title:"SFU ENGAGE",
+			user:userobject,
+			status:"logged in",
+			courses:req.session.courses,
+			errormsg:error }, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
 	});
 }
 
-/*
-exports.index = function(req, res){
-	if (req.session && req.session.user) {
-		res.render("engage/index", { 	title: "SFU ENGAGE",
-			user :  userobject,
-			courses : req.session.courses,
-			status : "logged in" })
-	}
-	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
-		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
-	}
-
-};
-*/
 exports.starred = function (req, res) {
 
 	if (req.session && req.session.user) {
-			res.render("engage/starred", { 	title: "SFU ENGAGE",
-				user :  userobject,
-				courses : req.session.courses,
-				status : "logged in" })
-   	}
+		res.render("engage/starred", {     title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses}, function (err, rendered) {
+
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
+
 	}
 
 }
@@ -711,33 +806,83 @@ exports.starred = function (req, res) {
 exports.instructor = function (req, res) {
 
 	if (req.session && req.session.user) {
-		res.render("engage/instructor", { 	title: "SFU ENGAGE",
-			user :  userobject,
-			courses : req.session.courses,
-			status : "logged in" })
+		res.render("engage/instructor", {     title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses}, function (err, rendered) {
+
+
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
 
 }
 
 
-
-
 exports.articleView = function (req, res) {
+	comment_1 = {
+		msg:"Where is it?",
+		user:userobject,
+		time:"1 hour ago",
+		replies:[]
+	}
+	comment_2 = {
+		msg:"I like this",
+		user:userobject,
+		time:"5 mins ago",
+		replies:[]
+	}
+
+
+	reply_comment_1 = {
+		msg:"No idea",
+		reply_to:comment_1,
+		user:user_1,
+		time:"10 mins ago"
+	}
+	reply_comment_2 = {
+		msg:"States?",
+		reply_to:comment_1,
+		user:user_2,
+		time:"5 mins ago"
+	}
+
+	reply_comment_3 = {
+		msg:"No i dont think so",
+		reply_to:comment_1,
+		user:user_1,
+		time:"5 mins ago"
+	}
+
+	reply_comment_4 = {
+		msg:"Yah me too",
+		reply_to:comment_2,
+		user:user_2,
+		time:"2 mins ago"
+	}
+
+	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
+	comment_2.replies = [reply_comment_4];
 
 	if (req.session && req.session.user) {
 		var pickedArticle = articles[req.params.id - 1];
 		res.render("engage/article", { title:"SFU ENGAGE",
-			article : pickedArticle,
+			article:pickedArticle,
+			comments:[comment_1, comment_2],
 			user:userobject,
-			courses : req.session.courses,
-			status:"logged in"     })
+			courses:req.session.courses,
+			status:"logged in"     }, function (err, rendered) {
+
+			// console.log(rendered);
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -746,74 +891,85 @@ exports.articleView = function (req, res) {
 
 		//login with demo user, remove when everything is set.
 	}
-
-
-
 
 
 }
 exports.contributions = function (req, res) {
 
 	if (req.session && req.session.user) {
-		var myarticles = [];
-		for (i in articles) {
-			if (articles[i].user === userobject){
-				myarticles.push(articles[i])
-			}
-		}
-		//console.log(myarticles);
+
 		res.render("engage/contributions", { title:"SFU ENGAGE",
-			user:userobject,
-			contributions : myarticles,
-			courses : req.session.courses,
-			status:"logged in"     })
+			user:req.session.user,
+			courses:req.session.courses  }, function (err, rendered) {
+
+
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
 		res.redirect("/demo");
-
-		//login with demo user, remove when everything is set.
 	}
 
 }
 exports.courseView = function (req, res) {
 	if (req.session && req.session.user) {
-		var selectedCourse = req.params.id;
-		var courseArticles = [];
-		for (i in articles) {
-			if (articles[i].course === selectedCourse){
-				courseArticles.push(articles[i])
-			}
+		var courseName = req.params.name;
+
+		var token = courseName.split('-');
+
+		if(token && token.length === 3){
+			Course.getCourseByName({subject:token[0],number:token[1],section:token[2]},function(err,result){
+				if(result){
+					res.render("engage/course", { title:"SFU ENGAGE",
+						courseName:courseName,
+						user:req.session.user,
+						course:result,
+
+						courses:req.session.courses
+					}, function (err, rendered) {
+
+						// console.log(rendered);
+						res.writeHead(200, {'Content-Type':'text/html'});
+						res.end(rendered);
+
+					})
+				}
+				else{
+
+				}
+
+
+
+
+			});
+
 		}
 
-		res.render("engage/course", { title:"SFU ENGAGE",
-			course : selectedCourse,
-			user:userobject,
-			courseArticles : courseArticles,
-			courses : req.session.courses,
-			status:"logged in"     })
+
+
+
+
+
+
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
 	}
-
-
 
 
 }
 
-exports.demoPage = function (req,res){
-	var fake_user_1 = {uuid:1,firstName:"Mark",lastName:"Ni",userID:"xna2",email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:2,firstName:"Cathrine",lastName:"Tan",userID:"llt3@sfu.ca",email:"llt3@sfu.ca"}
+exports.demoPage = function (req, res) {
+//	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Cathrine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
 
-	req.session.user= fake_user_2;
-	User.getUserCourses(req.session.user.uuid,function(err,result){
-		req.session.courses = [ ];
+	req.session.user = fake_user_2;
+	User.getUserCourses(req.session.user.uuid, function (err, result) {
+		req.session.courses = result;
 		res.redirect('/');
 
 	});

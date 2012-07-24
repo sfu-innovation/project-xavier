@@ -1,5 +1,19 @@
 div#courseList
-	div.courseButtonSelected PSYC221
-	div.courseButton PSYC260
-	div.courseButton PSYC268
-	div.courseButton PSYC308
+	div.courseButton(onclick="selectButton(this)")
+		div.courseButtonSelectorTop
+		div.courseButtonText PSYC221
+		div.courseButtonSelectorBottom
+	div.courseButton(onclick="selectButton(this)")
+		div.courseButtonSelectorTop
+		div.courseButtonText PSYC260
+		div.courseButtonSelectorBottom
+	div.courseButton(onclick="selectButton(this)")
+		div.courseButtonSelectorTop
+		div.courseButtonText PSYC268
+		div.courseButtonSelectorBottom
+	div.courseButton(onclick="selectButton(this)")
+		div.courseButtonSelectorTop
+		div.courseButtonText PSYC308
+		div.courseButtonSelectorBottom
+	
+script(type="text/javascript", src="../javascripts/rqra/courseList.js")

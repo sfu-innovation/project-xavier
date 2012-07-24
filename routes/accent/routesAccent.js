@@ -1,6 +1,9 @@
 var routesCommon = require('./../common/routesCommon.js');
-var TagAction = require("./../../controller/TagAction.js");
-var MediaAction = require("./../../controller/MediaAction.js");
+var TagAction    = require("./../../controller/TagAction.js");
+var MediaAction  = require("./../../controller/MediaAction.js");
+var MediaFile    = require(__dirname + "/../../models/mediafile.js");
+var User         = require(__dirname + "/../../models/user");
+var Tag          = require(__dirname + "/../../models/tag");
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -14,7 +17,7 @@ exports.questions = function(request, response) {
 	routesCommon.questionsRoute(1, request, response);
 }
 
-exports.questionsByUser = function(request, response) {
+exports.questionsByUser = function(request, response) {	
 	routesCommon.questionsByUserRoute(1, request, response);
 }
 
@@ -108,7 +111,7 @@ exports.tag = function(request,response){
 	}
 	else if (request.method === 'PUT'){		
 		var uuid = request.params.id;
-		TagAction.updateTag({'uuid':uuid}, request.body, function(error, result){
+		TagAction.updateTag(uuid, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tag: result }));
@@ -136,55 +139,39 @@ exports.tag = function(request,response){
 
 }
 
+exports.lastWatched = function(request, response){
+	if(request.session && request.session.user){
+		if(request.method === "GET"){
+			Tag.getLastWatched(request.session.user.uuid, function(error, tag){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tag: tag }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, error: error }));
+				}
+			});
+		}
+		else if(request.method === "PUT"){
+			Tag.updateLastWatched(request.session.user.uuid, request.body, function(error, tag){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tag: tag }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, error: error }));
+				}
+			})
+		}
+	}
+	else{
+		response.writeHead(200, { 'Content-Type': 'application/json' });
+		response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	}
 
-//
-//exports.taggedQuestion = function(request,response){
-//	if (request.method === 'GET'){
-//		var questionID = request.params.qid;
-//		TagAction.viewQuestionTagged({'question':questionID}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, question: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
-//
-//exports.taggedComment = function(request,response){
-//	if (request.method === 'GET'){
-//		var commentID = request.params.cid;
-//		TagAction.viewCommentTagged({'commentID':commentID}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, comment: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
-//
-//exports.taggedUser = function(request,response){
-//	if (request.method === 'GET'){
-//		var userId = request.params.uid;
-//		TagAction.getTaggedUser({'user':userId}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
+}
 
 // MediaFile
 exports.mediafile = function(request,response){
@@ -255,7 +242,7 @@ exports.mediafile = function(request,response){
 exports.mediafileTag = function(request,response){	
 	if (request.method === 'GET'){
 		var targetID = request.params.tid;								
-		MediaAction.getMediaFileTags({'uuid':targetID}, function(error, result){
+		MediaFile.getMediaFileTags(targetID, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, tags: result }));
@@ -268,33 +255,83 @@ exports.mediafileTag = function(request,response){
 	}
 }
 
-//exports.mediafileUser = function(request,response){
-//	if (request.method === 'GET'){
-//		var userId = request.params.uid;
-//		MediaAction.getMediaFileUser({'user':userId}, function(error, result){
-//			if(result){
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 0, resource: result }));
-//			}
-//			else{
-//				response.writeHead(200, { 'Content-Type': 'application/json' });
-//				response.end(JSON.stringify({ errorcode: 1, message: error }));
-//			}
-//		});
-//	}
-//}
+exports.userTagsByMedia = function(request, response){
+	if(request.method === "GET"){
+		if(request.session && request.session.user){
+			MediaFile.getUserTagsByMedia(request.session.user.uuid, request.params.id, function(error, result){
+				if(!error){
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, tags: result }));
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: error }));
+				}
+			})
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+		}
+	}
+}
 
-//deprecated
+exports.getQuestionsByMedia = function(request, response){
+	if(request.method === "GET"){
+		TagAction.getQuestionsByMedia(request.params.id, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, questions: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});
+	}
+}
 
-//exports.follower = function(request, response) {
-//	var question_id = request.params.uid;
-//	var follower_id = request.params.follower;
-//
-//	if (request.method === "PUT") {
-//		response.writeHead(500, { 'Content-Type': 'application/json' });
-//		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-//	} else if (request.method === "DELETE") {
-//		response.writeHead(500, { 'Content-Type': 'application/json' });
-//		response.end(JSON.stringify({ errorcode: 1, message: "Not Implemented" }));
-//	}
-//}
+exports.courseMediaFiles = function(request, response){
+	if(request.method === "GET"){
+		var courseID = request.params.id;
+		MediaAction.getMediaByCourse(courseID, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, media: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
+}
+
+exports.index = function(req, res){
+	if (req.session && req.session.user) {	
+		res.render("accent/index", { 	title: "SFU Accent",
+			user :  req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, 
+			function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
+		
+	}
+	else {
+		res.redirect("/demo");		
+	}	
+};
+
+exports.demoPage = function (req,res){
+	var temp_user = {uuid:"jhc20",firstName:"Jihoon",lastName:"Choi",userID:"jhc20",email:"jhc20@sfu.ca"}
+
+	req.session.user= temp_user;
+	User.getUserCourses(req.session.user.uuid,function(err,result){
+		req.session.courses = result;
+		res.redirect('/');
+
+	});
+}

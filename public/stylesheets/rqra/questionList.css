@@ -1,15 +1,14 @@
-div#content {
+div#questionListContent {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
-	margin-right: 25px;
+	width: 70%;
 }
 
 h1#courseTitle {
 	font-weight: normal;
-	font-size: 0.8em;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	font-size: 0.95em;
+	margin-bottom: 0.3em;
 }
 
 span.inserted {
@@ -19,8 +18,8 @@ span.inserted {
 h2#sectionTitle {
 	font-weight: bold;
 	font-size: 2em;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 0em;
+	margin-bottom: 0.2em;
 }
 
 span#sectionName {
@@ -34,6 +33,7 @@ div#questionHeader {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	width: 120%;
 }
 
 div#questionCount {
@@ -43,10 +43,11 @@ div#questionCount {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	margin-top: 1.6em;
+	margin-right: 1.6em;
 	font-size: 2em;
 	font-weight: bold;
-	margin-top: 70px;
-	margin-right: 10px;
+	float: right;
 }
 
 div#questionCountNumber {
@@ -71,34 +72,58 @@ div#questionTabs {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	margin-top: 0em;
 }
 
 div#questionTabs div.tab {
 	margin: 5px;
-	font-size: 0.8em;
+	margin-top: 0em;
+	font-size: 0.95em;
 	color: #1b88d0;
 	text-decoration:underline;
 	cursor: pointer;
 }
 
-div.questionPromoted {
-	padding: 2px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	background: #ffe450;
-	width: 700px;
-	cursor: pointer;
+div#askNewQuestionText {
+	margin-top: 0.5em;
+	padding: 0.5em;
+	font-size: 1.5em;
+}
+
+div#askNewQuestionText, a#askNewQuestionLink {
+	color: white;
+	background: #1b88d0;
 }
 
 div.question {
-	padding: 2px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	padding: 5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
 	cursor: pointer;
 }
 
+div.detailedQuestion {
+	padding: 2px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+div.questionId {
+	display: none;
+}
+
+div.questionTitle {
+	width: 80%;
+	font-size: 3em;
+}
+
 div.questionText {
-	margin: 5px;
+	font-size: 1.5em;
+}
+
+div.questionDetailsText {
+	font-size: 1.5em;
+	width: 70%;
 }
 
 div.questionData {
@@ -108,11 +133,12 @@ div.questionData {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	font-size: 0.95em;
 }
 
 div.questionData div {
-	margin: 5px;
-	padding: 2px;
+	padding: 0.2em;
+	margin-right: 1.4em;
 }
 
 div.profResponsesRecent {
@@ -130,16 +156,52 @@ div#pageNumber {
 }
 
 div#pageNumber img {
-	width: 12px;
+	width: 1em;
+	height: 1em;
+	margin: 0.6em;
 }
 
 div.pageNumberButton {
-	padding: 2px;
+	margin: 0.6em;
+	font-size: 1em;
 	color: #1b88d0;
 	text-decoration:underline;
 	cursor: pointer;
 }
 
 div.votes img {
-	width: 12px;
+	width: 1em;
+	height: 1em;
+}
+
+hr#replyDivider {
+	margin: 0em;
+	margin-bottom: 2em;
+	width: 70%;
+}
+
+div#addReplyText {
+	font-size: 1.5em;
+}
+
+div#replyButton {
+	color: white;
+	background: #1b88d0;
+	padding: 6px;
+	width: 3em;
+	cursor: pointer;
+	padding: 10px;
+	font-size: 1em;
+	font-weight: bold;
+	margin-bottom: 3em;
+}
+
+textarea#replyText {
+	width: 70%;
+	height: 12.8em;
+}
+
+input#tagText {
+	width: 70%;
+	margin-bottom: 1em;
 }

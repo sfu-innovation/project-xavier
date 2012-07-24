@@ -52,7 +52,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
-app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
+//app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
 
 
@@ -63,10 +63,22 @@ app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+
+//resource listings
+
 //TODO: need update this into document
 app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
+app.get('/api/resources/week/:week', routesEngage.resourcesInCoursesByWeek);
 //TODO: need update this into document
 app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resources uploaded by current user;
+
+app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
+app.get('/api/resources/user/:id', routesEngage.starredResources);	//get all  resources by user id
+
+app.get('/api/course/:id/resources/',routesEngage.resourcesInCourse);  //get all resources in a course, not using common one as it does not meet engage requirement.
+app.get('/api/course/:id/resources/week/:week',routesEngage.resourcesInCourseByWeek);
+
 
 app.post('/api/resource', routesEngage.createResource);
 //POST means create here
@@ -75,8 +87,7 @@ app.get('/api/resource/:uuid', routesEngage.getResource);
 app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
-//Star resources
-app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
+
 
 app.post('/api/resource/:id/star', routesEngage.starResource);		//star a resource
 app.delete('/api/resource/:id/star', routesEngage.unstarResource);	//unstar a resource
@@ -119,6 +130,7 @@ app.get('/logout', routesCommon.logout);
 app.get('/', routesEngage.index);
 app.post('/', routesEngage.index);
 
+
 app.post('/design', routesEngage.design);
 app.get('/design', routesEngage.design);
 
@@ -129,7 +141,7 @@ app.get('/mine', routesEngage.contributions);
 app.get('/instructor', routesEngage.instructor);
 
 //article - this is resource
-app.get('/course/:id', routesEngage.courseView);
+app.get('/course/:name', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
 

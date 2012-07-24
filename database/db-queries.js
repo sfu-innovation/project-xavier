@@ -12,21 +12,22 @@ process.setMaxListeners(0)
 var async = require('async');
 var Sequelize = require('sequelize');
 
-var Course = require('../models/course.js').Course;
-var CourseMember = require('../models/courseMember.js').CourseMember;
-var NotificationListener = require('../models/notificationListener.js').NotificationListener;
-var Resource = require(__dirname + '/../models/resource.js').Resource;
-var User = require('../models/user.js').User;
-var UserNotification = require('../models/userNotification.js').UserNotification;
+var Course                   = require('../models/course.js').Course;
+var CourseMember             = require('../models/courseMember.js').CourseMember;
+var NotificationListener     = require('../models/notificationListener.js').NotificationListener;
+var Resource                 = require('../models/resource.js').Resource;
+var User                     = require('../models/user.js').User;
+var UserProfile              = require('../models/userProfile.js').UserProfile;
+var UserNotification         = require('../models/userNotification.js').UserNotification;
 var UserNotificationSettings = require('../models/userNotificationSettings.js').UserNotificationSettings;
-var MediaFile = require('../models/mediafile.js').MediaFile;
-var Tag = require('../models/tag.js').Tag;
-var UserProfile = require('../models/userProfile.js').UserProfile;
-var Like = require('../models/like.js').Like;
-var Star = require('../models/star.js').Star;
-var Section = require('../models/section.js').Section;
-var SectionMaterial = require('../models/sectionMaterial.js').SectionMaterial;
-var CourseSection = require('../models/courseSection.js').CourseSection;
+var MediaFile                = require('../models/mediafile.js').MediaFile;
+var Tag                      = require('../models/tag.js').Tag;
+var UserProfile              = require('../models/userProfile.js').UserProfile;
+var Like                     = require('../models/like.js').Like;
+var Star                     = require('../models/star.js').Star;
+var Section                  = require('../models/section.js').Section;
+var SectionMaterial          = require('../models/sectionMaterial.js').SectionMaterial;
+var CourseSection            = require('../models/courseSection.js').CourseSection;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -126,6 +127,7 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 	async.series([
      	insert.bind(undefined, Course, data.courses),
 		insert.bind(undefined, User, data.users),
+		insert.bind(undefined, UserProfile, data.userProfiles),
 		insert.bind(undefined, CourseMember, data.courseMembers),
 		insert.bind(undefined, NotificationListener, data.notificationlistener),
 		insert.bind(undefined, UserNotification, data.usernotification),

@@ -1,5 +1,5 @@
 var EngageAction =   require('../../controller/EngageAction');
-
+var Parser = require('../../controller/Parser');
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
@@ -561,176 +561,6 @@ userobject.courses = {
 var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
-function mediaPath(path, host) {
-	if (path.charAt(0) == "/") {
-		return "http://" + host + path
-	}
-	else return path
-}
-
-
-function update_link(node, host) {
-	var attrs = [
-		'href',
-		'src'];
-
-	for (var i in attrs) {
-		if (node.hasAttribute(attrs[i])) {
-			var path = node.getAttribute(attrs[i])
-			node.setAttribute(attrs[i], mediaPath(path, host));
-		}
-	}
-}
-
-function walk(node, host, cb) {
-	var notAllowed = [
-
-			'SCRIPT',
-			'NOSCRIPT',
-			'H1'
-		],
-		tags = { };
-
-	if (node.nodeType !== node.ELEMENT_NODE) {
-		return;
-	}
-
-	update_link(node, host);
-	node.removeAttribute('class');
-	node.removeAttribute('style');
-	node.removeAttribute('id');
-
-	//console.log('node: '+node.tagName)
-	
-	for(var i = 0; i < node.childNodes.length; ++i){
-
-		var childNode = node.childNodes[i],
-			tagName = childNode.tagName;
-		
-		if (~notAllowed.indexOf(childNode.tagName)===-1) {
-			node.removeChild(childNode);
-			--i;
-		}
-		else if (tagName !== undefined){
-
-			if (childNode.hasAttribute("class")) {
-				tagName += ' '+childNode.getAttribute("class");
-			}
-			var arr = ( (!tags[tagName]) ? tags[tagName] = [] : tags[tagName] );
-
-			arr.push(childNode.textContent.length);
-			walk(childNode, host, cb);
-		}
-	}//------------end child loop
-
-	var items = Object.getOwnPropertyNames(tags).map(function (name) {
-		var tag = tags[name];
-	//	console.log('tags '+name+' '+tag)
-		return {
-			name: name,
-			len: tag.length,
-			ratio: tag.length/node.childNodes.length,
-			std_dev: deviation(tag),
-			mean: mean(tag),
-			node: node
-		}
-	})
-	if (items.length > 0)
-		cb(items);	
-}
-
-function deviation(set) {
-	var n = set.length,
-		d = set.reduce(function(a, b) { return a + Math.pow(b,2) }, 0)/n,
-		e = Math.pow(set.reduce(function(a, b) { return a + b })/n, 2);
-
-	return Math.sqrt(d - e);
-}
-
-function mean(set) {
-	return set.reduce(function(a, b) { return a + b })/set.length;
-}
-
-function strip(node, tag) {
-
-	var check = false;
-	for(var i = 0; i < node.childNodes.length; ++i){
-		var child = node.childNodes[i];
-		
-		if (child.tagName === tag) {
-			check = true;
-		}
-		if (!check) {
-			node.removeChild(child);
-			--i;
-		}
-	}
-}
-
-function listTypes(node, host) {
-
-	var articles = [],
-		max = 0,
-		candidateNode = null,
-		tag;
-
-	walk(node, host, function(tags) {
-		
-		var retval = tags.some(function(item) {
-			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.17;
-		});
-		if (retval) {
-			articles.push(tags)
-		}
-	})
-
-	for (var i in articles) {
-		
-		articles[i].forEach(function(item) {
-			if(item.len > max) {
-				tag = item.name.split(' ')[0];
-				candidateNode = item.node;
-				max = item.len;
-
-			} 
-		})
-	}
-	console.log(articles)
-	strip(candidateNode, tag);
-	return candidateNode;
-}
-
-
-function articlize(document, name) {
-	//var published_date = document.querySelector('TIME').textContent
-	var url = name.split("/"),
-		fileName = crypto.createHash('md5').update(url[url.length - 1]).digest('hex'),
-		path = "./public/resources/articles/" + fileName + ".xml",
-		host = url[2],
-		title = document.querySelector('TITLE').textContent,
-		published_date = "";
-	
-	if (document.querySelector('H1'))
-		title = document.querySelector('H1').textContent;
-
-
-	var stream = fs.createWriteStream(path);
-	stream.once('open', function (fd) {
-
-		stream.write('<title>' + title + '</title>\n')
-		stream.write('<content>' + html5.serialize(listTypes(document.documentElement, host)) + '</content>');
-
-	})
-
-
-	/*
-	 //for testing----------------
-	 return document.querySelectorAll(tag).map(function(node) {
-	 return "<p>"+node.textContent+"</p>";
-	 }).join("");
-	 //---------------------------
-	 */
-}
 
 exports.design = function (req, res) {
 	if (!req.body.article_url) {
@@ -785,7 +615,7 @@ exports.design = function (req, res) {
 
 			parser.parse(body);
 
-			articlize(window.document, req.body.article_url);
+			Parser.articlize( req.body.article_url);
 
 		}
 

@@ -61,13 +61,13 @@ app.put("/api/question/:uid/unfollow", routesAccent.unfollowQuestion); // a foll
 //TODO: need update this into document
 app.post("/api/question", routesAccent.question); // post a new question by user id stored in seesion
 //TODO: need update this into document
-app.get("/api/questions", routesAccent.questions); // get all questions
+app.get("/api/questions/page/:page", routesAccent.questions); //P, get all questions
 app.get("/api/questions/mediafile/:id", routesAccent.getQuestionsByMedia); // get all questions related to a mediafile
 
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
-app.get("/api/user/:uid/questions", routesAccent.questionsByUser); // get all questions for a user
+app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // P, get all questions for a user. TODO:sort desc
 
 //deprecated
 //app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
@@ -94,7 +94,7 @@ app.get("/api/user/:uid/comments", routesAccent.commentsByUser); // gets a list 
 
 app.post("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
-app.get("/api/question/:uid/comments", routesAccent.commentsByQuestion); // get all of the comments for a question
+app.get("/api/question/:uid/comments/page/:page", routesAccent.commentsByQuestion); // P get all of the comments for a question
 
 
 //tags

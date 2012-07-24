@@ -5,7 +5,7 @@ var prevSearchType = "latest";
 function formatQuestion(question) {
 	return "<div class='question' onclick='gotoQuestionPage(this)'>"
 			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionText'>" + question._source.body + "</div>"
+			+ "<div class='questionText'>" + question._source.title + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
@@ -16,11 +16,11 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
-function displayQuestions(searchType, page) {
+function displayQuestions(searchType, page, course, week) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	rqra.searchSortedQuestions(searchQuery, searchType, page, function (data) {
+	rqra.searchSortedQuestions(searchQuery, searchType, course, week, page, function (data) {
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
@@ -65,4 +65,4 @@ function gotoQuestionPage(clicked) {
 }
 
 // displays asked questions on page load
-displayQuestions("latest", 0);
+displayQuestions("latest", 0, "japn101", 0);

@@ -17,7 +17,7 @@ exports.questions = function(request, response) {
 	routesCommon.questionsRoute(1, request, response);
 }
 
-exports.questionsByUser = function(request, response) {
+exports.questionsByUser = function(request, response) {	
 	routesCommon.questionsByUserRoute(1, request, response);
 }
 
@@ -308,7 +308,7 @@ exports.courseMediaFiles = function(request, response){
 }
 
 exports.index = function(req, res){
-	if (req.session && req.session.user) {		
+	if (req.session && req.session.user) {	
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,

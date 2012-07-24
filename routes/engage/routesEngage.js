@@ -1,8 +1,11 @@
+var EngageAction =   require('../../controller/EngageAction');
+
 var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
-var Course = require(__dirname + "/../../models/user");
+var Course = require(__dirname + "/../../models/course");
+var CourseMember = require(__dirname + "/../../models/courseMember");
 
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
@@ -101,7 +104,7 @@ exports.starredResources = function (req, res) {
 		if (req.session && req.session.user) {
 			Star.getStarredResources(req.session.user.uuid, function (error, result) {
 				if (result) {
-					Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+					EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -226,6 +229,102 @@ exports.resourcesInSection = function (request, response) {
 	routesCommon.resourcesInSection(2, request, response);
 }
 
+
+exports.resourcesInCourse = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses) {
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
+				found = 1;
+			}
+			;
+		})
+
+		if (found) {
+			Resource.getResourcesByCourseUUIDs({uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else {
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
+exports.resourcesInCourseByWeek = function (req, res) {
+
+	if (req.session && req.session.user && req.session.courses) {
+		var course_uuid = req.params.id;
+		var user_uuid = req.session.user.uuid;
+		var courses = req.session.courses;
+		var found = 0;
+		var weekNum = req.params.week;
+		courses.forEach(function (course) {
+			if (course.uuid === course_uuid) {
+				found = 1;
+			}
+			;
+		})
+
+		if (found) {
+			var week = EngageAction.weekHelper(weekNum);
+			Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:[course_uuid]}, function (error, result) {
+
+				if (result) {
+					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resources:result }));
+					})
+				} else {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:error }));
+				}
+
+
+			})
+		}
+
+		else {
+			res.writeHead(401, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:3, message:'You are not enrolled in this course' }));
+		}
+	}
+
+	else {
+		req.writeHead(401, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:2, message:'You aren\'t logged in' }));
+	}
+
+
+}
+
+
+
+
 exports.resourcesInCourses = function (req, res) {
 	var CourseUUIDs = [];
 
@@ -238,7 +337,7 @@ exports.resourcesInCourses = function (req, res) {
 	Resource.getResourcesByCourseUUIDs({uuids:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -261,10 +360,11 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 	}
 
 	var weekNum = req.params.week;
-	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum, uuids:CourseUUIDs}, function (error, result) {
+	var week = EngageAction.weekHelper(weekNum);
+	Resource.getResourcesByCourseUUIDsAndDates({start: week.start, end: week.end, uuids:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -285,7 +385,7 @@ exports.resourcesOfCurrentUser = function (req, res) {
 		Resource.getResourceByUserId({user:req.session.user.uuid}, function (error, result) {
 
 			if (result) {
-				Resource.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 					res.writeHead(200, { 'Content-Type':'application/json' });
 					res.end(JSON.stringify({ errorcode:0, resources:result }));
 				})
@@ -763,6 +863,7 @@ exports.courseView = function (req, res) {
 					res.render("engage/course", { title:"SFU ENGAGE",
 						courseName:courseName,
 						user:req.session.user,
+						course:result,
 
 						courses:req.session.courses
 					}, function (err, rendered) {

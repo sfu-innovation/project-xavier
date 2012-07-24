@@ -2,7 +2,7 @@ extends layout
 
 block content
 	- var weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13]
-	div.row#hidden-info(style="display:none;", data-course-id="#{}")
+	div.row#hidden-info(style="display:none;", data-course-id="#{course.uuid}")
 	div.row
 		div.twelve.columns#weeks-bar
 			ul
@@ -12,7 +12,7 @@ block content
 					li(href="week/#{week}")
 						a(href="#week#{week}", data-week="#{week}") #{week}
 			
-	div.row#course
+	div.row.clearfix#contents
 		div.three.columns
 			div.innercontents#info
 				h4 #{courseName}

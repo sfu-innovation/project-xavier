@@ -42,21 +42,33 @@ function selectButton(selectedButton) {
 	});
 }
 
-function formatButton(name) {
+function formatButton(name, uuid) {
 	return "<div class='courseButton' onclick='selectButton(this)'>"
 		+ "<div class='courseButtonSelectorTop'></div>"
+		+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
 		+ "<div class='courseButtonText'>" + name + "</div>"
 		+ "<div class='courseButtonSelectorBottom'></div>"
 		+ "</div>";
 }
 
+function getUuid(courseName) {
+	var menu = document.getElementById("courseList");
+	for (var i = 0; i < menu.children.length; ++i) {
+		var child = menu.children[i];
+		if (courseName.toUpperCase() === child.querySelector(".courseButtonText").innerHTML) {
+			return child.querySelector(".courseButtonId").innerHTML;
+		}
+	}
+	return "";
+}
+
 function displayCourseList() {
-	common.getUserCourses("A7S7F8GA7SD98A7SDF8ASD7G", function(data) {
+	common.getUserCourses(function(data) {
 		if (data && data.errorcode === 0) {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
 			data.courses.forEach(function(course) {
-				menu.innerHTML += formatButton(course.subject + "" + course.number);
+				menu.innerHTML += formatButton(course.subject + "" + course.number, course.uuid);
 			});
 		}
 	});

@@ -308,7 +308,8 @@ exports.courseMediaFiles = function(request, response){
 }
 
 exports.index = function(req, res){
-	if (req.session && req.session.user) {	
+	if (req.session && req.session.user) {
+		console.log(JSON.stringify(req.session.user))	
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
@@ -334,4 +335,9 @@ exports.demoPage = function (req,res){
 		res.redirect('/');
 
 	});
+}
+
+/***NEW ROUTES */
+exports.searchQuestionsRoute = function(request, response){
+	routesCommon.searchQuestionsRoute(0, request, response);
 }

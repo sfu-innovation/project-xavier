@@ -75,7 +75,7 @@ app.put("/api/question/:uid/follow/:follower", routesAccent.followQuestion); // 
 
 app.put("/api/question/:uid/status", routesAccent.questionStatus); // updates a questions status
 
-app.post("/api/search/", routesAccent.search); // search based on a query
+app.post("/api/search/page/:page", routesAccent.search); // search based on a query
 
 // comments
 //TODO: need update this into document
@@ -139,3 +139,6 @@ app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile
 //non-REST calls
 app.get('/', routesAccent.index);
 app.get('/demo', routesAccent.demoPage); //this will login you with a demo user
+
+/***NEW ROUTES */
+app.post("/api/questions/search/page/:page", routesAccent.searchQuestionsRoute);

@@ -104,6 +104,14 @@
 			"type":0,
 			"userID":"aka87",
 			"email":"aka87@sfu.ca"
+		},
+		{
+			"uuid":"marko",
+			"firstName":"Marko",
+			"lastName":"Vulpo",
+			"type":1,
+			"userID":"marko",
+			"email":"marko@fake.ca"
 		}
 	],
 	"courses":[
@@ -155,6 +163,22 @@
 			"subject":"BUS",
 			"number":354,
 			"instructor":"ted"
+		},
+		{
+			"uuid":"37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"title":"Introduction to Esperanto",
+			"section":"D100",
+			"subject":"ESPT",
+			"number":100,
+			"instructor":"marko"
+		},
+		{
+			"uuid":"ffb52892-467a-4b3e-b205-4eadd2745afb",
+			"title":"English for Managers",
+			"section":"D100",
+			"subject":"BUS",
+			"number":100,
+			"instructor":"bernie"
 		}
 	],
 	"courseMembers":[
@@ -175,11 +199,11 @@
 			"user":"jrf2"
 		},
 		{
-			"course":"A8G7S6H7ASDFG9",
+			"course":"37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
 			"user":"jrf2"
 		},
 		{
-			"course":"A827346H7ASDFG9",
+			"course":"ffb52892-467a-4b3e-b205-4eadd2745afb",
 			"user":"jrf2"
 		},
 		{
@@ -608,8 +632,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://news.bbcimg.co.uk/media/images/61369000/jpg/_61369079_minke_spl.jpg",
-			"createdAt" : "2012-05-30T14:32:49.000Z"
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/61369000/jpg/_61369079_minke_spl.jpg"
 
 		} ,
 		{
@@ -627,8 +650,7 @@
 			"likes" : 2,
 			"url" : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect" ,
 			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect.",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
-			"createdAt" : "2012-06-30T14:32:49.000Z"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -646,8 +668,7 @@
 			"likes" : 2,
 			"url" : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively/" ,
 			"excerpt": "Job interviews are a common source of anxiety, and can at times be as pleasant as a trip to the dentist.",
-			"thumbnail": "http://blogs-images.forbes.com/victorlipman/files/2012/06/300x1942.jpg",
-			"createdAt" : "2012-05-11T09:32:49.000Z"
+			"thumbnail": "http://blogs-images.forbes.com/victorlipman/files/2012/06/300x1942.jpg"
 
 		},
 		{
@@ -665,8 +686,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
-			"createdAt" : "2012-07-03T08:32:49.000Z"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		},
 		{
@@ -684,9 +704,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
-			"createdAt" : "2012-06-23T07:32:49.000Z"
-
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 		},
 		{
 			"uuid" : "6",
@@ -703,8 +721,7 @@
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg",
-			"createdAt" : "2012-05-23T21:32:49.000Z"
+			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
 
 		}
 

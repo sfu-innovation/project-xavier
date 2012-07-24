@@ -16,18 +16,39 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
-function displayQuestions(searchType, page, course, week) {
+function refreshQuestionListHeader() {
+	var courseTitle = document.getElementById("courseTitle");
+	if (currentCourse === "") {
+		courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
+	} else {
+		courseTitle.innerHTML = "Questions for <span class='inserted'>" 
+			+ currentCourse.toUpperCase() + " insert full title" 
+			+ "</span> from";
+	}
+		
+	var sectionTitle = document.getElementById("sectionTitle");
+	sectionTitle.innerHTML = "Week " + currentWeek + " - Untitled.txt";
+}
+
+function refreshQuestionsList() {
+	displayQuestions(prevSearchType, 0);
+}
+
+function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	rqra.searchSortedQuestions(searchQuery, searchType, course, week, page, function (data) {
+	
+	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
+		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
-			questionList.innerHTML = "";
 			$.each(data.questions.hits, function (index, item) {
 				questionList.innerHTML += formatQuestion(item);
 			});
+		} else {
+			questionList.innerHTML += "No Questions Found!";
 		}
 	});
 }
@@ -65,4 +86,4 @@ function gotoQuestionPage(clicked) {
 }
 
 // displays asked questions on page load
-displayQuestions("latest", 0, "japn101", 0);
+displayQuestions("latest", 0);

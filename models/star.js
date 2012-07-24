@@ -8,6 +8,7 @@ var async = require('async');
 var User = require('../models/user.js');
 var Section = require(__dirname + '/section.js')
 var SectionMaterial = require(__dirname + '/sectionMaterial.js');
+var Notification = require(__dirname + '/../controller/NotificationAction.js');
 
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],
@@ -35,7 +36,18 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 			else {
 				Star.create({user:userUUID, resource:resourceUUID}).success(
 					function (star) {
-						callback(null, star);
+						var args = {
+							user : userUUID,
+							target : resourceUUID,
+							app    :2
+						}
+						Notification.addStarNotifier(args, function(error, result){
+							if(error)
+								return callback(error);
+
+							callback(null, star);
+						})
+
 					}).error(function (error) {
 						callback(error, null);
 					})

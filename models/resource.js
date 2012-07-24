@@ -11,6 +11,8 @@ var Section = require(__dirname + '/section.js');
 var Star = require(__dirname + '/star.js');
 var UserProfile = require(__dirname + '/userProfile.js');
 var SectionMaterial = require(__dirname + '/sectionMaterial.js');
+var Notification = require(__dirname + '/../controller/NotificationAction.js');
+
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],
 	config.mysqlDatabase["user"],
@@ -149,7 +151,18 @@ exports.createResource = function (userUUID, args, callback) {
 		if (isCourseMember) {
 			Resource.create(args).success(
 				function (resource) {
-					callback(null, resource);
+					args = {
+						target	: resource.uuid,
+						app		: 2,
+						user	: userUUID
+					}
+					Notification.addNewResourceNotifier(args, function(err, result){
+						if(err)
+							return callback(err)
+
+						callback(null, resource);
+					})
+
 				}).error(function (error) {
 					console.log("can't create resource " + error);
 					callback(error, null);

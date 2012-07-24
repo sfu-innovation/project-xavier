@@ -31,6 +31,10 @@ function selectButton(selectedButton) {
 	NodeList.prototype.forEach = Array.prototype.forEach;
 	buttons.forEach(function(obj) {
 		if (selectedButton === obj) {
+			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
+			currentCourse = currentCourse.toLowerCase();
+			refreshQuestionListHeader();
+			refreshQuestionsList();
 			setSelected(obj, true);
 		} else {
 			setSelected(obj, false);

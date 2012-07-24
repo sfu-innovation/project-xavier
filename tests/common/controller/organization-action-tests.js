@@ -32,7 +32,7 @@ module.exports = {
 			});
 		},
 		
-		/*"Add Resource To Section" : function( test ){
+		"Add Resource To Section" : function( test ){
 			var args = {
 				section : 'A827346H7ASDFG9',
 				material : 'A7S7FHGA7SD11A7SDF8ASD7G'
@@ -136,7 +136,7 @@ module.exports = {
 				test.ok(sections.should.have.lengthOf(1));
 				test.done();
 			});
-		},*/
+		},
 		"Materials in Section " : function(test){
 			var args = {
 				appType : 2, // don't think which app type matters for testing purpose

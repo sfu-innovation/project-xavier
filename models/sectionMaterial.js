@@ -189,7 +189,7 @@ exports.updateSectionMaterial = function( args, callback ) {
     args.sectionmaterial.updateAttributes({ section : args.newsection }).error(function(error ){
 		callback( error, null );
 	}).success(function(updatedSectionMaterial){
-		callback( null, updatedSectionMaterial );
+		callback( null, updatedSectionMaterial.section );
 	});
     
 }

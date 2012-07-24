@@ -17,7 +17,7 @@ block content
 							img.avatar(src="https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png") 
 							div#upload_avatar upload
 							a remove photo
-						div#edit_info_column.columns
+						div#edit_info_column.four.columns
 							div#edit_box
 								h4 #{user.firstName} #{user.lastName}
 								label Preferred Name:
@@ -27,32 +27,35 @@ block content
 								input.button(type="submit", value="save changes")
 					li#notificationTab
 						div#notification
-							h4 Notifications
 							form(name="edif_nofication", action="/preference",enctype="multipart/form-data", method="post")
-
-								ul
-									li 
-										input(type="checkbox") 
-										span Notify me when users comment on my shares
-									li 
-										input(type="checkbox") 
-										span Notify me when users like my shares
-									li 
-										input(type="checkbox") 
-										span Notify me when users star my shares
-									li 
-										input(type="checkbox") 
-										span Notify me when users reply to my comments
-									li 
-										input(type="checkbox") 
-										span Email me when users comment on my shares
-									li 
-										input(type="checkbox") 
-										span Email me when users like my shares
-									li 
-										input(type="checkbox") 
-										span Email me when users star my shares
-									li 
-										input(type="checkbox") 
-										span Email me when users reply to my comments
-								input.button(type="submit", value="save changes")
+								h4 Notifications
+								p 
+									|An email will automatically be sent to your inbox when one or more of the events occur.	
+									br
+									| You may also uncheck the boxes to turn these off at any time you would like.
+								div#setting_detail
+									ul
+										li
+											span
+										li 
+											span When others comment on my shares
+										li 
+											span When others like my shares
+										li 
+											span When others reply to my comments
+											
+									ul.checkbox_column
+										li
+											span.typicn.star
+											span.typicn.mail
+										li 
+											input(type="checkbox") 
+											input(type="checkbox") 
+										li 
+											input(type="checkbox") 
+											input(type="checkbox") 
+										li 
+											input(type="checkbox") 
+											input(type="checkbox") 
+								
+									input.button(type="submit", value="save changes")

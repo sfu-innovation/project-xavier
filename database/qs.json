@@ -2,6 +2,46 @@
 	{
 	"_index":"presenter",
 	"_type":"questions",
+	"_id":"9e36e922-44d2-4631-a899-c6282ea5b6b2",
+	"_score":1,
+	"_source":
+		{"user":"lol1user",
+		"title":"Is it more important for something to be strategic or to be visionary?",
+		"body":"I am aware that your budget for transforming should be at least one-half of your budget for streamlining. But I also feel that without C2B2B, virtual reporting, you will lack e-business development.",
+		"category":"academic",
+		"status":"unanswered",
+		"created":"2012-07-10T18:19:31.204Z",
+		"timestamp":"2012-07-10T18:19:31.204Z",
+		"followup":[],
+		"isInstructor":"true",
+		"viewCount":0,
+		"commentCount":1,
+		"course":"BUS100",
+		"week":1
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"comments",
+		"_id":"b1630bb6-facb-459a-aaae-258b6cb6758d",
+		"_score":1,
+		"_source": {
+			"user":"bernie",
+			"upvote":250,
+			"downvote":8,
+			"body":"Yes thats very true, the metrics for development are more well-understood if they are not long-term and your budget for strategizing should be at least three times your budget for aggregating. And of course dont forget your budget for engineering should be at least one-tenth of your budget for exploiting.",
+			"target_uuid":"9e36e922-44d2-4631-a899-c6282ea5b6b2",
+			"objectType":"comment",
+			"created":"2012-07-21T18:19:31.204Z",
+			"timestamp":"2012-07-21T18:19:31.204Z",
+			"isAnswered":"true",
+			"isInstructor":"true",
+			"commentParent":""
+		}
+	},
+	{
+	"_index":"presenter",
+	"_type":"questions",
 	"_id":"pJfznhheQuOicWWAjx7F01",
 	"_score":1,
 	"_source":
@@ -16,8 +56,8 @@
 		"isInstructor":"true",
 		"viewCount":0,
 		"commentCount":0,
-		"course":"CMPT300",
-		"week":0
+		"course":"ESPT100",
+		"week":1
 		}
 	},
 	{
@@ -117,8 +157,8 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"CMPT300",
-			"week":1
+			"course":"ESPT100",
+			"week":12
 		}
 	},
 	{
@@ -138,8 +178,8 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"CMPT470",
-			"week":0
+			"course":"ESPT100",
+			"week":5
 		}
 	},
 	{
@@ -159,8 +199,8 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"CMPT470",
-			"week":0
+			"course":"ESPT100",
+			"week":2
 		}
 	},
 	{
@@ -180,8 +220,8 @@
 			"isInstructor":"true",
 			"viewCount":5231,
 			"commentCount":1,
-			"course":"CMPT300",
-			"week":0
+			"course":"ESPT100",
+			"week":2
 		}
 	},
 	{
@@ -220,8 +260,8 @@
 			"isInstructor":"true",
 			"viewCount":100,
 			"commentCount":1,
-			"course":"CMPT300",
-			"week":0
+			"course":"ESPT100",
+			"week":10
 		}
 	},
 	{
@@ -260,8 +300,8 @@
 			"isInstructor":"true",
 			"viewCount":423,
 			"commentCount":2,
-			"course":"CMPT470",
-			"week":0
+			"course":"ESPT100",
+			"week":4
 		}
 	},
 	{

@@ -135,6 +135,8 @@ app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
 
+app.get('/preference', routesEngage.preference);
+
 app.get('/starred', routesEngage.starred);
 
 app.get('/mine', routesEngage.contributions);

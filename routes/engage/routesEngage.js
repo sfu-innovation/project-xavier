@@ -1037,7 +1037,7 @@ exports.courseView = function (req, res) {
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:'llt3', firstName:"Cathrine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
@@ -1047,7 +1047,27 @@ exports.demoPage = function (req, res) {
 	});
 }
 
+exports.preference = function (req, res){
+	if (req.session && req.session.user) {
+		res.render("engage/preference", 
+			{     
+			title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses
+			}, function (err, rendered) {
 
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+
+		res.redirect("/demo");
+
+
+	}
+}
 
 
 

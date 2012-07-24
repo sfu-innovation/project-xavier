@@ -12,8 +12,17 @@ script(type="text/javascript")
 			window.event.target.style.color = 'rgba(0,0,0,0)';
 		}
 	}
+	
+	function timelineClicked(timeline) {
+		if (window.event.target !== timeline) {
+			var targetNode = window.event.target;
+			HTMLCollection.prototype.indexOf = Array.prototype.indexOf;
+			currentWeek = targetNode.parentNode.children.indexOf(targetNode);
+			console.log(currentWeek);
+		}
+	}
 
-div#timeline(onmouseover="timelineMouseOver(this)", onmouseout="timelineMouseOut(this)")
+div#timeline(onmouseover="timelineMouseOver(this)", onmouseout="timelineMouseOut(this)", onclick="timelineClicked(this)")
 	div#timelineButton1(class="timelineButton") All
 	div#timelineButton2(class="timelineButton") Week1
 	div#timelineButton3(class="timelineButton") Week2

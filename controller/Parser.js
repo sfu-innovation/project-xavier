@@ -115,7 +115,7 @@ function listTypes(node, host) {
 	var articles = [],
 		max = 0,
 		candidateNode = null,
-		tag;
+		tag, image = null;
 	var candidate = { };
 
 	walk(node, host, function(tags) {
@@ -139,12 +139,18 @@ function listTypes(node, host) {
 		})
 	}
 //	console.log(articles)
+	image = candidateNode.parentNode.querySelector('IMG');
+	if (image !== undefined) {
+		candidate.image = mediaPath(image.getAttribute('src'), host);
+	}
 	strip(candidateNode, tag);
 	var str =  candidateNode.querySelectorAll(tag);
 
 	candidate.firstParagraph  = str[0].textContent+' '+str[1].textContent;
 
 	candidate.main = html5.serialize(candidateNode);
+
+
 	return candidate;
 }
 
@@ -196,6 +202,7 @@ var articlize =  exports.articlize = function( urlName, callback) {
 			result.path = fileName + ".xml";
 			result.title = title;
 			result.excerpt = content.firstParagraph;
+			result.thumbnail = content.image;
 
 
 			callback(error,result);

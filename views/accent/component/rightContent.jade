@@ -2,22 +2,13 @@ div#Right
 	div#myConversations
 		h1 My Conversations		
 		ul.Conversations
-			li.Selected
-				div.Question
-					span.Course CRIM 301
-					a(href="") I don't understand what is meant by the term CPCD?
-
-				div.Conversation
-					div.Top
-
-					div.All
-
-			div#myQuestionsList
 
 	div#classConversations
 		h1 Class Conversations	
 		ul.Conversations
-				
+
 script(type="text/javascript", src="../javascripts/accent/conversationTabs.js")
+script(type="text/javascript")
+	displayQuestions('#{user.uuid}');	
 script(type="text/javascript", src="../javascripts/accent/main.js")
 

@@ -35,7 +35,7 @@ module.exports = {
 		"Add Resource To Section" : function( test ){
 			var args = {
 				section : 'A827346H7ASDFG9',
-				resource : 'A7S7FHGA7SD11A7SDF8ASD7G'
+				material : 'A7S7FHGA7SD11A7SDF8ASD7G'
 			}
 			SectionMaterial.findAllMaterialsInSection( args, function( error, materials ){
 				test.ok(materials.should.have.lengthOf(0));
@@ -44,6 +44,7 @@ module.exports = {
 						test.ok(materials.should.have.lengthOf(1));
 						test.done();
 					})
+					
 				});
 			});
 		},
@@ -61,12 +62,12 @@ module.exports = {
 					})
 				});
 			});
-		},
+		}, 
 		"Update Resource From Section To Section" : function( test ){
 			args = {
 				section : 'A827346H7AFSSFG9',
 				newsection : 'A412341H7AFSSFG9',
-				resource : 'A7S7FWGA7SD11A7SDF8ASD7G'
+				material : 'A7S7FWGA7SD11A7SDF8ASD7G'
 			}
 			SectionMaterial.findAMaterialInSection( args, function( error, material ){
 				test.ok(material.should.have.property('section', 'A827346H7AFSSFG9'));
@@ -135,8 +136,7 @@ module.exports = {
 				test.ok(sections.should.have.lengthOf(1));
 				test.done();
 			});
-		}, 
-		
+		},
 		"Materials in Section " : function(test){
 			var args = {
 				appType : 2, // don't think which app type matters for testing purpose

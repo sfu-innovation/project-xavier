@@ -10,7 +10,7 @@ function formatQuestion(question) {
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
+					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
 			+ "</div>";
 }
 
@@ -20,7 +20,7 @@ function formatComment(comment) {
 			+ "<div class='questionData'>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + comment._source.user + "</span></div>"
+					+ "by <span class='inserted'>" + comment.user.firstName + " " + comment.user.lastName + "</span></div>"
 				+ "<div class='votes'>" + comment._source.upvote + " <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
 				+ "<div class='votes'>" + comment._source.downvote + " <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
 			+ "</div>";
@@ -66,6 +66,18 @@ function postComment() {
 			loadPage(false);
 		}
 	});
+}
+
+function vote(dir) {
+	if (dir === "up") {
+		rqra.upVoteCommentById(id, function(data) { 
+			
+		});
+	} else if (dir === "down") {
+		rqra.downVoteCommentById(id, function(data) { 
+			
+		});
+	}
 }
 
 loadPage(true);

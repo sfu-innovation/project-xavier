@@ -13,22 +13,22 @@ function formatQuestion(question) {
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
+					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
 			+ "</div>";
 }
 
 function refreshQuestionListHeader() {
 	var courseUuid = getUuid(currentCourse);
-	common.getCourseById(courseUuid, function(data) {
-		var courseTitle = document.getElementById("courseTitle");
-		if (currentCourse === "") {
+	var courseTitle = document.getElementById("courseTitle");
+	if (!currentCourse || currentCourse === "" || currentCourse === "all") {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-		} else {
+	} else {
+		common.getCourseById(courseUuid, function(data) {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>" 
 				+ currentCourse.toUpperCase() + " " + data.course.title 
 				+ "</span> from";
-		}
-	});
+		});
+	}
 
 	var sectionTitle = document.getElementById("sectionTitle");
 	if (currentWeek === 0) {
@@ -46,9 +46,8 @@ function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	
+	questionList.innerHTML = "";
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
-		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
@@ -56,6 +55,8 @@ function displayQuestions(searchType, page) {
 				questionList.innerHTML += formatQuestion(item);
 			});
 		} else {
+			displayTotal(0);
+			displayPageNumbers(0);
 			questionList.innerHTML += "No Questions Found!";
 		}
 	});
@@ -95,3 +96,4 @@ function gotoQuestionPage(clicked) {
 
 // displays asked questions on page load
 displayQuestions("latest", 0);
+refreshQuestionListHeader();

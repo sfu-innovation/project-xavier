@@ -413,7 +413,8 @@ coreApi._construct = function () {
 	}
 
 	function Presenter() {
-		this.createQuestion = function (questionTitle, questionBody, course, week, callback) {
+		this.myname = "asdf";
+		this.createQuestion = function (questionTitle, questionBody, callback) {
 			console.log("API - createQuestion");
 
 			var body = {};
@@ -423,8 +424,7 @@ coreApi._construct = function () {
 			question.category = 'testcategory'; //TODO need replaced
 			question.title = questionTitle;
 			body.question = question;
-			body.course = course;
-			body.week = week;
+
 
 			$.ajax({
 				url:'/api/question',
@@ -660,11 +660,8 @@ coreApi._construct = function () {
 				data:JSON.stringify(body),
 				success:function (data) {
 					callback(data);
-
 				}
-
 			})
-
 		}
 
 		this.getCommentById = function (id, callback) {
@@ -694,7 +691,6 @@ coreApi._construct = function () {
 			});
 		}
 
-
 		this.deleteCommentById = function (id, callback) {
 			console.log("API - deleteCommentById");
 			$.ajax({
@@ -706,7 +702,6 @@ coreApi._construct = function () {
 			});
 		}
 
-
 		this.getCommentsByUserId = function (user_id, callback) {
 			console.log("API - getCommentsByUserId");
 			$.ajax({
@@ -714,7 +709,6 @@ coreApi._construct = function () {
 				type:'GET',
 				success:function (data) {
 					callback(data);
-
 				}
 			});
 		}
@@ -729,9 +723,7 @@ coreApi._construct = function () {
 			console.log('API - downVoteCommentById');
 			var dir = 1;
 			voteCommentById(id,dir, callback);
-
 		}
-
 
 		//private method
 

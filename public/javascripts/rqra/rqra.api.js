@@ -12,7 +12,6 @@ rqra._construct = function () {
 		question.title = questionTitle;
 		body.question = question;
 
-
 		$.ajax({
 			url:'/api/question',
 			type:'POST',

@@ -39,7 +39,7 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
-							app    :1
+							app    :2
 						}
 						Notification.addStarNotifier(args, function(error, result){
 							if(error)

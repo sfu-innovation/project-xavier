@@ -35,7 +35,7 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
-							app    :1
+							app    :2
 						}
 						Notification.addLikeNotifier(args, function(error, result){
 							if(error)

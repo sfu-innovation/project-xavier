@@ -346,8 +346,6 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	args.section = data.week;	//section uuid
 	args.resource = questionUuid;	//question uuid
 
-	delete data.week;
-
 	user.selectUser({"uuid":data.user}, function(error, user){
 		if(error)
 			return callback(error);

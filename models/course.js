@@ -3,6 +3,8 @@ var config       = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize    = require('sequelize');
 var UUID         = require('com.izaakschroeder.uuid');
 var CourseMember = require('./courseMember.js').CourseMember;
+var Notification = require(__dirname + '/../controller/NotificationAction.js');
+
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],

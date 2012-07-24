@@ -16,7 +16,11 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
-function displayQuestions(searchType, page, course, week) {
+function refreshQuestionsList() {
+	displayQuestions(prevSearchType, 0);
+}
+
+function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
@@ -66,4 +70,4 @@ function gotoQuestionPage(clicked) {
 }
 
 // displays asked questions on page load
-displayQuestions("latest", 0, "japn101", 0);
+displayQuestions("latest", 0);

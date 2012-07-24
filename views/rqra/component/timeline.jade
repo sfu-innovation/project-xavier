@@ -18,7 +18,7 @@ script(type="text/javascript")
 			var targetNode = window.event.target;
 			HTMLCollection.prototype.indexOf = Array.prototype.indexOf;
 			currentWeek = targetNode.parentNode.children.indexOf(targetNode);
-			console.log(currentWeek);
+			refreshQuestionsList();
 		}
 	}
 

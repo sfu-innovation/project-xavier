@@ -350,14 +350,6 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 		if(error)
 			return callback(error);
 
-		if(user.type === 1){
-			data.isInstructor = 'true';
-		}else{
-			data.isInstructor = 'false';
-		}
-
-		//TODO:ADD COURSE & WEEK FOR PRESENTER
-
 		document.set(data, function(err, req, esResult){
 			if(err)
 				return callback(error);

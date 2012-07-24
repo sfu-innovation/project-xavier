@@ -30,7 +30,7 @@ block content
 				span Posted 1 day ago
 				span.like_reply
 					a like (3) 
-					a reply 
+					a#reply_click reply 
 						span.typicn.forward
 			each comment in comments
 				div.comment 
@@ -39,16 +39,27 @@ block content
 					span.post_time Posted #{comment.time}
 					span.like_reply
 						a like (3) 
-						a reply 
+						a.reply_click reply 
 							span.typicn.forward
 				each reply in comment.replies
-					div.replies
+					- var counter = 0
+					div(id = "replies_#{counter}")
 						span.name #{reply.user.firstName} #{reply.user.lastName}				
 						p #{reply.msg}
 						span.post_time Posted #{comment.time}
 						span.like_reply
 							a like (3) 
-							a reply 
+							a.reply_click reply 
 								span.typicn.forward
-			
+					div(id = "reply_to_reply_#{counter}")
+						span replying to #{reply.user.firstName} #{reply.user.lastName}
+						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
+							textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
+							input(type="submit", value="comment")
+				div.reply_to_comment
+					span replying to #{comment.user.firstName} #{comment.user.lastName}
+					form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
+						textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
+						input(type="submit", value="comment")	
+					
 			

@@ -25,14 +25,16 @@ var OrganizationAction = function(){};
 */
 OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.addResourceToSection] error - Args is not existent");
+		callback( null, "" );
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('resource'));
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.addResourceToSection] error - Invalid args");
+		callback( null, "" );
 		return;		
 	}
 
@@ -42,7 +44,8 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 				callback( null, newSectionMaterial);
 			});
 		}else {
-			callback ("The section material already exists", null );
+			console.log("[OrganizationAction.updateResourceFromSectionToSection] error - The section material already exists");
+			callback( null, "" );
 		}
 	});
 }
@@ -60,23 +63,31 @@ OrganizationAction.prototype.addResourceToSection = function( args, callback ){
 */
 OrganizationAction.prototype.removeResourceFromSection = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.removeResourceFromSection] error - Args is not existent");
+		callback( null, "" );
 		return;
 	}
 	var containsAllProperties = (args.hasOwnProperty('section') &&
-		args.hasOwnProperty('resource'));
+		                         args.hasOwnProperty('resource'));
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");
+		callback( null, "" );
 		return;		
 	}
 
     SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
+    	if ( error ){
+    		console.log("[SectionMaterial.findAMaterialInSection] error - "+error);
+		    callback( null, "" );
+		    return;
+    	}
     	var argsToRemove = {
     		sectionmaterial : sectionMaterial
     	}
     	SectionMaterial.removeMaterialFromSection( argsToRemove, function( error, removedMaterial ){
-    		callback( null, removedMaterial );
+    		console.log("[SectionMaterial.removeMaterialFromSection] error - "+error);
+		    callback( null, "" );
     	});
     }); 
 }
@@ -98,20 +109,32 @@ OrganizationAction.prototype.removeResourceFromSection = function( args, callbac
 */
 OrganizationAction.prototype.updateResourceFromSectionToSection = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Args is not existent");
+		callback( null, "" );
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('section') && args.hasOwnProperty('newsection') &&
-		args.hasOwnProperty('resource') );
+	var containsAllProperties = (args.hasOwnProperty('section') &&
+	                          args.hasOwnProperty('newsection') &&
+		                         args.hasOwnProperty('resource') );
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.updateResourceFromSectionToSection] error - Invalid args");
+		callback( null, "" );
 		return;		
 	}
 
 	SectionMaterial.findAMaterialInSection( args, function( error, sectionMaterial ){
+		if ( error ){
+			console.log("[SectionMaterial.findAMaterialInSection] error - "+error);
+			callback( null, "" );
+			return;
+		}	
 		args.sectionmaterial = sectionMaterial;
 		SectionMaterial.updateSectionMaterial( args, function( error, updatedMaterial ){
+			if ( error ){
+				console.log("[SectionMaterial.updateSectionMaterial] error - "+error);
+				callback( null, "" );
+			}
 			callback( null, updatedMaterial );
 		});
 	});
@@ -132,37 +155,44 @@ OrganizationAction.prototype.updateResourceFromSectionToSection = function( args
 */
 OrganizationAction.prototype.addSection = function( args, callback){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.addSection] error - Args is not existent");
+		callback( null, "");
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('title') && args.hasOwnProperty('course') &&
-		args.hasOwnProperty('app') );
+	var containsAllProperties = (args.hasOwnProperty('title') &&
+	                            args.hasOwnProperty('course') &&
+		                         args.hasOwnProperty('app') );
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.addSection] error - Invalid args");
+		callback( null, "");
 		return;		
 	}
 
 	CourseSection.sectionsInCourse( args, function( error, courseSectionUUIDs){
 		if ( error ){
-			callback( error, null );
+			console.log("[CourseSection.sectionsInCourse] error - "+error);
+			callback( null, "" );
 			return;
 		}
 		args.sections = courseSectionUUIDs;
 		Section.findSection( args, function ( error, section ){
 			if ( error ){
-				callback( error, null );
+				console.log("[Section.findSection] error - "+error);
+				callback( null, "" );
 				return;
 			}
 			Section.createSection( args, function ( error, newSection ){
 				if ( error ){
-					callback( error , null );
+					console.log("[Section.createSection] error - "+error);
+			        callback( null, "" );
 					return;
 				}
 				args.section = newSection.uuid;
 				CourseSection.createCourseSection( args, function ( error, newCourseSection ){
 					if ( error ){
-						callback( error, null );
+						console.log("[CourseSection.createCourseSection] error - "+error);
+			            callback( null, "" );
 						return;
 					}
 					else {
@@ -191,38 +221,46 @@ OrganizationAction.prototype.addSection = function( args, callback){
 */
 OrganizationAction.prototype.removeSection = function( args, callback){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.removeSection] error - Args is not existent");
+		callback( null, "");
 		return;
 	}
 	var containsAllProperties = args.hasOwnProperty('section');
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.removeSection] error - Invalid args");
+		callback( null, "");
 		return;		
 	}
 
 	CourseSection.removeCourseSection( args, function( error, removedCourseSection ){
 		if ( error ){
-					callback( error, null );
-					return;
+			console.log("[CourseSection.removeCourseSection] error - "+error);
+			callback( null, "");
+			return;
 		}
 		SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
 			if ( error ){
-					callback( error, null );
-					return;
+				console.log("[SectionMaterial.findAllMaterialsInSection] error - "+error);
+				callback( null , "" );
+				return;
 			}
 			args.sectionmaterials = sectionMaterials;
 			SectionMaterial.removeAllMaterialFromSection( args, function( error, removedSectionMaterials ){
 				if ( error ){
-					callback( error, null );
+					console.log("[SectionMaterial.removeAllMaterialFromSection] error - "+error);
+					callback( null, "" );
 					return;
 				}
 				Section.removeSection( args, function( error, removedSection ){
 					if ( error ){
-						callback( error, null );
+						console.log("[Section.removeSection] error - "+error);
+						callback( null, "" );
 						return;
 					}
-					callback( null, removedSection );
+					else {
+						callback( null, removedSection );
+					}
 				});	
 			});
 		});
@@ -243,32 +281,44 @@ OrganizationAction.prototype.removeSection = function( args, callback){
 */
 OrganizationAction.prototype.updateSection = function( args, callback){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.updateSection] error - Args is not existent");
+		callback( null, "" );
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('newtitle') && args.hasOwnProperty('course') &&
-		args.hasOwnProperty('title') );
+	var containsAllProperties = (args.hasOwnProperty('newtitle') && 
+	                               args.hasOwnProperty('course') &&
+		                            args.hasOwnProperty('title') );
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.updateSection] error - Invalid args");
+		callback( null, "");
 		return;		
 	}
 
     CourseSection.sectionsInCourse( args, function( error, courseSections ){
     	if ( error ){
-    			callback( error, null );
-    			return;
+    		console.log("[CourseSection.sectionsInCourse] error - "+error);
+    		callback( null, "");
+    		return;
     	}
     	args.sections = courseSections;
     	Section.findSection( args, function( error, section ){
     		if ( error ){
-    			callback( error, null );
+    			console.log("[Section.findSection] error - "+error);
+    			callback( null, "");
     			return;
     		}
     		args.sectionObject = section;
     		args.title = args.newtitle;
     		Section.updateSection( args, function( error, updatedSection ){
-    			callback( null, updatedSection );
+    			if ( error ){
+    				console.log("[Section.updateSection] error - "+error);
+    				callback( null, "");
+    				return;
+    			}
+    			else {
+    				callback( null, updatedSection );
+    			}
     		});
     	});
     });
@@ -285,17 +335,24 @@ OrganizationAction.prototype.updateSection = function( args, callback){
 */
 OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.sectionsInCourse] error - Args is not existent");
+		callback( null, new Array());
 		return;
 	}
 	var containsAllProperties = args.hasOwnProperty('course');
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.sectionsInCourse] error - Invalid args");
+		callback( null, new Array());
 		return;		
 	}
 
 	CourseSection.sectionsInCourse( args, function( error, courseSections ){
+		if ( error ){
+			console.log("[CourseSection.sectionsInCourse] error - "+error);
+			callback( null, new Array());
+			return;
+		}
 		SectionImpl.findAll({ where : { uuid : courseSections }}).success(function( sections ){
 			var retSections = new Array();
 			var x = sections.length -1 ;
@@ -305,7 +362,9 @@ OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 			callback( null, retSections );
 			return;
 		}).error( function ( error ) {
-			callback( error, null );
+			console.log("[SectionImpl.findAll] error - "+error);
+			callback( null , new Array() );
+			return
 		});
 	});
 }
@@ -321,16 +380,23 @@ OrganizationAction.prototype.sectionsInCourse = function( args, callback ){
 OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);
+		console.log("[OrganizationAction.resourcesInSection] error - Args is not existent");
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('appType') && args.hasOwnProperty('section'));
+	var containsAllProperties = (args.hasOwnProperty('appType') &&
+	                             args.hasOwnProperty('section'));
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.resourcesInSection] error - Invalid args");
 		return;		
 	}
 
 	SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
+		if ( error ){
+			console.log("[SectionMaterial.findALlMaterialsInSection] error - "+error);
+			callback( null, new Array());
+			return;
+		}
 		var resourcesInSection = new Array();
 		var i = sectionMaterials.length - 1;
 		for(; i >= 0; i-- ){
@@ -350,12 +416,15 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 					retResources.push.apply(retResources, result);
 					callback(null, retResources);
 				}else{
-					callback( err, null );
+					console.log("[QueryES.getAllQuestionsByUUIDS] error - "+ err);
+					callback( err, retResources );
 				}
 			});
 
 		}).error(function(error){
-			callback( error, null );
+			console.log("[Resource.findall] error - "+error);
+			callback( null, new Array() );
+			return;
 		});
 	});
 }
@@ -372,25 +441,30 @@ OrganizationAction.prototype.resourcesInSection = function( args, callback ){
 
 OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.numberOfResourcesInCourse] error - Args is not existent");
+		callback( null, 0 );
 		return;
 	}
 	var containsAllProperties = args.hasOwnProperty('course');
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.numberofResourcesInCourse] error - Invalid args");
+		callback( null, 0 );
 		return;		
 	}
 
 	CourseSection.sectionsInCourse( args, function( error, courseSections ){
 		if ( error ) {
-			callback( error, null );
+			console.log("[CourseSection.sectionsInCourse] error - "+error);
+			callback( error, 0 );
 			return;
 		}
 		args.section = courseSections;
 		SectionMaterial.findAllMaterialsInSection( args, function( error, sectionMaterials ){
 			if ( error ) {
-				callback( error, null );
+				console.log("[CourseSection.findAllMaterialsInSection] error - "+error);
+				callback( error, 0 );
+				return;
 			}
 			else {
 				callback( null, sectionMaterials.length );
@@ -398,7 +472,59 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 		});
 	});
 }
+/*
+	args = {
+		material : UUID of the resource
+	}
 
+*/
+OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, callback ){
+	if ( args === null || args === undefined ){
+		console.log("[OrganizationAction.getSectionTitleByResourceUUID] error - Args is not existent");
+		callback( null, "" );
+		return;
+	}
+	var containsAllProperties = args.hasOwnProperty('material');
+		
+	if (  !containsAllProperties ){
+		console.log("[OrganizationAction.getSectionTitleByResourceUUID] error - Invalid args");
+		console.log( null, "" );
+		return;		
+	}
+	
+	var arg = new Object();
+	arg.resource = args.object;
+	
+	SectionMaterial.findSectionIdByMaterialId( arg, function( error, sectionUUID){
+		if ( error){
+			console.log("[SectionMaterial.findSectionIdByMaterialId] error - "+error);
+			console.log( null, "" );
+			return;
+		}
+		else if ( sectionUUID ) {
+			arg.uuid = sectionUUID;
+			Section.findSectionById( arg, function( error, foundSection ){
+				if ( error ){
+					console.log("[Section.findSectionById] error - "+error);
+					callback( null, "" );
+				}
+				else if ( foundSection ){
+					callback( null, foundSection.title );
+				}
+				else { // foundSection was null
+					console.log("[Section.findSectionById] error - there was no section");
+					callback( null, "" );
+				}
+			}
+			
+		}
+		else{ //sectionUUID was null
+			console.log("[SectionMaterial.findSectionIdByMaterialId] error - the section UUID was null");
+			callback( null, "" );
+		}
+	}
+
+}
 /*
     Gets list of all of the resources in particular course.
     
@@ -411,46 +537,72 @@ OrganizationAction.prototype.numberOfResourcesInCourse = function( args, callbac
 
 OrganizationAction.prototype.getResourcesByCourseUUID = function( args, callback ){
 	if ( args === null || args === undefined ){
-		callback("Args is not existent", null);
+		console.log("[OrganizationAction.getResourcesByCourseUUID] error - Args is not existent");
+		callback( null , new Array());
 		return;
 	}
 	var containsAllProperties = args.hasOwnProperty('course');
 		
 	if (  !containsAllProperties ){
-		callback("Invalid args "+args.value, null );
+		console.log("[OrganizationAction.getResourcesByCourseUUID] error - Invalid args");
+		callback( null, new Array());
 		return;		
 	}
 
 	var async = require('async');	
 	var resources = [];	
 
-	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {		
-		if(sectionUUIDs){									
+	CourseSection.sectionsInCourse(args, function(error, sectionUUIDs) {
+		if ( error ){
+			console.log("[CourseSection.sectionsInCourse] error - "+error);
+			callback( null, new Array());
+			return;
+		}	
+		else if(sectionUUIDs){									
 			async.forEach(sectionUUIDs, function(sectionUUID, callback) {												
 				SectionMaterial.findAllMaterialsInSection({section:sectionUUID}, function(error, sectionMaterial) {
+					if ( error ){
+						console.log("[SectionMaterial.findAllMaterialsInSection] error - "+error);
+						callback( null , new Array());
+						return;
+					}
 					async.forEach(sectionMaterial, function(resourceID, callback) {						
 						var Resource = require('../models/resource.js');
-						Resource.getResourceByUUID(resourceID.material, function(error, resource) {											
-							resources.push(resource);	
-							// once the result is retrieved pass it to the callback
-							callback();																												
+						Resource.getResourceByUUID(resourceID.material, function(error, resource) {	
+							if ( error ){
+								console.log("[Resource.getResourceByUUID] error - "+error);
+								callback( new Object(), null );
+							}
+							else {										
+								resources.push(resource);	
+								// once the result is retrieved pass it to the callback
+								callback( null, resource );	
+							}																											
 						})
-					}, function(err){					    
+					}, function(err, results){					    
 					    // passed the result to outer loop
-					    callback();
+					    if( err ){
+					    	console.log("[SectionMaterial.findAllMaterialsInSection] error - "+err);
+					    	callback( null, new Array());
+					    }
+					    else {
+					    	callback( null, results);
+					    }
 					});									
 				})				
-			}, function(err){
+			}, function(err, results){
+				if ( err ){
+					console.log("[CourseSection.sectionsInCourse] error - "+err);
+					callback( null, new Array());
+					return;
+				}
+				else {
 			    // pass the completed result to a callback			    
 			    callback(null, resources);
+			    }
 			});										
 		}
-
-		//No sectionUUIDs were found
-		else{
-			callback(error, null);
-		}
-	})
+	});
 }
 
 module.exports = new OrganizationAction;

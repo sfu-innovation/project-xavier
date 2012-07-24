@@ -515,15 +515,10 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-			//newQuestion.course = body.question.course;
-			//newQuestion.week = body.question.week;
+			console.log(request.body.course)
+			newQuestion.course = request.body.course;
+			newQuestion.week = parseInt(request.body.week);
 
-			newQuestion.course = 'test course';
-			newQuestion.week = parseInt('0');		//remember to parse to int
-
-			//TODO: sectionUuid
-			//newQuestion.sectionUuid = request.body.sectionUuid;		//frontend
-			newQuestion.sectionUuid = 'someTestSection';
 			QueryES.addQuestion(newQuestion, appType, function(err, result) {
 				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -981,6 +976,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
+		console.log(JSON.stringify(request.body))
 		nlp(queryData.searchQuery, function(query){
 			/*
 			if(query){

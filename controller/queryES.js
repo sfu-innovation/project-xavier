@@ -41,7 +41,7 @@ var addUsersToData = function(data, callback){
 	result.hits = [];
 
 	async.forEach(data.hits.hits, function(obj, done){
-		user.selectUser({"uuid":obj._source.user}, function(error, user){
+		require('../models/user.js').selectUser({"uuid":obj._source.user}, function(error, user){
 
 			if(error){throw error;}
 
@@ -71,7 +71,7 @@ var addUsersToData = function(data, callback){
 
 //add a single user object to result
 var addUserToData = function(data, callback){
-	user.selectUser({"uuid":data._source.user}, function(error, user){
+	require('../models/user.js').selectUser({"uuid":data._source.user}, function(error, user){
 
 		if(user){
 			data.user = user;
@@ -345,8 +345,6 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	//should check if adding to a section is really needed. rqra dont need it
 	args.section = data.week;	//section uuid
 	args.resource = questionUuid;	//question uuid
-
-	delete data.week;
 
 	user.selectUser({"uuid":data.user}, function(error, user){
 		if(error)

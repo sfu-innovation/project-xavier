@@ -355,11 +355,46 @@ coreApi._construct = function () {
 			})
 		}
 
+
+		this.getResourcesByUserId = function(id, callback){
+			console.log("API - getResourcesByUserId");
+			$.ajax({
+
+				url:'/api/resources/user/'+id,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+
+		}
+
+
 		this.getResourcesByCurrentUserId = function(callback){
 			console.log("API - getResourcesByCurrentUserId");
 			$.ajax({
 
 				url:'/api/resources/my',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+
+		}
+
+
+		this.getWeekInfoByCourseIdAndWeekNum = function(id,num,callback){
+			console.log("API - getWeekInfoByCourseIdAndWeekNum");
+			$.ajax({
+
+				url:'/api/course/'+id+'/week/'+num,
 				type:'GET',
 				success:function (data) {
 					callback(data);

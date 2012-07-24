@@ -54,7 +54,7 @@ app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses ba
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 //app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
-
+app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the instructor of a course
 
 // follower
 //TODO: need update this into document
@@ -70,11 +70,13 @@ app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a foll
 app.get('/api/resources', routesEngage.resourcesInCourses); //get resources by the courses user enrolled, notice in Engage user can only see resources from the  course he is in.
 app.get('/api/resources/week/:week', routesEngage.resourcesInCoursesByWeek);
 //TODO: need update this into document
+
+app.get('/api/resources/user/:id', routesEngage.resourcesOfUser);	//get all  resources by user id
+
 app.get('/api/resources/my', routesEngage.resourcesOfCurrentUser);//get resources uploaded by current user;
 
 app.get('/api/resources/starred', routesEngage.starredResources);	//get all starred resources
 
-app.get('/api/resources/user/:id', routesEngage.starredResources);	//get all  resources by user id
 
 app.get('/api/course/:id/resources/',routesEngage.resourcesInCourse);  //get all resources in a course, not using common one as it does not meet engage requirement.
 app.get('/api/course/:id/resources/week/:week',routesEngage.resourcesInCourseByWeek);
@@ -127,12 +129,11 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 app.get('/login', routesEngage.login);
 app.get('/logout', routesCommon.logout);
 
+
+
+
+
 app.get('/', routesEngage.index);
-app.post('/', routesEngage.index);
-
-
-app.post('/design', routesEngage.design);
-app.get('/design', routesEngage.design);
 
 app.get('/starred', routesEngage.starred);
 
@@ -140,9 +141,20 @@ app.get('/mine', routesEngage.contributions);
 
 app.get('/instructor', routesEngage.instructor);
 
+app.get('/profile/:id', routesEngage.profile);
+
+app.get('/preference', routesEngage.preference);
+
 //article - this is resource
 app.get('/course/:name', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
 
 app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
+
+
+
+///HEDY&CATH ZONE
+
+app.post('/design', routesEngage.design);
+app.get('/design', routesEngage.design);

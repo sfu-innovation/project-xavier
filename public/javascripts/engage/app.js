@@ -31,6 +31,10 @@ jQuery(document).ready(function ($) {
 
 
 	}
+	else if (window.location.toString().indexOf('profile') != -1) {
+
+		loadProfileArticles(engage);
+	}
 	else if (window.location.toString().indexOf('course') != -1) {
 
 		$('#all_btn').addClass('active');
@@ -287,19 +291,72 @@ function loadMyArticles(engage) {
 	})
 }
 
+function loadProfileArticles(engage){
+	var id = $('#hidden-info').attr('data-user-id');
+
+	if (id){
+		engage.getResourcesByUserId(id, function (data) {
+			if (data) {
+
+				if (data.errorcode == 0) {
+
+					$('.articlebox').remove();
+					//$('#contents').empty();
+					console.log(data);
+					$.each(data.resources, function (index, item) {
+
+						console.log(item);
+						article = renderArticlePreviewBox(item);
+
+
+						$('#contents').append(article);
+					});
+
+				}
+
+				else {
+
+				}
+			}
+			else {
+
+			}
+
+
+		})
+	}
+}
 
 function loadCourseArticles(engage, week) {
 	var id = $('#hidden-info').attr('data-course-id');
 
 	if (id) {
 		if (week) {
-			var weekbox = renderWeekInfoBox();
-			$('.weekbox').remove();
-			$('#contents').append(weekbox);
-			console.log(weekbox);
+
+			engage.getWeekInfoByCourseIdAndWeekNum(id,week,function(data){
+				if (data){
+					if (data.errorcode ===0){
+						var weekbox = renderWeekInfoBox(data.week);
+						$('.weekbox').remove();
+						$('#contents').append(weekbox);
+					}
+					else{
+
+					}
+				}
+				else{
+
+				}
+
+
+			})
+
+
+
+
 			engage.getResourcesByCourseUUIDAndWeek(id, week, function (data) {
 				if (data) {
-					if (data.errorcode == 0) {
+					if (data.errorcode === 0) {
 
 						$('.articlebox').remove();
 ;
@@ -461,9 +518,13 @@ function loadStarredArticles(engage) {
 	})
 }
 
-function renderWeekInfoBox(){
+function renderWeekInfoBox(item){
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week 4</h4></div></div>'
+		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
+			item.week +
+			'</h4><p>' +
+			(item.topic) +
+			'</p></div></div>'
 
 	return weekBox;
 }

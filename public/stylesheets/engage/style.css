@@ -159,7 +159,8 @@ div.dropdown ul li a{
 	}
 
 
-.nav-bar#user_options_list{
+.nav-bar#user_options_list > li.has-flyout > a:first-child{
+	font-weight: bold;
 
 
 }

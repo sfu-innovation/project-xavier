@@ -64,7 +64,7 @@ html
 				div.two.columns.dropdown#user_options					
 					ul.nav-bar#user_options_list
 						li.has-flyout
-							a(href="#")
+							a(href="/profile/#{user.uuid}")
 								img.avatar(src="https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png") 
 								| #{ user.firstName } #{ user.lastName }
 							a(href="#").flyout-toggle

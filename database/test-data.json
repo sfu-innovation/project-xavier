@@ -715,54 +715,63 @@
 			"uuid":"1001",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some rand1324om topics",
 			"week": 1
 		},
 		{
 			"uuid":"1002",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some rand3232om topics",
 			"week": 2
 		},
 		{
 			"uuid":"1003",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some ra2323dom topics",
 			"week": 3
 		},
 		{
 			"uuid":"1004",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some ran2323dom topics",
 			"week": 4
 		},
 		{
 			"uuid":"1005",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some raweqndom topics",
 			"week": 5
 		},
 		{
 			"uuid":"1006",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some ran12321dom topics",
 			"week": 6
 		},
 		{
 			"uuid":"1007",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some rqweqandom topics",
 			"week": 7
 		},
 		{
 			"uuid":"1008",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some ra21312ndom topics",
 			"week": 8
 		},
 		{
 			"uuid":"1009",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some ran`31dom topics",
 			"week": 9
 		},
 		{
@@ -775,6 +784,7 @@
 			"uuid":"1011",
 			"app" : 2,
 			"course": 11,
+			"topic":"just some rando231m topics",
 			"week": 11
 		},
 		{
@@ -823,6 +833,7 @@
 			"uuid":"2005",
 			"app" : 2,
 			"course": 12,
+			"topic":"just some r253andom topics",
 			"week": 5
 		},
 		{
@@ -835,12 +846,14 @@
 			"uuid":"2007",
 			"app" : 2,
 			"course": 12,
+			"topic":"just some r131andom topics",
 			"week": 7
 		},
 		{
 			"uuid":"2008",
 			"app" : 2,
 			"course": 12,
+			"topic":"just some ra131ndom topics",
 			"week": 8
 		},
 		{
@@ -853,6 +866,7 @@
 			"uuid":"2010",
 			"app" : 2,
 			"course": 12,
+			"topic":"just some ra232ndom topics",
 			"week": 10
 		},
 		{

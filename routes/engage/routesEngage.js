@@ -6,7 +6,7 @@ var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
 var Course = require(__dirname + "/../../models/course");
 var CourseMember = require(__dirname + "/../../models/courseMember");
-
+var Week = require(__dirname + "/../../models/week");
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
 var request = require('request');
@@ -357,6 +357,49 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 	})
 }
 
+
+exports.courseWeekInfo = function(req,res){
+	var id = req.params.id;
+	var weekNum = req.params.week;
+
+
+	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
+
+		if (result) {
+
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, week:result }));
+
+		} else {
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:error }));
+		}
+
+
+	})
+
+}
+
+
+
+exports.resourcesOfUser = function(req,res){
+
+	Resource.getResourceByUserId({user:req.params.id}, function (error, result) {
+
+		if (result) {
+			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:0, resources:result }));
+			})
+		} else {
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:error }));
+		}
+
+
+	})
+
+}
 
 // get resources that uploaded by current user
 exports.resourcesOfCurrentUser = function (req, res) {
@@ -828,6 +871,29 @@ exports.instructor = function (req, res) {
 	}
 
 }
+
+
+exports.profile = function (req, res) {
+
+	if (req.session && req.session.user) {
+		res.render("engage/profile", {     title:"SFU ENGAGE",
+			user:req.session.user,
+			selectedUser:req.params.id,
+			courses:req.session.courses}, function (err, rendered) {
+
+
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+		res.redirect("/demo");
+
+	}
+
+}
+
 
 
 exports.articleView = function (req, res) {

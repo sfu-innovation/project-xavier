@@ -22,7 +22,7 @@ var Week = exports.Week = db.define('Week', {
 
 
 exports.selectWeek = function(args, callback){
-	Week.find({where: args}).success(function(tag) {
+	Week.find({where: args}).success(function(week) {
 		callback(null, week);
 	}).error(function(error) {
 			callback(error, null);

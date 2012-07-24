@@ -1,4 +1,5 @@
 var routesCommon = require('./../common/routesCommon.js');
+var notification = require('../../controller/NotificationAction.js')
 
 //TODO: remove when everything is setup
 var fakeUserNotification = function(callback){
@@ -6,7 +7,7 @@ var fakeUserNotification = function(callback){
 		app:0,
 		user:"jrf2"
 	}
-	require('../../controller/NotificationAction.js').createUserNotificationSettings(args, function(err, result){
+	notification.createUserNotificationSettings(args, function(err, result){
 		if(err)
 			console.log(err);
 

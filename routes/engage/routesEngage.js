@@ -623,13 +623,28 @@ exports.design = function (req, res) {
 
 
 exports.shareResource = function (req,res){
-	Parser.articlize(req.body.article_url, function (err,result) {
+	var url = req.body.url;
+	var description = req.body.description;
+	var course = req.body.course;
 
-		Resource.createResource(req.session.user.uuid, {url:result.url, path:result.path, excerpt:result.excerpt, week:13,course:12,fileType:"html",resourceType:2, title:result.title}, function(err,result){
-			console.log(result);
+	Parser.articlize(url, function (err,result) {
 
-			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:0, resources:result }));
+		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:13,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+			if (result){
+				EngageAction.resourceHelper(req.session.user.uuid, [result], function (error, result) {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+				})
+
+			}
+			else{
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:1, message:error }));
+
+
+			}
+
+
 
 		})
 

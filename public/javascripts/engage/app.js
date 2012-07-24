@@ -69,6 +69,31 @@ jQuery(document).ready(function ($) {
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
 
+		$('#submitnew form').bind('submit',function(){
+
+
+			var course = $('#submitnew form option:selected').val();
+			var description = $('#article_comment').val();
+			var url = $('#article_url').val();
+			engage.shareResource({course:course,description:description,url:url},function(data){
+
+						console.log(data);
+				if (data){
+					if (data.errorcode === 0){
+						var new_article = renderArticlePreviewBox(data.resource);
+						$('#sharebox').after(new_article);
+					}
+					else{
+
+					}
+				}
+				else{
+
+				}
+			});
+			return false;
+
+		})
 
 		$('#weeks-bar a').bind('click', function () {
 			var weekObj = $(this);

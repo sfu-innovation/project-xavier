@@ -13,7 +13,7 @@ function formatQuestion(question) {
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question._source.user + "</span></div>"
+					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
 			+ "</div>";
 }
 

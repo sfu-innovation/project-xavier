@@ -458,7 +458,7 @@ function loadStarredArticles(engage) {
 }
 
 function renderArticlePreviewBox(item) {
-	var week = weekConverter(item.createdAt, '2012-05-07T07:00:00.000Z');
+
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
@@ -472,8 +472,8 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + week + '">' + item.course.subject + " " + item.course.number
-			+ '-WK' + week + '</a>'
+			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '</a>'
 			+ '</span>'
 
 			+ '</p>'

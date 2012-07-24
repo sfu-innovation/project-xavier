@@ -60,7 +60,7 @@ exports.getResourceByUserId = function (args, callback) {
 }
 
 exports.getResourcesByCourseUUIDs = function (args, callback) {
-	Resource.findAll({where:{course:args.uuids}}).success(
+	Resource.findAll({where:{course:args.courses}}).success(
 		function (resources) {
 			if (resources) {
 
@@ -76,24 +76,11 @@ exports.getResourcesByCourseUUIDs = function (args, callback) {
 }
 
 
-//get resourceByCourseUUIDs and a range of dates
-exports.getResourcesByCourseUUIDsAndDates = function (args, callback) {
-	var UUIDs = "(";
-	for (var i = 0; i < args.uuids.length; i++) {
-		UUIDs += '"' + args.uuids[i] + '"';
-		if (i != args.uuids.length - 1) {
-			UUIDs += ','
-		}
-		else {
-			UUIDs += ')'
-		}
-	}
-	var statement = 'SELECT * FROM `Resources` WHERE createdAt >= "' + args.start + '" AND createdAt <= "' + args.end + '" AND course IN ' + UUIDs;
-	//custom query
-	db.query(statement, Resource).success(
+//get resourceByCourseUUIDs and the number of week
+exports.getResourcesByCourseUUIDsAndWeek = function (args, callback) {
+	Resource.findAll({where:{course:args.courses, week:args.week}}).success(
 		function (resources) {
 			if (resources) {
-
 				callback(null, resources);
 			}
 			else {

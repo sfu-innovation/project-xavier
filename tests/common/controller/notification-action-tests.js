@@ -313,7 +313,7 @@ module.exports = {
 				test.ok( results.should.have.lengthOf(10));
 				NotificationAction.setupCourseMaterialNotifiers( args, function( error, notifiers ){
 					NotificationListener.findEveryNotificationListener( null, function( error, results ){
-						test.ok( results.should.have.lengthOf(19));
+						test.ok( results.should.have.lengthOf(18));
 						test.done();
 					});
 				});

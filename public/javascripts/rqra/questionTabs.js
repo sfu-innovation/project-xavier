@@ -19,16 +19,16 @@ function formatQuestion(question) {
 
 function refreshQuestionListHeader() {
 	var courseUuid = getUuid(currentCourse);
-	common.getCourseById(courseUuid, function(data) {
-		var courseTitle = document.getElementById("courseTitle");
-		if (currentCourse === "") {
+	var courseTitle = document.getElementById("courseTitle");
+	if (!currentCourse || currentCourse === "" || currentCourse === "all") {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-		} else {
+	} else {
+		common.getCourseById(courseUuid, function(data) {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>" 
 				+ currentCourse.toUpperCase() + " " + data.course.title 
 				+ "</span> from";
-		}
-	});
+		});
+	}
 
 	var sectionTitle = document.getElementById("sectionTitle");
 	if (currentWeek === 0) {
@@ -48,7 +48,6 @@ function displayQuestions(searchType, page) {
 	var questionList = document.getElementById("questionsList");
 	
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
-		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
@@ -56,6 +55,8 @@ function displayQuestions(searchType, page) {
 				questionList.innerHTML += formatQuestion(item);
 			});
 		} else {
+			displayTotal(0);
+			displayPageNumbers(0);
 			questionList.innerHTML += "No Questions Found!";
 		}
 	});
@@ -95,3 +96,4 @@ function gotoQuestionPage(clicked) {
 
 // displays asked questions on page load
 displayQuestions("latest", 0);
+refreshQuestionListHeader();

@@ -22,11 +22,11 @@ app.configure(function() {
 
 app.configure('development', function(){
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-	app.use(function(req, res, next) {
-		if (req.session)
-			req.session.courses = [ ];
-		next();
-	})
+//	app.use(function(req, res, next) {
+//		if (req.session)
+//			req.session.courses = [ ];
+//		next();
+//	})
 });
 
 app.configure('production', function(){

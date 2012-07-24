@@ -2,6 +2,7 @@ var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
 var Resource = require(__dirname + '/resource.js').Resource;
+var Notification = require(__dirname + '/../controller/NotificationAction.js');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
 	config.mysqlDatabase["user"],
@@ -9,7 +10,7 @@ var db = new Sequelize(
 	
 	{
 		port: config.mysqlDatabase["port"],
-		host: config.mysqlDatabase["host"],		
+		host: config.mysqlDatabase["host"]
 	}
 );
 
@@ -31,7 +32,17 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 					var likeCount = resource.likes + 1;
 					resource.updateAttributes({likes: likeCount}).success(function(result){
-						callback(null, result);
+						var args = {
+							user : userUUID,
+							target : resourceUUID,
+							app    :1
+						}
+						Notification.addLikeNotifier(args, function(error, result){
+							if(error)
+								return callback(error);
+
+							callback(null, result);
+						})
 					}).error(function(error){
 						callback(error, null);
 					})

@@ -13,6 +13,7 @@ var request = require('request');
 var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
+var notification = require('../../controller/NotificationAction.js');
 
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
@@ -871,8 +872,25 @@ exports.demoPage = function (req, res) {
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
-		req.session.courses = result;
-		res.redirect('/');
+
+		var args= {
+			app:1,
+			user:"llt3"
+		}
+
+		notification.createUserNotificationSettings(args, function(err, success){
+			if(err)
+				console.log(err);
+
+			if(success)
+				console.log("created: " + success)
+
+			req.session.courses = result;
+			res.redirect('/');
+
+		});
+
+
 
 	});
 }

@@ -16,6 +16,20 @@ function formatQuestion(question) {
 			+ "</div>";
 }
 
+function refreshQuestionListHeader() {
+	var courseTitle = document.getElementById("courseTitle");
+	if (currentCourse === "") {
+		courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
+	} else {
+		courseTitle.innerHTML = "Questions for <span class='inserted'>" 
+			+ currentCourse.toUpperCase() + " insert full title" 
+			+ "</span> from";
+	}
+		
+	var sectionTitle = document.getElementById("sectionTitle");
+	sectionTitle.innerHTML = "Week " + currentWeek + " - Untitled.txt";
+}
+
 function refreshQuestionsList() {
 	displayQuestions(prevSearchType, 0);
 }

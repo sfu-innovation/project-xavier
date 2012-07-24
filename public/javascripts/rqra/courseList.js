@@ -33,6 +33,7 @@ function selectButton(selectedButton) {
 		if (selectedButton === obj) {
 			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
 			currentCourse = currentCourse.toLowerCase();
+			refreshQuestionListHeader();
 			refreshQuestionsList();
 			setSelected(obj, true);
 		} else {

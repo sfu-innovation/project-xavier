@@ -1,7 +1,7 @@
 var rqra = new coreApi.Presenter();
 
 function formatQuestion(question, callback) {
-	displayConversations('whatever', function(conversation){
+	displayConversations(question._id, function(conversation){
 		var questionStr = "<li class='Selected'>" 
 				+ "<div class='Question'>"
 				+ "<span class='Course'>" + question._source.course + "</span>"
@@ -60,9 +60,9 @@ function displayQuestions(user) {
 					//questionList.innerHTML += question;
 					questionStr += question;
 					--remaining;
-					alert(remaining)
+					//alert(remaining)
 					if (!remaining) {
-						alert(questionStr)
+						//alert(questionStr)
 						questionStr += "<ul>";
 						questionList.replaceWith(questionStr);				
 					}
@@ -74,8 +74,7 @@ function displayQuestions(user) {
 
 	rqra.getAllQuestions(0, function(data) {			
 		//console.log('all the questions:')			
-		var remaining = data.questions.hits.length;
-		alert("Nodes left: "+remaining)
+		var remaining = data.questions.hits.length;		
 		$.each(data.questions.hits, function (index, item) {			
 			//console.log(item._source.title)
 			if (item._source.user !== user) {	
@@ -115,7 +114,7 @@ function displayConversations(questionID, callback) {
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
 				
-	rqra.getCommentsByQuestion('aJfzndwdadddQuOicWWAjx7F15', function(data) {			
+	rqra.getCommentsByQuestion(questionID, function(data) {			
 		$.each(data.comments.hits, function (index, item) {			
 			if (item._source.isInstructor === "true") {				
 				topStr += formatResponse(item);

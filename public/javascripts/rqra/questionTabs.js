@@ -26,13 +26,15 @@ function displayQuestions(searchType, page) {
 	var questionList = document.getElementById("questionsList");
 	
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
+		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
-			questionList.innerHTML = "";
 			$.each(data.questions.hits, function (index, item) {
 				questionList.innerHTML += formatQuestion(item);
 			});
+		} else {
+			questionList.innerHTML += "No Questions Found!";
 		}
 	});
 }

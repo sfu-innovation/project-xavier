@@ -14,6 +14,7 @@ var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
 var notification = require('../../controller/NotificationAction.js');
+var async = require('async')
 
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
@@ -868,7 +869,7 @@ exports.courseView = function (req, res) {
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:'llt3', firstName:"Cathrine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
@@ -879,14 +880,30 @@ exports.demoPage = function (req, res) {
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){
-			if(err)
-				console.log(err);
-
 			if(success)
 				console.log("created: " + success)
 
-			req.session.courses = result;
-			res.redirect('/');
+			var courseList = ['11', '12'];
+
+			async.forEach(courseList, function(course, done){
+				var args = {
+					target      : course,
+					app         : 2
+				}
+				notification.setupCourseMaterialNotifiers(args, function(err, callback){
+					if(err)
+						console.log(err)
+					done();
+				})
+			}, function(err){
+				if(err)
+					console.log("Problem adding course materials")
+
+				req.session.courses = result;
+				res.redirect('/');
+			})
+
+
 
 		});
 
@@ -895,7 +912,27 @@ exports.demoPage = function (req, res) {
 	});
 }
 
+exports.preference = function (req, res){
+	if (req.session && req.session.user) {
+		res.render("engage/preference", 
+			{     
+			title:"SFU ENGAGE",
+			user:req.session.user,
+			courses:req.session.courses
+			}, function (err, rendered) {
 
+			res.writeHead(200, {'Content-Type':'text/html'});
+			res.end(rendered);
+
+		})
+	}
+	else {
+
+		res.redirect("/demo");
+
+
+	}
+}
 
 
 

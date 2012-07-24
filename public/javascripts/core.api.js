@@ -30,7 +30,7 @@ coreApi._construct = function () {
 		}
 		
 		// gets a list of courses for the current logged in user
-		this.getUserCourses = function(id,callback ) {
+		this.getUserCourses = function(callback) {
 			console.log("API - getUserCourses");
 			$.ajax({
 				url:'/api/user/courses',
@@ -413,8 +413,7 @@ coreApi._construct = function () {
 	}
 
 	function Presenter() {
-		this.myname = "asdf";
-		this.createQuestion = function (questionTitle, questionBody, callback) {
+		this.createQuestion = function (questionTitle, questionBody, course, week, callback) {
 			console.log("API - createQuestion");
 
 			var body = {};
@@ -424,7 +423,8 @@ coreApi._construct = function () {
 			question.category = 'testcategory'; //TODO need replaced
 			question.title = questionTitle;
 			body.question = question;
-
+			body.course = course;
+			body.week = week;
 
 			$.ajax({
 				url:'/api/question',

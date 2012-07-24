@@ -123,14 +123,7 @@
 			"number":371,
 			"instructor":"BSDF787D98ASDF099D7G"
 		},
-		{
-			"uuid":"11",
-			"title":"Graphic Design",
-			"section":"D100",
-			"subject":"IAT",
-			"number":102,
-			"instructor":"BSDF787D98ASDF099D7G"
-		},
+
 		{
 			"uuid":"6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
 			"title":"Beginners Japanese II",
@@ -146,9 +139,33 @@
 			"subject":"PSYC",
 			"number":221,
 			"instructor":"bernie"
+		} ,
+		{
+			"uuid":"11",
+			"title":"Graphic Design",
+			"section":"D100",
+			"subject":"IAT",
+			"number":102,
+			"instructor":"bernie"
+		},
+		{
+			"uuid":"12",
+			"title":"Bussiness Planing",
+			"section":"D100",
+			"subject":"BUS",
+			"number":354,
+			"instructor":"ted"
 		}
 	],
 	"courseMembers":[
+		{
+			"course":"11",
+			"user":"bernie"
+		},
+		{
+			"course":"12",
+			"user":"ted"
+		},
 		{
 			"course":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
 			"user":"jrf2"
@@ -189,10 +206,7 @@
 			"course":"A827346H7ASDFG9",
 			"user":"xna2"
 		},
-		{
-			"course":"A827346H7ASDFG9",
-			"user":"llt3"
-		},
+
 		{
 			"course":"11",
 			"user":"xna2"
@@ -223,6 +237,10 @@
 		},
 		{
 			"course":"11",
+			"user":"llt3"
+		} ,
+		{
+			"course":"12",
 			"user":"llt3"
 		}
 	],
@@ -575,9 +593,11 @@
 
 		},
 		{
+
 			"uuid" : "1",
 			"user" : "xna2",
-			"course": "A827346H7ASDFG9",
+			"course": "12",
+			"week": "2011",
 			"title" : "South Korea unveils 'scientific' whaling proposal",
 			"author" : "Richard Black",
 			"publishedDate": "4 July 2012",
@@ -594,7 +614,8 @@
 		{
 			"uuid" : "2",
 			"user" : "xna2",
-			"course": "A827346H7ASDFG9",
+			"course": "12",
+			"week": "2007",
 			"title" : "How To Create an Abstract Geometric Mosaic Text Effect",
 			"author" : "Chris Spooner",
 			"publishedDate": "28 June 2012",
@@ -612,7 +633,8 @@
 		{
 			"uuid" : "3",
 			"user" : "llt3",
-			"course": "A827346H7ASDFG9",
+			"course": "12",
+			"week": "2003",
 			"title" : "How To Interview Effectively",
 			"author" : "Richard Black",
 			"publishedDate": "28 June 2012",
@@ -631,6 +653,7 @@
 			"uuid" : "4",
 			"user" : "llt3",
 			"course": "11",
+			"week": "1002",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
 			"publishedDate": "28 June 2012",
@@ -649,13 +672,14 @@
 			"uuid" : "5",
 			"user" : "ted",
 			"course": "11",
+			"week": "1011",
 			"title" : "HSBC used by 'drug kingpins', says US Senate",
 			"author" : "Victor Lipman",
 			"publishedDate": "28 June 2012",
 			"description" : "Test resource description",
 			"path" : "/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
 			"resourceType" : 2,
-			"fileType" : "mp4",
+			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
@@ -667,13 +691,14 @@
 			"uuid" : "6",
 			"user" : "ted",
 			"course": "11",
+			"week": "1006",
 			"title" : "How To Interview Effectively",
 			"author" : "Victor Lipman",
 			"publishedDate": "28 June 2012",
 			"description" : "Test resource description",
 			"path" : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
 			"resourceType" : 2,
-			"fileType" : "mp4",
+			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
 			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
@@ -681,6 +706,181 @@
 			"createdAt" : "2012-05-23T21:32:49.000Z"
 
 		}
+
+
+	],
+	"weeks":[
+		{
+			"uuid":"1001",
+			"app" : 2,
+			"course": 11,
+			"week": 1
+		},
+		{
+			"uuid":"1002",
+			"app" : 2,
+			"course": 11,
+			"week": 2
+		},
+		{
+			"uuid":"1003",
+			"app" : 2,
+			"course": 11,
+			"week": 3
+		},
+		{
+			"uuid":"1004",
+			"app" : 2,
+			"course": 11,
+			"week": 4
+		},
+		{
+			"uuid":"1005",
+			"app" : 2,
+			"course": 11,
+			"week": 5
+		},
+		{
+			"uuid":"1006",
+			"app" : 2,
+			"course": 11,
+			"week": 6
+		},
+		{
+			"uuid":"1007",
+			"app" : 2,
+			"course": 11,
+			"week": 7
+		},
+		{
+			"uuid":"1008",
+			"app" : 2,
+			"course": 11,
+			"week": 8
+		},
+		{
+			"uuid":"1009",
+			"app" : 2,
+			"course": 11,
+			"week": 9
+		},
+		{
+			"uuid":"1010",
+			"app" : 2,
+			"course": 11,
+			"week": 10
+		},
+		{
+			"uuid":"1011",
+			"app" : 2,
+			"course": 11,
+			"week": 11
+		},
+		{
+			"uuid":"1012",
+			"app" : 2,
+			"course": 11,
+			"week": 12
+		},
+		{
+			"uuid":"1013",
+			"app" : 2,
+			"course": 11,
+			"week": 13
+		},
+		{
+			"uuid":"1014",
+			"app" : 2,
+			"course": 11,
+			"week": 14
+		} ,
+		{
+			"uuid":"2001",
+			"app" : 2,
+			"course": 12,
+			"week": 1
+		},
+		{
+			"uuid":"2002",
+			"app" : 2,
+			"course": 12,
+			"week": 2
+		},
+		{
+			"uuid":"2003",
+			"app" : 2,
+			"course": 12,
+			"week": 3
+		},
+		{
+			"uuid":"2004",
+			"app" : 2,
+			"course": 12,
+			"week": 4
+		},
+		{
+			"uuid":"2005",
+			"app" : 2,
+			"course": 12,
+			"week": 5
+		},
+		{
+			"uuid":"2006",
+			"app" : 2,
+			"course": 12,
+			"week": 6
+		},
+		{
+			"uuid":"2007",
+			"app" : 2,
+			"course": 12,
+			"week": 7
+		},
+		{
+			"uuid":"2008",
+			"app" : 2,
+			"course": 12,
+			"week": 8
+		},
+		{
+			"uuid":"2009",
+			"app" : 2,
+			"course": 12,
+			"week": 9
+		},
+		{
+			"uuid":"2010",
+			"app" : 2,
+			"course": 12,
+			"week": 10
+		},
+		{
+			"uuid":"2011",
+			"app" : 2,
+			"course": 12,
+			"week": 11
+		},
+		{
+			"uuid":"2012",
+			"app" : 2,
+			"course": 12,
+			"week": 12
+		},
+		{
+			"uuid":"2013",
+			"app" : 2,
+			"course": 12,
+			"week": 13
+		},
+		{
+			"uuid":"2014",
+			"app" : 2,
+			"course": 12,
+			"week": 14
+		}
+
+
+
 
 
 	],

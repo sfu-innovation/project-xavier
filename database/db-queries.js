@@ -28,6 +28,7 @@ var Star                     = require('../models/star.js').Star;
 var Section                  = require('../models/section.js').Section;
 var SectionMaterial          = require('../models/sectionMaterial.js').SectionMaterial;
 var CourseSection            = require('../models/courseSection.js').CourseSection;
+var Week 					 = require('../models/week.js').Week;
 
 exports.createDB = function(dbName, callback){
 	var mysql   = require("mysql").createClient({
@@ -65,6 +66,7 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, Star),
 				createTable.bind(undefined, Section),
 				createTable.bind(undefined, SectionMaterial),
+				createTable.bind(undefined, Week),
 				createTable.bind(undefined, CourseSection)]
 			, callback);
 		}
@@ -138,7 +140,8 @@ exports.insertData = function(dataFile, dbName, dbUser, dbPassword, dbHost, call
 		insert.bind(undefined, CourseSection, data.coursesections),
 		insert.bind(undefined, Section, data.sections),
 		insert.bind(undefined, SectionMaterial, data.sectionmaterials),
-		insert.bind(undefined, Star, data.stars)
+		insert.bind(undefined, Star, data.stars),
+		insert.bind(undefined, Week, data.weeks)
 		], callback);
 }
 

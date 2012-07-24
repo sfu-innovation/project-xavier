@@ -28,6 +28,7 @@ var Resource = exports.Resource = db.define('Resource', {
 	uuid:{type:Sequelize.STRING, unique:true, primaryKey:true},
 	user:{type:Sequelize.STRING, allowNull:false},
 	course:{type:Sequelize.STRING, allowNull:false},
+	week:{type:Sequelize.STRING, allowNull:true}, // the uuid of the week of the semester it belongs to
 	title:{type:Sequelize.STRING, allowNull:false},
 	description:{type:Sequelize.TEXT},
 	resourceType:{type:Sequelize.INTEGER, allowNull:false},

@@ -49,10 +49,11 @@ div#nav ul{
 }
 
 div#nav li{
-	background-color: rgba(0,0,0,0);
-	color: black !important;
-	border: 0;
-	text-align: left;
+	background-color: transparent;
+	-webkit-box-shadow: 0;
+	-moz-box-shadow: 0;
+	box-shadow: 0;
+	border: none;
 	padding-right: 20px;
 	padding-bottom: 0px;
 	position: relative;
@@ -62,7 +63,7 @@ div#nav li{
 div#nav li a{
 	color: #9e9e9e !important;
 	text-align: left;
-	border: 0;
+	border: none;
 }
 
 div#nav #options li a{
@@ -106,17 +107,38 @@ ul#mobile-nav li.course{
 
 #header .nav-bar{
 	margin-top: 5px;
-	background-color: rgba(0,0,0,0)
+	background-color: transparent;
+	border: none;
 }
 
 #header .nav-bar li{
 	padding-right: 0;
+	border: none;
+	background: transparent;
+	-webkit-box-shadow: 0;
+	-moz-box-shadow: 0;
+	box-shadow: 0;
 }
 
-#options.nav-bar li{
+#options.nav-bar > li{
 	margin-right: 20px;
+	border: none;
+	background: transparent;
+	-webkit-box-shadow: 0;
+	-moz-box-shadow: 0;
+	box-shadow: 0;
 }
 
+#options.nav-bar > li:first-child{
+	-webkit-box-shadow: 0;
+	-moz-box-shadow: 0;
+	box-shadow: 0;	
+}
+#options.nav-bar > li:last-child{
+	-webkit-box-shadow: 0;
+	-moz-box-shadow: 0;
+	box-shadow: 0;
+}
 
 /* -----------------------------------------
    right section of the HEADER, course and user box
@@ -517,6 +539,11 @@ div#article_container .columns:first-child{
 	box-shadow: 0 0 5px #9e9e9e;
 }
 
+div#owner_comment #small_wrap{
+	border-bottom: 2px solid #9e9e9e;
+	padding: 0 !important;
+	padding-bottom: 10px;
+}
 
 div#article_container #comments{
 	margin: 0;
@@ -525,16 +552,16 @@ div#article_container #comments{
 }
 
 div#article_container #comments #owner_comment{
-	padding: 10px;
 	-moz-box-shadow: 0 0 1px #9e9e9e;
 	-webkit-box-shadow: 0 0 1px #9e9e9e;
 	box-shadow: 0 0 1px #9e9e9e;
 	background-color:  rgba(0,0,0,0.05);
+	padding-bottom: 0;
 
 	}
 
 div#article_container #comments h5{
-	padding: 10px;
+	padding-left: 10px;
 }
 
 

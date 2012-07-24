@@ -221,6 +221,24 @@ coreApi._construct = function () {
 
 		}
 
+		this.shareResource = function (args,callback){
+			console.log('API - shareResource');
+
+			$.ajax({
+				url:'/resource/share',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(args),
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
 		this.likeResource = function(resource_uuid,callback){
 			console.log("API - likeResource");
 			$.ajax({

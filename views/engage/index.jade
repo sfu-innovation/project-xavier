@@ -12,9 +12,9 @@ block content
 					li(href="week/#{week}")
 						a(href="#week#{week}", data-week="#{week}") #{week}
 	div.row.clearfix#contents
-		div.three.columns
+		div.three.columns#sharebox
 			div.innercontents#submitnew
-				form(name="add_article", action="/",enctype="multipart/form-data", method="post", onsubmit="return validateForm()", style="margin-bottom : 0", class="custom")
+				form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 					label Share a resource!
 					input(name="article_url",type="text", id="article_url", placeholder="http://")
 					textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")

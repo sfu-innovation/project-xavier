@@ -483,7 +483,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
 			+ '</span>'
 
@@ -587,7 +587,7 @@ function renderExcerpt(excerpt) {
 // if the subject is new, give a new color, otherwise use the old one;
 
 function stylePicker() {
-	var available_styles = ['box-style-1', 'box-style-2'];
+	var available_styles = ['color-1', 'color-2'];
 	var subjects = {};
 
 	this.getStyle = function (subject) {

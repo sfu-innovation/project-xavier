@@ -229,15 +229,23 @@ div.innercontents{
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 }
 
-div.innercontents.box-style-1{
+div.innercontents.color-1{
 	border-top: 4px solid #d35f5e;
 }
 
-div.innercontents.box-style-2{
+div.innercontents.color-2{
 	border-top: 4px solid #2BA6CB;
 }
 
+span.coursename a.color-1{
+	 color:#d35f5e;
 
+ }
+
+span.coursename a.color-2{
+	color:#2BA6CB;
+
+}
 div.innercontents form textarea{
 	height: 200px;
 	resize: none; 

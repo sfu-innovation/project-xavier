@@ -25,7 +25,20 @@ var db = new Sequelize(
 
 
 var Resource = exports.Resource = db.define('Resource', {
-	uuid:{type:Sequelize.STRING, unique:true, primaryKey:true}, user:{type:Sequelize.STRING, allowNull:false}, course:{type:Sequelize.STRING, allowNull:false}, title:{type:Sequelize.STRING, allowNull:false}, description:{type:Sequelize.TEXT}, resourceType:{type:Sequelize.INTEGER, allowNull:false}, fileType:{type:Sequelize.STRING, allowNull:true}, likes:{type:Sequelize.INTEGER, defaultValue:0}, url:{type:Sequelize.STRING, allowNull:false}   // this is the url of the original page (for engage), path:{type:Sequelize.STRING, allowNull:false}  // this is the file path of the html page we parsed (for engage), author:{type:Sequelize.STRING, allowNull:true} //this is the original author of the article (for engage), publishedDate:{type:Sequelize.STRING, allowNull:true} //this is the original published date of the article (for engage), excerpt:{type:Sequelize.TEXT, allowNull:true} // A short extract from a film, broadcast, or piece of music or writing. (for engage), thumbnail:{type:Sequelize.STRING, allowNull:true} // a preview image for resource (for engage)
+	uuid:{type:Sequelize.STRING, unique:true, primaryKey:true},
+	user:{type:Sequelize.STRING, allowNull:false},
+	course:{type:Sequelize.STRING, allowNull:false},
+	title:{type:Sequelize.STRING, allowNull:false},
+	description:{type:Sequelize.TEXT},
+	resourceType:{type:Sequelize.INTEGER, allowNull:false},
+	fileType:{type:Sequelize.STRING, allowNull:true},
+	likes:{type:Sequelize.INTEGER, defaultValue:0},
+	url:{type:Sequelize.STRING, allowNull:false} ,
+	path:{type:Sequelize.STRING, allowNull:false}  ,
+	author:{type:Sequelize.STRING, allowNull:true} ,
+	excerpt:{type:Sequelize.TEXT, allowNull:true} ,
+	thumbnail:{type:Sequelize.STRING, allowNull:true},// a preview image for resource (for engage)
+	publishedDate:{type:Sequelize.STRING,allowNull:true}
 
 
 });

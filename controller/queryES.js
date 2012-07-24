@@ -41,7 +41,7 @@ var addUsersToData = function(data, callback){
 	result.hits = [];
 
 	async.forEach(data.hits.hits, function(obj, done){
-		require('../models/user.js').selectUser({"uuid":obj._source.user}, function(error, user){
+		user.selectUser({"uuid":obj._source.user}, function(error, user){
 
 			if(error){throw error;}
 
@@ -71,7 +71,7 @@ var addUsersToData = function(data, callback){
 
 //add a single user object to result
 var addUserToData = function(data, callback){
-	require('../models/user.js').selectUser({"uuid":data._source.user}, function(error, user){
+	user.selectUser({"uuid":data._source.user}, function(error, user){
 
 		if(user){
 			data.user = user;

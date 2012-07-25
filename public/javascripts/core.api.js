@@ -760,7 +760,7 @@ coreApi._construct = function () {
 
 		}
 
-		this.getWeekByCourseId = function(courseID, callback){
+		this.getWeeksByCourseId = function(courseID, callback){
 			console.log("API - getWeekByCourseId");
 			$.ajax({
 				url:'api/week/' + courseID,

@@ -13,7 +13,7 @@
 		"created":"2012-07-10T18:19:31.204Z",
 		"timestamp":"2012-07-10T18:19:31.204Z",
 		"followup":[],
-		"isInstructor":"true",
+		"isInstructor":"false",
 		"viewCount":0,
 		"commentCount":1,
 		"course":"BUS100",
@@ -35,7 +35,6 @@
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -53,7 +52,7 @@
 		"created":"2012-07-10T18:19:31.204Z",
 		"timestamp":"2012-07-10T18:19:31.204Z",
 		"followup":[],
-		"isInstructor":"true",
+		"isInstructor":"false",
 		"viewCount":0,
 		"commentCount":0,
 		"course":"ESPT100",
@@ -96,7 +95,6 @@
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -115,7 +113,6 @@
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -155,7 +152,6 @@
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -216,7 +212,6 @@
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -254,7 +249,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -275,7 +270,7 @@
 			"created":"2012-07-09T15:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -296,7 +291,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -317,7 +312,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":5231,
 			"commentCount":1,
 			"course":"ESPT100",
@@ -339,7 +334,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -379,7 +373,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -419,7 +412,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -438,7 +430,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F10"
 		}
 	},
@@ -478,7 +469,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -497,7 +487,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -516,7 +505,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -535,7 +523,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -554,7 +541,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -699,7 +685,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -718,7 +703,6 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},

@@ -469,16 +469,28 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 
 
 //change the status of a question from unanswered to answered, increments comment count
-QueryES.prototype.updateStatus = function(questionID, appType, callback){
+QueryES.prototype.updateStatus = function(questionID, isInstructor, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();
 
-	var data = {
-		'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
-		'params':{
-			'status':'answered',
-			'date':date,
-			'count':1
+	if(isInstructor){
+		var data = {
+			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count; ctx._source.isInstructor = isInstructor',
+			'params':{
+				'status':'answered',
+				'date':date,
+				'count':1,
+				'isInstructor': "true"
+			}
+		}
+	}else{
+		var data = {
+			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
+			'params':{
+				'status':'answered',
+				'date':date,
+				'count':1
+			}
 		}
 	}
 
@@ -605,10 +617,11 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 }
 
 //create a new comment
-QueryES.prototype.addComment = function(data, appType, callback){
+QueryES.prototype.addComment = function(data, user, appType, callback){
 	var document;
 	var commentUuid = UUID.generate();
 	var self = this;
+	var isInstructor = false;
 	var args = {
 		target:data.target_uuid
 		,app:appType
@@ -623,7 +636,13 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	self.updateStatus(args.target, appType, function(err, updateResult){
+	if(user.type === 1){
+		console.log("User is an instructor")
+		isInstructor = true;
+		data.isAnswered = "true";
+	}
+
+	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
 		if(err)
 			return callback(err);
 
@@ -632,27 +651,24 @@ QueryES.prototype.addComment = function(data, appType, callback){
 				return callback(err);
 				console.log("document added");
 
-				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+			notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+				if(err){
+					console.log(err);
+					return callback(err);
+				}
+
+				delete args.description;
+				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);
-						return callback(err);
+						callback(err);
 					}
 
-					delete args.description;
-					notification.addCommentNotifier(args, function(err, result){
-						if(err){
-							console.log(err);
-							callback(err);
-						}
+					console.log('complete');
 
-						console.log('complete');
-
-						callback(null, esData);
-					});
+					callback(null, esData);
 				});
-
-
-			//callback(null, esData);
+			});
 		});
 
 	});

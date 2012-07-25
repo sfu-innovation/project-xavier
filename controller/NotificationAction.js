@@ -463,7 +463,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
+	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
 			var title = "";

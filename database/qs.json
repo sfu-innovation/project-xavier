@@ -210,25 +210,6 @@
 			"commentParent":""
 		}
 	},
-		{
-		"_index":"accent",
-		"_type":"questions",
-		"_id":"aJfznhseQuOicWWAjx7F00",
-		"_score":1,
-		"_source": {
-			"user":"mak10",
-			"upvote":86,
-			"downvote":34,
-			"title":"What is the tallest building in Japan?",
-			"body":"What is the tallest building in Japan?",
-			"target_uuid":"9908615f-55fa-4f29-805a-91feef227b94",
-			"objectType":"comment",
-			"created":"2012-07-12T18:19:31.204Z",
-			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isInstructor":"false",
-			"commentParent":""
-		}
-	},
 	{
 		"_index":"presenter",
 		"_type":"questions",

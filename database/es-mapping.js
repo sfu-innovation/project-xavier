@@ -123,12 +123,6 @@ var map = function(appType, callback){
 					},
 					"objectType": {
 						"type" : "string"
-					},			
-					"isAnswered": {
-						"type": "string"
-					},
-					"isInstructor": {
-						"type": "string"
 					},
 					"commentParent": {
 						"type": "string"

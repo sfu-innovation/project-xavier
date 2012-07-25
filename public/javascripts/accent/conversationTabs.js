@@ -41,31 +41,22 @@ function formatConversation(conversation) {
 function displayQuestions(course) {
 	// My conversations
 	//var questionList = document.getElementById("myQuestionsList");
-	var questionList = $("#myConversations").children(".Conversations");
+	var questionList = $("#myConversations").children(".Conversations");	
 	var questionStr = "<ul class='Conversations'>";
 
 	// Class conversations
-	var classConversationList = $("#classConversations").children(".Conversations");
-
+	var classConversationList = $("#classConversations").children(".Conversations");	
 	var classStr = "<ul class='Conversations'>";
 	
 	// searchQuery, searchType, courseName, weekNumber, page, callback
 	rqra.searchSortedQuestions('', 'myQuestions', course, '', 0, function(data){
-		var remaining = data.questions.hits.length;
-		console.log('find anything????')
-
-		if (data && data.errorcode === 0 && remaining > 0) {
-			//console.log(data.questions.total);			
-			//questionList.innerHTML = "";						
-			$.each(data.questions.hits, function (index, item) {
-				//questionList.innerHTML += formatQuestion(item, function(question));				
-				formatQuestion(item, function(question){
-					//questionList.innerHTML += question;
+		var remaining = data.questions.hits.length;				
+		if (data && data.errorcode === 0 && remaining > 0) {					
+			$.each(data.questions.hits, function (index, item) {						
+				formatQuestion(item, function(question){					
 					questionStr += question;
-					--remaining;
-					//alert(remaining)
-					if (!remaining) {
-						//alert(questionStr)
+					--remaining;					
+					if (!remaining) {						
 						questionStr += "<ul>";
 						questionList.replaceWith(questionStr);				
 					}
@@ -73,24 +64,33 @@ function displayQuestions(course) {
 			});
 			
 		}
+		else {
+			questionStr += "<ul>";
+			questionList.replaceWith(questionStr);
+		}
 	});
 	
 	rqra.searchSortedQuestions('', 'notMyQuestions', course, '', 0, function(data){
 		var remaining = data.questions.hits.length;		
-		console.log('not my questions')
-		console.log(remaining)
-		$.each(data.questions.hits, function (index, item) {			
-			formatQuestion(item, function(question){
-				classStr += question;
-				--remaining;
-				
-				if (!remaining) {					
-					classStr += "<ul>";
-					classConversationList.replaceWith(classStr);				
-				}
+		if (data && data.errorcode === 0 && remaining > 0) {
+			$.each(data.questions.hits, function (index, item) {			
+				formatQuestion(item, function(question){
+					classStr += question;
+					--remaining;
+					
+					if (!remaining) {					
+						classStr += "<ul>";
+						classConversationList.replaceWith(classStr);				
+					}
 
-			})	
-		});		
+				})	
+			});	
+		}
+		else {
+			classStr += "<ul>";
+			classConversationList.replaceWith(classStr);
+		}		
+	
 	})
 
 }

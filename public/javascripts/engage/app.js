@@ -9,6 +9,8 @@ jQuery(document).ready(function ($) {
 
 
 
+
+
 	initUI();
 
 	var engage = new coreApi.Engage();
@@ -75,6 +77,10 @@ jQuery(document).ready(function ($) {
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
+
+		$('.flip_btn').bind('click',function(){
+			$('div.cover').toggleClass('flip');
+		})
 
 		$('#submitnew form').bind('submit',function(){
 

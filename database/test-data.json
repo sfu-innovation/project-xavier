@@ -761,6 +761,174 @@
 	],
 	"weeks":[
 		{
+			"uuid": "e9ff3a7a-abb9-4f3e-acf0-7173e930767b",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 1,
+			"topic": "Introductions and Greetings"
+		},
+		{
+			"uuid": "58f93cb7-458e-44bc-aa0e-dbd4e3279612",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 2,
+			"topic": "Pronounciation and Counting"
+		},
+		{
+			"uuid": "a2e61bc1-d6a7-4ce5-899a-d39ba1509ac3",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 3,
+			"topic": "Nouns and Pronouns"
+		},
+		{
+			"uuid": "9f1aead5-a9c4-4922-8344-cd4cbb7d53c6",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 4,
+			"topic": "Adjectives"
+		},
+		{
+			"uuid": "1939d950-89ff-4884-b93f-e62ccf38b401",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 5,
+			"topic": "Verbs"
+		},
+		{
+			"uuid": "ef19483d-e308-47b8-aeb7-9e5fc7a9f75f",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 6,
+			"topic": "Questions and Statements using Correlatives"
+		},
+		{
+			"uuid": "a09857cc-e8c9-4060-999f-476a16421c51",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 7,
+			"topic": "Midterm Review"
+		},
+		{
+			"uuid": "80728692-9cd8-4c24-a21e-9bcd51d166dd",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 8,
+			"topic": "Prepositions"
+		},
+		{
+			"uuid": "10d3bc42-9a0a-49ae-8992-804997beaace",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 9,
+			"topic": "Sentence Structure"
+		},
+		{
+			"uuid": "9b54fce7-853d-497d-b6be-042028768076",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 10,
+			"topic": "Prefixes and Affixes"
+		},
+		{
+			"uuid": "9bccabbd-9147-4e41-b4d0-c29c6f0d2ea5",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 11,
+			"topic": "Final Oral Presentations"
+		},
+		{
+			"uuid": "e50cce82-8f2a-446e-819c-bec0677498fe",
+			"app": 0,
+			"course": "37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"week": 12,
+			"topic": "Final Exam Review"
+		},
+		{
+			"uuid": "ad0342bb-aae0-4a5f-8af9-fe3ddcede1af",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 1,
+			"topic": "Introductions and Greetings"
+		},
+		{
+			"uuid": "3406733b-e091-4212-891b-6ae4d4054c98",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 2,
+			"topic": "Hiragana and Katakana"
+		},
+		{
+			"uuid": "18a29818-837e-4981-a126-2ec840642af7",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 3,
+			"topic": "Statements and Questions"
+		},
+		{
+			"uuid": "dabb0297-afc9-4af5-a9fe-481edb0590d8",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 4,
+			"topic": "Negative Statements"
+		},
+		{
+			"uuid": "50cd5625-fff2-498f-8758-81bf54727789",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 5,
+			"topic": "Present Tense of Verbs"
+		},
+		{
+			"uuid": "6866ead1-f924-4b8f-8cba-4a5f53185caf",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 6,
+			"topic": "Past Tense of Verbs"
+		},
+		{
+			"uuid": "30764784-ef7f-4ef7-ac1b-83c1dd5bc638",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 7,
+			"topic": "Midterm Review"
+		},
+		{
+			"uuid": "04f69919-1f4e-4526-8b84-aa715e240152",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 8,
+			"topic": "Adjective Conjugation"
+		},
+		{
+			"uuid": "1ab59db4-3882-44aa-a32d-ff35dfd831f5",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 9,
+			"topic": "Te-Form"
+		},
+		{
+			"uuid": "92d17154-7aa9-46a4-b240-abb1d5370d39",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 10,
+			"topic": "Short Forms of Verbs and Adjectives"
+		},
+		{
+			"uuid": "70be24f0-a5cb-4b9a-bb2d-c6e08d1d2c41",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 11,
+			"topic": "Past Tense Short Forms of Verbs and Adjectives"
+		},
+		{
+			"uuid": "9c98ba08-7b4d-431a-aded-989ff0a6c554",
+			"app": 0,
+			"course": "6c6cb8ce-e9df-4607-a8d5-c962586ccf7e",
+			"week": 12,
+			"topic": "Final Exam Review"
+		},
+		{
 			"uuid":"1001",
 			"app" : 2,
 			"course": 11,
@@ -942,11 +1110,6 @@
 			"course": 12,
 			"week": 14
 		}
-
-
-
-
-
 	],
 	"tags": [
 		{

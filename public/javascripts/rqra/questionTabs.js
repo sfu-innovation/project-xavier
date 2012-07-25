@@ -33,8 +33,20 @@ function refreshQuestionListHeader() {
 	var sectionTitle = document.getElementById("sectionTitle");
 	if (currentWeek === 0) {
 		sectionTitle.innerHTML = "All Weeks";
+	} else if (!currentCourse || currentCourse === "" || currentCourse === "all") {
+		sectionTitle.innerHTML = "Week " + currentWeek;
 	} else {
-		sectionTitle.innerHTML = "Week " + currentWeek + " - Untitled.txt";
+		rqra.getWeeksByCourseId(courseUuid, function(data) {
+			if (data && data.errorcode === 0 && data.week.length > 0) {
+				for(var i = 0; i < data.week.length; ++i) {
+					if (data.week[i].week === currentWeek) {
+						sectionTitle.innerHTML = "Week " + currentWeek + " - " + data.week[i].topic;
+					}
+				}	
+			} else {
+				sectionTitle.innerHTML = "Week " + currentWeek;
+			}
+		});
 	}
 }
 

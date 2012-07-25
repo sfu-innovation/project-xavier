@@ -20,9 +20,26 @@ var Week = exports.Week = db.define('Week', {
 	app  : {type: Sequelize.INTEGER, allowNull: false}  //app type , not sure if needed
 });
 
+exports.createWeek = function(week, callback){
+	week.uuid = UUID.generate();
+	Week.create(week).error(function(error){
+		callback(error, null);
+	}).success(function(){
+			callback(null, week);
+	})
+}
 
 exports.selectWeek = function(args, callback){
 	Week.find({where: args}).success(function(week) {
+		callback(null, week);
+	}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't find week " + error);
+		});
+}
+
+exports.findAllWeeks = function(args, callback){
+	Week.findAll({where: args}).success(function(week) {
 		callback(null, week);
 	}).error(function(error) {
 			callback(error, null);

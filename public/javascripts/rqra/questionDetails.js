@@ -3,6 +3,7 @@ var rqra = new coreApi.Presenter();
 function formatQuestion(question) {
 	return "<div class='detailedQuestion'>"
 			+ "<div class='questionTitle'>" + question._source.title + "</div>"
+			+ "<div class='questionId'>" + question._id + "</div>"
 			+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
@@ -21,13 +22,18 @@ function formatComment(comment) {
 	}
 
 	return "<div class='detailedQuestion' style='" + instructorStyle + "'>"
+			+ "<div class='questionId'>" + comment._id + "</div>"
 			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + comment.user.firstName + " " + comment.user.lastName + "</span></div>"
-				+ "<div class='votes'>" + comment._source.upvote + " <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
-				+ "<div class='votes'>" + comment._source.downvote + " <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
+				+ "<div class='votes' onclick='vote(1, this)'><span class='upVoteCount'>" 
+				+ comment._source.upvote 
+				+ "</span> <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
+				+ "<div class='votes' onclick='vote(-1, this)'><span class='downVoteCount'>" 
+				+ comment._source.downvote 
+				+ "</span> <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
 			+ "</div>";
 }
 
@@ -73,14 +79,17 @@ function postComment() {
 	});
 }
 
-function vote(dir) {
-	if (dir === "up") {
+function vote(dir, targetDiv) {
+	var id = targetDiv.parentNode.parentNode.querySelector(".questionId").innerHTML;
+	if (dir === 1) {
 		rqra.upVoteCommentById(id, function(data) { 
-			
+			var previousValue = parseInt(targetDiv.querySelector(".upVoteCount").innerHTML);
+			targetDiv.querySelector(".upVoteCount").innerHTML = previousValue+1;
 		});
-	} else if (dir === "down") {
+	} else if (dir === -1) {
 		rqra.downVoteCommentById(id, function(data) { 
-			
+			var previousValue = parseInt(targetDiv.querySelector(".downVoteCount").innerHTML);
+			targetDiv.querySelector(".downVoteCount").innerHTML = previousValue+1;
 		});
 	}
 }

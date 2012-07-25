@@ -145,3 +145,5 @@ app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile
 
 /***NEW ROUTES */
 app.post("/api/questions/search/page/:page", routesRqra.searchQuestionsRoute);
+app.get("/api/week/:id", routesRqra.getWeekByCourseId);		//course ID
+app.post("/api/week", routesRqra.addWeek)		//add week , provide {course, week, topic}  in JSON

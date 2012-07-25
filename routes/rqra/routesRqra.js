@@ -179,3 +179,11 @@ exports.search = function(request, response) {
 exports.searchQuestionsRoute = function(request, response){
 	routesCommon.searchQuestionsRoute(0, request, response);
 }
+
+exports.getWeekByCourseId = function(request, response){
+	routesCommon.getWeekByCourseId(0, request, response);
+}
+
+exports.addWeek = function(request, response){
+	routesCommon.addWeek(0, request, response);
+}

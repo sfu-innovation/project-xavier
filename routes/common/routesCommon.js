@@ -8,6 +8,7 @@ var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 var Notification = require(__dirname + "/../../controller/NotificationAction");
 var UserNotificationSettings = require('../../models/userNotificationSettings.js');
+var Week = require(__dirname + "/../../models/week.js");
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -1047,4 +1048,49 @@ exports.getResourceSection = function(request, response){
 		})
 
 	}	
+
+exports.getWeekByCourseId = function(appType, request, response){
+	if(request.method === "GET"){
+		var id = request.params.id;
+		Week.findAllWeeks({course:id}, function (error, result) {
+			if (!error) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, week: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, week: "No results found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, week: error }));
+			}
+		})
+	}
+}
+
+exports.addWeek = function(appType, request, response){
+	if(request.method === "POST"){
+		var week = {
+			course: request.body.course,
+			week:request.body.week,
+			topic:request.body.topic,
+			app: appType
+		}
+
+		Week.createWeek(week, function (error, result) {
+			if (!error) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, week: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, week: "Cannot create week" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, week: error }));
+			}
+		})
+	}
 }

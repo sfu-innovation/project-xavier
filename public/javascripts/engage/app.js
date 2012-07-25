@@ -2,6 +2,13 @@ var stylePicker = new stylePicker();
 
 jQuery(document).ready(function ($) {
 
+	if ($('html').hasClass('lt-ie8')) {
+		window.location="http://www.youtube.com/watch?v=4DbgiOCTQts";
+		return;
+	}
+
+
+
 	initUI();
 
 	var engage = new coreApi.Engage();

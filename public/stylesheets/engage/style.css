@@ -1,3 +1,5 @@
+
+
 .clearfix:after {
 	visibility: hidden;
 	font-size: 0.1em;
@@ -37,7 +39,8 @@ div#header img.logo{
 	margin: 0;
 	padding: 5px;
 	padding-top: 15px;
-	height: 60px;	
+	height: 60px;
+	border: 0;
 }
 
 
@@ -247,6 +250,7 @@ div#contents div.columns:last-child{;
 div.innercontents{
 	background-color: rgba(0,0,0,0.02) ;
 	position: relative;
+	height:360px;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow: :0px 0px 7px rgba(0,0,0,0.35);
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
@@ -376,7 +380,7 @@ div.innercontents #prof{
 div.articlepreview{
 	padding: 18px;
 	padding-top: 12px;
-	max-height: 55px;
+	height: 55px;
 	overflow: hidden;
 	font-family: "Lato", sans-serif;
 	font-weight: 700;

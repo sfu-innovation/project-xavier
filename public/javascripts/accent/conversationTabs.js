@@ -72,45 +72,15 @@ function displayQuestions(user) {
 		}
 	});
 
-	/*
-	rqra.getAllQuestions(0, function(data) {			
-		//console.log('all the questions:')			
-		var remaining = data.questions.hits.length;		
-		$.each(data.questions.hits, function (index, item) {			
-			//console.log(item._source.title)
-			if (item._source.user !== user) {	
-				//console.log(item._source.user);			
-				//classStr += formatQuestion(item);
-				formatQuestion(item, function(question){
-					classStr += question;
-					--remaining;
-					//alert(remaining)
-					if (!remaining) {
-						//alert(classStr)
-						classStr += "<ul>";
-						classConversationList.replaceWith(classStr);				
-					}
-
-				});
-			} else {
-				--remaining;
-			}	
-		});		
-	})
-	*/
-	
 	// searchQuery, searchType, courseName, weekNumber, page, callback
 	rqra.searchSortedQuestions('', 'notMyQuestions', '', '', 0, function(data){
-		console.log('notMyQuestions')
-		console.log(data)
 		var remaining = data.questions.hits.length;		
 		$.each(data.questions.hits, function (index, item) {			
 			formatQuestion(item, function(question){
 				classStr += question;
 				--remaining;
 				
-				if (!remaining) {
-					//alert(classStr)
+				if (!remaining) {					
 					classStr += "<ul>";
 					classConversationList.replaceWith(classStr);				
 				}

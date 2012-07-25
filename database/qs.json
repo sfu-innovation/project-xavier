@@ -34,7 +34,6 @@
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -94,7 +93,6 @@
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -112,7 +110,6 @@
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -151,7 +148,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -211,7 +207,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -230,7 +225,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
 			"isInstructor":"false",
 			"commentParent":""
 		}
@@ -333,7 +327,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":""
 		}
 	},
@@ -372,7 +365,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -411,7 +403,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -429,7 +420,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
 			"commentParent":"qJfzggggguOicWWAjx7F10"
 		}
 	},
@@ -468,7 +458,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -486,7 +475,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -504,7 +492,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -522,7 +509,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -540,7 +526,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -684,7 +669,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},
@@ -702,7 +686,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
 			"commentParent":""
 		}
 	},

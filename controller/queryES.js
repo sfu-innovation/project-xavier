@@ -639,7 +639,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	if(user.type === 1){
 		console.log("User is an instructor")
 		isInstructor = true;
-		data.isAnswered = "true";
 	}
 
 	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
@@ -758,7 +757,7 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 	var data = {
-		'script':'ctx._source.isAnswered = status',
+		'script':'ctx._source.isInstructor = status',
 		'params':{
 			'status':'true'
 		}

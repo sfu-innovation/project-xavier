@@ -7,7 +7,7 @@ function PostQuestion() {
 		console.log(data);
 		
 		if (data && data.errorcode === 0) {
-			
+			document.location.href = "/question/" + data.question._id;
 		}
 	});
 }

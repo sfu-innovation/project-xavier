@@ -38,7 +38,7 @@ function formatConversation(conversation) {
 }
 
 //function displayQuestions(searchType, page) {
-function displayQuestions() {
+function displayQuestions(course) {
 	// My conversations
 	//var questionList = document.getElementById("myQuestionsList");
 	var questionList = $("#myConversations").children(".Conversations");
@@ -49,8 +49,10 @@ function displayQuestions() {
 
 	var classStr = "<ul class='Conversations'>";
 	
-	rqra.searchSortedQuestions('', 'myQuestions', '', '', 0, function(data){
+	// searchQuery, searchType, courseName, weekNumber, page, callback
+	rqra.searchSortedQuestions('', 'myQuestions', course, '', 0, function(data){
 		var remaining = data.questions.hits.length;
+		console.log('find anything????')
 
 		if (data && data.errorcode === 0 && remaining > 0) {
 			//console.log(data.questions.total);			
@@ -72,10 +74,11 @@ function displayQuestions() {
 			
 		}
 	});
-
-	// searchQuery, searchType, courseName, weekNumber, page, callback
-	rqra.searchSortedQuestions('', 'notMyQuestions', '', '', 0, function(data){
+	
+	rqra.searchSortedQuestions('', 'notMyQuestions', course, '', 0, function(data){
 		var remaining = data.questions.hits.length;		
+		console.log('not my questions')
+		console.log(remaining)
 		$.each(data.questions.hits, function (index, item) {			
 			formatQuestion(item, function(question){
 				classStr += question;
@@ -133,6 +136,7 @@ function displayConversations(questionID, callback) {
 
 function refreshQuestions(course) {
 	console.log('show the questions for this course = ' + course)
+	displayQuestions(course);
 
 }
 
@@ -140,5 +144,5 @@ function refreshQuestions(course) {
 // displays asked questions on page load
 console.log('Loaded properly');
 
-displayQuestions();
-//displayConversations();
+// '' = meaning all courses
+displayQuestions('');

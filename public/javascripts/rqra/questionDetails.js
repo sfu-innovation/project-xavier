@@ -77,10 +77,13 @@ function loadPage(first) {
 function postComment() {
 	var questionId = window.location.pathname.replace("/question/", "");
 	var commentBody = document.getElementById("replyText").value;
+	var commentList = document.getElementById("comments");
+	
 	rqra.createComment(questionId, commentBody, function(data) {
-		console.log(data);
 		if (data && data.errorcode === 0) {
-			loadPage(false);
+			rqra.getCommentById(data.comment._id, function(data2) {
+				commentList.innerHTML += formatComment(data2.comment);
+			});
 		}
 	});
 }

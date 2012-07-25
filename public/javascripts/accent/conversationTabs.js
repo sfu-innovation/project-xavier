@@ -140,5 +140,5 @@ function refreshQuestions(course) {
 // displays asked questions on page load
 console.log('Loaded properly');
 
-//displayQuestions();
+displayQuestions();
 //displayConversations();

@@ -114,6 +114,12 @@
 			"title": "week 1",
 			"app": 1
 		}
+	],
+	"sectionmaterials":[
+		{
+			"section": "A827346H7AFSSFG9",
+			"material": "1234"
+		}
 	]
 
 }

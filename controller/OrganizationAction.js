@@ -516,17 +516,17 @@ OrganizationAction.prototype.getSectionTitleByResourceUUID = function( args, cal
 		return;		
 	}
 	
-	var arg = new Object();
-	arg.resource = args.object;
-	
-	SectionMaterial.findSectionIdByMaterialId( arg, function( error, sectionUUID){
+	SectionMaterial.findSectionIdByMaterialId( args, function( error, sectionUUID){
 		if ( error){
 			console.log("[SectionMaterial.findSectionIdByMaterialId] error - "+error);
 			console.log( null, "" );
 			return;
 		}
 		else if ( sectionUUID ) {
-			arg.uuid = sectionUUID;
+			var arg  = {
+				uuid: sectionUUID
+			}
+
 			Section.findSectionById( arg, function( error, foundSection ){
 				if ( error ){
 					console.log("[Section.findSectionById] error - "+error);

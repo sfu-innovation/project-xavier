@@ -17,6 +17,7 @@ var mediaFileID   = "1234";
 var mediaFileText = "How to make buble tea";
 var deletedTagID  = '';
 var sectionID     = 'A827346H7AFSSFG9';
+var sectionTitle  = 'week 1';
 
 module.exports = {
 	courseTest:{
@@ -222,6 +223,22 @@ module.exports = {
 				});
 			});
 			request.end();
+		},
+		getMediaFileSection: function(test){
+			this.requestOptions.method = "GET";
+			this.requestOptions.path = "/api/mediafile/" + mediaFileID + "/section";
+
+			var request = http.get(this.requestOptions, function(response){
+				var body = "";
+				response.on('data', function (chunk) {
+					body += chunk;
+				}).on('end', function() {
+					body = JSON.parse(body);
+					test.ok(body.errorcode === 0 &&
+						body.section === sectionTitle);
+					test.done();
+				});
+			});
 		}	
 	}
 }

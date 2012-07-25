@@ -67,9 +67,10 @@ exports.removeMaterialFromSection = function( args, callback ){
 
 
 exports.findSectionIdByMaterialId = function (args, callback) {
+
 	SectionMaterial.find({ where:{ material:args.material}}).success(
 		function (result) {
-			callback(null, result);
+			callback(null, result.section);
 		}).error(function (error) {
 			callback(error, null);
 			console.log("cannot find this section material relationship", error);

@@ -1028,3 +1028,23 @@ exports.updateUserNotifications = function(appType, request, response){
 		});
 	}
 }
+
+exports.getResourceSection = function(request, response){
+	if(request.method === "GET"){
+		var args = {
+			material: request.params.uid
+		}
+
+		OrganizationAction.getSectionTitleByResourceUUID(args, function(error, section){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, section: section }));
+			}
+			else{
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+
+	}	
+}

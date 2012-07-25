@@ -15,7 +15,12 @@ function formatQuestion(question) {
 }
 
 function formatComment(comment) {
-	return "<div class='detailedQuestion'>"
+	var instructorStyle = "";
+	if (comment.user.type === 1) {
+		instructorStyle = "background: #ffe450;";
+	}
+
+	return "<div class='detailedQuestion' style='" + instructorStyle + "'>"
 			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div>Asked "

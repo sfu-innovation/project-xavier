@@ -2,7 +2,7 @@ var rqra = new coreApi.Presenter();
 
 function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
-		var questionStr = "<li class='Selected'>" 
+		var questionStr = "<li>" 
 				+ "<div class='Question'>"
 				+ "<span class='Course'>" + question._source.course + "</span>"
 				+ "<a href=''>" + question._source.title + "</a>"		

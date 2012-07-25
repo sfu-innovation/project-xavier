@@ -1046,8 +1046,8 @@ exports.getResourceSection = function(request, response){
 				response.end(JSON.stringify({ errorcode: 1, message: error }));
 			}
 		})
-
-	}	
+	}
+}
 
 exports.getWeekByCourseId = function(appType, request, response){
 	if(request.method === "GET"){
@@ -1087,7 +1087,8 @@ exports.addWeek = function(appType, request, response){
 				else{
 					response.end(JSON.stringify({ errorcode: 0, week: "Cannot create week" }));
 				}
-			} else {
+			}
+			else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, week: error }));
 			}

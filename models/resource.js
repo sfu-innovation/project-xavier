@@ -48,7 +48,7 @@ var Resource = exports.Resource = db.define('Resource', {
 
 
 exports.getResourceByUserId = function (args, callback) {
-	Resource.findAll({where:{user:args.user}}).success(
+	Resource.findAll({where:{user:args.user},order: 'createdAt DESC'}).success(
 		function (resources) {
 			if (resources) {
 				callback(null, resources);
@@ -62,7 +62,7 @@ exports.getResourceByUserId = function (args, callback) {
 }
 
 exports.getResourcesByCourseUUIDs = function (args, callback) {
-	Resource.findAll({where:{course:args.courses}}).success(
+	Resource.findAll({where:{course:args.courses},order: 'createdAt DESC'}).success(
 		function (resources) {
 			if (resources) {
 
@@ -80,7 +80,7 @@ exports.getResourcesByCourseUUIDs = function (args, callback) {
 
 //get resourceByCourseUUIDs and the number of week
 exports.getResourcesByCourseUUIDsAndWeek = function (args, callback) {
-	Resource.findAll({where:{course:args.courses, week:args.week}}).success(
+	Resource.findAll({where:{course:args.courses, week:args.week},order: 'createdAt DESC'}).success(
 		function (resources) {
 			if (resources) {
 				callback(null, resources);
@@ -97,7 +97,7 @@ exports.getResourcesByCourseUUIDsAndWeek = function (args, callback) {
 
 
 exports.getResourcesByUUIDs = function (args, callback) {
-	Resource.findAll({where:{uuid:args.uuids}}).success(
+	Resource.findAll({where:{uuid:args.uuids},order: 'createdAt DESC'}).success(
 		function (resources) {
 			if (resources) {
 				callback(null, resources);
@@ -112,7 +112,7 @@ exports.getResourcesByUUIDs = function (args, callback) {
 
 //Fetch the resource with the given UUID
 exports.getResourceByUUID = function (resourceUUID, callback) {
-	Resource.find({where:{uuid:resourceUUID}}).success(
+	Resource.find({where:{uuid:resourceUUID},order: 'createdAt DESC'}).success(
 		function (resource) {
 			if (resource) {
 				callback(null, resource);

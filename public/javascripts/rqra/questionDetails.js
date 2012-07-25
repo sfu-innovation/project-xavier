@@ -48,27 +48,29 @@ function loadPage(first) {
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
 	
-	// updates page view count
-	if (first) {
-		rqra.updateQuestionViews(questionId, function(data) {});
-	}
-	
 	// get question
 	rqra.getQuestionById(questionId, function(data) {
 		if (data && data.errorcode === 0) {
 			question.innerHTML = formatQuestion(data.question);
-			//displayPageNumbers(data.questions.total);
-		}
-	});
-	
-	// get comments
-	rqra.getCommentsByTargetId(questionId, 0, function(data) {
-		commentList.innerHTML = "";
-		if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
-			//displayPageNumbers(data.questions.total);
 			
-			$.each(data.comments.hits, function (index, item) {
-				commentList.innerHTML += formatComment(item);
+			// get comments
+			rqra.getCommentsByTargetId(questionId, 0, function(data) {
+				commentList.innerHTML = "";
+				if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
+					//displayPageNumbers(data.questions.total);
+					
+					$.each(data.comments.hits, function (index, item) {
+						commentList.innerHTML += formatComment(item);
+					});
+					
+					// updates page view count
+					if (first) {
+						rqra.updateQuestionViews(questionId, function(data) {
+							
+							
+						});
+					}
+				}
 			});
 		}
 	});

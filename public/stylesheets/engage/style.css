@@ -376,7 +376,7 @@ div.innercontents #prof{
 div.articlepreview{
 	padding: 18px;
 	padding-top: 12px;
-	max-height: 55px;
+	height: 55px;
 	overflow: hidden;
 	font-family: "Lato", sans-serif;
 	font-weight: 700;

@@ -71,6 +71,7 @@ div#nav li a{
 }
 
 div#nav #options li a{
+	border-bottom: 4px solid transparent; /*to prevent it jumping around in profile/design page*/
 	color: #9e9e9e !important;
 	text-align: left;
 	padding: 0;

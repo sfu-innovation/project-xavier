@@ -1,0 +1,104 @@
+{
+	"users": [
+		{
+			"uuid":"mak10",
+			"firstName":"Mike",
+			"lastName":"Klemarewski",
+			"type":0,
+			"userID":"mak10",
+			"email":"mak10@sfu.ca"
+		}
+	],
+	"userProfiles": [
+		{
+			"user":"mak10",
+			"lastWatchedTag":"bbc0"
+		}
+	],
+	"courses":[
+		{
+			"uuid":"A8G7S6H7ASDFG9",
+			"title":"Algorithms",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":307,
+			"instructor":"BSDF787D98A7SDF8ASD7G"
+		}
+	],
+	"courseMembers":[
+		{
+			"course":"A8G7S6H7ASDFG9",
+			"user":"mak10"
+		}
+	],
+	"mediafiles": [
+		{
+			"user":"mak10",
+			"uuid":"1234",
+			"title":"How to make buble tea",
+			"course":"A8G7S6H7ASDFG9",
+			"path":"http://www.youtube.com/mj",
+			"type":0
+		}
+	],
+	"tags":[
+		{
+			"uuid":"bbc0",
+			"user":"mak10",
+			"start":20,
+			"end":30,
+			"type":1,
+			"target":"1234",
+			"title":"basketball dunk",
+			"description":"the windmill",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		},
+		{
+			"uuid":"bbc1",
+			"user":"mak10",
+			"start":2,
+			"end":54,			
+			"type":0,
+			"target":"1234",
+			"title":"soccer dribble",
+			"question":"aJfznhseQuOicWWAjx7F00",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		},
+		{
+			"uuid":"ffs3",
+			"user":"mak10",
+			"start":6,			
+			"type":0,
+			"target":"1234",
+			"question":"pJfzndwdadddQuOicWWAjx7F04",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		},
+		{
+			"uuid":"jvjv53",
+			"user":"bob123",
+			"start":20,
+			"end":30,
+			"type":1,
+			"target":"1234",
+			"title":"basketball dunk",
+			"description":"the windmill",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		}
+	]
+}

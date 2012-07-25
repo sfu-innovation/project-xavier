@@ -168,7 +168,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -189,7 +189,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -421,7 +421,7 @@
 			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"SIAT270",
+			"course":"CRIM101",
 			"week":0
 		}
 	},
@@ -527,7 +527,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"ENG109",
 			"week":0
 		}
 	},
@@ -569,7 +569,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"MATH209",
 			"week":0
 		}
 	},
@@ -590,7 +590,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT307",
 			"week":0
 		}
 	},
@@ -611,7 +611,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},
@@ -632,7 +632,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},

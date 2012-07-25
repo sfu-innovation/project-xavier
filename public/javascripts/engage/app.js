@@ -570,7 +570,7 @@ function renderArticlePreviewBox(item) {
 
 
 			+ '<div class="post_details"> '
-			+ '<span>' + item.user.firstName + " " + item.user.lastName + '</span>'
+			+ '<span><a href="/profile/'+ item.user.uuid +'">' + item.user.firstName + " " + item.user.lastName + '</a></span>'
 			+ isProf(item.user.type) //return nothing if not
 
 			+ '<p>Posted '
@@ -651,18 +651,44 @@ function renderStar(starred) {
 
 function renderPreviewImage(item) {
 
-	var previewImage = '<div class="innerwrap" style=\'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
+	var previewImage = '<div class="innerwrap" style=\''
+		//IE
+		+'background-image: url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		//CHROME SAFARI
+		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+
+		//FIREFOX
+		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
-		+ '")' + '\'>'
+		 + '\'>'
 		+ '<h5>'
-		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+		+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 		+ '</div>'
 
+
+
+//	var previewImage = '<div class="innerwrap" >'
+//		+ '<img src = "'
+//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
+//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
+//		+ '<h5>'
+//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+//		+ '</div>'
 
 	return  previewImage
 
 
+}
+
+//ajust text font size according to length
+function renderTitleFontSize(item){
+	var len =  item.title.length;
+	if (len <= 27) return 30;
+	if (len <= 45 ) return 28;
+	else return 25;
 }
 
 function renderExcerpt(excerpt) {

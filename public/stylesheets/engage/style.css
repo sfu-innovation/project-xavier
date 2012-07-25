@@ -17,6 +17,7 @@
 
 body{
 	color: #9e9e9e !important;
+	padding-bottom: 20px;
 }
 
 .row{	
@@ -112,6 +113,11 @@ ul#mobile-nav li.course{
 	margin-top: 5px;
 	background-color: transparent;
 	border: none;
+}
+
+.nav-bar > li,.nav-bar > li:last-child,.nav-bar > li:first-child   {
+	-webkit-box-shadow:none;
+	box-shadow: none;
 }
 
 #header .nav-bar li{
@@ -337,12 +343,17 @@ div.innercontents img.avatar{
 }
 
 div.post_details{
-	font-family: "Lato", sans-serif;
 	color: #9e9e9e;
+	font-family: "Lato", sans-serif;
+
 }
 
-div.post_details span{
+div.post_details span a{
+	color: #9e9e9e;
+
 	font-weight: 900;
+
+
 }
 
 div.post_details p{

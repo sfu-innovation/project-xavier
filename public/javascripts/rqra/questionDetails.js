@@ -59,7 +59,7 @@ function loadPage(first) {
 
 function postComment() {
 	var questionId = window.location.pathname.replace("/question/", "");
-	var commentBody = document.getElementById("askFormText").value;
+	var commentBody = document.getElementById("replyText").value;
 	rqra.createComment(questionId, commentBody, function(data) {
 		console.log(data);
 		if (data && data.errorcode === 0) {

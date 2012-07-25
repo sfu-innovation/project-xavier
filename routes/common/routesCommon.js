@@ -773,7 +773,7 @@ exports.commentRoute = function(appType, request, response) {
 				,request.body.comment.objectType
 				,request.body.comment.body);
 
-			QueryES.addComment(newComment, appType, function(err, result) {
+			QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
 				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					if(result){

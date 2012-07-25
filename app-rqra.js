@@ -79,6 +79,7 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
+app.post('/api/course/sections', routesCommon.sectionsInCourse); // gets a list of the section uids for a given course
 
 // notification
 app.put("/api/user/notification", routesRqra.updateUserNotifications);

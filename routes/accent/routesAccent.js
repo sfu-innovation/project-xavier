@@ -373,5 +373,5 @@ exports.demoPage = function (req,res){
 
 /***NEW ROUTES */
 exports.searchQuestionsRoute = function(request, response){
-	routesCommon.searchQuestionsRoute(0, request, response);
+	routesCommon.searchQuestionsRoute(1, request, response);
 }

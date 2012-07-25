@@ -2,7 +2,7 @@ var rqra = new coreApi.Presenter();
 
 function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
-		var questionStr = "<li class='Selected'>" 
+		var questionStr = "<li>" 
 				+ "<div class='Question'>"
 				+ "<span class='Course'>" + question._source.course + "</span>"
 				+ "<a href=''>" + question._source.title + "</a>"		
@@ -72,30 +72,23 @@ function displayQuestions(user) {
 		}
 	});
 
-	rqra.getAllQuestions(0, function(data) {			
-		//console.log('all the questions:')			
+	// searchQuery, searchType, courseName, weekNumber, page, callback
+	rqra.searchSortedQuestions('', 'notMyQuestions', '', '', 0, function(data){
 		var remaining = data.questions.hits.length;		
 		$.each(data.questions.hits, function (index, item) {			
-			//console.log(item._source.title)
-			if (item._source.user !== user) {	
-				//console.log(item._source.user);			
-				//classStr += formatQuestion(item);
-				formatQuestion(item, function(question){
-					classStr += question;
-					--remaining;
-					//alert(remaining)
-					if (!remaining) {
-						//alert(classStr)
-						classStr += "<ul>";
-						classConversationList.replaceWith(classStr);				
-					}
-
-				});
-			} else {
+			formatQuestion(item, function(question){
+				classStr += question;
 				--remaining;
-			}	
+				
+				if (!remaining) {					
+					classStr += "<ul>";
+					classConversationList.replaceWith(classStr);				
+				}
+
+			})	
 		});		
 	})
+
 }
 
 function displayConversations(questionID, callback) {	

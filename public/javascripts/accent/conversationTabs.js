@@ -37,7 +37,8 @@ function formatConversation(conversation) {
 			+ "</div>";
 }
 
-function displayQuestions(user) {
+//function displayQuestions(searchType, page) {
+function displayQuestions() {
 	// My conversations
 	//var questionList = document.getElementById("myQuestionsList");
 	var questionList = $("#myConversations").children(".Conversations");
@@ -47,8 +48,8 @@ function displayQuestions(user) {
 	var classConversationList = $("#classConversations").children(".Conversations");
 
 	var classStr = "<ul class='Conversations'>";
-
-	rqra.getQuestionsByUserId(user, function (data) {
+	
+	rqra.searchSortedQuestions('', 'myQuestions', '', '', 0, function(data){
 		var remaining = data.questions.hits.length;
 
 		if (data && data.errorcode === 0 && remaining > 0) {
@@ -127,6 +128,11 @@ function displayConversations(questionID, callback) {
 		//console.log(conver)
 		//return conversationStr;
 	})
+
+}
+
+function refreshQuestions(course) {
+	console.log('show the questions for this course = ' + course)
 
 }
 

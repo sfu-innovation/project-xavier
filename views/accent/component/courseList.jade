@@ -1,14 +1,16 @@
 ul#Courses
-	li
-		a.All(href="") All
+	li.Selected
+		a.All(href="", onclick="return selectButton(this);") All
 
 	each course, index in courses		
 		li
-			a.Name(href="")
+			a.Name(href="", onclick="return selectButton(this);")
 				span.Prefix #{course.subject}
 				span.Number #{course.number}
+				span.UUID(style='display:none;') #{course.uuid}				
 			a.Count(href="") 0
 
+script(type="text/javascript", src="../javascripts/accent/courseList.js")
 
 		
 			

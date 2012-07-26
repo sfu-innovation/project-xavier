@@ -57,7 +57,7 @@ jQuery(document).ready(function ($) {
 			loadCourseArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a').bind('click', function () {
+		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
@@ -108,7 +108,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#weeks-bar a').bind('click', function () {
+		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
@@ -572,7 +572,7 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png' + '<" class="avatar"/>'
+			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140' + '" class="avatar"/>'
 
 
 			+ '<div class="post_details"> '

@@ -4,7 +4,8 @@ function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
 		var questionStr = "<li>" 
 				+ "<div class='Question'>"
-				+ "<span class='Course'>" + question._source.course + "</span>"
+				//+ "<span class='Course'>" + question._source.course + "</span>"
+				+ "<a href='' class='Follow'>Follow</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation
@@ -111,9 +112,9 @@ function displayConversations(questionID, callback) {
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
 				
-	rqra.getCommentsByQuestion(questionID, function(data) {			
-		$.each(data.comments.hits, function (index, item) {			
-			if (item._source.isInstructor === "true") {				
+	rqra.getCommentsByQuestion(questionID, function(data) {					
+		$.each(data.comments.hits, function (index, item) {				
+			if (item.user.type === 1) {				
 				topStr += formatResponse(item);
 			}	
 			else {

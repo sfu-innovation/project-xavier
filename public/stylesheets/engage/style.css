@@ -777,6 +777,15 @@ div#info ul li span,div#week-info ul li span{
 	text-align: center;
 	margin: 20px 0 10px 0;
 	}
+
+#weeks-bar ul li:hover a.disabled {
+	opacity: 0.3;
+}
+
+#weeks-bar ul li a.disabled {
+	opacity: 0.3;
+}
+
 #weeks-bar ul{
 	list-style: none;
 	text-align: center;

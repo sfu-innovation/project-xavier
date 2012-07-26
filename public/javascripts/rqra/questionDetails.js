@@ -26,6 +26,9 @@ function formatComment(comment) {
 	if (comment.user.type === 1) {
 		instructorStyle = "background: #ffe450;";
 	}
+	
+	//var badCommentStyle = "";
+	//if (comment.
 
 	return "<div class='question' style='" + instructorStyle + "'>"
 			+ "<div class='questionId'>" + comment._id + "</div>"

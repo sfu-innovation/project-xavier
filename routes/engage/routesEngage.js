@@ -662,7 +662,7 @@ exports.index = function (req, res) {
 			title:"SFU ENGAGE",
 			user:req.session.user,
 			courses:req.session.courses,
-			currentWeek:11
+			currentWeek:currentWeek
 		}, function (err, rendered) {
 
 			// console.log(rendered);
@@ -837,6 +837,7 @@ exports.contributions = function (req, res) {
 
 }
 exports.courseView = function (req, res) {
+	var currentWeek = EngageAction.weekHelper();
 	if (req.session && req.session.user) {
 		var courseName = req.params.name;
 
@@ -849,7 +850,7 @@ exports.courseView = function (req, res) {
 						courseName:courseName,
 						user:req.session.user,
 						course:result,
-
+						currentWeek:currentWeek,
 						courses:req.session.courses
 					}, function (err, rendered) {
 

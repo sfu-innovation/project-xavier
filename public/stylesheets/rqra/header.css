@@ -85,7 +85,11 @@ div#newNotificationCount {
 	color: white;
 	border-radius: 1em;
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-	-webkit-animation: notification-appear-animation 600ms 0ms 1 alternate forwards;
+	opacity: 0;
+	transition: opacity 600ms;
+	-moz-transition: opacity 600ms; /* Firefox 4 */
+	-webkit-transition: opacity 600ms; /* Safari and Chrome */
+	-o-transition: opacity 600ms; /* Opera */
 }
 
 @-webkit-keyframes notification-menu-animation {
@@ -107,18 +111,6 @@ div#newNotificationCount {
 	}
 	100% { 
 		top: 75px;
-		opacity: 1;
-	}
-}
-
-@-webkit-keyframes notification-appear-animation {
-	0% { 
-		opacity: 0;
-	}
-	10% {
-		opacity: 0;
-	}
-	100% { 
 		opacity: 1;
 	}
 }

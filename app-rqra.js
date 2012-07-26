@@ -11,7 +11,7 @@ app.configure(function() {
 	app.use(function(req, res, next) {
 		req.session = {
 			user: {
-				"uuid":"mak10",
+				"uuid":"jrf2",
 				"firstName":"Jordan",
 				"lastName":"Fox",
 				"type":0,

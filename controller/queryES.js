@@ -934,24 +934,6 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 	}
 
-	//check to see which type its in
-	if(searchObj.course){
-		console.log("ES search- course param provided");				
-
-		// probably need to fix this since I am only doing this for 2 special cases		
-		if (searchObj.searchType === "myQuestions" || searchObj.searchType === "notMyQuestions") {			
-			data.query = {"term":{"course": searchObj.course}};			
-		}			
-		else {
-			data.query.bool.must.push({"term":{"course": searchObj.course}});
-		}
-
-		// this would be also different for Accent myQuestions and notMyQuestions		
-		if(searchObj.week){
-			console.log("ES search - week param provided")
-			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
-		}
-	}
 	switchIndex(appType);
 	switchMapping(0);
 	//console.log(JSON.stringify(data))

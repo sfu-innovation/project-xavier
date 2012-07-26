@@ -45,9 +45,20 @@ jQuery(document).ready(function ($) {
 		loadProfileArticles(engage);
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
-
-
 		loadComments(engage);
+		$('.reply_click').live('click',function(){
+			$('.reply_box').remove();
+			var self = $(this);
+			if (self.attr('data-reply-type') === 'super'){
+				var target_uuid = $(this).attr('data-target-uuid');
+				var reply_to = $('#owner_comment .name').html();//the name of user it replies to
+				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
+//
+				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+
+			}
+		})
+
 	}
 
 	else if (window.location.toString().indexOf('course') != -1) {
@@ -806,4 +817,14 @@ function weekConverter(post_date, semester_start_date) {
 	return post_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
+}
+
+function renderReplyBox (reply_to, comment_target, comment_parent){
+	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+		+ comment_target
+		+ '"><input type="hidden" id="comment_target" value="'
+		+ comment_parent
+		'"></form></div>'
+
+	return html;
 }

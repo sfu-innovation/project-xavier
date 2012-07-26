@@ -59,13 +59,13 @@ jQuery(document).ready(function ($) {
 			}
 		})
 
-		$('#article_options span a::nth-child(3) ').bind('click', function () {
+		$('#article_options span#options span::nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
 
 			return false;
 		})
 
-		$('#article_options span a::nth-child(4) ').bind('click', function () {
+		$('#article_options span#options span::nth-child(4) ').bind('click', function () {
 			$("#article").toggleClass('larger');
 
 			return false;

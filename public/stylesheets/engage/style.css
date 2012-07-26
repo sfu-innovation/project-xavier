@@ -559,6 +559,10 @@ div.likescomments span.typicn.starred:hover{
 /* -----------------------------------------
    Article sharing box
 ----------------------------------------- */
+.articlebox span.like_btn{
+	cursor: pointer;
+}
+
 div#submitnew{
 	background-color: transparent;
 

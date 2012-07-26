@@ -54,7 +54,8 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	                                   args.hasOwnProperty('target') &&
 		                               args.hasOwnProperty('event') &&
 		                               args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('description')
+		                               args.hasOwnProperty('description') &&
+		                               args.hasOwnProperty('origin')
 		                        );
 		                            
 	if (!containsAllProperties ){
@@ -64,10 +65,11 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	}
 	
 	var arg = new Object();
-	arg.target = args.target;
-	arg.app = args.app;
-	arg.event = args.event;
+	arg.target      = args.target;
+	arg.app         = args.app;
+	arg.event       = args.event;
 	arg.description = args.description;
+	arg.origin      = args.origin;
 	
 	var self = this;
 	var addedUserNotifications = new Array();
@@ -95,7 +97,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 						arg.emailSent = false;
 					}
 				}
-				arg.user     = listener.user;
+				
 				arg.listener = listener.uuid;
 
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
@@ -965,6 +967,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addLikeUserNotification = function( args, callback){
@@ -976,7 +979,9 @@ NotificationAction.prototype.addLikeUserNotification = function( args, callback)
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                        );
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addLikeUserNotification] error - Invalid args");
 		callback( null, new Object());
@@ -987,6 +992,8 @@ NotificationAction.prototype.addLikeUserNotification = function( args, callback)
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 0;
+	arg.origin = args.origin;
+	
 	
 	this.addUserNotification(arg,callback);
 }
@@ -998,6 +1005,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addCommentUserNotification = function( args, callback){
@@ -1008,7 +1016,9 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addCommentUserNotification] error - Invalid args");
@@ -1021,6 +1031,7 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 1;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }
@@ -1032,6 +1043,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addStarUserNotification = function( args, callback){
@@ -1042,7 +1054,9 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addStarUserNotification] error - Invalid args");
@@ -1055,6 +1069,7 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 2;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }
@@ -1077,7 +1092,9 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if (  !containsAllProperties ){
 		console.log("[NotificationAction.addNewResourceUserNotification] error - Invalid args");
@@ -1090,6 +1107,7 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 3;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }

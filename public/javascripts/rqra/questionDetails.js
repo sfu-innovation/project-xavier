@@ -48,6 +48,41 @@ function formatComment(comment) {
 			+ "</div>";
 }
 
+function refreshQuestionListHeader(question) {
+	var courseUuid = getUuid(question._source.course.toLowerCase());
+	var courseTitle = document.getElementById("courseTitle");
+	if (!courseUuid || courseUuid === "") {
+		courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
+	} else {
+		common.getCourseById(courseUuid, function(data) {
+			courseTitle.innerHTML = "Questions for <span class='inserted'>" 
+				+ question._source.course + " " + data.course.title 
+				+ "</span> from";
+		});
+	}
+
+	var currentWeek = question._source.week;
+	var sectionTitle = document.getElementById("sectionTitle");
+	sectionTitle.innerHTML = "Week " + currentWeek;
+	/*if (currentWeek === 0) {
+		sectionTitle.innerHTML = "All Weeks";
+	} else if (!courseUuid || courseUuid === "") {
+		sectionTitle.innerHTML = "Week " + currentWeek;
+	} else {
+		rqra.getWeeksByCourseId(courseUuid, function(data) {
+			if (data && data.errorcode === 0 && data.week.length > 0) {
+				for(var i = 0; i < data.week.length; ++i) {
+					if (data.week[i].week === currentWeek) {
+						sectionTitle.innerHTML = "Week " + currentWeek + " - " + data.week[i].topic;
+					}
+				}	
+			} else {
+				sectionTitle.innerHTML = "Week " + currentWeek;
+			}
+		});
+	}*/
+}
+
 function loadPage(first) {
 	var questionId = window.location.pathname.replace("/question/", "");
 	var question = document.getElementById("detailedQuestion");
@@ -57,6 +92,7 @@ function loadPage(first) {
 	rqra.getQuestionById(questionId, function(data) {
 		if (data && data.errorcode === 0) {
 			question.innerHTML = formatQuestion(data.question);
+			refreshQuestionListHeader(data.question);
 			
 			// get comments
 			rqra.getCommentsByTargetId(questionId, '-', function(data) {
@@ -68,15 +104,14 @@ function loadPage(first) {
 				
 					//displayPageNumbers(data.questions.total);
 					
-					$.each(data.comments.hits, function (index, item) {
-						commentList.innerHTML += formatComment(item);
-					});
+					for(var i = 0; i < data.comments.hits.length; i++) {
+						commentList.innerHTML += formatComment(data.comments.hits[i]);
+					}
 					
 					// updates page view count
 					if (first) {
 						rqra.updateQuestionViews(questionId, function(data) {
-							
-							
+						
 						});
 					}
 				}

@@ -278,8 +278,8 @@ li.has-flyout#notification ul li p.msg span.username{
 }
 
 li.has-flyout#notification a.notification{
-	padding: 10px;
-	height: 50px;
+	padding:15px;
+	height: 60px;
 }
 /* -----------------------------------------
    box container of articles previews

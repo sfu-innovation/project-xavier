@@ -101,6 +101,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				}
 				
 				arg.listener = listener.uuid;
+				arg.user = listener.user
 
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
@@ -110,7 +111,6 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							addedUserNotifications.push( newNotification );
 
 							//The root of the problem lies here.
-							arg.user = arg.listener.user;
 							compileEmail( arg, function( error, newNotification ){
 								if ( error ){
 									console.log("[NotificationAction.compileEmail] error - "+error);
@@ -528,6 +528,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
+
 	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";

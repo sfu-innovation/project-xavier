@@ -188,3 +188,7 @@ exports.addWeek = function(request, response){
 exports.getUserNotifications = function(request, response){
 	routesCommon.getUserNotifications(0, request, response);
 }
+
+exports.deleteComments = function(request, response){
+	routesCommon.commentsRoute(0, request, response);
+}

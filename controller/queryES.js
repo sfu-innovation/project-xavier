@@ -727,6 +727,9 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				}
 
 				delete args.description;
+				var user = args.origin;
+				delete args.origin
+				args.user = user;
 				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);
@@ -789,6 +792,24 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 			});
 		});
 	});
+}
+
+QueryES.prototype.deleteComments = function(commentList, appType, callback){
+	var self = this;
+	var successList = [];
+	console.log(commentList)
+	async.forEach(commentList, function(commentId, done){
+		self.deleteComment(commentId, appType, function(err, result){
+			if(err)
+				console.log('Cannot delete: %s, comment does not exist!', commentId)
+
+			if(result)
+				successList.push(result)
+			done();
+		})
+	}, function(err){
+		callback(null, successList)
+	})
 }
 
 //update a comment vote
@@ -916,10 +937,9 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 	}
 
-
 	switchIndex(appType);
 	switchMapping(0);
-	//console.log(JSON.stringify(data))
+	console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
 		if(err)
@@ -958,16 +978,20 @@ var unansweredQuestion = function(data){
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
 	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
-	data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	//data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	data.filter =  { "or":[]};
 	data.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 
 var notMyQuestions = function(data, searchObj){
-	data.query.bool.must_not = []
-	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
+	//data.query.bool.must_not = [];
+	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	//data = {"query":{"match_all":{}}, "filter":}};
+	data.filter =  { "not":{ "filter":{ "or":[]}}};
+	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 

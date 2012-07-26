@@ -1,3 +1,4 @@
+var rqra = new coreApi.Presenter();
 
 $(document).ready(function () {
 
@@ -19,28 +20,37 @@ $(document).ready(function () {
 
 		$(".Question a.Follow").live("click", function() {
 			var followNode = $(this);				
-
-			console.log("Unfollow it")									
-			
+												
 			followNode.parent().find("a.Follow").removeClass("Follow");
 			followNode.addClass("Unfollow");
 			followNode.text("Unfollow");			
+			
+			var questionID = $(followNode.parent().find("a.UUID")).text();
+			console.log(questionID);
+			
+			rqra.followQuestionById(questionID,function(result){
+				console.log("Unfollow it");
 				
+			});	
+			return false;		
 
-			return false;
 		});
 
 		$(".Question a.Unfollow").live("click", function() {
-			var followNode = $(this);				
-
-			console.log("Follow it")									
+			var followNode = $(this);												
 			
 			followNode.parent().find("a.Unfollow").removeClass("Unfollow");
 			followNode.addClass("Follow");
 			followNode.text("Follow");			
 				
+			var questionID = $(followNode.parent().find("a.UUID")).text();
+			console.log(questionID);			
+			rqra.unfollowQuestionById(questionID,function(result){
+				console.log("Follow it")			
+				
+			});	
+			return false;		
 
-			return false;
 		});
 	})
 

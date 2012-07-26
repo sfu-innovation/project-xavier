@@ -844,8 +844,22 @@ exports.commentsRoute = function(appType,request,response){
 			}
 
 		});
+	}else if(request.method === "DELETE"){
+		QueryES.deleteComments(request.body.commentList, appType, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No comments deleted" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
 	}
-
 }
 
 exports.commentsByUserRoute = function(appType, request, response) {
@@ -1117,6 +1131,4 @@ exports.getUserNotifications = function(appType, request, response){
 			}
 		})
 	}
-
-
 }

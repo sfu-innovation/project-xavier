@@ -280,8 +280,8 @@ li.has-flyout#notification ul li p.msg span.username{
 }
 
 li.has-flyout#notification a.notification{
-	padding: 10px;
-	height: 50px;
+	padding:15px;
+	height: 60px;
 }
 /* -----------------------------------------
    box container of articles previews
@@ -612,7 +612,6 @@ div.cover.flip .frontCard {
 
 div.cover .backCard {
 	background-color: rgba(250, 250, 250,1);
-
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow:0px 0px 7px rgba(0, 0, 0, 0.35);
 	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
@@ -622,7 +621,6 @@ div.cover .backCard {
 	left: 0;
 	width: 100%;
 	height: 100%;
-
 	z-index: 800;
 	-webkit-transform: rotateY(-180deg);
 	-webkit-transform-style: preserve-3d;
@@ -697,25 +695,32 @@ div#article_container{
 	
 }
 div#article_container #article{
-	padding: 1em 3em 4em;
-	font-size: 14px;
+	padding: 1em 2em 3em;
 	word-spacing: -0.05em;
 	line-height: 1.3em;
-	
 
 }
 
+div#article_container #article p{
+		font-size: 16px;
+		}
+
 div#article_container .columns:first-child.night{
+		-webkit-transition: all 0.2s ease-in-out;
+
 	color:white;
 	background-color: black;
 }
 
 div#article_container div#article.larger p{
+
 	font-size: 22px;
+	margin-bottom: 40px;
 }
 
 div#article_container div#article.larger h1{
-	font-size: 30px;
+	font-size: 40px;
+	margin-bottom: 40px;
 }
 
 div#article_container #article img{
@@ -727,12 +732,22 @@ div#article_container #article img{
 	}
 #article_options a{
 	color: #9e9e9e;
-	line-height: 12px;
-	}
+	cursor: pointer;
 	
+	}
+#article_options a.link{
+	border: 1px solid #9e9e9e;
+	padding: 4px;
+	border-radius: 5px;
+}	
+
+#article_options a.link:hover{
+	background-color: white;
+}
 #article_options a img{
 	opacity: 0.6;
 	height: 18px;
+	vertical-align: bottom;
 	}
 #article_options #back{
 	font-weight: bold;
@@ -822,7 +837,8 @@ div#article_container #comments span.like_reply{
 	padding-left: 5px;
 	}
 
-div#article_container #comments div{
+div#article_container #comments li{
+	list-style: none;
 	margin: 0;
 	padding: 10px;
 	}
@@ -837,10 +853,10 @@ div#article_container #comments .comment{
 }
 div#article_container #comments .replies{
 	padding: 10px;
-	-moz-box-shadow: 0 0 1px #9e9e9e;
-	-webkit-box-shadow: 0 0 1px #9e9e9e;
-	box-shadow: 0 0 1px #9e9e9e;
-	padding-left: 40px !important;
+	-moz-box-shadow: 0 0 2px #9e9e9e;
+	-webkit-box-shadow: 0 0 2px #9e9e9e;
+	box-shadow: 0 0 2px #9e9e9e;
+	margin-left: 40px !important;
 	}
 
 #comments .reply_box{

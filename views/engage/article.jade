@@ -3,7 +3,7 @@ extends layout
 block content
 	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
-		div.nine.columns
+		div.eight.columns
 			div#article_options
 				a(href="/")#back
 					img(src="/images/engage/icon/16x16/Back_v1.png") 
@@ -16,13 +16,13 @@ block content
 						img(src="/images/engage/icon/16x16/Like_v1.png")
 						|  Like 
 						span (4)
-					a(href="#",  onClick="invertText();")
+					a
 						img(src="/images/engage/icon/16x16/Invert_v1.png")
 						|  Day/Night
 					a 
 						img(src="/images/engage/icon/16x16/TextSize_v1.png")
 						|  Text Size
-					a(href="#{article.url}") 
+					a(href="#{article.url}").link
 						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
 						|  View Original
 			script
@@ -41,16 +41,15 @@ block content
 
 
 
-		div.three.columns#comments
-			div#owner_comment
-				div#small_wrap
-					span.name #{article.user.firstName} #{article.user.lastName}
-					p #{ article.description }
-					span.createtime #{article.createdAt}
-					span.like_reply
-						a like (3) 
-						a#reply_click(onclick = 'show_comment_box("0_0")') reply 
-							span.typicn.forward
+		div.four.columns#comments
+			li#owner_comment				
+				span.name #{article.user.firstName} #{article.user.lastName}
+				p #{ article.description }
+				span.createtime #{article.createdAt}
+				span.like_reply
+					a like (3) 
+					a#reply_click(onclick = 'show_comment_box("0_0")') reply 
+						span.typicn.forward
 			div.reply_box(id ="0_0", style="display: none")
 				span replying to #{article.user.firstName} #{article.user.lastName}
 				form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
@@ -59,37 +58,38 @@ block content
 
 			- var comment_id = 1
 			h5 Comments
-			each comment in comments
-				div.comment(id = "comment_#{comment_id}") 
-					span.name #{comment.user.firstName} #{comment.user.lastName}
-					p #{comment.msg}
-					span.post_time Posted #{comment.time}
-					span.like_reply
-						a like (3) 
-						a.reply_click(onclick = 'show_comment_box("#{comment_id}_0")') reply 
-							img(src="/images/engage/icon/16x16/Reply_v1.png")
-				- var reply_id = 1
-				each reply in comment.replies
-					div.replies(id = "replies_#{reply_id}")
-						span.name #{reply.user.firstName} #{reply.user.lastName}				
-						p #{reply.msg}
+			ul
+				each comment in comments
+					li.comment(id = "comment_#{comment_id}") 
+						span.name #{comment.user.firstName} #{comment.user.lastName}
+						p #{comment.msg}
 						span.post_time Posted #{comment.time}
 						span.like_reply
 							a like (3) 
-							a.reply_click(onclick = 'show_comment_box("#{comment_id}_#{reply_id}")') reply 
+							a.reply_click(onclick = 'show_comment_box("#{comment_id}_0")') reply 
 								img(src="/images/engage/icon/16x16/Reply_v1.png")
-					div.reply_box(id ="#{comment_id}_#{reply_id}", style="display: none")
-						span replying to #{reply.user.firstName} #{reply.user.lastName}
+					- var reply_id = 1
+					each reply in comment.replies
+						li.replies(id = "replies_#{reply_id}")
+							span.name #{reply.user.firstName} #{reply.user.lastName}				
+							p #{reply.msg}
+							span.post_time Posted #{comment.time}
+							span.like_reply
+								a like (3) 
+								a.reply_click(onclick = 'show_comment_box("#{comment_id}_#{reply_id}")') reply 
+									img(src="/images/engage/icon/16x16/Reply_v1.png")
+						li.reply_box(id ="#{comment_id}_#{reply_id}", style="display: none")
+							span replying to #{reply.user.firstName} #{reply.user.lastName}
+							form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
+								textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
+								input(type="submit", value="Post")
+						- reply_id = reply_id + 1			
+					div.reply_box(id = "#{comment_id}_0", style="display: none")
+						span replying to #{comment.user.firstName} #{comment.user.lastName}
 						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
 							textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
 							input(type="submit", value="Post")
-					- reply_id = reply_id + 1			
-				div.reply_box(id = "#{comment_id}_0", style="display: none")
-					span replying to #{comment.user.firstName} #{comment.user.lastName}
-					form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
-						textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-						input(type="submit", value="Post")
-				- comment_id = comment_id + 1		
+					- comment_id = comment_id + 1		
 		script(type='text/javascript')
 			function show_comment_box(id){
 				$("#"+ id +"").slideToggle();

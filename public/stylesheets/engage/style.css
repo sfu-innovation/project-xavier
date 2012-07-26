@@ -703,6 +703,19 @@ div#article_container #article{
 
 }
 
+div#article_container .columns:first-child.night{
+	color:white;
+	background-color: black;
+}
+
+div#article_container div#article.larger p{
+	font-size: 22px;
+}
+
+div#article_container div#article.larger h1{
+	font-size: 30px;
+}
+
 div#article_container #article img{
 	display: block;
 	}

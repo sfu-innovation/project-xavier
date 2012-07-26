@@ -17,7 +17,8 @@ var UserNotification = exports.UserNotification = db.define('UserNotification', 
      listener: {type: Sequelize.STRING, allowNull: false },
 	 description: {type:Sequelize.STRING, allowNull: false },
 	 emailSent: {type:Sequelize.BOOLEAN, defaultValue: false },
-	 wait:{ type:Sequelize.INTEGER , allowNULL: false, defaultValue: 0}
+	 wait:{ type:Sequelize.INTEGER , allowNULL: false, defaultValue: 0},
+	 origin:{ type:Sequelize.STRING, allowNull: false, defaultValue: ""}
 });
 
 /*
@@ -234,10 +235,13 @@ exports.createUserNotification = function( args, callback ) {
 		callback("Args is not existent", null);
 		return;
 	}
-	var containsAllProperties = (args.hasOwnProperty('listener') &&
+	var containsAllProperties = (
+	                                 args.hasOwnProperty('listener') &&
 	                              args.hasOwnProperty('description') &&
-		                               args.hasOwnProperty('emailSent') &&
-		                           args.hasOwnProperty('wait'));
+		                            args.hasOwnProperty('emailSent') &&
+		                                 args.hasOwnProperty('wait') &&
+		                               args.hasOwnProperty('origin')
+		                        );
 		                            
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
@@ -250,11 +254,14 @@ exports.createUserNotification = function( args, callback ) {
 	arg.description = args.description;
 	arg.emailSent   = args.emailSent;
 	arg.wait        = args.wait;
+	arg.origin      = args.origin;
 	
 	var userNotification = UserNotification.build( arg );
-	userNotification.save().error(function(error){
+	userNotification.save()
+	.error(function(error){
 		callback( error, null );
-	}).success(function(savedUserNotification){
+	})
+	.success(function(savedUserNotification){
 		callback( null, savedUserNotification);
 	});			
 }

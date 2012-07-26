@@ -16,7 +16,7 @@ block content
 						img(src="/images/engage/icon/16x16/Like_v1.png")
 						|  Like 
 						span (4)
-					a 
+					a(href="#",  onClick="invertText();")
 						img(src="/images/engage/icon/16x16/Invert_v1.png")
 						|  Day/Night
 					a 
@@ -25,12 +25,17 @@ block content
 					a(href="#{article.url}") 
 						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
 						|  View Original
-
+			script
+				function invertText(){
+					article = getElementbyID("article");
+					article.style.color("black")
+				}
 			div#article
 				h1 #{article.title}
 				div
 			script(type='text/javascript')
 				$('div#article div').load('/resources/articles/'+"#{article.path}");
+			
 
 
 
@@ -41,11 +46,11 @@ block content
 				div#small_wrap
 					span.name #{article.user.firstName} #{article.user.lastName}
 					p #{ article.description }
-					span Posted 1 day ago
+					span.createtime #{article.createdAt}
 					span.like_reply
 						a like (3) 
-						a.reply_click(onclick = 'show_comment_box("0_0")') reply 
-							img(src="/images/engage/icon/16x16/Reply_v1.png")
+						a#reply_click(onclick = 'show_comment_box("0_0")') reply 
+							span.typicn.forward
 			div.reply_box(id ="0_0", style="display: none")
 				span replying to #{article.user.firstName} #{article.user.lastName}
 				form(name="add_comment", action="/",enctype="multipart/form-data", method="post")

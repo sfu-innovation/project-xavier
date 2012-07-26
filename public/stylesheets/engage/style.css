@@ -202,8 +202,12 @@ div.dropdown ul li a{
 	color: inherit;
 	}
 #user_options_list img.avatar{
-	height: 38px;
+	height: 46px;
 	position: absolute;
+	margin-top: -5px;
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
 
 }
 
@@ -221,7 +225,9 @@ div.dropdown ul li a{
 .dropdown ul#courses_list ul{
 	margin-top: -9px;
 }
-
+li.has-flyout#notification{
+	z-index: 10;
+}
 li.has-flyout#notification a{
 	margin-left: -58px;
 	position: relative;
@@ -232,8 +238,8 @@ li.has-flyout#notification span{
 	background-color: #D35F5E;
 	height: 20px;
 	width: 20px;
-	margin-top: 18px;
-	margin-left: -10px;
+	margin-top: 21px;
+	margin-left: -5px;
 	line-height: 19px;
 	padding-left: 5px;
 	}
@@ -671,9 +677,9 @@ div#article_container .columns:first-child{
 }
 
 div#owner_comment #small_wrap{
-	border-bottom: 2px solid #9e9e9e;
 	padding: 0 !important;
 	padding-bottom: 10px;
+	
 }
 
 div#article_container #comments{
@@ -686,13 +692,16 @@ div#article_container #comments #owner_comment{
 	-moz-box-shadow: 0 0 1px #9e9e9e;
 	-webkit-box-shadow: 0 0 1px #9e9e9e;
 	box-shadow: 0 0 1px #9e9e9e;
-	background-color:  rgba(0,0,0,0.05);
-	padding-bottom: 0;
+	padding-bottom: 10px;
+	background: rgba(0,0,0,0.1);
+	border-bottom: 2px solid rgba(0,0,0,0.1);
 
 	}
 
 div#article_container #comments h5{
 	padding-left: 10px;
+	
+
 }
 
 

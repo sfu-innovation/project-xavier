@@ -6,6 +6,8 @@ var MediaFile    = require(__dirname + "/../../models/mediafile.js");
 var User         = require(__dirname + "/../../models/user");
 var Tag          = require(__dirname + "/../../models/tag");
 var queryES      = require(__dirname + '/../../controller/queryES.js');
+var fs           = require("fs");
+var config       = JSON.parse(fs.readFileSync("config.json"));
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -200,8 +202,15 @@ exports.mediafile = function(request,response){
 
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			request.body.user =  request.session.user.uuid;
-			MediaAction.addMediaFile(request.body.media, function(error, mediaFile){
+			var mediaFile = {
+				user: request.session.user.uuid,
+				title: request.body.title,
+				description: request.body.description,
+				course: request.body.course,
+				path: config.accentServer.mediaFolder + request.body.mediafile,
+				type: 0
+			}
+			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
 				if(!error){
 					var args = {
 						section: request.body.section,
@@ -375,3 +384,22 @@ exports.demoPage = function (req,res){
 exports.searchQuestionsRoute = function(request, response){
 	routesCommon.searchQuestionsRoute(1, request, response);
 }
+
+
+exports.uploadMedia = function (req, res) {
+	if (req.session && req.session.user) {
+
+		res.render("accent/upload",
+			{ 
+				title: "SFU Accent",
+				user :  req.session.user,
+				courses : req.session.courses,
+				status : "logged in" 
+			},
+			function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+			}
+		);
+	}
+};

@@ -229,8 +229,13 @@ li.has-flyout#notification a{
 li.has-flyout#notification span{
 	position: absolute;
 	color: white;
-	background-color: red;
-
+	background-color: #D35F5E;
+	height: 20px;
+	width: 20px;
+	margin-top: 18px;
+	margin-left: -10px;
+	line-height: 19px;
+	padding-left: 5px;
 	}
 
 li.has-flyout#notification ul li{

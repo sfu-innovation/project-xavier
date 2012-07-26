@@ -63,17 +63,54 @@ html
 						img.logo(src="/images/engage/SFUEngage_draft3-03.png")
 				div.two.columns.dropdown#user_options					
 					ul.nav-bar#user_options_list
+						li.has-flyout#notification
+						
+							
+							a
+								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+								span.number 4
+							ul.flyout.small
+								li
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Mark 
+											| just shared an resource in 
+											span.coursename IAT 200.
+								li
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Catherine 
+											| just shared an resource in 
+											span.coursename IAT 200.
+								li
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Mark 
+											| liked your article in 
+											span.coursename BUS 354
+								li
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Ted 
+											| liked your article in 
+											span.coursename BUS 354
 						li.has-flyout
-							a(href="/profile/#{user.uuid}")
-								img.avatar(src="https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png") 
+							a
 								| #{ user.firstName } #{ user.lastName }
 							a(href="#").flyout-toggle
 								span
 							ul.flyout.small
 								li
+									a(href="/profile/#{user.uuid}") my profile
+								li
 									a(href="/preference") preference
 								li
-									a(href="#") log out
+									a(href="/logout") log out
+
 				
 			div.row.hide-for-small#nav
 				div.ten.columns

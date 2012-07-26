@@ -516,7 +516,7 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-			console.log(request.body.course)
+			//console.log(request.body.course)
 			newQuestion.course = request.body.course;
 			newQuestion.week = parseInt(request.body.week);
 
@@ -977,7 +977,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
-		console.log(JSON.stringify(request.body))
+		//console.log(JSON.stringify(request.body))
 		nlp(queryData.searchQuery, function(query){
 			/*
 			if(query){
@@ -1030,6 +1030,25 @@ exports.updateUserNotifications = function(appType, request, response){
 	}
 }
 
+exports.getResourceSection = function(request, response){
+	if(request.method === "GET"){
+		var args = {
+			material: request.params.uid
+		}
+
+		OrganizationAction.getSectionTitleByResourceUUID(args, function(error, section){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, section: section }));
+			}
+			else{
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
+}
+
 exports.getWeekByCourseId = function(appType, request, response){
 	if(request.method === "GET"){
 		var id = request.params.id;
@@ -1068,10 +1087,36 @@ exports.addWeek = function(appType, request, response){
 				else{
 					response.end(JSON.stringify({ errorcode: 0, week: "Cannot create week" }));
 				}
-			} else {
+			}
+			else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 1, week: error }));
 			}
 		})
 	}
+}
+
+exports.getUserNotifications = function(appType, request, response){
+	if (request.method === "GET") {
+		var args = {
+			user : request.params.uid,
+			app  : appType
+		}
+		Notification.retrieveUserNotificationsByUser(args, function(err, result){
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
+	}
+
+
 }

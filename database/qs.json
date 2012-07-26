@@ -13,7 +13,7 @@
 		"created":"2012-07-10T18:19:31.204Z",
 		"timestamp":"2012-07-10T18:19:31.204Z",
 		"followup":[],
-		"isInstructor":"false",
+		"isInstructor":"true",
 		"viewCount":0,
 		"commentCount":1,
 		"course":"BUS100",
@@ -29,7 +29,7 @@
 			"user":"bernie",
 			"upvote":250,
 			"downvote":8,
-			"body":"Yes thats very true, the metrics for development are more well-understood if they are not long-term and your budget for strategizing should be at least three times your budget for aggregating. And of course dont forget your budget for engineering should be at least one-tenth of your budget for exploiting.",
+			"body":"Yes thats very true, the metrics for development are more well-understood if they are not long-term and your budget for strategizing should be at least three times your budget for aggregating. And of course dont forget your budget for engineering should be at least one-tenth of your budget for synergy contrast management and regional growth consolidation discovery.",
 			"target_uuid":"9e36e922-44d2-4631-a899-c6282ea5b6b2",
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
@@ -168,7 +168,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -189,7 +189,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -207,25 +207,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"commentParent":""
-		}
-	},
-		{
-		"_index":"accent",
-		"_type":"questions",
-		"_id":"aJfznhseQuOicWWAjx7F00",
-		"_score":1,
-		"_source": {
-			"user":"mak10",
-			"upvote":86,
-			"downvote":34,
-			"title":"What is the tallest building in Japan?",
-			"body":"What is the tallest building in Japan?",
-			"target_uuid":"9908615f-55fa-4f29-805a-91feef227b94",
-			"objectType":"comment",
-			"created":"2012-07-12T18:19:31.204Z",
-			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -344,7 +325,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":100,
 			"commentCount":1,
 			"course":"ESPT100",
@@ -382,7 +363,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":423,
 			"commentCount":2,
 			"course":"ESPT100",
@@ -437,10 +418,10 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"SIAT270",
+			"course":"CRIM101",
 			"week":0
 		}
 	},
@@ -546,7 +527,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"ENG109",
 			"week":0
 		}
 	},
@@ -584,11 +565,32 @@
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":["jhc20"],
+			"isInstructor":"true",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"MATH209",
+			"week":0
+		}
+	},
+		{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"aJfzndwdadddQuOicWWAjx7F88",
+		"_score":1,
+		"_source":
+		{"user":"kara",
+			"title":"I want to try harder and harder what should...",
+			"body":"some description",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T18:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"MATH209",
 			"week":0
 		}
 	},
@@ -609,7 +611,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT307",
 			"week":0
 		}
 	},
@@ -630,7 +632,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},
@@ -651,23 +653,23 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfznhheQuOicWWAjx7F17",
+		"_id":"x1",
 		"_score":1,
 		"_source":
-		{"user":"mcs3",
+		{"user":"ted",
 			"upvote":7,
 			"downvote":0,
 			"body":"some description",
 			"target_uuid":"1",
 			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T08:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"commentParent":""
 		}
@@ -675,18 +677,69 @@
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfzggggguOicWWAjx7F18",
+		"_id":"x2",
 		"_score":1,
 		"_source":
-		{"user":"mcs3",
+		{"user":"llt3",
 			"upvote":5,
 			"downvote":0,
 			"body":"some description",
 			"target_uuid":"1",
 			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T09:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"commentParent":""
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xx1",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T10:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"x1"
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xxx1",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T11:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"xx1"
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xx2",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T12:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"x2"
 		}
 	},
 	{
@@ -700,7 +753,7 @@
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T13:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",

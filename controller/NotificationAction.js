@@ -1,10 +1,12 @@
 var UserNotification = require('../models/userNotification.js');
 var UserNotificationSettings = require('../models/userNotificationSettings.js');
 var NotificationListener = require('../models/notificationListener.js');
+var UserProfile          = require('../models/userProfile.js');
 var async                = require('async');
 var NotificationListenerImpl = NotificationListener.NotificationListener;
 var UserNotificationImpl = UserNotification.UserNotification;
 var UserNotificationSettingsImpl = UserNotificationSettings.UserNotificationSettings;
+var UserProfileImpl = UserProfile.UserProfile;
 
 var User             = require('../models/user.js').User;
 var email            = require('emailjs');
@@ -54,7 +56,8 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	                                   args.hasOwnProperty('target') &&
 		                               args.hasOwnProperty('event') &&
 		                               args.hasOwnProperty('app') &&
-		                               args.hasOwnProperty('description')
+		                               args.hasOwnProperty('description') &&
+		                               args.hasOwnProperty('origin')
 		                        );
 		                            
 	if (!containsAllProperties ){
@@ -64,10 +67,11 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	}
 	
 	var arg = new Object();
-	arg.target = args.target;
-	arg.app = args.app;
-	arg.event = args.event;
+	arg.target      = args.target;
+	arg.app         = args.app;
+	arg.event       = args.event;
 	arg.description = args.description;
+	arg.origin      = args.origin;
 	
 	var self = this;
 	var addedUserNotifications = new Array();
@@ -95,7 +99,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 						arg.emailSent = false;
 					}
 				}
-				arg.user     = listener.user;
+				
 				arg.listener = listener.uuid;
 
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
@@ -143,7 +147,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	returns all of the user notifications which were removed
 
 */
-NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( args, callback ) {
+NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function( args, callback ) {
 	if ( args === null || args === undefined ){
 		console.log("[NotificationAction.removeUserNotificationsByUserAndTarget] error - Args is not existent");
 		callback( null, new Array());
@@ -182,20 +186,46 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
 			
 				if ( error ){
-					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - "+error);
+					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
 					callback( null, new Array());
-					return;
-				} else {
-					var notifications = new Object();
-					notifications.usernotifications = usernotifications;
+				}
+				else {
+					//var notifications = new Object();
+					//notifications.usernotifications = usernotifications;
+					var userWithNotifications = new Array();
+					async.forEachSeries( usernotifications, function( usernotification, callback ){
+						var tempObj = new Object();
+						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									tempObj.profile = userProfile;
+									tempObj.notificationListener = notificationListener;
+								    tempObj.notification = usernotification;
+								    tempObj.user         = foundUser;
+								    userWithNotifications.push( tempObj );
+								    callback( null, tempObj );
+								}).error( function ( error) {
+									console.log("[UserProfileImpl.find] error - "+error);
+									callback( null, new Object());
+								});
+								
+							}).error(function(error){
+								console.log("[NotificationListenerImpl.find] error - "+ error );
+								callback( null, new Object());
+							});
+							
+						}).error( function ( error ){
+							console.log("[User.find] error - "+ error );
+							callback( error, new Object());
+						}); 
 					
-					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+					}, function ( error , results ){
 						if ( error ){
-							console.log("[UserNotification.removedUserNotifications] error - "+error);
-							callback( null, new Array());
+							console.log("[UserNotification.findUserNotificationsByListenerUUID] error - "+error);
+							callback( null , new Array());
 						}
 						else {
-							callback( null, removedNotifications );
+							callback( null, userWithNotifications );
 						}
 					});
 				}
@@ -217,7 +247,7 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 	returns all of the user notifications which were removed
 
 */
-NotificationAction.prototype.removeUserNotificationsByUser = function( args, callback ){
+NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, callback ){
 	if ( args === null || args === undefined ){
 		console.log("[NotificationAction.removeUserNotificationsByUser] error - Args is not existent" );
 		callback( null, new Array());
@@ -235,7 +265,7 @@ NotificationAction.prototype.removeUserNotificationsByUser = function( args, cal
 	var arg = new Object();
 	arg.user = args.user;
 	arg.app  = args.app;
-	
+
 	NotificationListener.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
 		if ( error ){
 			console.log("[NotificationListener.findUserSpecificNotificationListeners] error - " + error );
@@ -258,16 +288,42 @@ NotificationAction.prototype.removeUserNotificationsByUser = function( args, cal
 					callback( null, new Array());
 				}
 				else {
-					var notifications = new Object();
-					notifications.usernotifications = usernotifications;
+					//var notifications = new Object();
+					//notifications.usernotifications = usernotifications;
+					var userWithNotifications = new Array();
+					async.forEachSeries( usernotifications, function( usernotification, callback ){
+						var tempObj = new Object();
+						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									tempObj.profile = userProfile;
+									tempObj.notificationListener = notificationListener;
+								    tempObj.notification = usernotification;
+								    tempObj.user         = foundUser;
+								    userWithNotifications.push( tempObj );
+								    callback( null, tempObj );
+								}).error( function ( error) {
+									console.log("[UserProfileImpl.find] error - "+error);
+									callback( null, new Object());
+								});
+								
+							}).error(function(error){
+								console.log("[NotificationListenerImpl.find] error - "+ error );
+								callback( null, new Object());
+							});
+							
+						}).error( function ( error ){
+							console.log("[User.find] error - "+ error );
+							callback( error, new Object());
+						}); 
 					
-					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+					}, function ( error , results ){
 						if ( error ){
-							console.log("[UserNotification.removeUserNotifications] error - " + error );
-							callback( null, new Array());
+							console.log("[NotificationAction.removeUserNotificationsByUser] error - "+error);
+							callback( null , new Array());
 						}
 						else {
-							callback( null, removedNotifications );
+							callback( null, userWithNotifications );
 						}
 					});
 				}
@@ -965,6 +1021,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addLikeUserNotification = function( args, callback){
@@ -976,7 +1033,9 @@ NotificationAction.prototype.addLikeUserNotification = function( args, callback)
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                        );
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addLikeUserNotification] error - Invalid args");
 		callback( null, new Object());
@@ -987,6 +1046,8 @@ NotificationAction.prototype.addLikeUserNotification = function( args, callback)
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 0;
+	arg.origin = args.origin;
+	
 	
 	this.addUserNotification(arg,callback);
 }
@@ -998,6 +1059,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addCommentUserNotification = function( args, callback){
@@ -1008,7 +1070,9 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addCommentUserNotification] error - Invalid args");
@@ -1021,6 +1085,7 @@ NotificationAction.prototype.addCommentUserNotification = function( args, callba
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 1;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }
@@ -1032,6 +1097,7 @@ args = {
 	target      : <the resource, tag, question>
 	app         : <the application eg. Accent, Engage, QRQA>
 	description : The message to be delivered in the notification	
+	origin      : UUID of the user that caused this user notification
 }
 */
 NotificationAction.prototype.addStarUserNotification = function( args, callback){
@@ -1042,7 +1108,9 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if ( !containsAllProperties ){
 		console.log("[NotificationAction.addStarUserNotification] error - Invalid args");
@@ -1055,6 +1123,7 @@ NotificationAction.prototype.addStarUserNotification = function( args, callback)
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 2;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }
@@ -1077,7 +1146,9 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	}
 	var containsAllProperties = (args.hasOwnProperty('target') &&
 	                              args.hasOwnProperty('app') &&
-		                           args.hasOwnProperty('description'));
+		                           args.hasOwnProperty('description') &&
+		                           args.hasOwnProperty('origin')
+		                           );
 		                            
 	if (  !containsAllProperties ){
 		console.log("[NotificationAction.addNewResourceUserNotification] error - Invalid args");
@@ -1090,6 +1161,7 @@ NotificationAction.prototype.addNewResourceUserNotification = function( args, ca
 	arg.app = args.app;
 	arg.description = args.description;
 	arg.event = 3;
+	arg.origin = args.origin;
 	
 	this.addUserNotification(arg,callback);
 }
@@ -1197,6 +1269,22 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 		else {
 			callback(null, newSettings);
 		}
+	});
+}
+
+NotificationAction.prototype.getUserNotifications = function(args, callback){
+	NotificationListener.findAllNotificationListeners(args, function( error, listeners ){
+		if(error){
+			console.log("[NotificationAction.findAllNotificationListeners] error - "+error);
+			return callback( null, new Object());
+		}
+
+		if ( null === listeners ){
+			console.log("[NotificationAction.findAllNotificationListeners] error - No listeners found");
+			return callback( null, new Object());
+		}
+
+		callback(null, listeners)
 	});
 }
 

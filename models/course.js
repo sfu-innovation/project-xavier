@@ -24,6 +24,7 @@ var Course = exports.Course = db.define('Course', {
 	subject: {type: Sequelize.STRING, allowNull: false},
 	number: {type: Sequelize.INTEGER, allowNull: false},
 	instructor: {type: Sequelize.STRING, allowNull: false},
+	description: {type: Sequelize.TEXT, allowNull: true},
 	meetingtimes: {type: Sequelize.TEXT}
 });
 

@@ -100,5 +100,26 @@
 			"reviewlater":true,
 			"shared":false
 		}
+	],
+	"coursesections":[
+		{
+			"course"  : "A8G7S6H7ASDFG9",
+			"section" : "A827346H7AFSSFG9",
+			"app"       : 1
+		}
+	],
+	"sections":[
+		{
+			"uuid": "A827346H7AFSSFG9",
+			"title": "week 1",
+			"app": 1
+		}
+	],
+	"sectionmaterials":[
+		{
+			"section": "A827346H7AFSSFG9",
+			"material": "1234"
+		}
 	]
+
 }

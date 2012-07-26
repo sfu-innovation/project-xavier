@@ -11,9 +11,6 @@ var fakeUserNotification = function(callback){
 		if(err)
 			console.log(err);
 
-		if(result)
-			console.log("created: " + result)
-
 		callback();
 	});
 }
@@ -83,7 +80,7 @@ exports.questionFormPage = function(request, response) {
 }
 
 exports.notificationList = function(request, response) {
-	response.render('rqra/component/notificationList', { title: "Demo" });
+	response.render('rqra/component/notificationList', { title: "Demo", user: request.session.user });
 }
 
 exports.updateUserNotifications = function(request, response){
@@ -186,4 +183,8 @@ exports.getWeekByCourseId = function(request, response){
 
 exports.addWeek = function(request, response){
 	routesCommon.addWeek(0, request, response);
+}
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(0, request, response);
 }

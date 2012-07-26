@@ -31,7 +31,8 @@ module.exports = {
 						"section":"D100",
 						"subject":"CMPT",
 						"number":307,
-						"instructor":"BSDF787D98A7SDF8ASD7G"
+						"instructor":"BSDF787D98A7SDF8ASD7G",
+						"description":"The hardest course you will ever take!"
 					}
 					Course.createCourse(newCourse, function(error, course){
 

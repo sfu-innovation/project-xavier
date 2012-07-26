@@ -1,37 +1,62 @@
 extends layout
 
 block content
+	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
 		div.nine.columns
 			div#article_options
-				a(href="/")#back BACK
+				a(href="/")#back
+					img(src="/images/engage/icon/16x16/Back_v1.png") 
+					|  BACK
 				span#options
 					a 
 						span.typicn.star
-						| Star
+						|  Star
 					a 
-						span.typicn.thumbsUp
-						|Like
+						img(src="/images/engage/icon/16x16/Like_v1.png")
+						|  Like 
+						span (4)
+					a(href="#",  onClick="invertText();")
+						img(src="/images/engage/icon/16x16/Invert_v1.png")
+						|  Day/Night
 					a 
-						span.typicn.brightness
-						|Day/Night
-					a 
-						span.typicn.plus
-						|Text Size
-					a(href="#{article.url}") View Original
+						img(src="/images/engage/icon/16x16/TextSize_v1.png")
+						|  Text Size
+					a(href="#{article.url}") 
+						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
+						|  View Original
+			script
+				function invertText(){
+					article = getElementbyID("article");
+					article.style.color("black")
+				}
 			div#article
+				h1 #{article.title}
+				div
 			script(type='text/javascript')
-				$('div#article').load("#{article.path}");
+				$('div#article div').load('/resources/articles/'+"#{article.path}");
+			
+
+
+
+
+
 		div.three.columns#comments
 			div#owner_comment
 				div#small_wrap
 					span.name #{article.user.firstName} #{article.user.lastName}
 					p #{ article.description }
-					span Posted 1 day ago
+					span.createtime #{article.createdAt}
 					span.like_reply
 						a like (3) 
-						a#reply_click reply 
+						a#reply_click(onclick = 'show_comment_box("0_0")') reply 
 							span.typicn.forward
+			div.reply_box(id ="0_0", style="display: none")
+				span replying to #{article.user.firstName} #{article.user.lastName}
+				form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
+					textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")		
+					input(type="submit", value="Post")
+
 			- var comment_id = 1
 			h5 Comments
 			each comment in comments
@@ -42,7 +67,7 @@ block content
 					span.like_reply
 						a like (3) 
 						a.reply_click(onclick = 'show_comment_box("#{comment_id}_0")') reply 
-							span.typicn.forward
+							img(src="/images/engage/icon/16x16/Reply_v1.png")
 				- var reply_id = 1
 				each reply in comment.replies
 					div.replies(id = "replies_#{reply_id}")
@@ -52,7 +77,7 @@ block content
 						span.like_reply
 							a like (3) 
 							a.reply_click(onclick = 'show_comment_box("#{comment_id}_#{reply_id}")') reply 
-								span.typicn.forward
+								img(src="/images/engage/icon/16x16/Reply_v1.png")
 					div.reply_box(id ="#{comment_id}_#{reply_id}", style="display: none")
 						span replying to #{reply.user.firstName} #{reply.user.lastName}
 						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")

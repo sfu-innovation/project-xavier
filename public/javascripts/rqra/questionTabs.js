@@ -4,11 +4,17 @@ var prevSearchQuery = "";
 var prevSearchType = "latest";
 
 function formatQuestion(question) {
+	var instructorStyle = "";
+	if (question._source.isInstructor === "true") {
+		instructorStyle = "background: #ffe450;";
+	}
+	
 	return "<div class='question' onclick='gotoQuestionPage(this)'>"
 			+ "<div class='questionId'>" + question._id + "</div>"
 			+ "<div class='questionText'>" + question._source.title + "</div>"
 			+ "<div class='questionData'>"
-				+ "<div class='profResponsesRecent'>5 <img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
+				+ "<div style='" + instructorStyle + "'>"
+				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
@@ -58,18 +64,18 @@ function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	questionList.innerHTML = "";
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
+		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
-			$.each(data.questions.hits, function (index, item) {
-				questionList.innerHTML += formatQuestion(item);
-			});
+			for (var i = 0; i < data.questions.hits.length; ++i) {
+				questionList.innerHTML += formatQuestion(data.questions.hits[i]);
+			}
 		} else {
 			displayTotal(0);
 			displayPageNumbers(0);
-			questionList.innerHTML += "No Questions Found!";
+			questionList.innerHTML += "<div class='question'><div class='questionText'>No Questions Found!</div></div>";
 		}
 	});
 }
@@ -95,7 +101,7 @@ function displayTotal(total) {
 function displayPageNumbers(total) {
 	var pageNumbers = document.getElementById("pageNumber");
 	pageNumbers.innerHTML = "<img src='../images/rqra/prev.png' alt='previous'>";
-	for(var i = 0; i < total/5; i++) {
+	for(var i = 0; i < total/7; i++) {
 		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 	}
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";

@@ -277,7 +277,7 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 					var userWithNotifications = new Array();
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
-						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+						require('../models/user.js').User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
 							tempObj.notification = usernotification;
 							tempObj.user         = foundUser;
 							userWithNotifications.push( tempObj );

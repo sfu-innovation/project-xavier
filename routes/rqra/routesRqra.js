@@ -80,7 +80,7 @@ exports.questionFormPage = function(request, response) {
 }
 
 exports.notificationList = function(request, response) {
-	response.render('rqra/component/notificationList', { title: "Demo" });
+	response.render('rqra/component/notificationList', { title: "Demo", user: request.session.user });
 }
 
 exports.updateUserNotifications = function(request, response){
@@ -187,8 +187,4 @@ exports.addWeek = function(request, response){
 
 exports.getUserNotifications = function(request, response){
 	routesCommon.getUserNotifications(0, request, response);
-}
-
-exports.removeUserNotifications = function(request, response){
-	routesCommon.removeUserNotifications(0, request, response);
 }

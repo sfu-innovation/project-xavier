@@ -35,7 +35,7 @@ function formatConversation(conversation) {
 			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
 			+ "</div>"
 			+ "<a class='UUID' style='display:none;'>" + conversation._id + "</a>"
-			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
+			+ "<a class='Count' href=''>" + formatVoteCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body
@@ -43,7 +43,7 @@ function formatConversation(conversation) {
 			+ "</div>";
 }
 
-function formatCount(count) {
+function formatVoteCount(count) {
 	var countStr = "";
 	if (count > 0)
 		countStr += "+" + count;

@@ -575,14 +575,15 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 		]
 	};
 
-	if(pageNum !== '-'){
-		data.from = paging(pageNum)
-		data.size = sizeOfResult
+	if(pageNum === '-'){
+		data.from = 0
+		data.size = 1000
 	}
 
 	switchIndex(appType);
 	switchMapping(1);
 
+	console.log(JSON.stringify(data))
 	mapping.search(data, function(err, data){
 		if(err)
 			return callback(err);
@@ -603,6 +604,8 @@ QueryES.prototype.getCommentByResourceUUID = function(target_uuid,callback){
 			{"created": {"order": "asc"}}
 		]
 	};
+	data.from = 0
+	data.size = 1000
 
 	switchIndex(2);
 	switchMapping(1);
@@ -692,7 +695,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	var args = {
 		target:data.target_uuid
 		,app:appType
-		,user:data.user
+		,origin:data.user
 		,description:data.body
 	};
 
@@ -856,7 +859,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			bool:{
 				must:[]
 			}
-		},
+		},		
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
@@ -915,7 +918,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 
 	switchIndex(appType);
-	switchMapping(0);
+	switchMapping(0);	
 	console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
@@ -954,13 +957,17 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
-	data.query.bool.must.push({"term":{"user": searchObj.uuid}});
+	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
+	data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	data.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 
 var notMyQuestions = function(data, searchObj){
 	data.query.bool.must_not = []
 	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
 	return data;
 }
 

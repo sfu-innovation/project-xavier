@@ -204,7 +204,7 @@ div.dropdown ul li a{
 #user_options_list img.avatar{
 	height: 46px;
 	position: absolute;
-	margin-top: -5px;
+	margin-top: -6px;
 	-moz-box-shadow: 0 0 5px #9e9e9e;
 	-webkit-box-shadow: 0 0 5px #9e9e9e;
 	box-shadow: 0 0 5px #9e9e9e;
@@ -232,7 +232,7 @@ li.has-flyout#notification a{
 	margin-left: -58px;
 	position: relative;
 }
-li.has-flyout#notification span{
+li.has-flyout#notification span.number{
 	position: absolute;
 	color: white;
 	background-color: #D35F5E;
@@ -244,9 +244,43 @@ li.has-flyout#notification span{
 	padding-left: 5px;
 	}
 
+li.has-flyout#notification ul{
+	box-shadow: none;
+	border: none;
+	
+}
 li.has-flyout#notification ul li{
-	width: 300px;
+	position: relative;
+	box-shadow: none;
+
 	}
+	
+li.has-flyout#notification ul li img.user_avatar{
+	float: left;
+	height: 30px;
+	margin-right: 10px;
+}
+
+li.has-flyout#notification ul li p.msg{
+	display: inline;
+}
+
+li.has-flyout#notification ul li p.msg a{
+	display: inline;
+	}
+	
+li.has-flyout#notification ul li p.msg span.coursename{
+	display: inline;
+	}
+	
+li.has-flyout#notification ul li p.msg span.username{
+	font-weight: bold;
+}
+
+li.has-flyout#notification a.notification{
+	padding: 10px;
+	height: 50px;
+}
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */
@@ -350,7 +384,7 @@ span.coursename a.color-6{
 
 
 div.innerwrap > img {
-bottom: 0;
+	bottom: 0;
 	position: absolute;
 	opacity: 0.4;
 	-webkit-transition: all 0.5s ease-in-out;
@@ -567,13 +601,9 @@ div.cover .frontCard {
 }
 
 div.cover.flip .frontCard {
-
 	z-index: 900;
-
-
 	-webkit-transform: rotateY(180deg);
 	-moz-transform: rotateY(180deg);
-
 
 }
 
@@ -680,7 +710,15 @@ div#article_container #article img{
 	margin-top: 30px;
 	padding: 0em 3em 0em;
 	}
+#article_options a{
+	color: #9e9e9e;
+	line-height: 12px;
+	}
 	
+#article_options a img{
+	opacity: 0.6;
+	height: 15px;
+	}
 #article_options #back{
 	font-weight: bold;
 	}
@@ -812,6 +850,13 @@ div#article_container #comments .replies{
 	background-color: rgba(0, 0, 0, 0.05);
 	color: #9e9e9e;
 	
+}
+
+a.reply_click img{
+	opacity: 0.6;
+	height: 10px;
+	bottom: 0;
+	line-height: 10px;
 }
 /* -----------------------------------------
    courses

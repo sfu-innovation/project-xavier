@@ -575,9 +575,9 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 		]
 	};
 
-	if(pageNum !== '-'){
-		data.from = paging(pageNum)
-		data.size = sizeOfResult
+	if(pageNum === '-'){
+		data.from = 0
+		data.size = 1000
 	}
 
 	switchIndex(appType);
@@ -604,6 +604,8 @@ QueryES.prototype.getCommentByResourceUUID = function(target_uuid,callback){
 			{"created": {"order": "asc"}}
 		]
 	};
+	data.from = 0
+	data.size = 1000
 
 	switchIndex(2);
 	switchMapping(1);

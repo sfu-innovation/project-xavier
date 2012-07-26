@@ -5,6 +5,7 @@ div#askForm {
 	-moz-box-orient: vertical;
 	display: box;
 	box-orient: vertical;
+	-webkit-animation: form-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
 div.formButton {
@@ -28,4 +29,16 @@ div.askFormField {
 
 div.askFormFieldName {
 	width: 120px;
+}
+
+@-webkit-keyframes form-appear-animation {
+	0% { 
+		opacity: 0;
+	}
+	10% {
+		opacity: 0;
+	}
+	100% { 
+		opacity: 1;
+	}
 }

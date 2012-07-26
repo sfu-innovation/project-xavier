@@ -41,14 +41,14 @@ var nlpQuery = module.exports = function(query, callback){
 			tokens = tokenizer.tokenize(query);
 		//tokens = query.tokenizeAndStem();
 
-		console.log('tokenizing query function');
+		//console.log('tokenizing query function');
 		for (i in tokens) {
 			var candidates = dict.testing(tokens[i], words);
 			sent += " "+hi_find(candidates);
 		}
 		var tmp = sent.tokenizeAndStem();
-		console.log('Before tokenize and stem: ' + sent);
-		console.log('After tokenize and stem: ' + tmp);
+		//console.log('Before tokenize and stem: ' + sent);
+		//console.log('After tokenize and stem: ' + tmp);
 		callback(tmp.join(' '));
 	})
 

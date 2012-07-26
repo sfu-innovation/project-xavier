@@ -394,17 +394,17 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 			if(err)
 				return callback(error);
 
-			console.log('Added question to ES');
+			//console.log('Added question to ES');
 			require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 				if(err)
 					return callback(err);
 
-				console.log('Added question resource to section');
+				//console.log('Added question resource to section');
 				notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 					if(err)
 						return callback(err);
 
-					console.log('Added question notification');
+					//console.log('Added question notification');
 					callback(null, esResult);
 				});
 			});
@@ -583,7 +583,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	switchIndex(appType);
 	switchMapping(1);
 
-	console.log(JSON.stringify(data))
+	//console.log(JSON.stringify(data))
 	mapping.search(data, function(err, data){
 		if(err)
 			return callback(err);
@@ -707,7 +707,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	data.created = data.timestamp;
 
 	if(user.type === 1){
-		console.log("User is an instructor")
+		//console.log("User is an instructor")
 		isInstructor = true;
 	}
 
@@ -718,7 +718,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-			console.log("document added");
+			//console.log("document added");
 
 			notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 				if(err){
@@ -733,7 +733,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 						callback(err);
 					}
 
-					console.log('complete');
+					//console.log('complete');
 
 					callback(null, esData);
 				});
@@ -908,18 +908,18 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 	//check to see which type its in
 	if(searchObj.course){
-		console.log("ES search- course param provided")
+		//console.log("ES search- course param provided")
 		data.query.bool.must.push({"term":{"course": searchObj.course}});
 		if(searchObj.week){
-			console.log("ES search - week param provided")
+			//console.log("ES search - week param provided")
 			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
 		}
 	}
 
 
 	switchIndex(appType);
-	switchMapping(0);	
-	console.log(JSON.stringify(data))
+	switchMapping(0);
+	//console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
 		if(err)

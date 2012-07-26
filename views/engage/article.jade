@@ -16,7 +16,7 @@ block content
 						img(src="/images/engage/icon/16x16/Like_v1.png")
 						|  Like 
 						span (4)
-					a 
+					a(href="#",  onClick="invertText();")
 						img(src="/images/engage/icon/16x16/Invert_v1.png")
 						|  Day/Night
 					a 
@@ -25,12 +25,17 @@ block content
 					a(href="#{article.url}") 
 						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
 						|  View Original
-
+			script
+				function invertText(){
+					article = getElementbyID("article");
+					article.style.color("black")
+				}
 			div#article
 				h1 #{article.title}
 				div
 			script(type='text/javascript')
 				$('div#article div').load('/resources/articles/'+"#{article.path}");
+			
 
 
 

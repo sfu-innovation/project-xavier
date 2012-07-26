@@ -779,7 +779,7 @@ coreApi._construct = function () {
 		this.getWeeksByCourseId = function(courseID, callback){
 			console.log("API - getWeekByCourseId");
 			$.ajax({
-				url:'api/week/' + courseID,
+				url:'/api/week/' + courseID,
 				type:'GET',
 				success:function (data) {
 					callback(data);
@@ -791,7 +791,7 @@ coreApi._construct = function () {
 		this.userNotifications = function(userID, callback){
 			console.log("API - userNotifications");
 			$.ajax({
-				url:'api/user/notification/' + userID,
+				url:'/api/user/notification/' + userID,
 				type:'GET',
 				success:function (data) {
 					callback(data);

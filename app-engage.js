@@ -121,7 +121,7 @@ app.post("/api/section/resources", routesCommon.engageResourcesInSection);
 app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 
 
-
+app.get('/api/resource/:id/comments',routesEngage.commentsByResourceUUID);
 
 
 //non-REST calls

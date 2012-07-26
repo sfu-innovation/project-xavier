@@ -65,10 +65,10 @@ function loadPage(first) {
 					
 					// updates page view count
 					if (first) {
-						/*rqra.updateQuestionViews(questionId, function(data) {
+						rqra.updateQuestionViews(questionId, function(data) {
 							
 							
-						});*/
+						});
 					}
 				}
 			});

@@ -971,11 +971,23 @@ exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {
 		QueryES.getCommentByResourceUUID(request.params.id, function(err, result) {
 			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+
 				if(result){
-					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+					EngageAction.commentsHelper(result,function(err,result){
+						if (!err){
+							response.writeHead(200, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 0, comments: result }));
+						}
+						else{
+							response.writeHead(500, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 1, message: err }));
+						}
+
+					})
+
 				}
 				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
 				}
 			} else {

@@ -597,7 +597,7 @@ QueryES.prototype.getCommentByResourceUUID = function(target_uuid,callback){
 			}
 		},
 		"sort": [
-			{"created": {"order": "desc"}}
+			{"created": {"order": "asc"}}
 		]
 	};
 

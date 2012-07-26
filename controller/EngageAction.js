@@ -6,6 +6,40 @@ var Star = require('../models/star.js');
 var UserProfile = require('../models/userProfile.js');
 
 
+var commentsHelper = exports.commentsHelper = function(json ,callback){
+
+	if (json && json.total &&  json.hits){
+		var comments = json.hits;
+		var new_comments = [];
+		comments.forEach(function(comment){
+			var new_comment = {};
+			new_comment.user = comment.user;
+			new_comment.profile = comment.profile;
+			new_comment.uuid = comment._id;
+			new_comment.upvote = comment._source.upvote;
+			new_comment.body = comment._source.body;
+			new_comment.target_uuid = comment._source.target_uuid;
+			new_comment.createdAt = comment._source.created;
+			new_comment.updatedAt = comment._source.timestamp;
+			new_comment.parent_uuid = comment._source.commentParent;
+			new_comments.push(new_comment);
+
+		})
+
+
+
+		callback(null,new_comments);
+
+
+	}
+	else if(json.total === 0){
+		callback(null,[]);
+	}
+	else{
+		callback("Error on Getting Comments", null);
+	}
+
+}
 
 var weekHelper = exports.weekHelper = function(){
 	Date.prototype.getWeek = function () {

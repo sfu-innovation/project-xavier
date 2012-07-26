@@ -145,7 +145,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	returns all of the user notifications which were removed
 
 */
-NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( args, callback ) {
+NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function( args, callback ) {
 	if ( args === null || args === undefined ){
 		console.log("[NotificationAction.removeUserNotificationsByUserAndTarget] error - Args is not existent");
 		callback( null, new Array());
@@ -184,20 +184,32 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
 			
 				if ( error ){
-					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - "+error);
+					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
 					callback( null, new Array());
-					return;
-				} else {
-					var notifications = new Object();
-					notifications.usernotifications = usernotifications;
+				}
+				else {
+					//var notifications = new Object();
+					//notifications.usernotifications = usernotifications;
+					var userWithNotifications = new Array();
+					async.forEachSeries( usernotifications, function( usernotification, callback ){
+						var tempObj = new Object();
+						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+							tempObj.notification = usernotification;
+							tempObj.user         = foundUser;
+							userWithNotifications.push( tempObj );
+							callback( null, tempObj );
+						}).error( function ( error ){
+							console.log("[User.find] error - "+ error );
+							callback( error, new Object());
+						}); 
 					
-					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+					}, function ( error , results ){
 						if ( error ){
-							console.log("[UserNotification.removedUserNotifications] error - "+error);
-							callback( null, new Array());
+							console.log("[UserNotification.findUserNotificationsByListenerUUID] error - "+error);
+							callback( null , new Array());
 						}
 						else {
-							callback( null, removedNotifications );
+							callback( null, userWithNotifications );
 						}
 					});
 				}
@@ -219,7 +231,7 @@ NotificationAction.prototype.removeUserNotificationsByUserAndTarget = function( 
 	returns all of the user notifications which were removed
 
 */
-NotificationAction.prototype.removeUserNotificationsByUser = function( args, callback ){
+NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, callback ){
 	if ( args === null || args === undefined ){
 		console.log("[NotificationAction.removeUserNotificationsByUser] error - Args is not existent" );
 		callback( null, new Array());
@@ -260,16 +272,28 @@ NotificationAction.prototype.removeUserNotificationsByUser = function( args, cal
 					callback( null, new Array());
 				}
 				else {
-					var notifications = new Object();
-					notifications.usernotifications = usernotifications;
+					//var notifications = new Object();
+					//notifications.usernotifications = usernotifications;
+					var userWithNotifications = new Array();
+					async.forEachSeries( usernotifications, function( usernotification, callback ){
+						var tempObj = new Object();
+						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+							tempObj.notification = usernotification;
+							tempObj.user         = foundUser;
+							userWithNotifications.push( tempObj );
+							callback( null, tempObj );
+						}).error( function ( error ){
+							console.log("[User.find] error - "+ error );
+							callback( error, new Object());
+						}); 
 					
-					UserNotification.removeUserNotifications( notifications, function( error, removedNotifications ){
+					}, function ( error , results ){
 						if ( error ){
-							console.log("[UserNotification.removeUserNotifications] error - " + error );
-							callback( null, new Array());
+							console.log("[NotificationAction.removeUserNotificationsByUser] error - "+error);
+							callback( null , new Array());
 						}
 						else {
-							callback( null, removedNotifications );
+							callback( null, userWithNotifications );
 						}
 					});
 				}

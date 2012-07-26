@@ -3,7 +3,7 @@ extends layout
 block content
 	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
-		div.nine.columns
+		div.eight.columns
 			div#article_options
 				a(href="/")#back
 					img(src="/images/engage/icon/16x16/Back_v1.png") 
@@ -16,13 +16,13 @@ block content
 						img(src="/images/engage/icon/16x16/Like_v1.png")
 						|  Like 
 						span (4)
-					a(href="#",  onClick="invertText();")
+					a
 						img(src="/images/engage/icon/16x16/Invert_v1.png")
 						|  Day/Night
 					a 
 						img(src="/images/engage/icon/16x16/TextSize_v1.png")
 						|  Text Size
-					a(href="#{article.url}") 
+					a(href="#{article.url}").link
 						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
 						|  View Original
 			script
@@ -41,7 +41,7 @@ block content
 
 
 
-		div.three.columns#comments
+		div.four.columns#comments
 			li#owner_comment				
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }

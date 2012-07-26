@@ -75,7 +75,7 @@ function displayQuestions(searchType, page) {
 		} else {
 			displayTotal(0);
 			displayPageNumbers(0);
-			questionList.innerHTML += "No Questions Found!";
+			questionList.innerHTML += "<div class='question'><div class='questionText'>No Questions Found!</div></div>";
 		}
 	});
 }

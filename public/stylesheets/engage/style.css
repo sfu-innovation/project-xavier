@@ -202,9 +202,9 @@ div.dropdown ul li a{
 	color: inherit;
 	}
 #user_options_list img.avatar{
-	height: 50px;
+	height: 46px;
 	position: absolute;
-	margin-top: -4px;
+	margin-top: -2px;
 }
 
 
@@ -232,8 +232,8 @@ li.has-flyout#notification span{
 	background-color: #D35F5E;
 	height: 20px;
 	width: 20px;
-	margin-top: 18px;
-	margin-left: -10px;
+	margin-top: 30px;
+	margin-left: -5px;
 	line-height: 19px;
 	padding-left: 5px;
 	}

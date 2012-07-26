@@ -110,6 +110,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 							addedUserNotifications.push( newNotification );
 
 							//The root of the problem lies here.
+							arg.user = arg.listener.user;
 							compileEmail( arg, function( error, newNotification ){
 								if ( error ){
 									console.log("[NotificationAction.compileEmail] error - "+error);
@@ -510,7 +511,7 @@ function compileEmail( args, callback ){
 		callback( null, new Object() );
 		return;
 	}
-	var containsAllProperties = ( args.hasOwnProperty('origin')        &&
+	var containsAllProperties = ( args.hasOwnProperty('user')        &&
 	                              args.hasOwnProperty('description') &&
 		                               args.hasOwnProperty('wait'));
 		                            
@@ -527,7 +528,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	require('../models/user.js').User.find({ where: { uuid: msg.origin}}).success( function( userFound ){
+	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
 			var title = "";

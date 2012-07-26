@@ -939,7 +939,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 	switchIndex(appType);
 	switchMapping(0);
-	//console.log(JSON.stringify(data))
+	console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
 		if(err)
@@ -978,7 +978,8 @@ var unansweredQuestion = function(data){
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
 	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
-	data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	//data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	data.filter =  { "or":[]};
 	data.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
@@ -987,7 +988,8 @@ var myQuestions = function(data, searchObj){
 var notMyQuestions = function(data, searchObj){
 	//data.query.bool.must_not = [];
 	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	data = {"query":{"match_all":{}}, "filter": { "not":{ "filter":{ "or":[]}}}};
+	//data = {"query":{"match_all":{}}, "filter":}};
+	data.filter =  { "not":{ "filter":{ "or":[]}}};
 	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;

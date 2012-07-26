@@ -101,7 +101,7 @@ function displayTotal(total) {
 function displayPageNumbers(total) {
 	var pageNumbers = document.getElementById("pageNumber");
 	pageNumbers.innerHTML = "<img src='../images/rqra/prev.png' alt='previous'>";
-	for(var i = 0; i < total/5; i++) {
+	for(var i = 0; i < total/7; i++) {
 		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 	}
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";

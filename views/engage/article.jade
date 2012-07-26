@@ -19,9 +19,17 @@ block content
 						span.typicn.plus
 						|Text Size
 					a(href="#{article.url}") View Original
+
 			div#article
+				h1 #{article.title}
+				div
 			script(type='text/javascript')
-				$('div#article').load("#{article.path}");
+				$('div#article div').load('/resources/articles/'+"#{article.path}");
+
+
+
+
+
 		div.three.columns#comments
 			div#owner_comment
 				div#small_wrap

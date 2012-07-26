@@ -6,7 +6,7 @@ function formatQuestion(question) {
 		instructorStyle = "background: #ffe450;";
 	}
 
-	return "<div class='detailedQuestion'>"
+	return "<div class='question'>"
 			+ "<div class='questionTitle'>" + question._source.title + "</div>"
 			+ "<div class='questionId'>" + question._id + "</div>"
 			+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
@@ -27,7 +27,7 @@ function formatComment(comment) {
 		instructorStyle = "background: #ffe450;";
 	}
 
-	return "<div class='detailedQuestion' style='" + instructorStyle + "'>"
+	return "<div class='question' style='" + instructorStyle + "'>"
 			+ "<div class='questionId'>" + comment._id + "</div>"
 			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"

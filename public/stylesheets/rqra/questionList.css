@@ -100,12 +100,16 @@ div.question {
 	margin-top: 1em;
 	margin-bottom: 1em;
 	cursor: pointer;
+	-webkit-animation: notification-menu-animation 500ms 0ms 1 alternate forwards;
 }
 
-div.detailedQuestion {
-	padding: 2px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+@-webkit-keyframes comment-appear-animation {
+	0% { 
+		opacity: 0; 
+	}
+	100% { 
+		opacity: 1;
+	}
 }
 
 div.questionId {

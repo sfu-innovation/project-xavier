@@ -12,14 +12,19 @@ block content
 						a(href="#notification") Notification
 				ul.tabs-content
 					li.active#editTab
-						form(name="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
+						form(id="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
 							div#avatar_column.columns
 								img.avatar(src=avatar) 
 								div.browsebox
 									input(type="file", name="upload", onchange = "this.form.submit()")
 									div#upload_avatar upload
-								
-								a remove photo
+								input(type="hidden", name="remove")
+
+								a(onclick="submit()") remove photo
+								script
+									function submit(){
+										document.getElementById("edit_profile").submit();
+									}
 							div#edit_info_column.four.columns
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}

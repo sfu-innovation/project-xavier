@@ -886,13 +886,18 @@ exports.demoPage = function (req, res) {
 		email:"llt3@sfu.ca"
 	};
 
-	var fake_user_2_profile = {
+/*	var fake_user_2_profile = {
 		user: fake_user_2.userID,
 		profilePicture: "https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png"
-	};
+	};*/
 
 	req.session.user = fake_user_2;
-	req.session.Profile = fake_user_2_profile;
+	UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+		if (err)
+			console.log(err)
+		req.session.Profile = result;
+	});
+	//req.session.Profile = fake_user_2_profile;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
@@ -929,38 +934,66 @@ exports.demoPage = function (req, res) {
 
 
 exports.preference = function (req, res){
-/*	console.log(req.method)
-	console.log(req.files)
-	console.log(req.body)
-	console.log(req.session.Profile)*/
+//	console.log(req.method)
+//	console.log(req.files)
+//	console.log(req.body)
+//	console.log(req.session.Profile)
 	
 	
 	if (req.session && req.session.user) {
 		var bio = req.session.Profile.bio, 
-		pName = req.session.user.preferedName;
+			pName = req.session.user.preferedName,
+			img = req.session.Profile.profilePicture;
 
 
 		if( req.method === 'POST') {
+			var type = req.files.upload.type.split('/')[1];
 			if(req.files.upload.size > 0) {
 
 				var path = req.files.upload.path;
-				var filepath = ('./public/images/avatars/'+req.files.upload.name);
+				var type = req.files.upload.type.split('/')[1];
+				req.session.Profile.imgType = type;
+				var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
 
-				fs.rename(path, filepath , function(err) {
-					if (err) {
-						console.log("Error uploading file: "+err)
-						console.log("Move "+path+" to "+filepath)
-						fs.unlink(filepath);
-						fs.rename(path, filepath);
-						return;
-					}
-				})
-				req.session.Profile.profilePicture = '/images/avatars/'+req.files.upload.name;
+				fs.readFile(path, function (err, data) {
+					var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
+				 	fs.writeFile(filepath, data, function (err) {});
+				});
+
+				img = '/images/avatars/tmp/'+req.session.user.userID+'.'+type;
 				bio = req.body.bio;
 				pName = req.body.pref_name;
 			} else {
-				bio = req.session.Profile.bio = req.body.bio;
-				pName = req.session.user.preferedName = req.body.pref_name;
+				var name = req.session.user.userID+'.'+req.session.Profile.imgType;
+				var path = ('./public/images/avatars/tmp/'+name);
+				
+				
+
+
+
+				fs.readFile(path, function (err, data) {
+					var filepath = ('./public/images/avatars/'+name);
+				 	fs.writeFile(filepath, data, function (err) {});
+				});
+
+				pName = req.body.pref_name,
+				img = '/images/avatars/'+name,
+				bio = req.body.bio;
+
+				User.setPreferedName(req.session.user.uuid, req.body.pref_name,function(err, res){
+					if (err)
+						console.log(err)
+					req.session.user.preferedName = res.preferedName;
+				});
+				UserProfile.updateProfile(req.session.user.uuid, {
+					profilePicture: '/images/avatars/'+name,
+					bio: req.body.bio
+				}, function(err, data) {
+					if (err)
+						console.log(err)
+					req.session.Profile.profilePicture = data.profilePicture;
+					req.session.Profile.bio = data.bio;
+				})
 			}
 
 		}
@@ -969,7 +1002,7 @@ exports.preference = function (req, res){
 			title:"SFU ENGAGE",
 			user:req.session.user,
 			courses:req.session.courses,
-			avatar:req.session.Profile.profilePicture,
+			avatar: img,
 			pref_name: pName,
 			bio: bio
 			}, function (err, rendered) {

@@ -30,7 +30,9 @@ function walk(node, host, cb) {
 
 			'SCRIPT',
 			'NOSCRIPT',
-			'H1'
+			'H1',
+			'FORM',
+			'TITLE'
 		],
 		tags = { };
 

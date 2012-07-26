@@ -33,7 +33,7 @@ module.exports = {
 			});
 		},
 		
-		"Add Notification Listener" : function( test ){
+	/*	"Add Notification Listener" : function( test ){
 			var args = {
 				user : 'mak10',
 				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
@@ -147,7 +147,7 @@ module.exports = {
 			});	
 		},
 		
-		"Retrieve User Notifications by User on Target ": function( test ){
+	*/	"Retrieve User Notifications by User on Target ": function( test ){
 			var testArg = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event :1,
@@ -163,6 +163,10 @@ module.exports = {
 				test.ok( results.should.have.lengthOf(6));
 				NotificationAction.retrieveUserNotificationsByUserAndTarget( retrievalArg, function ( error, removedResults ){
 					test.ok( removedResults.should.have.lengthOf(2));
+					var i = removedResults.length - 1;
+					for(; i >= 0; i-- ){
+						console.log( removedResults[i]);
+					}
 					test.done();
 					});
 				});
@@ -171,7 +175,7 @@ module.exports = {
 			// we want to check out how many user notificatons on that target that user now has.
 			// and finally print out the removed user notifications
 		},
-		"Retrieve User Notifications by User": function(test ){
+	/*	"Retrieve User Notifications by User": function(test ){
 			var args = {
 				user : 'aka87',
 				app  : 1
@@ -304,6 +308,6 @@ module.exports = {
 					});
 				});
 			});
-		}
+		} */
 	}
 }

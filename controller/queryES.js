@@ -695,7 +695,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	var args = {
 		target:data.target_uuid
 		,app:appType
-		,user:data.user
+		,origin:data.user
 		,description:data.body
 	};
 

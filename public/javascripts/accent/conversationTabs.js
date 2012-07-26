@@ -31,15 +31,42 @@ function formatConversation(conversation) {
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
 			+ "<div class='Actions'>"
-			+ "<a class='Upvote' href=''>Upvote</a>"
-			+ "<a class='Downvote' href=''>Downvote</a>"
+			+ "<a class='Upvote' href='' onclick='return selectVote(this);'>Upvote</a>"
+			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
 			+ "</div>"
-			+ "<a class='Count' href=''>" + conversation._source.upvote + "</a>"  			
+			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body
 			+ "</div>"
 			+ "</div>";
+}
+
+function formatCount(count) {
+	var countStr = "";
+	if (count > 0)
+		countStr += "+" + count;
+	else
+		countStr += count;
+	return countStr;
+
+}
+
+function selectVote(selectedVote) {
+	var countNode = $(selectedVote).parent().parent().children(".Count");
+	var value = parseInt(countNode.text());
+	if ($(selectedVote).hasClass("Upvote")) {
+		value += 1;
+	}
+	else {
+		value -= 1;
+	}	
+
+	if (value > 0) 
+		countNode.text("+" + value);
+	else
+		countNode.text(value);
+	return false;
 }
 
 //function displayQuestions(searchType, page) {

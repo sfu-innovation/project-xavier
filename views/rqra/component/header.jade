@@ -14,3 +14,7 @@ div#header
 				include ./notificationList
 			
 script(type="text/javascript", src="../javascripts/rqra/notificationMenu.js")
+
+script(type="text/javascript")
+	notificationUser = '#{user.uuid}';
+	updateNotificationList(notificationUser);

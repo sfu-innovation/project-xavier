@@ -80,7 +80,7 @@ exports.questionFormPage = function(request, response) {
 }
 
 exports.notificationList = function(request, response) {
-	response.render('rqra/component/notificationList', { title: "Demo" });
+	response.render('rqra/component/notificationList', { title: "Demo", user: request.session.user });
 }
 
 exports.updateUserNotifications = function(request, response){

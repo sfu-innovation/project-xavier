@@ -64,14 +64,14 @@ function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	questionList.innerHTML = "";
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
+		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
-			$.each(data.questions.hits, function (index, item) {
-				questionList.innerHTML += formatQuestion(item);
-			});
+			for (var i = 0; i < data.questions.hits.length; ++i) {
+				questionList.innerHTML += formatQuestion(data.questions.hits[i]);
+			}
 		} else {
 			displayTotal(0);
 			displayPageNumbers(0);
@@ -101,7 +101,7 @@ function displayTotal(total) {
 function displayPageNumbers(total) {
 	var pageNumbers = document.getElementById("pageNumber");
 	pageNumbers.innerHTML = "<img src='../images/rqra/prev.png' alt='previous'>";
-	for(var i = 0; i < total/5; i++) {
+	for(var i = 0; i < total/7; i++) {
 		pageNumbers.innerHTML += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 	}
 	pageNumbers.innerHTML += "<img src='../images/rqra/next.png' alt='next'>";

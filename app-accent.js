@@ -43,6 +43,10 @@ app.get('/api/user/:id', routesCommon.user); // get user by id
 app.post('/api/users/', routesCommon.userQuery); // get a list of users based on a custom query
 app.put('/api/user/setPreferedName', routesCommon.userPreferredName); // update users prefered name
 
+//userprofile
+app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
+app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
+
 // course
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
@@ -67,9 +71,7 @@ app.get("/api/questions/mediafile/:id", routesAccent.getQuestionsByMedia); // ge
 app.get("/api/question/:uid", routesAccent.question); // get question by id
 app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
-app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // P, get all questions for a user. TODO:sort desc
-
-app.get("/api/user/:uid/conversations/", routesAccent.getUserConversations); // Gets all questions that the user has asked or commented on
+app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // get all questions for a user. TODO:sort desc
 
 //deprecated
 //app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
@@ -116,11 +118,7 @@ app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagge
 app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
 app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
-
-
-
 //mediafile
-
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
 app.get("/api/mediafile/:id/conversations", routesAccent.getConversationsByMedia); // get all questions by media
 app.get("/api/mediafile/:id", routesAccent.mediafile); // get a mediafile by id
@@ -132,11 +130,6 @@ app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags 
 app.get("/api/mediafiles/course/:id", routesAccent.courseMediaFiles);// get all media files for a course
 //to be deprecated, use Get API for each Model instead
 app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
-
-//userprofile
-
-app.get("/api/user/:id/profile",routesCommon.userProfile); //get user profile by id
-app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile by id
 
 //non-REST calls
 app.get('/', routesAccent.index);

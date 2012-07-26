@@ -184,3 +184,7 @@ exports.getWeekByCourseId = function(request, response){
 exports.addWeek = function(request, response){
 	routesCommon.addWeek(0, request, response);
 }
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(0, request, response);
+}

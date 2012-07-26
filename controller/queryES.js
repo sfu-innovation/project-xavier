@@ -9,7 +9,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	async = require('async'),
 	user = require('../models/user.js'),
 	userProfile = require('../models/userProfile.js'),
-	sizeOfResult = 6;
+	sizeOfResult = 3;
 
 var QueryES = function() {
 }
@@ -88,6 +88,44 @@ var addUserToData = function(data, callback){
 	});
 }
 //
+QueryES.prototype.getUserNotification = function(userID, appType, callback){
+	var self = this;
+	var notificationList = [];
+
+	self.getAllQuestionByUserID(userID, '-', appType, function(err, result){
+		if(err)
+			return callback(err);
+
+		async.forEach(result.hits, function(question, done){
+
+			var args = {
+				app    : appType,
+				target : question._id,
+				event : 1
+			}
+
+			notification.getUserNotifications(args, function(err, result){
+				if(err)
+					return callback(err)
+				if(result.length !== 0){
+					notificationList.push({
+						question: question._source.title,
+						user: result[0].user,
+						createdAt: result[0].createdAt
+					})
+				}
+
+				done();
+			})
+		}, function(err){
+			if(err)
+				return callback(err)
+
+			callback(null, notificationList)
+		})
+	})
+}
+
 QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, callback){
 	var self = this;
 	var questions = [];
@@ -174,10 +212,13 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 	var data = {
 		query: {
 			match_all:{}
-		},
-		from: paging(pageNum),
-		size: sizeOfResult
+		}
 	};
+
+	if(pageNum !== '-'){
+		data.from = paging(pageNum)
+		data.size = sizeOfResult
+	}
 
 	switchIndex(appType);
 	switchMapping(0);
@@ -193,17 +234,16 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, callback){
 	var data = {
 		query: {
-			bool:{
-				must:[{
-					term:{
-						user: userID
-					}
-				}]
+			term:{
+				user: userID
 			}
-		},
-		from: paging(pageNum),
-		size: sizeOfResult
+		}
 	};
+
+	if(pageNum !== '-'){
+		data.from = paging(pageNum)
+		data.size = sizeOfResult
+	}
 
 	switchIndex(appType);
 	switchMapping(0);
@@ -641,12 +681,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		isInstructor = true;
 	}
 
-	document.set(data, function(err, req, esData){
-		if(err)
-			return callback(err);
-		console.log("document added");
-		callback(null, esData);
-/*
 	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
 		if(err)
 			return callback(err);
@@ -675,7 +709,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				});
 			});
 		});
-*/
 	});
 }
 

@@ -1095,3 +1095,23 @@ exports.addWeek = function(appType, request, response){
 		})
 	}
 }
+
+
+exports.getUserNotifications = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getUserNotification(request.params.uid, appType, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		});
+	}
+}

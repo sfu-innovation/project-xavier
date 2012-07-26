@@ -1200,4 +1200,20 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 	});
 }
 
+NotificationAction.prototype.getUserNotifications = function(args, callback){
+	NotificationListener.findAllNotificationListeners(args, function( error, listeners ){
+		if(error){
+			console.log("[NotificationAction.findAllNotificationListeners] error - "+error);
+			return callback( null, new Object());
+		}
+
+		if ( null === listeners ){
+			console.log("[NotificationAction.findAllNotificationListeners] error - No listeners found");
+			return callback( null, new Object());
+		}
+
+		callback(null, listeners)
+	});
+}
+
 module.exports = new NotificationAction;

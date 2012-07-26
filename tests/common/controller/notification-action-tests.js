@@ -175,7 +175,7 @@ module.exports = {
 			// we want to check out how many user notificatons on that target that user now has.
 			// and finally print out the removed user notifications
 		},
-	/*	"Retrieve User Notifications by User": function(test ){
+		"Retrieve User Notifications by User": function(test ){
 			var args = {
 				user : 'aka87',
 				app  : 1
@@ -191,7 +191,7 @@ module.exports = {
 				});
 			});
 		},
-		"Remove a notifier ": function(test){
+		/*"Remove a notifier ": function(test){
 			var args2 = {
 				user : 'aka87',
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',

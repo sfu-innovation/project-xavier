@@ -29,13 +29,11 @@
 			"user":"bernie",
 			"upvote":250,
 			"downvote":8,
-			"body":"Yes thats very true, the metrics for development are more well-understood if they are not long-term and your budget for strategizing should be at least three times your budget for aggregating. And of course dont forget your budget for engineering should be at least one-tenth of your budget for exploiting.",
+			"body":"Yes thats very true, the metrics for development are more well-understood if they are not long-term and your budget for strategizing should be at least three times your budget for aggregating. And of course dont forget your budget for engineering should be at least one-tenth of your budget for synergy contrast management and regional growth consolidation discovery.",
 			"target_uuid":"9e36e922-44d2-4631-a899-c6282ea5b6b2",
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -53,7 +51,7 @@
 		"created":"2012-07-10T18:19:31.204Z",
 		"timestamp":"2012-07-10T18:19:31.204Z",
 		"followup":[],
-		"isInstructor":"true",
+		"isInstructor":"false",
 		"viewCount":0,
 		"commentCount":0,
 		"course":"ESPT100",
@@ -95,8 +93,6 @@
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -114,8 +110,6 @@
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
 			"timestamp":"2012-07-21T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -154,8 +148,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -176,7 +168,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -197,7 +189,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -215,28 +207,6 @@
 			"objectType":"comment",
 			"created":"2012-07-12T18:19:31.204Z",
 			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
-			"commentParent":""
-		}
-	},
-		{
-		"_index":"accent",
-		"_type":"questions",
-		"_id":"aJfznhseQuOicWWAjx7F00",
-		"_score":1,
-		"_source": {
-			"user":"mak10",
-			"upvote":86,
-			"downvote":34,
-			"title":"What is the tallest building in Japan?",
-			"body":"What is the tallest building in Japan?",
-			"target_uuid":"9908615f-55fa-4f29-805a-91feef227b94",
-			"objectType":"comment",
-			"created":"2012-07-12T18:19:31.204Z",
-			"timestamp":"2012-07-12T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -254,7 +224,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -275,7 +245,7 @@
 			"created":"2012-07-09T15:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -296,7 +266,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
 			"course":"ESPT100",
@@ -317,7 +287,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":5231,
 			"commentCount":1,
 			"course":"ESPT100",
@@ -338,8 +308,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -357,7 +325,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":100,
 			"commentCount":1,
 			"course":"ESPT100",
@@ -378,8 +346,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -397,7 +363,7 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":423,
 			"commentCount":2,
 			"course":"ESPT100",
@@ -418,8 +384,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F21"
 		}
 	},
@@ -437,8 +401,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"true",
-			"isInstructor":"false",
 			"commentParent":"qJfzggggguOicWWAjx7F10"
 		}
 	},
@@ -456,10 +418,10 @@
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
-			"isInstructor":"true",
+			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"SIAT270",
+			"course":"CRIM101",
 			"week":0
 		}
 	},
@@ -477,8 +439,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -496,8 +456,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -515,8 +473,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -534,8 +490,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -553,8 +507,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"false",
 			"commentParent":""
 		}
 	},
@@ -575,7 +527,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"ENG109",
 			"week":0
 		}
 	},
@@ -617,7 +569,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"MATH209",
 			"week":0
 		}
 	},
@@ -638,7 +590,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT307",
 			"week":0
 		}
 	},
@@ -659,7 +611,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},
@@ -680,7 +632,7 @@
 			"isInstructor":"true",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"BUS101",
+			"course":"CMPT371",
 			"week":0
 		}
 	},
@@ -698,8 +650,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},
@@ -717,8 +667,6 @@
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
-			"isAnswered":"false",
-			"isInstructor":"true",
 			"commentParent":""
 		}
 	},

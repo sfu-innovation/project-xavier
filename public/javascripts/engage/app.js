@@ -2,6 +2,15 @@ var stylePicker = new stylePicker();
 
 jQuery(document).ready(function ($) {
 
+	if ($('html').hasClass('lt-ie8')) {
+		window.location="http://www.youtube.com/watch?v=4DbgiOCTQts";
+		return;
+	}
+
+
+
+
+
 	initUI();
 
 	var engage = new coreApi.Engage();
@@ -48,7 +57,7 @@ jQuery(document).ready(function ($) {
 			loadCourseArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a').bind('click', function () {
+		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
@@ -69,8 +78,37 @@ jQuery(document).ready(function ($) {
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
 
+		$('.flip_btn').bind('click',function(){
+			$('div.cover').toggleClass('flip');
+		})
 
-		$('#weeks-bar a').bind('click', function () {
+		$('#submitnew form').bind('submit',function(){
+
+
+			var course = $('#submitnew form option:selected').val();
+			var description = $('#article_comment').val();
+			var url = $('#article_url').val();
+			engage.shareResource({course:course,description:description,url:url},function(data){
+
+						console.log(data);
+				if (data){
+					if (data.errorcode === 0){
+						var new_article = renderArticlePreviewBox(data.resource);
+						$('#sharebox').after(new_article);
+					}
+					else{
+
+					}
+				}
+				else{
+
+				}
+			});
+			return false;
+
+		})
+
+		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
@@ -534,11 +572,11 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png' + '<" class="avatar"/>'
+			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140' + '" class="avatar"/>'
 
 
 			+ '<div class="post_details"> '
-			+ '<span>' + item.user.firstName + " " + item.user.lastName + '</span>'
+			+ '<span><a href="/profile/'+ item.user.uuid +'">' + item.user.firstName + " " + item.user.lastName + '</a></span>'
 			+ isProf(item.user.type) //return nothing if not
 
 			+ '<p>Posted '
@@ -550,10 +588,14 @@ function renderArticlePreviewBox(item) {
 
 			+ '</p>'
 			+ '</div>'
+
 			//end of post_details
 
 			+ renderPreviewImage(item)
 			//end of innerwrap
+
+			+ '<h5>'
+			+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
@@ -619,18 +661,42 @@ function renderStar(starred) {
 
 function renderPreviewImage(item) {
 
-	var previewImage = '<div class="innerwrap" style=\'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
+	var previewImage = '<div class="innerwrap" style=\''
+		//IE
+		+'background-image: url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		//CHROME SAFARI
+		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+
+		//FIREFOX
+		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
-		+ '")' + '\'>'
-		+ '<h5>'
-		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+		 + '\'>'
 		+ '</div>'
 
+
+
+//	var previewImage = '<div class="innerwrap" >'
+//		+ '<img src = "'
+//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
+//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
+//		+ '<h5>'
+//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
+//		+ '</div>'
 
 	return  previewImage
 
 
+}
+
+//ajust text font size according to length
+function renderTitleFontSize(item){
+	var len =  item.title.length;
+	if (len <= 27) return 30;
+	if (len <= 45 ) return 28;
+	else return 25;
 }
 
 function renderExcerpt(excerpt) {

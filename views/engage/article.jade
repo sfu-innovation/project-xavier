@@ -23,16 +23,17 @@ block content
 			script(type='text/javascript')
 				$('div#article').load("#{article.path}");
 		div.three.columns#comments
-			h5 Comments
 			div#owner_comment
-				span.name #{article.user.firstName} #{article.user.lastName}
-				p #{ article.description }
-				span Posted 1 day ago
-				span.like_reply
-					a like (3) 
-					a#reply_click reply 
-						span.typicn.forward
+				div#small_wrap
+					span.name #{article.user.firstName} #{article.user.lastName}
+					p #{ article.description }
+					span Posted 1 day ago
+					span.like_reply
+						a like (3) 
+						a#reply_click reply 
+							span.typicn.forward
 			- var comment_id = 1
+			h5 Comments
 			each comment in comments
 				div.comment(id = "comment_#{comment_id}") 
 					span.name #{comment.user.firstName} #{comment.user.lastName}

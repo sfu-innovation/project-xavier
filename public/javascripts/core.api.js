@@ -221,6 +221,24 @@ coreApi._construct = function () {
 
 		}
 
+		this.shareResource = function (args,callback){
+			console.log('API - shareResource');
+
+			$.ajax({
+				url:'/resource/share',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(args),
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
 		this.likeResource = function(resource_uuid,callback){
 			console.log("API - likeResource");
 			$.ajax({
@@ -413,8 +431,7 @@ coreApi._construct = function () {
 	}
 
 	function Presenter() {
-		this.myname = "asdf";
-		this.createQuestion = function (questionTitle, questionBody, callback) {
+		this.createQuestion = function (questionTitle, questionBody, course, week, callback) {
 			console.log("API - createQuestion");
 
 			var body = {};
@@ -424,7 +441,8 @@ coreApi._construct = function () {
 			question.category = 'testcategory'; //TODO need replaced
 			question.title = questionTitle;
 			body.question = question;
-
+			body.course = course;
+			body.week = week;
 
 			$.ajax({
 				url:'/api/question',
@@ -742,10 +760,28 @@ coreApi._construct = function () {
 
 		}
 
+		this.getWeeksByCourseId = function(courseID, callback){
+			console.log("API - getWeekByCourseId");
+			$.ajax({
+				url:'api/week/' + courseID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
-
-
+		this.userNotifications = function(userID, callback){
+			console.log("API - userNotifications");
+			$.ajax({
+				url:'api/user/notification/' + userID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 	}
 

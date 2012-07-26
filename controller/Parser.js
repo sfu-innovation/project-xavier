@@ -115,7 +115,7 @@ function listTypes(node, host) {
 	var articles = [],
 		max = 0,
 		candidateNode = null,
-		tag;
+		tag, image = null;
 	var candidate = { };
 
 	walk(node, host, function(tags) {
@@ -139,12 +139,27 @@ function listTypes(node, host) {
 		})
 	}
 //	console.log(articles)
+	if (candidateNode){
+	image = candidateNode.parentNode.querySelector('IMG');
+	}
+	if (image) {
+		var image_path = mediaPath(image.getAttribute('src'), host);
+		if (image_path.indexOf('gif')=== -1 ){
+			candidate.image = image_path;
+		}
+	}
 	strip(candidateNode, tag);
 	var str =  candidateNode.querySelectorAll(tag);
 
-	candidate.firstParagraph  = str[0].textContent+' '+str[1].textContent;
+	if (str && str[0] && str[1])  {
+		candidate.firstParagraph  = str[0].textContent+' '+str[1].textContent;
+	}
+
+
 
 	candidate.main = html5.serialize(candidateNode);
+
+
 	return candidate;
 }
 
@@ -196,6 +211,7 @@ var articlize =  exports.articlize = function( urlName, callback) {
 			result.path = fileName + ".xml";
 			result.title = title;
 			result.excerpt = content.firstParagraph;
+			result.thumbnail = content.image;
 
 
 			callback(error,result);

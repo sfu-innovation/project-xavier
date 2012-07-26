@@ -11,9 +11,6 @@ var fakeUserNotification = function(callback){
 		if(err)
 			console.log(err);
 
-		if(result)
-			console.log("created: " + result)
-
 		callback();
 	});
 }
@@ -178,4 +175,20 @@ exports.search = function(request, response) {
 /***NEW ROUTES */
 exports.searchQuestionsRoute = function(request, response){
 	routesCommon.searchQuestionsRoute(0, request, response);
+}
+
+exports.getWeekByCourseId = function(request, response){
+	routesCommon.getWeekByCourseId(0, request, response);
+}
+
+exports.addWeek = function(request, response){
+	routesCommon.addWeek(0, request, response);
+}
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(0, request, response);
+}
+
+exports.removeUserNotifications = function(request, response){
+	routesCommon.removeUserNotifications(0, request, response);
 }

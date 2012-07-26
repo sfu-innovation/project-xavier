@@ -8,6 +8,7 @@ var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
 var Notification = require(__dirname + "/../../controller/NotificationAction");
 var UserNotificationSettings = require('../../models/userNotificationSettings.js');
+var Week = require(__dirname + "/../../models/week.js");
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -773,7 +774,7 @@ exports.commentRoute = function(appType, request, response) {
 				,request.body.comment.objectType
 				,request.body.comment.body);
 
-			QueryES.addComment(newComment, appType, function(err, result) {
+			QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
 				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					if(result){
@@ -1020,6 +1021,113 @@ exports.updateUserNotifications = function(appType, request, response){
 				}
 				else{
 					response.end(JSON.stringify({ errorcode: 0, notification: "Failed to update user notification" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		});
+	}
+}
+
+exports.getResourceSection = function(request, response){
+	if(request.method === "GET"){
+		var args = {
+			material: request.params.uid
+		}
+
+		OrganizationAction.getSectionTitleByResourceUUID(args, function(error, section){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, section: section }));
+			}
+			else{
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
+}
+
+exports.getWeekByCourseId = function(appType, request, response){
+	if(request.method === "GET"){
+		var id = request.params.id;
+		Week.findAllWeeks({course:id}, function (error, result) {
+			if (!error) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, week: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, week: "No results found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, week: error }));
+			}
+		})
+	}
+}
+
+exports.addWeek = function(appType, request, response){
+	if(request.method === "POST"){
+		var week = {
+			course: request.body.course,
+			week:request.body.week,
+			topic:request.body.topic,
+			app: appType
+		}
+
+		Week.createWeek(week, function (error, result) {
+			if (!error) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, week: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, week: "Cannot create week" }));
+				}
+			}
+			else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, week: error }));
+			}
+		})
+	}
+}
+
+
+exports.getUserNotifications = function(appType, request, response){
+	if (request.method === "GET") {
+		QueryES.getUserNotification(request.params.uid, appType, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		});
+	}
+}
+
+exports.removeUserNotifications = function(appType, request, response){
+	if (request.method === "DELETE") {
+		var args = {user:request.params.uid,app:appType}
+
+		Notification.removeUserNotificationsByUser(args, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });

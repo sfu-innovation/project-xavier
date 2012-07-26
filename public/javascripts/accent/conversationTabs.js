@@ -2,9 +2,10 @@ var rqra = new coreApi.Presenter();
 
 function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
-		var questionStr = "<li class='Selected'>" 
+		var questionStr = "<li>" 
 				+ "<div class='Question'>"
-				+ "<span class='Course'>" + question._source.course + "</span>"
+				//+ "<span class='Course'>" + question._source.course + "</span>"
+				+ "<a href='' class='Follow'>Follow</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation
@@ -37,32 +38,26 @@ function formatConversation(conversation) {
 			+ "</div>";
 }
 
-function displayQuestions(user) {
+//function displayQuestions(searchType, page) {
+function displayQuestions(course) {
 	// My conversations
 	//var questionList = document.getElementById("myQuestionsList");
-	var questionList = $("#myConversations").children(".Conversations");
+	var questionList = $("#myConversations").children(".Conversations");	
 	var questionStr = "<ul class='Conversations'>";
 
 	// Class conversations
-	var classConversationList = $("#classConversations").children(".Conversations");
-
+	var classConversationList = $("#classConversations").children(".Conversations");	
 	var classStr = "<ul class='Conversations'>";
-
-	rqra.getQuestionsByUserId(user, function (data) {
-		var remaining = data.questions.hits.length;
-
-		if (data && data.errorcode === 0 && remaining > 0) {
-			//console.log(data.questions.total);			
-			//questionList.innerHTML = "";						
-			$.each(data.questions.hits, function (index, item) {
-				//questionList.innerHTML += formatQuestion(item, function(question));				
-				formatQuestion(item, function(question){
-					//questionList.innerHTML += question;
+	
+	// searchQuery, searchType, courseName, weekNumber, page, callback
+	rqra.searchSortedQuestions('', 'myQuestions', course, '', 0, function(data){
+		var remaining = data.questions.hits.length;				
+		if (data && data.errorcode === 0 && remaining > 0) {					
+			$.each(data.questions.hits, function (index, item) {						
+				formatQuestion(item, function(question){					
 					questionStr += question;
-					--remaining;
-					//alert(remaining)
-					if (!remaining) {
-						//alert(questionStr)
+					--remaining;					
+					if (!remaining) {						
 						questionStr += "<ul>";
 						questionList.replaceWith(questionStr);				
 					}
@@ -70,32 +65,35 @@ function displayQuestions(user) {
 			});
 			
 		}
+		else {
+			questionStr += "<ul>";
+			questionList.replaceWith(questionStr);
+		}
 	});
-
-	rqra.getAllQuestions(0, function(data) {			
-		//console.log('all the questions:')			
+	
+	rqra.searchSortedQuestions('', 'notMyQuestions', course, '', 0, function(data){
 		var remaining = data.questions.hits.length;		
-		$.each(data.questions.hits, function (index, item) {			
-			//console.log(item._source.title)
-			if (item._source.user !== user) {	
-				//console.log(item._source.user);			
-				//classStr += formatQuestion(item);
+		if (data && data.errorcode === 0 && remaining > 0) {
+			$.each(data.questions.hits, function (index, item) {			
 				formatQuestion(item, function(question){
 					classStr += question;
 					--remaining;
-					//alert(remaining)
-					if (!remaining) {
-						//alert(classStr)
+					
+					if (!remaining) {					
 						classStr += "<ul>";
 						classConversationList.replaceWith(classStr);				
 					}
 
-				});
-			} else {
-				--remaining;
-			}	
-		});		
+				})	
+			});	
+		}
+		else {
+			classStr += "<ul>";
+			classConversationList.replaceWith(classStr);
+		}		
+	
 	})
+
 }
 
 function displayConversations(questionID, callback) {	
@@ -114,9 +112,9 @@ function displayConversations(questionID, callback) {
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
 				
-	rqra.getCommentsByQuestion(questionID, function(data) {			
-		$.each(data.comments.hits, function (index, item) {			
-			if (item._source.isInstructor === "true") {				
+	rqra.getCommentsByQuestion(questionID, function(data) {					
+		$.each(data.comments.hits, function (index, item) {				
+			if (item.user.type === 1) {				
 				topStr += formatResponse(item);
 			}	
 			else {
@@ -137,9 +135,15 @@ function displayConversations(questionID, callback) {
 
 }
 
+function refreshQuestions(course) {
+	console.log('show the questions for this course = ' + course)
+	displayQuestions(course);
+
+}
+
 
 // displays asked questions on page load
 console.log('Loaded properly');
 
-//displayQuestions();
-//displayConversations();
+// '' = meaning all courses
+displayQuestions('');

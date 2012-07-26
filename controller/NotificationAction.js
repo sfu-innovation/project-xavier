@@ -235,7 +235,7 @@ NotificationAction.prototype.removeUserNotificationsByUser = function( args, cal
 	var arg = new Object();
 	arg.user = args.user;
 	arg.app  = args.app;
-	
+
 	NotificationListener.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
 		if ( error ){
 			console.log("[NotificationListener.findUserSpecificNotificationListeners] error - " + error );
@@ -463,7 +463,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	User.find({ where: { uuid: msg.user}}).success( function( userFound ){
+	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
 			var title = "";
@@ -1197,6 +1197,22 @@ NotificationAction.prototype.createUserNotificationSettings = function( args, ca
 		else {
 			callback(null, newSettings);
 		}
+	});
+}
+
+NotificationAction.prototype.getUserNotifications = function(args, callback){
+	NotificationListener.findAllNotificationListeners(args, function( error, listeners ){
+		if(error){
+			console.log("[NotificationAction.findAllNotificationListeners] error - "+error);
+			return callback( null, new Object());
+		}
+
+		if ( null === listeners ){
+			console.log("[NotificationAction.findAllNotificationListeners] error - No listeners found");
+			return callback( null, new Object());
+		}
+
+		callback(null, listeners)
 	});
 }
 

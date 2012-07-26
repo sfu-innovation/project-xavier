@@ -5,8 +5,16 @@ div#content
 				span.inserted PSYC221 Introduction to Cognitive Psychology
 				span  from
 			h2#sectionTitle Ask a New Question
-			
+	
 	div#askForm
+		div.askFormField
+			div.askFormFieldName Course Name
+			div.askFormFieldValue
+				select#courseBox(onchange="RefreshWeekBox()")
+		div.askFormField
+			div.askFormFieldName Week / Topic
+			div.askFormFieldValue
+				select#weekBox
 		div.askFormField
 			div.askFormFieldName Your Question
 			div.askFormFieldValue
@@ -15,14 +23,7 @@ div#content
 			div.askFormFieldName Description
 			div.askFormFieldValue
 				textarea#descriptionField(rows="4", cols="40")
-		div.askFormField
-			div.askFormFieldName Topic
-			div.askFormFieldValue
-				input(type="text")
-		div.askFormField
-			div.askFormFieldName Tag People
-			div.askFormFieldValue
-				input(type="text")
+
 	div.formButton(onclick="PostQuestion()") Ask Question
 	
 script(type="text/javascript", src="../javascripts/rqra/questionForm.js")

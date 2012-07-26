@@ -10,6 +10,7 @@ var Question = function(user, title, body, category){
 	this.commentCount = 0;
 	this.course = "";
 	this.week = 0;
+	this.isInstructor = 'false'
 }
 
 module.exports = Question;

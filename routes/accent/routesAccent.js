@@ -201,10 +201,22 @@ exports.mediafile = function(request,response){
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
 			request.body.user =  request.session.user.uuid;
-			MediaAction.addMediaFile(request.body, function(error, result){
-				if(result){
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 0, mediafile: result }));
+			MediaAction.addMediaFile(request.body.media, function(error, mediaFile){
+				if(!error){
+					var args = {
+						section: request.body.section,
+						material: mediaFile.uuid
+					}
+					require('../../controller/OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
+						if(!err){
+							response.writeHead(200, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 0, mediafile: mediaFile }));
+						}
+						else{
+							response.writeHead(200, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 1, message: err }));
+						}
+					});
 				}
 				else{
 					response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -361,5 +373,5 @@ exports.demoPage = function (req,res){
 
 /***NEW ROUTES */
 exports.searchQuestionsRoute = function(request, response){
-	routesCommon.searchQuestionsRoute(0, request, response);
+	routesCommon.searchQuestionsRoute(1, request, response);
 }

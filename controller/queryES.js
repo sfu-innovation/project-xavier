@@ -9,7 +9,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	async = require('async'),
 	user = require('../models/user.js'),
 	userProfile = require('../models/userProfile.js'),
-	sizeOfResult = 5;
+	sizeOfResult = 3;
 
 var QueryES = function() {
 }
@@ -88,6 +88,44 @@ var addUserToData = function(data, callback){
 	});
 }
 //
+QueryES.prototype.getUserNotification = function(userID, appType, callback){
+	var self = this;
+	var notificationList = [];
+
+	self.getAllQuestionByUserID(userID, '-', appType, function(err, result){
+		if(err)
+			return callback(err);
+
+		async.forEach(result.hits, function(question, done){
+
+			var args = {
+				app    : appType,
+				target : question._id,
+				event : 1
+			}
+
+			notification.getUserNotifications(args, function(err, result){
+				if(err)
+					return callback(err)
+				if(result.length !== 0){
+					notificationList.push({
+						question: question._source.title,
+						user: result[0].user,
+						createdAt: result[0].createdAt
+					})
+				}
+
+				done();
+			})
+		}, function(err){
+			if(err)
+				return callback(err)
+
+			callback(null, notificationList)
+		})
+	})
+}
+
 QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, callback){
 	var self = this;
 	var questions = [];
@@ -174,10 +212,13 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 	var data = {
 		query: {
 			match_all:{}
-		},
-		from: paging(pageNum),
-		size: sizeOfResult
+		}
 	};
+
+	if(pageNum !== '-'){
+		data.from = paging(pageNum)
+		data.size = sizeOfResult
+	}
 
 	switchIndex(appType);
 	switchMapping(0);
@@ -193,17 +234,16 @@ QueryES.prototype.getAllQuestions = function(appType, pageNum, callback){
 QueryES.prototype.getAllQuestionByUserID = function(userID, pageNum, appType, callback){
 	var data = {
 		query: {
-			bool:{
-				must:[{
-					term:{
-						user: userID
-					}
-				}]
+			term:{
+				user: userID
 			}
-		},
-		from: paging(pageNum),
-		size: sizeOfResult
+		}
 	};
+
+	if(pageNum !== '-'){
+		data.from = paging(pageNum)
+		data.size = sizeOfResult
+	}
 
 	switchIndex(appType);
 	switchMapping(0);
@@ -350,14 +390,6 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 		if(error)
 			return callback(error);
 
-		if(user.type === 1){
-			data.isInstructor = 'true';
-		}else{
-			data.isInstructor = 'false';
-		}
-
-		//TODO:ADD COURSE & WEEK FOR PRESENTER
-
 		document.set(data, function(err, req, esResult){
 			if(err)
 				return callback(error);
@@ -477,16 +509,28 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 
 
 //change the status of a question from unanswered to answered, increments comment count
-QueryES.prototype.updateStatus = function(questionID, appType, callback){
+QueryES.prototype.updateStatus = function(questionID, isInstructor, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();
 
-	var data = {
-		'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
-		'params':{
-			'status':'answered',
-			'date':date,
-			'count':1
+	if(isInstructor){
+		var data = {
+			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count; ctx._source.isInstructor = isInstructor',
+			'params':{
+				'status':'answered',
+				'date':date,
+				'count':1,
+				'isInstructor': "true"
+			}
+		}
+	}else{
+		var data = {
+			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
+			'params':{
+				'status':'answered',
+				'date':date,
+				'count':1
+			}
 		}
 	}
 
@@ -613,10 +657,11 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 }
 
 //create a new comment
-QueryES.prototype.addComment = function(data, appType, callback){
+QueryES.prototype.addComment = function(data, user, appType, callback){
 	var document;
 	var commentUuid = UUID.generate();
 	var self = this;
+	var isInstructor = false;
 	var args = {
 		target:data.target_uuid
 		,app:appType
@@ -631,38 +676,39 @@ QueryES.prototype.addComment = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	self.updateStatus(args.target, appType, function(err, updateResult){
+	if(user.type === 1){
+		console.log("User is an instructor")
+		isInstructor = true;
+	}
+
+	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
 		if(err)
 			return callback(err);
 
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-				console.log("document added");
+			console.log("document added");
 
-				notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+			notification.addCommentUserNotification(args, function(err, usrNotificationResult){
+				if(err){
+					console.log(err);
+					return callback(err);
+				}
+
+				delete args.description;
+				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);
-						return callback(err);
+						callback(err);
 					}
 
-					delete args.description;
-					notification.addCommentNotifier(args, function(err, result){
-						if(err){
-							console.log(err);
-							callback(err);
-						}
+					console.log('complete');
 
-						console.log('complete');
-
-						callback(null, esData);
-					});
+					callback(null, esData);
 				});
-
-
-			//callback(null, esData);
+			});
 		});
-
 	});
 }
 
@@ -750,7 +796,7 @@ QueryES.prototype.updateVote = function(commentID, direction, appType, callback)
 QueryES.prototype.updateIsAnswered = function(commentID, appType, callback){
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';
 	var data = {
-		'script':'ctx._source.isAnswered = status',
+		'script':'ctx._source.isInstructor = status',
 		'params':{
 			'status':'true'
 		}

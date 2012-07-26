@@ -7,7 +7,6 @@ var Comment = function(target_uuid, user, objectType, body){
 	this.downvote = 0;
 	this.body = body;
 	this.objectType = objectType;
-	this.isAnswered = 'false';
 	this.commentParent = '';
 }
 

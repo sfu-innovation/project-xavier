@@ -79,8 +79,11 @@ app.get('/api/course/:id/members', routesCommon.courseMembers);
 app.get('/api/course/:id', routesCommon.course); // get course by id
 app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses based on a custom query
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
+app.post('/api/course/sections', routesCommon.sectionsInCourse); // gets a list of the section uids for a given course
 
 // notification
+app.get("/api/user/notification/:uid", routesRqra.getUserNotifications);
+app.delete("/api/user/notification/:uid", routesRqra.removeUserNotifications);
 app.put("/api/user/notification", routesRqra.updateUserNotifications);
 // questions
 
@@ -144,3 +147,7 @@ app.put("/api/user/:id/profile",routesCommon.userProfile); //update user profile
 
 /***NEW ROUTES */
 app.post("/api/questions/search/page/:page", routesRqra.searchQuestionsRoute);
+app.get("/api/week/:id", routesRqra.getWeekByCourseId);		//course ID
+app.post("/api/week", routesRqra.addWeek)		//add week , provide {course, week, topic}  in JSON
+
+

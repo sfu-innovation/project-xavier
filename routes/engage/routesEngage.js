@@ -623,13 +623,28 @@ exports.design = function (req, res) {
 
 
 exports.shareResource = function (req,res){
-	Parser.articlize(req.body.article_url, function (err,result) {
+	var url = req.body.url;
+	var description = req.body.description;
+	var course = req.body.course;
 
-		Resource.createResource(req.session.user.uuid, {url:result.url, path:result.path, excerpt:result.excerpt, week:13,course:12,fileType:"html",resourceType:2, title:result.title}, function(err,result){
-			console.log(result);
+	Parser.articlize(url, function (err,result) {
 
-			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:0, resources:result }));
+		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:13,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+			if (result){
+				EngageAction.resourceHelper(req.session.user.uuid, [result], function (error, result) {
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+				})
+
+			}
+			else{
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:1, message:error }));
+
+
+			}
+
+
 
 		})
 
@@ -640,10 +655,15 @@ exports.shareResource = function (req,res){
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
+
 	if (req.session && req.session.user) {
-		res.render("engage/index", {     title:"SFU ENGAGE",
+		console.log(req.session.user);
+		res.render("engage/index", {
+			title:"SFU ENGAGE",
 			user:req.session.user,
-			courses:req.session.courses}, function (err, rendered) {
+			courses:req.session.courses,
+			currentWeek:currentWeek
+		}, function (err, rendered) {
 
 			// console.log(rendered);
 			res.writeHead(200, {'Content-Type':'text/html'});
@@ -817,6 +837,7 @@ exports.contributions = function (req, res) {
 
 }
 exports.courseView = function (req, res) {
+	var currentWeek = EngageAction.weekHelper();
 	if (req.session && req.session.user) {
 		var courseName = req.params.name;
 
@@ -829,7 +850,7 @@ exports.courseView = function (req, res) {
 						courseName:courseName,
 						user:req.session.user,
 						course:result,
-
+						currentWeek:currentWeek,
 						courses:req.session.courses
 					}, function (err, rendered) {
 
@@ -868,7 +889,7 @@ exports.courseView = function (req, res) {
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {

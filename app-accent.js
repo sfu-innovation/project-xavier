@@ -110,9 +110,6 @@ app.put("/api/tag/:id", routesAccent.tag); // update a tag by id
 app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
 app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
-
-
-
 //to be deprecated, use Get API for each Model instead
 app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagged questions
 app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
@@ -130,6 +127,8 @@ app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags 
 app.get("/api/mediafiles/course/:id", routesAccent.courseMediaFiles);// get all media files for a course
 //to be deprecated, use Get API for each Model instead
 app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
+
+app.get("/api/mediafile/:uid/section", routesCommon.getResourceSection); // get the section title of the resource
 
 //non-REST calls
 app.get('/', routesAccent.index);

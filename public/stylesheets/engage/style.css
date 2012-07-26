@@ -221,7 +221,9 @@ div.dropdown ul li a{
 .dropdown ul#courses_list ul{
 	margin-top: -9px;
 }
-
+li.has-flyout#notification{
+	z-index: 10;
+}
 li.has-flyout#notification a{
 	margin-left: -58px;
 	position: relative;

@@ -875,6 +875,16 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		data.query.bool.must.push({match_all:{}});
 	}
 
+	//check to see which type its in
+	if(searchObj.course){
+		//console.log("ES search- course param provided")
+		data.query.bool.must.push({"term":{"course": searchObj.course}});
+		if(searchObj.week){
+			//console.log("ES search - week param provided")
+			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
+		}
+	}
+
 	switch(searchObj.searchType){
 		case 'latest':{
 			data = latestQuestion(data);
@@ -903,16 +913,6 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 		case 'notMyQuestions':{
 			data = notMyQuestions(data, searchObj);
-		}
-	}
-
-	//check to see which type its in
-	if(searchObj.course){
-		//console.log("ES search- course param provided")
-		data.query.bool.must.push({"term":{"course": searchObj.course}});
-		if(searchObj.week){
-			//console.log("ES search - week param provided")
-			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
 		}
 	}
 

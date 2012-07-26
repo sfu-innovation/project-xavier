@@ -64,14 +64,14 @@ function displayQuestions(searchType, page) {
 	var searchQuery = prevSearchQuery;
 	prevSearchType = searchType;
 	var questionList = document.getElementById("questionsList");
-	questionList.innerHTML = "";
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
+		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
 			displayTotal(data.questions.total);
 			displayPageNumbers(data.questions.total);
-			$.each(data.questions.hits, function (index, item) {
-				questionList.innerHTML += formatQuestion(item);
-			});
+			for (var i = 0; i < data.questions.hits.length; ++i) {
+				questionList.innerHTML += formatQuestion(data.questions.hits[i]);
+			}
 		} else {
 			displayTotal(0);
 			displayPageNumbers(0);

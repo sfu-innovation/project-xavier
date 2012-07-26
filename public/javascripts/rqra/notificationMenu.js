@@ -33,7 +33,7 @@ function updateNotificationList(user) {
 		} else {
 			newNotificationCount.style.opacity = 1;
 		}
-
+	
 		var notificationMenu = document.getElementById("notificationMenu");
 		notificationMenu.innerHTML = "<div id='notificationHeader'>" + data.notification.length + " New notifications</div>";
 		for(var i = 0; i < data.notification.length; ++i) {

@@ -639,16 +639,16 @@
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfznhheQuOicWWAjx7F17",
+		"_id":"x1",
 		"_score":1,
 		"_source":
-		{"user":"mcs3",
+		{"user":"ted",
 			"upvote":7,
 			"downvote":0,
 			"body":"some description",
 			"target_uuid":"1",
 			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T08:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"commentParent":""
 		}
@@ -656,18 +656,69 @@
 	{
 		"_index":"engage",
 		"_type":"comments",
-		"_id":"eJfzggggguOicWWAjx7F18",
+		"_id":"x2",
 		"_score":1,
 		"_source":
-		{"user":"mcs3",
+		{"user":"llt3",
 			"upvote":5,
 			"downvote":0,
 			"body":"some description",
 			"target_uuid":"1",
 			"objectType":"question",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T09:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"commentParent":""
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xx1",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T10:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"x1"
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xxx1",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T11:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"xx1"
+		}
+	},
+	{
+		"_index":"engage",
+		"_type":"comments",
+		"_id":"xx2",
+		"_score":1,
+		"_source":
+		{"user":"llt3",
+			"upvote":5,
+			"downvote":0,
+			"body":"some description",
+			"target_uuid":"1",
+			"objectType":"question",
+			"created":"2012-07-09T12:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":"x2"
 		}
 	},
 	{
@@ -681,7 +732,7 @@
 			"body":"some description",
 			"category":"academic",
 			"status":"unanswered",
-			"created":"2012-07-09T18:19:31.204Z",
+			"created":"2012-07-09T13:19:31.204Z",
 			"timestamp":"2012-07-09T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"true",

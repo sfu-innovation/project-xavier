@@ -14,7 +14,8 @@ var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
 var notification = require('../../controller/NotificationAction.js');
-var async = require('async')
+var async = require('async');
+var QueryES = require('./../../controller/queryES.js');
 
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
@@ -579,7 +580,7 @@ exports.design = function (req, res) {
 				courses:req.session.courses,
 				errormsg:error }, function (err, rendered) {
 
-				// console.log(rendered);
+
 				res.writeHead(200, {'Content-Type':'text/html'});
 				res.end(rendered);
 
@@ -596,8 +597,7 @@ exports.design = function (req, res) {
 		return;
 	}
 
-	//var pathname = req.body.article_url.substring(0,pathname.lastIndexOf("/"));
-	//console.log(req.body.article_url.split("/"));
+
 
 
 	Parser.articlize(req.body.article_url, function (err) {
@@ -607,7 +607,7 @@ exports.design = function (req, res) {
 			courses:req.session.courses,
 			errormsg:error }, function (err, rendered) {
 
-			// console.log(rendered);
+
 			res.writeHead(200, {'Content-Type':'text/html'});
 			res.end(rendered);
 
@@ -628,8 +628,8 @@ exports.shareResource = function (req,res){
 	var course = req.body.course;
 
 	Parser.articlize(url, function (err,result) {
-
-		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:13,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+		var currentWeek = EngageAction.weekHelper();
+		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
 			if (result){
 				EngageAction.resourceHelper(req.session.user.uuid, [result], function (error, result) {
 					res.writeHead(200, { 'Content-Type':'application/json' });
@@ -657,7 +657,7 @@ exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
 
 	if (req.session && req.session.user) {
-		console.log(req.session.user);
+
 		res.render("engage/index", {
 			title:"SFU ENGAGE",
 			user:req.session.user,
@@ -665,7 +665,6 @@ exports.index = function (req, res) {
 			currentWeek:currentWeek
 		}, function (err, rendered) {
 
-			// console.log(rendered);
 			res.writeHead(200, {'Content-Type':'text/html'});
 			res.end(rendered);
 
@@ -792,20 +791,32 @@ exports.articleView = function (req, res) {
 	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
 	comment_2.replies = [reply_comment_4];
 
-	if (req.session && req.session.user) {
-		var pickedArticle = articles[req.params.id - 1];
-		res.render("engage/article", { title:"SFU ENGAGE",
-			article:pickedArticle,
-			comments:[comment_1, comment_2],
-			user:userobject,
-			courses:req.session.courses,
-			status:"logged in"     }, function (err, rendered) {
 
-			// console.log(rendered);
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
+	if (req.session && req.session.user) {
+
+		Resource.getResourceByUUID(req.params.id, function (error, resource) {
+
+			EngageAction.resourceHelper(req.session.user.uuid, [resource], function (err,resources) {
+				var resource = resources[0];
+				var pickedArticle = articles[req.params.id - 1];
+				res.render("engage/article", { title:"SFU ENGAGE",
+					article:resource,
+					comments:[comment_1, comment_2],
+					user:req.session.user,
+					courses:req.session.courses
+				}, function (err, rendered) {
+
+
+					res.writeHead(200, {'Content-Type':'text/html'});
+					res.end(rendered);
+
+				})
+
+			})
+
 
 		})
+
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -854,7 +865,7 @@ exports.courseView = function (req, res) {
 						courses:req.session.courses
 					}, function (err, rendered) {
 
-						// console.log(rendered);
+
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
 
@@ -955,4 +966,35 @@ exports.preference = function (req, res){
 }
 
 
+
+exports.commentsByResourceUUID = function(request, response) {
+	if (request.method === "GET") {
+		QueryES.getCommentByResourceUUID(request.params.id, function(err, result) {
+			if (!err) {
+
+				if(result){
+					EngageAction.commentsHelper(result,function(err,result){
+						if (!err){
+							response.writeHead(200, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 0, comments: result }));
+						}
+						else{
+							response.writeHead(500, { 'Content-Type': 'application/json' });
+							response.end(JSON.stringify({ errorcode: 1, message: err }));
+						}
+
+					})
+
+				}
+				else{
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 0, comments: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		});
+	}
+}
 

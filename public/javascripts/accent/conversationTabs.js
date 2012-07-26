@@ -4,7 +4,8 @@ function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
 		var questionStr = "<li>" 
 				+ "<div class='Question'>"
-				+ "<span class='Course'>" + question._source.course + "</span>"
+				//+ "<span class='Course'>" + question._source.course + "</span>"
+				+ "<a href='' class='Follow'>Follow</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation
@@ -29,12 +30,50 @@ function formatResponse(response) {
 function formatConversation(conversation) {	
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
-			+ "<a class='' href=''>" + conversation._source.upvote + "</a>"  			
+			+ "<div class='Actions'>"
+			+ "<a class='Upvote' href='' onclick='return selectVote(this);'>Upvote</a>"
+			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
+			+ "</div>"
+			+ "<a class='UUID' style='display:none;'>" + conversation._id + "</a>"
+			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body
 			+ "</div>"
 			+ "</div>";
+}
+
+function formatCount(count) {
+	var countStr = "";
+	if (count > 0)
+		countStr += "+" + count;
+	else
+		countStr += count;
+	return countStr;
+
+}
+
+function selectVote(selectedVote) {
+	var commentID = $(selectedVote).parent().parent().children(".UUID");
+	var countNode = $(selectedVote).parent().parent().children(".Count");
+	var value = parseInt(countNode.text());
+	if ($(selectedVote).hasClass("Upvote")) {
+		value += 1;		
+		rqra.upVoteCommentById(commentID.text(), function(result){});
+	}
+	else {
+		value -= 1;		
+		console.log('result:')
+		rqra.downVoteCommentById(commentID.text(), function(result){});
+	}	
+
+	if (value > 0) 
+		countNode.text("+" + value);
+	else
+		countNode.text(value);
+	
+
+	return false;
 }
 
 //function displayQuestions(searchType, page) {
@@ -111,9 +150,9 @@ function displayConversations(questionID, callback) {
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
 				
-	rqra.getCommentsByQuestion(questionID, function(data) {			
-		$.each(data.comments.hits, function (index, item) {			
-			if (item._source.isInstructor === "true") {				
+	rqra.getCommentsByQuestion(questionID, function(data) {					
+		$.each(data.comments.hits, function (index, item) {				
+			if (item.user.type === 1) {				
 				topStr += formatResponse(item);
 			}	
 			else {

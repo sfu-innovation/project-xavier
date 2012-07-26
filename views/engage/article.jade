@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
 		div.nine.columns
 			div#article_options
@@ -19,9 +20,17 @@ block content
 						span.typicn.plus
 						|Text Size
 					a(href="#{article.url}") View Original
+
 			div#article
+				h1 #{article.title}
+				div
 			script(type='text/javascript')
-				$('div#article').load("#{article.path}");
+				$('div#article div').load('/resources/articles/'+"#{article.path}");
+
+
+
+
+
 		div.three.columns#comments
 			div#owner_comment
 				div#small_wrap
@@ -30,8 +39,14 @@ block content
 					span Posted 1 day ago
 					span.like_reply
 						a like (3) 
-						a#reply_click reply 
+						a#reply_click(onclick = 'show_comment_box("0_0")') reply 
 							span.typicn.forward
+			div.reply_box(id ="0_0", style="display: none")
+				span replying to #{article.user.firstName} #{article.user.lastName}
+				form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
+					textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")		
+					input(type="submit", value="Post")
+
 			- var comment_id = 1
 			h5 Comments
 			each comment in comments

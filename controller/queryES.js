@@ -588,6 +588,30 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	});
 }
 
+//mark's evil code here
+QueryES.prototype.getCommentByResourceUUID = function(target_uuid,callback){
+	var data = {
+		query: {
+			term: {
+				target_uuid: target_uuid
+			}
+		},
+		"sort": [
+			{"created": {"order": "asc"}}
+		]
+	};
+
+	switchIndex(2);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(err)
+			return callback(err);
+
+		addUsersToData(data, callback);
+	});
+}
+
 //get all comments
 QueryES.prototype.getAllComments = function(appType, pageNum, callback){
 	var data = {

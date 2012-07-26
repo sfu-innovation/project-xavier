@@ -424,6 +424,22 @@ coreApi._construct = function () {
 
 		}
 
+		this.getCommentsByResourceId = function(id,callback){
+			console.log("API - getCommentsByResourceId");
+			$.ajax({
+
+				url:'/api/resource/'+id+'/comments',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+
+		}
+
 
 
 

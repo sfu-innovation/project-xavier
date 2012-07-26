@@ -202,9 +202,13 @@ div.dropdown ul li a{
 	color: inherit;
 	}
 #user_options_list img.avatar{
-	height: 38px;
+	height: 46px;
 	position: absolute;
-	margin-left: -58px;
+	margin-top: -5px;
+	-moz-box-shadow: 0 0 5px #9e9e9e;
+	-webkit-box-shadow: 0 0 5px #9e9e9e;
+	box-shadow: 0 0 5px #9e9e9e;
+
 }
 
 
@@ -221,6 +225,28 @@ div.dropdown ul li a{
 .dropdown ul#courses_list ul{
 	margin-top: -9px;
 }
+li.has-flyout#notification{
+	z-index: 10;
+}
+li.has-flyout#notification a{
+	margin-left: -58px;
+	position: relative;
+}
+li.has-flyout#notification span{
+	position: absolute;
+	color: white;
+	background-color: #D35F5E;
+	height: 20px;
+	width: 20px;
+	margin-top: 21px;
+	margin-left: -5px;
+	line-height: 19px;
+	padding-left: 5px;
+	}
+
+li.has-flyout#notification ul li{
+	width: 300px;
+	}
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */
@@ -265,20 +291,60 @@ div.innercontents{
 }
 
 div.innercontents.color-1{
-	border-top: 4px solid #d35f5e;
+	border-top: 4px solid #30A4AA;
 }
 
 div.innercontents.color-2{
-	border-top: 4px solid #2BA6CB;
+	border-top: 4px solid #F44A38;
 }
 
-span.coursename a.color-1{
-	 color:#d35f5e;
+div.innercontents.color-3{
+	border-top: 4px solid #458C33;
+}
 
- }
+div.innercontents.color-4{
+	border-top: 4px solid #5B1387;
+}
+
+div.innercontents.color-5{
+	border-top: 4px solid #FFA10B;
+}
+
+div.innercontents.color-6{
+	border-top: 4px solid #FFE000;
+}
+
+
+
+span.coursename a.color-1{
+	color:#30A4AA;
+
+}
 
 span.coursename a.color-2{
-	color:#2BA6CB;
+	color:#F44A38;
+
+}
+
+
+span.coursename a.color-3{
+	color:#458C33;
+
+}
+
+span.coursename a.color-4{
+	color:#5B1387;
+
+}
+
+
+span.coursename a.color-5{
+	color:#FFA10B;
+
+}
+
+span.coursename a.color-6{
+	color:#FFE000;
 
 }
 
@@ -307,7 +373,7 @@ div.innerwrap{
 	background-size: auto, cover;
 	height: 200px;
 	position: relative;
-	opacity: 0.70;
+	opacity: 0.50;
 	padding: 0;
 	overflow: hidden;
 	z-index: 1;
@@ -651,9 +717,9 @@ div#article_container .columns:first-child{
 }
 
 div#owner_comment #small_wrap{
-	border-bottom: 2px solid #9e9e9e;
 	padding: 0 !important;
 	padding-bottom: 10px;
+	
 }
 
 div#article_container #comments{
@@ -666,13 +732,16 @@ div#article_container #comments #owner_comment{
 	-moz-box-shadow: 0 0 1px #9e9e9e;
 	-webkit-box-shadow: 0 0 1px #9e9e9e;
 	box-shadow: 0 0 1px #9e9e9e;
-	background-color:  rgba(0,0,0,0.05);
-	padding-bottom: 0;
+	padding-bottom: 10px;
+	background: rgba(0,0,0,0.1);
+	border-bottom: 2px solid rgba(0,0,0,0.1);
 
 	}
 
 div#article_container #comments h5{
 	padding-left: 10px;
+	
+
 }
 
 

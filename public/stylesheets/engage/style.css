@@ -202,9 +202,9 @@ div.dropdown ul li a{
 	color: inherit;
 	}
 #user_options_list img.avatar{
-	height: 38px;
+	height: 50px;
 	position: absolute;
-
+	margin-top: -4px;
 }
 
 
@@ -694,6 +694,7 @@ div#article_container #comments #owner_comment{
 
 div#article_container #comments h5{
 	padding-left: 10px;
+	
 
 }
 

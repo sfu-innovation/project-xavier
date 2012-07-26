@@ -112,9 +112,9 @@ function displayConversations(questionID, callback) {
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
 				
-	rqra.getCommentsByQuestion(questionID, function(data) {			
-		$.each(data.comments.hits, function (index, item) {			
-			if (item._source.isInstructor === "true") {				
+	rqra.getCommentsByQuestion(questionID, function(data) {					
+		$.each(data.comments.hits, function (index, item) {				
+			if (item.user.type === 1) {				
 				topStr += formatResponse(item);
 			}	
 			else {

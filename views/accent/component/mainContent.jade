@@ -4,8 +4,41 @@ div#Main
 	h2 Week 4
 
 	div
-		video(width="540", height="320", src="movie.mp4") Your browser doesn't support video!
+		video(width="840", height="490", src="movie.mp4") Your browser doesn't support video!
 		div.Controls
-			input(type="button", value="Play")
-			input(type="range", name="timeline", value="")
-						
+			a.Play(href="") Play
+			div.Timeline
+				a.Scrubber(href="")
+			div.Volume
+
+		div.Tagger
+			div.Timeline
+				div.Tag(style="left: 40px; width: 170px; background: green;")
+				div.Tag(style="left: 20px; width: 100px; background: yellow;")
+				div.Tag(style="left: 220px; width: 90px; background: orange;")
+				div.Tag(style="left: 520px; width: 12px; background: purple;")
+			div.Commands
+				a(href="") X
+				ul
+					li
+						a(href="") X
+					li
+						a(href="") Y
+					li
+						a(href="") Z
+					li
+						a(href="") Q
+		div.TagWindow
+			div
+				label Title:
+				input(type="text", placeholder="My Great Title")
+			div
+				label Tag Type:
+			div
+				label Description:
+				textarea
+			div
+				input(type="submit", value="Done")
+					
+
+					

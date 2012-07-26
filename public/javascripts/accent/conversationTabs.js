@@ -4,7 +4,8 @@ function formatQuestion(question, callback) {
 	displayConversations(question._id, function(conversation){
 		var questionStr = "<li>" 
 				+ "<div class='Question'>"
-				+ "<span class='Course'>" + question._source.course + "</span>"
+				//+ "<span class='Course'>" + question._source.course + "</span>"
+				+ "<a href='' class='Follow'>Follow</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation

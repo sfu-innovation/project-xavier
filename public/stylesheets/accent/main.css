@@ -289,14 +289,22 @@ img.User {
 	margin-bottom: 40px;
 }
 
-.Conversations .Course {
+.Conversations .Follow {
+	background: #91C759;
+}
+
+.Conversations .Unfollow {
+	background: #333;
+}
+
+.Conversations .Follow, .Conversations .Unfollow {
 	float: right;
 	font-size: 70%;
 	font-weight: bold;
 	margin-left: 5px;
 	margin-bottom: 7px;
-	color: #fff;
-	background: #91C759;
+	color: #fff !important;
+	
 	border-radius: 4px;
 	padding: 3px;
 }
@@ -313,8 +321,23 @@ img.User {
 }
 
 .Conversations .Votes {
-	width: 50px;
-	text-align: right;
+	padding-left: 10px;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: center;
+	-webkit-box-pack: end;
+}
+
+.Conversations .Votes .Actions {
+	display: -webkit-box;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+}
+
+.Conversations .Votes .Count {
+	display: block;
+	margin-right: 10px;
 }
 
 .Conversations h1 {
@@ -413,4 +436,157 @@ img.User {
 	content: " ";
 	left: 50%;
 	margin-left: -10px;
+}
+
+.Upvote, .Downvote {
+	font-size: 1.5em;
+	width: 1em;
+	height: 1em;
+	color: transparent;
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: block;
+}
+
+.Upvote {
+	background-image: url('up.png');
+}
+
+.Downvote {
+	background-image: url('down.png');
+}
+
+.Controls, .Tagger {
+	background: #222;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+}
+
+.Timeline {
+	-webkit-box-flex: 1.0;
+	position: relative
+}
+
+
+
+.TagWindow {
+	padding: 20px;
+	margin: 10px 0;
+	background: #222;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	position: relative;
+	border-radius: 9px;
+}
+
+.TagWindow:after {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #222;
+	position: absolute;
+	right: 50%;
+	content: " ";
+	bottom: 100%;
+	margin-left: -5px;
+}
+
+
+.Commands {
+	position: relative;
+}
+
+.Commands ul {
+	position: absolute;
+	display: none;
+	left: 100%;
+	padding-left: 10px;
+	bottom: 0;
+	list-style-type: none;
+}
+
+.Commands ul li {
+	padding: 10px;
+	background: #333;
+	z-index: 999;
+	position: relative;
+}
+
+.Commands ul li:last-child:after {
+	width: 0; 
+	height: 0; 
+	border-bottom: 10px solid transparent;
+	border-top: 10px solid transparent;
+	border-right: 10px solid #333;
+	position: absolute;
+	right: 100%;
+	content: " ";
+	bottom: 50%;
+}
+
+.Commands ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+
+.Commands:hover ul {
+	display: block
+}
+
+.Controls .Timeline {
+	border: solid 1px #222;
+	background: rgba(0,0,0,0.4);
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.Controls .Timeline .Scrubber {
+	display: block;
+	width: 0.5em;
+	height: 0.5em;
+	background: #444;
+	border: solid 1px #666;
+	border-radius: 50%;
+	position: relative;
+}
+
+.Controls .Timeline .Scrubber:after {
+	position: absolute;
+	display: block;
+	content: " ";
+	width: 1px;
+	background: #444;
+	height: 30px;
+	top: 100%;
+	left: 50%;
+	margin-left: -1px;
+}
+
+.Play {
+	display: block;
+	width: 50px;
+}
+
+.Tagger .Timeline {
+	margin-left: 50px;
+	height: 26px;
+}
+
+.Tagger .Tag {
+	position: absolute;
+	border-radius: 5px;
+	background: red;
+	height: 12px;
+	opacity: 0.6;
+	box-shadow: inset 0 0 3px rgba(0,0,0,1)
+}
+
+.TagWindow label {
+	display: block;
+	color: #ccc;
+}
+
+.TagWindow input {
+	padding: 4px;
 }

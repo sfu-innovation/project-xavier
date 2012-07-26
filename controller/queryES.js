@@ -641,12 +641,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		isInstructor = true;
 	}
 
-	document.set(data, function(err, req, esData){
-		if(err)
-			return callback(err);
-		console.log("document added");
-		callback(null, esData);
-/*
 	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
 		if(err)
 			return callback(err);
@@ -675,7 +669,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				});
 			});
 		});
-*/
 	});
 }
 

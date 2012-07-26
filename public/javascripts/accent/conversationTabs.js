@@ -34,6 +34,7 @@ function formatConversation(conversation) {
 			+ "<a class='Upvote' href='' onclick='return selectVote(this);'>Upvote</a>"
 			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
 			+ "</div>"
+			+ "<a class='UUID' style='display:none;'>" + conversation._id + "</a>"
 			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
@@ -53,19 +54,25 @@ function formatCount(count) {
 }
 
 function selectVote(selectedVote) {
+	var commentID = $(selectedVote).parent().parent().children(".UUID");
 	var countNode = $(selectedVote).parent().parent().children(".Count");
 	var value = parseInt(countNode.text());
 	if ($(selectedVote).hasClass("Upvote")) {
-		value += 1;
+		value += 1;		
+		rqra.upVoteCommentById(commentID.text(), function(result){});
 	}
 	else {
-		value -= 1;
+		value -= 1;		
+		console.log('result:')
+		rqra.downVoteCommentById(commentID.text(), function(result){});
 	}	
 
 	if (value > 0) 
 		countNode.text("+" + value);
 	else
 		countNode.text(value);
+	
+
 	return false;
 }
 

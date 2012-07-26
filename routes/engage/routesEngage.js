@@ -655,10 +655,15 @@ exports.shareResource = function (req,res){
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
+
 	if (req.session && req.session.user) {
-		res.render("engage/index", {     title:"SFU ENGAGE",
+		console.log(req.session.user);
+		res.render("engage/index", {
+			title:"SFU ENGAGE",
 			user:req.session.user,
-			courses:req.session.courses}, function (err, rendered) {
+			courses:req.session.courses,
+			currentWeek:currentWeek
+		}, function (err, rendered) {
 
 			// console.log(rendered);
 			res.writeHead(200, {'Content-Type':'text/html'});
@@ -832,6 +837,7 @@ exports.contributions = function (req, res) {
 
 }
 exports.courseView = function (req, res) {
+	var currentWeek = EngageAction.weekHelper();
 	if (req.session && req.session.user) {
 		var courseName = req.params.name;
 
@@ -844,7 +850,7 @@ exports.courseView = function (req, res) {
 						courseName:courseName,
 						user:req.session.user,
 						course:result,
-
+						currentWeek:currentWeek,
 						courses:req.session.courses
 					}, function (err, rendered) {
 
@@ -883,7 +889,7 @@ exports.courseView = function (req, res) {
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
-	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca"}
+	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
 	req.session.user = fake_user_2;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {

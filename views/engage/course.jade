@@ -10,7 +10,10 @@ block content
 					a#week WEEK
 				each week in weeks
 					li(href="week/#{week}")
-						a(href="#week#{week}", data-week="#{week}") #{week}
+						- if (week > currentWeek && user.type ===0 )
+							a.disabled( data-week="#{week}") #{week}
+						- else
+							a.passed(href="#week#{week}", data-week="#{week}") #{week}
 			
 	div.row.clearfix#contents
 		div.three.columns

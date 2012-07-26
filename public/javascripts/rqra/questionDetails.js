@@ -63,8 +63,7 @@ function refreshQuestionListHeader(question) {
 
 	var currentWeek = question._source.week;
 	var sectionTitle = document.getElementById("sectionTitle");
-	sectionTitle.innerHTML = "Week " + currentWeek;
-	/*if (currentWeek === 0) {
+	if (currentWeek === 0) {
 		sectionTitle.innerHTML = "All Weeks";
 	} else if (!courseUuid || courseUuid === "") {
 		sectionTitle.innerHTML = "Week " + currentWeek;
@@ -80,7 +79,7 @@ function refreshQuestionListHeader(question) {
 				sectionTitle.innerHTML = "Week " + currentWeek;
 			}
 		});
-	}*/
+	}
 }
 
 function loadPage(first) {

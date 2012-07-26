@@ -83,7 +83,6 @@ app.post('/api/course/sections', routesCommon.sectionsInCourse); // gets a list 
 
 // notification
 app.get("/api/user/notification/:uid", routesRqra.getUserNotifications);
-app.delete("/api/user/notification/:uid", routesRqra.removeUserNotifications);
 app.put("/api/user/notification", routesRqra.updateUserNotifications);
 // questions
 

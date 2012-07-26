@@ -188,7 +188,3 @@ exports.addWeek = function(request, response){
 exports.getUserNotifications = function(request, response){
 	routesCommon.getUserNotifications(0, request, response);
 }
-
-exports.removeUserNotifications = function(request, response){
-	routesCommon.removeUserNotifications(0, request, response);
-}

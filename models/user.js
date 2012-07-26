@@ -98,6 +98,7 @@ exports.getUserCourses = function(userUUID, callback){
 }
 
 exports.setPreferedName = function(userUUID, newName, callback){
+
 	User.find({where: {uuid:userUUID}}).success(function(user){
 		user.updateAttributes({
 			preferedName: newName

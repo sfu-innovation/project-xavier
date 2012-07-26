@@ -204,7 +204,7 @@ exports.removeUserNotifications = function( args, callback) {
 	returns back an array of UserNotifications
 */
 exports.findUserNotificationsByListenerUUID = function( args, callback ){
-	UserNotification.findAll({ where : { listener : args.uuids }}).success(function( userNotifications ){
+	UserNotification.findAll({ where : { listener : args.uuid }}).success(function( userNotifications ){
 		callback( null, userNotifications );
 	}).error(function(error){
 		callback( error, null );

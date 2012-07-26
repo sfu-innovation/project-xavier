@@ -69,9 +69,10 @@ function displayCourseList() {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
 			menu.innerHTML += formatButton("All", "");
-			data.courses.forEach(function(course) {
-				menu.innerHTML += formatButton(course.subject + "" + course.number, course.uuid);
-			});
+			for (var i = 0; i < data.courses.length; i++) {
+				menu.innerHTML += formatButton(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
+			}
+			selectButton($(".courseButton")[0]);
 		}
 	});
 }

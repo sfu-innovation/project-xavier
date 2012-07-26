@@ -516,7 +516,7 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-			console.log(request.body.course)
+			//console.log(request.body.course)
 			newQuestion.course = request.body.course;
 			newQuestion.week = parseInt(request.body.week);
 
@@ -977,7 +977,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
-		console.log(JSON.stringify(request.body))
+		//console.log(JSON.stringify(request.body))
 		nlp(queryData.searchQuery, function(query){
 			/*
 			if(query){

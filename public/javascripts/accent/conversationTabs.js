@@ -30,7 +30,11 @@ function formatResponse(response) {
 function formatConversation(conversation) {	
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
-			+ "<a class='' href=''>" + conversation._source.upvote + "</a>"  			
+			+ "<div class='Actions'>"
+			+ "<a class='Upvote' href=''>Upvote</a>"
+			+ "<a class='Downvote' href=''>Downvote</a>"
+			+ "</div>"
+			+ "<a class='Count' href=''>" + conversation._source.upvote + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body

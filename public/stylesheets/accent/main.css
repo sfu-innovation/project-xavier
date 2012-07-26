@@ -449,11 +449,11 @@ img.User {
 }
 
 .Upvote {
-	background-image: url('up.png');
+	background-image: url('../../images/accent/up.png');
 }
 
 .Downvote {
-	background-image: url('down.png');
+	background-image: url('../../images/accent/down.png');
 }
 
 .Controls, .Tagger {

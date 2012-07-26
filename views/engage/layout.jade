@@ -64,18 +64,40 @@ html
 				div.two.columns.dropdown#user_options					
 					ul.nav-bar#user_options_list
 						li.has-flyout#notification
+						
+							
 							a
 								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-								span 4
+								span.number 4
 							ul.flyout.small
 								li
-									a notification 1
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Mark 
+											| just shared an resource in 
+											span.coursename IAT 200.
 								li
-									a notification 1
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Catherine 
+											| just shared an resource in 
+											span.coursename IAT 200.
 								li
-									a notification 1
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Mark 
+											| liked your article in 
+											span.coursename BUS 354
 								li
-									a notification 1		
+									a.notification
+										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+										p.msg 
+											span.username Ted 
+											| liked your article in 
+											span.coursename BUS 354
 						li.has-flyout
 							a
 								| #{ user.firstName } #{ user.lastName }

@@ -1,4 +1,6 @@
-
+em {
+	font-style: normal;
+}
 
 .clearfix:after {
 	visibility: hidden;
@@ -325,60 +327,60 @@ div.innercontents{
 }
 
 div.innercontents.color-1{
-	border-top: 4px solid #30A4AA;
+	border-top: 4px solid #F14241;
 }
 
 div.innercontents.color-2{
-	border-top: 4px solid #F44A38;
+	border-top: 4px solid #FFAB08;
 }
 
 div.innercontents.color-3{
-	border-top: 4px solid #458C33;
+	border-top: 4px solid #5FE1C2;
 }
 
 div.innercontents.color-4{
-	border-top: 4px solid #5B1387;
+	border-top: 4px solid #14CC43;
 }
 
 div.innercontents.color-5{
-	border-top: 4px solid #FFA10B;
+	border-top: 4px solid #4860E3;
 }
 
 div.innercontents.color-6{
-	border-top: 4px solid #FFE000;
+	border-top: 4px solid #FFEA1C;
 }
 
 
 
 span.coursename a.color-1{
-	color:#30A4AA;
+	color:#F14241;
 
 }
 
 span.coursename a.color-2{
-	color:#F44A38;
+	color:#FFAB08;
 
 }
 
 
 span.coursename a.color-3{
-	color:#458C33;
+	color:#5FE1C2;
 
 }
 
 span.coursename a.color-4{
-	color:#5B1387;
+	color:#14CC43;
 
 }
 
 
 span.coursename a.color-5{
-	color:#FFA10B;
+	color:#4860E3;
 
 }
 
 span.coursename a.color-6{
-	color:#FFE000;
+	color:#FFEA1C;
 
 }
 

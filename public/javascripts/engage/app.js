@@ -62,13 +62,13 @@ jQuery(document).ready(function ($) {
 		$('#article_options span a::nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
 
-			return false
+			return false;
 		})
 
 		$('#article_options span a::nth-child(4) ').bind('click', function () {
 			$("#article").toggleClass('larger');
 
-			return false
+			return false;
 		})
 
 	}
@@ -180,6 +180,61 @@ jQuery(document).ready(function ($) {
 				}
 
 			})
+		}
+
+	})
+
+	$('.articlebox span.like_btn.disliked').live('click',function(){
+
+		var self = $(this);
+		var resource_uuid = $(this).parent().parent().attr('data-id');
+		if (resource_uuid){
+			engage.likeResource(resource_uuid,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0) {
+					self.addClass('liked');
+					self.removeClass('disliked');
+
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+
+				}
+				else if (data.errorcode === 1){
+					//if already liked
+					engage.dislikeResource(resource_uuid,function(data){
+						if (data && data.errorcode === 0) {
+							var num = parseInt(self.children().html()) - 1;
+							self.children().html(num)
+						}
+
+					})
+
+				}
+
+			})
+
+		}
+
+	})
+
+	$('.articlebox span.like_btn.liked').live('click',function(){
+
+			var self = $(this);
+		var resource_uuid = $(this).parent().parent().attr('data-id');
+		if (resource_uuid){
+			engage.dislikeResource(resource_uuid,function(data){
+				if (data && data.errorcode === 0) {
+					self.removeClass('liked');
+					self.addClass('disliked');
+
+					var num = parseInt(self.children().html()) - 1;
+
+					self.children().html(num);
+
+				}
+
+			})
+
 		}
 
 	})
@@ -680,7 +735,7 @@ function renderArticlePreviewBox(item) {
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
 
-			+ '<span> Like (' + item.likes + ') </span>'
+			+ '<span class="like_btn disliked"> Like (<em>' + item.likes + '</em>) </span>'
 			+ '<span> Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'

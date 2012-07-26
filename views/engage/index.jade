@@ -14,15 +14,33 @@ block content
 	div.row.clearfix#contents
 		div.three.columns#sharebox
 			div.innercontents#submitnew
-				form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
-					label Share a resource!
-					input(name="article_url",type="text", id="article_url", placeholder="http://")
-					textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
-					
-					div#sumbitrow
-						div.selectcourse
-							select(class="customDropdown", name="article_course", value="select a course")
-								each item in courses
-									option(value=item.uuid) #{item.subject+item.number}
-						div.submit
-							input(type="submit", value="add", class="small button")
+				div.cover
+					div.frontCard
+						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+							label Share or
+								a.flip_btn upload a resource!
+							input(name="article_url",type="text", id="article_url", placeholder="http://")
+							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+
+							div#sumbitrow
+								div.selectcourse
+									select(class="customDropdown", name="article_course", value="select a course")
+										each item in courses
+											option(value=item.uuid) #{item.subject+item.number}
+								div.submit
+									input(type="submit", value="add", class="small button")
+					div.backCard
+						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+							label Share or
+								a.flip_btn upload a resource!
+
+							input(name="article_url",type="text", id="article_url", placeholder="http://", disabled="disabled")
+							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")
+
+							div#sumbitrow
+								div.selectcourse
+									select(class="customDropdown", name="article_course", value="select a course", disabled="disabled")
+										each item in courses
+											option(value=item.uuid) #{item.subject+item.number}
+								div.submit
+									input(type="submit", value="add", class="small button", disabled="disabled")

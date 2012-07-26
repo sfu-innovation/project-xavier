@@ -144,7 +144,7 @@ function listTypes(node, host) {
 	}
 	if (image) {
 		var image_path = mediaPath(image.getAttribute('src'), host);
-		if (image_path.indexOf('gif')!== -1 ){
+		if (image_path.indexOf('gif')=== -1 ){
 			candidate.image = image_path;
 		}
 	}

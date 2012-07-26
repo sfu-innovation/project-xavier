@@ -727,6 +727,9 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				}
 
 				delete args.description;
+				var user = args.origin;
+				delete args.origin
+				args.user = user;
 				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);

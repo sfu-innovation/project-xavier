@@ -301,7 +301,7 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 					var userWithNotifications = new Array();
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
-						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+						require('../models/user.js').User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
 							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
 								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
 									tempObj.profile = userProfile;
@@ -510,7 +510,7 @@ function compileEmail( args, callback ){
 		callback( null, new Object() );
 		return;
 	}
-	var containsAllProperties = ( args.hasOwnProperty('user')        &&
+	var containsAllProperties = ( args.hasOwnProperty('origin')        &&
 	                              args.hasOwnProperty('description') &&
 		                               args.hasOwnProperty('wait'));
 		                            
@@ -527,7 +527,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
-	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
+	require('../models/user.js').User.find({ where: { uuid: msg.origin}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";
 			var title = "";

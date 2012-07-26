@@ -181,9 +181,8 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 				listenerArray.push( listeners[i].uuid );
 			}
 			var listeners = new Object();
-			listeners.uuids = listenerArray; 
-			
-			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
+			listeners.uuid = listenerArray;
+			UserNotification.findUserNotificationsByListenerUUID( listeners , function( error, usernotifications ){
 			
 				if ( error ){
 					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
@@ -279,7 +278,7 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 			}	
 			
 			var listeners = new Object();
-			listeners.uuids = arr;
+			listeners.uuid = arr;
 			
 			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
 			

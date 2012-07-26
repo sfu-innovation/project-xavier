@@ -934,7 +934,24 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 	}
 
+	//check to see which type its in
+	if(searchObj.course){
+		console.log("ES search- course param provided");				
 
+		// probably need to fix this since I am only doing this for 2 special cases		
+		if (searchObj.searchType === "myQuestions" || searchObj.searchType === "notMyQuestions") {			
+			data.query = {"term":{"course": searchObj.course}};			
+		}			
+		else {
+			data.query.bool.must.push({"term":{"course": searchObj.course}});
+		}
+
+		// this would be also different for Accent myQuestions and notMyQuestions		
+		if(searchObj.week){
+			console.log("ES search - week param provided")
+			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
+		}
+	}
 	switchIndex(appType);
 	switchMapping(0);
 	//console.log(JSON.stringify(data))
@@ -983,9 +1000,11 @@ var myQuestions = function(data, searchObj){
 }
 
 var notMyQuestions = function(data, searchObj){
-	data.query.bool.must_not = []
-	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
+	//data.query.bool.must_not = [];
+	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	data = {"query":{"match_all":{}}, "filter": { "not":{ "filter":{ "or":[]}}}};
+	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 

@@ -12,18 +12,27 @@ block content
 						a(href="#notification") Notification
 				ul.tabs-content
 					li.active#editTab
-						form(name="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
+						form(id="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
 							div#avatar_column.columns
-								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-								div#upload_avatar upload
-								a remove photo
+								img.avatar(src=avatar) 
+								div.browsebox
+									input(type="file", name="upload", onchange = "this.form.submit()")
+									div#upload_avatar upload
+								input(type="hidden", name="remove")
+
+								a(onclick="submit()") remove photo
+								script
+									function submit(){
+										document.getElementById("edit_profile").submit();
+									}
+									
 							div#edit_info_column.four.columns
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}
 									label Preferred Name:
-									input(type="text", maxlength="20")
+									input(type="text", name="pref_name", maxlength="20", value=pref_name)
 									label Academic Bio:
-									textarea(type="text")
+									textarea(type="text", name="bio", value=bio)
 									input.button(type="submit", value="save changes")
 					li#notificationTab
 						div#notification

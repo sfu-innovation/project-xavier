@@ -4,6 +4,7 @@ var Resource = require(__dirname + "/../../models/resource");
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
+var UserProfile = require(__dirname + "/../../models/userProfile");
 var Course = require(__dirname + "/../../models/course");
 var CourseMember = require(__dirname + "/../../models/courseMember");
 var Week = require(__dirname + "/../../models/week");
@@ -598,8 +599,6 @@ exports.design = function (req, res) {
 	}
 
 
-
-
 	Parser.articlize(req.body.article_url, function (err) {
 		res.render("engage/design", {     title:"SFU ENGAGE",
 			user:userobject,
@@ -657,6 +656,7 @@ exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
 
 	if (req.session && req.session.user) {
+
 
 		res.render("engage/index", {
 			title:"SFU ENGAGE",
@@ -883,11 +883,6 @@ exports.courseView = function (req, res) {
 		}
 
 
-
-
-
-
-
 	}
 	else {
 
@@ -903,6 +898,12 @@ exports.demoPage = function (req, res) {
 	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
 	req.session.user = fake_user_2;
+	UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+		if (err)
+			console.log(err)
+		req.session.Profile = result;
+	});
+	//req.session.Profile = fake_user_2_profile;
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
@@ -933,29 +934,89 @@ exports.demoPage = function (req, res) {
 				req.session.courses = result;
 				res.redirect('/');
 			})
-
-
-
 		});
-
-
-
 	});
 }
 
+
 exports.preference = function (req, res){
+//	console.log(req.method)
+//	console.log(req.files)
+//	console.log(req.body)
+//	console.log(req.session.Profile)
+	
+	
 	if (req.session && req.session.user) {
+		var bio = req.session.Profile.bio, 
+			pName = req.session.user.preferedName,
+			img = req.session.Profile.profilePicture;
+
+
+		if( req.method === 'POST') {
+			var type = req.files.upload.type.split('/')[1];
+			if(req.files.upload.size > 0) {
+
+				var path = req.files.upload.path;
+				var type = req.files.upload.type.split('/')[1];
+				req.session.Profile.imgType = type;
+				var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
+
+				fs.readFile(path, function (err, data) {
+					var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
+				 	fs.writeFile(filepath, data, function (err) {});
+				});
+
+				img = '/images/avatars/tmp/'+req.session.user.userID+'.'+type;
+				bio = req.body.bio;
+				pName = req.body.pref_name;
+			} else {
+				var name = req.session.user.userID+'.'+req.session.Profile.imgType;
+				var path = ('./public/images/avatars/tmp/'+name);
+				
+				
+
+
+
+				fs.readFile(path, function (err, data) {
+					var filepath = ('./public/images/avatars/'+name);
+				 	fs.writeFile(filepath, data, function (err) {});
+				});
+
+				pName = req.body.pref_name,
+				img = '/images/avatars/'+name,
+				bio = req.body.bio;
+
+				User.setPreferedName(req.session.user.uuid, req.body.pref_name,function(err, res){
+					if (err)
+						console.log(err)
+					req.session.user.preferedName = res.preferedName;
+				});
+				UserProfile.updateProfile(req.session.user.uuid, {
+					profilePicture: '/images/avatars/'+name,
+					bio: req.body.bio
+				}, function(err, data) {
+					if (err)
+						console.log(err)
+					req.session.Profile.profilePicture = data.profilePicture;
+					req.session.Profile.bio = data.bio;
+				})
+			}
+
+		}
 		res.render("engage/preference", 
 			{     
 			title:"SFU ENGAGE",
 			user:req.session.user,
-			courses:req.session.courses
+			courses:req.session.courses,
+			avatar: img,
+			pref_name: pName,
+			bio: bio
 			}, function (err, rendered) {
-
 			res.writeHead(200, {'Content-Type':'text/html'});
 			res.end(rendered);
 
 		})
+		
 	}
 	else {
 
@@ -963,6 +1024,7 @@ exports.preference = function (req, res){
 
 
 	}
+
 }
 
 

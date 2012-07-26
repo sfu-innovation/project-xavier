@@ -860,6 +860,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 				must:[]
 			}
 		},
+		//"filter": {},
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
@@ -919,6 +920,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 	switchIndex(appType);
 	switchMapping(0);
+	console.log("wklsajdflkjsdflkjsflka querying now:::::::::::")
 	console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
@@ -964,6 +966,7 @@ var myQuestions = function(data, searchObj){
 var notMyQuestions = function(data, searchObj){
 	data.query.bool.must_not = []
 	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
 	return data;
 }
 

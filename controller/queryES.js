@@ -791,6 +791,24 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 	});
 }
 
+QueryES.prototype.deleteComments = function(commentList, appType, callback){
+	var self = this;
+	var successList = [];
+	console.log(commentList)
+	async.forEach(commentList, function(commentId, done){
+		self.deleteComment(commentId, appType, function(err, result){
+			if(err)
+				console.log('Cannot delete: %s, comment does not exist!', commentId)
+
+			if(result)
+				successList.push(result)
+			done();
+		})
+	}, function(err){
+		callback(null, successList)
+	})
+}
+
 //update a comment vote
 QueryES.prototype.updateVote = function(commentID, direction, appType, callback){
 	var link = '/' + switchIndex(appType) + '/comments/' + commentID +'/_update';

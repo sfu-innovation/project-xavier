@@ -204,7 +204,7 @@ div.dropdown ul li a{
 #user_options_list img.avatar{
 	height: 38px;
 	position: absolute;
-	margin-left: -58px;
+
 }
 
 
@@ -221,6 +221,21 @@ div.dropdown ul li a{
 .dropdown ul#courses_list ul{
 	margin-top: -9px;
 }
+
+li.has-flyout#notification a{
+	margin-left: -58px;
+	position: relative;
+}
+li.has-flyout#notification span{
+	position: absolute;
+	color: white;
+	background-color: red;
+
+	}
+
+li.has-flyout#notification ul li{
+	width: 300px;
+	}
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */
@@ -307,7 +322,7 @@ div.innerwrap{
 	background-size: auto, cover;
 	height: 200px;
 	position: relative;
-	opacity: 0.70;
+	opacity: 0.50;
 	padding: 0;
 	overflow: hidden;
 	z-index: 1;

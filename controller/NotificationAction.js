@@ -235,7 +235,7 @@ NotificationAction.prototype.removeUserNotificationsByUser = function( args, cal
 	var arg = new Object();
 	arg.user = args.user;
 	arg.app  = args.app;
-	
+
 	NotificationListener.findUserSpecificNotificationListeners( arg, function( error, notificationListeners ){
 		if ( error ){
 			console.log("[NotificationListener.findUserSpecificNotificationListeners] error - " + error );

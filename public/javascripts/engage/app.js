@@ -9,6 +9,8 @@ jQuery(document).ready(function ($) {
 
 
 
+
+
 	initUI();
 
 	var engage = new coreApi.Engage();
@@ -75,6 +77,10 @@ jQuery(document).ready(function ($) {
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
+
+		$('.flip_btn').bind('click',function(){
+			$('div.cover').toggleClass('flip');
+		})
 
 		$('#submitnew form').bind('submit',function(){
 
@@ -582,10 +588,14 @@ function renderArticlePreviewBox(item) {
 
 			+ '</p>'
 			+ '</div>'
+
 			//end of post_details
 
 			+ renderPreviewImage(item)
 			//end of innerwrap
+
+			+ '<h5>'
+			+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
@@ -664,8 +674,6 @@ function renderPreviewImage(item) {
 		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
 		 + '\'>'
-		+ '<h5>'
-		+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 		+ '</div>'
 
 

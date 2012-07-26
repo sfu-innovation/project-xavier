@@ -11,9 +11,6 @@ var fakeUserNotification = function(callback){
 		if(err)
 			console.log(err);
 
-		if(result)
-			console.log("created: " + result)
-
 		callback();
 	});
 }

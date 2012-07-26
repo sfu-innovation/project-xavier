@@ -71,6 +71,7 @@ div#nav li a{
 }
 
 div#nav #options li a{
+	border-bottom: 4px solid transparent; /*to prevent it jumping around in profile/design page*/
 	color: #9e9e9e !important;
 	text-align: left;
 	padding: 0;
@@ -254,11 +255,12 @@ div#contents div.columns:last-child{;
 ----------------------------------------- */
 
 div.innercontents{
-	background-color: rgba(0,0,0,0.02) ;
+	/*background-color: rgba(0,0,0,0.02) ;*/
+	background-color: rgba(250, 250, 250,1);
 	position: relative;
 	height:360px;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
-	-webkit-box-shadow: :0px 0px 7px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 }
 
@@ -455,16 +457,108 @@ div.likescomments span.typicn.starred:hover{
 /* -----------------------------------------
    Article sharing box
 ----------------------------------------- */
+div#submitnew{
+	background-color: transparent;
+
+	-moz-box-shadow: none;
+	-webkit-box-shadow:none;
+	box-shadow:none;
+}
+
+
+div.cover {
+	height: 360px;
+	position: relative;
+	-webkit-perspective: 600px;
+	-moz-perspective: 600px;
+}
+
+div.cover .frontCard {
+	background-color: rgba(250, 250, 250,1);
+
+	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
+	-webkit-box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
+	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
+	float: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	z-index: 900;
+	top: 0;
+	left: 0;
+	-webkit-transform: rotateX(0deg) rotateY(0deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-moz-transform: rotateX(0deg) rotateY(0deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+div.cover.flip .frontCard {
+
+	z-index: 900;
+
+
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+
+
+}
+
+
+div.cover .backCard {
+	background-color: rgba(250, 250, 250,1);
+
+	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
+	-webkit-box-shadow:0px 0px 7px rgba(0, 0, 0, 0.35);
+	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
+	float: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	z-index: 800;
+	-webkit-transform: rotateY(-180deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+	-moz-transform: rotateY(-180deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+div.cover.flip .backCard {
+	z-index: 1000;
+
+	-webkit-transform: rotateX(0deg) rotateY(0deg);
+	-moz-transform: rotateX(0deg) rotateY(0deg);
+
+
+}
 
 div.selectcourse{
 	display: inline;
 	float: left;
 	}
 div.innercontents#submitnew{
-	padding: 10px;
+	padding: 0px;
 }
 
-
+div.innercontents#submitnew form{
+	margin:10px
+}
 	
 #sumbitrow{
 	display: inline-block;

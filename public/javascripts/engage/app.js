@@ -44,6 +44,12 @@ jQuery(document).ready(function ($) {
 
 		loadProfileArticles(engage);
 	}
+	else if (window.location.toString().indexOf('article') != -1) {
+
+
+		loadComments(engage);
+	}
+
 	else if (window.location.toString().indexOf('course') != -1) {
 
 		$('#all_btn').addClass('active');
@@ -156,10 +162,7 @@ jQuery(document).ready(function ($) {
 	})
 
 
-	/* Use this js doc for all application specific JS */
 
-	/* TABS --------------------------------- */
-	/* Remove if you don't need :) */
 
 
 });
@@ -255,6 +258,58 @@ function initUI() {
 	$('.button.dropdown.small > ul').css('top', smallButtonHeight);
 	$('.button.dropdown.tiny > ul').css('top', tinyButtonHeight);
 
+
+}
+
+function renderCommentBox(item){
+	function renderBox(item){
+		return '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+			+ '</span><p>' + item.body
+			+ '</p><span class="post_time">' + formartDate(item.createdAt)
+			+ '</span><span class="like_reply"><a>like (' + item.like + ')'
+		+ '</a><a class="reply_click"> reply <span class="typicn forward"></span> </a></span></div>';
+	}
+
+
+   var html = '<div class="comment">'+ renderBox(item);
+
+	if (item.replies && item.replies.length > 0){
+		$.each(item.replies, function (index, reply) {
+
+			html += '<div class="replies">'+ renderBox(reply);
+		});
+
+	}
+
+	return html;
+}
+
+function loadComments(engage){
+	var id = $('#hidden-info').attr('data-resource-id');
+	if(id){
+		engage.getCommentsByResourceId(id,function(data){
+			if (data){
+				if (data.errorcode === 0){
+					console.log(data);
+					$.each(data.comments, function (index, item) {
+
+						console.log(item);
+						comment = renderCommentBox(item);
+
+
+						$('#comments').append(comment);
+					});
+				}
+				else{
+
+				}
+			}
+			else{
+
+			}
+
+		})
+	}
 
 }
 

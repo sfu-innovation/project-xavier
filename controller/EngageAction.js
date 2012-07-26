@@ -19,11 +19,11 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 			var new_comment = {};
 			id_name_list[comment._id] = comment.user.firstName + ' ' + comment.user.lastName;
 			child_parent_list[comment._id] = comment._source.commentParent;
-			console.log(child_parent_list);
+
 			new_comment.user = comment.user;
 			new_comment.profile = comment.profile;
 			new_comment.uuid = comment._id;
-			new_comment.upvote = comment._source.upvote;
+			new_comment.like = comment._source.upvote;
 			new_comment.body = comment._source.body;
 			new_comment.target_uuid = comment._source.target_uuid;
 			new_comment.createdAt = comment._source.created;

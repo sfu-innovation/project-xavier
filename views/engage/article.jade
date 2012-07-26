@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
 		div.nine.columns
 			div#article_options

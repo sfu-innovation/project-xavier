@@ -34,7 +34,7 @@ function formatConversation(conversation) {
 			+ "<a class='Upvote' href='' onclick='return selectVote(this);'>Upvote</a>"
 			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
 			+ "</div>"
-			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote) + "</a>"  			
+			+ "<a class='Count' href=''>" + formatCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body

@@ -569,13 +569,16 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 				  target_uuid: ptarget_uuid
 			  }
 		  },
-		from: paging(pageNum),
-		size: sizeOfResult,
 		"sort": [
 			{"upvote": {"order": "desc"}},
 			{"downvote": {"order": "desc"}}
 		]
 	};
+
+	if(pageNum !== '-'){
+		data.from = paging(pageNum)
+		data.size = sizeOfResult
+	}
 
 	switchIndex(appType);
 	switchMapping(1);

@@ -5,27 +5,23 @@ block content
 	div.row.clearfix#article_container
 		div.eight.columns
 			div#article_options
+			
 				a(href="/")#back
-					img(src="/images/engage/icon/16x16/Back_v1.png") 
-					|  BACK
+					span#back_btn
+						|  BACK
 				span#options
-					a 
-						span.typicn.star
+					span#star_btn 
 						|  Star
-					a 
-						img(src="/images/engage/icon/16x16/Like_v1.png")
-						|  Like 
-						span (4)
-					a
-						img(src="/images/engage/icon/16x16/Invert_v1.png")
+					span#like_btn 
+						|  Like (4)
+					span#invert_btn
 						|  Day/Night
-					a 
-						img(src="/images/engage/icon/16x16/TextSize_v1.png")
+					span#textsize_btn 
 						|  Text Size
-					a(href="#{article.url}").link
-						img(src="/images/engage/icon/16x16/ViewOriginal_v1.png")
-						|  View Original
-			script
+					a(href="#{article.url}")
+						span#link_btn
+							|  View Original
+			script	
 				function invertText(){
 					article = getElementbyID("article");
 					article.style.color("black")

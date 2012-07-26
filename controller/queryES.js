@@ -604,6 +604,8 @@ QueryES.prototype.getCommentByResourceUUID = function(target_uuid,callback){
 			{"created": {"order": "asc"}}
 		]
 	};
+	data.from = 0
+	data.size = 1000
 
 	switchIndex(2);
 	switchMapping(1);

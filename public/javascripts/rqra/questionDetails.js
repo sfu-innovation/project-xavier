@@ -26,8 +26,13 @@ function formatComment(comment) {
 	if (comment.user.type === 1) {
 		instructorStyle = "background: #ffe450;";
 	}
-
-	return "<div class='question' style='" + instructorStyle + "'>"
+	
+	var badCommentStyle = "";
+	if (comment._source.upvote - comment._source.downvote < 0) {
+		badCommentStyle = "color: #AAAAAA;";
+	}
+	
+	return "<div class='question' style='" + instructorStyle + badCommentStyle + "'>"
 			+ "<div class='questionId'>" + comment._id + "</div>"
 			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"
@@ -57,6 +62,10 @@ function loadPage(first) {
 			rqra.getCommentsByTargetId(questionId, '-', function(data) {
 				commentList.innerHTML = "";
 				if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
+					data.comments.hits.sort(function(a, b){ 
+						return (b._source.upvote - b._source.downvote)-(a._source.upvote - a._source.downvote);
+					});
+				
 					//displayPageNumbers(data.questions.total);
 					
 					$.each(data.comments.hits, function (index, item) {

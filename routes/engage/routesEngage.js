@@ -792,20 +792,35 @@ exports.articleView = function (req, res) {
 	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
 	comment_2.replies = [reply_comment_4];
 
-	if (req.session && req.session.user) {
-		var pickedArticle = articles[req.params.id - 1];
-		res.render("engage/article", { title:"SFU ENGAGE",
-			article:pickedArticle,
-			comments:[comment_1, comment_2],
-			user:userobject,
-			courses:req.session.courses,
-			status:"logged in"     }, function (err, rendered) {
 
-			// console.log(rendered);
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
+	if (req.session && req.session.user) {
+		console.log(req.url);
+		console.log('?????');
+		console.log(req.params.id);
+		Resource.getResourceByUUID(req.params.id, function (error, resource) {
+			console.log('////');
+			console.log(resource);
+			EngageAction.resourceHelper(req.session.user.uuid, [resource], function (err,resources) {
+				var resource = resources[0];
+				var pickedArticle = articles[req.params.id - 1];
+				res.render("engage/article", { title:"SFU ENGAGE",
+					article:resource,
+					comments:[comment_1, comment_2],
+					user:req.session.user,
+					courses:req.session.courses
+				}, function (err, rendered) {
+
+					// console.log(rendered);
+					res.writeHead(200, {'Content-Type':'text/html'});
+					res.end(rendered);
+
+				})
+
+			})
+
 
 		})
+
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead

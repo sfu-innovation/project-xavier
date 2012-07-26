@@ -5,7 +5,7 @@ div#Container
 	include ./component/courseList
 
 	div#Content
-		form(action="/api/mediafile", method="POST")
+		form(action="/api/mediafile", enctype="multipart/form-data", method="POST")
 			div
 				|Title: 
 				input(type="text", name="title")

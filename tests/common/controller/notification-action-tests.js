@@ -147,7 +147,7 @@ module.exports = {
 			});	
 		},
 		
-	*/	"Retrieve User Notifications by User on Target ": function( test ){
+	*//*	"Retrieve User Notifications by User on Target ": function( test ){
 			var testArg = {
 				target : 'A7S7FHGA7SD11A7SDF8AS87G',
 				event :1,
@@ -174,7 +174,7 @@ module.exports = {
 			// then remove them, making sure to retain the notifications to be read out later
 			// we want to check out how many user notificatons on that target that user now has.
 			// and finally print out the removed user notifications
-		},
+		}, */
 		"Retrieve User Notifications by User": function(test ){
 			var args = {
 				user : 'aka87',

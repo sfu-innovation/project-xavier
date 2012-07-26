@@ -80,7 +80,8 @@ module.exports = {
 				target      : 'A7S7FHGA7SD11A7SDF8AS87G',
 				app         : 1,
 				event       : 1,
-				description : 'Alex is testing  a notification for the add user notification test'
+				description : 'Alex is testing  a notification for the add user notification test',
+				origin      : 'aka87'
 			}
 				UserNotification.findAllUserNotifications( args, function( error, notifications){
 					test.ok(notifications.should.have.lengthOf(6));
@@ -160,21 +161,11 @@ module.exports = {
 			
 			UserNotification.findAllUserNotifications( null , function( error, results ){
 				test.ok( results.should.have.lengthOf(6));
-				NotificationAction.removeUserNotificationsByUserAndTarget( retrievalArg, function ( error, removedResults ){
+				NotificationAction.retrieveUserNotificationsByUserAndTarget( retrievalArg, function ( error, removedResults ){
 					test.ok( removedResults.should.have.lengthOf(2));
-					NotificationAction.removeUserNotificationsByUserAndTarget( retrievalArg, function ( error, removedResults ){
-						test.ok( removedResults.should.have.lengthOf(0));
-						UserNotification.findAllUserNotifications( null , function( error, results3 ){
-							if ( results3 ) {
-								test.ok( results3.should.have.lengthOf(4));
-							test.done();
-							}
-						});
+					test.done();
 					});
-					
-					
 				});
-			});
 			// we first want to see how many user notificatiosn on that target this user has
 			// then remove them, making sure to retain the notifications to be read out later
 			// we want to check out how many user notificatons on that target that user now has.
@@ -189,15 +180,10 @@ module.exports = {
 				if ( error ){
 				}
 				test.ok( results.should.have.lengthOf(6));
-				NotificationAction.removeUserNotificationsByUser( args, function( error, results ){
+				NotificationAction.retrieveUserNotificationsByUser( args, function( error, results ){
+						
 					test.ok( results.should.have.lengthOf(2));
-					NotificationAction.removeUserNotificationsByUser( args, function( error, results ){
-						test.ok( results.should.have.lengthOf(0));
-						UserNotification.findAllUserNotifications( null , function( error, results ){
-							test.ok( results.should.have.lengthOf(4));
-							test.done();
-						});
-					});
+					test.done();
 				});
 			});
 		},

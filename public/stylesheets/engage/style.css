@@ -291,20 +291,60 @@ div.innercontents{
 }
 
 div.innercontents.color-1{
-	border-top: 4px solid #d35f5e;
+	border-top: 4px solid #30A4AA;
 }
 
 div.innercontents.color-2{
-	border-top: 4px solid #2BA6CB;
+	border-top: 4px solid #F44A38;
 }
 
-span.coursename a.color-1{
-	 color:#d35f5e;
+div.innercontents.color-3{
+	border-top: 4px solid #458C33;
+}
 
- }
+div.innercontents.color-4{
+	border-top: 4px solid #5B1387;
+}
+
+div.innercontents.color-5{
+	border-top: 4px solid #FFA10B;
+}
+
+div.innercontents.color-6{
+	border-top: 4px solid #FFE000;
+}
+
+
+
+span.coursename a.color-1{
+	color:#30A4AA;
+
+}
 
 span.coursename a.color-2{
-	color:#2BA6CB;
+	color:#F44A38;
+
+}
+
+
+span.coursename a.color-3{
+	color:#458C33;
+
+}
+
+span.coursename a.color-4{
+	color:#5B1387;
+
+}
+
+
+span.coursename a.color-5{
+	color:#FFA10B;
+
+}
+
+span.coursename a.color-6{
+	color:#FFE000;
 
 }
 

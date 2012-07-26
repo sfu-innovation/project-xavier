@@ -714,7 +714,7 @@ function renderExcerpt(excerpt) {
 // if the subject is new, give a new color, otherwise use the old one;
 
 function stylePicker() {
-	var available_styles = ['color-1', 'color-2'];
+	var available_styles = ['color-1', 'color-2','color-3', 'color-4','color-5', 'color-6'];
 	var subjects = {};
 
 	this.getStyle = function (subject) {

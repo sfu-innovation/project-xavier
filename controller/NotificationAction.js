@@ -182,6 +182,11 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 			}
 			var listeners = new Object();
 			listeners.uuid = listenerArray;
+			if ( listenerArray.length === 0 ){
+				console.log("[NotificationListener.findUserSpecificNotificationListeners] error - There are no notification listeners for this user");
+				callback( null , new Array());
+				return;
+			}
 			UserNotification.findUserNotificationsByListenerUUID( listeners , function( error, usernotifications ){
 			
 				if ( error ){
@@ -279,7 +284,11 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 			
 			var listeners = new Object();
 			listeners.uuid = arr;
-			
+			if ( arr.length === 0 ){
+				console.log("[NotificationListener.findUserSpecificNotificationListeners] error - There are no notification listeners for this user");
+				callback( null , new Array());
+				return;
+			}
 			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
 			
 				if ( error ){

@@ -167,5 +167,5 @@ node_modules/*
 test-app.js
 test.js
 
-
+.xml
 ./idea

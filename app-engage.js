@@ -11,6 +11,7 @@ app.configure(function() {
 	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
+	app.use(express.limit('1mb'));
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
@@ -135,7 +136,7 @@ app.get('/logout', routesCommon.logout);
 
 app.get('/', routesEngage.index);
 
-app.get('/preference', routesEngage.preference);
+//app.get('/preference', routesEngage.preference);
 
 app.get('/starred', routesEngage.starred);
 
@@ -146,6 +147,7 @@ app.get('/instructor', routesEngage.instructor);
 app.get('/profile/:id', routesEngage.profile);
 
 app.get('/preference', routesEngage.preference);
+app.post('/preference',routesEngage.preference)
 
 //article - this is resource
 app.get('/course/:name', routesEngage.courseView);

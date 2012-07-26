@@ -125,6 +125,7 @@ app.post("/api/search/page/:page", routesRqra.search); // search based on a quer
 app.post("/api/comment",routesRqra.comment); // post a new comment by user id stored in seesion object
 
 app.get("/api/comments/page/:page", routesRqra.comments); //P get all comments
+app.delete("/api/comments/", routesRqra.comments);
 app.get("/api/comment/count/:uid", routesRqra.commentCount);
 app.get("/api/comment/:uid", routesRqra.comment); // get a comment by id
 app.put("/api/comment/:uid", routesRqra.comment); // updates a question by id

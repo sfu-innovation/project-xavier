@@ -278,8 +278,8 @@ li.has-flyout#notification ul li p.msg span.username{
 }
 
 li.has-flyout#notification a.notification{
-	padding: 10px;
-	height: 50px;
+	padding:15px;
+	height: 60px;
 }
 /* -----------------------------------------
    box container of articles previews
@@ -703,6 +703,19 @@ div#article_container #article{
 
 }
 
+div#article_container .columns:first-child.night{
+	color:white;
+	background-color: black;
+}
+
+div#article_container div#article.larger p{
+	font-size: 22px;
+}
+
+div#article_container div#article.larger h1{
+	font-size: 30px;
+}
+
 div#article_container #article img{
 	display: block;
 	}
@@ -988,7 +1001,20 @@ div#upload_avatar{
 	padding: 5px 10px;
 	border: 1px solid #9e9e9e;
 	width: 120px;
+	background-color: #eee;
+	overflow:hidden;
 }
+
+.browsebox {
+	position: relative;
+	overflow:hidden;
+}
+
+.browsebox input {
+	position: absolute;
+	opacity: 0;
+}
+
 
 div#preference .columns:first-child a{
 	float: right;	

@@ -15,7 +15,6 @@ $(document).ready(function () {
 	var accent = new coreApi.Accent();
 	var common = new coreApi.Common();
 
-
 	loadAllQuestions(rqra);
 	loadAllComments(rqra);
 

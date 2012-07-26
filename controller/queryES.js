@@ -583,6 +583,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	switchIndex(appType);
 	switchMapping(1);
 
+	console.log(JSON.stringify(data))
 	mapping.search(data, function(err, data){
 		if(err)
 			return callback(err);

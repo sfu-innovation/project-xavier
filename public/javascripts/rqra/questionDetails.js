@@ -54,7 +54,7 @@ function loadPage(first) {
 			question.innerHTML = formatQuestion(data.question);
 			
 			// get comments
-			rqra.getCommentsByTargetId(questionId, 0, function(data) {
+			rqra.getCommentsByTargetId(questionId, '-', function(data) {
 				commentList.innerHTML = "";
 				if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
 					//displayPageNumbers(data.questions.total);

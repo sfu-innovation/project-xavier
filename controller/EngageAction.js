@@ -8,11 +8,18 @@ var UserProfile = require('../models/userProfile.js');
 
 var commentsHelper = exports.commentsHelper = function(json ,callback){
 
+
 	if (json && json.total &&  json.hits){
 		var comments = json.hits;
 		var new_comments = [];
+		var id_name_list = [];
+		var child_parent_list = [];
+
 		comments.forEach(function(comment){
 			var new_comment = {};
+			id_name_list[comment._id] = comment.user.firstName + ' ' + comment.user.lastName;
+			child_parent_list[comment._id] = comment._source.commentParent;
+			console.log(child_parent_list);
 			new_comment.user = comment.user;
 			new_comment.profile = comment.profile;
 			new_comment.uuid = comment._id;
@@ -26,9 +33,49 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 
 		})
 
+		new_comments.forEach(function(comment){
+			comment.reply_to = id_name_list[comment.parent_uuid];
+		})
+
+		var getAncestor = function(child){
+			var parent = getParent(child);
+			if (parent){
+				return getAncestor(parent);
+			}
+			else{
+				return child;
+			}
+
+		}
+
+		var getParent = function(child){
+			return child_parent_list[child];
+		}
 
 
-		callback(null,new_comments);
+
+		var map = [];
+		var counter = 0;
+		var super_new_comments = [];
+
+		new_comments.forEach(function(comment){
+			if (!comment.parent_uuid){
+				map[comment.uuid] = counter;
+				counter ++;
+				comment.replies = [];
+				super_new_comments.push(comment)
+			}
+		})
+
+		new_comments.forEach(function(comment){
+			if (comment.parent_uuid){
+				super_new_comments[map[getAncestor(comment.uuid)]].replies.push(comment);
+			}
+		})
+
+
+		callback(null,super_new_comments);
+
 
 
 	}

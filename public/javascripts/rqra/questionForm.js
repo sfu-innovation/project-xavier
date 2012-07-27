@@ -19,6 +19,14 @@ function LoadCourseBox() {
 	});
 }
 
+function refreshQuestionListHeader() {
+
+}
+
+function refreshQuestionsList() {
+
+}
+
 function RefreshWeekBox() {
 	var courseId = document.getElementById("courseBox").value;
 	var weekBox = document.getElementById("weekBox");

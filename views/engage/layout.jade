@@ -61,6 +61,9 @@ html
 				div.eight.columns#nav-bar
 					ul.hide-for-small#options
 						li
+							a(href="/")
+								img(href="/", src="/images/engage/SFUEngage_draft3-03.png")
+						li
 							a#all_btn(href="/") All Resources
 						li
 							a#contruibutions_btn(href="/mine") Your Contributions
@@ -68,62 +71,62 @@ html
 							a#starred_btn(href="/starred") Starred
 						li
 							a#instructor_btn(href="/instructor") Instructor Posts
-				div.four.columns.dropdown#user_options					
-					ul.nav-bar#user_options_list
-						li.has-flyout#notification
-							a
-								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-								span.number 4
-							ul.flyout.small
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Mark 
-											| just shared an resource in 
-											span.coursename IAT 200.
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Catherine 
-											| just shared an resource in 
-											span.coursename IAT 200.
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Mark 
-											| liked your article in 
-											span.coursename BUS 354
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Ted 
-											| liked your article in 
-											span.coursename BUS 354
-						li.has-flyout
-							a
-								| #{ user.firstName } #{ user.lastName }
-							a(href="#").flyout-toggle
-								span
-							ul.flyout.small
-								li
-									a(href="/profile/#{user.uuid}") my profile
-								li
-									a(href="/preference") preference
-								li
-									a(href="/logout") log out
 				
-						li.has-flyout#courses_list
-							a(href="#") Courses
-							a(href="#").flyout-toggle
-								span
-							ul.flyout.small
-								each item in courses
-									li.courses
-										a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+				div.four.columns.dropdowns#user_options					
+					ul#user_options_list
+						li#notification
+							img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+							span#notification_number 4
+							div.dropdown_list
+								ul
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Mark 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Catherine 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Mark 
+												| liked your article in 
+												span.coursename BUS 354
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Ted 
+												| liked your article in 
+												span.coursename BUS 354
+						li#user_information
+							span #{ user.firstName } #{ user.lastName }
+							span.typicn.next
+							div.dropdown_list
+								ul
+									li
+										a(href="/profile/#{user.uuid}") my profile
+									li
+										a(href="/preference") preference
+									li
+										a(href="/logout") log out
+				
+						li#courses_list
+							span Courses
+							span.typicn.next
+							div.dropdown_list
+								ul
+									each item in courses
+										li.courses
+											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 
 										
 			div.row.show-for-small

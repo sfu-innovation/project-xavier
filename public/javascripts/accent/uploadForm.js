@@ -16,6 +16,7 @@ function fillCourseDD(){
 
 function fillSectionDD(){
 	var courseID = $('select[name|="course"]').val();
+	$('select[name|="section"]').empty();
 	common.sectionsInCourse(courseID, function(data){
 		if (data && data.errorcode === 0){
 			for(var i = 0; i < data.sectionsInCourse.length; ++i){

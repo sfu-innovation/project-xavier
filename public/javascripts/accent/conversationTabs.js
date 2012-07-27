@@ -35,7 +35,7 @@ function formatFollowing(type, questionUser) {
 function formatResponse(response) {
 	return "<div class='Message'>"
 			+ "<span class='Author'>" 
-			+ "<image src='../images/accent/bernie.jpg'>" 
+			+ "<image src='../images/accent/" + response._source.user + ".jpg'>" 
 			+ response._source.user
 			+ "</span>"
 			+ " " + response._source.body		
@@ -149,6 +149,10 @@ function displayQuestions(course) {
 
 }
 
+function formatTextInput() {
+	return "<input type='text' placeholder='Add something to the conversation' style='width: 90%; padding: 7px; margin-top: 20px'/>";
+}
+
 function displayConversations(questionID, callback) {	
 	// My conversations
 	var conversationStr = "<div class='Conversation'>";
@@ -174,7 +178,8 @@ function displayConversations(questionID, callback) {
 				allStr += formatConversation(item);
 			}						
 		});
-		topStr += "</div>";		
+		topStr += "</div>";	
+		allStr += formatTextInput();
 		allStr += "</div>";
 		//topConversationList.replaceWith(topStr);
 		//allConversationList.replaceWith(allStr);

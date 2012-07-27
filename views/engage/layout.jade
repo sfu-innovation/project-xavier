@@ -78,7 +78,30 @@ html
 							function dropdownToggle(id){
 								$(id).toggle();
 								}
-							
+						li
+							div(onClick="dropdownToggle('#course_list')")
+								span Courses
+								span.typicn.next
+							div.dropdown_list#course_list
+								ul
+									each item in courses
+										li.courses
+											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+	
+						li
+							div(onClick="dropdownToggle('#user_info')")
+								span #{ user.firstName } #{ user.lastName }
+								span.typicn.next
+							div.dropdown_list#user_info
+								ul
+									li
+										a(href="/profile/#{user.uuid}") My Profile
+									li
+										a(href="/preference") Preference
+									li
+										a(href="/logout") Logout
+										
+
 						li#notification
 							div(onClick="dropdownToggle('#notif')")
 								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
@@ -113,30 +136,6 @@ html
 												span.username Ted 
 												| liked your article in 
 												span.coursename BUS 354
-						li
-							div(onClick="dropdownToggle('#user_info')")
-								span #{ user.firstName } #{ user.lastName }
-								span.typicn.next
-							div.dropdown_list#user_info
-								ul
-									li
-										a(href="/profile/#{user.uuid}") my profile
-									li
-										a(href="/preference") preference
-									li
-										a(href="/logout") log out
-				
-						li
-							div(onClick="dropdownToggle('#course_list')")
-								span Courses
-								span.typicn.next
-							div.dropdown_list#course_list
-								ul
-									each item in courses
-										li.courses
-											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
-
-										
 			div.row.show-for-small
 				div.button-bar.ten.columns
 					ul.button-group#mobile-nav

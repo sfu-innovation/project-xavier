@@ -8,7 +8,7 @@ $(document).ready(function () {
 				p = $(this).parent().parent(),
 				wasSelected = p.hasClass("Selected");
 
-			console.log(wasSelected)
+			//console.log(wasSelected)
 			
 			p.parent().find("li.Selected").removeClass("Selected");
 
@@ -25,11 +25,13 @@ $(document).ready(function () {
 			followNode.addClass("Unfollow");
 			followNode.text("Unfollow");			
 			
-			var questionID = $(followNode.parent().find("a.UUID")).text();
-			console.log(questionID);
+			var questionID = $(followNode.parent().find("a.UUID")).text();			
 			
-			rqra.followQuestionById(questionID,function(result){
-				console.log("Unfollow it");
+			rqra.followQuestionById(questionID,function(result){				
+				var myConversation = $("#myConversations ul.Conversations");				
+				var moveFollowSelected = followNode.parent().parent();
+				
+				myConversation.append(moveFollowSelected);				
 				
 			});	
 			return false;		
@@ -44,9 +46,12 @@ $(document).ready(function () {
 			followNode.text("Follow");			
 				
 			var questionID = $(followNode.parent().find("a.UUID")).text();
-			console.log(questionID);			
-			rqra.unfollowQuestionById(questionID,function(result){
-				console.log("Follow it")			
+						
+			rqra.unfollowQuestionById(questionID,function(result){								
+				var classConversation = $("#classConversations ul.Conversations");
+				var moveUnfollowSelected = followNode.parent().parent();
+				
+				classConversation.append(moveUnfollowSelected);					
 				
 			});	
 			return false;		

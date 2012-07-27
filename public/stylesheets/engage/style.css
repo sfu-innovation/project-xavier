@@ -36,15 +36,13 @@ div#header{
 	-moz-box-shadow: 0 0 5px #9e9e9e;
 	-webkit-box-shadow: 0 0 5px #9e9e9e;
 	box-shadow: 0 0 5px #9e9e9e;
+	padding-top:20px;
 }
 
-div#header #nav-bar{
-	background-image: url("/images/engage/SFUEngage_draft3-03.png");
-	background-position: left;
-	padding-left: 160px;
-	background-size: 150px;
-	background-repeat: no-repeat;
-	padding-top: 20px;
+
+
+#header ul#options li img{
+	height: 50px;
 }
 
 #header ul#options{
@@ -52,20 +50,26 @@ div#header #nav-bar{
 	list-style: none;
 	white-space: nowrap;
 	float: left;
+	margin-bottom: 10px;
 }
 
 #header ul#options li{
 	display: inline-block;
 	padding: 0 15px !important;
+	vertical-align: middle;
+	color: #9e9e9e;
 }
 
-
-div#nav #options li a.active{
-	border-bottom: 4px solid #9e9e9e;
+#header ul#options li a{
+	color: #9e9e9e;
 }
 
-div#nav ul#options li:hover a{
-	border-bottom: 4px solid #9e9e9e;
+#header ul#options li a.active{
+	border-bottom: 1px solid #9e9e9e;
+}
+
+#header ul#options li:hover a{
+	border-bottom: 1px solid #9e9e9e;
 }
 
 /* -----------------------------------------
@@ -132,132 +136,50 @@ ul#mobile-nav li.course{
    right section of the HEADER, course and user box
 ----------------------------------------- */
 
-#header .dropdown .nav-bar{
-	margin-top: 5px !important;
-	background-color: #f2f2f2 ;
+ul#user_options_list{
+	list-style: none;
+	margin-bottom: 0;
+	text-align: right;
 }
 
-
-div.dropdown#user_options{
-	margin-top: 10px;
-}
-
-div.dropdown ul{
-	float: right;
-	border: 0;
-	background-color: white;
+ul#user_options_list li{
+	margin: 0 15px;
+	display: inline-block;
+	vertical-align: middle;
 	}
 	
-div.dropdown ul li{
-	border: 0;
-	color: #9e9e9e !important;
-	width: 166.667px !important;
+ul#user_options_list li#notification img{
+	height: 45px;
+	width: 45px;
+	-moz-box-shadow: 0 0 2px #9e9e9e;
+	-webkit-box-shadow: 0 0 2px #9e9e9e;
+	box-shadow: 0 0 2px #9e9e9e;
 	}
 	
-	
-div.dropdown ul li a{
-	color: #9e9e9e !important;
-	}	
-	
-.nav-bar > li.has-flyout > a:first-child::after {
-	/*this is for the down arrow*/
-	border-color: #b3b3b3 transparent transparent transparent;
-	}
-	
-.nav-bar > li:last-child {
-	border: 0 !important;
-	}
-
-
-.nav-bar#user_options_list > li.has-flyout > a:first-child{
-	font-weight: bold;
-
-
-}
-
-.nav-bar#user_options_list li:hover{
-	background-color: inherit;
-	color: inherit;
-	}
-#user_options_list img.avatar{
-	height: 46px;
+ul#user_options_list span#notification_number{
+	display: block;
 	position: absolute;
-	margin-top: -6px;
-	-moz-box-shadow: 0 0 5px #9e9e9e;
-	-webkit-box-shadow: 0 0 5px #9e9e9e;
-	box-shadow: 0 0 5px #9e9e9e;
-
-}
-
-
-.dropdown ul#courses_list{
-	height: 30px !important;
-	
-}
-
-.dropdown ul#courses_list li{
-	line-height: 30px !important;
-	
-	}
-	
-.dropdown ul#courses_list ul{
-	margin-top: -9px;
-}
-li.has-flyout#notification{
-	z-index: 10;
-}
-li.has-flyout#notification a{
-	margin-left: -58px;
-	position: relative;
-}
-li.has-flyout#notification span.number{
-	position: absolute;
-	color: white;
-	background-color: #D35F5E;
-	height: 20px;
+	background-color: red;
+	-moz-box-shadow: 0 0 2px #9e9e9e;
+	-webkit-box-shadow: 0 0 2px #9e9e9e;
+	box-shadow: 0 0 2px #9e9e9e;
 	width: 20px;
-	margin-top: 21px;
-	margin-left: -5px;
-	line-height: 19px;
-	padding-left: 5px;
-	}
-
-li.has-flyout#notification ul{
-	box-shadow: none;
-	border: none;
-	
-}
-li.has-flyout#notification ul li{
-	position: relative;
-	box-shadow: none;
-
-	}
-	
-li.has-flyout#notification ul li img.user_avatar{
-	float: left;
-	height: 30px;
-	margin-right: 10px;
-}
-
-li.has-flyout#notification ul li p.msg{
-	display: inline;
-}
-
-li.has-flyout#notification ul li p.msg a{
-	display: inline;
-	}
-	
-li.has-flyout#notification ul li p.msg span.coursename{
-	display: inline;
-	}
-	
-li.has-flyout#notification ul li p.msg span.username{
+	height: 20px;
+	color: white;
 	font-weight: bold;
+	text-align: center;
+	margin-left: -6px;
+	margin-top: -20px;
+}
+	
+ul#user_options_list li div.dropdown_list{
+	display: none;
 }
 
-li.has-flyout#notification a.notification{
-	padding:15px;
-	height: 60px;
+ul#user_options_list span.typicn.next{
+	position: absolute;
+	-webkit-transform: rotate(90deg); 
+	-moz-transform: rotate(90deg);	
 }
 /* -----------------------------------------
    box container of articles previews

@@ -43,14 +43,15 @@ block content
 				p #{ article.description }
 				span.createtime #{article.createdAt}
 				span.like_reply
-					a like (3) 
-					a#reply_click(onclick = 'show_comment_box("0_0")') reply 
+
+					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") reply
 						span.typicn.forward
-			div.reply_box(id ="0_0", style="display: none")
-				span replying to #{article.user.firstName} #{article.user.lastName}
-				form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
-					textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")		
-					input(type="submit", value="Post")
+
+
+
+
+
+
 
 			- var comment_id = 1
 			h5 Comments
@@ -80,7 +81,7 @@ block content
 								textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
 								input(type="submit", value="Post")
 						- reply_id = reply_id + 1			
-					div.reply_box(id = "#{comment_id}_0", style="display: none")
+					div.reply_box(id = "#{comment_id}_0", style="")
 						span replying to #{comment.user.firstName} #{comment.user.lastName}
 						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
 							textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			

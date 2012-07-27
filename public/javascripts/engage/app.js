@@ -46,8 +46,9 @@ jQuery(document).ready(function ($) {
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
 		loadComments(engage);
-		$('.reply_click').live('click',function(){
-			$('.reply_box').remove();
+		$('.reply_click').bind('click',function(){
+
+			$('.reply_box').remove();   //remove all other reply box
 			var self = $(this);
 			if (self.attr('data-reply-type') === 'super'){
 				var target_uuid = $(this).attr('data-target-uuid');
@@ -57,6 +58,8 @@ jQuery(document).ready(function ($) {
 				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
 
 			}
+
+
 		})
 
 		$('#article_options span#options span:nth-child(3) ').bind('click', function () {

@@ -518,6 +518,9 @@ div.likescomments span:hover{
 
 div.likescomments span.comment_btn{
 	background-image: url("/images/engage/icon/16x16/Comment_v1.png");
+	background-size: 15px;
+	background-position: 0 1px;
+}
 
 }
 

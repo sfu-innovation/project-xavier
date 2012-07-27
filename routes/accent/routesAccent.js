@@ -205,8 +205,10 @@ exports.mediafile = function(request,response){
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
 			
+			console.log("\n\n" + util.inspect(request.files.mediafile) + "\n\n")
 			var filepath = request.files.mediafile.path.split('/');
 			var filename = filepath[filepath.length - 1];
+			var filetype = request.files.mediafile.type;
 			
 			var mediaFile = {
 				user: request.session.user.uuid,
@@ -219,8 +221,17 @@ exports.mediafile = function(request,response){
 			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
 				if(!error){
 					console.log("filepath: " + filepath + " filename: " + filename);
-					//Convert media using ffmpeg
-					var args = [
+					
+					//Convert audio using ffmpeg
+					var audioArgs = [
+						'-i', request.files.mediafile.path,
+						'-threads', '0',
+						'-f', 'wav',
+						'media/' + filename
+					]
+
+					//Convert video using ffmpeg
+					var videoArgs = [
 						'-i',
 						request.files.mediafile.path,
 						'-vcodec', 'libx264',
@@ -250,7 +261,13 @@ exports.mediafile = function(request,response){
 						'-f', 'mp4', 
 						'media/' + filename
 					]
-					var ffmpeg = child.spawn('ffmpeg', args);
+
+					if(filetype.match(/audio/)){
+						var ffmpeg = child.spawn('ffmpeg', audioArgs);
+					}
+					else if(filetype.match(/video/)){
+						var ffmpeg = child.spawn('ffmpeg', videoArgs);
+					}
 
 					ffmpeg.stderr.on('data', function (data) {
 					 	console.log('stderr: ' + data);

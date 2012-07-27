@@ -59,13 +59,13 @@ jQuery(document).ready(function ($) {
 			}
 		})
 
-		$('#article_options span#options span::nth-child(3) ').bind('click', function () {
+		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
 
 			return false;
 		})
 
-		$('#article_options span#options span::nth-child(4) ').bind('click', function () {
+		$('#article_options span#options span:nth-child(4) ').bind('click', function () {
 			$("#article").toggleClass('larger');
 
 			return false;
@@ -79,7 +79,16 @@ jQuery(document).ready(function ($) {
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
+		if (!weekNum){
+			weekNum = weekConverter();
+		}
+
+		else{
+			weekNum = parseInt(weekNum);
+		}
+
 		loadCourseArticles(engage, weekNum);
+		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
@@ -871,7 +880,7 @@ function stylePicker() {
 }
 
 //2012-07-21T00:00:24.000Z
-function weekConverter(post_date, semester_start_date) {
+function weekConverter() {
 
 	Date.prototype.getWeek = function () {
 		var onejan = new Date(this.getFullYear(), 0, 1);
@@ -879,9 +888,9 @@ function weekConverter(post_date, semester_start_date) {
 	}
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
-	var post_date = new Date(Date.parse(post_date));
-	var semester_start_date = new Date(Date.parse(semester_start_date));
-	return post_date.getWeek() - semester_start_date.getWeek() + 1;
+	var current_date = new Date();
+	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
+	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
 }

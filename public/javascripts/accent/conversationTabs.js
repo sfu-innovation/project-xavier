@@ -35,7 +35,7 @@ function formatFollowing(type, questionUser) {
 function formatResponse(response) {
 	return "<div class='Message'>"
 			+ "<span class='Author'>" 
-			+ "<image src='../images/accent/bernie.jpg'>" 
+			+ "<image src='../images/accent/" + response._source.user + ".jpg'>" 
 			+ response._source.user
 			+ "</span>"
 			+ " " + response._source.body		

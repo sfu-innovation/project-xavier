@@ -117,7 +117,13 @@ jQuery(document).ready(function ($) {
 		loadAllArticles(engage, weekNum);
 
 		$('.flip_btn').bind('click',function(){
+			$('div.cover').addClass('hack');
 			$('div.cover').toggleClass('flip');
+		})
+
+		$('.selectcourse .dropdown a').bind('click',function(){
+			$('div.cover').removeClass('hack');
+
 		})
 
 		$('#submitnew form').bind('submit',function(){

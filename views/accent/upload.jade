@@ -1,0 +1,24 @@
+include ./component/header
+
+div#Container
+	a.Archives.Button(href="") Archives
+	include ./component/courseList
+
+	div#Content
+		form(action="/api/mediafile", enctype="multipart/form-data", method="POST")
+			div
+				|Title: 
+				input(type="text", name="title")
+			div
+				|Description:
+				input(type="text", name="description")
+			div
+				|Course:
+				select(name="course")
+			div
+				|Section:
+				input(type="text", name="section", value="week 1")
+			input(type="file", name="mediafile")
+			input(type="submit", value="UPLOAD!")
+
+script(type="text/javascript", src="../javascripts/accent/uploadForm.js")

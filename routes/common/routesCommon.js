@@ -400,6 +400,7 @@ exports.sectionsInCourse = function(request, response){
 	if(request.method === "POST"){
 		OrganizationAction.sectionsInCourse(request.body, function(error, result){
 			if (result) {
+				console.log(JSON.stringify(result));
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, sectionsInCourse: result }));
 			} else {

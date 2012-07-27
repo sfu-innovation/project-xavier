@@ -66,6 +66,19 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.sectionsInCourse = function(course, callback){
+			console.log("API - sectionsInCourse " + course);
+			$.ajax({
+				url:'/api/section/course',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify({course: course}),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
 
 
 	}

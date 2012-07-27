@@ -165,12 +165,13 @@ jQuery(document).ready(function ($) {
 		})
 	}
 
-	$('span.typicn.star').live('click', function () {
+	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
 		var resource_uuid = $(this).parent().parent().attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
+					self.removeClass('unstarred');
 					self.addClass('starred');
 				}
 
@@ -180,13 +181,14 @@ jQuery(document).ready(function ($) {
 
 	})
 
-	$('span.typicn.star.starred').live('click', function () {
+	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
 		var resource_uuid = $(this).parent().parent().attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
 					self.removeClass('starred');
+					self.addClass('unstarred');
 					if (window.location.toString().indexOf('starred') != -1) {
 						self.parent().parent().parent().fadeOut('slow', function () {
 							$(this).remove();
@@ -750,8 +752,8 @@ function renderArticlePreviewBox(item) {
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
 
-			+ '<span class="like_btn disliked"> Like (<em>' + item.likes + '</em>) </span>'
-			+ '<span> Comments (' + item.totalComments + ') </span>'
+			+ '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
+			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'
 			+ '</div>';
@@ -799,10 +801,10 @@ function isProf(user_type) {
 
 function renderStar(starred) {
 	if (starred) {
-		return '<span class="typicn star starred"></span>';
+		return '<span class="star_btn starred">Star</span>';
 	}
 	else {
-		return '<span class="typicn star"></span>'
+		return '<span class="star_btn unstarred">Star</span>'
 	}
 }
 

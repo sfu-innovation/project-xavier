@@ -9,7 +9,6 @@ function formatQuestion(question) {
 	return "<div class='question'>"
 			+ "<div class='questionTitle'>" + question._source.title + "</div>"
 			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
 			+ "<div class='questionData'>"
 				+ "<div style='" + instructorStyle + "'>"
 				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
@@ -18,7 +17,8 @@ function formatQuestion(question) {
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
-			+ "</div>";
+			+ "</div>"
+			+ "<div class='questionDetailsText'>" + question._source.body + "</div><hr/>";
 }
 
 function formatComment(comment) {
@@ -32,7 +32,7 @@ function formatComment(comment) {
 		badCommentStyle = "color: #AAAAAA;";
 	}
 	
-	return "<div class='question' style='" + instructorStyle + badCommentStyle + "'>"
+	return "<div class='comment' style='" + instructorStyle + badCommentStyle + "'>"
 			+ "<div class='questionId'>" + comment._id + "</div>"
 			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
 			+ "<div class='questionData'>"

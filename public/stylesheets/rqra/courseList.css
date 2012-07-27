@@ -5,7 +5,7 @@ div#courseList {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	margin-bottom: 2.75em;
+	margin-bottom: 30px;;
 	z-index: -100;
 }
 
@@ -20,8 +20,8 @@ div.courseButton {
 	color: white;
 	background: #394161;
 	padding: 0em;
-	height: 2.1em;
-	width: 6.4em;
+	height: 25px;
+	width: 80px;
 	border-bottom: 4px solid white;
 	cursor: pointer;
 }
@@ -54,6 +54,7 @@ div.courseButtonText {
 	left: 0.95em;
 	top: 0.45em;
 	text-align: center;
+	font-size: 11px;
 }
 
 div.courseButtonSelected {

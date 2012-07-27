@@ -2,12 +2,20 @@ div#questionListContent {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
-	width: 70%;
 }
 
-h1#courseTitle {
+div#infolist {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	display: box;
+	box-orient: horizontal;
+}
+
+h2#courseTitle {
 	font-weight: normal;
-	font-size: 0.95em;
+	font-size: 11px;
 	margin-bottom: 0.3em;
 }
 
@@ -15,11 +23,12 @@ span.inserted {
 	text-decoration:underline;
 }
 
-h2#sectionTitle {
+h1#sectionTitle {
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 24px;
 	margin-top: 0em;
 	margin-bottom: 0.2em;
+	width: 690px;
 }
 
 span#sectionName {
@@ -28,12 +37,11 @@ span#sectionName {
 
 div#questionHeader {
 	display: -webkit-box;
-	-webkit-box-orient: horizontal;
+	-webkit-box-orient: vertical;
 	display: -moz-box;
-	-moz-box-orient: horizontal;
+	-moz-box-orient: vertical;
 	display: box;
-	box-orient: horizontal;
-	width: 120%;
+	box-orient: vertical;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
@@ -44,11 +52,10 @@ div#questionCount {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	margin-top: 1.6em;
-	margin-right: 1.6em;
-	font-size: 2em;
+	margin-left: 60px;
+	margin-top: 1.0em;
+	font-size: 34px;
 	font-weight: bold;
-	float: right;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
@@ -63,10 +70,12 @@ div#questionCountText {
 	-moz-box-orient: vertical;
 	display: box;
 	box-orient: vertical;
-	font-size: 0.5em;
+	padding-top: 4px;
+	font-size: 12px;
 	font-weight: normal;
 }
 
+/* grayed out color: c6c6c6*/
 div#questionTabs {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
@@ -78,9 +87,9 @@ div#questionTabs {
 }
 
 div#questionTabs div.tab {
-	margin: 5px;
 	margin-top: 0em;
-	font-size: 0.95em;
+	font-size: 12px;
+	padding-right: 20px;
 	color: #1b88d0;
 	text-decoration:underline;
 	cursor: pointer;
@@ -88,20 +97,47 @@ div#questionTabs div.tab {
 
 div#askNewQuestionText {
 	margin-top: 0.5em;
+	margin-bottom: 20px;
 	padding: 0.5em;
 	font-size: 1.5em;
 }
 
 div#askNewQuestionText, a#askNewQuestionLink {
+	margin-top: 40px;
+	margin-left: -10px;
+	font-size: 18px;
+	width: 705px;
+	padding: 10px;
 	color: white;
 	background: #1b88d0;
 }
 
+div#detailedQuestion {
+	width: 690px;
+	margin-top:  35px;
+}
+
+div#detailedQuestion div.question {
+	width: 690px;
+}
+
+/* yellow boxes should be padded 10px; */
 div.question {
-	padding: 5px;
-	margin-top: 1em;
-	margin-bottom: 1em;
+	width: 550px;
+	margin-bottom: 17px;
+	font-size: 18px;
+	font-weight: 200;
 	cursor: pointer;
+	color: #4d4d4d;
+	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+}
+
+div.comment {
+	width: 550px;
+	margin-bottom: 30px;
+	font-size: 18px;
+	font-weight: 200;
+	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
@@ -122,17 +158,23 @@ div.questionId {
 }
 
 div.questionTitle {
-	width: 80%;
-	font-size: 3em;
+	font-size: 36px;
+	font-weight: bold;
 }
 
 div.questionText {
-	font-size: 1.5em;
+	font-size: 18px;
+	margin-bottom: 9px;
 }
 
 div.questionDetailsText {
-	font-size: 1.5em;
-	width: 70%;
+	font-size: 18px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+hr {
+	border-bottom: 1px red;
 }
 
 div.questionData {
@@ -142,11 +184,11 @@ div.questionData {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	font-size: 0.95em;
+	font-size: 11px;
 }
 
 div.questionData div {
-	padding: 0.2em;
+	padding-right: 4px;
 	margin-right: 1.4em;
 }
 
@@ -184,31 +226,44 @@ div.votes img {
 	height: 1em;
 }
 
+span.upVoteCount {
+	color: #39b54a;
+}
+
+span.downVoteCount {
+	color: #ee2a7b;
+}
+
 hr#replyDivider {
 	margin: 0em;
 	margin-bottom: 2em;
-	width: 70%;
 }
 
 div#addReplyText {
-	font-size: 1.5em;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 div#replyButton {
 	color: white;
 	background: #1b88d0;
-	padding: 6px;
-	width: 3em;
-	cursor: pointer;
 	padding: 10px;
-	font-size: 1em;
+	width: 60px;
+	cursor: pointer;
+	font-size: 12px;
+	text-align: center;
 	font-weight: bold;
 	margin-bottom: 3em;
 }
 
 textarea#replyText {
-	width: 70%;
-	height: 12.8em;
+	width: 530px;
+	height: 160px;
+	padding: 10px;
+	border-width: 1px;
+	margin-bottom: 10px;
+	border-color: #4d4d4d;
 }
 
 input#tagText {

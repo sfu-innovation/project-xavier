@@ -1,14 +1,14 @@
 div#header
 	a(href="/")
-		img#logo(src="../images/img.png", alt="logo")
-	div#askQuestion Ask a Question
-		input#askQuestionInput(type="text")
+		img#logo(src="../images/rqra/logo.png", alt="logo")
+	div#askQuestion
+		input#askQuestionInput(type="text", value="Ask a Question")
 	div#profile
 		div#profiletext
 			div#profileGreeting Hey there,
 			div#profileName #{user.firstName} #{user.lastName}
 		div#profilePicture
-			img(src="../images/img.png", alt="profile", onclick="showNotificationMenu()")
+			img(src="../images/rqra/avatar.jpg", alt="profile", onclick="showNotificationMenu()")
 			div#newNotificationCount 1
 			nav#notificationList
 				include ./notificationList

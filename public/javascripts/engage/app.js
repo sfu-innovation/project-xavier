@@ -792,7 +792,7 @@ function formartDate(old_date) {
 
 function isProf(user_type) {
 	if (user_type === 1) {
-		return '<span id="prof" title="instructor" class="typicn tick"></span>'
+		return '<span id="prof" title="instructor"><img src="/images/engage/icon/16x16/Instructor_v1.png"/></span>'
 	}
 	else {
 		return '';

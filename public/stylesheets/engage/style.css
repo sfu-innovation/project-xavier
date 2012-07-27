@@ -444,15 +444,10 @@ div.innercontents .post_time{
 	font-weight: 400;
 	}
 	
-div.innercontents #prof{
-	background-color: #2BA6CB;
-	border-radius: 10px;
-	color:white;	
+div.innercontents span#prof img{
+	opacity: 0.6;
+	vertical-align: bottom;
 	margin-left: 5px;
-	padding: 1px;
-	padding-top:3px;
-	padding-bottom: 0;
-	float: right;
 }
 
 

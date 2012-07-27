@@ -512,11 +512,13 @@ div.likescomments span{
 	}
 
 div.likescomments span{
+	line-height:15px;
 	color: #3B3B3B;
 	margin-left: 10px;
-
+	display: inline-block;
 
 	background-repeat: no-repeat;
+
 	padding-left: 18px;
 	opacity: 0.5;
 	cursor: pointer

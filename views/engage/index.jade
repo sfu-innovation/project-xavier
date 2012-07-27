@@ -19,7 +19,7 @@ block content
 			div.innercontents#submitnew
 				div.cover
 					div.frontCard
-						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Share or
 								a.flip_btn  upload a resource!
 							input(name="article_url",type="text", id="article_url", placeholder="http://")
@@ -33,7 +33,7 @@ block content
 								div.submit
 									input(type="submit", value="add", class="small button")
 					div.backCard
-						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
 								a.flip_btn  share a resource!
 

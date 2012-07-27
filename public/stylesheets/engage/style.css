@@ -510,26 +510,73 @@ div.likescomments span{
 	vertical-align: text-top;
 	
 	}
-	
-div.likescomments span.typicn.star{
-	color:white;
-	-moz-text-stroke: 1px #9e9e9e;
-	-webkit-text-stroke: 1px #9e9e9e;
-	font-size: 16px;
-	cursor: pointer;
+
+div.likescomments span{
+	color: #3B3B3B;
+	margin-left: 10px;
+
+
+	background-repeat: no-repeat;
+	padding-left: 18px;
+	opacity: 0.5;
+	cursor: pointer
 }
 
-div.likescomments span.typicn.star:hover{
-	color: yellow;
-	
-}
-div.likescomments span.typicn.starred{
-	color: yellow;
+div.likescomments span:hover{
+
+	opacity: 0.7;
 }
 
-div.likescomments span.typicn.starred:hover{
-	color: white;
+
+div.likescomments span.comment_btn{
+	background-image: url("/images/engage/icon/16x16/Comment_v1.png");
+
 }
+
+div.likescomments span.comment_btn:hover{
+
+	background-image: url("/images/engage/icon/16x16/Comment_v1.png");
+
+}
+
+div.likescomments span.star_btn.unstarred{
+	 background-image: url("/images/engage/icon/16x16/Star_v1.png");
+
+ }
+
+div.likescomments span.star_btn.unstarred:hover{
+	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
+
+
+}
+div.likescomments span.star_btn.starred{
+	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
+}
+
+div.likescomments span.star_btn.starred:hover{
+	background-image: url("/images/engage/icon/16x16/Star_v1.png");
+}
+
+
+
+div.likescomments span.like_btn.disliked{
+	background-image: url("/images/engage/icon/16x16/Like_v1.png");
+
+}
+
+div.likescomments span.like_btn.disliked:hover{
+	background-image: url("/images/engage/icon/16x16/Like_pressed_v1.png");
+
+
+}
+div.likescomments span.like_btn.liked{
+	background-image: url("/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+div.likescomments span.like_btn.liked:hover{
+	background-image: url("/images/engage/icon/16x16/Like_v1.png");
+}
+
 
 
 /* -----------------------------------------

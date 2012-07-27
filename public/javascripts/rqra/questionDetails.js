@@ -119,6 +119,8 @@ function loadPage(first) {
 						
 						});
 					}
+				} else {
+					commentList.innerHTML += "<div class='comment'>This Question has not yet been Answered</div>"
 				}
 			});
 		}

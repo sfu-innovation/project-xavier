@@ -2,6 +2,10 @@ em {
 	font-style: normal;
 }
 
+.hide{
+	display: none;
+}
+
 .clearfix:after {
 	visibility: hidden;
 	font-size: 0.1em;
@@ -176,11 +180,17 @@ ul#user_options_list span#notification_number{
 }
 	
 ul#user_options_list li div.dropdown_list{
-	display: none;
+	/*display: none;*/
 	position: absolute;
 	z-index: 100;
 	text-align: left;
 	background: #F2F2F2;
+
+}
+
+
+ul#user_options_list li div.dropdown_list.hide{
+	display: none;
 
 }
 	

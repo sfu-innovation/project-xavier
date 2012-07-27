@@ -76,13 +76,13 @@ html
 					ul#user_options_list
 						script(type='text/javascript')
 							function dropdownToggle(id){
-								$(id).toggle();
+								$(id).toggleClass('hide');
 								}
 						li
 							div(onClick="dropdownToggle('#course_list')")
 								span Courses
 								span.typicn.next
-							div.dropdown_list#course_list
+							div.dropdown_list#course_list.hide
 								ul
 									each item in courses
 										li.courses
@@ -92,7 +92,7 @@ html
 							div(onClick="dropdownToggle('#user_info')")
 								span #{ user.firstName } #{ user.lastName }
 								span.typicn.next
-							div.dropdown_list#user_info
+							div.dropdown_list#user_info.hide
 								ul
 									li
 										a(href="/profile/#{user.uuid}") My Profile
@@ -106,7 +106,7 @@ html
 							div(onClick="dropdownToggle('#notif')")
 								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
 								span#notification_number 4
-							div.dropdown_list#notif
+							div.dropdown_list#notif.hide
 								ul
 									li
 										a.notification

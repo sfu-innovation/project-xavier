@@ -16,10 +16,10 @@ function setSelected(button, select) {
 	var selectorBottom = button.querySelector(".courseButtonSelectorBottom");
 	if (selectorBottom) {
 		if (!select) {
-			selectorBottom.style.top = "2.5em";
+			selectorBottom.style.top = "40px";
 			selectorBottom.style.opacity = "0";
 		} else {
-			selectorBottom.style.top = "2.1em";
+			selectorBottom.style.top = "30px";
 			selectorBottom.style.opacity = "100";
 		}
 	}
@@ -47,7 +47,8 @@ function formatButton(name, uuid) {
 	return "<div class='courseButton' onclick='selectButton(this)'>"
 		+ "<div class='courseButtonSelectorTop'></div>"
 		+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
-		+ "<div class='courseButtonText'>" + name + "</div>"
+		+ "<div class='courseButtonTextContainer'>" 
+			+ "<div class='courseButtonText'>" + name + "</div></div>"
 		+ "<div class='courseButtonSelectorBottom'></div>"
 		+ "</div>";
 }

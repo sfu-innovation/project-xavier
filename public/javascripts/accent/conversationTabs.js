@@ -2,11 +2,11 @@ var rqra = new coreApi.Presenter();
 
 function formatQuestion(question, type, callback) {
 	displayConversations(question._id, function(conversation){
-		var followingType = formatFollowing(type);
+		var followingType = formatFollowing(type, question._source.user);
 		var questionStr = "<li>" 
 				+ "<div class='Question'>"
 				//+ "<span class='Course'>" + question._source.course + "</span>"
-				+ "<a href='' class=" + "'" + followingType + "'>" + followingType + "</a>"
+				+ "<a href='' class=" + "'" + followingType + "'>" + followingType + "</a>"				
 				+ "<a class='UUID' style='display:none;'>" + question._id + "</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
@@ -18,12 +18,16 @@ function formatQuestion(question, type, callback) {
 
 }
 
-function formatFollowing(type) {
-	var followType = "";
-	if (type === "myQuestions")
-		followType = "Unfollow";
-	else
+function formatFollowing(type, questionUser) {
+	var followType = "";	
+	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
+
+	if (type === "notMyQuestions")
 		followType = "Follow";
+	else if (sessionUser !== questionUser) {
+		followType = "Unfollow";
+	}		
+
 	return followType;
 }
 
@@ -100,9 +104,9 @@ function displayQuestions(course) {
 	
 	// searchQuery, searchType, courseName, weekNumber, page, callback
 	rqra.searchSortedQuestions('', 'myQuestions', course, '', 0, function(data){
-		var remaining = data.questions.hits.length;				
-		if (data && data.errorcode === 0 && remaining > 0) {					
-			$.each(data.questions.hits, function (index, item) {						
+		var remaining = data.questions.hits.length;			
+		if (data && data.errorcode === 0 && remaining > 0) {								
+			$.each(data.questions.hits, function (index, item) {											
 				formatQuestion(item, 'myQuestions', function(question){					
 					questionStr += question;
 					--remaining;					

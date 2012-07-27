@@ -1,7 +1,8 @@
 div#HeaderContainer
 	div#Header
 		div#Session
-			div.Components				
+			div.Components	
+				a.UUID(style="display:none;") #{ user.uuid }		
 				a.User(href="/") #{ user.firstName }  #{ user.lastName }
 				div.Actions
 					a(href="") Settings

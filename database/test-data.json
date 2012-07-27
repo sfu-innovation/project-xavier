@@ -516,6 +516,16 @@
 			"app"       : 2
 		},
 		{
+			"course"  : "A827346H7ASDFG9",
+			"section" : "ZZZ341H7AFFFFG10",
+			"app"       : 2
+		},
+		{
+			"course"  : "A8G7S6H7ASDFG9",
+			"section" : "VVV7341H7AFFFFG10",
+			"app"       : 2
+		},
+		{
 			"course"  : "11",
 			"section" : "1",
 			"app"       : 2
@@ -552,6 +562,15 @@
 			"app": 2
 		},
 		{
+			"uuid": "ZZZ341H7AFFFFG10",
+			"title": "Custom Section 1",
+			"app": 2
+		},		{
+			"uuid": "VVV7341H7AFFFFG10",
+			"title": "Cusom Section 2",
+			"app": 2
+		},
+			{
 			"uuid": "1",
 			"title": "WEEK 1",
 			"app": 2

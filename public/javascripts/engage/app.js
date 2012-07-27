@@ -722,7 +722,8 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />'
+			+ '<a href="/profile/'+ item.user.uuid +'">'
+			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
 
 
 			+ '<div class="post_details"> '
@@ -792,7 +793,7 @@ function formartDate(old_date) {
 
 function isProf(user_type) {
 	if (user_type === 1) {
-		return '<span id="prof" title="instructor" class="typicn tick"></span>'
+		return '<span id="prof" title="instructor"><img src="/images/engage/icon/16x16/Instructor_v1.png"/></span>'
 	}
 	else {
 		return '';

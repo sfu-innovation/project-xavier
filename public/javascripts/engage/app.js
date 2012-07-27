@@ -722,7 +722,8 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />'
+			+ '<a href="/profile/'+ item.user.uuid +'">'
+			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
 
 
 			+ '<div class="post_details"> '

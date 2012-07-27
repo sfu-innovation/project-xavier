@@ -36,47 +36,27 @@ div#header{
 	box-shadow: 0 0 5px #9e9e9e;
 }
 
-div#header img.logo{
-	margin: 0;
-	padding: 5px;
-	padding-top: 15px;
-	height: 60px;
-	border: 0;
+div#header #nav-bar{
+	background-image: url("/images/engage/SFUEngage_draft3-03.png");
+	background-position: left;
+	padding-left: 160px;
+	background-size: 150px;
+	background-repeat: no-repeat;
+	padding-top: 20px;
 }
 
-
-div#nav{	
-}
-div#nav ul{
-	padding-bottom: 0;
-	margin-bottom: 0;
-}
-
-div#nav li{
-	background-color: transparent;
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-	border: none;
-	padding-right: 20px;
-	padding-bottom: 0px;
-	position: relative;
-	
+#header ul#options{
+	display: block;
+	list-style: none;
+	white-space: nowrap;
+	float: left;
 }
 
-div#nav li a{
-	color: #9e9e9e !important;
-	text-align: left;
-	border: none;
+#header ul#options li{
+	display: inline-block;
+	padding: 0 15px !important;
 }
 
-div#nav #options li a{
-	border-bottom: 4px solid transparent; /*to prevent it jumping around in profile/design page*/
-	color: #9e9e9e !important;
-	text-align: left;
-	padding: 0;
-	
-}
 
 div#nav #options li a.active{
 	border-bottom: 4px solid #9e9e9e;
@@ -110,11 +90,7 @@ ul#mobile-nav li.course{
 	width: 120px;
 }
 
-#header .nav-bar{
-	margin-top: 5px;
-	background-color: transparent;
-	border: none;
-}
+
 
 .nav-bar > li,.nav-bar > li:last-child,.nav-bar > li:first-child   {
 	-webkit-box-shadow:none;
@@ -760,6 +736,10 @@ div#article_container #article img{
 
 #article_options span#like_btn{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
+}
+
+#article_options span#like_btn:hover{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
 #article_options span#invert_btn{

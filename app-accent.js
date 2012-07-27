@@ -138,3 +138,4 @@ app.get('/demo', routesAccent.demoPage); //this will login you with a demo user
 
 /***NEW ROUTES */
 app.post("/api/questions/search/page/:page", routesAccent.searchQuestionsRoute);
+app.post("/api/section/course", routesCommon.sectionsInCourse);

@@ -149,8 +149,36 @@ function displayQuestions(course) {
 
 }
 
+function enterPressed(event, textInput) {
+	
+	//console.log(event.value);
+	if (event.which === 13) {
+		var textNode = $(textInput);
+
+		var questionSelected = textNode.parent().parent().parent();
+		var questionNode = $(questionSelected).children(".Question");
+		var questionID = $(questionNode).children("a.UUID").text();
+
+		var conversationNode = $(questionSelected).children(".Conversation");
+		var allConversationList = $(conversationNode).children(".All");
+		var value = textNode.val();
+		console.log(questionSelected);
+		console.log(allConversationList);
+		console.log(questionID);
+		console.log(value);
+		console.log('enterPressed');
+
+		/*
+		rqra.createComment(questionID, value, function(result) {
+
+		})
+		*/
+	}
+	
+}
+
 function formatTextInput() {
-	return "<input type='text' placeholder='Add something to the conversation' style='width: 90%; padding: 7px; margin-top: 20px'/>";
+	return "<input type='text' onkeydown='return enterPressed(event, this);' placeholder='Add something to the conversation' style='width: 90%; padding: 7px; margin-top: 20px'/>";
 }
 
 function displayConversations(questionID, callback) {	

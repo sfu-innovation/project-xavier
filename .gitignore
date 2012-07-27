@@ -162,10 +162,15 @@ pip-log.txt
 # Mac crap
 .DS_Store
 
+
+*.xml
 config.json
 node_modules/*
 test-app.js
 test.js
 
-.xml
+
 ./idea
+public/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml
+
+*.xml

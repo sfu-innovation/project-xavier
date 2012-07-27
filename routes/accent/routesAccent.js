@@ -204,22 +204,25 @@ exports.mediafile = function(request,response){
 
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			console.log("\n\n\n *** FILES MOTHER FUCKER! *** \n" + util.inspect(request.files) + "\n\n\n");
+			
+			var filepath = request.files.mediafile.path.split('/');
+			var filename = filepath[filepath.length - 1];
+			
 			var mediaFile = {
 				user: request.session.user.uuid,
 				title: request.body.title,
 				description: request.body.description,
 				course: request.body.course,
-				path: config.accentServer.tmpFolder + request.body.mediafile,
+				path: config.accentServer.mediaFolder + filename,
 				type: 0
 			}
 			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
 				if(!error){
-
+					console.log("filepath: " + filepath + " filename: " + filename);
 					//Convert media using ffmpeg
 					var args = [
 						'-i',
-						'/tmp/sample.avi',
+						request.files.mediafile.path,
 						'-vcodec', 'libx264',
 						'-flags', '+loop',
 						'-me_method', 'umh',
@@ -245,7 +248,7 @@ exports.mediafile = function(request,response){
 						'-ab', '128k',
 						'-threads', '0',
 						'-f', 'mp4', 
-						'media/derp'
+						'media/' + filename
 					]
 					var ffmpeg = child.spawn('ffmpeg', args);
 

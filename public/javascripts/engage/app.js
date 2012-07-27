@@ -45,9 +45,32 @@ jQuery(document).ready(function ($) {
 		loadProfileArticles(engage);
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
-
-
 		loadComments(engage);
+		$('.reply_click').live('click',function(){
+			$('.reply_box').remove();
+			var self = $(this);
+			if (self.attr('data-reply-type') === 'super'){
+				var target_uuid = $(this).attr('data-target-uuid');
+				var reply_to = $('#owner_comment .name').html();//the name of user it replies to
+				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
+//
+				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+
+			}
+		})
+
+		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
+			$("div#article_container .columns:first-child").toggleClass('night');
+
+			return false;
+		})
+
+		$('#article_options span#options span:nth-child(4) ').bind('click', function () {
+			$("#article").toggleClass('larger');
+
+			return false;
+		})
+
 	}
 
 	else if (window.location.toString().indexOf('course') != -1) {
@@ -56,7 +79,16 @@ jQuery(document).ready(function ($) {
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
+		if (!weekNum){
+			weekNum = weekConverter();
+		}
+
+		else{
+			weekNum = parseInt(weekNum);
+		}
+
 		loadCourseArticles(engage, weekNum);
+		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
@@ -157,6 +189,61 @@ jQuery(document).ready(function ($) {
 				}
 
 			})
+		}
+
+	})
+
+	$('.articlebox span.like_btn.disliked').live('click',function(){
+
+		var self = $(this);
+		var resource_uuid = $(this).parent().parent().attr('data-id');
+		if (resource_uuid){
+			engage.likeResource(resource_uuid,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0) {
+					self.addClass('liked');
+					self.removeClass('disliked');
+
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+
+				}
+				else if (data.errorcode === 1){
+					//if already liked
+					engage.dislikeResource(resource_uuid,function(data){
+						if (data && data.errorcode === 0) {
+							var num = parseInt(self.children().html()) - 1;
+							self.children().html(num)
+						}
+
+					})
+
+				}
+
+			})
+
+		}
+
+	})
+
+	$('.articlebox span.like_btn.liked').live('click',function(){
+
+			var self = $(this);
+		var resource_uuid = $(this).parent().parent().attr('data-id');
+		if (resource_uuid){
+			engage.dislikeResource(resource_uuid,function(data){
+				if (data && data.errorcode === 0) {
+					self.removeClass('liked');
+					self.addClass('disliked');
+
+					var num = parseInt(self.children().html()) - 1;
+
+					self.children().html(num);
+
+				}
+
+			})
+
 		}
 
 	})
@@ -627,7 +714,7 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140' + '" class="avatar"/>'
+			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />'
 
 
 			+ '<div class="post_details"> '
@@ -657,7 +744,7 @@ function renderArticlePreviewBox(item) {
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
 
-			+ '<span> Like (' + item.likes + ') </span>'
+			+ '<span class="like_btn disliked"> Like (<em>' + item.likes + '</em>) </span>'
 			+ '<span> Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'
@@ -793,7 +880,7 @@ function stylePicker() {
 }
 
 //2012-07-21T00:00:24.000Z
-function weekConverter(post_date, semester_start_date) {
+function weekConverter() {
 
 	Date.prototype.getWeek = function () {
 		var onejan = new Date(this.getFullYear(), 0, 1);
@@ -801,9 +888,19 @@ function weekConverter(post_date, semester_start_date) {
 	}
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
-	var post_date = new Date(Date.parse(post_date));
-	var semester_start_date = new Date(Date.parse(semester_start_date));
-	return post_date.getWeek() - semester_start_date.getWeek() + 1;
+	var current_date = new Date();
+	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
+	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
+}
+
+function renderReplyBox (reply_to, comment_target, comment_parent){
+	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+		+ comment_target
+		+ '"><input type="hidden" id="comment_target" value="'
+		+ comment_parent
+		'"></form></div>'
+
+	return html;
 }

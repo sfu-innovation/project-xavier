@@ -1,10 +1,12 @@
 var UserNotification = require('../models/userNotification.js');
 var UserNotificationSettings = require('../models/userNotificationSettings.js');
 var NotificationListener = require('../models/notificationListener.js');
+var UserProfile          = require('../models/userProfile.js');
 var async                = require('async');
 var NotificationListenerImpl = NotificationListener.NotificationListener;
 var UserNotificationImpl = UserNotification.UserNotification;
 var UserNotificationSettingsImpl = UserNotificationSettings.UserNotificationSettings;
+var UserProfileImpl = UserProfile.UserProfile;
 
 var User             = require('../models/user.js').User;
 var email            = require('emailjs');
@@ -99,6 +101,7 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 				}
 				
 				arg.listener = listener.uuid;
+				arg.user = listener.user
 
 				UserNotification.createUserNotification( arg, function( error, newNotification ){
 						if ( error ){
@@ -179,9 +182,13 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 				listenerArray.push( listeners[i].uuid );
 			}
 			var listeners = new Object();
-			listeners.uuids = listenerArray; 
-			
-			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
+			listeners.uuid = listenerArray;
+			if ( listenerArray.length === 0 ){
+				console.log("[NotificationListener.findUserSpecificNotificationListeners] error - There are no notification listeners for this user");
+				callback( null , new Array());
+				return;
+			}
+			UserNotification.findUserNotificationsByListenerUUID( listeners , function( error, usernotifications ){
 			
 				if ( error ){
 					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
@@ -194,10 +201,24 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
 						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
-							tempObj.notification = usernotification;
-							tempObj.user         = foundUser;
-							userWithNotifications.push( tempObj );
-							callback( null, tempObj );
+							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									tempObj.profile = userProfile;
+									tempObj.notificationListener = notificationListener;
+								    tempObj.notification = usernotification;
+								    tempObj.user         = foundUser;
+								    userWithNotifications.push( tempObj );
+								    callback( null, tempObj );
+								}).error( function ( error) {
+									console.log("[UserProfileImpl.find] error - "+error);
+									callback( null, new Object());
+								});
+								
+							}).error(function(error){
+								console.log("[NotificationListenerImpl.find] error - "+ error );
+								callback( null, new Object());
+							});
+							
 						}).error( function ( error ){
 							console.log("[User.find] error - "+ error );
 							callback( error, new Object());
@@ -263,8 +284,12 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 			}	
 			
 			var listeners = new Object();
-			listeners.uuids = arr;
-			
+			listeners.uuid = arr;
+			if ( arr.length === 0 ){
+				console.log("[NotificationListener.findUserSpecificNotificationListeners] error - There are no notification listeners for this user");
+				callback( null , new Array());
+				return;
+			}
 			UserNotification.findUserNotificationsByListenerUUID( listeners, function( error, usernotifications ){
 			
 				if ( error ){
@@ -278,10 +303,24 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
 						require('../models/user.js').User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
-							tempObj.notification = usernotification;
-							tempObj.user         = foundUser;
-							userWithNotifications.push( tempObj );
-							callback( null, tempObj );
+							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									tempObj.profile = userProfile;
+									tempObj.notificationListener = notificationListener;
+								    tempObj.notification = usernotification;
+								    tempObj.user         = foundUser;
+								    userWithNotifications.push( tempObj );
+								    callback( null, tempObj );
+								}).error( function ( error) {
+									console.log("[UserProfileImpl.find] error - "+error);
+									callback( null, new Object());
+								});
+								
+							}).error(function(error){
+								console.log("[NotificationListenerImpl.find] error - "+ error );
+								callback( null, new Object());
+							});
+							
 						}).error( function ( error ){
 							console.log("[User.find] error - "+ error );
 							callback( error, new Object());
@@ -489,6 +528,7 @@ function compileEmail( args, callback ){
 	}
 	
 	var msg = args;
+
 	require('../models/user.js').User.find({ where: { uuid: msg.user}}).success( function( userFound ){
 		if ( null != userFound ) {
 			var str = "";

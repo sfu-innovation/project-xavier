@@ -394,17 +394,17 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 			if(err)
 				return callback(error);
 
-			console.log('Added question to ES');
+			//console.log('Added question to ES');
 			require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 				if(err)
 					return callback(err);
 
-				console.log('Added question resource to section');
+				//console.log('Added question resource to section');
 				notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 					if(err)
 						return callback(err);
 
-					console.log('Added question notification');
+					//console.log('Added question notification');
 					callback(null, esResult);
 				});
 			});
@@ -583,7 +583,7 @@ QueryES.prototype.getCommentByTarget_uuid = function(ptarget_uuid, pageNum, appT
 	switchIndex(appType);
 	switchMapping(1);
 
-	console.log(JSON.stringify(data))
+	//console.log(JSON.stringify(data))
 	mapping.search(data, function(err, data){
 		if(err)
 			return callback(err);
@@ -707,7 +707,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	data.created = data.timestamp;
 
 	if(user.type === 1){
-		console.log("User is an instructor")
+		//console.log("User is an instructor")
 		isInstructor = true;
 	}
 
@@ -718,7 +718,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-			console.log("document added");
+			//console.log("document added");
 
 			notification.addCommentUserNotification(args, function(err, usrNotificationResult){
 				if(err){
@@ -727,13 +727,16 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				}
 
 				delete args.description;
+				var user = args.origin;
+				delete args.origin
+				args.user = user;
 				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);
 						callback(err);
 					}
 
-					console.log('complete');
+					//console.log('complete');
 
 					callback(null, esData);
 				});
@@ -789,6 +792,24 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 			});
 		});
 	});
+}
+
+QueryES.prototype.deleteComments = function(commentList, appType, callback){
+	var self = this;
+	var successList = [];
+	console.log(commentList)
+	async.forEach(commentList, function(commentId, done){
+		self.deleteComment(commentId, appType, function(err, result){
+			if(err)
+				console.log('Cannot delete: %s, comment does not exist!', commentId)
+
+			if(result)
+				successList.push(result)
+			done();
+		})
+	}, function(err){
+		callback(null, successList)
+	})
 }
 
 //update a comment vote
@@ -859,8 +880,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			bool:{
 				must:[]
 			}
-		},
-		//"filter": {},
+		},		
 		from: paging(pageNum),
 		size: sizeOfResult
 	};
@@ -874,6 +894,16 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			}});
 	}else{
 		data.query.bool.must.push({match_all:{}});
+	}
+
+	//check to see which type its in
+	if(searchObj.course){
+		//console.log("ES search- course param provided")
+		data.query.bool.must.push({"term":{"course": searchObj.course}});
+		if(searchObj.week){
+			//console.log("ES search - week param provided")
+			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
+		}
 	}
 
 	switch(searchObj.searchType){
@@ -907,20 +937,8 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 	}
 
-	//check to see which type its in
-	if(searchObj.course){
-		console.log("ES search- course param provided")
-		data.query.bool.must.push({"term":{"course": searchObj.course}});
-		if(searchObj.week){
-			console.log("ES search - week param provided")
-			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
-		}
-	}
-
-
 	switchIndex(appType);
 	switchMapping(0);
-	console.log("wklsajdflkjsdflkjsflka querying now:::::::::::")
 	console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
@@ -959,14 +977,21 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
-	data.query.bool.must.push({"term":{"user": searchObj.uuid}});
+	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
+	//data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	data.filter =  { "or":[]};
+	data.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 
 var notMyQuestions = function(data, searchObj){
-	data.query.bool.must_not = []
-	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
+	//data.query.bool.must_not = [];
+	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	//data = {"query":{"match_all":{}}, "filter":}};
+	data.filter =  { "not":{ "filter":{ "or":[]}}};
+	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 

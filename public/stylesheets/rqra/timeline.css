@@ -14,6 +14,7 @@ div.timelineButton {
 	transition: all 300ms linear;
 	-moz-transition: all 300ms linear;
 	-webkit-transition: all 300ms linear;
+	font-weight: bold;
 	cursor: pointer;
 	font-size: 0.95em;
 }

@@ -1,11 +1,13 @@
 var rqra = new coreApi.Presenter();
 
-function formatQuestion(question, callback) {
+function formatQuestion(question, type, callback) {
 	displayConversations(question._id, function(conversation){
+		var followingType = formatFollowing(type);
 		var questionStr = "<li>" 
 				+ "<div class='Question'>"
 				//+ "<span class='Course'>" + question._source.course + "</span>"
-				+ "<a href='' class='Follow'>Follow</a>"
+				+ "<a href='' class=" + "'" + followingType + "'>" + followingType + "</a>"
+				+ "<a class='UUID' style='display:none;'>" + question._id + "</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation
@@ -14,6 +16,15 @@ function formatQuestion(question, callback) {
 		callback(questionStr);
 	})
 
+}
+
+function formatFollowing(type) {
+	var followType = "";
+	if (type === "myQuestions")
+		followType = "Unfollow";
+	else
+		followType = "Follow";
+	return followType;
 }
 
 				
@@ -92,7 +103,7 @@ function displayQuestions(course) {
 		var remaining = data.questions.hits.length;				
 		if (data && data.errorcode === 0 && remaining > 0) {					
 			$.each(data.questions.hits, function (index, item) {						
-				formatQuestion(item, function(question){					
+				formatQuestion(item, 'myQuestions', function(question){					
 					questionStr += question;
 					--remaining;					
 					if (!remaining) {						
@@ -113,7 +124,7 @@ function displayQuestions(course) {
 		var remaining = data.questions.hits.length;		
 		if (data && data.errorcode === 0 && remaining > 0) {
 			$.each(data.questions.hits, function (index, item) {			
-				formatQuestion(item, function(question){
+				formatQuestion(item, 'notMyQuestions', function(question){
 					classStr += question;
 					--remaining;
 					

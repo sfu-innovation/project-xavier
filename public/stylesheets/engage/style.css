@@ -551,8 +551,14 @@ div#submitnew{
 div.cover {
 	height: 360px;
 	position: relative;
-	-webkit-perspective: 600px;
-	-moz-perspective: 600px;
+
+
+	-moz-perspective: 2000px;
+}
+
+div.cover.hack{
+	/*it appears to be a chrome bug that it does not display image on the fly correctly when prespective is set, so we set perspective after the images are load*/
+	-webkit-perspective:2000px;
 }
 
 div.cover .frontCard {
@@ -570,7 +576,7 @@ div.cover .frontCard {
 	top: 0;
 	left: 0;
 	-webkit-transform: rotateX(0deg) rotateY(0deg);
-	-webkit-transform-style: preserve-3d;
+	-webkit-transform-style: flat;
 	-webkit-backface-visibility: hidden;
 	-moz-transform: rotateX(0deg) rotateY(0deg);
 	-moz-transform-style: preserve-3d;
@@ -578,8 +584,9 @@ div.cover .frontCard {
 	-o-transition: all .4s ease-in-out;
 	-ms-transition: all .4s ease-in-out;
 	-moz-transition: all .4s ease-in-out;
-	-webkit-transition: all 0.4s ease-in-out;
-	transition: all 0.4s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+
 }
 
 div.cover.flip .frontCard {
@@ -603,7 +610,7 @@ div.cover .backCard {
 	height: 100%;
 	z-index: 800;
 	-webkit-transform: rotateY(-180deg);
-	-webkit-transform-style: preserve-3d;
+	-webkit-transform-style: flat;
 	-webkit-backface-visibility: hidden;
 	-moz-transform: rotateY(-180deg);
 	-moz-transform-style: preserve-3d;
@@ -611,8 +618,9 @@ div.cover .backCard {
 	-o-transition: all .4s ease-in-out;
 	-ms-transition: all .4s ease-in-out;
 	-moz-transition: all .4s ease-in-out;
-	-webkit-transition: all 0.4s ease-in-out;
-	transition: all 0.4s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+
 }
 
 div.cover.flip .backCard {

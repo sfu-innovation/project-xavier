@@ -272,24 +272,25 @@ ul#user_options_list span.typicn.next{
 
 
 li.mobile_view ul{
-	margin-top: 30px;
+	margin-top: 27px;
 	margin-left: -100px;
 	z-index: 100;
  
  }
  
-li.mobile_view div#notif ul{
-
+li.mobile_view div#mobile_notif ul{
+	margin-top: 0;
 	margin-left: -205px !important;
 	
 	}
  
-li.mobile_view div#notif li{
+li.mobile_view div#mobile_notif li{
 	width: 300px;
 }
 
-li.mobile_view div#notif li p.msg{
+li.mobile_view div#mobile_notif li p.msg{
 	white-space: normal;
+	margin-bottom: 0;
 }
 
 

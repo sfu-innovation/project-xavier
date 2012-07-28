@@ -57,6 +57,14 @@ html
 		
 	body
 		div#header
+			div.clearfix.show-for-small
+				ul.mobile_list
+					li
+						a MENU
+					li 
+						a COURSES
+					li 
+						a SHARE
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
@@ -70,10 +78,10 @@ html
 																
 
 						li#notification.mobile_view
-							div(onClick="dropdownToggle('#notif')")
+							div(onClick="dropdownToggle('#mobile_notif')")
 								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
 								span#notification_number 4
-							div.dropdown_list#notif.hide
+							div.dropdown_list#mobile_notif.hide
 								ul
 									li
 										a.notification
@@ -104,9 +112,9 @@ html
 												| liked your article in 
 												span.coursename BUS 354		
 						li.mobile_view
-							div(onClick="dropdownToggle('#user_info')")
+							div(onClick="dropdownToggle('#mobile_user_info')")
 								span.typicn.next
-							div.dropdown_list#user_info.hide
+							div.dropdown_list#mobile_user_info.hide
 								ul
 									li
 										a(href="/profile/#{user.uuid}") My Profile

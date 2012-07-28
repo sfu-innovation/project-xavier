@@ -626,6 +626,8 @@ exports.shareResource = function (req,res){
 	var description = req.body.description;
 	var course = req.body.course;
 
+	console.log(req.body);
+
 	Parser.articlize(url, function (err,result) {
 		var currentWeek = EngageAction.weekHelper();
 		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){

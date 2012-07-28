@@ -838,27 +838,20 @@ function renderPreviewImage(item) {
 	var previewImage = '<div class="innerwrap" style=\''
 		//IE
 		+'background-image: url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 		//CHROME SAFARI
 		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 
 		//FIREFOX
 		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
 		 + '\'>'
 		+ '</div>'
 
 
 
-//	var previewImage = '<div class="innerwrap" >'
-//		+ '<img src = "'
-//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
-//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
-//		+ '<h5>'
-//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-//		+ '</div>'
 
 	return  previewImage
 

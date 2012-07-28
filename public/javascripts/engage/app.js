@@ -62,20 +62,21 @@ jQuery(document).ready(function ($) {
 				reply_to = $('#owner_comment .name').html();//the name of user it replies to
 				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
 //
-				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
 
 			}
 			else if(self.attr('data-reply-type') === 'comment'){
 
 				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).appendTo(self.closest('.thread ol')).slideDown('slow');
+				$(new_reply_box).appendTo(self.closest('.thread ol')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
 
 
 			}
 			else if(self.attr('data-reply-type') === 'replies'){
 
 				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow');
+				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
 
 
 			}

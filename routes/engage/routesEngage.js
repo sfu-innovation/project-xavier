@@ -25,31 +25,37 @@ exports.login = function (request, response) {
 
 
 exports.createComment = function (req,res){
-	if(request.session && request.session.user){
+	console.log('///////');
+	console.log(req.body);
+	if(req.session && req.session.user){
 		var newComment = new Comment(
-			request.body.target_uuid
-			,request.session.user.uuid
-			,request.body.objectType
-			,request.body.body, request.body.parent_uuid);
+			req.body.target_uuid
+			,req.session.user.uuid
+			,req.body.objectType
+			,req.body.body, req.body.parent_uuid);
 
-		QueryES.addComment(newComment, request.session.user, 2, function(err, result) {
+		QueryES.addComment(newComment, req.session.user, 2, function(err, result) {
+			console.log('?????');
+			console.log(newComment);
+			console.log(err);
+			console.log(result);
 			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
+				res.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
-					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+					res.end(JSON.stringify({ errorcode: 0, comment: result }));
 				}
 				else{
-					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
+					res.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
 				}
 			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
 			}
 		});
 	}
 	else{
-		response.writeHead(200, { 'Content-Type': 'application/json' });
-		response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
 	}
 
 }

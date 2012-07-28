@@ -210,17 +210,18 @@ coreApi._construct = function () {
 		this.createComment = function (args, callback) {
 			console.log("API - createComment");
 
-			var body = {};
 
 
-			body.body = args.comment_body;
+			console.log('!!!!');
+			console.log(args);
+
+
+
 
 			//TODO:need to fix this to dynamic input
-			body.objectType = 'resource';
+			args.objectType = 'resource';
 
-			body.target_uuid = args.target_id;
 
-			body.parent_uuid = args.parent_id;
 
 			$.ajax({
 				//url : '/api/user/'+user_id+'/comments',
@@ -228,7 +229,7 @@ coreApi._construct = function () {
 				type:'POST',
 				dataType:'json',
 				contentType:"application/json",
-				data:JSON.stringify(body),
+				data:JSON.stringify(args),
 				success:function (data) {
 					callback(data);
 				}

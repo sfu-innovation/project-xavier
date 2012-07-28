@@ -84,10 +84,16 @@ jQuery(document).ready(function ($) {
 		})
 
 		$('.reply_box form').live('submit',function(){
+			var comment = {};
+			comment.target_uuid = $('form input#comment_target').val();
+			comment.parent_uuid = $('form input#comment_parent').val();
+			comment.body = $('form input#comment_parent').val();
 
-			var target_id = $('form input#comment_target').val();
-			var parent_id = $('form input#comment_parent').val();
+			engage.createComment(comment,function(data){
 
+				console.log(data);
+
+			})
 
 			return false;
 		})

@@ -51,31 +51,33 @@ jQuery(document).ready(function ($) {
 
 			$('.reply_box').remove();   //remove all other reply box
 			var self = $(this);
+			var list = self.closest('li');
 
-			var target_uuid = $(this).attr('data-target-uuid');
-			var reply_to = $(this).attr('data-reply-to');
-			var parent_uuid = $(this).attr('data-parent-uuid');
+			var target_uuid = list.attr('data-target-uuid');
+			var reply_to = list.attr('data-reply-to');
+			var parent_uuid = list.attr('data-parent-uuid');
+
 
 
 			if (self.attr('data-reply-type') === 'super'){
-
+				target_uuid = self.attr('data-target-uuid');
 				reply_to = $('#owner_comment .name').html();//the name of user it replies to
-				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
+				var new_reply_box = renderReplyBox("comment",reply_to,target_uuid,null);
 //
 				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
 
 			}
-			else if(self.attr('data-reply-type') === 'comment'){
+			else if(list.attr('data-reply-type') === 'comment'){
 
-				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).appendTo(self.closest('.thread ol')).slideDown('slow',function(){$('form input#reply_content').focus();});
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.comment')).slideDown('slow',function(){$('form input#reply_content').focus();});
 
 
 
 			}
-			else if(self.attr('data-reply-type') === 'replies'){
+			else if(list.attr('data-reply-type') === 'replies'){
 
-				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
 				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
 
 
@@ -85,6 +87,7 @@ jQuery(document).ready(function ($) {
 		})
 
 		$('.reply_box form').live('submit',function(){
+			var self = $(this);
 			var comment = {};
 			comment.target_uuid = $('form input#comment_target').val();
 			comment.parent_uuid = $('form input#comment_parent').val();
@@ -92,7 +95,33 @@ jQuery(document).ready(function ($) {
 
 			engage.createComment(comment,function(data){
 
-				console.log(data);
+//				console.log(data);
+				if (data && data.comment){
+
+					data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
+					var type = $('.reply_box form').attr('data-reply-type');
+					console.log(data);
+					if (type){
+						$('.reply_box').hide();
+						var new_comment = renderBox(data.comment,type);
+						if (type === "replies"){
+
+							$(new_comment).appendTo(self.closest('ol'));
+
+							$.scrollTo(self.closest('ol').children('li').filter(':last'),900);
+
+						}
+						else if (type === "comment"){
+							$(new_comment).appendTo('#comments > ol');
+							$.scrollTo($('#comments > ol > li:last-child'),900);
+						}
+
+						$('.reply_box').remove();
+					}
+
+
+
+				}
 
 			})
 
@@ -401,11 +430,11 @@ function initUI() {
 }
 
 function renderBox(item,type){
-	return '<li class="'+type+'">'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span><p>' + item.body
 		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
 		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
-		+ '</a><a class="reply_click" data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'       +'> Reply <span class="typicn forward"></span> </a></span></li>';
+		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span></li>';
 }
 
 function renderCommentBox(item){
@@ -978,8 +1007,12 @@ function weekConverter() {
 
 }
 
-function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment">'
+function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
+
 		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
 		+ '<input type="submit" value="Post" class="submit_btn">'
 		+ '<input type="hidden" id="comment_target" value="'
@@ -999,8 +1032,11 @@ function renderReplyBox (reply_to, comment_target, comment_parent){
 	return html;
 }
 
-function renderSubReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment">'
+function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
 		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
 		+ '<input type="submit" value="Post" class="submit_btn">'
 		+ '<input type="hidden" id="comment_target" value="'

@@ -219,18 +219,6 @@ jQuery(document).ready(function ($) {
 					self.children().html(num);
 
 				}
-				else if (data.errorcode === 1){
-					//if already liked
-					engage.dislikeResource(resource_uuid,function(data){
-						if (data && data.errorcode === 0) {
-							var num = parseInt(self.children().html()) - 1;
-							self.children().html(num)
-						}
-
-					})
-
-				}
-
 			})
 
 		}
@@ -756,8 +744,8 @@ function renderArticlePreviewBox(item) {
 			+ '</div>'
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
+			+ renderLike(item)
 
-			+ '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
 			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'
@@ -810,6 +798,15 @@ function renderStar(starred) {
 	}
 	else {
 		return '<span class="star_btn unstarred">Star</span>'
+	}
+}
+
+function renderLike(item) {
+	if (item.liked) {
+		return '<span class="like_btn liked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+	else {
+		return '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
 	}
 }
 

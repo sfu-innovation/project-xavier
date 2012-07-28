@@ -713,7 +713,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	}
 
 	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
-		if(err)
+		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 
 		document.set(data, function(err, req, esData){

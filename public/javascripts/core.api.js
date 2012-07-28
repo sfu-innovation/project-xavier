@@ -207,20 +207,20 @@ coreApi._construct = function () {
 
 	function Engage() {
 
-		this.createComment = function (target_id, comment_body, callback) {
+		this.createComment = function (args, callback) {
 			console.log("API - createComment");
 
 			var body = {};
-			var comment = {};
 
-			comment.body = comment_body;
+
+			body.body = args.comment_body;
 
 			//TODO:need to fix this to dynamic input
-			comment.objectType = 'question';
+			body.objectType = 'resource';
 
-			comment.target_uuid = target_id;
-			body.comment = comment;
+			body.target_uuid = args.target_id;
 
+			body.parent_uuid = args.parent_id;
 
 			$.ajax({
 				//url : '/api/user/'+user_id+'/comments',

@@ -696,7 +696,8 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		target:data.target_uuid
 		,app:appType
 		,origin:data.user
-		,description:data.body
+		,description:data.body,
+		commentParent: data.commentParent
 	};
 
 	switchIndex(appType);

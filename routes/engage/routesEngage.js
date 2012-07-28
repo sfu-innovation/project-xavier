@@ -17,9 +17,41 @@ var crypto = require('crypto');
 var notification = require('../../controller/NotificationAction.js');
 var async = require('async');
 var QueryES = require('./../../controller/queryES.js');
+var Comment = require('./../../models/comment.js');
 
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
+}
+
+
+exports.createComment = function (req,res){
+	if(request.session && request.session.user){
+		var newComment = new Comment(
+			request.body.target_uuid
+			,request.session.user.uuid
+			,request.body.objectType
+			,request.body.body, request.body.parent_uuid);
+
+		QueryES.addComment(newComment, request.session.user, 2, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
+			}
+		});
+	}
+	else{
+		response.writeHead(200, { 'Content-Type': 'application/json' });
+		response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+	}
+
 }
 
 

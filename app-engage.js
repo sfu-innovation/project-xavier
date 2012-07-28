@@ -87,7 +87,9 @@ app.post('/api/resource', routesEngage.createResource);
 //POST means create here
 app.post('/api/resource/create', routesEngage.createResource);
 app.get('/api/resource/:uuid', routesEngage.getResource);
-app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
+
+app.delete('/api/resource/:uuid', routesEngage.deleteResource);
+
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 

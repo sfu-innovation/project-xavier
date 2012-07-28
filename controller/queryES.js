@@ -939,7 +939,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 	switchIndex(appType);
 	switchMapping(0);
-	console.log(JSON.stringify(data))
+	//console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
 		if(err)

@@ -3,6 +3,7 @@ var Course = require('../models/course.js');
 var async = require('async');
 var User = require('../models/user.js');
 var Star = require('../models/star.js');
+var Like = require('../models/like.js');
 var UserProfile = require('../models/userProfile.js');
 
 
@@ -186,41 +187,6 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 				})
 		},
 
-//		findSectionId:function (callback) {
-//			parsedResult = JSON.parse(JSON.stringify(resources));
-//			async.forEach(parsedResult , function (resource, callback) {
-//
-//					SectionMaterial.findSectionIdByMaterialId({"material":resource.uuid}, function (err, result) {
-//						if (result) {
-//							resource.section = result.section;
-//						}
-//						callback(err);
-//					});
-//				},
-//				function (err) {
-//
-//					callback(err)
-//				})
-//
-//		},
-//
-//		findSectionInfo:function (callback){
-//			async.forEach(parsedResult , function (resource, callback) {
-//
-//					Section.findSectionById({"uuid":resource.section}, function (err, result) {
-//						if (result) {
-//
-//							resource.section = result;
-//						}
-//						callback(err);
-//					});
-//				},
-//				function (err) {
-//					callback(err)
-//				})
-//
-//		},
-
 
 
 		findTotalComments:function (callback) {
@@ -240,11 +206,36 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 				})
 		}
 		,
+		findIsLiked:function (callback) {
+
+
+			async.forEach(parsedResult, function (resource, callback) {
+					Like.isResourceLiked({user:currentUser.uuid, resource:resource.uuid},function(err,result){
+						if  (result){
+							resource.liked = true
+						}
+						else{
+
+							resource.liked = false;
+						}
+
+						callback(err);
+
+
+
+					})
+
+				}
+				, function (err) {
+					callback(err)
+				})
+		}
+		,
 		findIsStarred:function (callback) {
 
 
 			async.forEach(parsedResult, function (resource, callback) {
-					Star.isResourceStarred({user:currentUser, resource:resource.uuid},function(err,result){
+					Star.isResourceStarred({user:currentUser.uuid, resource:resource.uuid},function(err,result){
 						if  (result){
 							resource.starred = true
 						}
@@ -258,6 +249,31 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 					})
+
+				}
+				, function (err) {
+					callback(err)
+				})
+		} ,
+		findIsOwner:function (callback) {
+
+
+			async.forEach(parsedResult, function (resource, callback) {
+
+
+						if  (currentUser.uuid === resource.user.uuid || currentUser.type === 1 || currentUser.type === 2 ){
+							resource.owner = true
+						}
+						else{
+
+							resource.owner = false;
+						}
+
+						callback();
+
+
+
+
 
 				}
 				, function (err) {

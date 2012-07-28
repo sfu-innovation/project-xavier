@@ -40,22 +40,25 @@ div#header{
 	-moz-box-shadow: 0 0 5px #9e9e9e;
 	-webkit-box-shadow: 0 0 5px #9e9e9e;
 	box-shadow: 0 0 5px #9e9e9e;
-	padding-top:20px;
 }
 
 
 
 
-#header ul#options li img{
-	height: 50px;
+#header img.logo{
+	margin-bottom: 10px;
+	padding-top:15px;
+	width: 140px;
 }
 
 #header ul#options{
-	display: block;
 	list-style: none;
 	white-space: nowrap;
 	float: left;
 	margin-bottom: 10px;
+	margin-top: 11px;
+	margin-left: -40px;
+	padding-top:15px;
 }
 
 #header ul#options li{
@@ -77,74 +80,85 @@ div#header{
 	border-bottom: 1px solid #9e9e9e;
 }
 
+#header ul#options li:hover:first-child a{
+	border-bottom: 0;
+	}
 /* -----------------------------------------
-   mobile view of navigation bar
+   mobile view of navigation slider
 ----------------------------------------- */
-
-ul#mobile-nav {
-	list-style: none;
-	margin: 0;
-	margin-bottom: 10px;
+#sliderMenu{
 	text-align: center;
+	margin-top: 0;
+	clear: both;
 }
-
-ul#mobile-nav li{
+#sliderMenu li{
 	display: inline;
+	padding: 10px 30px;
+	background: white;
+	-moz-box-shadow: 0px 1px 5px #9e9e9e;
+	-webkit-box-shadow: 0px 1px 5px #9e9e9e;
+	box-shadow :0px 1px 5px #9e9e9e;
+	border-radius: 0 0 15px 15px;
+	-moz-border-radius: 0 0 15px 15px;
+	-webkit-border: 0 0 15px 15px;
+	color: #888;
+	font-weight: bold;
 }
 
-ul#mobile-nav .button{
-	padding: 8px;
+#sliderMenu li a{
+		color: #888;
+	font-weight: bold;
+	cursor: pointer;
+	}
+.slider_box{
+	background-color: white;
+	margin-bottom: 8px;
+	padding: 20px;
+	position: relative;
+	clear: both;
+	-moz-box-shadow: 0px 1px 5px #9e9e9e;
+	-webkit-box-shadow: 0px 1px 5px #9e9e9e;
+	box-shadow :0px 1px 5px #9e9e9e;
+	display: none;
+	
+}
+.slider_box ul{
+	margin-bottom: 0;
+	padding: 0 40px;
+	}
+.slider_box li{
+	list-style: none;
+}	
+
+.slider_box li a{
+	color: #888;
+	}
+
+.slider_box#menu_box{
+	padding: 0 40px;
+	}
+.slider_box ul{
+	float: left;
+	padding: 5px 25px;
 }
 
-ul#mobile-nav li.course{
-	display: inline;
-	width: 120px;
+.slider_box ul li{
+	padding: 5px 0;
 }
-
-
-
-.nav-bar > li,.nav-bar > li:last-child,.nav-bar > li:first-child   {
-	-webkit-box-shadow:none;
-	box-shadow: none;
+.slider_box#courses_box li a{
+	border-left: 4px solid #F14241;
+	padding-left: 5px
 }
-
-#header .nav-bar li{
-	padding-right: 0;
-	border: none;
-	background: transparent;
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
-#options.nav-bar > li{
-	margin-right: 20px;
-	border: none;
-	background: transparent;
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
-#options.nav-bar > li:first-child{
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;	
-}
-#options.nav-bar > li:last-child{
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */
 
 ul#user_options_list{
 	list-style: none;
-	margin-bottom: 0;
 	text-align: right;
+	white-space: nowrap;
+	display: block;
+	padding-top:15px;
 }
 
 ul#user_options_list li{
@@ -154,7 +168,9 @@ ul#user_options_list li{
 	cursor: pointer;
 	color: #555;
 	}
-	
+ul#user_options_list li div{
+	cursor: pointer;
+} 	
 ul#user_options_list li#notification img{
 	height: 45px;
 	width: 45px;
@@ -187,7 +203,9 @@ ul#user_options_list li div.dropdown_list{
 	background: #F2F2F2;
 
 }
-
+ul#user_options_list li div.dropdown_list li{
+	display: block;
+	}
 
 ul#user_options_list li div.dropdown_list.hide{
 	display: none;
@@ -205,15 +223,16 @@ div.dropdown_list ul{
 	margin-top: 15px;
 	margin-left: -10px;
 	}
+	
 div.dropdown_list li{
 	 padding: 10px 15px;
-	 border-bottom:  1px solid #E6E6E6;
+	 border:  2px solid #dbdbdb;
 	 margin: 0 !important;
-	 background: rgba(250, 250, 250, 1);
+	 background: #f8f8f8;
 	 width: 120px;
 	 color: #555;
  }
- 
+
  
  div.dropdown_list li:hover{
  	background-color: #e9e9e9;
@@ -225,6 +244,7 @@ div.dropdown_list li{
  } 
  div.dropdown_list#notif li{
 	 width: 370px;
+	 height: 67px;
  }
  
   div.dropdown_list#notif p.msg{
@@ -254,6 +274,31 @@ ul#user_options_list span.typicn.next{
 	-webkit-transform: rotate(90deg); 
 	-moz-transform: rotate(90deg);	
 }
+
+
+li.mobile_view ul{
+	margin-top: 27px;
+	margin-left: -100px;
+	z-index: 100;
+ 
+ }
+ 
+li.mobile_view div#mobile_notif ul{
+	margin-top: 0;
+	margin-left: -205px !important;
+	
+	}
+ 
+li.mobile_view div#mobile_notif li{
+	width: 300px;
+}
+
+li.mobile_view div#mobile_notif li p.msg{
+	white-space: normal;
+	margin-bottom: 0;
+}
+
+
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */
@@ -286,6 +331,54 @@ div#contents div.columns:last-child{;
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */
+
+.articlebox .delete_btn{
+
+	font-size: 13px;
+	position: absolute;
+	right:5px;
+	top:5px;
+	background-color: #f3f3f3;
+	border: 1px solid #d9dad5;
+	padding: 1px 3px;
+	cursor: pointer;
+	display: none;
+	opacity: 0.6;
+
+}
+
+.articlebox .delete_btn:after{
+	content: "DELETE";
+	font-size: 12px;
+	position: absolute;
+	right:-1px;
+	top:15px;
+
+	background-color: #f3f3f3;
+	border: 1px solid #d9dad5;
+	padding: 1px 3px;
+	text-align: center;
+	display: none;
+}
+
+.articlebox .delete_btn:hover{
+	opacity: 1;
+}
+
+.articlebox .delete_btn:hover:after{
+	display: block;
+}
+
+.articlebox .delete_btn{
+
+}
+
+
+.articlebox:hover .delete_btn{
+	display: block;
+
+
+}
 
 div.innercontents{
 	/*background-color: rgba(0,0,0,0.02) ;*/
@@ -914,20 +1007,21 @@ div#article_container #comments .replies{
 	
 }
 
-#comments .reply_box textarea{
+#comments .reply_box input{
 	width: 80%;
 	display: inline;
-	min-height: 40px;
+	height: 40px;
 	font-size: 12px;
 	margin-top:2px;
 	resize: none; 
+
 }
 
-#comments .reply_box input{
+#comments .reply_box input.submit_btn{
 	float: right;
 	width: 20%;
 	display: block;
-	min-height: 40px;
+	height: 40px;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	background-color: rgba(0, 0, 0, 0.05);
 	color: #9e9e9e;
@@ -1011,9 +1105,11 @@ div#info ul li span,div#week-info ul li span{
 #weeks-bar ul li a#week{
 	/*background-color: transparent;*/
 	border-top: none;
-	color: #9e9e9e;
 	padding-top: 5px;
+	color: #555;
+	opacity: 0.8;
 }
+
 
 #weeks-bar ul li:hover a{
 	opacity: 1;

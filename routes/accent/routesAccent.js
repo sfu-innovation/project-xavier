@@ -226,7 +226,9 @@ exports.mediafile = function(request,response){
 					var audioArgs = [
 						'-i', request.files.mediafile.path,
 						'-threads', '0',
-						'-f', 'wav',
+						'-acodec', 'libvo_aacenc',
+						'-ac', '128k',
+						'-f', 'mp4',
 						'media/' + filename
 					]
 

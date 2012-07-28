@@ -170,7 +170,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -186,7 +186,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
 	$('.articlebox span.like_btn.disliked').live('click',function(){
 
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.likeResource(resource_uuid,function(data){
 				console.log(data);
@@ -219,18 +219,6 @@ jQuery(document).ready(function ($) {
 					self.children().html(num);
 
 				}
-				else if (data.errorcode === 1){
-					//if already liked
-					engage.dislikeResource(resource_uuid,function(data){
-						if (data && data.errorcode === 0) {
-							var num = parseInt(self.children().html()) - 1;
-							self.children().html(num)
-						}
-
-					})
-
-				}
-
 			})
 
 		}
@@ -239,8 +227,8 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.like_btn.liked').live('click',function(){
 
-			var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.dislikeResource(resource_uuid,function(data){
 				if (data && data.errorcode === 0) {
@@ -259,8 +247,24 @@ jQuery(document).ready(function ($) {
 
 	})
 
+	$('.articlebox span.delete_btn').live('click', function () {
+		var article = $(this).closest('.articlebox');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 
+		if (resource_uuid) {
+			engage.deleteResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
 
+					article.fadeOut('slow', function () {
+						article.remove()
+					});
+
+				}
+
+			})
+
+		}
+	})
 
 
 });
@@ -725,6 +729,8 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ isOwner(item.owner)
+
 			+ '<a href="/profile/'+ item.user.uuid +'">'
 			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
 
@@ -755,14 +761,19 @@ function renderArticlePreviewBox(item) {
 			+ '</div>'
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
+			+ renderLike(item)
 
-			+ '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
 			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'
 			+ '</div>';
 	return article;
 
+}
+
+function isOwner(owner){
+	if (owner) return '<span class="delete_btn">X</span>'
+	else return ""
 }
 
 
@@ -812,33 +823,35 @@ function renderStar(starred) {
 	}
 }
 
+function renderLike(item) {
+	if (item.liked) {
+		return '<span class="like_btn liked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+	else {
+		return '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+}
+
 
 function renderPreviewImage(item) {
 
 	var previewImage = '<div class="innerwrap" style=\''
 		//IE
 		+'background-image: url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 		//CHROME SAFARI
 		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 
 		//FIREFOX
 		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+		+ (item.thumbnail ? item.thumbnail : 'http://askdjlyons.com/clipart/images/frames/content-large-white.gif')+ '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
 		 + '\'>'
 		+ '</div>'
 
 
 
-//	var previewImage = '<div class="innerwrap" >'
-//		+ '<img src = "'
-//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
-//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
-//		+ '<h5>'
-//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-//		+ '</div>'
 
 	return  previewImage
 

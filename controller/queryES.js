@@ -739,6 +739,11 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 
 					//console.log('complete');
 
+					// good idea to attach source so that it is
+					// not troublesome to check the object without calling getCommentByID
+					esData._source = data;
+					// maybe even add user if it's needed
+
 					callback(null, esData);
 				});
 			});

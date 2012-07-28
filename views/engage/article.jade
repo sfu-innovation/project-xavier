@@ -42,7 +42,7 @@ block content
 			div#owner_comment
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }
-				span.createtime #{article.createdAt}
+				span.post_time(data-time="#{article.createdAt}") #{article.createdAt}
 				span.like_reply
 
 					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") reply

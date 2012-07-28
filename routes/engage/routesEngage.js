@@ -898,7 +898,7 @@ exports.courseView = function (req, res) {
 
 
 exports.demoPage = function (req, res) {
-//	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}
+//	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"P", userID:"ted", email:"ted@sfu.ca",type:1}
 	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
 	req.session.user = fake_user_2;

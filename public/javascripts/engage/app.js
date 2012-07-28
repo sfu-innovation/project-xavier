@@ -45,6 +45,7 @@ jQuery(document).ready(function ($) {
 		loadProfileArticles(engage);
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
+		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
 		$('.reply_click').live('click',function(){
 
@@ -395,7 +396,7 @@ function initUI() {
 function renderBox(item,type){
 	return '<li class="'+type+'">'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span><p>' + item.body
-		+ '</p><span class="post_time"> Posted at ' + formartDate(item.createdAt)
+		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
 		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</a><a class="reply_click" data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'       +'> Reply <span class="typicn forward"></span> </a></span></li>';
 }

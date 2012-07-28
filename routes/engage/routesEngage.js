@@ -25,8 +25,7 @@ exports.login = function (request, response) {
 
 
 exports.createComment = function (req,res){
-	console.log('///////');
-	console.log(req.body);
+
 	if(req.session && req.session.user){
 		var newComment = new Comment(
 			req.body.target_uuid
@@ -35,10 +34,8 @@ exports.createComment = function (req,res){
 			,req.body.body, req.body.parent_uuid);
 
 		QueryES.addComment(newComment, req.session.user, 2, function(err, result) {
-			console.log('?????');
-			console.log(newComment);
-			console.log(err);
-			console.log(result);
+
+
 			if (!err) {
 				res.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){

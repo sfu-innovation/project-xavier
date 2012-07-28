@@ -87,7 +87,7 @@ jQuery(document).ready(function ($) {
 			var comment = {};
 			comment.target_uuid = $('form input#comment_target').val();
 			comment.parent_uuid = $('form input#comment_parent').val();
-			comment.body = $('form input#comment_parent').val();
+			comment.body = $('form input#reply_content').val();
 
 			engage.createComment(comment,function(data){
 

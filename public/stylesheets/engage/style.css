@@ -154,7 +154,9 @@ ul#user_options_list li{
 	cursor: pointer;
 	color: #555;
 	}
-	
+ul#user_options_list li div{
+	cursor: pointer;
+} 	
 ul#user_options_list li#notification img{
 	height: 45px;
 	width: 45px;
@@ -962,16 +964,17 @@ div#article_container #comments .replies{
 	
 }
 
-#comments .reply_box textarea{
+#comments .reply_box input{
 	width: 80%;
 	display: inline;
 	min-height: 40px;
 	font-size: 12px;
 	margin-top:2px;
 	resize: none; 
+	overflow: scroll;
 }
 
-#comments .reply_box input{
+#comments .reply_box input.submit_btn{
 	float: right;
 	width: 20%;
 	display: block;

@@ -1,13 +1,19 @@
 var common = new coreApi.Common();
 
-function updateNotificationList(user) {
-	console.log('being updated...');
-	console.log(user);	
+function formatNotification(item){
+	return	"<div class='Notification'>"
+			+ "<a href='' class='Close' onclick='return selectNotification(this);'>Close</a>"
+			+ "<h1>" + item.user.firstName + " " + item.user.lastName + " commented:" + "</h1>"
+			+ "<span>" + item.notification.description + "</span>"
+			+ "</div>";
+}
+
+function updateNotificationList(user) {	
+	var notificationLists = $(".Notifications");
+	notificationLists.empty();	
+	
 	common.userNotifications(user, function(data) {
-		if (data) {			
-			console.log('user notification:');
-			console.log(data);
-					
+		if (data) {								
 			for(var i = 0; i < data.notification.length; ++i) {
 				var notificationType = "notificationRegular";
 				if (data.notification[i].user.type === 1) {
@@ -15,18 +21,18 @@ function updateNotificationList(user) {
 				}
 			
 				if (data.notification[i].notification && data.notification[i].user) {
-					
+					notificationLists.append(formatNotification(data.notification[i]));
 				}
 			}
 		}
-	});
+	});	
 }
 
-function selectNotification(selectedNotification) {
-	console.log('remove:');
+function selectNotification(selectedNotification) {	
 	var selected = $(selectedNotification).parent();
-	selected.remove();
-	console.log(selected);
+	selected.remove();	
+	// need to update the notification...
+	
 	return false;
 }
 

@@ -469,3 +469,7 @@ exports.uploadMedia = function (req, res) {
 		);
 	}
 };
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(1, request, response);
+}

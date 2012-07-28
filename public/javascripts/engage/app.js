@@ -46,16 +46,36 @@ jQuery(document).ready(function ($) {
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
 		loadComments(engage);
-		$('.reply_click').bind('click',function(){
+		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box
 			var self = $(this);
+
+			var target_uuid = $(this).attr('data-target-uuid');
+			var reply_to = $(this).attr('data-reply-to');
+			var parent_uuid = $(this).attr('data-parent-uuid');
+
+
 			if (self.attr('data-reply-type') === 'super'){
-				var target_uuid = $(this).attr('data-target-uuid');
-				var reply_to = $('#owner_comment .name').html();//the name of user it replies to
+
+				reply_to = $('#owner_comment .name').html();//the name of user it replies to
 				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
 //
 				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+
+			}
+			else if(self.attr('data-reply-type') === 'comment'){
+
+				var new_reply_box = renderReplyBox(reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).appendTo(self.closest('.thread')).slideDown('slow');
+
+
+			}
+			else if(self.attr('data-reply-type') === 'replies'){
+
+				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow');
+
 
 			}
 
@@ -363,25 +383,31 @@ function initUI() {
 
 }
 
+function renderBox(item,type){
+	return '<li class="'+type+'">'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+		+ '</span><p>' + item.body
+		+ '</p><span class="post_time"> Posted at ' + formartDate(item.createdAt)
+		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</a><a class="reply_click" data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'       +'> Reply <span class="typicn forward"></span> </a></span></li>';
+}
+
 function renderCommentBox(item){
-	function renderBox(item){
-		return '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
-			+ '</span><p>' + item.body
-			+ '</p><span class="post_time">' + formartDate(item.createdAt)
-			+ '</span><span class="like_reply"><a>like (' + item.like + ')'
-		+ '</a><a class="reply_click"> reply <span class="typicn forward"></span> </a></span></div>';
-	}
 
 
-   var html = '<div class="comment">'+ renderBox(item);
+
+   var html = renderBox(item, "comment");
 
 	if (item.replies && item.replies.length > 0){
+
 		$.each(item.replies, function (index, reply) {
 
-			html += '<div class="replies">'+ renderBox(reply);
+			html += renderBox(reply, "replies");
 		});
 
+
 	}
+
+	html = '<li class="thread"><ol>'+ html +'</ol></li>';
 
 	return html;
 }
@@ -399,7 +425,7 @@ function loadComments(engage){
 						comment = renderCommentBox(item);
 
 
-						$('#comments').append(comment);
+						$('#comments > ol').append(comment);
 					});
 				}
 				else{
@@ -936,11 +962,21 @@ function weekConverter() {
 }
 
 function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
+	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
 		+ comment_target
 		+ '"><input type="hidden" id="comment_target" value="'
 		+ comment_parent
 		'"></form></div>'
+
+	return html;
+}
+
+function renderSubReplyBox (reply_to, comment_target, comment_parent){
+	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
+		+ comment_target
+		+ '"><input type="hidden" id="comment_target" value="'
+		+ comment_parent
+	'"></form></li>'
 
 	return html;
 }

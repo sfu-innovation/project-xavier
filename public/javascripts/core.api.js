@@ -207,6 +207,35 @@ coreApi._construct = function () {
 
 	function Engage() {
 
+		this.createComment = function (target_id, comment_body, callback) {
+			console.log("API - createComment");
+
+			var body = {};
+			var comment = {};
+
+			comment.body = comment_body;
+
+			//TODO:need to fix this to dynamic input
+			comment.objectType = 'question';
+
+			comment.target_uuid = target_id;
+			body.comment = comment;
+
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/comment',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
+
 
 		this.deleteResource = function(uuid,callback){
 			console.log('API - deleteResource');

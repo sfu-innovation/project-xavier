@@ -82,6 +82,15 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('.reply_box form').live('submit',function(){
+
+			var target_id = $('form input#comment_target').val();
+			var parent_id = $('form input#comment_parent').val();
+
+
+			return false;
+		})
+
 		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
 
@@ -962,21 +971,37 @@ function weekConverter() {
 }
 
 function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
+	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment">'
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
 		+ comment_target
-		+ '"><input type="hidden" id="comment_target" value="'
-		+ comment_parent
-		'"></form></div>'
+		+ '">';
+
+		if(comment_parent){
+			html += '<input type="hidden" id="comment_parent" value="'
+				+ comment_parent
+			+ '">'
+		}
+
+
+
+		html += '</form></div>';
 
 	return html;
 }
 
 function renderSubReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
+	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment">'
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
 		+ comment_target
-		+ '"><input type="hidden" id="comment_target" value="'
+		+ '">'
+		+ '<input type="hidden" id="comment_parent" value="'
 		+ comment_parent
-	'"></form></li>'
+		+ '">'
+		+ '</form></li>'
 
 	return html;
 }

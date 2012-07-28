@@ -58,12 +58,14 @@ app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the
 app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the instructor of a course
 
 // follower
-//TODO: need update this into document
+//TODO: remove this if not needed
 app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower follows a question
-//TODO: need update this into document
+//TODO: remove this if not needed
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+
+app.post('/api/comment',routesEngage.createComment);
 
 //resource listings
 

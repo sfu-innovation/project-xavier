@@ -57,12 +57,70 @@ html
 		
 	body
 		div#header
-			div.row.clearfix
+			div.row.clearfix.show-for-small
+				div.mobile-two.columns
+					a(href="/")
+						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
+				div.mobile-two.columns#user_options
+					ul#user_options_list
+						script(type='text/javascript')
+							function dropdownToggle(id){
+								$(id).toggleClass('hide');
+								}
+																
+
+						li#notification.mobile_view
+							div(onClick="dropdownToggle('#notif')")
+								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+								span#notification_number 4
+							div.dropdown_list#notif.hide
+								ul
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png")
+											p.msg 
+												span.username Mark 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Catherine 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Mark 
+												| liked your article in 
+												span.coursename BUS 354
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Ted 
+												| liked your article in 
+												span.coursename BUS 354		
+						li.mobile_view
+							div(onClick="dropdownToggle('#user_info')")
+								span.typicn.next
+							div.dropdown_list#user_info.hide
+								ul
+									li
+										a(href="/profile/#{user.uuid}") My Profile
+									li
+										a(href="/preference") Preference
+									li
+										a(href="/logout") Logout
+
+			div.row.clearfix.hide-for-small
 				div.two.columns
 					a(href="/")
 						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
 				div.six.columns#nav-bar
-					ul.hide-for-small#options
+					ul#options
 						li
 							a#all_btn(href="/") All Resources
 						li
@@ -135,23 +193,6 @@ html
 											p.msg 
 												span.username Ted 
 												| liked your article in 
-												span.coursename BUS 354
-			div.row.show-for-small
-				div.button-bar.ten.columns
-					ul.button-group#mobile-nav
-						li
-							a.button(href="/") ALL
-						li
-							a.button(href="/mine") YOURS
-						li
-							a.button(href="/starred") STAR
-						li
-							a.button(href="/instructor") PROF
-							
-						br
-						each item in courses
-							li.courses
-								a.button(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
-										
+												span.coursename BUS 354					
 		block content
 

@@ -3,7 +3,7 @@ extends layout
 block content
 
 	- var weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-	div.row
+	div.row.hide-for-small
 		div.twelve.columns#weeks-bar
 			ul
 				li
@@ -15,7 +15,7 @@ block content
 						- else
 							a.passed(href="#week#{week}", data-week="#{week}") #{week}
 	div.row.clearfix#contents
-		div.three.columns#sharebox
+		div.three.columns#sharebox.hide-for-small
 			div.innercontents#submitnew
 				div.cover
 					div.frontCard

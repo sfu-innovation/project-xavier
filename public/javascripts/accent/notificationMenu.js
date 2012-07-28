@@ -22,6 +22,14 @@ function updateNotificationList(user) {
 	});
 }
 
+function selectNotification(selectedNotification) {
+	console.log('remove:');
+	var selected = $(selectedNotification).parent();
+	selected.remove();
+	console.log(selected);
+	return false;
+}
+
 setInterval(function() {
 	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
 	updateNotificationList(sessionUser);

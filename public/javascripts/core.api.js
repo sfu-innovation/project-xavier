@@ -199,8 +199,20 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			})
+		}
 
-
+		this.getMediaFiles = function(courses, callback){
+			console.log('API - getMediaFiles');
+			var body = {};				
+			body.where = courses;
+			$.ajax({
+				url:'/api/mediafiles/course',
+				type:'POST',
+				data:body,
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}

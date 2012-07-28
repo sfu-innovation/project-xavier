@@ -84,8 +84,8 @@ block content
 					div.reply_box(id = "#{comment_id}_0", style="")
 						span replying to #{comment.user.firstName} #{comment.user.lastName}
 						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
-							textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-							input(type="submit", value="Post")
+							input(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
+							input.submit_btn(type="submit", value="Post")
 					- comment_id = comment_id + 1		
 		script(type='text/javascript')
 			function show_comment_box(id){

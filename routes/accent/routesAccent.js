@@ -261,7 +261,7 @@ exports.mediafile = function(request,response){
 						'-ab', '128k',
 						'-threads', '0',
 						'-f', 'mp4', 
-						'media/' + filename
+						config.accentServer.mediaFolder + filename
 					]
 
 					if(filetype.match(/audio/)){
@@ -414,12 +414,41 @@ exports.courseMediaFiles = function(request, response){
 			}
 		})
 	}
+	else if(request.method === "POST" && request.body.where){
+		MediaAction.getMediaByCourse(request.body.where, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, media: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
 }
 
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
-		console.log(JSON.stringify(req.session.user))	
 		res.render("accent/index", { 	title: "SFU Accent",
+			user :  req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, 
+			function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
+		
+	}
+	else {
+		res.redirect("/demo");		
+	}	
+};
+
+exports.viewMediaPage = function(req, res){
+	if (req.session && req.session.user) {
+		res.render("accent/view-media", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, 

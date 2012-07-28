@@ -170,7 +170,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -186,7 +186,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
 	$('.articlebox span.like_btn.disliked').live('click',function(){
 
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.likeResource(resource_uuid,function(data){
 				console.log(data);
@@ -227,8 +227,8 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.like_btn.liked').live('click',function(){
 
-			var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.dislikeResource(resource_uuid,function(data){
 				if (data && data.errorcode === 0) {
@@ -247,8 +247,24 @@ jQuery(document).ready(function ($) {
 
 	})
 
+	$('.articlebox span.delete_btn').live('click', function () {
+		var article = $(this).closest('.articlebox');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 
+		if (resource_uuid) {
+			engage.deleteResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
 
+					article.fadeOut('slow', function () {
+						article.remove()
+					});
+
+				}
+
+			})
+
+		}
+	})
 
 
 });

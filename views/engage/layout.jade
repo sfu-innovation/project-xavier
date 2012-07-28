@@ -58,7 +58,7 @@ html
 	body
 		div#header
 			
-			div.clearfix.show-for-small
+			div.row.clearfix.show-for-small
 				script(type='text/javascript')
 					function show_slider_box(id){
 						$(id).slideToggle();
@@ -93,14 +93,15 @@ html
 							div.submit
 								input(type="submit", value="add", class="small button")
 
-				ul#sliderMenu
-					li#slide_menu 
-						a(onClick="show_slider_box('#menu_box')") MENU
-					li#slide_courses 
-						a(onClick="show_slider_box('#courses_box')") COURSES
-					li#slide_share 
-						a(onClick="show_slider_box('#share_box')") SHARE
-				
+				div.mobile-four.columns
+					ul#sliderMenu
+						li#slide_menu 
+							a(onClick="show_slider_box('#menu_box')") MENU
+						li#slide_courses 
+							a(onClick="show_slider_box('#courses_box')") COURSES
+						li#slide_share 
+							a(onClick="show_slider_box('#share_box')") SHARE
+					
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
@@ -147,8 +148,8 @@ html
 												span.username Ted 
 												| liked your article in 
 												span.coursename BUS 354		
-						li.mobile_view
-							div(onClick="dropdownToggle('#mobile_user_info')")
+						li#mobile_user_info.mobile_view
+							div.expand_btn(onClick="dropdownToggle('#mobile_user_info')")
 								span.typicn.next
 							div.dropdown_list#mobile_user_info.hide
 								ul
@@ -181,7 +182,7 @@ html
 								$(id).toggleClass('hide');
 								}
 						li
-							div(onClick="dropdownToggle('#course_list')")
+							div.dropdown_btn(onClick="dropdownToggle('#course_list')")
 								span Courses
 								span.typicn.next
 							div.dropdown_list#course_list.hide
@@ -191,7 +192,7 @@ html
 											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 	
 						li
-							div(onClick="dropdownToggle('#user_info')")
+							div.dropdown_btn(onClick="dropdownToggle('#user_info')")
 								span #{ user.firstName } #{ user.lastName }
 								span.typicn.next
 							div.dropdown_list#user_info.hide

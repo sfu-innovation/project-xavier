@@ -170,7 +170,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -186,7 +186,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
 	$('.articlebox span.like_btn.disliked').live('click',function(){
 
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.likeResource(resource_uuid,function(data){
 				console.log(data);
@@ -227,8 +227,8 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.like_btn.liked').live('click',function(){
 
-			var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.dislikeResource(resource_uuid,function(data){
 				if (data && data.errorcode === 0) {
@@ -247,8 +247,24 @@ jQuery(document).ready(function ($) {
 
 	})
 
+	$('.articlebox span.delete_btn').live('click', function () {
+		var article = $(this).closest('.articlebox');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 
+		if (resource_uuid) {
+			engage.deleteResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
 
+					article.fadeOut('slow', function () {
+						article.remove()
+					});
+
+				}
+
+			})
+
+		}
+	})
 
 
 });
@@ -739,7 +755,7 @@ function renderArticlePreviewBox(item) {
 			//end of innerwrap
 
 			+ '<h5>'
-			+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
+			+ '<a '+ (item.thumbnail?'':'class="noimage"')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
@@ -819,30 +835,38 @@ function renderLike(item) {
 
 function renderPreviewImage(item) {
 
-	var previewImage = '<div class="innerwrap" style=\''
-		//IE
-		+'background-image: url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
-		//CHROME SAFARI
-		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	var previewImage = "";
 
-		//FIREFOX
-		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	if (item.thumbnail){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ item.thumbnail + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ item.thumbnail + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ item.thumbnail + '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
-		 + '\'>'
-		+ '</div>'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else{
+		previewImage= '<div class="innerwrap" style=\''
+			+ 'opacity: 1;'
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/default_thumbnail.jpg' + '");'
+			+ '\'>'
+			+ '</div>'
+	}
 
 
 
-//	var previewImage = '<div class="innerwrap" >'
-//		+ '<img src = "'
-//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
-//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
-//		+ '<h5>'
-//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-//		+ '</div>'
+
 
 	return  previewImage
 
@@ -912,7 +936,7 @@ function weekConverter() {
 }
 
 function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
 		+ comment_target
 		+ '"><input type="hidden" id="comment_target" value="'
 		+ comment_parent

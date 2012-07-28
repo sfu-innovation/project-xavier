@@ -207,6 +207,24 @@ coreApi._construct = function () {
 
 	function Engage() {
 
+
+		this.deleteResource = function(uuid,callback){
+			console.log('API - deleteResource');
+
+			$.ajax({
+				url:'/api/resource/'+uuid,
+				type:'DELETE',
+				dataType:'json',
+				contentType:"application/json",
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
 		this.createResource = function (course_id,title,description,resource_type,file_type,url,callback){
 			console.log('API - createResource');
 			var body = {};

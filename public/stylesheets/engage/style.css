@@ -159,7 +159,7 @@ div#header{
 	padding-left: 5px
 }
 
-.slider_box#share_box form{
+.slider_box#mobile_share_box form{
 	margin: 20px;
 }
 /* -----------------------------------------
@@ -332,8 +332,7 @@ li.mobile_view	div.expand_btn{
 	z-index: 1;
 	margin-bottom: 6px;
 	}
- 
- 
+
 li.mobile_view	div.expand_btn span{
 	margin-left: -5px;
 	margin-top: 3px;
@@ -525,13 +524,13 @@ div.innerwrap > img:hover {
 }
 
 div.innerwrap{
-	background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(42%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%), url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* IE10+ */
-	background-image: linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9e000000', endColorstr='#7a000000',GradientType=0 ); /* IE6-9 */
+	/*background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* FF3.6+ */
+	/*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(42%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* Chrome,Safari4+ */
+	/*background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%), url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* Chrome10+,Safari5.1+ */
+	/*background-image: -o-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* Opera 11.10+ */
+	/*background-image: -ms-linear-gradient(top, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* IE10+ */
+	/*background-image: linear-gradient(to bottom, rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.12) 27%,rgba(0,0,0,0.01) 42%,rgba(0,0,0,0.06) 53%,rgba(0,0,0,0.48) 100%),url("http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"); *//* W3C */
+	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9e000000', endColorstr='#7a000000',GradientType=0 ); *//* IE6-9 */
 	background-repeat: repeat-x, no-repeat;
 	background-position: top, center;
 	background-size: auto, cover;
@@ -565,6 +564,14 @@ div.innercontents h5 a{
 	text-shadow: 1px 1px 5px black;
 	margin-bottom: 5px;
 }
+
+div.innercontents h5 a.noimage{
+
+	color: #858587;
+	text-shadow: none;
+
+}
+
 div.post_details {
 	padding-left: 50px;
 	height: 65px;
@@ -579,6 +586,7 @@ div.innercontents img.avatar{
 
 div.post_details{
 	color: #9e9e9e;
+	border-bottom: 1px solid #ccc;
 	font-family: "Lato", sans-serif;
 
 }
@@ -1067,8 +1075,21 @@ div#article_container #comments .replies{
 	margin-left: 40px !important;
 	}
 
-#comments .reply_box{
+#comments .reply_box form{
+	margin-top: 10px;
 	
+}
+
+#comments .reply_box span{
+	padding-left: 9px;
+
+}
+
+#comments .reply_box{
+	height: 75px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+
 }
 
 #comments .reply_box input{

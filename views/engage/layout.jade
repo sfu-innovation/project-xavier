@@ -53,7 +53,7 @@ html
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
 		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js?v101")
+		script(src="/javascripts/engage/app.js?v102")
 		
 	body
 		div#header
@@ -80,12 +80,12 @@ html
 							li.courses
 								a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 								
-				div.slider_box#share_box
+				div.slider_box#mobile_share_box
 					form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
-						input(name="article_url",type="text", id="article_url", placeholder="http://")
-						input(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+						input.article_url(name="article_url",type="text",placeholder="http://")
+						input.article_comment(name="article_comment", type="text", placeholder="Type in a comment")
 
-						div#sumbitrow
+						div#mobile_sumbitrow
 							div.selectcourse
 								select(class="customDropdown", name="article_course", value="select a course")
 									each item in courses
@@ -100,8 +100,9 @@ html
 						li#slide_courses 
 							a(onClick="show_slider_box('#courses_box')") COURSES
 						li#slide_share 
-							a(onClick="show_slider_box('#share_box')") SHARE
+							a(onClick="show_slider_box('#mobile_share_box')") SHARE
 					
+
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")

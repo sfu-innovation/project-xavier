@@ -43,6 +43,8 @@ function formatResponse(response) {
 }
 
 function formatConversation(conversation) {	
+	var upVote = conversation._source.upvote;
+	var downVote = conversation._source.downvote;		
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
 			+ "<div class='Actions'>"
@@ -50,7 +52,7 @@ function formatConversation(conversation) {
 			+ "<a class='Downvote' href='' onclick='return selectVote(this);'>Downvote</a>"
 			+ "</div>"
 			+ "<a class='UUID' style='display:none;'>" + conversation._id + "</a>"
-			+ "<a class='Count' href=''>" + formatVoteCount(conversation._source.upvote - conversation._source.downvote) + "</a>"  			
+			+ "<a class='Count' href=''>" + formatVoteCount(upVote - downVote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ conversation._source.body
@@ -149,6 +151,15 @@ function displayQuestions(course) {
 
 }
 
+function insertAtIndex(i) {
+    if(i === 0) {
+     $("#controller").prepend("<div>okay things</div>");        
+     return;
+    }
+
+    $("#controller div:nth-child(" + i + ")").before("<div>great things</div>");   
+}
+
 function enterPressed(event, textInput) {
 	
 	//console.log(event.value);
@@ -159,20 +170,23 @@ function enterPressed(event, textInput) {
 		var questionNode = $(questionSelected).children(".Question");
 		var questionID = $(questionNode).children("a.UUID").text();
 
-		var conversationNode = $(questionSelected).children(".Conversation");
-		var allConversationList = $(conversationNode).children(".All");
 		var value = textNode.val();
-		console.log(questionSelected);
-		console.log(allConversationList);
-		console.log(questionID);
-		console.log(value);
-		console.log('enterPressed');
-
-		/*
+				
 		rqra.createComment(questionID, value, function(result) {
+			// it would be nice to add directly after creating comment
+			// the result should return the whole object not just top layer			
+			console.log(result);
 
-		})
-		*/
+			// maybe refresh the question instead of dynamically adding it
+			rqra.getCommentById(result.comment._id,function(result){	
+				var conversationNode = $(questionSelected).children(".Conversation");
+				var allConversationList = $(conversationNode).children(".All");
+				var inputText = $(allConversationList).children("input");			
+				var conversationStr = formatConversation(result.comment);
+				inputText.before(conversationStr);				
+			});
+		});
+		
 	}
 	
 }

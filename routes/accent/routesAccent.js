@@ -422,8 +422,7 @@ exports.index = function(req, res){
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
-			status : "logged in" }, 
-			function(err, rendered){			
+			status : "logged in" }, function(err, rendered){			
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
 
@@ -431,7 +430,10 @@ exports.index = function(req, res){
 		
 	}
 	else {
-		res.redirect("/demo");		
+		demoUserNotification(function(){ 
+			res.redirect("/demo");		
+		});
+		
 	}	
 };
 
@@ -443,6 +445,21 @@ exports.demoPage = function (req,res){
 		req.session.courses = result;
 		res.redirect('/');
 
+	});
+}
+
+//TODO: remove when everything is setup
+var notification = require('../../controller/NotificationAction.js')
+var demoUserNotification = function(callback){
+	var args= {
+		app:1,
+		user:"jhc20"
+	}
+	notification.createUserNotificationSettings(args, function(err, result){
+		if(err)
+			console.log(err);
+
+		callback();
 	});
 }
 
@@ -469,3 +486,7 @@ exports.uploadMedia = function (req, res) {
 		);
 	}
 };
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(1, request, response);
+}

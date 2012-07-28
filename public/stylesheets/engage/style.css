@@ -287,6 +287,54 @@ div#contents div.columns:last-child{;
    box container of articles previews
 ----------------------------------------- */
 
+.articlebox .delete_btn{
+
+	font-size: 13px;
+	position: absolute;
+	right:5px;
+	top:5px;
+	background-color: #f3f3f3;
+	border: 1px solid #d9dad5;
+	padding: 1px 3px;
+	cursor: pointer;
+	display: none;
+	opacity: 0.6;
+
+}
+
+.articlebox .delete_btn:after{
+	content: "DELETE";
+	font-size: 12px;
+	position: absolute;
+	right:-1px;
+	top:15px;
+
+	background-color: #f3f3f3;
+	border: 1px solid #d9dad5;
+	padding: 1px 3px;
+	text-align: center;
+	display: none;
+}
+
+.articlebox .delete_btn:hover{
+	opacity: 1;
+}
+
+.articlebox .delete_btn:hover:after{
+	display: block;
+}
+
+.articlebox .delete_btn{
+
+}
+
+
+.articlebox:hover .delete_btn{
+	display: block;
+
+
+}
+
 div.innercontents{
 	/*background-color: rgba(0,0,0,0.02) ;*/
 	background-color: rgba(250, 250, 250,1);

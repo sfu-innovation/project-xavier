@@ -18,14 +18,19 @@ function getMedia(courseUUID){
 		$('#media-list').empty();
 		var media = response.media;
 		for(var i = 0; i < media.length; ++i){
-			var mediaNode = "<div class=\"Item\">" + 
-				"<img src=\"" + media[i].thumbnail + "\" alt=\"\"/>" +
-				"<h1>" + media[i].title + "</h1>" + 
-				"<h2>Week 5</h2>" + 
-				"<p>" + media[i].description + "</p>" + 
-				"</div>"
 
-			$('#media-list').append(mediaNode);
+			(function(mediaItem){
+				accent.getMediaSection(mediaItem.uuid, function(section){
+				var mediaNode = "<div class=\"MediaItem\">" + 
+					"<img src=\"" + mediaItem.thumbnail + "\" alt=\"\" width=\"200\"/>" +
+					"<h1>" + mediaItem.title + "</h1>" + 
+					"<h2>" + section.section + "</h2>" + 
+					"<p>" + mediaItem.description + "</p>" + 
+					"</div>"
+
+				$('#media-list').append(mediaNode);
+				})
+			})(media[i])
 		}
 	})
 }

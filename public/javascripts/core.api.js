@@ -215,6 +215,16 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.getMediaSection = function(uuid, callback){
+				$.ajax({
+				url:'/api/mediafile/' + uuid + '/section',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
 	}
 
 	function Engage() {

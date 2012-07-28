@@ -85,7 +85,7 @@ exports.deleteResource = function (request, response) {
 exports.starredResources = function (req, res) {
 	if (req.method === 'GET') {
 		if (req.session && req.session.user) {
-			Star.getStarredResources(req.session.user.uuid, function (error, result) {
+			Star.getStarredResources(req.session.user, function (error, result) {
 				if (result) {
 					EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
@@ -231,7 +231,7 @@ exports.resourcesInCourse = function (req, res) {
 			Resource.getResourcesByCourseUUIDs({courses:[course_uuid]}, function (error, result) {
 
 				if (result) {
-					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+					EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -278,7 +278,7 @@ exports.resourcesInCourseByWeek = function (req, res) {
 			Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum, courses:[course_uuid]}, function (error, result) {
 
 				if (result) {
-					EngageAction.resourceHelper(user_uuid, result, function (error, result) {
+					EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})
@@ -320,7 +320,7 @@ exports.resourcesInCourses = function (req, res) {
 	Resource.getResourcesByCourseUUIDs({courses:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -347,7 +347,7 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 	Resource.getResourcesByCourseUUIDsAndWeek({week:weekNum, courses:CourseUUIDs}, function (error, result) {
 
 		if (result) {
-			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -391,7 +391,7 @@ exports.resourcesOfUser = function(req,res){
 	Resource.getResourceByUserId({user:req.params.id}, function (error, result) {
 
 		if (result) {
-			EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+			EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 				res.writeHead(200, { 'Content-Type':'application/json' });
 				res.end(JSON.stringify({ errorcode:0, resources:result }));
 			})
@@ -411,7 +411,7 @@ exports.resourcesOfCurrentUser = function (req, res) {
 		Resource.getResourceByUserId({user:req.session.user.uuid}, function (error, result) {
 
 			if (result) {
-				EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+				EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 					res.writeHead(200, { 'Content-Type':'application/json' });
 					res.end(JSON.stringify({ errorcode:0, resources:result }));
 				})
@@ -630,7 +630,7 @@ exports.shareResource = function (req,res){
 		var currentWeek = EngageAction.weekHelper();
 		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
 			if (result){
-				EngageAction.resourceHelper(req.session.user.uuid, [result], function (error, result) {
+				EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
 					res.writeHead(200, { 'Content-Type':'application/json' });
 					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
 				})
@@ -796,7 +796,7 @@ exports.articleView = function (req, res) {
 
 		Resource.getResourceByUUID(req.params.id, function (error, resource) {
 
-			EngageAction.resourceHelper(req.session.user.uuid, [resource], function (err,resources) {
+			EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
 				var resource = resources[0];
 				var pickedArticle = articles[req.params.id - 1];
 				res.render("engage/article", { title:"SFU ENGAGE",
@@ -892,6 +892,8 @@ exports.courseView = function (req, res) {
 
 
 }
+
+
 
 exports.demoPage = function (req, res) {
 //	var fake_user_1 = {uuid:'xna2', firstName:"Mark", lastName:"Ni", userID:"xna2", email:"xna2@sfu.ca"}

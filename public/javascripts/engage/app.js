@@ -713,7 +713,8 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<span class="delete_btn">X</span>'
+			+ isOwner(item.owner)
+
 			+ '<a href="/profile/'+ item.user.uuid +'">'
 			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
 
@@ -752,6 +753,11 @@ function renderArticlePreviewBox(item) {
 			+ '</div>';
 	return article;
 
+}
+
+function isOwner(owner){
+	if (owner) return '<span class="delete_btn">X</span>'
+	else return ""
 }
 
 

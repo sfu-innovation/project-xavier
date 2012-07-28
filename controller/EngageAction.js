@@ -210,7 +210,7 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 			async.forEach(parsedResult, function (resource, callback) {
-					Like.isResourceLiked({user:currentUser, resource:resource.uuid},function(err,result){
+					Like.isResourceLiked({user:currentUser.uuid, resource:resource.uuid},function(err,result){
 						if  (result){
 							resource.liked = true
 						}
@@ -235,7 +235,7 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 			async.forEach(parsedResult, function (resource, callback) {
-					Star.isResourceStarred({user:currentUser, resource:resource.uuid},function(err,result){
+					Star.isResourceStarred({user:currentUser.uuid, resource:resource.uuid},function(err,result){
 						if  (result){
 							resource.starred = true
 						}
@@ -249,6 +249,31 @@ var resourceHelper = exports.resourceHelper = function(currentUser,resources,cal
 
 
 					})
+
+				}
+				, function (err) {
+					callback(err)
+				})
+		} ,
+		findIsOwner:function (callback) {
+
+
+			async.forEach(parsedResult, function (resource, callback) {
+
+
+						if  (currentUser.uuid === resource.user.uuid || currentUser.type === 1 || currentUser.type === 2 ){
+							resource.owner = true
+						}
+						else{
+
+							resource.owner = false;
+						}
+
+						callback();
+
+
+
+
 
 				}
 				, function (err) {

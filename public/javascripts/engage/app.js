@@ -67,8 +67,8 @@ jQuery(document).ready(function ($) {
 			}
 			else if(self.attr('data-reply-type') === 'comment'){
 
-				var new_reply_box = renderReplyBox(reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).appendTo(self.closest('.thread')).slideDown('slow');
+				var new_reply_box = renderSubReplyBox(reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).appendTo(self.closest('.thread ol')).slideDown('slow');
 
 
 			}

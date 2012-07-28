@@ -40,7 +40,6 @@ div#header{
 	-moz-box-shadow: 0 0 5px #9e9e9e;
 	-webkit-box-shadow: 0 0 5px #9e9e9e;
 	box-shadow: 0 0 5px #9e9e9e;
-	padding-top:15px;
 }
 
 
@@ -48,7 +47,7 @@ div#header{
 
 #header img.logo{
 	margin-bottom: 10px;
-
+	padding-top:15px;
 	width: 140px;
 }
 
@@ -59,6 +58,7 @@ div#header{
 	margin-bottom: 10px;
 	margin-top: 11px;
 	margin-left: -40px;
+	padding-top:15px;
 }
 
 #header ul#options li{
@@ -84,67 +84,47 @@ div#header{
 	border-bottom: 0;
 	}
 /* -----------------------------------------
-   mobile view of navigation bar
+   mobile view of navigation slider
 ----------------------------------------- */
-
-ul#mobile-nav {
-	list-style: none;
-	margin: 0;
-	margin-bottom: 10px;
+#sliderMenu{
 	text-align: center;
+	margin-top: 0;
+	clear: both;
 }
-
-ul#mobile-nav li{
+#sliderMenu li{
 	display: inline;
+	padding: 10px 30px;
+	background: white;
+	-moz-box-shadow: 0px 1px 5px #9e9e9e;
+	-webkit-box-shadow: 0px 1px 5px #9e9e9e;
+	box-shadow :0px 1px 5px #9e9e9e;
+	border-radius: 0 0 15px 15px;
+	-moz-border-radius: 0 0 15px 15px;
+	-webkit-border: 0 0 15px 15px;
+	color: #888;
+	font-weight: bold;
 }
 
-ul#mobile-nav .button{
-	padding: 8px;
+#sliderMenu li a{
+		color: #888;
+	font-weight: bold;
+	cursor: pointer;
+	}
+.slider_box{
+	background-color: white;
+	margin-bottom: 8px;
+	padding: 20px;
+	position: relative;
+	clear: both;
+	-moz-box-shadow: 0px 1px 5px #9e9e9e;
+	-webkit-box-shadow: 0px 1px 5px #9e9e9e;
+	box-shadow :0px 1px 5px #9e9e9e;
+	display: none;
+	
 }
-
-ul#mobile-nav li.course{
-	display: inline;
-	width: 120px;
-}
-
-
-
-.nav-bar > li,.nav-bar > li:last-child,.nav-bar > li:first-child   {
-	-webkit-box-shadow:none;
-	box-shadow: none;
-}
-
-#header .nav-bar li{
-	padding-right: 0;
-	border: none;
-	background: transparent;
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
-#options.nav-bar > li{
-	margin-right: 20px;
-	border: none;
-	background: transparent;
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
-#options.nav-bar > li:first-child{
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-		
-}
-
-#options.nav-bar > li:last-child{
-	-webkit-box-shadow: 0;
-	-moz-box-shadow: 0;
-	box-shadow: 0;
-}
-
+.slider_box ul{
+	margin-bottom: 0;
+	}
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */
@@ -154,6 +134,7 @@ ul#user_options_list{
 	text-align: right;
 	white-space: nowrap;
 	display: block;
+	padding-top:15px;
 }
 
 ul#user_options_list li{

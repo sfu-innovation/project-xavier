@@ -57,14 +57,49 @@ html
 		
 	body
 		div#header
+			
 			div.clearfix.show-for-small
-				ul.mobile_list
-					li
-						a MENU
-					li 
-						a COURSES
-					li 
-						a SHARE
+				script(type='text/javascript')
+					function show_slider_box(id){
+						$(id).slideToggle();
+					}
+				div.slider_box#menu_box
+					ul
+						li
+							a#all_btn(href="/") All Resources
+						li
+							a#contruibutions_btn(href="/mine") Your Contributions
+						li
+							a#starred_btn(href="/starred") Starred
+						li
+							a#instructor_btn(href="/instructor") Instructor Posts
+				div.slider_box#courses_box
+					ul
+						each item in courses
+							li.courses
+								a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+								
+				div.slider_box#share_box
+					form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						input(name="article_url",type="text", id="article_url", placeholder="http://")
+						textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+
+						div#sumbitrow
+							div.selectcourse
+								select(class="customDropdown", name="article_course", value="select a course")
+									each item in courses
+										option(value=item.uuid) #{item.subject+item.number}
+							div.submit
+								input(type="submit", value="add", class="small button")
+
+				ul#sliderMenu
+					li#slide_menu 
+						a(onClick="show_slider_box('#menu_box')") MENU
+					li#slide_courses 
+						a(onClick="show_slider_box('#courses_box')") COURSES
+					li#slide_share 
+						a(onClick="show_slider_box('#share_box')") SHARE
+				
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
@@ -79,7 +114,7 @@ html
 
 						li#notification.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
-								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+								img.avatar(src="/images/engage/default_profile.png") 
 								span#notification_number 4
 							div.dropdown_list#mobile_notif.hide
 								ul

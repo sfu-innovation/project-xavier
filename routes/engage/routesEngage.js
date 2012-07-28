@@ -85,9 +85,9 @@ exports.deleteResource = function (request, response) {
 exports.starredResources = function (req, res) {
 	if (req.method === 'GET') {
 		if (req.session && req.session.user) {
-			Star.getStarredResources(req.session.user, function (error, result) {
+			Star.getStarredResources(req.session.user.uuid, function (error, result) {
 				if (result) {
-					EngageAction.resourceHelper(req.session.user.uuid, result, function (error, result) {
+					EngageAction.resourceHelper(req.session.user, result, function (error, result) {
 						res.writeHead(200, { 'Content-Type':'application/json' });
 						res.end(JSON.stringify({ errorcode:0, resources:result }));
 					})

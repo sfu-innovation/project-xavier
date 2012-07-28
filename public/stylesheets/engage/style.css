@@ -278,9 +278,20 @@ li.mobile_view ul{
  
  }
  
+li.mobile_view div#notif ul{
+
+	margin-left: -205px !important;
+	
+	}
+ 
 li.mobile_view div#notif li{
-	width: 390px;
+	width: 300px;
 }
+
+li.mobile_view div#notif li p.msg{
+	white-space: normal;
+}
+
 
 /* -----------------------------------------
    box container of articles previews

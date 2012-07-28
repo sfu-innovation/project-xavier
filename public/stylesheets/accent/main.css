@@ -590,3 +590,228 @@ img.User {
 .TagWindow input {
 	padding: 4px;
 }
+
+.Notifications {
+ position: absolute;
+ width: 300px;
+ left: 0;
+ bottom: 0;
+ z-index: 222;
+ -webkit-perspective: 2000;
+ -khtml-perspective: 2000;
+ -moz-perspective: 2000;
+ -ms-perspective: 2000;
+ -o-perspective: 2000;
+ perspective: 2000;
+}
+
+.Notification {
+ position: relative;
+ padding: 10px;
+ width: 100%;
+ margin-bottom: 10px;
+ 
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ border-radius: 5px;
+ overflow: hidden;
+ 
+ background: #000;
+ border: 1px solid #000;
+ 
+ -webkit-box-shadow: rgba(0,0,0,0.35) 0px 3px 6px, inset rgba(255,255,255,0.15) 0px 1px 0px, inset rgba(255,255,255,0.25) 0px 0px 1px;
+ -moz-box-shadow: rgba(0,0,0,0.35) 0px 3px 6px, inset rgba(255,255,255,0.15) 0px 1px 0px, inset rgba(255,255,255,0.25) 0px 0px 1px;
+ box-shadow: rgba(0,0,0,1) 0px 0px 6px, inset rgba(255,255,255,0.15) 0px 1px 0px, inset rgba(255,255,255,0.25) 0px 0px 1px;
+ 
+ -webkit-transform-style: preserve-3d;
+ -khtml-transform-style: preserve-3d;
+ -moz-transform-style: preserve-3d;
+ -ms-transform-style: preserve-3d;
+ -o-transform-style: preserve-3d;
+ transform-style: preserve-3d;
+ 
+ -webkit-backface-visibility: hidden;
+ -khtml-backface-visibility: hidden;
+ -moz-backface-visibility: hidden;
+ -ms-backface-visibility: hidden;
+ -o-backface-visibility: hidden;
+ backface-visibility: hidden;
+ 
+ -webkit-animation: flip 1s 1 linear;
+ -khtml-animation: flip 1s 1 linear;
+ -moz-animation: flip 1s 1 linear;
+ -o-animation: flip 1s 1 linear;
+ animation: flip 1s 1 linear;
+ 
+ opacity: 0.9;
+}
+
+.Notification:before {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ 
+ margin-left: 50%;
+ margin-top: -10px;
+ padding-bottom: 10px;
+ 
+ -webkit-transform-style: flat;
+ -khtml-transform-style: flat;
+ -moz-transform-style: flat;
+ -ms-transform-style: flat;
+ -o-transform-style: flat;
+ transform-style: flat;
+ 
+ -webkit-transform: skew(45deg);
+ -khtml-transform: skew(45deg);
+ -moz-transform: skew(45deg);
+ -ms-transform: skew(45deg);
+ -o-transform: skew(45deg);
+ transform: skew(45deg);
+ 
+ -webkit-animation: shine-in 1s 1 ease-out;
+ -khtml-animation: shine-in 1s 1 ease-out;
+ -moz-animation: shine-in 1s 1 ease-out;
+ -ms-animation: shine-in 1s 1 ease-out;
+ -o-animation: shine-in 1s 1 ease-out;
+ animation: shine-in 1s 1 ease-out;
+ 
+ background: -moz-linear-gradient(top, hsla(0,0%,100%,0.25) 0%, hsla(0,0%,100%,0) 100%);
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,hsla(0,0%,100%,0.2)), color-stop(100%,hsla(0,0%,100%,0)));
+ background: -webkit-linear-gradient(top, hsla(0,0%,100%,0.25) 0%,hsla(0,0%,100%,0) 100%);
+ background: -o-linear-gradient(top, hsla(0,0%,100%,0.25) 0%,hsla(0,0%,100%,0) 100%);
+ background: -ms-linear-gradient(top, hsla(0,0%,100%,0.25) 0%,hsla(0,0%,100%,0) 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42ffffff', endColorstr='#00ffffff',GradientType=0 );
+ background: linear-gradient(to bottom, hsla(0,0%,100%,0.25) 0%,hsla(0,0%,100%,0) 100%);
+ content: " ";
+ z-index: 555;
+}
+
+.Notification > h1, .Notification > span {
+ position: relative;
+}
+
+.Notification > h1, .Notification > span {
+ max-width: 100%;
+ min-width: 55%;
+ font-weight: bold;
+ text-shadow: #000 0px 1px 1px;
+}
+
+.Notification > h1 {
+ color: #f5f5f5;
+ font-size: 18px;
+}
+
+.Notification > span {
+ color: #aaa;
+ font-size: 0.6em;
+}
+
+.Notification .Close {
+ font-family: "Pictos";
+ position: absolute;
+ right: 10px;
+ top: 10px;
+ font-size: 22px;
+ z-index: 774;
+ color: #000;
+}
+
+.Notification .Close:hover {
+ color: #fff;
+ cursor: pointer;
+}
+
+.Notification a {
+ font-weight: bold;
+ color: #ddd;
+}
+
+.Notification img {
+ width: 48px; 
+ float: left; 
+ margin-right: 10px;
+}
+
+@-webkit-keyframes flip {
+      0% {-webkit-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-webkit-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-webkit-transform: rotateY(-1deg);}
+    100% {-webkit-transform: rotateY(0deg);}
+}
+@-webkit-keyframes shine-in {
+      0% {margin-left: 100%;}
+    100% {}
+}
+
+
+
+@-khtml-keyframes flip {
+      0% {-khtml-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-khtml-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-khtml-transform: rotateY(-1deg);}
+    100% {-khtml-transform: rotateY(0deg);}
+}
+@-khtml-keyframes shine-in {
+      0% {margin-left: 100%;}
+}
+@-khtml-keyframes text-in {
+      0% {margin-left: 25%;margin-right: -25%;}
+}
+
+
+@-moz-keyframes flip {
+      0% {-moz-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-moz-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-moz-transform: rotateY(-1deg);}
+    100% {-moz-transform: rotateY(0deg);}
+}
+@-moz-keyframes shine-in {
+      0% {margin-left: 100%;}
+}
+@-moz-keyframes text-in {
+      0% {margin-left: 25%;margin-right: -25%;}
+}
+
+
+@-ms-keyframes flip {
+      0% {-ms-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-ms-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-ms-transform: rotateY(-1deg);}
+    100% {-ms-transform: rotateY(0deg);}
+}
+@-ms-keyframes shine-in {
+      0% {margin-left: 100%;}
+}
+@-ms-keyframes text-in {
+      0% {margin-left: 25%;margin-right: -25%;}
+}
+
+
+@-o-keyframes flip {
+      0% {-o-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-o-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-o-transform: rotateY(-1deg);}
+    100% {-o-transform: rotateY(0deg);}
+}
+@-o-keyframes shine-in {
+      0% {margin-left: 100%;}
+}
+@-o-keyframes text-in {
+      0% {margin-left: 25%;margin-right: -25%;}
+}
+
+
+@keyframes flip {
+      0% {-o-transform: rotateY(-90deg);opacity: 0;border-right-width: 30px;}
+     80% {-o-transform: rotateY(10deg);border-right-width: 0px;}
+     95% {-o-transform: rotateY(-1deg);}
+    100% {-o-transform: rotateY(0deg);}
+}
+@keyframes shine-in {
+      0% {margin-left: 100%;}
+}
+@keyframes text-in {
+      0% {margin-left: 25%;margin-right: -25%;}
+}

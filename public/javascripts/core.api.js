@@ -80,6 +80,17 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.userNotifications = function(userID, callback){
+			console.log("API - userNotifications");
+			$.ajax({
+				url:'/api/user/notification/' + userID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 	}
 

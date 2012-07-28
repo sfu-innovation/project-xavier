@@ -154,7 +154,9 @@ ul#user_options_list li{
 	cursor: pointer;
 	color: #555;
 	}
-	
+ul#user_options_list li div{
+	cursor: pointer;
+} 	
 ul#user_options_list li#notification img{
 	height: 45px;
 	width: 45px;

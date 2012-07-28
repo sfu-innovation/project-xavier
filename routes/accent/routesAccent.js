@@ -253,7 +253,7 @@ exports.mediafile = function(request,response){
 						'-keyint_min', '25',
 						'-refs', '4',
 						'-trellis', '1',
-						'-partitions', '+parti8x8+parti4x4+partp8x8+partb8x8',
+						/*'-partitions', '+parti8x8+parti4x4+partp8x8+partb8x8',*/
 						'-s', '720x480',
 						'-acodec', 'copy'/*libvo_aacenc*/,
 						'-ab', '128k',

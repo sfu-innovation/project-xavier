@@ -124,7 +124,31 @@ div#header{
 }
 .slider_box ul{
 	margin-bottom: 0;
+	padding: 0 40px;
 	}
+.slider_box li{
+	list-style: none;
+}	
+
+.slider_box li a{
+	color: #888;
+	}
+
+.slider_box#menu_box{
+	padding: 0 40px;
+	}
+.slider_box ul{
+	float: left;
+	padding: 5px 25px;
+}
+
+.slider_box ul li{
+	padding: 5px 0;
+}
+.slider_box#courses_box li a{
+	border-left: 4px solid #F14241;
+	padding-left: 5px
+}
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */

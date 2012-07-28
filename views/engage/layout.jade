@@ -69,6 +69,7 @@ html
 							a#all_btn(href="/") All Resources
 						li
 							a#contruibutions_btn(href="/mine") Your Contributions
+					ul	
 						li
 							a#starred_btn(href="/starred") Starred
 						li
@@ -82,7 +83,7 @@ html
 				div.slider_box#share_box
 					form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 						input(name="article_url",type="text", id="article_url", placeholder="http://")
-						textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+						input(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
 						div#sumbitrow
 							div.selectcourse

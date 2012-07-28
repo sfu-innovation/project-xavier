@@ -40,24 +40,25 @@ div#header{
 	-moz-box-shadow: 0 0 5px #9e9e9e;
 	-webkit-box-shadow: 0 0 5px #9e9e9e;
 	box-shadow: 0 0 5px #9e9e9e;
-	padding-top:20px;
+	padding-top:15px;
 }
 
 
 
 
 #header img.logo{
-	height: 50px;
 	margin-bottom: 10px;
+
+	width: 140px;
 }
 
 #header ul#options{
-	display: block;
 	list-style: none;
 	white-space: nowrap;
 	float: left;
 	margin-bottom: 10px;
-	margin-top: 12px;
+	margin-top: 11px;
+	margin-left: -40px;
 }
 
 #header ul#options li{
@@ -150,7 +151,6 @@ ul#mobile-nav li.course{
 
 ul#user_options_list{
 	list-style: none;
-	margin-bottom: 0;
 	text-align: right;
 	white-space: nowrap;
 	display: block;
@@ -198,7 +198,9 @@ ul#user_options_list li div.dropdown_list{
 	background: #F2F2F2;
 
 }
-
+ul#user_options_list li div.dropdown_list li{
+	display: block;
+	}
 
 ul#user_options_list li div.dropdown_list.hide{
 	display: none;
@@ -216,15 +218,16 @@ div.dropdown_list ul{
 	margin-top: 15px;
 	margin-left: -10px;
 	}
+	
 div.dropdown_list li{
 	 padding: 10px 15px;
-	 border-bottom:  1px solid #E6E6E6;
+	 border:  2px solid #dbdbdb;
 	 margin: 0 !important;
-	 background: rgba(250, 250, 250, 1);
+	 background: #f8f8f8;
 	 width: 120px;
 	 color: #555;
  }
- 
+
  
  div.dropdown_list li:hover{
  	background-color: #e9e9e9;
@@ -236,6 +239,7 @@ div.dropdown_list li{
  } 
  div.dropdown_list#notif li{
 	 width: 370px;
+	 height: 67px;
  }
  
   div.dropdown_list#notif p.msg{
@@ -265,6 +269,19 @@ ul#user_options_list span.typicn.next{
 	-webkit-transform: rotate(90deg); 
 	-moz-transform: rotate(90deg);	
 }
+
+
+li.mobile_view ul{
+	margin-top: 30px;
+	margin-left: -100px;
+	z-index: 100;
+ 
+ }
+ 
+li.mobile_view div#notif li{
+	width: 390px;
+}
+
 /* -----------------------------------------
    box container of articles previews
 ----------------------------------------- */

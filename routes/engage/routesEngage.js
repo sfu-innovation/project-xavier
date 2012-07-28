@@ -39,7 +39,16 @@ exports.createComment = function (req,res){
 			if (!err) {
 				res.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
-					res.end(JSON.stringify({ errorcode: 0, comment: result }));
+
+					QueryES.getComment(result._id,2,function(err,data){
+						EngageAction.commentHelper(data,function(err,data){
+							res.end(JSON.stringify({ errorcode: 0, comment: data }));
+						})
+
+
+
+					})
+
 				}
 				else{
 					res.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));

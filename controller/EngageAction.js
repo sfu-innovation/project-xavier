@@ -7,6 +7,26 @@ var Like = require('../models/like.js');
 var UserProfile = require('../models/userProfile.js');
 
 
+var commentHelper = exports.commentHelper = function (comment, callback){
+
+	if (comment) {
+		var new_comment = {};
+		new_comment.user = comment.user;
+		new_comment.profile = comment.profile;
+		new_comment.uuid = comment._id;
+		new_comment.like = comment._source.upvote;
+		new_comment.body = comment._source.body;
+		new_comment.target_uuid = comment._source.target_uuid;
+		new_comment.createdAt = comment._source.created;
+		new_comment.updatedAt = comment._source.timestamp;
+		new_comment.parent_uuid = comment._source.commentParent;
+
+
+		callback(null,new_comment);
+	}
+
+}
+
 var commentsHelper = exports.commentsHelper = function(json ,callback){
 
 

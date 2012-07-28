@@ -212,13 +212,7 @@ coreApi._construct = function () {
 
 
 
-			console.log('!!!!');
-			console.log(args);
 
-
-
-
-			//TODO:need to fix this to dynamic input
 			args.objectType = 'resource';
 
 

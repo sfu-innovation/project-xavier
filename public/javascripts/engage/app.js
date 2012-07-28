@@ -936,7 +936,7 @@ function weekConverter() {
 }
 
 function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post" class="submit_btn value="Post"> <input type="hidden" id="comment_target" value="'
 		+ comment_target
 		+ '"><input type="hidden" id="comment_target" value="'
 		+ comment_parent

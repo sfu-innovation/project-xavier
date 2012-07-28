@@ -1012,8 +1012,21 @@ div#article_container #comments .replies{
 	margin-left: 40px !important;
 	}
 
-#comments .reply_box{
+#comments .reply_box form{
+	margin-top: 10px;
 	
+}
+
+#comments .reply_box span{
+	padding-left: 9px;
+
+}
+
+#comments .reply_box{
+	height: 75px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+
 }
 
 #comments .reply_box input{

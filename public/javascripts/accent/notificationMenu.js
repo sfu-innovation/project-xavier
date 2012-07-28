@@ -1,9 +1,4 @@
-var timeout;
-var menuOpened = false;
-
 var common = new coreApi.Common();
-
-var notificationUser = "";
 
 function updateNotificationList(user) {
 	console.log('being updated...');
@@ -28,7 +23,6 @@ function updateNotificationList(user) {
 }
 
 setInterval(function() {
-	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
-	notificationUser = sessionUser;
-	updateNotificationList(notificationUser);
+	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
+	updateNotificationList(sessionUser);
 }, 4000);

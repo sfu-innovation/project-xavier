@@ -457,6 +457,7 @@
 			"user":"mak10",
 			"uuid":"abc1230",
 			"title":"How to dunk like MJ",
+			"description":"Grow really tall, get tallented, play for the Chicago bulls!",
 			"course":"A8G7S6H7ASDFG9",
 			"path":"http://www.youtube.com/mj",
 			"type":0
@@ -465,6 +466,7 @@
 			"user":"BSDF787D98A7SDF8ASD7G",
 			"uuid":"abc1231",
 			"title":"How to dribble like Lionel",
+			"description":"Only Mesi can be Mesi",
 			"course":"A8G7S6H7ASDFG9",	
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
@@ -473,6 +475,7 @@
 			"user":"BSDF787D98ASDF099D7G",
 			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
+			"description":"Buy a wok, some chicken, and terriyaki sauce.  Cook the chicken in the wok.  Add the terriyaki sauce.  Put it on a plate.  Put it in your mouth.  Enjoy!",
 			"course":"A827346H7ASDFG9",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
@@ -481,6 +484,7 @@
 			"user":"jhc20",
 			"uuid":"abc1233",
 			"title":"Preparation for linear algebra",
+			"description":"MATH!",
 			"course":"A8G7S6H7ASDFG9",		
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
@@ -489,6 +493,7 @@
 			"user":"jhc20",
 			"uuid":"abc1234",
 			"title":"Making videos",
+			"description":"no description",
 			"course":"A827346H7ASDFG9",		
 			"path":"http://www.youtube.com/yt",
 			"type":0
@@ -583,7 +588,27 @@
 
 	"sectionmaterials":[
 		{
+			"section": "1",
+			"material":"abc1234"
+		},
+		{
 			"section": "A827346H7AFSSFG9",
+			"material":"abc1233"
+		},
+		{
+			"section": "A827341H7AFFFFG9",
+			"material":"abc1232"
+		},
+		{
+			"section": "2",
+			"material":"abc1231"
+		},
+		{
+			"section": "A827346H7AFSSFG9",
+			"material":"abc1230"
+		},
+		{
+			"section": "A827341H7AFFFFG9",
 			"material": "A7S7FWGA7SD11A7SDF8ASD7G"
 		},
 		{

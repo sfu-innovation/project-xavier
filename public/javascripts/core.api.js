@@ -80,6 +80,17 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.userNotifications = function(userID, callback){
+			console.log("API - userNotifications");
+			$.ajax({
+				url:'/api/user/notification/' + userID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 	}
 
@@ -199,8 +210,30 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			})
+		}
 
+		this.getMediaFiles = function(courses, callback){
+			console.log('API - getMediaFiles');
+			var body = {};				
+			body.where = courses;
+			$.ajax({
+				url:'/api/mediafiles/course',
+				type:'POST',
+				data:body,
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
 
+		this.getMediaSection = function(uuid, callback){
+				$.ajax({
+				url:'/api/mediafile/' + uuid + '/section',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}

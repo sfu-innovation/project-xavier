@@ -993,27 +993,30 @@ exports.searchQuestionsRoute = function(appType, request, response){
 
 	if (request.method === "POST") {
 		//console.log(JSON.stringify(request.body))
-		nlp(queryData.searchQuery, function(query){
-			/*
-			if(query){
-		 		queryData.searchQuery = query + " " + queryData.searchQuery;
-			}*/
-			queryData.uuid = request.session.user.uuid;
-			QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, questions: result }));
+		if(request.session.user){
+
+			nlp(queryData.searchQuery, function(query){
+				/*
+				if(query){
+			 		queryData.searchQuery = query + " " + queryData.searchQuery;
+				}*/
+				queryData.uuid = request.session.user.uuid;
+				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, questions: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: searchQuestionsRoute' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: searchQuestionsRoute' }));
-				}
+				});
 			});
-		 });
+		}
 	}
 }
 

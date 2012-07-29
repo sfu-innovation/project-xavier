@@ -135,7 +135,7 @@ app.get("/api/mediafile/:uid/section", routesCommon.getResourceSection); // get 
 
 //non-REST calls
 app.get('/', routesAccent.index);
-app.get('/media', routesAccent.viewMediaPage);
+app.get('/video/:mediaID', routesAccent.viewMediaPage);
 app.get('/demo', routesAccent.demoPage); //this will login you with a demo user
 
 /***NEW ROUTES */

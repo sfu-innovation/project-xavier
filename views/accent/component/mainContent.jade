@@ -4,9 +4,10 @@ div#Main
 	h2 Week 4
 
 	div
-		video(width="840", height="490", src="movie.mp4") Your browser doesn't support video!
+		span(id="mediaUUID", style='display:none;') #{mediaUUID}	
+		video(id="mediaPlayer", width="840", height="490", type="video/mp4", src="") Your browser doesn't support video!
 		div.Controls
-			a.Play(href="") Play
+			a.Play(onclick="playVideo();") Play
 			div.Timeline
 				a.Scrubber(href="")
 			div.Volume
@@ -40,5 +41,4 @@ div#Main
 			div
 				input(type="submit", value="Done")
 					
-
-					
+script(type="text/javascript", src="../javascripts/accent/load-media.js")

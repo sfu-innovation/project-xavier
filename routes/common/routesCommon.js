@@ -517,9 +517,8 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-			//console.log(request.body.course)
-			newQuestion.course = request.body.course;
-			newQuestion.week = parseInt(request.body.week);
+			newQuestion.course = request.session.course;
+			newQuestion.week = parseInt(request.session.week);
 
 			QueryES.addQuestion(newQuestion, appType, function(err, result) {
 				if (!err) {
@@ -1121,6 +1120,30 @@ exports.getUserNotifications = function(appType, request, response){
 			app  : appType
 		}
 		Notification.retrieveUserNotificationsByUser(args, function(err, result){
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
+	}
+}
+
+exports.removeCommentNotifier = function(appType, request, response){
+	if (request.method === "DELETE") {
+		var args = {
+			user : request.params.uid,
+			target : request.params.qid,
+			app  : appType
+		}
+		Notification.removeCommentNotifier(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){

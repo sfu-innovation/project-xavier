@@ -17,6 +17,7 @@ h2#courseTitle {
 	font-weight: normal;
 	font-size: 11px;
 	margin-bottom: 0.3em;
+	margin-top: -1px;
 }
 
 span.inserted {
@@ -127,22 +128,28 @@ div#detailedQuestion div.question {
 
 /* yellow boxes should be padded 10px; */
 div.question {
-	width: 550px;
+	padding: 10px;
+	width: 705px;
 	margin-bottom: 17px;
+	margin-left: -10px;
 	font-size: 18px;
 	font-weight: 200;
 	cursor: pointer;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
 div.comment {
-	width: 550px;
+	padding: 10px;
+	width: 690px;
 	margin-bottom: 30px;
+	margin-left: -10px;
 	font-size: 18px;
 	font-weight: 200;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
 @-webkit-keyframes question-appear-animation {
@@ -200,6 +207,16 @@ div.profResponsesRecent {
 	background: #ffe450;
 }
 
+div.instructorResponseFlag {
+	background: #ffe450; 
+	position:relative; 
+	height: 11px; 
+	padding: 5px; 
+	margin-top: -4px; 
+	margin-left: -5px; 
+	margin-right: 20px;
+}
+
 div#pageNumber {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
@@ -222,6 +239,10 @@ div.pageNumberButton {
 	font-size: 1em;
 	color: #1b88d0;
 	text-decoration:underline;
+	cursor: pointer;
+}
+
+div.votes {
 	cursor: pointer;
 }
 

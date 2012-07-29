@@ -3,22 +3,24 @@ var rqra = new coreApi.Presenter();
 function formatQuestion(question) {
 	var instructorStyle = "";
 	if (question._source.isInstructor === "true") {
-		instructorStyle = "background: #ffe450;";
+		instructorStyle = "instructorResponseFlag";
 	}
 
 	return "<div class='question'>"
-			+ "<div class='questionTitle'>" + question._source.title + "</div>"
-			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionData'>"
-				+ "<div style='" + instructorStyle + "'>"
+		+ "<div class='questionTitle'>" + question._source.title + "</div>"
+		+ "<div class='questionId'>" + question._id + "</div>"
+		+ "<div class='questionData'>"
+				+ "<div class='" + instructorStyle + "'>"
 				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
-			+ "</div>"
-			+ "<div class='questionDetailsText'>" + question._source.body + "</div><hr/>";
+					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span>"
+				+ "</div>"
+		+ "</div>"
+		+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
+	+ "</div>";
 }
 
 function formatComment(comment) {
@@ -52,23 +54,34 @@ function refreshQuestionsList() {
 
 }
 
-function refreshQuestionListHeader(question) {
+function refreshQuestionListHeader() {
+
+}
+
+function refreshQuestionDetailsListHeader(question) {
 	if (question) {
-		var courseUuid = getUuid(question._source.course.toLowerCase());
 		var courseTitle = document.getElementById("courseTitle");
-		if (!courseUuid || courseUuid === "") {
+		if (!question._source.course) {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
 		} else {
-			common.getCourseById(courseUuid, function(data) {
-				courseTitle.innerHTML = "Questions for <span class='inserted'>" 
-					+ question._source.course + " " + data.course.title 
-					+ "</span> from";
-			});
+			var courseUuid = getUuid(question._source.course.toLowerCase());
+			if (!courseUuid || courseUuid === "") {
+				courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
+			} else {
+				common.getCourseById(courseUuid, function(data) {
+					courseTitle.innerHTML = "Questions for <span class='inserted'>" 
+						+ question._source.course + " " + data.course.title 
+						+ "</span> from";
+				});
+				
+				currentCourse = question._source.course;
+				selectButtonByName(question._source.course);
+			}
 		}
 
 		var currentWeek = question._source.week;
 		var sectionTitle = document.getElementById("sectionTitle");
-		if (currentWeek === 0) {
+		if (currentWeek === 0 || currentWeek === null) {
 			sectionTitle.innerHTML = "All Weeks";
 		} else if (!courseUuid || courseUuid === "") {
 			sectionTitle.innerHTML = "Week " + currentWeek;
@@ -97,8 +110,8 @@ function loadPage(first) {
 	rqra.getQuestionById(questionId, function(data) {
 		if (data && data.errorcode === 0) {
 			question.innerHTML = formatQuestion(data.question);
-			refreshQuestionListHeader(data.question);
-			
+			refreshQuestionDetailsListHeader(data.question);
+
 			// get comments
 			rqra.getCommentsByTargetId(questionId, '-', function(data) {
 				commentList.innerHTML = "";
@@ -156,4 +169,7 @@ function vote(dir, targetDiv) {
 	}
 }
 
-loadPage(true);
+window.onload = function() {
+	redirect = true;
+	loadPage(true);
+}

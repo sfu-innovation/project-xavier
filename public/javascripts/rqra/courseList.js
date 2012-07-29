@@ -1,4 +1,6 @@
 var common = new coreApi.Common();
+var rqra = new coreApi.Presenter();
+var redirect = false;
 
 function setSelected(button, select) {
 	var buttonText = button.querySelector(".courseButtonText");
@@ -25,6 +27,15 @@ function setSelected(button, select) {
 	}
 }
 
+function clickButton(selectedButton) {
+	if (redirect) {
+		currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML.toLowerCase();
+		rqra.setSelectedCourse(currentCourse, 0, function(data) { });
+		window.location = "/questions";
+	}
+	selectButton(selectedButton);
+}
+
 function selectButton(selectedButton) {
 	var menu = document.getElementById("courseList");
 	var buttons = menu.querySelectorAll(".courseButton");
@@ -34,8 +45,10 @@ function selectButton(selectedButton) {
 			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
 			currentCourse = currentCourse.toLowerCase();
 			if (currentCourse === "all") currentCourse = "";
+			
 			refreshQuestionListHeader();
 			refreshQuestionsList();
+			
 			setSelected(obj, true);
 		} else {
 			setSelected(obj, false);
@@ -43,8 +56,21 @@ function selectButton(selectedButton) {
 	});
 }
 
+function selectButtonByName(name) {
+	var menu = document.getElementById("courseList");
+	var buttons = menu.querySelectorAll(".courseButton");
+	NodeList.prototype.forEach = Array.prototype.forEach;
+	buttons.forEach(function(obj) {
+		if (name === obj.querySelector(".courseButtonText").innerHTML) {
+			setSelected(obj, true);
+		}	else {
+			setSelected(obj, false);
+		}
+	});
+}
+
 function formatButton(name, uuid) {
-	return "<div class='courseButton' onclick='selectButton(this)'>"
+	return "<div class='courseButton' onclick='clickButton(this)'>"
 		+ "<div class='courseButtonSelectorTop'></div>"
 		+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
 		+ "<div class='courseButtonTextContainer'>" 

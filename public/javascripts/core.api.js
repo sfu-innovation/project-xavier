@@ -91,6 +91,17 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.removeCommentNotifier = function(userID, qid, callback){
+			console.log("API - removeCommentNotifier");
+			$.ajax({
+				url:'/api/user/notification/' + userID + '/comment/' + qid,
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 	}
 
@@ -528,6 +539,22 @@ coreApi._construct = function () {
 
 		}
 
+		this.updateCommentById = function (id,commentBody, callback) {
+			console.log("API - updateCommentById");
+			var body = {};
+			body.body = commentBody;
+			$.ajax({
+				url:'/api/comment/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 
 
@@ -885,6 +912,26 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			});
+		}
+
+		this.setSelectedCourse = function(courseID, week, callback){
+			console.log("API - setSelectedCourse");
+
+			var body ={};
+			body.course = courseID;
+			body.week = week;
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/setSelectedCourse',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}

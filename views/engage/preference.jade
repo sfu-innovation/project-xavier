@@ -1,11 +1,15 @@
 extends layout
 
+
+
 block content
+
 	div.row.clearfix
 		div.twelve.columns
 			div#preference
 				dl.tabs
 					dt Preferences
+
 					dd.active
 						a(href="#edit") Edit Profile
 					dd 
@@ -16,27 +20,33 @@ block content
 							div#avatar_column.columns
 								img.avatar(src=avatar) 
 								div.browsebox
-									input(type="file", name="upload", onchange = "this.form.submit()")
+									input(type="file", name="upload", onchange = "submit(this)")
 									div#upload_avatar upload
-								input(type="hidden", name="remove")
-
-								a(onclick="submit()") remove photo
+								input(type="hidden", name="helper", value=format)
+								a(onclick="submit(this)", id="remove") remove photo
 								script
-									function submit(){
-										document.getElementById("edit_profile").submit();
+									function submit(ele){
+										var form = document.getElementById("edit_profile");
+										if (ele.id==='remove'){
+											form.helper.value = 'del';
+										}
+										form.submit();
 									}
-									
+								
 							div#edit_info_column.four.columns
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}
 									label Preferred Name:
 									input(type="text", name="pref_name", maxlength="20", value=pref_name)
 									label Academic Bio:
-									textarea(type="text", name="bio", value=bio)
+									textarea(type="text", name="bio")= bio
 									input.button(type="submit", value="save changes")
+								div#feedback
+									| #{msg}
+											
 					li#notificationTab
 						div#notification
-							form(name="edif_nofication", action="/preference",enctype="multipart/form-data", method="post")
+							form(name="edit_notification", action="/preference",enctype="multipart/form-data", method="post")
 								h4 Notifications
 								p 
 									|An email will automatically be sent to your inbox when one or more of the events occur.	

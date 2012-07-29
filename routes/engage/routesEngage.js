@@ -1,6 +1,7 @@
 var EngageAction =   require('../../controller/EngageAction');
 var Parser = require('../../controller/Parser');
 var Resource = require(__dirname + "/../../models/resource");
+var ProfileSettings = require('../../controller/ProfileSettings')
 var Star = require(__dirname + "/../../models/star");
 var Like = require(__dirname + "/../../models/like");
 var User = require(__dirname + "/../../models/user");
@@ -11,7 +12,6 @@ var Week = require(__dirname + "/../../models/week");
 var routesCommon = require('./../common/routesCommon.js');
 var http = require('http');
 var request = require('request');
-var fs = require('fs');
 var jsdom = require('jsdom'), html5 = require('html5');
 var crypto = require('crypto');
 var notification = require('../../controller/NotificationAction.js');
@@ -414,9 +414,16 @@ exports.courseWeekInfo = function(req,res){
 	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
 
 		if (result) {
+			var new_result = JSON.parse(JSON.stringify(result));
+			if (req.session.user.type === 0){
+				new_result.owner = false;
+			}
+			else{
+				new_result.owner = true;
+			}
 
 			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:0, week:result }));
+			res.end(JSON.stringify({ errorcode:0, week:new_result }));
 
 		} else {
 			res.writeHead(200, { 'Content-Type':'application/json' });
@@ -644,16 +651,15 @@ exports.design = function (req, res) {
 
 
 	Parser.articlize(req.body.article_url, function (err) {
-		res.render("engage/design", {     title:"SFU ENGAGE",
+		res.render("engage/design", {     
+			title:"SFU ENGAGE",
 			user:userobject,
 			status:"logged in",
 			courses:req.session.courses,
 			errormsg:error }, function (err, rendered) {
 
-
 			res.writeHead(200, {'Content-Type':'text/html'});
 			res.end(rendered);
-
 		})
 
 	});
@@ -670,28 +676,36 @@ exports.shareResource = function (req,res){
 	var description = req.body.description;
 	var course = req.body.course;
 
-	console.log(req.body);
+	//console.log(req.body);
 
 	Parser.articlize(url, function (err,result) {
-		var currentWeek = EngageAction.weekHelper();
-		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
-			if (result){
-				EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+		if(result) {
+			var currentWeek = EngageAction.weekHelper();
+			Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+				if (result){
+					EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+					})
+
+				}
+				else{
 					res.writeHead(200, { 'Content-Type':'application/json' });
-					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
-				})
-
-			}
-			else{
-				res.writeHead(200, { 'Content-Type':'application/json' });
-				res.end(JSON.stringify({ errorcode:1, message:error }));
+					res.end(JSON.stringify({ errorcode:1, message:error }));
 
 
-			}
+				}
 
 
 
-		})
+			})
+		}
+		else{
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:err }));
+
+
+				}
 
 
 
@@ -708,6 +722,7 @@ exports.index = function (req, res) {
 			title:"SFU ENGAGE",
 			user:req.session.user,
 			courses:req.session.courses,
+			profile:req.session.Profile,
 			currentWeek:currentWeek
 		}, function (err, rendered) {
 
@@ -732,6 +747,7 @@ exports.starred = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/starred", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 			res.writeHead(200, {'Content-Type':'text/html'});
@@ -753,6 +769,7 @@ exports.instructor = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/instructor", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -775,6 +792,7 @@ exports.profile = function (req, res) {
 		res.render("engage/profile", {     title:"SFU ENGAGE",
 			user:req.session.user,
 			selectedUser:req.params.id,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -790,86 +808,65 @@ exports.profile = function (req, res) {
 
 }
 
-
+exports.notFound = function (req,res){
+	res.render('engage/404', function (err, rendered) {
+		res.writeHead(404, {'Content-Type':'text/html'});
+		res.end(rendered);
+	});
+}
 
 exports.articleView = function (req, res) {
-	comment_1 = {
-		msg:"Where is it?",
-		user:userobject,
-		time:"1 hour ago",
-		replies:[]
-	}
-	comment_2 = {
-		msg:"I like this",
-		user:userobject,
-		time:"5 mins ago",
-		replies:[]
-	}
-
-
-	reply_comment_1 = {
-		msg:"No idea",
-		reply_to:comment_1,
-		user:user_1,
-		time:"10 mins ago"
-	}
-	reply_comment_2 = {
-		msg:"States?",
-		reply_to:comment_1,
-		user:user_2,
-		time:"5 mins ago"
-	}
-
-	reply_comment_3 = {
-		msg:"No i dont think so",
-		reply_to:comment_1,
-		user:user_1,
-		time:"5 mins ago"
-	}
-
-	reply_comment_4 = {
-		msg:"Yah me too",
-		reply_to:comment_2,
-		user:user_2,
-		time:"2 mins ago"
-	}
-
-	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
-	comment_2.replies = [reply_comment_4];
-
 
 	if (req.session && req.session.user) {
 
 		Resource.getResourceByUUID(req.params.id, function (error, resource) {
 
-			EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
-				var resource = resources[0];
-				var pickedArticle = articles[req.params.id - 1];
-				res.render("engage/article", { title:"SFU ENGAGE",
-					article:resource,
-					comments:[comment_1, comment_2],
-					user:req.session.user,
-					courses:req.session.courses
-				}, function (err, rendered) {
+			if (error){
+
+				console.log(error);
+
+				if (req.accepts('html')) {
+					res.redirect("/404");
+
+				}
+				else{
+					res.writeHead(404, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:4, message:error }));
+				}
 
 
-					res.writeHead(200, {'Content-Type':'text/html'});
-					res.end(rendered);
+			}
+			else{
+				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
+					var resource = resources[0];
+
+					res.render("engage/article", { title:"SFU ENGAGE",
+						article:resource,
+						profile:req.session.Profile,
+						user:req.session.user,
+						courses:req.session.courses
+					}, function (err, rendered) {
+
+
+						res.writeHead(200, {'Content-Type':'text/html'});
+						res.end(rendered);
+
+					})
 
 				})
+			}
 
-			})
+
 
 
 		})
 
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
+
 		res.redirect("/demo");
 
-		//login with demo user, remove when everything is set.
+
 	}
 
 
@@ -880,6 +877,7 @@ exports.contributions = function (req, res) {
 
 		res.render("engage/contributions", { title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses  }, function (err, rendered) {
 
 
@@ -908,6 +906,7 @@ exports.courseView = function (req, res) {
 						user:req.session.user,
 						course:result,
 						currentWeek:currentWeek,
+						profile:req.session.Profile,
 						courses:req.session.courses
 					}, function (err, rendered) {
 
@@ -942,6 +941,9 @@ exports.courseView = function (req, res) {
 
 
 exports.demoPage = function (req, res) {
+	req.session.user = null;
+	req.session.courses = null;
+	req.session.Profile = null;
 //	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"P", userID:"ted", email:"ted@sfu.ca",type:1}
 	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
@@ -987,82 +989,76 @@ exports.demoPage = function (req, res) {
 }
 
 
+exports.demoProf = function (req, res) {
+	req.session.user = null;
+	req.session.courses = null;
+	req.session.Profile = null;
+
+	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"Kirkpatrick", userID:"ted", email:"ted@sfu.ca",type:1}
+//	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
+
+	req.session.user = fake_user_2;
+	UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+		if (err)
+			console.log(err)
+		req.session.Profile = result;
+	});
+	//req.session.Profile = fake_user_2_profile;
+	User.getUserCourses(req.session.user.uuid, function (err, result) {
+
+		var args= {
+			app:1,
+			user:"llt3"
+		}
+
+		notification.createUserNotificationSettings(args, function(err, success){
+			if(success)
+				console.log("created: " + success)
+
+			var courseList = ['11', '12'];
+
+			async.forEach(courseList, function(course, done){
+				var args = {
+					target      : course,
+					app         : 2
+				}
+				notification.setupCourseMaterialNotifiers(args, function(err, callback){
+					if(err)
+						console.log(err)
+					done();
+				})
+			}, function(err){
+				if(err)
+					console.log("Problem adding course materials")
+
+				req.session.courses = result;
+				res.redirect('/');
+			})
+		});
+	});
+}
+
 exports.preference = function (req, res){
-//	console.log(req.method)
-//	console.log(req.files)
-//	console.log(req.body)
-//	console.log(req.session.Profile)
-	
 	
 	if (req.session && req.session.user) {
-		var bio = req.session.Profile.bio, 
-			pName = req.session.user.preferedName,
-			img = req.session.Profile.profilePicture;
+		ProfileSettings.settings(req, function(result) {
 
+				res.render("engage/preference", 
+				{
+					title:"SFU ENGAGE",
+					profile:req.session.Profile,
+					user:req.session.user,
+					courses:req.session.courses,
+					avatar: result.img,
+					pref_name: result.pName,
+					bio: result.bio,
+					format: result.format,
+					msg: result.msg
+					}, function (err, rendered) {
+						res.writeHead(200, {'Content-Type':'text/html'});
+						res.end(rendered);
 
-		if( req.method === 'POST') {
-			var type = req.files.upload.type.split('/')[1];
-			if(req.files.upload.size > 0) {
-
-				var path = req.files.upload.path;
-				var type = req.files.upload.type.split('/')[1];
-				req.session.Profile.imgType = type;
-				var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
-
-				fs.readFile(path, function (err, data) {
-					var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
-				 	fs.writeFile(filepath, data, function (err) {});
-				});
-
-				img = '/images/avatars/tmp/'+req.session.user.userID+'.'+type;
-				bio = req.body.bio;
-				pName = req.body.pref_name;
-			} else {
-				var name = req.session.user.userID+'.'+req.session.Profile.imgType;
-				var path = ('./public/images/avatars/tmp/'+name);
-				
-				
-
-
-
-				fs.readFile(path, function (err, data) {
-					var filepath = ('./public/images/avatars/'+name);
-				 	fs.writeFile(filepath, data, function (err) {});
-				});
-
-				pName = req.body.pref_name,
-				img = '/images/avatars/'+name,
-				bio = req.body.bio;
-
-				User.setPreferedName(req.session.user.uuid, req.body.pref_name,function(err, res){
-					if (err)
-						console.log(err)
-					req.session.user.preferedName = res.preferedName;
-				});
-				UserProfile.updateProfile(req.session.user.uuid, {
-					profilePicture: '/images/avatars/'+name,
-					bio: req.body.bio
-				}, function(err, data) {
-					if (err)
-						console.log(err)
-					req.session.Profile.profilePicture = data.profilePicture;
-					req.session.Profile.bio = data.bio;
 				})
-			}
-
-		}
-		res.render("engage/preference", 
-			{     
-			title:"SFU ENGAGE",
-			user:req.session.user,
-			courses:req.session.courses,
-			avatar: img,
-			pref_name: pName,
-			bio: bio
-			}, function (err, rendered) {
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
-
 		})
 		
 	}
@@ -1075,18 +1071,67 @@ exports.preference = function (req, res){
 
 }
 
+exports.updateComment = function(request,response){
 
+
+	QueryES.updateComment(request.params.uid, request.body.body, 2, function(err, result) {
+		if (!err) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			if(result){
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			}
+			else{
+				response.end(JSON.stringify({ errorcode: 1, comment: "Failed to update comment" }));
+			}
+		} else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
+		}
+	});
+
+}
 
 exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {
-		QueryES.getCommentByResourceUUID(request.params.id, function(err, result) {
+		QueryES.getCommentByResourceUUID(request.params.id, function(err, results) {
 			if (!err) {
 
-				if(result){
-					EngageAction.commentsHelper(result,function(err,result){
+				if(results){
+					EngageAction.commentsHelper(results,function(err,results){
 						if (!err){
+							results.forEach(function(result){
+								if (request.session.user){
+									if(result.user.uuid === request.session.user.uuid){
+										result.owner = true;
+
+									}
+									else {
+										result.owner = false;
+									}
+								}
+								else{
+									result.owner = false;
+								}
+								if (result.replies && result.replies.length > 0){
+									result.replies.forEach(function(reply){
+										if (request.session.user){
+											if(reply.user.uuid === request.session.user.uuid){
+												reply.owner = true;
+
+											}
+											else {
+												reply.owner = false;
+											}
+										}
+										else{
+											resply.owner = false;
+										}
+									})
+								}
+							})
+
 							response.writeHead(200, { 'Content-Type': 'application/json' });
-							response.end(JSON.stringify({ errorcode: 0, comments: result }));
+							response.end(JSON.stringify({ errorcode: 0, comments: results }));
 						}
 						else{
 							response.writeHead(500, { 'Content-Type': 'application/json' });

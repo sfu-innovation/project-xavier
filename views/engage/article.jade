@@ -10,15 +10,27 @@ block content
 					span#back_btn
 						|  BACK
 				span#options
-					span#star_btn 
-						|  Star
-					span#like_btn 
-						|  Like (4)
+					- if (article.starred)
+						span.star_btn.starred
+							|  Star
+					- else
+						span.star_btn.unstarred
+							|  Star
+					- if (article.liked)
+						span.like_btn.liked
+							|  Like (
+							em #{article.likes}
+							)
+					- else
+						span.like_btn.disliked
+							|  Like (
+							em #{article.likes}
+							)
 					span#invert_btn
 						|  Day/Night
 					span#textsize_btn 
 						|  Text Size
-					a(href="#{article.url}")
+					a(href="#{article.url}", target="_blank")
 						span#link_btn
 							|  View Original
 			script	
@@ -31,20 +43,24 @@ block content
 				div
 			script(type='text/javascript')
 				$('div#article div').load('/resources/articles/'+"#{article.path}");
-			
-
-
 
 
 
 		div.four.columns#comments
-			h5 Comments
+			h5 Poster's Comment
 			div#owner_comment
+				- if (article.user.avatar)
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="#{article.user.avatar}")
+				- else
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="/images/engage/default_profile.png")
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }
 				span.post_time(data-time="#{article.createdAt}") #{article.createdAt}
 				span.like_reply
 
-					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") reply
+					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") Reply
 						span.typicn.forward
+			h5 Comments
 			ol

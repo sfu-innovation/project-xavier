@@ -10,8 +10,8 @@ app.configure(function() {
 	app.set('view engine', 'jade');
 	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
+	app.use(express.limit('5mb'));
 	app.use(express.bodyParser());
-	app.use(express.limit('1mb'));
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })

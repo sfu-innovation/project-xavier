@@ -61,7 +61,10 @@ var settings = exports.settings = function( req, callback ) {
 
 			if(path){
 				fs.readFile(path, function (err, data) {
-				 	fs.writeFile(filepath, data, function (err) {});
+				 	fs.writeFile(filepath, data, function (err) {
+				 		if(err)
+				 			console.log(err)
+				 	});
 				});
 			}
 

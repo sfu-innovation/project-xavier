@@ -47,6 +47,28 @@ jQuery(document).ready(function ($) {
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
+
+		$('.edit_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.hide();
+			control.slideDown('slow');
+		})
+
+
+		$('.cancel_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.show();
+			control.slideUp('slow');
+		})
+
 		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box
@@ -112,6 +134,7 @@ jQuery(document).ready(function ($) {
 
 						}
 						else if (type === "comment"){
+							new_comment = '<li class="thread"><ol>'+ new_comment +'</ol></li>'
 							$(new_comment).appendTo('#comments > ol');
 							$.scrollTo($('#comments > ol > li:last-child'),900);
 						}
@@ -413,6 +436,7 @@ jQuery(document).ready(function ($) {
 		}
 	})
 
+	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
 });
 
@@ -511,11 +535,36 @@ function initUI() {
 }
 
 function renderBox(item,type){
-	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
-		+ '</span><p>' + item.body
-		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
-		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span></li>';
+	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
+
+	if (item.owner){
+		html += '<span class="edit_btn">Edit</span>';
+	}
+
+	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
+		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+		+ '</span>'
+		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
+		+ '<p>' + item.body
+		+ '</p>';
+	if (item.owner){
+
+		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
+			+'<a class="tiny button save_btn">Save</a>'
+			+'<a class="tiny button delete_btn">Delete</a>'
+			+'<a class="tiny button cancel_btn" >Cancel</a>'
+			+ '</div>'
+		;
+	}
+
+	html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
+
+		+ '</li>';
+
+	return html;
 }
 
 function renderCommentBox(item){
@@ -684,6 +733,7 @@ function loadCourseArticles(engage, week) {
 			engage.getWeekInfoByCourseIdAndWeekNum(id,week,function(data){
 				if (data){
 					if (data.errorcode ===0){
+						console.log(data);
 						var weekbox = renderWeekInfoBox(data.week);
 						$('.weekbox').remove();
 						$('#contents').append(weekbox);
@@ -866,13 +916,56 @@ function loadStarredArticles(engage) {
 	})
 }
 
+function renderTopicInput(){
+	var html = '<input type="text" placeholder="#" /> '
+	+  '<a href="" class="tiny button">+</a>'
+	+  '<a href="" class="tiny button">-</a>'
+			;
+
+	return html;
+}
+
 function renderWeekInfoBox(item){
 	var weekBox =
 		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
 			item.week +
-			'</h4><p>' +
-			(item.topic) +
-			'</p></div></div>'
+			'</h4>';
+	if (!item.owner){
+		if (!item.topic){
+			weekBox += '<p>' +
+				'Instructor has not set up weekly topics yet.' +
+				'</p>';
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += '<p>' +
+					topic_list[0] +
+					'</p>';
+			}
+			else{
+				topic_list.shift();
+				weekBox += '<ul>'
+				$.each(topic_list,function(i,topic){
+					weekBox += '<li>'+ topic+'</li>'
+				})
+				weekBox += '</ul>'
+				console.log(topic_list)
+			}
+		}
+
+	}
+
+	//if is prof
+	else{
+
+		weekBox += renderTopicInput();
+		weekBox += renderTopicInput();
+
+	}
+
+
+	weekBox += '</div></div>'
 
 	return weekBox;
 }
@@ -893,7 +986,7 @@ function renderArticlePreviewBox(item) {
 			+ isProf(item.user.type) //return nothing if not
 
 			+ '<p>Posted '
-			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
 			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
@@ -1129,4 +1222,14 @@ function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent)
 		+ '</form></li>'
 
 	return html;
+}
+
+function updatePostTime(){
+	 var time_spans = $('.post_time');
+	$.each(time_spans, function(i,item){
+		$(item).html(formartDate($(item).attr('data-time')));
+	})
+
+//	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
+	setTimeout(updatePostTime,30000);
 }

@@ -17,6 +17,7 @@ h2#courseTitle {
 	font-weight: normal;
 	font-size: 11px;
 	margin-bottom: 0.3em;
+	margin-top: -1px;
 }
 
 span.inserted {
@@ -238,6 +239,10 @@ div.pageNumberButton {
 	font-size: 1em;
 	color: #1b88d0;
 	text-decoration:underline;
+	cursor: pointer;
+}
+
+div.votes {
 	cursor: pointer;
 }
 

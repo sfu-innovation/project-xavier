@@ -20,6 +20,7 @@ var commentHelper = exports.commentHelper = function (comment, callback){
 		new_comment.createdAt = comment._source.created;
 		new_comment.updatedAt = comment._source.timestamp;
 		new_comment.parent_uuid = comment._source.commentParent;
+		new_comment.owner = true;
 
 
 		callback(null,new_comment);

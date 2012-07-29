@@ -30,9 +30,16 @@ exports.index = function(req, res){
 		})
 	}
 	else {
-		//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
-
+		var user = {
+			"uuid":"jrf2",
+			"firstName":"Jordan",
+			"lastName":"Fox",
+			"type":0,
+			"userID":"jrf2",
+			"email":"jrf2@sfu.ca"
+		}
+		req.session.user = user
+		console.log(JSON.stringify(req.session))
 		//login with demo user, remove when everything is set.
 		fakeUserNotification(function(){
 			console.log("redirect");
@@ -41,6 +48,24 @@ exports.index = function(req, res){
 	}
 
 };
+
+exports.prof = function(req, res){
+	var user = {
+		"uuid":"bernie",
+		"firstName":"Bernie",
+		"lastName":"Maroney",
+		"type":1,
+		"userID":"bernie",
+		"email":"bernie@sfu.ca"
+	}
+	req.session.user = user
+	console.log(JSON.stringify(req.session))
+	//login with demo user, remove when everything is set.
+	fakeUserNotification(function(){
+		console.log("redirect");
+		res.redirect("/questions");
+	})
+}
 
 // frontend
 exports.header = function(request, response) {
@@ -196,6 +221,7 @@ exports.deleteComments = function(request, response){
 exports.setSelectedCourse = function(request, response){
 	if (request.method === "POST"){
 		//if not log in, cannot create a question
+		console.log(JSON.stringify(request.session))
 		if(request.session && request.session.user){
 
 			request.session.course = request.body.course;

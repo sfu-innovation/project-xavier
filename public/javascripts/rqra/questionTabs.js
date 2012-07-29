@@ -113,6 +113,8 @@ function gotoQuestionPage(clicked) {
 	document.location.href = "/question/" + questionId;
 }
 
-// displays asked questions on page load
-displayQuestions("latest", 0);
-refreshQuestionListHeader();
+window.onload = function() {
+	// displays asked questions on page load
+	displayQuestions("latest", 0);
+	refreshQuestionListHeader();
+}

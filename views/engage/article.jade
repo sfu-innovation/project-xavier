@@ -47,13 +47,20 @@ block content
 
 
 		div.four.columns#comments
-			h5 Comments
+			h5 Poster's Comment
 			div#owner_comment
+				- if (article.user.avatar)
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="#{article.user.avatar}")
+				- else
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="/images/engage/default_profile.png")
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }
 				span.post_time(data-time="#{article.createdAt}") #{article.createdAt}
 				span.like_reply
 
-					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") reply
+					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") Reply
 						span.typicn.forward
+			h5 Comments
 			ol

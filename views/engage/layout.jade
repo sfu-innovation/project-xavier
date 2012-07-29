@@ -29,7 +29,7 @@ html
 
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
 
-		link(rel='stylesheet', href='/stylesheets/engage/style.css?v4')
+		link(rel='stylesheet', href='/stylesheets/engage/style.css?v5')
 				link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
@@ -53,7 +53,7 @@ html
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
 		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js?v109")
+		script(src="/javascripts/engage/app.js?v115")
 		
 	body
 		div#header
@@ -109,12 +109,6 @@ html
 						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
 				div.mobile-two.columns#user_options
 					ul#user_options_list
-						script(type='text/javascript')
-							function dropdownToggle(id){
-								$(id).toggleClass('hide');
-								}
-																
-
 						li#notification.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
 								img.avatar(src="/images/engage/default_profile.png") 
@@ -149,7 +143,7 @@ html
 												span.username Ted 
 												| liked your article in 
 												span.coursename BUS 354		
-						li#mobile_user_info.mobile_view
+						li#user_info.mobile_view
 							div.expand_btn(onClick="dropdownToggle('#mobile_user_info')")
 								span.typicn.next
 							div.dropdown_list#mobile_user_info.hide
@@ -193,10 +187,10 @@ html
 											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 	
 						li
-							div.dropdown_btn(onClick="dropdownToggle('#user_info')")
+							div.dropdown_btn(onClick="dropdownToggle('#user_info_downdrop')")
 								span #{ user.firstName } #{ user.lastName }
 								span.typicn.next
-							div.dropdown_list#user_info.hide
+							div.dropdown_list#user_info_downdrop.hide
 								ul
 									li
 										a(href="/profile/#{user.uuid}") My Profile
@@ -208,7 +202,10 @@ html
 
 						li#notification
 							div(onClick="dropdownToggle('#notif')")
-								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+								- if (profile && profile.profilePicture)
+									img.avatar(src="#{profile.profilePicture}")
+								- else
+									img.avatar(src="/images/engage/default_profile.png")
 								span#notification_number 4
 							div.dropdown_list#notif.hide
 								ul

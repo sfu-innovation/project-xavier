@@ -31,9 +31,8 @@ block content
 											form.helper.value = 'del';
 										}
 										form.submit();
-
 									}
-									
+								
 							div#edit_info_column.four.columns
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}
@@ -42,6 +41,9 @@ block content
 									label Academic Bio:
 									textarea(type="text", name="bio")= bio
 									input.button(type="submit", value="save changes")
+								div#feedback
+									| #{msg}
+											
 					li#notificationTab
 						div#notification
 							form(name="edit_notification", action="/preference",enctype="multipart/form-data", method="post")

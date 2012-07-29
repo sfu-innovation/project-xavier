@@ -976,7 +976,8 @@ exports.preference = function (req, res){
 					avatar: result.img,
 					pref_name: result.pName,
 					bio: result.bio,
-					format: result.format
+					format: result.format,
+					msg: result.msg
 					}, function (err, rendered) {
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);

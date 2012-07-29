@@ -7,21 +7,6 @@ var routesRqra = require('./routes/rqra/routesRqra.js');
 var app = module.exports = express.createServer();
 
 app.configure(function() {
-	// sets logged in user for testing
-	app.use(function(req, res, next) {
-		req.session = {
-			user: {
-				"uuid":"jrf2",
-				"firstName":"Jordan",
-				"lastName":"Fox",
-				"type":0,
-				"userID":"jrf2",
-				"email":"jrf2@sfu.ca"
-			}
-		}
-		next();
-	});
-
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.cookieParser());

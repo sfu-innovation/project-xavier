@@ -91,6 +91,17 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.removeCommentNotifier = function(userID, qid, callback){
+			console.log("API - removeCommentNotifier");
+			$.ajax({
+				url:'/api/user/notification/' + userID + '/comment/' + qid,
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 	}
 

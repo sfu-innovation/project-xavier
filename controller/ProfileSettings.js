@@ -5,7 +5,6 @@ var User = require(__dirname + "/../models/user");
 
 
 var settings = exports.settings = function( req, callback ) {
-	console.log('wtf')
 	var profile = { },
 		bio = req.session.Profile.bio, 
 		pName = req.session.user.preferedName,
@@ -14,7 +13,6 @@ var settings = exports.settings = function( req, callback ) {
 	
 
 		if( req.method === 'POST') {
-			console.log('post')
 			var filepath, path;
 
 			if(req.files.upload.size > 0) { //upload --> preview
@@ -71,12 +69,10 @@ var settings = exports.settings = function( req, callback ) {
 				bio = req.body.bio;		
 
 		}
-		console.log('end')
 		profile.pName = pName;
 		profile.bio = bio;
 		profile.img = img;
 		profile.format = format;
-		console.log(profile)
 		callback(profile);
 	
 }

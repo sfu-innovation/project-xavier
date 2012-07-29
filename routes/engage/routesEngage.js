@@ -990,8 +990,6 @@ exports.preference = function (req, res){
 	
 	if (req.session && req.session.user) {
 		ProfileSettings.settings(req, function(result) {
-			console.log('preference')
-			console.log(result)
 
 				res.render("engage/preference", 
 				{

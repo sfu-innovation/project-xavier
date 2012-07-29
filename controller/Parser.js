@@ -99,15 +99,17 @@ function mean(set) {
 function strip(node, tag) {
 
 	var check = false;
-	for(var i = 0; i < node.childNodes.length; ++i){
-		var child = node.childNodes[i];
+	if (node.childNodes){
+		for(var i = 0; i < node.childNodes.length; ++i){
+			var child = node.childNodes[i];
 
-		if (child.tagName === tag) {
-			check = true;
-		}
-		if (!check) {
-			node.removeChild(child);
-			--i;
+			if (child.tagName === tag) {
+				check = true;
+			}
+			if (!check) {
+				node.removeChild(child);
+				--i;
+			}
 		}
 	}
 }

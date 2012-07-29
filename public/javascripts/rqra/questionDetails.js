@@ -60,23 +60,28 @@ function refreshQuestionListHeader() {
 
 function refreshQuestionDetailsListHeader(question) {
 	if (question) {
-		var courseUuid = getUuid(question._source.course.toLowerCase());
 		var courseTitle = document.getElementById("courseTitle");
-		if (!courseUuid || courseUuid === "") {
+		if (!question._source.course) {
 			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
 		} else {
-			common.getCourseById(courseUuid, function(data) {
-				courseTitle.innerHTML = "Questions for <span class='inserted'>" 
-					+ question._source.course + " " + data.course.title 
-					+ "</span> from";
-			});
-			
-			selectButtonByName(question._source.course);
+			var courseUuid = getUuid(question._source.course.toLowerCase());
+			if (!courseUuid || courseUuid === "") {
+				courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
+			} else {
+				common.getCourseById(courseUuid, function(data) {
+					courseTitle.innerHTML = "Questions for <span class='inserted'>" 
+						+ question._source.course + " " + data.course.title 
+						+ "</span> from";
+				});
+				
+				currentCourse = question._source.course;
+				selectButtonByName(question._source.course);
+			}
 		}
 
 		var currentWeek = question._source.week;
 		var sectionTitle = document.getElementById("sectionTitle");
-		if (currentWeek === 0) {
+		if (currentWeek === 0 || currentWeek === null) {
 			sectionTitle.innerHTML = "All Weeks";
 		} else if (!courseUuid || courseUuid === "") {
 			sectionTitle.innerHTML = "Week " + currentWeek;
@@ -165,5 +170,6 @@ function vote(dir, targetDiv) {
 }
 
 window.onload = function() {
+	redirect = true;
 	loadPage(true);
 }

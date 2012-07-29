@@ -28,7 +28,7 @@ function updateNotificationList(user) {
 	rqra.userNotifications(user, function(data) {
 		if (data) {
 			var newNotificationCount = document.getElementById("newNotificationCount");
-			newNotificationCount.innerHTML = data.notification.length;
+			newNotificationCount.innerHTML = Math.min(5, data.notification.length);
 			if (data.notification.length === 0) {
 				newNotificationCount.style.opacity = 0;
 			} else {
@@ -37,7 +37,7 @@ function updateNotificationList(user) {
 		
 			var notificationMenu = document.getElementById("notificationMenu");
 			notificationMenu.innerHTML = "<div id='notificationHeader'>" + data.notification.length + " New notifications</div>";
-			for(var i = 0; i < data.notification.length; ++i) {
+			for(var i = 0; i < 5; ++i) {
 				var notificationType = "notificationRegular";
 				if (data.notification[i].user.type === 1) {
 					notificationType = "notificationInstructor";

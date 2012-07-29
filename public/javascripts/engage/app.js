@@ -413,6 +413,7 @@ jQuery(document).ready(function ($) {
 		}
 	})
 
+	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
 });
 
@@ -900,7 +901,7 @@ function renderArticlePreviewBox(item) {
 			+ isProf(item.user.type) //return nothing if not
 
 			+ '<p>Posted '
-			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
 			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
@@ -1136,4 +1137,10 @@ function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent)
 		+ '</form></li>'
 
 	return html;
+}
+
+function updatePostTime(){
+
+	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
+	setTimeout(updatePostTime,30000);
 }

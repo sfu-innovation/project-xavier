@@ -611,8 +611,17 @@ function renderBox(item,type){
 		;
 	}
 
-	html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+	if (item.createdAt === item.updatedAt || !item.updatedAt){
+		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+	else{
+		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+
+
+	html	+= ' <span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
 		+ '</li>';

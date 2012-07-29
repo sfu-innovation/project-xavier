@@ -46,7 +46,7 @@ function refreshQuestionListHeader() {
 			if (data && data.errorcode === 0 && data.week.length > 0) {
 				for(var i = 0; i < data.week.length; ++i) {
 					if (data.week[i].week === currentWeek) {
-						sectionTitle.innerHTML = "Week " + currentWeek + " &#8212; " + data.week[i].topic;
+						sectionTitle.innerHTML = "Week " + currentWeek + " <span id='sectionName'>&#8212; " + data.week[i].topic + "</span>";
 					}
 				}	
 			} else {

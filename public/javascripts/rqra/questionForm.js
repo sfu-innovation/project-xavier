@@ -53,7 +53,8 @@ function PostQuestion() {
 	var week = parseInt(document.getElementById("weekBox").value);
 	var index = document.getElementById("courseBox").selectedIndex;
 	var courseName = document.getElementById("courseBox").children[index].title.toLowerCase();
-	
+
+	//courseName and week still gets passed in fornow, but wont be added at REST
 	rqra.createQuestion(questionTitle, questionBody, courseName, week, function(data) {
 		if (data && data.errorcode === 0) {
 			document.location.href = "/question/" + data.question._id;

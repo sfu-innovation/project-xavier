@@ -151,3 +151,4 @@ app.get("/api/week/:id", routesRqra.getWeekByCourseId);		//course ID
 app.post("/api/week", routesRqra.addWeek)		//add week , provide {course, week, topic}  in JSON
 
 
+app.post("/api/setSelectedCourse", routesRqra.setSelectedCourse);

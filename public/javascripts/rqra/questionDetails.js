@@ -3,22 +3,24 @@ var rqra = new coreApi.Presenter();
 function formatQuestion(question) {
 	var instructorStyle = "";
 	if (question._source.isInstructor === "true") {
-		instructorStyle = "background: #ffe450;";
+		instructorStyle = "instructorResponseFlag";
 	}
 
 	return "<div class='question'>"
-			+ "<div class='questionTitle'>" + question._source.title + "</div>"
-			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionData'>"
-				+ "<div style='" + instructorStyle + "'>"
+		+ "<div class='questionTitle'>" + question._source.title + "</div>"
+		+ "<div class='questionId'>" + question._id + "</div>"
+		+ "<div class='questionData'>"
+				+ "<div class='" + instructorStyle + "'>"
 				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
 				+ "<div>Asked "
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
-			+ "</div>"
-			+ "<div class='questionDetailsText'>" + question._source.body + "</div><hr/>";
+					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span>"
+				+ "</div>"
+		+ "</div>"
+		+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
+	+ "</div>";
 }
 
 function formatComment(comment) {

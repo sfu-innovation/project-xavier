@@ -835,7 +835,7 @@ function renderArticlePreviewBox(item) {
 			+ renderStar(item.starred)
 			+ renderLike(item)
 
-			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
+			+ '<a href="/article/'+item.uuid+'"><span class="comment_btn">Comments (' + item.totalComments + ') </span></a>'
 			+ '</div>'
 			+ '</div>'
 			+ '</div>';

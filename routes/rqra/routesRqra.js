@@ -49,6 +49,24 @@ exports.index = function(req, res){
 
 };
 
+exports.prof = function(req, res){
+	var user = {
+		"uuid":"bernie",
+		"firstName":"Bernie",
+		"lastName":"Maroney",
+		"type":1,
+		"userID":"bernie",
+		"email":"bernie@sfu.ca"
+	}
+	req.session.user = user
+	console.log(JSON.stringify(req.session))
+	//login with demo user, remove when everything is set.
+	fakeUserNotification(function(){
+		console.log("redirect");
+		res.redirect("/questions");
+	})
+}
+
 // frontend
 exports.header = function(request, response) {
 	response.render('rqra/component/header', { title: "Demo", user: request.session.user });

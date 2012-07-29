@@ -940,67 +940,72 @@ exports.demoPage = function (req, res) {
 
 
 exports.preference = function (req, res){
-//	console.log(req.method)
-//	console.log(req.files)
-//	console.log(req.body)
-//	console.log(req.session.Profile)
-	
 	
 	if (req.session && req.session.user) {
 		var bio = req.session.Profile.bio, 
 			pName = req.session.user.preferedName,
-			img = req.session.Profile.profilePicture;
-
+			img = req.session.Profile.profilePicture,
+			format="";
 
 		if( req.method === 'POST') {
-			var type = req.files.upload.type.split('/')[1];
-			if(req.files.upload.size > 0) {
+			var filepath, path;
 
-				var path = req.files.upload.path;
-				var type = req.files.upload.type.split('/')[1];
-				req.session.Profile.imgType = type;
-				var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
+			if(req.files.upload.size > 0) { //upload --> preview
+				format = req.files.upload.type.split('/')[1];
 
-				fs.readFile(path, function (err, data) {
-					var filepath = ('./public/images/avatars/tmp/'+req.session.user.userID+'.'+type);
-				 	fs.writeFile(filepath, data, function (err) {});
-				});
+				path = req.files.upload.path;
+				req.session.Profile.imgType = format;
+				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
 
-				img = '/images/avatars/tmp/'+req.session.user.userID+'.'+type;
-				bio = req.body.bio;
-				pName = req.body.pref_name;
-			} else {
-				var name = req.session.user.userID+'.'+req.session.Profile.imgType;
-				var path = ('./public/images/avatars/tmp/'+name);
+				img = '/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+
+
+			} else if (req.body.helper === 'del') { //delete --> preview
+				format = 'png'
+
+				path = './public/images/SFUEngage_profile.png';
+				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+
+				img = '/images/SFUEngage_profile.png';
+			
+			} else { //save
+				if(req.body.helper !== ''){ //has format, otherwise keep current img
+					var name = req.session.user.uuid+'.'+req.body.helper;
+					path = './public/images/avatars/tmp/'+name;
+					filepath = './public/images/avatars/'+name;
+
+					img = '/images/avatars/'+name;
+				}
 				
 				
-
-
-
-				fs.readFile(path, function (err, data) {
-					var filepath = ('./public/images/avatars/'+name);
-				 	fs.writeFile(filepath, data, function (err) {});
-				});
-
-				pName = req.body.pref_name,
-				img = '/images/avatars/'+name,
-				bio = req.body.bio;
 
 				User.setPreferedName(req.session.user.uuid, req.body.pref_name,function(err, res){
 					if (err)
 						console.log(err)
-					req.session.user.preferedName = res.preferedName;
 				});
 				UserProfile.updateProfile(req.session.user.uuid, {
-					profilePicture: '/images/avatars/'+name,
+					profilePicture: img,
 					bio: req.body.bio
-				}, function(err, data) {
+				}, function(err, data) {	
 					if (err)
 						console.log(err)
-					req.session.Profile.profilePicture = data.profilePicture;
-					req.session.Profile.bio = data.bio;
 				})
+
+				req.session.user.preferedName = req.body.pref_name;
+				req.session.Profile.profilePicture = img;
+				req.session.Profile.bio = req.body.bio;
+				
 			}
+
+			if(path){
+				fs.readFile(path, function (err, data) {
+				 	fs.writeFile(filepath, data, function (err) {});
+				});
+			}
+
+				console.log(req.body.bio);
+				pName = req.body.pref_name;
+				bio = req.body.bio;
 
 		}
 		res.render("engage/preference", 
@@ -1010,7 +1015,8 @@ exports.preference = function (req, res){
 			courses:req.session.courses,
 			avatar: img,
 			pref_name: pName,
-			bio: bio
+			bio: bio,
+			format: format
 			}, function (err, rendered) {
 			res.writeHead(200, {'Content-Type':'text/html'});
 			res.end(rendered);

@@ -1141,7 +1141,7 @@ exports.removeCommentNotifier = function(appType, request, response){
 	if (request.method === "DELETE") {
 		var args = {
 			user : request.params.uid,
-			target : request.params.tid,
+			target : request.params.qid,
 			app  : appType
 		}
 		Notification.removeCommentNotifier(args, function(err, result){

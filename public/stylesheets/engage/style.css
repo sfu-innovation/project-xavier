@@ -989,19 +989,34 @@ div#article_container #article img{
 	}
 
 
-#article_options span#star_btn{
+#article_options span.star_btn.unstarred{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
-#article_options span#star_btn:hover{
+#article_options span.star_btn.unstarred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
-#article_options span#like_btn{
+#article_options span.star_btn.starred{
+	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
+}
+#article_options span.star_btn.starred:hover{
+	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
+}
+
+#article_options span.like_btn.disliked{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-#article_options span#like_btn:hover{
+#article_options span.like_btn.disliked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+#article_options span.like_btn.liked{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+#article_options span.like_btn.liked:hover{
+	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
 #article_options span#invert_btn{

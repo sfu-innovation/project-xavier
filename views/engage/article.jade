@@ -10,10 +10,22 @@ block content
 					span#back_btn
 						|  BACK
 				span#options
-					span#star_btn 
-						|  Star
-					span#like_btn 
-						|  Like (4)
+					- if (article.starred)
+						span.star_btn.starred
+							|  Star
+					- else
+						span.star_btn.unstarred
+							|  Star
+					- if (article.liked)
+						span.like_btn.liked
+							|  Like (
+							em #{article.likes}
+							)
+					- else
+						span.like_btn.disliked
+							|  Like (
+							em #{article.likes}
+							)
 					span#invert_btn
 						|  Day/Night
 					span#textsize_btn 

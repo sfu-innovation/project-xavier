@@ -140,6 +140,87 @@ jQuery(document).ready(function ($) {
 			return false;
 		})
 
+
+		$('#article_options span.star_btn.unstarred').live('click', function () {
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid) {
+				engage.starResource(resource_uuid, function (data) {
+					if (data && data.errorcode === 0) {
+						self.removeClass('unstarred');
+						self.addClass('starred');
+					}
+
+
+				})
+			}
+
+		})
+
+		$('#article_options span.star_btn.starred').live('click', function () {
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid) {
+				engage.unstarResource(resource_uuid, function (data) {
+					if (data && data.errorcode === 0) {
+						self.removeClass('starred');
+						self.addClass('unstarred');
+						if (window.location.toString().indexOf('starred') != -1) {
+							self.parent().parent().parent().fadeOut('slow', function () {
+								$(this).remove();
+							});
+						}
+					}
+
+				})
+			}
+
+		})
+
+		$('#article_options span.like_btn.disliked').live('click',function(){
+
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid){
+				engage.likeResource(resource_uuid,function(data){
+					console.log(data);
+					if (data && data.errorcode === 0) {
+						self.addClass('liked');
+						self.removeClass('disliked');
+
+						var num = parseInt(self.children().html()) + 1;
+						self.children().html(num);
+
+					}
+				})
+
+			}
+
+		})
+
+		$('#article_options span.like_btn.liked').live('click',function(){
+
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid){
+				engage.dislikeResource(resource_uuid,function(data){
+					if (data && data.errorcode === 0) {
+						self.removeClass('liked');
+						self.addClass('disliked');
+
+						var num = parseInt(self.children().html()) - 1;
+
+						self.children().html(num);
+
+					}
+
+				})
+
+			}
+
+		})
+
+
 	}
 
 	else if (window.location.toString().indexOf('course') != -1) {

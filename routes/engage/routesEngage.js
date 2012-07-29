@@ -1063,7 +1063,26 @@ exports.preference = function (req, res){
 
 }
 
+exports.updateComment = function(request,response){
+	console.log('////');
+	console.log(request.body.body);
 
+	QueryES.updateComment(request.params.uid, request.body.body, 2, function(err, result) {
+		if (!err) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			if(result){
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			}
+			else{
+				response.end(JSON.stringify({ errorcode: 1, comment: "Failed to update comment" }));
+			}
+		} else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
+		}
+	});
+
+}
 
 exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {

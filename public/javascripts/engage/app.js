@@ -69,6 +69,31 @@ jQuery(document).ready(function ($) {
 			control.slideUp('slow');
 		})
 
+		$('.save_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = control.children('input').val();
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					p.html(text);
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+
 		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box

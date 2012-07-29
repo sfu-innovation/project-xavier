@@ -875,6 +875,15 @@ function loadStarredArticles(engage) {
 	})
 }
 
+function renderTopicInput(){
+	var html = '<input type="text" placeholder="#" /> '
+	+  '<a href="" class="tiny button">+</a>'
+	+  '<a href="" class="tiny button">-</a>'
+			;
+
+	return html;
+}
+
 function renderWeekInfoBox(item){
 	var weekBox =
 		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
@@ -903,6 +912,14 @@ function renderWeekInfoBox(item){
 				console.log(topic_list)
 			}
 		}
+
+	}
+
+	//if is prof
+	else{
+
+		weekBox += renderTopicInput();
+		weekBox += renderTopicInput();
 
 	}
 

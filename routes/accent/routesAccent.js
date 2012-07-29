@@ -215,7 +215,7 @@ exports.mediafile = function(request,response){
 				title: request.body.title,
 				description: request.body.description,
 				course: request.body.course,
-				path: config.accentServer.mediaFolder + filename,
+				path: '/media/' + filename + '.mp4',
 				type: 0
 			}
 			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
@@ -261,7 +261,7 @@ exports.mediafile = function(request,response){
 						'-ab', '128k',
 						'-threads', '0',
 						'-f', 'mp4', 
-						config.accentServer.mediaFolder + filename
+						config.accentServer.mediaFolder + filename + '.mp4'
 					]
 
 					if(filetype.match(/audio/)){
@@ -453,7 +453,8 @@ exports.viewMediaPage = function(req, res){
 		res.render("accent/view-media", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
-			status : "logged in" }, 
+			mediaUUID: req.params.mediaID,
+			status : "logged in" },
 			function(err, rendered){			
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);

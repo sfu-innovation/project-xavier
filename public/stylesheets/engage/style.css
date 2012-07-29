@@ -658,7 +658,14 @@ div.post_details p a{
 	padding-left: 2px;
 	}
 
+div.contents .loading{
+	height: 360px;
+	position: absolute;
+	z-index: 9000;
+	left:0;
+	top:0;
 
+}
 
 div.innercontents .post_time{
 	white-space: nowrap;

@@ -885,7 +885,7 @@ function renderArticlePreviewBox(item) {
 			+ isOwner(item.owner)
 
 			+ '<a href="/profile/'+ item.user.uuid +'">'
-			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
+			+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '" class="avatar" />' + '</a>'
 
 
 			+ '<div class="post_details"> '

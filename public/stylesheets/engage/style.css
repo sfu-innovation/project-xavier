@@ -1095,6 +1095,19 @@ div#article_container #comments span.name{
 	font-style: normal;
 }
 
+div#article_container .thread li span.edit_btn{
+	position: absolute;
+	right:10px;
+	top:10px;
+	cursor: pointer;
+	opacity: 0.5;
+	display: none;
+}
+
+div#article_container .thread li:hover span.edit_btn{
+	display: block;
+}
+
 div#article_container #comments span{
 	font-size: 12px;
 	font-weight: 300;

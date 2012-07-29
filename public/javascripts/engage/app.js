@@ -512,8 +512,13 @@ function initUI() {
 }
 
 function renderBox(item,type){
-	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'
-		+ '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
+	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
+
+	if (item.owner){
+		html += '<span class="edit_btn">Edit</span>'
+	}
+
+	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
 		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
 		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span>'
@@ -524,6 +529,8 @@ function renderBox(item,type){
 		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
 		+ '</li>';
+
+	return html;
 }
 
 function renderCommentBox(item){

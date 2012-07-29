@@ -1067,14 +1067,45 @@ exports.preference = function (req, res){
 
 exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {
-		QueryES.getCommentByResourceUUID(request.params.id, function(err, result) {
+		QueryES.getCommentByResourceUUID(request.params.id, function(err, results) {
 			if (!err) {
 
-				if(result){
-					EngageAction.commentsHelper(result,function(err,result){
+				if(results){
+					EngageAction.commentsHelper(results,function(err,results){
 						if (!err){
+							results.forEach(function(result){
+								if (request.session.user){
+									if(result.user.uuid === request.session.user.uuid){
+										result.owner = true;
+
+									}
+									else {
+										result.owner = false;
+									}
+								}
+								else{
+									result.owner = false;
+								}
+								if (result.replies && result.replies.length > 0){
+									result.replies.forEach(function(reply){
+										if (request.session.user){
+											if(reply.user.uuid === request.session.user.uuid){
+												reply.owner = true;
+
+											}
+											else {
+												reply.owner = false;
+											}
+										}
+										else{
+											resply.owner = false;
+										}
+									})
+								}
+							})
+
 							response.writeHead(200, { 'Content-Type': 'application/json' });
-							response.end(JSON.stringify({ errorcode: 0, comments: result }));
+							response.end(JSON.stringify({ errorcode: 0, comments: results }));
 						}
 						else{
 							response.writeHead(500, { 'Content-Type': 'application/json' });

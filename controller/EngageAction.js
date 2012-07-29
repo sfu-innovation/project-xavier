@@ -12,7 +12,8 @@ var commentHelper = exports.commentHelper = function (comment, callback){
 	if (comment) {
 		var new_comment = {};
 		new_comment.user = comment.user;
-		new_comment.profile = comment.profile;
+		new_comment.avatar = comment.profile;
+
 		new_comment.uuid = comment._id;
 		new_comment.like = comment._source.upvote;
 		new_comment.body = comment._source.body;
@@ -43,7 +44,8 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 			child_parent_list[comment._id] = comment._source.commentParent;
 
 			new_comment.user = comment.user;
-			new_comment.profile = comment.profile;
+			new_comment.avatar = comment.profile;
+
 			new_comment.uuid = comment._id;
 			new_comment.like = comment._source.upvote;
 			new_comment.body = comment._source.body;

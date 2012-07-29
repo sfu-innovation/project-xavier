@@ -567,7 +567,7 @@ function renderBox(item,type){
 	}
 
 	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
-		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<img src="' + (item.avatar ? item.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
 		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span>'
 		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')

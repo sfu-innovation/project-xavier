@@ -669,28 +669,36 @@ exports.shareResource = function (req,res){
 	var description = req.body.description;
 	var course = req.body.course;
 
-	console.log(req.body);
+	//console.log(req.body);
 
 	Parser.articlize(url, function (err,result) {
-		var currentWeek = EngageAction.weekHelper();
-		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
-			if (result){
-				EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+		if(result) {
+			var currentWeek = EngageAction.weekHelper();
+			Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+				if (result){
+					EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+					})
+
+				}
+				else{
 					res.writeHead(200, { 'Content-Type':'application/json' });
-					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
-				})
-
-			}
-			else{
-				res.writeHead(200, { 'Content-Type':'application/json' });
-				res.end(JSON.stringify({ errorcode:1, message:error }));
+					res.end(JSON.stringify({ errorcode:1, message:error }));
 
 
-			}
+				}
 
 
 
-		})
+			})
+		}
+		else{
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:err }));
+
+
+				}
 
 
 

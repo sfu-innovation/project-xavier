@@ -170,5 +170,6 @@ function vote(dir, targetDiv) {
 }
 
 window.onload = function() {
+	redirect = true;
 	loadPage(true);
 }

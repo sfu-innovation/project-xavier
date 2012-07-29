@@ -511,11 +511,18 @@ function initUI() {
 }
 
 function renderBox(item,type){
-	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
-		+ '</span><p>' + item.body
+	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'
+		+ '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
+		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+		+ '</span>'
+		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
+		+ '<p>' + item.body
 		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
-		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span></li>';
+		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
+
+		+ '</li>';
 }
 
 function renderCommentBox(item){

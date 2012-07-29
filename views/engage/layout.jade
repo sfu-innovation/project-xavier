@@ -187,10 +187,10 @@ html
 											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 	
 						li
-							div.dropdown_btn(onClick="dropdownToggle('#user_info')")
+							div.dropdown_btn(onClick="dropdownToggle('#user_info_downdrop')")
 								span #{ user.firstName } #{ user.lastName }
 								span.typicn.next
-							div.dropdown_list#user_info.hide
+							div.dropdown_list#user_info_downdrop.hide
 								ul
 									li
 										a(href="/profile/#{user.uuid}") My Profile

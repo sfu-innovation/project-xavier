@@ -241,6 +241,10 @@ div.pageNumberButton {
 	cursor: pointer;
 }
 
+div.votes {
+	cursor: pointer;
+}
+
 div.votes img {
 	width: 1em;
 	height: 1em;

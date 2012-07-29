@@ -49,7 +49,9 @@ function selectButtonByName(name) {
 	NodeList.prototype.forEach = Array.prototype.forEach;
 	buttons.forEach(function(obj) {
 		if (name === obj.querySelector(".courseButtonText").innerHTML) {
-			selectButton(obj);
+			setSelected(obj, true);
+		}	else {
+			setSelected(obj, false);
 		}
 	});
 }

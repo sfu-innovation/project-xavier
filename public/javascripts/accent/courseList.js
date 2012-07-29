@@ -17,7 +17,7 @@ function selectButton(selectedButton) {
 	}
 	else {
 		//console.log('all selected');
-		refreshQuestions('');
+		//refreshQuestions('');
 		getMedia('all');
 	}
 	

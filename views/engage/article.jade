@@ -47,7 +47,7 @@ block content
 
 
 		div.four.columns#comments
-			h5 Comments
+			h5 Poster's Comment
 			div#owner_comment
 				- if (article.user.avatar)
 					a.avatar(href="/profile/#{article.user.uuid}")
@@ -62,4 +62,5 @@ block content
 
 					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") Reply
 						span.typicn.forward
+			h5 Comments
 			ol

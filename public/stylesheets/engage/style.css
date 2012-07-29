@@ -247,9 +247,9 @@ ul#user_options_list div.dropdown_btn{
 ul#user_options_list li#notification img{
 	height: 45px;
 	width: 45px;
-	-moz-box-shadow: 0 0 2px #9e9e9e;
-	-webkit-box-shadow: 0 0 2px #9e9e9e;
-	box-shadow: 0 0 2px #9e9e9e;
+	-moz-box-shadow: 1px 1px 2px #9E9E9E;
+	-webkit-box-shadow: 1px 1px 2px #9E9E9E;
+	box-shadow: 1px 1px 2px #9E9E9E;
 	}
 	
 ul#user_options_list span#notification_number{
@@ -290,15 +290,15 @@ div.dropdown_list ul{
 	margin: 0;
 	padding: 0 !important;
 	position: absolute;
-	-moz-box-shadow: 0 0 2px #9e9e9e;
-	-webkit-box-shadow: 0 0 2px #9e9e9e;
-	box-shadow: 0 0 2px #9e9e9e;
+	-moz-box-shadow: 1px 1px 5px #9e9e9e;
+	-webkit-box-shadow: 1px 1px 5px #9e9e9e;
+	box-shadow: 1px 1px 5px #9e9e9e;
 	margin-top: 15px;
 	margin-left: -10px;
 	}
 	
 div.dropdown_list li{
-	 padding: 10px 15px;
+	 padding: 8px 12px;
 	 border:  1px solid #dbdbdb;
 	 margin: 0 !important;
 	 background: #f8f8f8;
@@ -361,22 +361,20 @@ li.mobile_view ul{
 li.mobile_view{
 	margin: 0 !important;
 }
+
 li.mobile_view	div.expand_btn{
-	position: relative;
+	position: inherit;
 	height: 45px;
 	width: 45px;
 	-moz-box-shadow: 0 0 2px #9e9e9e;
 	-webkit-box-shadow: 0 0 2px #9e9e9e;
 	box-shadow: 0 0 2px #9e9e9e;
-	padding-right: 10px;
-	padding-top: 5px;
-	z-index: 1;
 	margin-bottom: 6px;
 	}
 
 li.mobile_view	div.expand_btn span{
-	margin-left: -5px;
-	margin-top: 3px;
+	margin-left: -15px;
+	margin-top: 5px;
 	font-size: 18px;
 }
 li.mobile_view div#mobile_notif ul{
@@ -398,10 +396,11 @@ li.mobile_view div#mobile_notif li p.msg{
 	height: 70px;
 	}
 
-#mobile_user_info{
-	margin-left: -30px;
+#mobile_user_info ul{
+	margin-left: -80px;
 }
-	
+
+
 
 /* -----------------------------------------
    box container of articles previews
@@ -1108,6 +1107,11 @@ div#article_container .thread li:hover span.edit_btn{
 	display: block;
 }
 
+
+div#article_container .thread li span.edit_btn:hover{
+	opacity: 1;
+}
+
 div#article_container #comments span{
 	font-size: 12px;
 	font-weight: 300;
@@ -1123,6 +1127,10 @@ div#article_container #comments span.like_reply{
 	font-style: normal;
 	color: #9e9e9e;
 	}
+
+
+#comments .comment_control input {margin-top: 10px}
+#comments .comment_control a { margin-right:5px;}
 	
 #comments span.like_reply a{
 	color: #9e9e9e;

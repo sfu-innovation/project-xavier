@@ -47,6 +47,28 @@ jQuery(document).ready(function ($) {
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
+
+		$('.edit_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.hide();
+			control.slideDown('slow');
+		})
+
+
+		$('.cancel_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.show();
+			control.slideUp('slow');
+		})
+
 		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box
@@ -112,6 +134,7 @@ jQuery(document).ready(function ($) {
 
 						}
 						else if (type === "comment"){
+							new_comment = '<li class="thread"><ol>'+ new_comment +'</ol></li>'
 							$(new_comment).appendTo('#comments > ol');
 							$.scrollTo($('#comments > ol > li:last-child'),900);
 						}
@@ -515,7 +538,7 @@ function renderBox(item,type){
 	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
 
 	if (item.owner){
-		html += '<span class="edit_btn">Edit</span>'
+		html += '<span class="edit_btn">Edit</span>';
 	}
 
 	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
@@ -524,7 +547,18 @@ function renderBox(item,type){
 		+ '</span>'
 		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
 		+ '<p>' + item.body
-		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+		+ '</p>';
+	if (item.owner){
+
+		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
+			+'<a class="tiny button save_btn">Save</a>'
+			+'<a class="tiny button delete_btn">Delete</a>'
+			+'<a class="tiny button cancel_btn" >Cancel</a>'
+			+ '</div>'
+		;
+	}
+
+	html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
 		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 

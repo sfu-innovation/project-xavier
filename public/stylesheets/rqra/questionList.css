@@ -200,6 +200,16 @@ div.profResponsesRecent {
 	background: #ffe450;
 }
 
+div.instructorResponseFlag {
+	background: #ffe450; 
+	position:relative; 
+	height: 11px; 
+	padding: 5px; 
+	margin-top: -4px; 
+	margin-left: -5px; 
+	margin-right: 20px;
+}
+
 div#pageNumber {
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;

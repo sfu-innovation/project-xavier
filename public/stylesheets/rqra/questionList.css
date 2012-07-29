@@ -127,22 +127,28 @@ div#detailedQuestion div.question {
 
 /* yellow boxes should be padded 10px; */
 div.question {
-	width: 550px;
+	padding: 10px;
+	width: 705px;
 	margin-bottom: 17px;
+	margin-left: -10px;
 	font-size: 18px;
 	font-weight: 200;
 	cursor: pointer;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
 div.comment {
-	width: 550px;
+	padding: 10px;
+	width: 690px;
 	margin-bottom: 30px;
+	margin-left: -10px;
 	font-size: 18px;
 	font-weight: 200;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
 @-webkit-keyframes question-appear-animation {

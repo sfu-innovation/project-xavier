@@ -69,6 +69,30 @@ jQuery(document).ready(function ($) {
 			control.slideUp('slow');
 		})
 
+		$('.delete_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = "!@#$%^&*()";
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					list.html('This comment has been deleted');
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
 		$('.save_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
@@ -560,6 +584,10 @@ function initUI() {
 }
 
 function renderBox(item,type){
+	if (item.body === "!@#$%^&*()"){
+		return '<li class = "'+type+'">This comment has been deleted</li>'
+	}
+
 	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
 
 	if (item.owner){

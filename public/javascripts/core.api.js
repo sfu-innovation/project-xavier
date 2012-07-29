@@ -898,6 +898,26 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.setSelectedCourse = function(courseID, week, callback){
+			console.log("API - setSelectedCourse");
+
+			var body ={};
+			body.course = courseID;
+			body.week = week;
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/setSelectedCourse',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
 	}
 
 	this.Common = Common;

@@ -707,6 +707,7 @@ exports.index = function (req, res) {
 			title:"SFU ENGAGE",
 			user:req.session.user,
 			courses:req.session.courses,
+			profile:req.session.Profile,
 			currentWeek:currentWeek
 		}, function (err, rendered) {
 
@@ -731,6 +732,7 @@ exports.starred = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/starred", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 			res.writeHead(200, {'Content-Type':'text/html'});
@@ -752,6 +754,7 @@ exports.instructor = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/instructor", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -774,6 +777,7 @@ exports.profile = function (req, res) {
 		res.render("engage/profile", {     title:"SFU ENGAGE",
 			user:req.session.user,
 			selectedUser:req.params.id,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -821,7 +825,7 @@ exports.articleView = function (req, res) {
 
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
-
+						profile:req.session.Profile,
 						user:req.session.user,
 						courses:req.session.courses
 					}, function (err, rendered) {
@@ -856,6 +860,7 @@ exports.contributions = function (req, res) {
 
 		res.render("engage/contributions", { title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses  }, function (err, rendered) {
 
 
@@ -884,6 +889,7 @@ exports.courseView = function (req, res) {
 						user:req.session.user,
 						course:result,
 						currentWeek:currentWeek,
+						profile:req.session.Profile,
 						courses:req.session.courses
 					}, function (err, rendered) {
 
@@ -971,6 +977,7 @@ exports.preference = function (req, res){
 				res.render("engage/preference", 
 				{
 					title:"SFU ENGAGE",
+					profile:req.session.Profile,
 					user:req.session.user,
 					courses:req.session.courses,
 					avatar: result.img,

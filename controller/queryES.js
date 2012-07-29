@@ -940,6 +940,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 		case 'notMyQuestions':{
 			data = notMyQuestions(data, searchObj);
+			break;
 		}
 	}
 

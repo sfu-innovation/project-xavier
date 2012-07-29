@@ -22,6 +22,7 @@ function updateNotificationList(user) {
 			for(var i = 0; i < data.notification.length; ++i) {
 				var contains = $.inArray(data.notification[i].notification.id, notificationIDs);
 
+				// need a better way to check whether the notification is worth listening too
 				if (contains === -1) {
 					var notificationType = "notificationRegular";
 					if (data.notification[i].user.type === 1) {

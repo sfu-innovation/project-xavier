@@ -108,15 +108,15 @@ div#newNotificationCount {
 		opacity: 0; 
 	}
 	6% {
-		top: 40px;
+		top: 10px;
 		opacity: 0;
 	}
 	95% { 
-		top: 75px;
+		top: 38px;
 		opacity: 1;
 	}
 	100% { 
-		top: 75px;
+		top: 38px;
 		opacity: 1;
 	}
 }
@@ -127,5 +127,5 @@ nav#notificationList {
 	left: -220px;
 	-webkit-animation: notification-menu-animation 300ms 0ms infinite alternate forwards;
 	-webkit-animation-play-state: paused;
-	box-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+	box-shadow: 4px 4px 5px rgba(0,0,0,0.3);
 }

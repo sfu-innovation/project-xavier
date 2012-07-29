@@ -46,11 +46,13 @@ function selectNotification(selectedNotification) {
 	var target = $(selected).children("a.target").text();
 	console.log(user);
 	
-	
+	/*
 	common.removeCommentNotifier(user,target,function(result){
 		console.log(result);
 		selected.remove();	
 	})
+	*/
+	selected.remove();	
 	
 	
 	

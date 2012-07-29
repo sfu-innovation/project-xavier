@@ -676,28 +676,36 @@ exports.shareResource = function (req,res){
 	var description = req.body.description;
 	var course = req.body.course;
 
-	console.log(req.body);
+	//console.log(req.body);
 
 	Parser.articlize(url, function (err,result) {
-		var currentWeek = EngageAction.weekHelper();
-		Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
-			if (result){
-				EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+		if(result) {
+			var currentWeek = EngageAction.weekHelper();
+			Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
+				if (result){
+					EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+					})
+
+				}
+				else{
 					res.writeHead(200, { 'Content-Type':'application/json' });
-					res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
-				})
-
-			}
-			else{
-				res.writeHead(200, { 'Content-Type':'application/json' });
-				res.end(JSON.stringify({ errorcode:1, message:error }));
+					res.end(JSON.stringify({ errorcode:1, message:error }));
 
 
-			}
+				}
 
 
 
-		})
+			})
+		}
+		else{
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:err }));
+
+
+				}
 
 
 
@@ -1063,7 +1071,25 @@ exports.preference = function (req, res){
 
 }
 
+exports.updateComment = function(request,response){
 
+
+	QueryES.updateComment(request.params.uid, request.body.body, 2, function(err, result) {
+		if (!err) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			if(result){
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			}
+			else{
+				response.end(JSON.stringify({ errorcode: 1, comment: "Failed to update comment" }));
+			}
+		} else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
+		}
+	});
+
+}
 
 exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {

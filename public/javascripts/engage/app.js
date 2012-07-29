@@ -69,6 +69,55 @@ jQuery(document).ready(function ($) {
 			control.slideUp('slow');
 		})
 
+		$('.delete_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = "!@#$%^&*()";
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					list.html('This comment has been deleted');
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+		$('.save_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = control.children('input').val();
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					p.html(text);
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+
 		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box
@@ -535,6 +584,10 @@ function initUI() {
 }
 
 function renderBox(item,type){
+	if (item.body === "!@#$%^&*()"){
+		return '<li class = "'+type+'">This comment has been deleted</li>'
+	}
+
 	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
 
 	if (item.owner){
@@ -542,7 +595,7 @@ function renderBox(item,type){
 	}
 
 	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
-		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<img src="' + (item.avatar ? item.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
 		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span>'
 		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
@@ -558,8 +611,17 @@ function renderBox(item,type){
 		;
 	}
 
-	html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+	if (item.createdAt === item.updatedAt || !item.updatedAt){
+		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+	else{
+		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+
+
+	html	+= ' <span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
 		+ '</li>';

@@ -144,4 +144,5 @@ app.post("/api/section/course", routesCommon.sectionsInCourse);
 
 // notification
 app.get("/api/user/notification/:uid", routesAccent.getUserNotifications);
+app.delete("/api/user/notification/:uid/comment/:tid", routesAccent.removeCommentNotifier);
 app.put("/api/user/notification", routesAccent.updateUserNotifications);

@@ -519,3 +519,7 @@ exports.uploadMedia = function (req, res) {
 exports.getUserNotifications = function(request, response){
 	routesCommon.getUserNotifications(1, request, response);
 }
+
+exports.removeCommentNotifier = function(request, response){
+	routesCommon.removeCommentNotifier(1, request, response);
+}

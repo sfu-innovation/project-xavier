@@ -1136,3 +1136,27 @@ exports.getUserNotifications = function(appType, request, response){
 		})
 	}
 }
+
+exports.removeCommentNotifier = function(appType, request, response){
+	if (request.method === "DELETE") {
+		var args = {
+			user : request.params.uid,
+			target : request.params.tid,
+			app  : appType
+		}
+		Notification.removeCommentNotifier(args, function(err, result){
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
+	}
+}

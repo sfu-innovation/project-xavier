@@ -6,9 +6,9 @@ function getMedia(courseUUID){
 		var courseUUIDS = [];
 		var courses = $('#Courses').children();
 		for(var i = 0; i < courses.length; ++i){
-			var uuid = courses[i].querySelector(".UUID").innerHTML;
+			var uuid = courses[i].querySelector(".UUID");
 			if(uuid){
-				courseUUIDS.push(uuid);
+				courseUUIDS.push(uuid.innerHTML);
 			}
 		}
 		getMedia(courseUUIDS);

@@ -3,7 +3,7 @@ extends layout
 block content
 
 	- var weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-	div.row
+	div.row.hide-for-small
 		div.twelve.columns#weeks-bar
 			ul
 				li
@@ -15,13 +15,13 @@ block content
 						- else
 							a.passed(href="#week#{week}", data-week="#{week}") #{week}
 	div.row.clearfix#contents
-		div.three.columns#sharebox
+		div.three.columns#sharebox.hide-for-small
 			div.innercontents#submitnew
 				div.cover
 					div.frontCard
-						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
-							label Share or 
-								a.flip_btn upload a resource!
+						form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+							label Share or
+								a.flip_btn  upload a resource!
 							input(name="article_url",type="text", id="article_url", placeholder="http://")
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
@@ -33,9 +33,9 @@ block content
 								div.submit
 									input(type="submit", value="add", class="small button")
 					div.backCard
-						form(name="add_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
-							label Share or
-								a.flip_btn upload a resource!
+						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+							label Upload or
+								a.flip_btn  share a resource!
 
 							input(name="article_url",type="text", id="article_url", placeholder="http://", disabled="disabled")
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")

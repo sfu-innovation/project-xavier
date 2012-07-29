@@ -7,6 +7,7 @@ function selectButton(selectedButton) {
 	var isNotAllTab = $(selectedButton).children().size();
 	
 	if (isNotAllTab) {
+		getMedia(selectedButton.querySelector(".UUID").innerHTML);
 		var coursePrefix = selectedButton.querySelector(".Prefix").innerHTML;
 		var courseNumber = selectedButton.querySelector(".Number").innerHTML;
 
@@ -16,7 +17,8 @@ function selectButton(selectedButton) {
 	}
 	else {
 		//console.log('all selected');
-		refreshQuestions('');
+		//refreshQuestions('');
+		getMedia('all');
 	}
 	
 	return false;

@@ -1,3 +1,25 @@
+div#formHeader {
+	font-size: 24px;
+	margin-bottom: 40px;
+}
+
+textarea {
+	border-width: 1px;
+	border-color: #4d4d4d;
+	padding: 10px;
+	width: 560px;
+	height: 140px;
+	font-size: 18px;
+}
+
+select {
+	padding: 10px;
+	width: 582px;
+	border-width: 1px;
+	border-color: #4d4d4d;
+	font-size: 18px;
+}
+
 div#askForm {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
@@ -16,6 +38,7 @@ div.formButton {
 	padding: 10px;
 	float: right;
 	font-weight: bold;
+	margin-bottom: 3em;
 }
 
 div.askFormField {
@@ -25,10 +48,17 @@ div.askFormField {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
+	margin-bottom: 20px;
 }
 
 div.askFormFieldName {
 	width: 120px;
+	margin-top: 10px;
+	font-size: 18px;
+}
+
+div.askFormFieldValue {
+	margin-left: 20px;
 }
 
 @-webkit-keyframes form-appear-animation {

@@ -6,6 +6,10 @@ var MediaFile    = require(__dirname + "/../../models/mediafile.js");
 var User         = require(__dirname + "/../../models/user");
 var Tag          = require(__dirname + "/../../models/tag");
 var queryES      = require(__dirname + '/../../controller/queryES.js');
+var fs           = require("fs");
+var config       = JSON.parse(fs.readFileSync("config.json"));
+var util         = require("util");
+var child        = require("child_process");
 
 exports.login = function(request, response){
 	routesCommon.login(1, request, response);
@@ -200,9 +204,80 @@ exports.mediafile = function(request,response){
 
 	if(request.method === 'POST'){
 		if(request.session && request.session.user){
-			request.body.user =  request.session.user.uuid;
-			MediaAction.addMediaFile(request.body.media, function(error, mediaFile){
+			
+			console.log("\n\n" + util.inspect(request.files.mediafile) + "\n\n")
+			var filepath = request.files.mediafile.path.split('/');
+			var filename = filepath[filepath.length - 1];
+			var filetype = request.files.mediafile.type;
+			
+			var mediaFile = {
+				user: request.session.user.uuid,
+				title: request.body.title,
+				description: request.body.description,
+				course: request.body.course,
+				path: config.accentServer.mediaFolder + filename,
+				type: 0
+			}
+			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
 				if(!error){
+					console.log("filepath: " + filepath + " filename: " + filename);
+					
+					//Convert audio using ffmpeg
+					var audioArgs = [
+						'-i', request.files.mediafile.path,
+						'-threads', '0',
+						'-acodec', 'libvo_aacenc',
+						'-ac', '128k',
+						'-f', 'mp4',
+						'media/' + filename
+					]
+
+					//Convert video using ffmpeg
+					var videoArgs = [
+						'-i',
+						request.files.mediafile.path,
+						'-vcodec', 'libx264',
+						'-flags', '+loop',
+						'-me_method', 'umh',
+						'-g', '250',
+						'-qcomp', '0.6',
+						'-qmin', '10',
+						'-qmax', '51',
+						'-qdiff', '4',
+						'-bf', '16',
+						'-b_strategy', '1', 
+						'-i_qfactor', '0.71', 
+						'-cmp', '+chroma',
+						'-subq', '8',
+						'-me_range', '16', 
+						'-coder', '1',
+						'-sc_threshold', '40', 
+						'-keyint_min', '25',
+						'-refs', '4',
+						'-trellis', '1',
+						/*'-partitions', '+parti8x8+parti4x4+partp8x8+partb8x8',*/
+						'-s', '720x480',
+						'-acodec', 'copy'/*libvo_aacenc*/,
+						'-ab', '128k',
+						'-threads', '0',
+						'-f', 'mp4', 
+						config.accentServer.mediaFolder + filename
+					]
+
+					if(filetype.match(/audio/)){
+						var ffmpeg = child.spawn('ffmpeg', audioArgs);
+					}
+					else if(filetype.match(/video/)){
+						var ffmpeg = child.spawn('ffmpeg', videoArgs);
+					}
+
+					ffmpeg.stderr.on('data', function (data) {
+					 	console.log('stderr: ' + data);
+					});
+
+					ffmpeg.on('exit', function(code){
+						console.log("DONE CONVERTING " + code);
+					})
 					var args = {
 						section: request.body.section,
 						material: mediaFile.uuid
@@ -339,12 +414,43 @@ exports.courseMediaFiles = function(request, response){
 			}
 		})
 	}
+	else if(request.method === "POST" && request.body.where){
+		MediaAction.getMediaByCourse(request.body.where, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, media: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
 }
 
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
-		console.log(JSON.stringify(req.session.user))	
 		res.render("accent/index", { 	title: "SFU Accent",
+			user :  req.session.user,
+			courses : req.session.courses,
+			status : "logged in" }, function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
+		
+	}
+	else {
+		demoUserNotification(function(){ 
+			res.redirect("/demo");		
+		});
+		
+	}	
+};
+
+exports.viewMediaPage = function(req, res){
+	if (req.session && req.session.user) {
+		res.render("accent/view-media", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, 
@@ -371,7 +477,49 @@ exports.demoPage = function (req,res){
 	});
 }
 
+//TODO: remove when everything is setup
+var notification = require('../../controller/NotificationAction.js')
+var demoUserNotification = function(callback){
+	var args= {
+		app:1,
+		user:"jhc20"
+	}
+	notification.createUserNotificationSettings(args, function(err, result){
+		if(err)
+			console.log(err);
+
+		callback();
+	});
+}
+
 /***NEW ROUTES */
 exports.searchQuestionsRoute = function(request, response){
 	routesCommon.searchQuestionsRoute(1, request, response);
+}
+
+
+exports.uploadMedia = function (req, res) {
+	if (req.session && req.session.user) {
+
+		res.render("accent/upload",
+			{ 
+				title: "SFU Accent",
+				user :  req.session.user,
+				courses : req.session.courses,
+				status : "logged in" 
+			},
+			function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+			}
+		);
+	}
+};
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(1, request, response);
+}
+
+exports.removeCommentNotifier = function(request, response){
+	routesCommon.removeCommentNotifier(1, request, response);
 }

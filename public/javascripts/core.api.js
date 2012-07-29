@@ -66,6 +66,41 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.sectionsInCourse = function(course, callback){
+			console.log("API - sectionsInCourse " + course);
+			$.ajax({
+				url:'/api/section/course',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify({course: course}),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
+		this.userNotifications = function(userID, callback){
+			console.log("API - userNotifications");
+			$.ajax({
+				url:'/api/user/notification/' + userID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+		this.removeCommentNotifier = function(userID, qid, callback){
+			console.log("API - removeCommentNotifier");
+			$.ajax({
+				url:'/api/user/notification/' + userID + '/comment/' + qid,
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 	}
@@ -186,13 +221,77 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			})
+		}
 
+		this.getMediaFiles = function(courses, callback){
+			console.log('API - getMediaFiles');
+			var body = {};				
+			body.where = courses;
+			$.ajax({
+				url:'/api/mediafiles/course',
+				type:'POST',
+				data:body,
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
 
+		this.getMediaSection = function(uuid, callback){
+				$.ajax({
+				url:'/api/mediafile/' + uuid + '/section',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}
 
 	function Engage() {
+
+		this.createComment = function (args, callback) {
+			console.log("API - createComment");
+
+
+
+
+			args.objectType = 'resource';
+
+
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/comment',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(args),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
+
+
+		this.deleteResource = function(uuid,callback){
+			console.log('API - deleteResource');
+
+			$.ajax({
+				url:'/api/resource/'+uuid,
+				type:'DELETE',
+				dataType:'json',
+				contentType:"application/json",
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
 
 		this.createResource = function (course_id,title,description,resource_type,file_type,url,callback){
 			console.log('API - createResource');

@@ -29,7 +29,7 @@ html
 
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
 
-		link(rel='stylesheet', href='/stylesheets/engage/style.css?v3')
+		link(rel='stylesheet', href='/stylesheets/engage/style.css?v4')
 				link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
@@ -53,105 +53,192 @@ html
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
 		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js")
+		script(src="/javascripts/engage/app.js?v107")
 		
 	body
 		div#header
-			div.row.clearfix
-				div.ten.columns
-					a(href="/")
-						img.logo(src="/images/engage/SFUEngage_draft3-03.png")
-				div.two.columns.dropdown#user_options					
-					ul.nav-bar#user_options_list
-						li.has-flyout#notification
-						
-							
-							a
-								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-								span.number 4
-							ul.flyout.small
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Mark 
-											| just shared an resource in 
-											span.coursename IAT 200.
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Catherine 
-											| just shared an resource in 
-											span.coursename IAT 200.
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Mark 
-											| liked your article in 
-											span.coursename BUS 354
-								li
-									a.notification
-										img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
-										p.msg 
-											span.username Ted 
-											| liked your article in 
-											span.coursename BUS 354
-						li.has-flyout
-							a
-								| #{ user.firstName } #{ user.lastName }
-							a(href="#").flyout-toggle
-								span
-							ul.flyout.small
-								li
-									a(href="/profile/#{user.uuid}") my profile
-								li
-									a(href="/preference") preference
-								li
-									a(href="/logout") log out
-
-				
-			div.row.hide-for-small#nav
-				div.ten.columns
-					ul.nav-bar#options
-						li(data-value="all")
+			
+			div.row.clearfix.show-for-small
+				script(type='text/javascript')
+					function show_slider_box(id){
+						$(id).slideToggle();
+					}
+				div.slider_box#menu_box
+					ul
+						li
 							a#all_btn(href="/") All Resources
-						li(data-value="yours")
+						li
 							a#contruibutions_btn(href="/mine") Your Contributions
-						li(data-value="starred")
+					ul	
+						li
 							a#starred_btn(href="/starred") Starred
-						li(data-value="prof")
+						li
 							a#instructor_btn(href="/instructor") Instructor Posts
-				div.two.columns.dropdown
-					ul.nav-bar#courses_list
-						li.has-flyout
-							a(href="#") Courses
-							a(href="#").flyout-toggle
-								span
-							ul.flyout.small
-								each item in courses
-									li.courses
-										a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
-
-
-										
-			div.row.show-for-small
-				div.button-bar.ten.columns
-					ul.button-group#mobile-nav
-						li
-							a.button(href="/") ALL
-						li
-							a.button(href="/mine") YOURS
-						li
-							a.button(href="/starred") STAR
-						li
-							a.button(href="/instructor") PROF
-							
-						br
+				div.slider_box#courses_box
+					ul
 						each item in courses
 							li.courses
-								a.button(href="../course/#{item.subject+item.number}") #{item.subject+item.number}
+								a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+								
+				div.slider_box#mobile_share_box
+					form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						input.article_url(name="article_url",type="text",placeholder="http://")
+						input.article_comment(name="article_comment", type="text", placeholder="Type in a comment")
+
+						div#mobile_sumbitrow
+							div.selectcourse
+								select(class="customDropdown", name="article_course", value="select a course")
+									each item in courses
+										option(value=item.uuid) #{item.subject+item.number}
+							div.submit
+								input(type="submit", value="add", class="small button")
+
+				div.mobile-four.columns
+					ul#sliderMenu
+						li#slide_menu 
+							a(onClick="show_slider_box('#menu_box')") MENU
+						li#slide_courses 
+							a(onClick="show_slider_box('#courses_box')") COURSES
+						li#slide_share 
+							a(onClick="show_slider_box('#mobile_share_box')") SHARE
+					
+
+			div.row.clearfix.show-for-small
+				div.mobile-two.columns
+					a(href="/")
+						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
+				div.mobile-two.columns#user_options
+					ul#user_options_list
+						script(type='text/javascript')
+							function dropdownToggle(id){
+								$(id).toggleClass('hide');
+								}
+																
+
+						li#notification.mobile_view
+							div(onClick="dropdownToggle('#mobile_notif')")
+								img.avatar(src="/images/engage/default_profile.png") 
+								span#notification_number 4
+							div.dropdown_list#mobile_notif.hide
+								ul
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png")
+											p.msg 
+												span.username Mark 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Catherine 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Mark 
+												| liked your article in 
+												span.coursename BUS 354
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Ted 
+												| liked your article in 
+												span.coursename BUS 354		
+						li#mobile_user_info.mobile_view
+							div.expand_btn(onClick="dropdownToggle('#mobile_user_info')")
+								span.typicn.next
+							div.dropdown_list#mobile_user_info.hide
+								ul
+									li
+										a(href="/profile/#{user.uuid}") My Profile
+									li
+										a(href="/preference") Preference
+									li
+										a(href="/logout") Logout
+
+			div.row.clearfix.hide-for-small
+				div.two.columns
+					a(href="/")
+						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
+				div.six.columns#nav-bar
+					ul#options
+						li
+							a#all_btn(href="/") All Resources
+						li
+							a#contruibutions_btn(href="/mine") Your Contributions
+						li
+							a#starred_btn(href="/starred") Starred
+						li
+							a#instructor_btn(href="/instructor") Instructor Posts
+				
+				div.four.columns.dropdowns#user_options					
+					ul#user_options_list
+						script(type='text/javascript')
+							function dropdownToggle(id){
+								$(id).toggleClass('hide');
+								}
+						li
+							div.dropdown_btn(onClick="dropdownToggle('#course_list')")
+								span Courses
+								span.typicn.next
+							div.dropdown_list#course_list.hide
+								ul
+									each item in courses
+										li.courses
+											a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
+	
+						li
+							div.dropdown_btn(onClick="dropdownToggle('#user_info')")
+								span #{ user.firstName } #{ user.lastName }
+								span.typicn.next
+							div.dropdown_list#user_info.hide
+								ul
+									li
+										a(href="/profile/#{user.uuid}") My Profile
+									li
+										a(href="/preference") Preference
+									li
+										a(href="/logout") Logout
 										
+
+						li#notification
+							div(onClick="dropdownToggle('#notif')")
+								img.avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+								span#notification_number 4
+							div.dropdown_list#notif.hide
+								ul
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png")
+											p.msg 
+												span.username Mark 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
+											p.msg 
+												span.username Catherine 
+												| just shared an resource in 
+												span.coursename IAT 200.
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Mark 
+												| liked your article in 
+												span.coursename BUS 354
+									li
+										a.notification
+											img.user_avatar(src="/images/engage/default_profile.png") 
+											p.msg 
+												span.username Ted 
+												| liked your article in 
+												span.coursename BUS 354					
 		block content
 

@@ -58,12 +58,14 @@ app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the
 app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the instructor of a course
 
 // follower
-//TODO: need update this into document
+//TODO: remove this if not needed
 app.put("/api/question/:uid/follow", routesEngage.followQuestion); // a follower follows a question
-//TODO: need update this into document
+//TODO: remove this if not needed
 app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a follower follows a question
 
 // Resource
+
+app.post('/api/comment',routesEngage.createComment);
 
 //resource listings
 
@@ -87,7 +89,9 @@ app.post('/api/resource', routesEngage.createResource);
 //POST means create here
 app.post('/api/resource/create', routesEngage.createResource);
 app.get('/api/resource/:uuid', routesEngage.getResource);
-app.del('/api/resource/:uuid/delete', routesEngage.deleteResource);
+
+app.delete('/api/resource/:uuid', routesEngage.deleteResource);
+
 app.get('/api/resource/:uuid/likes', routesEngage.getLikes);
 
 

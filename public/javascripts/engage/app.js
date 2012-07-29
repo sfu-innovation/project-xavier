@@ -45,18 +45,99 @@ jQuery(document).ready(function ($) {
 		loadProfileArticles(engage);
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
+		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
 		$('.reply_click').live('click',function(){
-			$('.reply_box').remove();
+
+			$('.reply_box').remove();   //remove all other reply box
 			var self = $(this);
+			var list = self.closest('li');
+
+			var target_uuid = list.attr('data-target-uuid');
+			var reply_to = list.attr('data-reply-to');
+			var parent_uuid = list.attr('data-parent-uuid');
+
+
+
 			if (self.attr('data-reply-type') === 'super'){
-				var target_uuid = $(this).attr('data-target-uuid');
-				var reply_to = $('#owner_comment .name').html();//the name of user it replies to
-				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
+				target_uuid = self.attr('data-target-uuid');
+				reply_to = $('#owner_comment .name').html();//the name of user it replies to
+				var new_reply_box = renderReplyBox("comment",reply_to,target_uuid,null);
 //
-				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
 
 			}
+			else if(list.attr('data-reply-type') === 'comment'){
+
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.comment')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
+
+
+			}
+			else if(list.attr('data-reply-type') === 'replies'){
+
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
+
+			}
+
+
+		})
+
+		$('.reply_box form').live('submit',function(){
+			var self = $(this);
+			var comment = {};
+			comment.target_uuid = $('form input#comment_target').val();
+			comment.parent_uuid = $('form input#comment_parent').val();
+			comment.body = $('form input#reply_content').val();
+
+			engage.createComment(comment,function(data){
+
+//				console.log(data);
+				if (data && data.comment){
+
+					data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
+					var type = $('.reply_box form').attr('data-reply-type');
+					console.log(data);
+					if (type){
+						$('.reply_box').hide();
+						var new_comment = renderBox(data.comment,type);
+						if (type === "replies"){
+
+							$(new_comment).appendTo(self.closest('ol'));
+
+							$.scrollTo(self.closest('ol').children('li').filter(':last'),900);
+
+						}
+						else if (type === "comment"){
+							$(new_comment).appendTo('#comments > ol');
+							$.scrollTo($('#comments > ol > li:last-child'),900);
+						}
+
+						$('.reply_box').remove();
+					}
+
+
+
+				}
+
+			})
+
+			return false;
+		})
+
+		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
+			$("div#article_container .columns:first-child").toggleClass('night');
+
+			return false;
+		})
+
+		$('#article_options span#options span:nth-child(4) ').bind('click', function () {
+			$("#article").toggleClass('larger');
+
+			return false;
 		})
 
 	}
@@ -67,7 +148,16 @@ jQuery(document).ready(function ($) {
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
+		if (!weekNum){
+			weekNum = weekConverter();
+		}
+
+		else{
+			weekNum = parseInt(weekNum);
+		}
+
 		loadCourseArticles(engage, weekNum);
+		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
@@ -96,7 +186,13 @@ jQuery(document).ready(function ($) {
 		loadAllArticles(engage, weekNum);
 
 		$('.flip_btn').bind('click',function(){
+			$('div.cover').addClass('hack');
 			$('div.cover').toggleClass('flip');
+		})
+
+		$('.selectcourse .dropdown a').bind('click',function(){
+			$('div.cover').removeClass('hack');
+
 		})
 
 		$('#submitnew form').bind('submit',function(){
@@ -138,12 +234,13 @@ jQuery(document).ready(function ($) {
 		})
 	}
 
-	$('span.typicn.star').live('click', function () {
+	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
+					self.removeClass('unstarred');
 					self.addClass('starred');
 				}
 
@@ -153,13 +250,14 @@ jQuery(document).ready(function ($) {
 
 	})
 
-	$('span.typicn.star.starred').live('click', function () {
+	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
 					self.removeClass('starred');
+					self.addClass('unstarred');
 					if (window.location.toString().indexOf('starred') != -1) {
 						self.parent().parent().parent().fadeOut('slow', function () {
 							$(this).remove();
@@ -172,8 +270,67 @@ jQuery(document).ready(function ($) {
 
 	})
 
+	$('.articlebox span.like_btn.disliked').live('click',function(){
 
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
+		if (resource_uuid){
+			engage.likeResource(resource_uuid,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0) {
+					self.addClass('liked');
+					self.removeClass('disliked');
 
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+
+				}
+			})
+
+		}
+
+	})
+
+	$('.articlebox span.like_btn.liked').live('click',function(){
+
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
+		if (resource_uuid){
+			engage.dislikeResource(resource_uuid,function(data){
+				if (data && data.errorcode === 0) {
+					self.removeClass('liked');
+					self.addClass('disliked');
+
+					var num = parseInt(self.children().html()) - 1;
+
+					self.children().html(num);
+
+				}
+
+			})
+
+		}
+
+	})
+
+	$('.articlebox span.delete_btn').live('click', function () {
+		var article = $(this).closest('.articlebox');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
+
+		if (resource_uuid) {
+			engage.deleteResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
+
+					article.fadeOut('slow', function () {
+						article.remove()
+					});
+
+				}
+
+			})
+
+		}
+	})
 
 
 });
@@ -272,25 +429,31 @@ function initUI() {
 
 }
 
+function renderBox(item,type){
+	return '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>'+'<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+		+ '</span><p>' + item.body
+		+ '</p> <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+		+ '.</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span></li>';
+}
+
 function renderCommentBox(item){
-	function renderBox(item){
-		return '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
-			+ '</span><p>' + item.body
-			+ '</p><span class="post_time">' + formartDate(item.createdAt)
-			+ '</span><span class="like_reply"><a>like (' + item.like + ')'
-		+ '</a><a class="reply_click"> reply <span class="typicn forward"></span> </a></span></div>';
-	}
 
 
-   var html = '<div class="comment">'+ renderBox(item);
+
+   var html = renderBox(item, "comment");
 
 	if (item.replies && item.replies.length > 0){
+
 		$.each(item.replies, function (index, reply) {
 
-			html += '<div class="replies">'+ renderBox(reply);
+			html += renderBox(reply, "replies");
 		});
 
+
 	}
+
+	html = '<li class="thread"><ol>'+ html +'</ol></li>';
 
 	return html;
 }
@@ -308,7 +471,7 @@ function loadComments(engage){
 						comment = renderCommentBox(item);
 
 
-						$('#comments').append(comment);
+						$('#comments > ol').append(comment);
 					});
 				}
 				else{
@@ -638,7 +801,10 @@ function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<img src="' + 'https://secure.gravatar.com/avatar/aa50677b765abddd31f3fd1c279f75e0?s=140' + '" class="avatar"/>'
+			+ isOwner(item.owner)
+
+			+ '<a href="/profile/'+ item.user.uuid +'">'
+			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
 
 
 			+ '<div class="post_details"> '
@@ -661,20 +827,25 @@ function renderArticlePreviewBox(item) {
 			//end of innerwrap
 
 			+ '<h5>'
-			+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
+			+ '<a '+ (item.thumbnail?'':'class="noimage"')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
+			+ renderLike(item)
 
-			+ '<span> Like (' + item.likes + ') </span>'
-			+ '<span> Comments (' + item.totalComments + ') </span>'
+			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
 			+ '</div>'
 			+ '</div>'
 			+ '</div>';
 	return article;
 
+}
+
+function isOwner(owner){
+	if (owner) return '<span class="delete_btn">X</span>'
+	else return ""
 }
 
 
@@ -708,7 +879,7 @@ function formartDate(old_date) {
 
 function isProf(user_type) {
 	if (user_type === 1) {
-		return '<span id="prof" title="instructor" class="typicn tick"></span>'
+		return '<span id="prof" title="instructor"><img src="/images/engage/icon/16x16/Instructor_v1.png"/></span>'
 	}
 	else {
 		return '';
@@ -717,40 +888,57 @@ function isProf(user_type) {
 
 function renderStar(starred) {
 	if (starred) {
-		return '<span class="typicn star starred"></span>';
+		return '<span class="star_btn starred">Star</span>';
 	}
 	else {
-		return '<span class="typicn star"></span>'
+		return '<span class="star_btn unstarred">Star</span>'
+	}
+}
+
+function renderLike(item) {
+	if (item.liked) {
+		return '<span class="like_btn liked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+	else {
+		return '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
 	}
 }
 
 
 function renderPreviewImage(item) {
 
-	var previewImage = '<div class="innerwrap" style=\''
-		//IE
-		+'background-image: url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
-		//CHROME SAFARI
-		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	var previewImage = "";
 
-		//FIREFOX
-		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	if (item.thumbnail){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ item.thumbnail + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ item.thumbnail + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ item.thumbnail + '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
-		 + '\'>'
-		+ '</div>'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else{
+		previewImage= '<div class="innerwrap" style=\''
+			+ 'opacity: 1;'
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/default_thumbnail.jpg' + '");'
+			+ '\'>'
+			+ '</div>'
+	}
 
 
 
-//	var previewImage = '<div class="innerwrap" >'
-//		+ '<img src = "'
-//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
-//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
-//		+ '<h5>'
-//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-//		+ '</div>'
+
 
 	return  previewImage
 
@@ -804,7 +992,7 @@ function stylePicker() {
 }
 
 //2012-07-21T00:00:24.000Z
-function weekConverter(post_date, semester_start_date) {
+function weekConverter() {
 
 	Date.prototype.getWeek = function () {
 		var onejan = new Date(this.getFullYear(), 0, 1);
@@ -812,19 +1000,52 @@ function weekConverter(post_date, semester_start_date) {
 	}
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
-	var post_date = new Date(Date.parse(post_date));
-	var semester_start_date = new Date(Date.parse(semester_start_date));
-	return post_date.getWeek() - semester_start_date.getWeek() + 1;
+	var current_date = new Date();
+	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
+	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
 }
 
-function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
+
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
 		+ comment_target
-		+ '"><input type="hidden" id="comment_target" value="'
+		+ '">';
+
+		if(comment_parent){
+			html += '<input type="hidden" id="comment_parent" value="'
+				+ comment_parent
+			+ '">'
+		}
+
+
+
+		html += '</form></div>';
+
+	return html;
+}
+
+function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
+		+ comment_target
+		+ '">'
+		+ '<input type="hidden" id="comment_parent" value="'
 		+ comment_parent
-		'"></form></div>'
+		+ '">'
+		+ '</form></li>'
 
 	return html;
 }

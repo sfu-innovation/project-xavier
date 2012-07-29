@@ -1,7 +1,7 @@
 var fs      = require("fs")
 var config  = JSON.parse(fs.readFileSync("config.json"));
 var Sequelize = require('sequelize');
-var Resource = require(__dirname + '/resource.js').Resource;
+//var Resource = require(__dirname + '/resource.js').Resource;
 var Notification = require(__dirname + '/../controller/NotificationAction.js');
 var db = new Sequelize(
 	config.mysqlDatabase["db-name"],	
@@ -29,6 +29,7 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 		}
 		else{
 			Like.create({user:userUUID, resource: resourceUUID}).success(function(like){
+				var Resource = require(__dirname + '/resource.js').Resource;  // doesn't work when define on the top, no idea why
 				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 					var likeCount = resource.likes + 1;
 					resource.updateAttributes({likes: likeCount}).success(function(result){
@@ -64,6 +65,7 @@ exports.unlikeResource = function(userUUID, resourceUUID, callback){
 	Like.find({where:{user:userUUID, resource: resourceUUID}}).success(function(like){
 		if(like){
 			like.destroy().success(function(result){
+				var Resource = require(__dirname + '/resource.js').Resource;   // doesn't work when define on the top, no idea why
 				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 					var likeCount = resource.likes - 1;
 					resource.updateAttributes({likes: likeCount}).success(function(result){
@@ -84,4 +86,18 @@ exports.unlikeResource = function(userUUID, resourceUUID, callback){
 	}).error(function(error){
 		callback(error, null);
 	})
+}
+
+
+exports.isResourceLiked = function(args,callback){
+	Like.find({where:{user:args.user, resource:args.resource}}).success(function(result){
+		callback(null,result);
+
+
+
+
+
+
+	}).error(function(error){callback(error, null);});
+
 }

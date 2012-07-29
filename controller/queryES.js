@@ -696,7 +696,8 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		target:data.target_uuid
 		,app:appType
 		,origin:data.user
-		,description:data.body
+		,description:data.body,
+		commentParent: data.commentParent
 	};
 
 	switchIndex(appType);
@@ -712,7 +713,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	}
 
 	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
-		if(err)
+		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 
 		document.set(data, function(err, req, esData){
@@ -727,6 +728,9 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 				}
 
 				delete args.description;
+				var user = args.origin;
+				delete args.origin
+				args.user = user;
 				notification.addCommentNotifier(args, function(err, result){
 					if(err){
 						console.log(err);
@@ -734,6 +738,11 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 					}
 
 					//console.log('complete');
+
+					// good idea to attach source so that it is
+					// not troublesome to check the object without calling getCommentByID
+					esData._source = data;
+					// maybe even add user if it's needed
 
 					callback(null, esData);
 				});
@@ -789,6 +798,24 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 			});
 		});
 	});
+}
+
+QueryES.prototype.deleteComments = function(commentList, appType, callback){
+	var self = this;
+	var successList = [];
+	console.log(commentList)
+	async.forEach(commentList, function(commentId, done){
+		self.deleteComment(commentId, appType, function(err, result){
+			if(err)
+				console.log('Cannot delete: %s, comment does not exist!', commentId)
+
+			if(result)
+				successList.push(result)
+			done();
+		})
+	}, function(err){
+		callback(null, successList)
+	})
 }
 
 //update a comment vote
@@ -916,7 +943,6 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		}
 	}
 
-
 	switchIndex(appType);
 	switchMapping(0);
 	//console.log(JSON.stringify(data))
@@ -958,16 +984,20 @@ var unansweredQuestion = function(data){
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
 	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
-	data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	//data = {"query":{"match_all":{}}, "filter": {"or":[]}};
+	data.filter =  { "or":[]};
 	data.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 
 var notMyQuestions = function(data, searchObj){
-	data.query.bool.must_not = []
-	data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	data.filter = {"not":{"term":{"followup": searchObj.uuid}}};
+	//data.query.bool.must_not = [];
+	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
+	//data = {"query":{"match_all":{}}, "filter":}};
+	data.filter =  { "not":{ "filter":{ "or":[]}}};
+	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
+	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});
 	return data;
 }
 

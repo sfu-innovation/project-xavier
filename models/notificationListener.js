@@ -158,9 +158,9 @@ exports.findUserSpecificNotificationListeners = function( args, callback ){
 	var arg = new Object();
 	arg.user = args.user;
 	arg.app = args.app;
-	console.log("**** " + JSON.stringify(arg));
+	//console.log("**** " + JSON.stringify(arg));
 	NotificationListener.findAll({ where : arg }).success(function( listeners ){
-		console.log("[fdsf] "+ listeners );
+		//console.log("[fdsf] "+ listeners );
 		callback( null, listeners );
 	}).error(function(error){
 		console.log('***% = '+ error );

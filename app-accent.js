@@ -37,6 +37,8 @@ app.dynamicHelpers({
 app.get('/login', routesAccent.login);
 app.get('/logout', routesCommon.logout);
 
+app.get('/upload', routesAccent.uploadMedia);
+
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses
 app.get('/api/user/:id', routesCommon.user); // get user by id
@@ -125,6 +127,7 @@ app.delete("/api/mediafile/:id", routesAccent.mediafile); // delete a mediafile 
 
 app.get("/api/mediafile/:tid/tags", routesAccent.mediafileTag); // get all tags by mediafile id
 app.get("/api/mediafiles/course/:id", routesAccent.courseMediaFiles);// get all media files for a course
+app.post("/api/mediafiles/course", routesAccent.courseMediaFiles);
 //to be deprecated, use Get API for each Model instead
 app.get("/api/mediafile/:uid/user", routesAccent.mediafileUser); // get a mediafile user
 
@@ -132,7 +135,14 @@ app.get("/api/mediafile/:uid/section", routesCommon.getResourceSection); // get 
 
 //non-REST calls
 app.get('/', routesAccent.index);
+app.get('/media', routesAccent.viewMediaPage);
 app.get('/demo', routesAccent.demoPage); //this will login you with a demo user
 
 /***NEW ROUTES */
 app.post("/api/questions/search/page/:page", routesAccent.searchQuestionsRoute);
+app.post("/api/section/course", routesCommon.sectionsInCourse);
+
+// notification
+app.get("/api/user/notification/:uid", routesAccent.getUserNotifications);
+app.delete("/api/user/notification/:uid/comment/:qid", routesAccent.removeCommentNotifier);
+app.put("/api/user/notification", routesAccent.updateUserNotifications);

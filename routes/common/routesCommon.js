@@ -400,6 +400,7 @@ exports.sectionsInCourse = function(request, response){
 	if(request.method === "POST"){
 		OrganizationAction.sectionsInCourse(request.body, function(error, result){
 			if (result) {
+				console.log(JSON.stringify(result));
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify({ errorcode: 0, sectionsInCourse: result }));
 			} else {
@@ -458,7 +459,7 @@ exports.questionViewCountRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: questionViewCount' }));
 			}
 		});
 
@@ -479,7 +480,7 @@ exports.instructorQuestionsRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getInstructorQuestion' }));
 			}
 		});
 
@@ -500,7 +501,7 @@ exports.questionRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getQuestion' }));
 			}
 		});
 
@@ -531,7 +532,7 @@ exports.questionRoute = function(appType, request, response) {
 					}
 				} else {
 					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addQuestion' }));
 				}
 			});
 		}
@@ -558,7 +559,7 @@ exports.questionRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateQuestion' }));
 			}
 		});
 
@@ -574,7 +575,7 @@ exports.questionRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: deleteQuestion' }));
 			}
 		});
 	}
@@ -593,7 +594,7 @@ exports.questionsRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllQuestions' }));
 			}
 		});
 	}
@@ -614,7 +615,7 @@ exports.questionsUnansweredRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllUnansweredQuestions' }));
 			}
 		});
 	}
@@ -634,7 +635,7 @@ exports.questionsNewRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllNewQuestions' }));
 			}
 		});
 	}
@@ -653,7 +654,7 @@ exports.questionsAnsweredRoute = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllRecentlyAnsweredQuestions' }));
 			}
 		});
 	}
@@ -674,7 +675,7 @@ exports.questionsByUserRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllQuestionsByUserID' }));
 			}
 		});
 	}
@@ -694,7 +695,7 @@ exports.followQuestionRoute = function(appType, request, response) {
 					}
 				} else {
 					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addFollower' }));
 				}
 			});
 		}
@@ -720,7 +721,7 @@ exports.unfollowQuestionRoute = function(appType, request, response) {
 					}
 				} else {
 					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: removeFollower' }));
 				}
 			});
 		}
@@ -744,7 +745,7 @@ exports.questionStatusRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateStatus' }));
 			}
 		});
 	}
@@ -763,7 +764,7 @@ exports.commentRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getComment' }));
 			}
 		});
 	} else if (request.method === "POST"){
@@ -785,7 +786,7 @@ exports.commentRoute = function(appType, request, response) {
 					}
 				} else {
 					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
 				}
 			});
 		}
@@ -805,7 +806,7 @@ exports.commentRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
 			}
 		});
 
@@ -821,7 +822,7 @@ exports.commentRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: deleteComment' }));
 			}
 		});
 	}
@@ -840,12 +841,26 @@ exports.commentsRoute = function(appType,request,response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllComments' }));
 			}
 
 		});
+	}else if(request.method === "DELETE"){
+		QueryES.deleteComments(request.body.commentList, appType, function(err, result) {
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, comments: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, comments: "No comments deleted" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: deleteComments' }));
+			}
+		})
 	}
-
 }
 
 exports.commentsByUserRoute = function(appType, request, response) {
@@ -861,7 +876,7 @@ exports.commentsByUserRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getAllCommentByUserID' }));
 			}
 		});
 	}
@@ -880,7 +895,7 @@ exports.commentVoteRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateVote' }));
 			}
 		});
 	}
@@ -900,7 +915,7 @@ exports.commentAnsweredRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateIsAnswered' }));
 			}
 		});
 	}
@@ -919,7 +934,7 @@ exports.commentsByQuestionRoute = function(appType, request, response) {
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getCommentByTarget_uuid' }));
 			}
 		});
 	}
@@ -938,7 +953,7 @@ exports.commentCount = function(appType, request, response){
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: getCommentCount' }));
 			}
 		});
 	}
@@ -964,7 +979,7 @@ exports.searchRoute = function(appType, request, response) {
 					}
 				} else {
 					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: searchAll' }));
 				}
 			});
 		});
@@ -978,27 +993,30 @@ exports.searchQuestionsRoute = function(appType, request, response){
 
 	if (request.method === "POST") {
 		//console.log(JSON.stringify(request.body))
-		nlp(queryData.searchQuery, function(query){
-			/*
-			if(query){
-		 		queryData.searchQuery = query + " " + queryData.searchQuery;
-			}*/
-			queryData.uuid = request.session.user.uuid;
-			QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, questions: result }));
+		if(request.session.user){
+
+			nlp(queryData.searchQuery, function(query){
+				/*
+				if(query){
+			 		queryData.searchQuery = query + " " + queryData.searchQuery;
+				}*/
+				queryData.uuid = request.session.user.uuid;
+				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, questions: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: searchQuestionsRoute' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, questions: "No questions found" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: err }));
-				}
+				});
 			});
-		 });
+		}
 	}
 }
 
@@ -1117,6 +1135,28 @@ exports.getUserNotifications = function(appType, request, response){
 			}
 		})
 	}
+}
 
-
+exports.removeCommentNotifier = function(appType, request, response){
+	if (request.method === "DELETE") {
+		var args = {
+			user : request.params.uid,
+			target : request.params.qid,
+			app  : appType
+		}
+		Notification.removeCommentNotifier(args, function(err, result){
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					response.end(JSON.stringify({ errorcode: 0, notification: result }));
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
+	}
 }

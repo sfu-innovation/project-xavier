@@ -1,5 +1,5 @@
 //Comment Model
-var Comment = function(target_uuid, user, objectType, body){
+var Comment = function(target_uuid, user, objectType, body,commentParent){
 	//this.id = uuid;
 	this.target_uuid = target_uuid;
 	this.user = user;
@@ -7,7 +7,7 @@ var Comment = function(target_uuid, user, objectType, body){
 	this.downvote = 0;
 	this.body = body;
 	this.objectType = objectType;
-	this.commentParent = '';
+	this.commentParent = commentParent || "";
 }
 
 module.exports = Comment;

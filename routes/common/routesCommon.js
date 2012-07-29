@@ -517,9 +517,8 @@ exports.questionRoute = function(appType, request, response) {
 				,request.body.question.body
 				,request.body.question.category);
 
-			//console.log(request.body.course)
-			newQuestion.course = request.body.course;
-			newQuestion.week = parseInt(request.body.week);
+			newQuestion.course = request.session.course;
+			newQuestion.week = parseInt(request.session.week);
 
 			QueryES.addQuestion(newQuestion, appType, function(err, result) {
 				if (!err) {

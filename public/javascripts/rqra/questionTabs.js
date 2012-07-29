@@ -6,14 +6,14 @@ var prevSearchType = "latest";
 function formatQuestion(question) {
 	var instructorStyle = "";
 	if (question._source.isInstructor === "true") {
-		instructorStyle = "background: #ffe450;";
+		instructorStyle = "instructorResponseFlag";
 	}
 	
 	return "<div class='question' onclick='gotoQuestionPage(this)'>"
 			+ "<div class='questionId'>" + question._id + "</div>"
 			+ "<div class='questionText'>" + question._source.title + "</div>"
 			+ "<div class='questionData'>"
-				+ "<div style='" + instructorStyle + "'>"
+				+ "<div class='" + instructorStyle + "'>"
 				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
 				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
 				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
@@ -46,7 +46,7 @@ function refreshQuestionListHeader() {
 			if (data && data.errorcode === 0 && data.week.length > 0) {
 				for(var i = 0; i < data.week.length; ++i) {
 					if (data.week[i].week === currentWeek) {
-						sectionTitle.innerHTML = "Week " + currentWeek + " &#8212; " + data.week[i].topic;
+						sectionTitle.innerHTML = "Week " + currentWeek + " <span id='sectionName'>&#8212; " + data.week[i].topic + "</span>";
 					}
 				}	
 			} else {

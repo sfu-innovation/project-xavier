@@ -192,3 +192,24 @@ exports.getUserNotifications = function(request, response){
 exports.deleteComments = function(request, response){
 	routesCommon.commentsRoute(0, request, response);
 }
+
+exports.setSelectedCourse = function(request, response){
+	if (request.method === "POST"){
+		//if not log in, cannot create a question
+		if(request.session && request.session.user){
+
+			request.session.course = request.body.course;
+			request.session.week = request.body.week;
+
+			console.log("Course and week info saved to usr session")
+			console.log("Course: " +request.session.course + ", Week: " + request.session.week)
+
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 0, SessionInfo: request.session }));
+		}
+		else{
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
+		}
+	}
+}

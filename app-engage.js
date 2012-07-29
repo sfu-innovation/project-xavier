@@ -161,6 +161,9 @@ app.get('/article/:id', routesEngage.articleView);
 app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
 
 
+app.get('/404', routesEngage.notFound);
+
+
 
 ///HEDY&CATH ZONE
 

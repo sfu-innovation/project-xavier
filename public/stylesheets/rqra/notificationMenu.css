@@ -1,18 +1,22 @@
 div#notificationMenu {
 	width: 300px;
 	background: white;
+	font-size: 14px;
 }
 
 div#notificationArrow {
-	width: 35px;
-	height: 20px;
+	width: 0;
+	height: 0;
 	position: relative;
-	left: 83%;
-	background: #1b88d0;
+	left: 78%;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #1b88d0;
 }
 
 div.notificationNew, div.notificationRegular, div.notificationInstructor {
 	padding: 5px;
+	cursor: pointer;
 }
 
 div#notificationHeader {

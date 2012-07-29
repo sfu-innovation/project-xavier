@@ -52,7 +52,7 @@ function walk(node, host, cb) {
 		var childNode = node.childNodes[i],
 			tagName = childNode.tagName;
 
-		if (!~notAllowed.indexOf(childNode.tagName)) {
+		if (notAllowed.indexOf(childNode.tagName) !==-1) {
 			node.removeChild(childNode);
 			--i;
 		}

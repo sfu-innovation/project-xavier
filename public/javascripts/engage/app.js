@@ -692,6 +692,7 @@ function loadCourseArticles(engage, week) {
 			engage.getWeekInfoByCourseIdAndWeekNum(id,week,function(data){
 				if (data){
 					if (data.errorcode ===0){
+						console.log(data);
 						var weekbox = renderWeekInfoBox(data.week);
 						$('.weekbox').remove();
 						$('#contents').append(weekbox);
@@ -878,9 +879,35 @@ function renderWeekInfoBox(item){
 	var weekBox =
 		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
 			item.week +
-			'</h4><p>' +
-			(item.topic) +
-			'</p></div></div>'
+			'</h4>';
+	if (!item.owner){
+		if (!item.topic){
+			weekBox += '<p>' +
+				'Instructor has not set up weekly topics yet.' +
+				'</p>';
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += '<p>' +
+					topic_list[0] +
+					'</p>';
+			}
+			else{
+				topic_list.shift();
+				weekBox += '<ul>'
+				$.each(topic_list,function(i,topic){
+					weekBox += '<li>'+ topic+'</li>'
+				})
+				weekBox += '</ul>'
+				console.log(topic_list)
+			}
+		}
+
+	}
+
+
+	weekBox += '</div></div>'
 
 	return weekBox;
 }

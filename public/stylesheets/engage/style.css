@@ -625,6 +625,7 @@ div.post_details {
 	}
 div.innercontents img.avatar{
 	height: 49px;
+	width:49px;
 	position: absolute;
 	margin-left: -5px;
 	margin-top:8px;

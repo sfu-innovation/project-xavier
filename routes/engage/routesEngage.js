@@ -1072,8 +1072,7 @@ exports.preference = function (req, res){
 }
 
 exports.updateComment = function(request,response){
-	console.log('////');
-	console.log(request.body.body);
+
 
 	QueryES.updateComment(request.params.uid, request.body.body, 2, function(err, result) {
 		if (!err) {

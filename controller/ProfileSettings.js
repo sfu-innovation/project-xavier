@@ -9,7 +9,8 @@ var settings = exports.settings = function( req, callback ) {
 		bio = req.session.Profile.bio, 
 		pName = req.session.user.preferedName,
 		img = req.session.Profile.profilePicture,
-		format="";
+		format="",
+		msg="";
 	
 
 		if( req.method === 'POST') {
@@ -56,6 +57,7 @@ var settings = exports.settings = function( req, callback ) {
 				req.session.user.preferedName = req.body.pref_name;
 				req.session.Profile.profilePicture = img;
 				req.session.Profile.bio = req.body.bio;
+				msg = 'Your changes have been saved.'
 				
 			}
 
@@ -76,6 +78,7 @@ var settings = exports.settings = function( req, callback ) {
 		profile.bio = bio;
 		profile.img = img;
 		profile.format = format;
+		profile.msg = msg;
 		callback(profile);
 	
 }

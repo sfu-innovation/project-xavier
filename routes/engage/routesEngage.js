@@ -790,75 +790,99 @@ exports.profile = function (req, res) {
 
 }
 
-
+exports.notFound = function (req,res){
+	res.render('engage/404', function (err, rendered) {
+		res.writeHead(404, {'Content-Type':'text/html'});
+		res.end(rendered);
+	});
+}
 
 exports.articleView = function (req, res) {
-	comment_1 = {
-		msg:"Where is it?",
-		user:userobject,
-		time:"1 hour ago",
-		replies:[]
-	}
-	comment_2 = {
-		msg:"I like this",
-		user:userobject,
-		time:"5 mins ago",
-		replies:[]
-	}
 
 
-	reply_comment_1 = {
-		msg:"No idea",
-		reply_to:comment_1,
-		user:user_1,
-		time:"10 mins ago"
-	}
-	reply_comment_2 = {
-		msg:"States?",
-		reply_to:comment_1,
-		user:user_2,
-		time:"5 mins ago"
-	}
-
-	reply_comment_3 = {
-		msg:"No i dont think so",
-		reply_to:comment_1,
-		user:user_1,
-		time:"5 mins ago"
-	}
-
-	reply_comment_4 = {
-		msg:"Yah me too",
-		reply_to:comment_2,
-		user:user_2,
-		time:"2 mins ago"
-	}
-
-	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
-	comment_2.replies = [reply_comment_4];
+//	comment_1 = {
+//		msg:"Where is it?",
+//		user:userobject,
+//		time:"1 hour ago",
+//		replies:[]
+//	}
+//	comment_2 = {
+//		msg:"I like this",
+//		user:userobject,
+//		time:"5 mins ago",
+//		replies:[]
+//	}
+//
+//
+//	reply_comment_1 = {
+//		msg:"No idea",
+//		reply_to:comment_1,
+//		user:user_1,
+//		time:"10 mins ago"
+//	}
+//	reply_comment_2 = {
+//		msg:"States?",
+//		reply_to:comment_1,
+//		user:user_2,
+//		time:"5 mins ago"
+//	}
+//
+//	reply_comment_3 = {
+//		msg:"No i dont think so",
+//		reply_to:comment_1,
+//		user:user_1,
+//		time:"5 mins ago"
+//	}
+//
+//	reply_comment_4 = {
+//		msg:"Yah me too",
+//		reply_to:comment_2,
+//		user:user_2,
+//		time:"2 mins ago"
+//	}
+//
+//	comment_1.replies = [reply_comment_1, reply_comment_2, reply_comment_3];
+//	comment_2.replies = [reply_comment_4];
 
 
 	if (req.session && req.session.user) {
 
 		Resource.getResourceByUUID(req.params.id, function (error, resource) {
 
-			EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
-				var resource = resources[0];
-				var pickedArticle = articles[req.params.id - 1];
-				res.render("engage/article", { title:"SFU ENGAGE",
-					article:resource,
-					comments:[comment_1, comment_2],
-					user:req.session.user,
-					courses:req.session.courses
-				}, function (err, rendered) {
+			if (error){
+
+				if (req.accepts('html')) {
+					res.redirect("/404");
+
+				}
+				else{
+					res.writeHead(404, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:4, message:error }));
+				}
 
 
-					res.writeHead(200, {'Content-Type':'text/html'});
-					res.end(rendered);
+			}
+			else{
+				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
+					var resource = resources[0];
+//				var pickedArticle = articles[req.params.id - 1];
+					res.render("engage/article", { title:"SFU ENGAGE",
+						article:resource,
+//					comments:[comment_1, comment_2],
+						user:req.session.user,
+						courses:req.session.courses
+					}, function (err, rendered) {
+
+
+						res.writeHead(200, {'Content-Type':'text/html'});
+						res.end(rendered);
+
+					})
 
 				})
+			}
 
-			})
+
 
 
 		})

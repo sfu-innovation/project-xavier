@@ -893,6 +893,8 @@ coreApi._construct = function () {
 				url:'/api/user/notification/' + userID,
 				type:'GET',
 				success:function (data) {
+					console.log(data.notification.length)
+					console.log(data)
 					callback(data);
 				}
 			});

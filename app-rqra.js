@@ -70,6 +70,7 @@ app.post('/api/course/sections', routesCommon.sectionsInCourse); // gets a list 
 // notification
 app.get("/api/user/notification/:uid", routesRqra.getUserNotifications);
 app.put("/api/user/notification", routesRqra.updateUserNotifications);
+app.delete("/api/user/notification/:uid/:qid", routesRqra.removeCommentNotifier);
 // questions
 
 //TODO: need update this into document

@@ -1143,6 +1143,7 @@ exports.removeCommentNotifier = function(appType, request, response){
 			target : request.params.qid,
 			app  : appType
 		}
+		console.log(JSON.stringify(args))
 		Notification.removeCommentNotifier(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });

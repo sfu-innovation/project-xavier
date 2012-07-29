@@ -239,3 +239,7 @@ exports.setSelectedCourse = function(request, response){
 		}
 	}
 }
+
+exports.removeCommentNotifier = function(request, response){
+	routesCommon.removeCommentNotifier(0, request, response)
+}

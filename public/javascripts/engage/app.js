@@ -1140,7 +1140,11 @@ function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent)
 }
 
 function updatePostTime(){
+	 var time_spans = $('.post_time');
+	$.each(time_spans, function(i,item){
+		$(item).html(formartDate($(item).attr('data-time')));
+	})
 
-	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
+//	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
 	setTimeout(updatePostTime,30000);
 }

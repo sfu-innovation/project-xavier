@@ -10,8 +10,8 @@ app.configure(function() {
 	app.set('view engine', 'jade');
 	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
+	app.use(express.limit('5mb'));
 	app.use(express.bodyParser());
-	app.use(express.limit('1mb'));
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
@@ -159,7 +159,7 @@ app.get('/course/:name', routesEngage.courseView);
 app.get('/article/:id', routesEngage.articleView);
 
 app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
-
+app.get('/prof', routesEngage.demoProf); //this will login you with a demo prof user
 
 app.get('/404', routesEngage.notFound);
 

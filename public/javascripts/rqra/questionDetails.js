@@ -54,7 +54,11 @@ function refreshQuestionsList() {
 
 }
 
-function refreshQuestionListHeader(question) {
+function refreshQuestionListHeader() {
+
+}
+
+function refreshQuestionDetailsListHeader(question) {
 	if (question) {
 		var courseUuid = getUuid(question._source.course.toLowerCase());
 		var courseTitle = document.getElementById("courseTitle");
@@ -66,6 +70,8 @@ function refreshQuestionListHeader(question) {
 					+ question._source.course + " " + data.course.title 
 					+ "</span> from";
 			});
+			
+			selectButtonByName(question._source.course);
 		}
 
 		var currentWeek = question._source.week;
@@ -99,8 +105,8 @@ function loadPage(first) {
 	rqra.getQuestionById(questionId, function(data) {
 		if (data && data.errorcode === 0) {
 			question.innerHTML = formatQuestion(data.question);
-			refreshQuestionListHeader(data.question);
-			
+			refreshQuestionDetailsListHeader(data.question);
+
 			// get comments
 			rqra.getCommentsByTargetId(questionId, '-', function(data) {
 				commentList.innerHTML = "";
@@ -158,4 +164,6 @@ function vote(dir, targetDiv) {
 	}
 }
 
-loadPage(true);
+window.onload = function() {
+	loadPage(true);
+}

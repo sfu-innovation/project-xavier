@@ -43,6 +43,17 @@ function selectButton(selectedButton) {
 	});
 }
 
+function selectButtonByName(name) {
+	var menu = document.getElementById("courseList");
+	var buttons = menu.querySelectorAll(".courseButton");
+	NodeList.prototype.forEach = Array.prototype.forEach;
+	buttons.forEach(function(obj) {
+		if (name === obj.querySelector(".courseButtonText").innerHTML) {
+			selectButton(obj);
+		}
+	});
+}
+
 function formatButton(name, uuid) {
 	return "<div class='courseButton' onclick='selectButton(this)'>"
 		+ "<div class='courseButtonSelectorTop'></div>"

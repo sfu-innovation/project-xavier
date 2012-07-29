@@ -52,7 +52,7 @@ function walk(node, host, cb) {
 		var childNode = node.childNodes[i],
 			tagName = childNode.tagName;
 
-		if (~notAllowed.indexOf(childNode.tagName)===-1) {
+		if (notAllowed.indexOf(childNode.tagName) !==-1) {
 			node.removeChild(childNode);
 			--i;
 		}
@@ -80,6 +80,7 @@ function walk(node, host, cb) {
 			node: node
 		}
 	})
+//	console.log(items)
 	if (items.length > 0)
 		cb(items);
 }
@@ -142,7 +143,7 @@ function listTypes(node, host) {
 			}
 		})
 	}
-//	console.log(articles)
+	//console.log(articles)
 	if (candidateNode){
 	image = candidateNode.parentNode.querySelector('IMG');
 	}

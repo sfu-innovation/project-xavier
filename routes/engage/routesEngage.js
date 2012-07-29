@@ -414,9 +414,16 @@ exports.courseWeekInfo = function(req,res){
 	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
 
 		if (result) {
+			var new_result = JSON.parse(JSON.stringify(result));
+			if (req.session.user.type === 0){
+				new_result.owner = false;
+			}
+			else{
+				new_result.owner = true;
+			}
 
 			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:0, week:result }));
+			res.end(JSON.stringify({ errorcode:0, week:new_result }));
 
 		} else {
 			res.writeHead(200, { 'Content-Type':'application/json' });
@@ -707,6 +714,7 @@ exports.index = function (req, res) {
 			title:"SFU ENGAGE",
 			user:req.session.user,
 			courses:req.session.courses,
+			profile:req.session.Profile,
 			currentWeek:currentWeek
 		}, function (err, rendered) {
 
@@ -731,6 +739,7 @@ exports.starred = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/starred", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 			res.writeHead(200, {'Content-Type':'text/html'});
@@ -752,6 +761,7 @@ exports.instructor = function (req, res) {
 	if (req.session && req.session.user) {
 		res.render("engage/instructor", {     title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -774,6 +784,7 @@ exports.profile = function (req, res) {
 		res.render("engage/profile", {     title:"SFU ENGAGE",
 			user:req.session.user,
 			selectedUser:req.params.id,
+			profile:req.session.Profile,
 			courses:req.session.courses}, function (err, rendered) {
 
 
@@ -804,6 +815,8 @@ exports.articleView = function (req, res) {
 
 			if (error){
 
+				console.log(error);
+
 				if (req.accepts('html')) {
 					res.redirect("/404");
 
@@ -821,7 +834,7 @@ exports.articleView = function (req, res) {
 
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
-
+						profile:req.session.Profile,
 						user:req.session.user,
 						courses:req.session.courses
 					}, function (err, rendered) {
@@ -856,6 +869,7 @@ exports.contributions = function (req, res) {
 
 		res.render("engage/contributions", { title:"SFU ENGAGE",
 			user:req.session.user,
+			profile:req.session.Profile,
 			courses:req.session.courses  }, function (err, rendered) {
 
 
@@ -884,6 +898,7 @@ exports.courseView = function (req, res) {
 						user:req.session.user,
 						course:result,
 						currentWeek:currentWeek,
+						profile:req.session.Profile,
 						courses:req.session.courses
 					}, function (err, rendered) {
 
@@ -918,6 +933,9 @@ exports.courseView = function (req, res) {
 
 
 exports.demoPage = function (req, res) {
+	req.session.user = null;
+	req.session.courses = null;
+	req.session.Profile = null;
 //	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"P", userID:"ted", email:"ted@sfu.ca",type:1}
 	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
@@ -963,6 +981,55 @@ exports.demoPage = function (req, res) {
 }
 
 
+exports.demoProf = function (req, res) {
+	req.session.user = null;
+	req.session.courses = null;
+	req.session.Profile = null;
+
+	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"Kirkpatrick", userID:"ted", email:"ted@sfu.ca",type:1}
+//	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
+
+	req.session.user = fake_user_2;
+	UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+		if (err)
+			console.log(err)
+		req.session.Profile = result;
+	});
+	//req.session.Profile = fake_user_2_profile;
+	User.getUserCourses(req.session.user.uuid, function (err, result) {
+
+		var args= {
+			app:1,
+			user:"llt3"
+		}
+
+		notification.createUserNotificationSettings(args, function(err, success){
+			if(success)
+				console.log("created: " + success)
+
+			var courseList = ['11', '12'];
+
+			async.forEach(courseList, function(course, done){
+				var args = {
+					target      : course,
+					app         : 2
+				}
+				notification.setupCourseMaterialNotifiers(args, function(err, callback){
+					if(err)
+						console.log(err)
+					done();
+				})
+			}, function(err){
+				if(err)
+					console.log("Problem adding course materials")
+
+				req.session.courses = result;
+				res.redirect('/');
+			})
+		});
+	});
+}
+
 exports.preference = function (req, res){
 	
 	if (req.session && req.session.user) {
@@ -971,12 +1038,14 @@ exports.preference = function (req, res){
 				res.render("engage/preference", 
 				{
 					title:"SFU ENGAGE",
+					profile:req.session.Profile,
 					user:req.session.user,
 					courses:req.session.courses,
 					avatar: result.img,
 					pref_name: result.pName,
 					bio: result.bio,
-					format: result.format
+					format: result.format,
+					msg: result.msg
 					}, function (err, rendered) {
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);

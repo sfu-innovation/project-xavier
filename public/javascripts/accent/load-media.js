@@ -12,4 +12,21 @@ function playVideo(){
 	console.log("PLAY");
 }
 
+function formatTagTypeOption(index){
+	var tagType = ["Question","Description"];
+	return "<option value='" + index + "'>" + tagType[index] + "</option>";
+}
+
+
+function loadTagType() {
+	var tagType = $("#tagType");
+	
+	for(var i = 0; i <= 1; ++i) {
+		tagType.append(formatTagTypeOption(i));
+	}
+	console.log('tag type');
+	console.log(tagType)
+}
+
 loadMedia($('#mediaUUID').text());
+loadTagType();

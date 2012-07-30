@@ -20,7 +20,13 @@ block content
 			div.innercontents#submitnew
 				div.loading loading... Hedy is working hard in the background to parse the article manually... Show some respect....
 				div.msg
-					div ok.
+					span.delete_btn X
+					div
+
+				div.error
+					span.delete_btn X
+					div
+
 				div.cover
 					div.frontCard
 						form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
@@ -35,7 +41,7 @@ block content
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit
-									input(type="submit", value="add", class="small button")
+									input(type="submit", value="Post", class="small button")
 					div.backCard
 						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
@@ -50,4 +56,4 @@ block content
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit
-									input(type="submit", value="add", class="small button", disabled="disabled")
+									input(type="submit", value="Post", class="small button", disabled="disabled")

@@ -338,6 +338,9 @@ jQuery(document).ready(function ($) {
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
 
+		$('div#submitnew .error span.delete_btn').bind('click',function(){$('div#submitnew .error').fadeOut(500);});
+		$('div#submitnew .msg span.delete_btn').bind('click',function(){$('div#submitnew .msg').fadeOut(500);});
+
 		$('.flip_btn').bind('click',function(){
 			$('div.cover').addClass('hack');
 			$('div.cover').toggleClass('flip');
@@ -354,20 +357,22 @@ jQuery(document).ready(function ($) {
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
+			var course_name = $('#submitnew form option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
-				$('div#submitnew .loading').hide();
+
 						console.log(data);
 				if (data){
 					if (data.errorcode === 0){
 						var new_article = renderArticlePreviewBox(data.resource);
 						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
 					}
 					else{
-
+						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
 					}
 				}
 				else{
-
+					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
 				}
 			});
 			return false;
@@ -1294,4 +1299,29 @@ function updatePostTime(){
 
 //	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
 	setTimeout(updatePostTime,30000);
+}
+
+function displayMsg(msg){
+
+	$('#submitnew .msg div').html(msg);
+	$('#submitnew  .msg').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .msg').fadeOut(500);
+	},3000);
+
+
+}
+
+function displayErrorMsg(err){
+
+
+	$('#submitnew .error div').html(err);
+	$('#submitnew  .error').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .error').fadeOut(500);
+	},5000);
+
+
 }

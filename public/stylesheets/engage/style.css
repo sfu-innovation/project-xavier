@@ -662,7 +662,7 @@ div#submitnew .loading{
 	display: none;
 	height: 360px;
 	position: absolute;
-	z-index: 9000;
+	z-index: 5000;
 	left:0;
 	top:0;
 	width: 100%;
@@ -670,7 +670,9 @@ div#submitnew .loading{
 
 }
 
-div#submitnew .msg{
+div#submitnew .msg,div#submitnew .error{
+
+	padding-top: 20px;
 	display: none;
 	height: 360px;
 	position: absolute;
@@ -680,6 +682,45 @@ div#submitnew .msg{
 	width: 100%;
 	background-color: rgba(250, 250, 250, 1);
 
+}
+
+
+div#submitnew .msg span.delete_btn,div#submitnew .error span.delete_btn{
+	font-family: Lato, sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: #9E9E9E;
+	position: absolute;
+	right:5px;
+	top:5px;
+	background-color: #f3f3f3;
+	border: 1px solid #d9dad5;
+	padding: 1px 3px;
+	cursor: pointer;
+
+	opacity: 0.6;
+	line-height: 13px;
+
+}
+
+
+
+div#submitnew .msg span.delete_btn:hover,div#submitnew .error span.delete_btn:hover{
+	opacity: 1;
+}
+
+
+div#submitnew .msg div span{font-weight: 900; font-size: 15px; padding-left: 5px;}
+
+div#submitnew .msg div, div#submitnew .error div{
+	line-height: 23px;
+	margin: 40px auto;
+	width: 80%;
+	font-size: 15px;
+}
+
+div#submitnew .error div{
+	color:#F14241
 }
 
 div.innercontents .post_time{

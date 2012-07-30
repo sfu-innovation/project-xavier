@@ -21,27 +21,49 @@ function formatTagTypeOption(index){
 
 
 function loadTagTypes() {
-	var tagType = $("#tagType");
+	var tagType = $("#TagType");
 	
 	for(var i = 0; i <= 1; ++i) {
 		tagType.append(formatTagTypeOption(i));
 	}
 }
 
+function formatTagtype(value) {
+	var color = "";
+	if (value === 0)
+		color = "green";
+	else
+		color = "purple";
+	return color;
+
+}
+
+// start and end has to be matching with the UI timeline
+// probabaly adding some offset value
+function formatTimeline(tag){
+	return "<div class='Tag' style='left: " + (tag.start + 40) + "px; width: " + (tag.end  + 60) + "px; background: " + formatTagtype(tag.type) + ";' " + "onclick='return selectedTag(this);' " + "UUID='" + tag.uuid + "'>"			
+}
+
 function loadTags(uuid) {
 	var tagger = $(".Tagger").children(".Timeline");
 	
-
-	console.log('tagger')
-	console.log(tagger);
-	
 	accent.getTagsByMediaFileId(uuid, function(data){
-		console.log('tags:')
-		console.log(data);
-	
+
+		data.tags.forEach(function(tag) {	
+			tagger.append(formatTimeline(tag));
+		});			
 	});
 
 	loadTagTypes();
+}
+
+function selectedTag(tag) {	
+	var tagID = $(tag).attr('uuid');	
+	
+	accent.getTagById(tagID, function(data){
+		alert(JSON.stringify(data.tag));
+	});
+	
 }
 
 loadMedia(mediaID);

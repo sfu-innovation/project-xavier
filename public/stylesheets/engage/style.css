@@ -130,6 +130,13 @@ div#header{
 #header ul#options li:hover:first-child a{
 	border-bottom: 0;
 	}
+	
+	
+#header #banner{
+
+	background-image: url("/images/engage/sfu_brand_banner.png");
+	background-position: cover;
+	}
 /* -----------------------------------------
    mobile view of navigation slider
 ----------------------------------------- */

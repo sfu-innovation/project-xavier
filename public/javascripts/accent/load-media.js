@@ -28,10 +28,20 @@ function loadTagTypes() {
 	}
 }
 
+function formatTagtype(value) {
+	var color = "";
+	if (value === 0)
+		color = "green";
+	else
+		color = "purple";
+	return color;
+
+}
+
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + (tag.start + 40) + "px; width: " + (tag.end  + 60) + "px; background: " + "purple" + ";' " + "onclick='return selectedTag(this);' " + "UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + (tag.start + 40) + "px; width: " + (tag.end  + 60) + "px; background: " + formatTagtype(tag.type) + ";' " + "onclick='return selectedTag(this);' " + "UUID='" + tag.uuid + "'>"			
 }
 
 function loadTags(uuid) {

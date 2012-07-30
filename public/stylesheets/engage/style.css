@@ -1661,3 +1661,13 @@ div.innercontents#user_detail_box h3{
 	margin-left: 50px;
 	
 }
+
+/* -----------------------------------------
+   padding bar for smaller screens
+----------------------------------------- */
+
+#padding-bar{
+	width: 12%;
+	float:left;
+	height: 1500px;
+}

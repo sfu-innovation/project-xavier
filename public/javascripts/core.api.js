@@ -225,7 +225,6 @@ coreApi._construct = function () {
 
 		this.getMediaFiles = function(courses, callback){
 			console.log('API - getMediaFiles');
-			console.log(courses);
 			var body = {};				
 			body.where = courses;
 			$.ajax({

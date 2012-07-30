@@ -810,18 +810,31 @@ exports.instructor = function (req, res) {
 
 exports.profile = function (req, res) {
 
+
 	if (req.session && req.session.user) {
-		res.render("engage/profile", {     title:"SFU ENGAGE",
-			user:req.session.user,
-			selectedUser:req.params.id,
-			profile:req.session.Profile,
-			courses:req.session.courses}, function (err, rendered) {
+		var target_id =req.params.id;
+		UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
+			if (result){
+
+				res.render("engage/profile", {     title:"SFU ENGAGE",
+					user:req.session.user,
+					selectedUser:req.params.id,
+					profile:req.session.Profile,
+					targetProfile:result,
+					courses:req.session.courses}, function (err, rendered) {
 
 
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
+					res.writeHead(200, {'Content-Type':'text/html'});
+					res.end(rendered);
 
+				})
+
+			}
+			else{
+				res.redirect("/404");
+			}
 		})
+
 	}
 	else {
 		res.redirect("/demo");

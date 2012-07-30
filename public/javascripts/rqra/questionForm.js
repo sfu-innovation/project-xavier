@@ -1,3 +1,9 @@
+/*
+	Question Form
+	----------------------------
+	Manages the page where a user asks a question
+*/
+
 var common = new coreApi.Common();
 var rqra = new coreApi.Presenter();
 

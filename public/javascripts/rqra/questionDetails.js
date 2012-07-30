@@ -1,3 +1,10 @@
+/*
+	Question Details
+	----------------------------
+	Manages the content of a page displaying
+	a single question and all of its comments
+*/
+
 var rqra = new coreApi.Presenter();
 
 function refreshQuestionsList() {

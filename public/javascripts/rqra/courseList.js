@@ -1,3 +1,10 @@
+/*
+	Course List
+	----------------------------
+	Responsible for controlling the course list widget
+	which appear across all pages
+*/
+
 var common = new coreApi.Common();
 var rqra = new coreApi.Presenter();
 var redirect = false;

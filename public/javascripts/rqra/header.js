@@ -1,3 +1,10 @@
+/*
+	Header
+	----------------------------
+	Responsible for controlling and updating the header
+	which appears on all pages
+*/
+
 var timeout;
 var menuOpened = false;
 var menu = document.getElementById("notificationList");

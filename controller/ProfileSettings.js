@@ -15,7 +15,12 @@ var settings = exports.settings = function( req, callback ) {
 		if( req.method === 'POST') {
 			var filepath, path;
 
-			console.log(req.files.upload)
+			//console.log(req.body)
+
+			/***
+			 *	Need to find proper way to limit upload size. 
+			 ***/
+		//	console.log(req.files.upload)
 			if(req.files.upload.size > 0) { //upload --> preview
 
 				if(req.files.upload.size < 5242880) {

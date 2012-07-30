@@ -837,6 +837,15 @@ exports.notFound = function (req,res){
 	});
 }
 
+exports.splash = function(req, res) {
+	res.render('/', function  (err, rendered) {
+		title: "SFU ENGAGE"
+	}, function(err, rendered) {
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.end(rendered);
+	})
+}
+
 exports.articleView = function (req, res) {
 
 	if (req.session && req.session.user) {

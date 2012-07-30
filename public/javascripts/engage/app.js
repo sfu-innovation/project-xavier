@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 
 
 	initUI();
-
+//	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
 
 
@@ -1418,3 +1418,13 @@ function displayErrorMsg(err){
 
 
 }
+
+/*
+function paddingforMediumScreen(){
+	var height = document.body.clientHeight;
+	var padding_bar = document.getElementById('padding-bar')
+	alert(height);
+	padding_bar.style.height = height
+	
+}
+*/

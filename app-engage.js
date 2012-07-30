@@ -10,8 +10,20 @@ app.configure(function() {
 	app.set('view engine', 'jade');
 	app.set('view options', { layout: false });
 	app.use(express.cookieParser());
-	app.use(express.limit('5mb'));
-	app.use(express.bodyParser());
+	app.use(express.bodyParser(/*{ //something to think about...
+		onPart: function(part) {
+			var total = 0, derp = this, foo = function(data) {
+				console.log('data'+data)
+				total += data.length;
+				console.log(total)
+				if (total > 5242880) {
+					derp.emit("end");
+					part.removeListener("data", foo);
+				}
+			};
+			part.on("data", foo);
+		}
+	}*/));
 	app.use(express.methodOverride());
 	app.use(express.session({ secret: "keyboard cat",
 			store: express.session.MemoryStore({ reapInterval: 60000 })
@@ -55,7 +67,14 @@ app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses ba
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 //app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
-app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the instructor of a course
+
+app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the week info of a course
+
+app.put('/api/week/:id', routesEngage.updateWeekInfo); // update the id
+
+
+
+
 
 // follower
 //TODO: remove this if not needed

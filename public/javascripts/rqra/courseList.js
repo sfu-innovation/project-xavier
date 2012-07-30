@@ -33,9 +33,9 @@ function setSelected(button, select) {
 }
 
 function clickButton(selectedButton) {
+	QuestionCommon.setCourse(selectedButton.querySelector(".courseButtonText").innerHTML.toLowerCase());
+	QuestionCommon.refreshDefaultHeader();
 	if (redirect) {
-		currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML.toLowerCase();
-		rqra.setSelectedCourse(currentCourse, 0, function(data) { });
 		window.location = "/questions";
 	}
 	selectButton(selectedButton);
@@ -44,42 +44,37 @@ function clickButton(selectedButton) {
 function selectButton(selectedButton) {
 	var menu = document.getElementById("courseList");
 	var buttons = menu.querySelectorAll(".courseButton");
-	NodeList.prototype.forEach = Array.prototype.forEach;
-	buttons.forEach(function(obj) {
-		if (selectedButton === obj) {
-			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
-			currentCourse = currentCourse.toLowerCase();
-			if (currentCourse === "all") currentCourse = "";
-			
-			refreshQuestionListHeader();
-			refreshQuestionsList();
-			
-			setSelected(obj, true);
+	for (var i = 0; i < buttons.length; ++i) {
+		if (selectedButton === buttons[i]) {
+			if (typeof(QuestionList) !== "undefined") {
+				QuestionList.setPage(0);
+			}
+			setSelected(buttons[i], true);
 		} else {
-			setSelected(obj, false);
+			setSelected(buttons[i], false);
 		}
-	});
+	}
 }
 
 function selectButtonByName(name) {
 	var menu = document.getElementById("courseList");
 	var buttons = menu.querySelectorAll(".courseButton");
-	NodeList.prototype.forEach = Array.prototype.forEach;
-	buttons.forEach(function(obj) {
-		if (name === obj.querySelector(".courseButtonText").innerHTML) {
-			setSelected(obj, true);
+	for (var i = 0; i < buttons.length; ++i) {
+		if (name === buttons[i].querySelector(".courseButtonText").innerHTML) {
+			setSelected(buttons[i], true);
 		}	else {
-			setSelected(obj, false);
+			setSelected(buttons[i], false);
 		}
-	});
+	}
 }
 
 function getUuid(courseName) {
 	var menu = document.getElementById("courseList");
-	for (var i = 0; i < menu.children.length; ++i) {
-		var child = menu.children[i];
-		if (courseName.toUpperCase() === child.querySelector(".courseButtonText").innerHTML) {
-			return child.querySelector(".courseButtonId").innerHTML;
+	if (menu) {
+		for (var i = 0; i < menu.children.length; ++i) {
+			if (courseName && courseName.toUpperCase() === menu.children[i].querySelector(".courseButtonText").innerHTML) {
+				return menu.children[i].querySelector(".courseButtonId").innerHTML;
+			}
 		}
 	}
 	return "";

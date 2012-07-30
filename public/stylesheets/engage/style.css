@@ -1,4 +1,20 @@
+@media all and (max-width: 1180px) and (min-width: 891px){
+	#contents{margin-left: 10%}
 
+
+}
+
+@media all and (max-width: 890px) and (min-width: 800px){
+	#contents{margin-left: 12%}
+
+
+}
+
+@media all and (max-width: 879px) and (min-width: 767px){
+	#contents{margin-left: 15%}
+
+
+}
 
 ::-webkit-scrollbar {
 	height: 10px;
@@ -71,6 +87,7 @@ em {
 body{
 	color: #9e9e9e !important;
 	padding-bottom: 20px;
+	overflow-x: hidden;
 }
 
 .row{	
@@ -92,11 +109,6 @@ div#header{
 
 
 
-#header img.logo{
-	margin-bottom: 10px;
-	padding-top:15px;
-	width: 140px;
-}
 
 #header ul#options{
 	list-style: none;
@@ -104,32 +116,59 @@ div#header{
 	float: left;
 	margin-bottom: 10px;
 	margin-top: 11px;
-	margin-left: -40px;
 	padding-top:15px;
+	padding-left: 15px;
 }
 
 #header ul#options li{
 	display: inline-block;
-	padding: 0 15px !important;
+	padding-right: 14px !important;
+	
 	vertical-align: middle;
 	color: #555;
+	text-align: left;
 }
 
 #header ul#options li a{
-	color: #555;
+	color:  rgba(250, 250, 250, 1);
+
 }
 
 #header ul#options li a.active{
-	border-bottom: 1px solid #9e9e9e;
+	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
 
 #header ul#options li:hover a{
-	border-bottom: 1px solid #9e9e9e;
+	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
 
 #header ul#options li:hover:first-child a{
 	border-bottom: 0;
+
+
 	}
+#header #nav-bar{
+	text-align: right;
+}
+#header #banner{
+
+	background-image: url("/images/engage/sfu_brand_banner.png");
+	background-position: cover;
+	width: 100%;
+	}
+#header #banner_logo{
+	padding-right:0;
+}
+#header #banner_logo a{
+	line-height: 60px;
+	}	
+#header #banner_logo img.logo#small_logo{
+	min-width: 70px;
+}
+#header #banner img.logo{
+	vertical-align: middle;
+}	
+
 /* -----------------------------------------
    mobile view of navigation slider
 ----------------------------------------- */
@@ -212,7 +251,10 @@ div#header{
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */
+div#user_options{
 
+	min-width: 320px;
+}
 ul#user_options_list{
 	list-style: none;
 	text-align: right;
@@ -230,7 +272,9 @@ ul#user_options_list li{
 	color: #555;
 
 	}
-	
+ul#user_options_list li#notification {
+	margin: 0;
+}
 ul#user_options_list li#notification div{
 	background-color: transparent;
 }
@@ -245,7 +289,7 @@ ul#user_options_list div.dropdown_btn{
 	-moz-box-shadow: 0 0 2px #9e9e9e;
 	-webkit-box-shadow: 0 0 2px #9e9e9e;
 	box-shadow: 0 0 2px #9e9e9e;
-	padding: 6px 10px;
+	padding: 4px 8px;
 } 	
 
 
@@ -260,17 +304,17 @@ ul#user_options_list li#notification img{
 ul#user_options_list span#notification_number{
 	display: block;
 	position: absolute;
-	background-color: red;
-	-moz-box-shadow: 0 0 2px #9e9e9e;
-	-webkit-box-shadow: 0 0 2px #9e9e9e;
-	box-shadow: 0 0 2px #9e9e9e;
+	background-color: rgba(250, 250, 250, 1);
+	-moz-box-shadow: 1px 1px 2px #9e9e9e;
+	-webkit-box-shadow: 1px 1px 2px #9e9e9e;
+	box-shadow: 1px 1px 2px #9e9e9e;
 	width: 20px;
 	height: 20px;
-	color: white;
+	color: #B5111B;
 	font-weight: bold;
 	text-align: center;
-	margin-left: -6px;
-	margin-top: -20px;
+	margin-left: 30px;
+	margin-top: -22px;
 }
 	
 ul#user_options_list li div.dropdown_list{
@@ -457,12 +501,17 @@ div#contents div.columns:last-child{;
 	border: 1px solid #d9dad5;
 	padding: 1px 3px;
 	cursor: pointer;
-	display: none;
 	opacity: 0.6;
 
 }
 
-.articlebox .delete_btn:after{
+.no-touch .articlebox .delete_btn{
+
+display: none;
+
+}
+
+.no-touch .articlebox .delete_btn:after{
 	content: "DELETE";
 	font-size: 12px;
 	position: absolute;
@@ -476,20 +525,17 @@ div#contents div.columns:last-child{;
 	display: none;
 }
 
-.articlebox .delete_btn:hover{
+.no-touch .articlebox .delete_btn:hover{
 	opacity: 1;
 }
 
-.articlebox .delete_btn:hover:after{
+.no-touch .articlebox .delete_btn:hover:after{
 	display: block;
 }
 
-.articlebox .delete_btn{
-
-}
 
 
-.articlebox:hover .delete_btn{
+.no-touch .articlebox:hover .delete_btn{
 	display: block;
 
 
@@ -714,7 +760,7 @@ div#submitnew .msg span.delete_btn,div#submitnew .error span.delete_btn{
 
 
 
-div#submitnew .msg span.delete_btn:hover,div#submitnew .error span.delete_btn:hover{
+.no-touch div#submitnew .msg span.delete_btn:hover,div#submitnew .error span.delete_btn:hover{
 	opacity: 1;
 }
 
@@ -824,16 +870,17 @@ div.likescomments span.star_btn.unstarred{
 
  }
 
-div.likescomments span.star_btn.unstarred:hover{
+.no-touch div.likescomments span.star_btn.unstarred:hover{
 	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
 
 
 }
+
 div.likescomments span.star_btn.starred{
 	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
-div.likescomments span.star_btn.starred:hover{
+.no-touch div.likescomments span.star_btn.starred:hover{
 	background-image: url("/images/engage/icon/16x16/Star_v1.png");
 }
 
@@ -1178,8 +1225,13 @@ div#article_container .thread li span.edit_btn{
 	right:10px;
 	top:10px;
 	cursor: pointer;
+}
+
+.no-touch div#article_container .thread li span.edit_btn{
 	opacity: 0.5;
+
 	display: none;
+
 }
 
 div#article_container .thread li:hover span.edit_btn{
@@ -1633,4 +1685,14 @@ div.innercontents#user_detail_box h3{
 	display: inline-block;
 	margin-left: 50px;
 	
+}
+
+/* -----------------------------------------
+   padding bar for smaller screens
+----------------------------------------- */
+
+#padding-bar{
+	width: 12%;
+	float:left;
+	height: 1500px;
 }

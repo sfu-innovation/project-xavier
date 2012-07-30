@@ -428,12 +428,28 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 }
 
 
+exports.updateWeekInfo = function(req,res){
+	var id = req.params.id;
+	var args = req.body;
+	Week.updateWeek(id,args,function(err,data){
+		if(data){
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, week:data}));
+		}
+		else{
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:err }));
+		}
+	})
+
+}
+
 exports.courseWeekInfo = function(req,res){
 	var id = req.params.id;
 	var weekNum = req.params.week;
 
 
-	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
+	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
@@ -813,27 +829,39 @@ exports.profile = function (req, res) {
 
 	if (req.session && req.session.user) {
 		var target_id =req.params.id;
-		UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
-			if (result){
+		User.selectUser({uuid:target_id},function(err,user){
 
-				res.render("engage/profile", {     title:"SFU ENGAGE",
-					user:req.session.user,
-					selectedUser:req.params.id,
-					profile:req.session.Profile,
-					targetProfile:result,
-					courses:req.session.courses}, function (err, rendered) {
+			if (user){
+				UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
+					if (result){
+						res.render("engage/profile", {     title:"SFU ENGAGE",
+							user:req.session.user,
+							selectedUser:req.params.id,
+							profile:req.session.Profile,
+							targetProfile:result,
+							targetUser:user,
+							courses:req.session.courses}, function (err, rendered) {
 
 
-					res.writeHead(200, {'Content-Type':'text/html'});
-					res.end(rendered);
+							res.writeHead(200, {'Content-Type':'text/html'});
+							res.end(rendered);
 
+						})
+
+					}
+					else{
+						res.redirect("/404");
+					}
 				})
 
 			}
+
 			else{
-				res.redirect("/404");
+				res.redirect('/404');
 			}
-		})
+
+		});
+
 
 	}
 	else {
@@ -848,6 +876,15 @@ exports.notFound = function (req,res){
 		res.writeHead(404, {'Content-Type':'text/html'});
 		res.end(rendered);
 	});
+}
+
+exports.splash = function(req, res) {
+	res.render('/', function  (err, rendered) {
+		title: "SFU ENGAGE"
+	}, function(err, rendered) {
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.end(rendered);
+	})
 }
 
 exports.articleView = function (req, res) {

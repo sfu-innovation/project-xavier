@@ -126,5 +126,6 @@ function vote(dir, targetDiv) {
 
 window.onload = function() {
 	redirect = true;
+	displayCourseList();
 	loadPage(true);
 }

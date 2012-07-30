@@ -95,6 +95,7 @@ function gotoQuestionPage(clicked) {
 
 window.onload = function() {
 	// displays asked questions on page load
+	displayCourseList();
 	displayQuestions("latest", 0);
 	refreshQuestionListHeader();
 }

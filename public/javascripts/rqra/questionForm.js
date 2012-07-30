@@ -65,4 +65,7 @@ function PostQuestion() {
 	});
 }
 
-LoadCourseBox();
+window.onload = function() {
+	displayCourseList();
+	LoadCourseBox();
+}

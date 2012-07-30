@@ -1,5 +1,9 @@
-var rqra = new coreApi.Presenter();
-var common = new coreApi.Common();
+/*
+	Question List
+	----------------------------
+	Manages the page that lists all of the questions
+*/
+
 var prevSearchQuery = "";
 var prevSearchType = "latest";
 
@@ -91,6 +95,7 @@ function gotoQuestionPage(clicked) {
 
 window.onload = function() {
 	// displays asked questions on page load
+	displayCourseList();
 	displayQuestions("latest", 0);
 	refreshQuestionListHeader();
 }

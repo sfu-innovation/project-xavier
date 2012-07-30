@@ -1,5 +1,10 @@
-var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
+/*
+	Course List
+	----------------------------
+	Responsible for controlling the course list widget
+	which appear across all pages
+*/
+
 var redirect = false;
 
 function setSelected(button, select) {
@@ -93,5 +98,3 @@ function displayCourseList() {
 		}
 	});
 }
-
-displayCourseList();

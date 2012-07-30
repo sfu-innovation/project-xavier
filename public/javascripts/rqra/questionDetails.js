@@ -1,4 +1,9 @@
-var rqra = new coreApi.Presenter();
+/*
+	Question Details
+	----------------------------
+	Manages the content of a page displaying
+	a single question and all of its comments
+*/
 
 function refreshQuestionsList() {
 
@@ -121,5 +126,6 @@ function vote(dir, targetDiv) {
 
 window.onload = function() {
 	redirect = true;
+	displayCourseList();
 	loadPage(true);
 }

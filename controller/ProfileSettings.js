@@ -12,21 +12,34 @@ var settings = exports.settings = function( req, callback ) {
 		format="",
 		msg="";
 	
-
 		if( req.method === 'POST') {
 			var filepath, path;
 
+			console.log(req.files.upload)
 			if(req.files.upload.size > 0) { //upload --> preview
-				format = req.files.upload.type.split('/')[1];
 
-				path = req.files.upload.path;
-				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+				if(req.files.upload.size < 5242880) {
+					var upload = req.files.upload.type.split('/'),
+						type = upload[0];
+					if (type === 'image'){
+						format = upload[1];
+						console.log('upload format: '+format)
 
-				img = '/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+						path = req.files.upload.path;
+						filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
 
+						img = '/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+					} else {
+						msg = "Error: Profile picture must be an image file."
+					}
+				} else {
+					msg = "Error: Profile picture must be less than 5MB in size."
 
+				
+				}
 			} else if (req.body.helper === 'del') { //delete --> preview
-				format = 'png'
+				format = 'png';
+				console.log('delete format: '+format)
 
 				path = './public/images/SFUEngage_profile.png';
 				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
@@ -34,6 +47,7 @@ var settings = exports.settings = function( req, callback ) {
 				img = '/images/SFUEngage_profile.png';
 			
 			} else { //save
+				console.log('save format: '+format)
 				if(req.body.helper !== ''){ //has format, otherwise keep current img
 					var name = req.session.user.uuid+'.'+req.body.helper;
 					path = './public/images/avatars/tmp/'+name;

@@ -7,7 +7,7 @@ function uploadTag(tag){
 	//var tagTitle = $(tagNode).children("input#TagTitle");
 	//var tagDescription = $(tagNode).children("textarea#TagDescription");
 	var tagTitle = document.getElementById("TagTitle").value;
-	var tagTarget = $('#mediaUUID').text();
+	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 	var tagDescription = document.getElementById("TagDescription").value;
 
 	var tag = {				

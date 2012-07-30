@@ -1,6 +1,6 @@
 var accent = new coreApi.Accent();
 
-var mediaID = $('#mediaUUID').text();
+var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 
 function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
@@ -26,11 +26,21 @@ function loadTagTypes() {
 	for(var i = 0; i <= 1; ++i) {
 		tagType.append(formatTagTypeOption(i));
 	}
-	console.log('tag type');
-	console.log(tagType)
 }
 
 function loadTags(uuid) {
+	var tagger = $(".Tagger").children(".Timeline");
+	
+
+	console.log('tagger')
+	console.log(tagger);
+	
+	accent.getTagsByMediaFileId(uuid, function(data){
+		console.log('tags:')
+		console.log(data);
+	
+	});
+
 	loadTagTypes();
 }
 

@@ -46,7 +46,9 @@ function selectButton(selectedButton) {
 	var buttons = menu.querySelectorAll(".courseButton");
 	for (var i = 0; i < buttons.length; ++i) {
 		if (selectedButton === buttons[i]) {
-			refreshQuestionsList();
+			if (typeof(QuestionList) !== "undefined") {
+				QuestionList.setPage(0);
+			}
 			setSelected(buttons[i], true);
 		} else {
 			setSelected(buttons[i], false);

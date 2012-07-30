@@ -368,10 +368,13 @@ jQuery(document).ready(function ($) {
 			var result = "";
 			$.each(topics, function(i,topic){
 				console.log(topic);
-				 result += '#' + $(topic).val();
+				if($(topic).val()){
+					result += '#' + $(topic).val();
+
+				}
 			})
 			var id = $('#week-info').attr('data-week-id');
-			if(id){
+			if(id && result){
 				engage.updateWeekInfo(id,result,function(data){
 
 					if (data && data.errorcode === 0){
@@ -382,6 +385,9 @@ jQuery(document).ready(function ($) {
 					};
 				})
 
+			}
+			else{
+				alert('failed!');
 			}
 
 		})

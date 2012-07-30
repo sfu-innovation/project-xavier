@@ -431,7 +431,6 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 exports.updateWeekInfo = function(req,res){
 	var id = req.params.id;
 	var args = req.body;
-	console.log(args);
 	Week.updateWeek(id,args,function(err,data){
 		if(data){
 			res.writeHead(200, { 'Content-Type':'application/json' });

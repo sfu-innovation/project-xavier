@@ -5,8 +5,6 @@
 	which appear across all pages
 */
 
-var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
 var redirect = false;
 
 function setSelected(button, select) {

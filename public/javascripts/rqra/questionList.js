@@ -4,8 +4,6 @@
 	Manages the page that lists all of the questions
 */
 
-var rqra = new coreApi.Presenter();
-var common = new coreApi.Common();
 var prevSearchQuery = "";
 var prevSearchType = "latest";
 

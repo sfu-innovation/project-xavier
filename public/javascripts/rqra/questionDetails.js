@@ -5,8 +5,6 @@
 	a single question and all of its comments
 */
 
-var rqra = new coreApi.Presenter();
-
 function refreshQuestionsList() {
 
 }

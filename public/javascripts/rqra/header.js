@@ -8,7 +8,6 @@
 var timeout;
 var menuOpened = false;
 var menu = document.getElementById("notificationList");
-var rqra = new coreApi.Presenter();
 
 // controls the default text in the ask a question box
 $(document).ready(function() {

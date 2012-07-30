@@ -428,6 +428,22 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 }
 
 
+exports.updateWeekInfo = function(req,res){
+	var id = req.params.id;
+	var args = req.body;
+	Week.updateWeek(id,args,function(err,data){
+		if(data){
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, week:data}));
+		}
+		else{
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:err }));
+		}
+	})
+
+}
+
 exports.courseWeekInfo = function(req,res){
 	var id = req.params.id;
 	var weekNum = req.params.week;

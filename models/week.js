@@ -38,6 +38,26 @@ exports.selectWeek = function(args, callback){
 		});
 }
 
+exports.selectWeekAndCreateOneIfNotFind = function(args, callback){
+	Week.find({where: args}).success(function(week) {
+		if(week){
+			callback(null, week);
+		}
+		else{
+			args.uuid = UUID.generate();
+			Week.create(args).error(function(error){
+				callback(error, null);
+			}).success(function(){
+					callback(null, week);
+				})
+		}
+	}).error(function(error) {
+			callback(error, null);
+			console.log("Couldn't find week " + error);
+		});
+}
+
+
 exports.findAllWeeks = function(args, callback){
 	Week.findAll({where: args}).success(function(week) {
 		callback(null, week);
@@ -50,7 +70,7 @@ exports.findAllWeeks = function(args, callback){
 
 exports.updateWeek = function(uuid, args, callback){
 	Week.find({where: {uuid: uuid}}).success(function(week) {
-		tag.updateAttributes(args).success(function(updatedWeek) {
+		week.updateAttributes(args).success(function(updatedWeek) {
 			callback(null, updatedWeek);
 		});
 	}).error(function(error) {
@@ -58,3 +78,4 @@ exports.updateWeek = function(uuid, args, callback){
 			console.log("Couldn't find week " + error);
 		});
 }
+

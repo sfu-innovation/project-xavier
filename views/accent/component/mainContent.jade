@@ -32,14 +32,14 @@ div#Main
 		div.TagWindow
 			div
 				label Title:
-				input.Title(type="text", placeholder="My Great Title")
+				input#TagTitle(type="text", placeholder="My Great Title")
 			div
 				label Tag Type:
 			div
 				label Description:
-				textarea.Description
+				textarea#TagDescription
 			div
-				input(type="submit", value="Done", onclick="return uploadTag();")
+				input(type="submit", value="Done", onclick="return uploadTag(this);")
 					
 script(type="text/javascript", src="../javascripts/accent/load-media.js")
 script(type="text/javascript", src="../javascripts/accent/uploadTag.js")

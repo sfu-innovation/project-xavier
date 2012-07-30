@@ -67,7 +67,14 @@ app.post('/api/courses/', routesCommon.courseQuery); // get a list of courses ba
 app.get('/api/course/:id/instructor', routesCommon.courseInstructor); // get the instructor of a course
 //app.get('/api/course/:id/resources', routesCommon.courseResources); // get the list of course resources
 
-app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the instructor of a course
+
+app.get('/api/course/:id/week/:week', routesEngage.courseWeekInfo); // get the week info of a course
+
+app.put('/api/week/:id', routesEngage.updateWeekInfo); // update the id
+
+
+
+
 
 // follower
 //TODO: remove this if not needed

@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 
 
 	initUI();
-
+//	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
 
 
@@ -363,15 +363,32 @@ jQuery(document).ready(function ($) {
 
 
 		$('#week-info .save_btn').live('click',function(){
-			alert('!');
 			var self = $(this);
 			var topics = $('.topic_input input');
 			var result = "";
 			$.each(topics, function(i,topic){
 				console.log(topic);
-				 result += '#' + $(topic).val();
+				if($(topic).val()){
+					result += '#' + $(topic).val();
+
+				}
 			})
-			alert(result);
+			var id = $('#week-info').attr('data-week-id');
+			if(id && result){
+				engage.updateWeekInfo(id,result,function(data){
+
+					if (data && data.errorcode === 0){
+
+						alert('saved!');
+					}
+					else{alert('failed!')
+					};
+				})
+
+			}
+			else{
+				alert('failed!');
+			}
 
 		})
 
@@ -1047,7 +1064,7 @@ function renderTopicInput(topic){
 
 function renderWeekInfoBox(item){
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
+		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
 			item.week +
 			'</h4>';
 	if (!item.owner){
@@ -1401,3 +1418,13 @@ function displayErrorMsg(err){
 
 
 }
+
+/*
+function paddingforMediumScreen(){
+	var height = document.body.clientHeight;
+	var padding_bar = document.getElementById('padding-bar')
+	alert(height);
+	padding_bar.style.height = height
+	
+}
+*/

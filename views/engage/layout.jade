@@ -158,10 +158,13 @@ html
 										a(href="/logout") Logout
 
 			div.row.clearfix.hide-for-small#banner
-				div.three.columns#banner_logo
+				div.three.columns#banner_logo.hide-for-medium
 					a(href="/")
 						img.logo(href="/", src="/images/engage/sfu_logo_white.png")
-				div.four.columns#nav-bar
+				div.one.columns#banner_logo.show-for-medium
+					a(href="/")
+						img.logo#small_logo(href="/", src="/images/engage/sfu_logo_white_small.png")
+				div.five.columns#nav-bar
 					ul#options
 						li
 							a#all_btn(href="/") All Resources
@@ -237,5 +240,7 @@ html
 												span.username Ted 
 												| liked your article in 
 												span.coursename BUS 354					
+		
+		
 		block content
 

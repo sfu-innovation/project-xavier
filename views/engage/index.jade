@@ -18,7 +18,8 @@ block content
 		div.three.columns#sharebox.hide-for-small
 
 			div.innercontents#submitnew
-				div.loading loading... Hedy is working hard in the background to parse the article manually... Show some respect....
+				div.loading
+					span loading...
 				div.msg
 					span.delete_btn X
 					div
@@ -46,10 +47,11 @@ block content
 						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
 								a.flip_btn  share a resource!
-							div(style="display:inline-block; width:100%")
+							div
 								input(name="article_title",type="text", id="article_title", placeholder="Title", disabled="disabled")
-								div
-									a.button.small.loadFile +
+								div.browsebox
+									input(type="file", value="upload")
+									div#upload_file +
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")
 
 							div#sumbitrow

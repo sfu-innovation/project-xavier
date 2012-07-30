@@ -1,3 +1,5 @@
+
+
 ::-webkit-scrollbar {
 	height: 16px;
 	overflow: visible;
@@ -660,6 +662,8 @@ div.post_details p a{
 
 div#submitnew .loading{
 	display: none;
+	text-align: center;
+	padding-top: 100px;
 	height: 360px;
 	position: absolute;
 	z-index: 5000;

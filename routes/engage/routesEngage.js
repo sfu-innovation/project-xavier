@@ -830,12 +830,11 @@ exports.profile = function (req, res) {
 
 	if (req.session && req.session.user) {
 		var target_id =req.params.id;
-		User.selectedUser({uuid:target_id},function(err,user){
+		User.selectUser({uuid:target_id},function(err,user){
 
 			if (user){
 				UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
 					if (result){
-
 						res.render("engage/profile", {     title:"SFU ENGAGE",
 							user:req.session.user,
 							selectedUser:req.params.id,
@@ -878,6 +877,15 @@ exports.notFound = function (req,res){
 		res.writeHead(404, {'Content-Type':'text/html'});
 		res.end(rendered);
 	});
+}
+
+exports.splash = function(req, res) {
+	res.render('/', function  (err, rendered) {
+		title: "SFU ENGAGE"
+	}, function(err, rendered) {
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.end(rendered);
+	})
 }
 
 exports.articleView = function (req, res) {

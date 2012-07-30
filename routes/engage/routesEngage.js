@@ -813,27 +813,40 @@ exports.profile = function (req, res) {
 
 	if (req.session && req.session.user) {
 		var target_id =req.params.id;
-		UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
-			if (result){
+		User.selectedUser({uuid:target_id},function(err,user){
 
-				res.render("engage/profile", {     title:"SFU ENGAGE",
-					user:req.session.user,
-					selectedUser:req.params.id,
-					profile:req.session.Profile,
-					targetProfile:result,
-					courses:req.session.courses}, function (err, rendered) {
+			if (user){
+				UserProfile.getUserProfileWithOutCreatingOne(target_id,function(err,result){
+					if (result){
+
+						res.render("engage/profile", {     title:"SFU ENGAGE",
+							user:req.session.user,
+							selectedUser:req.params.id,
+							profile:req.session.Profile,
+							targetProfile:result,
+							targetUser:user,
+							courses:req.session.courses}, function (err, rendered) {
 
 
-					res.writeHead(200, {'Content-Type':'text/html'});
-					res.end(rendered);
+							res.writeHead(200, {'Content-Type':'text/html'});
+							res.end(rendered);
 
+						})
+
+					}
+					else{
+						res.redirect("/404");
+					}
 				})
 
 			}
+
 			else{
-				res.redirect("/404");
+				res.redirect('/404');
 			}
-		})
+
+		});
+
 
 	}
 	else {

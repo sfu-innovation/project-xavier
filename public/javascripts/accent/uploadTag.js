@@ -1,17 +1,42 @@
 var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
+//var rqra = new coreApi.Presenter();
+var accent = new coreApi.Accent();
 
 function uploadTag(tag){
 	var tagNode = $(tag).parent().parent().children("div");
 	//var tagTitle = $(tagNode).children("input#TagTitle");
 	//var tagDescription = $(tagNode).children("textarea#TagDescription");
-	var tagTitle = document.getElementById("TagTitle");
-	var tagDescription = document.getElementById("TagDescription");
+	var tagTitle = document.getElementById("TagTitle").value;
+	var tagTarget = $('#mediaUUID').text();
+	var tagDescription = document.getElementById("TagDescription").value;
 
-	console.log('upload tag now!');
-	console.log(tagNode);
-	console.log(tagTitle);
-	console.log(tagDescription);
+	var tag = {				
+		user:"",
+		start:0,
+		end:0,			
+		type:1,
+		target:"",
+		title:"",
+		description:"",
+		question:"",
+		important:false,
+		interest:false,
+		examable:false,
+		reviewlater:false,
+		shared:false
+	};
+
+	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
+	tag.user = sessionUser;
+	tag.target = tagTarget;
+	tag.title = tagTitle;
+	tag.description = tagDescription;
+
+	
+	accent.createTag(tag,function(data){
+		// put tag timelines dynamically
+		console.log(data);
+	});	
 }
 
 

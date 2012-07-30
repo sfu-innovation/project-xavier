@@ -65,9 +65,10 @@ app.put("/api/question/:uid/unfollow", routesEngage.unfollowQuestion); // a foll
 
 // Resource
 
+//comment
 app.post('/api/comment',routesEngage.createComment);
 app.put('/api/comment/:uid',routesEngage.updateComment);
-
+app.post('/api/comment/:id/like',routesEngage.likeComment);
 
 //resource listings
 

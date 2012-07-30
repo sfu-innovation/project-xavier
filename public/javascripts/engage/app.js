@@ -48,7 +48,27 @@ jQuery(document).ready(function ($) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
 
-		$('.edit_btn').live('click',function(){
+
+		$('#comments li .like_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var id = list.attr('data-parent-uuid');
+			engage.likeCommentById(id,function(data){
+				if (data && data.errorcode === 0){
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+					self.addClass('dislike_btn');
+					self.removeClass('like_btn');
+
+
+				}
+			})
+
+		})
+
+
+
+		$('#comments li .edit_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -59,7 +79,7 @@ jQuery(document).ready(function ($) {
 		})
 
 
-		$('.cancel_btn').live('click',function(){
+		$('#comments li .cancel_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -69,7 +89,7 @@ jQuery(document).ready(function ($) {
 			control.slideUp('slow');
 		})
 
-		$('.delete_btn').live('click',function(){
+		$('#comments li .delete_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -93,7 +113,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('.save_btn').live('click',function(){
+		$('#comments li .save_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -606,6 +626,7 @@ function renderBox(item,type){
 		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
 		+ '<p>' + item.body
 		+ '</p>';
+
 	if (item.owner){
 
 		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
@@ -626,8 +647,8 @@ function renderBox(item,type){
 	}
 
 
-	html	+= ' <span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
-		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
+	html	+= ' <span class="like_reply"><span class="like_btn">Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</span><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
 		+ '</li>';
 

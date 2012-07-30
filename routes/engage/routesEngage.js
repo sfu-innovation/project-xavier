@@ -24,6 +24,27 @@ exports.login = function (request, response) {
 }
 
 
+exports.likeComment = function(req,res){
+	var commentID = req.params.id;
+	if (req.session && req.session.user) {
+		QueryES.updateVote(commentID, 0, 2, function(err,data){
+			if (!err){
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 0, result: data }));
+			}
+			else{
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: voteComment' }));
+			}
+		})
+	}
+	else {
+		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	}
+
+}
+
 exports.createComment = function (req,res){
 
 	if(req.session && req.session.user){

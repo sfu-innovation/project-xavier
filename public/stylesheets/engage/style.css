@@ -1192,8 +1192,16 @@ div#article_container #comments span{
 	font-style: italic;
 }
 
+div#article_container #comments span.like_btn, div#article_container #comments span.dislike_btn{
+
+	font-style: normal;
+	cursor: pointer;
+}
+
+
 div#article_container #comments span.reply_to{
 	margin-left: 10px;
+
 }
 
 div#article_container #comments span.like_reply{

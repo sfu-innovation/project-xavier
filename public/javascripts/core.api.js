@@ -556,6 +556,20 @@ coreApi._construct = function () {
 		}
 
 
+		this.likeCommentById = function(id, callback){
+			console.log("API - likeCommentById");
+			$.ajax({
+
+				url:'/api/comment/'+id+'/like',
+				type:'POST',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
+
 
 
 

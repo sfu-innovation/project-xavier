@@ -14,9 +14,6 @@ div#header
 				div#notificationArrow
 				div#notificationMenu
 					div#notificationHeader
-			
-script(type="text/javascript", src="../javascripts/rqra/header.js")
 
 script(type="text/javascript")
-	notificationUser = '#{user.uuid}';
-	updateNotificationList(notificationUser);
+	initializeHeader('#{user.uuid}');

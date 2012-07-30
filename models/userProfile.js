@@ -21,6 +21,20 @@ var UserProfile = exports.UserProfile = db.define('UserProfile', {
 	lastWatchedTag: {type: Sequelize.STRING}
 });
 
+exports.getUserProfileWithOutCreatingOne = function(userUUID, callback){
+	UserProfile.find({where: {user:userUUID}}).success(function(profile){
+		if(profile){
+			callback(null, profile);
+		}
+		else{
+			callback("cannot find such a profile",null);
+		}
+
+	}).error(function(error){
+			callback(error, null);
+		})
+}
+
 exports.getUserProfile = function(userUUID, callback){	
 	UserProfile.find({where: {user:userUUID}}).success(function(profile){
 		if(profile){

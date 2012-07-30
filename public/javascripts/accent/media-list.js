@@ -2,21 +2,30 @@ var accent = new coreApi.Accent();
 var common = new coreApi.Common();
 
 function getMedia(courseUUID, all){
-
-	// If the all button was clicked, build up an array of course uuids
-	// to feed to getMedia
-	if(courseUUID === 'all'){
-		var courseUUIDS = [];
-		var courses = $('#Courses').children();
-		for(var i = 0; i < courses.length; ++i){
-			var uuid = courses[i].querySelector(".UUID");
-			if(uuid){
-				courseUUIDS.push(uuid.innerHTML);
+	
+	// Only load media files if on the main page
+	if($('#media-list')){
+		//alert("UUID " + courseUUID);
+		// If the all button was clicked, build up an array of course uuids
+		// to feed to getMedia
+		if(typeof courseUUID === 'string' && courseUUID.toLowerCase() === 'all'){
+			var courseUUIDS = [];
+			var courses = $('#Courses').children();
+			for(var i = 0; i < courses.length; ++i){
+				var uuid = courses[i].querySelector(".UUID");
+				if(uuid){
+					courseUUIDS.push(uuid.innerHTML.replace(/\t/g, ''));
+				}
 			}
+			retrieveMedia(courseUUIDS, true);
 		}
-		getMedia(courseUUIDS, true);
+		else{
+			retrieveMedia(courseUUID, false);
+		}
 	}
+}
 
+var retrieveMedia = function(courseUUID, all){
 	accent.getMediaFiles(courseUUID, function(response){
 		$('#media-list').empty();
 		var media = response.media;
@@ -53,4 +62,4 @@ function getMedia(courseUUID, all){
 	})
 }
 
-getMedia();
+getMedia($('.Selected').text());

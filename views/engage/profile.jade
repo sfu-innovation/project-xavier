@@ -1,5 +1,13 @@
 extends layout
 
 block content
-    div.row.clearfix#contents
-    div.row#hidden-info(style="display:none;", data-user-id="#{selectedUser}")
+	div.row#hidden-info(style="display:none;", data-user-id="#{selectedUser}")
+	div.row.clearfix#contents
+		div.three.columns#sharebox.hide-for-small
+			div.innercontents#user_detail_box
+				- if (profile && profile.profilePicture)
+					img.avatar(src="#{profile.profilePicture}")
+				- else
+					img.avatar(src="/images/engage/default_profile.png")
+				h3 Catherine Tan
+				

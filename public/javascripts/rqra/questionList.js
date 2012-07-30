@@ -23,13 +23,13 @@ function displayQuestions(searchType, page) {
 	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, QuestionCommon.week, page, function (data) {
 		questionList.innerHTML = "";
 		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
-			displayTotal(data.questions.total);
+			QuestionCommon.setQuestionCounter(data.questions.total, "Questions", "for this Week");
 			displayPageNumbers(data.questions.total);
 			for (var i = 0; i < data.questions.hits.length; ++i) {
 				questionList.innerHTML += ElementFactory.createQuestionItem(data.questions.hits[i]);
 			}
 		} else {
-			displayTotal(0);
+			QuestionCommon.setQuestionCounter(0, "Questions", "for this Week");
 			displayPageNumbers(0);
 			questionList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 		}
@@ -48,11 +48,6 @@ setInterval(updateSearch, 500);
 
 function changePage(page) {
 	displayQuestions(prevSearchType, page);
-}
-
-function displayTotal(total) {
-	var questionCount = document.getElementById("questionCountNumber");
-	questionCount.innerHTML = total;
 }
 
 function displayPageNumbers(total) {

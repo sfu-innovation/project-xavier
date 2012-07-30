@@ -170,19 +170,35 @@
 		} ,
 		{
 			"uuid":"11",
-			"title":"Graphic Design",
+			"title":"Special Topics in IAT(Science)",
 			"section":"D100",
 			"subject":"IAT",
-			"number":102,
+			"number":381,
 			"instructor":"bernie"
 		},
 		{
 			"uuid":"12",
+			"title":"Honors Research Project",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":498,
+			"instructor":"ted"
+		},
+		{
+			"uuid":"13",
+			"title":"Special Topics Cmpt. Science",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":318,
+			"instructor":"ted"
+		},
+		{
+			"uuid":"14",
 			"title":"Bussiness Planing",
 			"section":"D100",
 			"subject":"BUS",
-			"number":354,
-			"instructor":"ted"
+			"number":394,
+			"instructor":"bernie"
 		},
 		{
 			"uuid":"37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
@@ -209,6 +225,14 @@
 		{
 			"course":"12",
 			"user":"ted"
+		},
+		{
+			"course":"13",
+			"user":"ted"
+		},
+		{
+			"course":"14",
+			"user":"bernie"
 		},
 		{
 			"course":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
@@ -297,6 +321,13 @@
 		} ,
 		{
 			"course":"12",
+			"user":"llt3"
+		},		{
+			"course":"13",
+			"user":"llt3"
+		} ,
+		{
+			"course":"14",
 			"user":"llt3"
 		}
 	],
@@ -1073,7 +1104,9 @@
 			"uuid":"2001",
 			"app" : 2,
 			"course": 12,
-			"week": 1
+			"week": 1,
+			"topic":"#topic1#topic2#topic3"
+
 		},
 		{
 			"uuid":"2002",

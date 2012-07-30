@@ -1,5 +1,14 @@
 extends layout
 
 block content
-    div.row.clearfix#contents
-    div.row#hidden-info(style="display:none;", data-user-id="#{selectedUser}")
+	div.row#hidden-info(style="display:none;", data-user-id="#{selectedUser}")
+	div.row.clearfix#contents
+		div.three.columns#sharebox.hide-for-small
+			div.innercontents#user_detail_box
+				- if (targetProfile.profilePicture)
+					img.avatar(src="#{targetProfile.profilePicture}")
+				- else
+					img.avatar(src="/images/engage/default_profile.png")
+				h3 #{targetUser.firstName}
+				p #{targetUser.email}
+				p #{targetProfile.bio}

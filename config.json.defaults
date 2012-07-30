@@ -36,7 +36,7 @@
 		 "user": "sfu.mobile.innovation@gmail.com",
 		 "password": "",
 		 "host": "smtp.gmail.com",
-		 "ssl": true"",
+		 "ssl": true,
 		 "from": "Administrator"
 	},
 	"dictionaryDB":{

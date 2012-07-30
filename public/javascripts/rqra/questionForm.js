@@ -4,6 +4,8 @@
 	Manages the page where a user asks a question
 */
 
+function QuestionForm() { }
+
 function LoadCourseBox() {
 	var courseBox = document.getElementById("courseBox");
 	

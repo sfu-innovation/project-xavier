@@ -164,7 +164,7 @@ ElementFactory.createNotificationItem = function(notification) {
 		
 		// check that user object is valid and if the user is an instructor
 		var user = { firstName: "Jane", lastName: "Doe" };
-		if (notification.user && question.user.firstName && question.user.lastName) {
+		if (notification.user && notification.user.firstName && notification.user.lastName) {
 			user = notification.user;
 			if (user.type === 1) {
 				notificationType = "notificationInstructor";

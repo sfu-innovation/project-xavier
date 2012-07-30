@@ -350,12 +350,12 @@ jQuery(document).ready(function ($) {
 
 		$('#submitnew form').bind('submit',function(){
 
-
+			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
 			engage.shareResource({course:course,description:description,url:url},function(data){
-
+				$('div#submitnew .loading').hide();
 						console.log(data);
 				if (data){
 					if (data.errorcode === 0){

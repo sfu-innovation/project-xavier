@@ -658,12 +658,27 @@ div.post_details p a{
 	padding-left: 2px;
 	}
 
-div.contents .loading{
+div#submitnew .loading{
+	display: none;
 	height: 360px;
 	position: absolute;
 	z-index: 9000;
 	left:0;
 	top:0;
+	width: 100%;
+	background-color: rgba(250, 250, 250, 1);
+
+}
+
+div#submitnew .msg{
+	display: none;
+	height: 360px;
+	position: absolute;
+	z-index: 8000;
+	left:0;
+	top:0;
+	width: 100%;
+	background-color: rgba(250, 250, 250, 1);
 
 }
 

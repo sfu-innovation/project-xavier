@@ -1,4 +1,20 @@
+@media all and (max-width: 1180px) and (min-width: 891px){
+	#contents{margin-left: 10%}
 
+
+}
+
+@media all and (max-width: 890px) and (min-width: 800px){
+	#contents{margin-left: 12%}
+
+
+}
+
+@media all and (max-width: 879px) and (min-width: 767px){
+	#contents{margin-left: 15%}
+
+
+}
 
 ::-webkit-scrollbar {
 	height: 10px;

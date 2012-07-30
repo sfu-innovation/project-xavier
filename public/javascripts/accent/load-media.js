@@ -21,7 +21,7 @@ function formatTagTypeOption(index){
 
 
 function loadTagTypes() {
-	var tagType = $("#tagType");
+	var tagType = $("#TagType");
 	
 	for(var i = 0; i <= 1; ++i) {
 		tagType.append(formatTagTypeOption(i));

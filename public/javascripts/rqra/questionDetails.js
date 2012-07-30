@@ -98,7 +98,7 @@ function postComment() {
 	rqra.createComment(questionId, commentBody, function(data) {
 		if (data && data.errorcode === 0) {
 			rqra.getCommentById(data.comment._id, function(data2) {
-				commentList.innerHTML += formatComment(data2.comment);
+				commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
 			});
 		}
 	});

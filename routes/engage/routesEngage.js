@@ -41,6 +41,7 @@ exports.createComment = function (req,res){
 				if(result){
 
 					QueryES.getComment(result._id,2,function(err,data){
+
 						EngageAction.commentHelper(data,function(err,data){
 							res.end(JSON.stringify({ errorcode: 0, comment: data }));
 						})

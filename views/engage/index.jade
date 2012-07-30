@@ -46,8 +46,10 @@ block content
 						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
 								a.flip_btn  share a resource!
-
-							input(name="article_url",type="text", id="article_url", placeholder="http://", disabled="disabled")
+							div(style="display:inline-block; width:100%")
+								input(name="article_title",type="text", id="article_title", placeholder="Title", disabled="disabled")
+								div
+									a.button.small.loadFile +
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")
 
 							div#sumbitrow

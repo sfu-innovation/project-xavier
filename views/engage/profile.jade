@@ -5,7 +5,10 @@ block content
 	div.row.clearfix#contents
 		div.three.columns#sharebox.hide-for-small
 			div.innercontents#user_detail_box
-				- if (profile && profile.profilePicture)
-					img.avatar(src="#{profile.profilePicture}")
+				- if (targetProfile.profilePicture)
+					img.avatar(src="#{targetProfile.profilePicture}")
 				- else
 					img.avatar(src="/images/engage/default_profile.png")
+				h3 #{targetUser.firstName}
+				p #{targetUser.email}
+				p #{targetProfile.bio}

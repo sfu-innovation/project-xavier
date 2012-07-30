@@ -349,6 +349,32 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('.topic_input .remove_btn').live('click',function(){
+			var self = $(this);
+			self.closest('.topic_input').slideUp(function(){self.closest('.topic_input').remove()});
+
+		})
+
+		$('#week-info .add_btn').live('click',function(){
+			var self = $(this);
+			var new_topic_box = renderTopicInput('');
+			$(new_topic_box).insertBefore(self);
+		})
+
+
+		$('#week-info .save_btn').live('click',function(){
+			alert('!');
+			var self = $(this);
+			var topics = $('.topic_input input');
+			var result = "";
+			$.each(topics, function(i,topic){
+				console.log(topic);
+				 result += '#' + $(topic).val();
+			})
+			alert(result);
+
+		})
+
 
 	}
 	else {
@@ -1004,10 +1030,10 @@ function loadStarredArticles(engage) {
 	})
 }
 
-function renderTopicInput(){
-	var html = '<input type="text" placeholder="#" /> '
-	+  '<a href="" class="tiny button">+</a>'
-	+  '<a href="" class="tiny button">-</a>'
+function renderTopicInput(topic){
+	var html = '<div class="topic_input"><input  type="text" placeholder="#" value="'+topic+'" /> '
+	+  ''
+	+  '<span class="tiny button remove_btn">-</span></div>'
 			;
 
 	return html;
@@ -1047,10 +1073,33 @@ function renderWeekInfoBox(item){
 	//if is prof
 	else{
 
-		weekBox += renderTopicInput();
-		weekBox += renderTopicInput();
+		if (!item.topic){
+			weekBox += renderTopicInput('');
+
+
+
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += renderTopicInput(topic_list[0]);
+			}
+			else{
+				topic_list.shift();
+
+				$.each(topic_list,function(i,topic){
+					weekBox += renderTopicInput(topic);
+				})
+
+				console.log(topic_list)
+			}
+		}
+
+		weekBox += '<span class="medium button add_btn">Add</span>';
+		weekBox += '<span class="button medium save_btn">Save</span>';
 
 	}
+
 
 
 	weekBox += '</div></div>'

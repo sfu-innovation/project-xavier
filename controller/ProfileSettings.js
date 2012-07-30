@@ -46,10 +46,10 @@ var settings = exports.settings = function( req, callback ) {
 				format = 'png';
 				console.log('delete format: '+format)
 
-				path = './public/images/SFUEngage_profile.png';
+				path = './public/images/engage/default_profile.png';
 				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
 
-				img = '/images/SFUEngage_profile.png';
+				img = '/images/engage/default_profile.png';
 			
 			} else { //save
 				console.log('save format: '+format)

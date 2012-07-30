@@ -1,10 +1,16 @@
 
 
 ::-webkit-scrollbar {
-	height: 0;
+	height: 10px;
 	overflow: visible;
 	width: 10px;
 }
+
+::-webkit-scrollbar:horizontal {
+
+	height: 0;
+	
+	}
 ::-webkit-scrollbar-thumb {
 	background-color: rgba(158, 158, 158, 0.5);
 
@@ -12,8 +18,6 @@
 	border-width: 1px 1px 1px 6px;
 	min-height: 28px;
 	padding: 100px 0 0;
-
-
 
 }
 
@@ -499,6 +503,7 @@ div.innercontents{
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
+	font-family: "Lato", sans-serif;
 }
 
 div.innercontents.color-1{
@@ -1192,16 +1197,8 @@ div#article_container #comments span{
 	font-style: italic;
 }
 
-div#article_container #comments span.like_btn, div#article_container #comments span.dislike_btn{
-
-	font-style: normal;
-	cursor: pointer;
-}
-
-
 div#article_container #comments span.reply_to{
 	margin-left: 10px;
-
 }
 
 div#article_container #comments span.like_reply{
@@ -1623,4 +1620,17 @@ dl.tabs dd.active{
 dl.tabs dd.active a{
 	background: none; 
 	border: none;
+}
+
+/* -----------------------------------------
+   Profile page
+----------------------------------------- */
+div.innercontents#user_detail_box{
+
+}
+
+div.innercontents#user_detail_box h3{
+	display: inline-block;
+	margin-left: 50px;
+	
 }

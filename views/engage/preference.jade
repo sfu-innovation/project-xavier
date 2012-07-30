@@ -46,7 +46,7 @@ block content
 											
 					li#notificationTab
 						div#notification
-							form(name="edit_notification", action="/preference",enctype="multipart/form-data", method="post")
+							form(id="edit_notification", action="/preference", method="post")
 								h4 Notifications
 								p 
 									|An email will automatically be sent to your inbox when one or more of the events occur.	
@@ -68,13 +68,13 @@ block content
 											span.typicn.star
 											span.typicn.mail
 										li 
-											input(type="checkbox") 
-											input(type="checkbox") 
+											input(type="checkbox", name="comment_notif") 
+											input(type="checkbox", name="comment_email") 
 										li 
-											input(type="checkbox") 
-											input(type="checkbox") 
+											input(type="checkbox", name="likes_notif") 
+											input(type="checkbox", name="likes_email") 
 										li 
-											input(type="checkbox") 
-											input(type="checkbox") 
+											input(type="checkbox", name="reply_notif") 
+											input(type="checkbox", name="reply_email") 
 								
 									input.button(type="submit", value="save changes")

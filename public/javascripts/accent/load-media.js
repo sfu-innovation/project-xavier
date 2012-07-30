@@ -1,5 +1,7 @@
 var accent = new coreApi.Accent();
 
+var mediaID = $('#mediaUUID').text();
+
 function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
 		$('#mediaPlayer').attr('src', data.mediafile.path);
@@ -18,7 +20,7 @@ function formatTagTypeOption(index){
 }
 
 
-function loadTagType() {
+function loadTagTypes() {
 	var tagType = $("#tagType");
 	
 	for(var i = 0; i <= 1; ++i) {
@@ -28,5 +30,9 @@ function loadTagType() {
 	console.log(tagType)
 }
 
-loadMedia($('#mediaUUID').text());
-loadTagType();
+function loadTags(uuid) {
+	loadTagTypes();
+}
+
+loadMedia(mediaID);
+loadTags(mediaID)

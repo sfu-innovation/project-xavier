@@ -501,12 +501,17 @@ div#contents div.columns:last-child{;
 	border: 1px solid #d9dad5;
 	padding: 1px 3px;
 	cursor: pointer;
-	display: none;
 	opacity: 0.6;
 
 }
 
-.articlebox .delete_btn:after{
+.no-touch .articlebox .delete_btn{
+
+display: none;
+
+}
+
+.no-touch .articlebox .delete_btn:after{
 	content: "DELETE";
 	font-size: 12px;
 	position: absolute;
@@ -520,20 +525,17 @@ div#contents div.columns:last-child{;
 	display: none;
 }
 
-.articlebox .delete_btn:hover{
+.no-touch .articlebox .delete_btn:hover{
 	opacity: 1;
 }
 
-.articlebox .delete_btn:hover:after{
+.no-touch .articlebox .delete_btn:hover:after{
 	display: block;
 }
 
-.articlebox .delete_btn{
-
-}
 
 
-.articlebox:hover .delete_btn{
+.no-touch .articlebox:hover .delete_btn{
 	display: block;
 
 
@@ -758,7 +760,7 @@ div#submitnew .msg span.delete_btn,div#submitnew .error span.delete_btn{
 
 
 
-div#submitnew .msg span.delete_btn:hover,div#submitnew .error span.delete_btn:hover{
+.no-touch div#submitnew .msg span.delete_btn:hover,div#submitnew .error span.delete_btn:hover{
 	opacity: 1;
 }
 
@@ -868,16 +870,17 @@ div.likescomments span.star_btn.unstarred{
 
  }
 
-div.likescomments span.star_btn.unstarred:hover{
+.no-touch div.likescomments span.star_btn.unstarred:hover{
 	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
 
 
 }
+
 div.likescomments span.star_btn.starred{
 	background-image: url("/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
-div.likescomments span.star_btn.starred:hover{
+.no-touch div.likescomments span.star_btn.starred:hover{
 	background-image: url("/images/engage/icon/16x16/Star_v1.png");
 }
 
@@ -1222,8 +1225,13 @@ div#article_container .thread li span.edit_btn{
 	right:10px;
 	top:10px;
 	cursor: pointer;
+}
+
+.no-touch div#article_container .thread li span.edit_btn{
 	opacity: 0.5;
+
 	display: none;
+
 }
 
 div#article_container .thread li:hover span.edit_btn{

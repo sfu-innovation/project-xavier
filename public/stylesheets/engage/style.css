@@ -1,7 +1,7 @@
 
 
 ::-webkit-scrollbar {
-	height: 16px;
+	height: 0;
 	overflow: visible;
 	width: 10px;
 }
@@ -1429,6 +1429,68 @@ div#info ul li span,div#week-info ul li span{
 
 #weeks-bar ul li a.active{
 	opacity: 1;
+}
+
+
+span#mobile_week_label{
+	display: block;
+	float:left;
+	margin-top: 28px;
+	color: #555;
+}
+
+
+#mobile_week_bar{
+	width: 85%;
+	height: 100%;
+	overflow: auto;
+	margin-left:50px;
+	margin-top:10px;
+}
+
+
+#mobile_week_bar ul{
+	list-style: none;
+	height: 40px;
+	width: 1000px;
+	display: block;
+}
+
+
+
+#mobile_week_bar ul li{
+	display: block;
+	margin: 0 4px;
+	float:left;
+	line-height: 35px;
+	vertical-align: bottom;
+	text-align: center;
+	
+	
+	}
+	
+li.mobile_week_item a{
+	font-family: "Lato", sans-serif;
+	font-size: 20px;
+	display: inline-block;
+	border: 0;
+	color: #555;
+	vertical-align: bottom;
+	text-align: center;
+	width:60px;
+	border-top: #a51414 5px solid;
+
+}
+
+li.mobile_week_item a:active{
+	font-size: 30px;
+	font-weight: bold;
+	margin: 0 2px;
+}
+
+li.mobile_week_item a:hover{
+	font-size: 30px;
+	font-weight: bold;
 }
 
 /* -----------------------------------------

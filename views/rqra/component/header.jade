@@ -11,9 +11,11 @@ div#header
 			img(src="../images/rqra/avatar.jpg", alt="profile", onclick="showNotificationMenu()")
 			div#newNotificationCount 1
 			nav#notificationList
-				include ./notificationList
+				div#notificationArrow
+				div#notificationMenu
+					div#notificationHeader
 			
-script(type="text/javascript", src="../javascripts/rqra/notificationMenu.js")
+script(type="text/javascript", src="../javascripts/rqra/header.js")
 
 script(type="text/javascript")
 	notificationUser = '#{user.uuid}';

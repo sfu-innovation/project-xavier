@@ -1,5 +1,8 @@
-var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
+/*
+	Question Form
+	----------------------------
+	Manages the page where a user asks a question
+*/
 
 function LoadCourseBox() {
 	var courseBox = document.getElementById("courseBox");
@@ -62,4 +65,7 @@ function PostQuestion() {
 	});
 }
 
-LoadCourseBox();
+window.onload = function() {
+	displayCourseList();
+	LoadCourseBox();
+}

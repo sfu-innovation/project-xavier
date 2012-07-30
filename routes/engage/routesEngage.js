@@ -24,6 +24,27 @@ exports.login = function (request, response) {
 }
 
 
+exports.likeComment = function(req,res){
+	var commentID = req.params.id;
+	if (req.session && req.session.user) {
+		QueryES.updateVote(commentID, 0, 2, function(err,data){
+			if (!err){
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 0, result: data }));
+			}
+			else{
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: voteComment' }));
+			}
+		})
+	}
+	else {
+		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.end(JSON.stringify({ errorcode: 2, message: 'You aren\'t logged in' }));
+	}
+
+}
+
 exports.createComment = function (req,res){
 
 	if(req.session && req.session.user){
@@ -41,6 +62,7 @@ exports.createComment = function (req,res){
 				if(result){
 
 					QueryES.getComment(result._id,2,function(err,data){
+
 						EngageAction.commentHelper(data,function(err,data){
 							res.end(JSON.stringify({ errorcode: 0, comment: data }));
 						})
@@ -1071,7 +1093,25 @@ exports.preference = function (req, res){
 
 }
 
+exports.updateComment = function(request,response){
 
+
+	QueryES.updateComment(request.params.uid, request.body.body, 2, function(err, result) {
+		if (!err) {
+			response.writeHead(200, { 'Content-Type': 'application/json' });
+			if(result){
+				response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			}
+			else{
+				response.end(JSON.stringify({ errorcode: 1, comment: "Failed to update comment" }));
+			}
+		} else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
+		}
+	});
+
+}
 
 exports.commentsByResourceUUID = function(request, response) {
 	if (request.method === "GET") {

@@ -83,7 +83,15 @@ var addUserToData = function(data, callback){
 		if(error){
 			callback(error);
 		}else{
-			callback(null, data);
+			userProfile.getUserProfile(data._source.user, function(err, profile){
+				if(err)
+					return callback(err)
+
+				if(profile){
+					data.profile = profile.profilePicture;
+				}
+				callback(null, data);
+			})
 		}
 	});
 }

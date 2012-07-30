@@ -539,6 +539,36 @@ coreApi._construct = function () {
 
 		}
 
+		this.updateCommentById = function (id,commentBody, callback) {
+			console.log("API - updateCommentById");
+			var body = {};
+			body.body = commentBody;
+			$.ajax({
+				url:'/api/comment/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+
+		this.likeCommentById = function(id, callback){
+			console.log("API - likeCommentById");
+			$.ajax({
+
+				url:'/api/comment/'+id+'/like',
+				type:'POST',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
 
 
 

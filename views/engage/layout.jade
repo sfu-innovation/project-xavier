@@ -29,10 +29,11 @@ html
 
 		link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
 
-		link(rel='stylesheet', href='/stylesheets/engage/style.css?v5')
+		link(rel='stylesheet', href='/stylesheets/engage/style.css?v6')
 				link(rel="stylesheet", href="/stylesheets/engage/app.css")
 		<!--[if lt IE 9]>
 		link(rel="stylesheet", href="/stylesheets/engage/ie.css")
+		link(rel="stylesheet", href="/stylesheets/engage/jquery.jscrollpane.css")
 		<![endif]-->
 		
 		script(src="/javascripts/engage/modernizr.foundation.js")
@@ -53,7 +54,8 @@ html
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
 		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js?v115")
+		script(src="/javascripts/engage/app.js?v116")
+		script(src="/javascripts/engage/jquery.jscrollpane.min.js")
 		
 	body
 		div#header
@@ -145,7 +147,7 @@ html
 												span.coursename BUS 354		
 						li#user_info.mobile_view
 							div.expand_btn(onClick="dropdownToggle('#mobile_user_info')")
-								span.typicn.next
+								span &#x25BE;
 							div.dropdown_list#mobile_user_info.hide
 								ul
 									li
@@ -178,8 +180,7 @@ html
 								}
 						li
 							div.dropdown_btn(onClick="dropdownToggle('#course_list')")
-								span Courses
-								span.typicn.next
+								span Courses &#x25BE;
 							div.dropdown_list#course_list.hide
 								ul
 									each item in courses
@@ -188,8 +189,7 @@ html
 	
 						li
 							div.dropdown_btn(onClick="dropdownToggle('#user_info_downdrop')")
-								span #{ user.firstName } #{ user.lastName }
-								span.typicn.next
+								span #{ user.firstName } #{ user.lastName } &#x25BE;
 							div.dropdown_list#user_info_downdrop.hide
 								ul
 									li

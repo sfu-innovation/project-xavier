@@ -48,7 +48,27 @@ jQuery(document).ready(function ($) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
 
-		$('.edit_btn').live('click',function(){
+
+		$('#comments li .like_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var id = list.attr('data-parent-uuid');
+			engage.likeCommentById(id,function(data){
+				if (data && data.errorcode === 0){
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+					self.addClass('dislike_btn');
+					self.removeClass('like_btn');
+
+
+				}
+			})
+
+		})
+
+
+
+		$('#comments li .edit_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -59,7 +79,7 @@ jQuery(document).ready(function ($) {
 		})
 
 
-		$('.cancel_btn').live('click',function(){
+		$('#comments li .cancel_btn').live('click',function(){
 			var self = $(this);
 			var list = self.closest('li');
 			var p = list.children('p');
@@ -68,6 +88,55 @@ jQuery(document).ready(function ($) {
 			p.show();
 			control.slideUp('slow');
 		})
+
+		$('#comments li .delete_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = "!@#$%^&*()";
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					list.html('This comment has been deleted');
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+		$('#comments li .save_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = control.children('input').val();
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					p.html(text);
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
 
 		$('.reply_click').live('click',function(){
 
@@ -280,6 +349,32 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('.topic_input .remove_btn').live('click',function(){
+			var self = $(this);
+			self.closest('.topic_input').slideUp(function(){self.closest('.topic_input').remove()});
+
+		})
+
+		$('#week-info .add_btn').live('click',function(){
+			var self = $(this);
+			var new_topic_box = renderTopicInput('');
+			$(new_topic_box).insertBefore(self);
+		})
+
+
+		$('#week-info .save_btn').live('click',function(){
+			alert('!');
+			var self = $(this);
+			var topics = $('.topic_input input');
+			var result = "";
+			$.each(topics, function(i,topic){
+				console.log(topic);
+				 result += '#' + $(topic).val();
+			})
+			alert(result);
+
+		})
+
 
 	}
 	else {
@@ -288,6 +383,9 @@ jQuery(document).ready(function ($) {
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
+
+		$('div#submitnew .error span.delete_btn').bind('click',function(){$('div#submitnew .error').fadeOut(500);});
+		$('div#submitnew .msg span.delete_btn').bind('click',function(){$('div#submitnew .msg').fadeOut(500);});
 
 		$('.flip_btn').bind('click',function(){
 			$('div.cover').addClass('hack');
@@ -301,10 +399,11 @@ jQuery(document).ready(function ($) {
 
 		$('#submitnew form').bind('submit',function(){
 
-
+			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
+			var course_name = $('#submitnew form option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
@@ -312,13 +411,14 @@ jQuery(document).ready(function ($) {
 					if (data.errorcode === 0){
 						var new_article = renderArticlePreviewBox(data.resource);
 						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
 					}
 					else{
-
+						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
 					}
 				}
 				else{
-
+					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
 				}
 			});
 			return false;
@@ -535,6 +635,10 @@ function initUI() {
 }
 
 function renderBox(item,type){
+	if (item.body === "!@#$%^&*()"){
+		return '<li class = "'+type+'">This comment has been deleted</li>'
+	}
+
 	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
 
 	if (item.owner){
@@ -542,12 +646,13 @@ function renderBox(item,type){
 	}
 
 	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
-		+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<img src="' + (item.avatar ? item.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
 		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
 		+ '</span>'
 		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
 		+ '<p>' + item.body
 		+ '</p>';
+
 	if (item.owner){
 
 		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
@@ -558,9 +663,18 @@ function renderBox(item,type){
 		;
 	}
 
-	html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-		+ ' .</span><span class="like_reply"><a>Like (' + '<em>' +item.like + '</em>' +')'
-		+ '</a><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
+	if (item.createdAt === item.updatedAt || !item.updatedAt){
+		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+	else{
+		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+
+
+	html	+= ' <span class="like_reply"><span class="like_btn">Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</span><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
 		+ '</li>';
 
@@ -916,10 +1030,10 @@ function loadStarredArticles(engage) {
 	})
 }
 
-function renderTopicInput(){
-	var html = '<input type="text" placeholder="#" /> '
-	+  '<a href="" class="tiny button">+</a>'
-	+  '<a href="" class="tiny button">-</a>'
+function renderTopicInput(topic){
+	var html = '<div class="topic_input"><input  type="text" placeholder="#" value="'+topic+'" /> '
+	+  ''
+	+  '<span class="tiny button remove_btn">-</span></div>'
 			;
 
 	return html;
@@ -959,10 +1073,33 @@ function renderWeekInfoBox(item){
 	//if is prof
 	else{
 
-		weekBox += renderTopicInput();
-		weekBox += renderTopicInput();
+		if (!item.topic){
+			weekBox += renderTopicInput('');
+
+
+
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += renderTopicInput(topic_list[0]);
+			}
+			else{
+				topic_list.shift();
+
+				$.each(topic_list,function(i,topic){
+					weekBox += renderTopicInput(topic);
+				})
+
+				console.log(topic_list)
+			}
+		}
+
+		weekBox += '<span class="medium button add_btn">Add</span>';
+		weekBox += '<span class="button medium save_btn">Save</span>';
 
 	}
+
 
 
 	weekBox += '</div></div>'
@@ -1232,4 +1369,29 @@ function updatePostTime(){
 
 //	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
 	setTimeout(updatePostTime,30000);
+}
+
+function displayMsg(msg){
+
+	$('#submitnew .msg div').html(msg);
+	$('#submitnew  .msg').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .msg').fadeOut(500);
+	},3000);
+
+
+}
+
+function displayErrorMsg(err){
+
+
+	$('#submitnew .error div').html(err);
+	$('#submitnew  .error').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .error').fadeOut(500);
+	},5000);
+
+
 }

@@ -1,54 +1,9 @@
-var rqra = new coreApi.Presenter();
-
-function formatQuestion(question) {
-	var instructorStyle = "";
-	if (question._source.isInstructor === "true") {
-		instructorStyle = "instructorResponseFlag";
-	}
-
-	return "<div class='question'>"
-		+ "<div class='questionTitle'>" + question._source.title + "</div>"
-		+ "<div class='questionId'>" + question._id + "</div>"
-		+ "<div class='questionData'>"
-				+ "<div class='" + instructorStyle + "'>"
-				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
-				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
-				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
-				+ "<div>Asked "
-					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span>"
-				+ "</div>"
-		+ "</div>"
-		+ "<div class='questionDetailsText'>" + question._source.body + "</div>"
-	+ "</div>";
-}
-
-function formatComment(comment) {
-	var instructorStyle = "";
-	if (comment.user.type === 1) {
-		instructorStyle = "background: #ffe450;";
-	}
-	
-	var badCommentStyle = "";
-	if (comment._source.upvote - comment._source.downvote < 0) {
-		badCommentStyle = "color: #AAAAAA;";
-	}
-	
-	return "<div class='comment' style='" + instructorStyle + badCommentStyle + "'>"
-			+ "<div class='questionId'>" + comment._id + "</div>"
-			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
-			+ "<div class='questionData'>"
-				+ "<div>Asked "
-					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + comment.user.firstName + " " + comment.user.lastName + "</span></div>"
-				+ "<div class='votes' onclick='vote(1, this)'><span class='upVoteCount'>" 
-				+ comment._source.upvote 
-				+ "</span> <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
-				+ "<div class='votes' onclick='vote(-1, this)'><span class='downVoteCount'>" 
-				+ comment._source.downvote 
-				+ "</span> <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
-			+ "</div>";
-}
+/*
+	Question Details
+	----------------------------
+	Manages the content of a page displaying
+	a single question and all of its comments
+*/
 
 function refreshQuestionsList() {
 
@@ -109,7 +64,7 @@ function loadPage(first) {
 	// get question
 	rqra.getQuestionById(questionId, function(data) {
 		if (data && data.errorcode === 0) {
-			question.innerHTML = formatQuestion(data.question);
+			question.innerHTML = ElementFactory.createDetailedQuestionItem(data.question);
 			refreshQuestionDetailsListHeader(data.question);
 
 			// get comments
@@ -123,7 +78,7 @@ function loadPage(first) {
 					//displayPageNumbers(data.questions.total);
 					
 					for(var i = 0; i < data.comments.hits.length; i++) {
-						commentList.innerHTML += formatComment(data.comments.hits[i]);
+						commentList.innerHTML += ElementFactory.createCommentItem(data.comments.hits[i]);
 					}
 					
 					// updates page view count
@@ -133,7 +88,7 @@ function loadPage(first) {
 						});
 					}
 				} else {
-					commentList.innerHTML += "<div class='comment'>This Question has not yet been Answered</div>"
+					commentList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 				}
 			});
 		}
@@ -148,7 +103,7 @@ function postComment() {
 	rqra.createComment(questionId, commentBody, function(data) {
 		if (data && data.errorcode === 0) {
 			rqra.getCommentById(data.comment._id, function(data2) {
-				commentList.innerHTML += formatComment(data2.comment);
+				commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
 			});
 		}
 	});
@@ -171,5 +126,6 @@ function vote(dir, targetDiv) {
 
 window.onload = function() {
 	redirect = true;
+	displayCourseList();
 	loadPage(true);
 }

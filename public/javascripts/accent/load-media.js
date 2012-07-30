@@ -47,22 +47,23 @@ function formatTimeline(tag){
 function loadTags(uuid) {
 	var tagger = $(".Tagger").children(".Timeline");
 	
-
-	console.log('tagger')
-	console.log(tagger);
-	
 	accent.getTagsByMediaFileId(uuid, function(data){
-		console.log('tags:')
-		console.log(data);
 
 		data.tags.forEach(function(tag) {	
-			console.log('tag')
-			console.log(tag);
 			tagger.append(formatTimeline(tag));
 		});			
 	});
 
 	loadTagTypes();
+}
+
+function selectedTag(tag) {	
+	var tagID = $(tag).attr('uuid');	
+	
+	accent.getTagById(tagID, function(data){
+		alert(JSON.stringify(data.tag));
+	});
+	
 }
 
 loadMedia(mediaID);

@@ -69,16 +69,6 @@ function selectButtonByName(name) {
 	});
 }
 
-function formatButton(name, uuid) {
-	return "<div class='courseButton' onclick='clickButton(this)'>"
-		+ "<div class='courseButtonSelectorTop'></div>"
-		+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
-		+ "<div class='courseButtonTextContainer'>" 
-			+ "<div class='courseButtonText'>" + name + "</div></div>"
-		+ "<div class='courseButtonSelectorBottom'></div>"
-		+ "</div>";
-}
-
 function getUuid(courseName) {
 	var menu = document.getElementById("courseList");
 	for (var i = 0; i < menu.children.length; ++i) {
@@ -95,9 +85,9 @@ function displayCourseList() {
 		if (data && data.errorcode === 0) {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
-			menu.innerHTML += formatButton("All", "");
+			menu.innerHTML += ElementFactory.createCourseListItem("All", "");
 			for (var i = 0; i < data.courses.length; i++) {
-				menu.innerHTML += formatButton(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
+				menu.innerHTML += ElementFactory.createCourseListItem(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
 			}
 			selectButton($(".courseButton")[0]);
 		}

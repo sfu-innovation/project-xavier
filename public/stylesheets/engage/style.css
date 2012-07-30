@@ -92,11 +92,6 @@ div#header{
 
 
 
-#header img.logo{
-	margin-bottom: 10px;
-	padding-top:15px;
-	width: 140px;
-}
 
 #header ul#options{
 	list-style: none;
@@ -104,7 +99,6 @@ div#header{
 	float: left;
 	margin-bottom: 10px;
 	margin-top: 11px;
-	margin-left: -40px;
 	padding-top:15px;
 }
 
@@ -113,10 +107,11 @@ div#header{
 	padding: 0 15px !important;
 	vertical-align: middle;
 	color: #555;
+	text-align: left;
 }
 
 #header ul#options li a{
-	color: #555;
+	color:  rgba(250, 250, 250, 1);
 }
 
 #header ul#options li a.active{
@@ -129,14 +124,24 @@ div#header{
 
 #header ul#options li:hover:first-child a{
 	border-bottom: 0;
+
+
 	}
-	
-	
+
 #header #banner{
 
 	background-image: url("/images/engage/sfu_brand_banner.png");
 	background-position: cover;
 	}
+	
+#header #banner_logo a{
+	vertical-align: bottom;
+	line-height: 60px;
+	}	
+
+#header #banner img.logo{
+}
+
 /* -----------------------------------------
    mobile view of navigation slider
 ----------------------------------------- */
@@ -267,17 +272,17 @@ ul#user_options_list li#notification img{
 ul#user_options_list span#notification_number{
 	display: block;
 	position: absolute;
-	background-color: red;
-	-moz-box-shadow: 0 0 2px #9e9e9e;
-	-webkit-box-shadow: 0 0 2px #9e9e9e;
-	box-shadow: 0 0 2px #9e9e9e;
+	background-color: rgba(250, 250, 250, 1);
+	-moz-box-shadow: 1px 1px 2px #9e9e9e;
+	-webkit-box-shadow: 1px 1px 2px #9e9e9e;
+	box-shadow: 1px 1px 2px #9e9e9e;
 	width: 20px;
 	height: 20px;
-	color: white;
+	color: #B5111B;
 	font-weight: bold;
 	text-align: center;
-	margin-left: -6px;
-	margin-top: -20px;
+	margin-left: 30px;
+	margin-top: -22px;
 }
 	
 ul#user_options_list li div.dropdown_list{

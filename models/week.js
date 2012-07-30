@@ -48,7 +48,7 @@ exports.selectWeekAndCreateOneIfNotFind = function(args, callback){
 			Week.create(args).error(function(error){
 				callback(error, null);
 			}).success(function(){
-					callback(null, week);
+					callback(null, args);
 				})
 		}
 	}).error(function(error) {

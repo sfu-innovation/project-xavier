@@ -449,7 +449,7 @@ exports.courseWeekInfo = function(req,res){
 	var weekNum = req.params.week;
 
 
-	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
+	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));

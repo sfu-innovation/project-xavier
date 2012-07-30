@@ -22,8 +22,10 @@ function LoadCourseBox() {
 	});
 }
 
-function refreshQuestionListHeader() {
-
+function refreshCustomQuestionHeader() {
+	QuestionCommon.getCourseTitle(function(courseTitle) {
+		QuestionCommon.setQuestionHeader(courseTitle, "Ask a Question", "");
+	});
 }
 
 function refreshQuestionsList() {
@@ -68,4 +70,5 @@ function PostQuestion() {
 window.onload = function() {
 	displayCourseList();
 	LoadCourseBox();
+	refreshCustomQuestionHeader();
 }

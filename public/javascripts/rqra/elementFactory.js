@@ -102,10 +102,10 @@ ElementFactory.createQuestionsNotFoundItem = function() {
 	return item;
 }
 
-ElementFactory.createPageNumbers = function(number) {
-	if (number > 0) {
+ElementFactory.createPageNumbers = function(totalPages) {
+	if (totalPages > 0) {
 		var item = "<img src='../images/rqra/prev.png' alt='previous'>";
-		for(var i = 0; i < number/7; i++) {
+		for(var i = 0; i < totalPages; i++) {
 			item += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 		}
 		item += "<img src='../images/rqra/next.png' alt='next'>";

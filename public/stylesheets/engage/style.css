@@ -87,6 +87,7 @@ em {
 body{
 	color: #9e9e9e !important;
 	padding-bottom: 20px;
+	overflow-x: hidden;
 }
 
 .row{	

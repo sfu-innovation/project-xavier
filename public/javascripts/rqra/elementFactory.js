@@ -142,13 +142,13 @@ ElementFactory.createCommentItem = function(comment) {
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + user.firstName + " " + user.lastName + "</span>"
 				+ "</div>"
-				+ "<div class='votes' onclick='vote(1, this)'>"
+				+ "<div class='votes' onclick='QuestionDetails.vote(1, this)'>"
 					+ "<span class='upVoteCount'>" + comment._source.upvote + "</span> " 
 					+ "<img src='../images/rqra/up.png' alt='UpVotes'/>"
 				+ "</div>"
-				+ "<div class='votes' onclick='vote(-1, this)'>"
+				+ "<div class='votes' onclick='QuestionDetails.vote(-1, this)'>"
 					+ "<span class='downVoteCount'>" + comment._source.downvote + "</span> " 
-					+ "<img src='../images/rqra/up.png' alt='DownVotes'/>"
+					+ "<img src='../images/rqra/down.png' alt='DownVotes'/>"
 				+ "</div>"
 			+ "</div>";
 		return commentItem;

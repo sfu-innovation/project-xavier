@@ -425,6 +425,12 @@ jQuery(document).ready(function ($) {
 
 		})
 
+
+		$(window).bind( 'hashchange', function(e) {
+			var weekNum = (window.location.toString().split('#week'))[1];
+			loadAllArticles(engage, weekNum);
+		});
+
 		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');

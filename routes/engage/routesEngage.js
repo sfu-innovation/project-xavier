@@ -987,7 +987,11 @@ exports.demoPage = function (req, res) {
 			if(success)
 				console.log("created: " + success)
 
-			var courseList = ['11', '12'];
+			var courseList = [];
+			result.forEach(function(course){
+				courseList.push(course.uuid);
+			})
+
 
 			async.forEach(courseList, function(course, done){
 				var args = {
@@ -1036,8 +1040,15 @@ exports.demoProf = function (req, res) {
 		notification.createUserNotificationSettings(args, function(err, success){
 			if(success)
 				console.log("created: " + success)
+			var courseList = [];
+			result.forEach(function(course){
+				courseList.push(course.uuid);
+			})
 
-			var courseList = ['11', '12'];
+//			console.log(courseList);
+
+//			courseList = ['11', '12','13','14'];
+
 
 			async.forEach(courseList, function(course, done){
 				var args = {

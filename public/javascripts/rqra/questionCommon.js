@@ -104,3 +104,29 @@ QuestionCommon.refreshDefaultHeader = function() {
 		});
 	});
 }
+
+QuestionCommon.setQuestionCounter = function(total, line1, line2) {
+	var questionCount = document.getElementById("questionCount");
+	if (questionCount) {
+		questionCount.innerHTML = ElementFactory.createQuestionCounter(total, "Questions", "for this Week");
+	}
+}
+
+QuestionCommon.hideQuestionCounter = function() {
+	var questionCount = document.getElementById("questionCount");
+	if (questionCount) {
+		questionCount.innerHTML = "";
+	}
+}
+
+QuestionCommon.showListBody = function() {
+
+}
+
+QuestionCommon.showDetailsBody = function() {
+	QuestionCommon.hideQuestionCounter();
+}
+
+QuestionCommon.showFormBody = function() {
+	QuestionCommon.hideQuestionCounter();
+}

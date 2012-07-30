@@ -186,3 +186,13 @@ ElementFactory.createNotificationItem = function(notification) {
 		return "";
 	}
 }
+
+ElementFactory.createQuestionCounter = function(count, line1, line2) {
+	var item = ""
+		+ "<div id='questionCountNumber'>" + count + "</div>"
+		+ "<div id='questionCountText'>"
+			+ "<div id='questionCountText1'>" + line1 + "</div>"
+			+ "<div id='questionCountText2'>" + line2 + "</div>"
+		+ "</div>";
+	return item;
+}

@@ -363,7 +363,6 @@ jQuery(document).ready(function ($) {
 
 
 		$('#week-info .save_btn').live('click',function(){
-			alert('!');
 			var self = $(this);
 			var topics = $('.topic_input input');
 			var result = "";
@@ -371,7 +370,19 @@ jQuery(document).ready(function ($) {
 				console.log(topic);
 				 result += '#' + $(topic).val();
 			})
-			alert(result);
+			var id = $('#week-info').attr('data-week-id');
+			if(id){
+				engage.updateWeekInfo(id,result,function(data){
+
+					if (data && data.errorcode === 0){
+
+						alert('saved!');
+					}
+					else{alert('failed!')
+					};
+				})
+
+			}
 
 		})
 
@@ -1047,7 +1058,7 @@ function renderTopicInput(topic){
 
 function renderWeekInfoBox(item){
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
+		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
 			item.week +
 			'</h4>';
 	if (!item.owner){

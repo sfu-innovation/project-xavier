@@ -74,7 +74,7 @@ function showTagInfo(title, description){
 	var tagDescription = document.getElementById("TagDescription");
 
 	tagTitle.value = title;
-	tagDescription.innerHTML = description;
+	tagDescription.value = description;
 	$(".TagWindow").show();
 }
 
@@ -102,10 +102,14 @@ function bindTag(tag) {
 		var tagID = selectedTag.attr("uuid");
 
 		accent.getTagById(tagID, function(data){		
-			if (data.tag) 
+			if (data.tag) {
 				showTagInfo(data.tag.title, data.tag.description);			
-			else
+				console.log('should display something')
+			}				
+			else {
 				showTagInfo("", "");
+				console.log('should display nothing')
+			}				
 
 		})
 
@@ -136,7 +140,7 @@ $(document).ready(function () {
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
-		
+		console.log('should display nothing when d clicked')
 		showTagInfo("","");
 
 		tag.data("offset", offset)

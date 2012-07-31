@@ -7,7 +7,7 @@ block content
 	div.row.show-for-small
 		div.mobile-four.columns
 			span#mobile_week_label WEEK
-			div#mobile_week_bar
+			div#mobile_week_bar.weeks-bar
 				ul
 					each week in weeks
 						li.mobile_week_item
@@ -18,7 +18,7 @@ block content
 	
 				
 	div.row.hide-for-small
-		div.twelve.columns#weeks-bar
+		div.twelve.columns.weeks-bar
 			ul
 				li
 					a#week WEEK
@@ -68,13 +68,13 @@ block content
 							div
 								input(name="article_title",type="text", id="article_title", placeholder="Title")
 								div.browsebox
-									input(type="file",name="resource-file",id="resource-file")
+									input(type="file",name="article_file",id="article_file")
 									div#upload_file +
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
 							div.sumbitrow
 								div.selectcourse
-									select(class="customDropdown", name="article_course", value="select a course")
+									select#article_course(class="customDropdown", name="article_course", value="select a course")
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit

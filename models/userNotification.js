@@ -230,7 +230,7 @@ exports.findAllUserNotifications = function( args, callback ){
 	returns either the newly saved user notification or an error
 */
 exports.createUserNotification = function( args, callback ) {
-	
+
 	if ( args === null || args === undefined ){
 		callback("Args is not existent", null);
 		return;
@@ -242,7 +242,7 @@ exports.createUserNotification = function( args, callback ) {
 		                                 args.hasOwnProperty('wait') &&
 		                               args.hasOwnProperty('origin')
 		                        );
-		                            
+		                                             
 	if ( !containsAllProperties ){
 		callback("Invalid args ", null );
 		return;
@@ -255,7 +255,6 @@ exports.createUserNotification = function( args, callback ) {
 	arg.emailSent   = args.emailSent;
 	arg.wait        = args.wait;
 	arg.origin      = args.origin;
-	
 	var userNotification = UserNotification.build( arg );
 	userNotification.save()
 	.error(function(error){

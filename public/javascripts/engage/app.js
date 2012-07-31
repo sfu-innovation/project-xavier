@@ -374,8 +374,10 @@ jQuery(document).ready(function ($) {
 
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
-			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self.parent());
+			if ($('.topic_input').length < 5) {
+				var new_topic_box = renderTopicInput('');
+				$(new_topic_box).insertBefore(self.parent());
+			}
 		})
 
 

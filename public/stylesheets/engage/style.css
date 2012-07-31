@@ -106,6 +106,7 @@ body#splash .button{
 	border-color: #555;
 	background-color: #888;
 	margin: 10px;
+	min-width: 200px;
 	}
 	
 body#splash #login_as{
@@ -298,7 +299,7 @@ ul#user_options_list{
 	text-align: right;
 	white-space: nowrap;
 	display: block;
-	padding-top:25px;
+	padding-top:18px;
 	margin-bottom: 10px;
 }
 
@@ -312,9 +313,6 @@ ul#user_options_list li{
 	}
 ul#user_options_list li#notification {
 	margin: 0;
-	position: absolute;
-	margin-left: -44px;
-	margin-top: -8px;
 }
 ul#user_options_list li#notification div{
 	background-color: transparent;
@@ -1109,7 +1107,7 @@ div#article_container{
 	
 }
 div#article_container #article{
-	padding: 0;
+	padding: 0 1em;
 	word-spacing: -0.05em;
 	line-height: 1.3em;
 
@@ -1191,14 +1189,14 @@ div#article_container #article img{
 .article_options span.star_btn.unstarred{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
-.article_options span.star_btn.unstarred:hover{
+.no-touch .article_options span.star_btn.unstarred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
 .article_options span.star_btn.starred{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
-.article_options span.star_btn.starred:hover{
+.no-touch .no-touch .article_options span.star_btn.starred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
 
@@ -1206,7 +1204,7 @@ div#article_container #article img{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-.article_options span.like_btn.disliked:hover{
+.no-touch .article_options span.like_btn.disliked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
@@ -1214,7 +1212,7 @@ div#article_container #article img{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-.article_options span.like_btn.liked:hover{
+.no-touch .article_options span.like_btn.liked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
@@ -1244,22 +1242,64 @@ div#article_container #article img{
 #article_options_mobile{
 	white-space: nowrap;
 	display: inline-block;
-	margin-top:10px;
+	margin: 15px 0;
 }
 #article_options_mobile #options{
-	
+	clear: both;
 	padding: 0 10px;
 	margin: 0 !important;
 	float:none;
-	text-align: center;
+	text-align: left;
+	
+	
 }
+
+#article_options_mobile a#back{
+	float: left;
+}
+
+#article_options_mobile a#back span{
+	margin: 0;
+}
+
+#article_options_mobile a#view_original{
+	float: right;
+}
+
+#article_options_mobile a#view_original span{
+	margin: 0;
+	
+	
+}
+
 
 #article_options_mobile #options span{
 	margin: 0;
-	margin: 0 15px;
+	margin: 0 25px;
 	line-height: 35px;
-	padding-left: 30px;
-	
+	width: 30px;
+	padding: 0;
+	height: 35px;
+	vertical-align: left;
+	background-position: bottom;
+	margin-top: 15px;
+}
+
+#article_options_mobile #options span:first-child{
+	margin-left: 0;
+	}
+#article_options_mobile #options span:last-child{
+	margin-right: 0;
+}
+#article_options_mobile #options span.like_btn em{
+	color: white;
+	font-size: 11px;
+	text-shadow: 1px 1px 5px black;
+}
+
+#article_options_mobile #options span.like_btn{
+	color: white;
+	text-align: center;
 }
 #article_options_mobile span#back_btn{
 	display: inline-block;
@@ -1269,14 +1309,14 @@ div#article_container #article img{
 .article_options#article_options_mobile span.star_btn.unstarred{
 	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
 }
-.article_options#article_options_mobile span.star_btn.unstarred:hover{
+.no-touch .article_options#article_options_mobile span.star_btn.unstarred:hover{
 	background-image: url( "/images/engage/icon/32x32/Star_pressed_v1.png");
 }
 
 .article_options#article_options_mobile span.star_btn.starred{
-	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
+	background-image: url( "/images/engage/icon/32x32/Star_pressed_v1.png");
 }
-.article_options#article_options_mobile span.star_btn.starred:hover{
+.no-touch .article_options#article_options_mobile span.star_btn.starred:hover{
 	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
 }
 
@@ -1284,15 +1324,15 @@ div#article_container #article img{
 	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
 }
 
-.article_options#article_options_mobile span.like_btn.disliked:hover{
-	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+.no-touch .article_options#article_options_mobile span.like_btn.disliked:hover{
+	background-image: url( "/images/engage/icon/32x32/Like_pressed_v1.png");
 }
 
 .article_options#article_options_mobile span.like_btn.liked{
-	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+	background-image: url( "/images/engage/icon/32x32/Like_pressed_v1.png");
 }
 
-.article_options#article_options_mobile span.like_btn.liked:hover{
+.no-touch .article_options#article_options_mobile span.like_btn.liked:hover{
 	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
 }
 
@@ -1305,7 +1345,9 @@ div#article_container #article img{
 }
 
 .article_options#article_options_mobile span#link_btn{
-	background-image: url( "/images/engage/icon/32x32/ViewOriginal_v1.png");	
+	background-image: none;
+	display: inline-block;
+	width: auto;
 }
 .article_options#article_options_mobile span#back_btn{
 	background-image: url( "/images/engage/icon/32x32/Back_v1.png");	
@@ -1852,15 +1894,31 @@ dl.tabs dd.active a{
    Profile page
 ----------------------------------------- */
 div.innercontents#user_detail_box{
-
+	padding: 10px;
+}
+div.innercontents#user_detail_box img.profile_avatar{
+	float: left;
+	margin-right: 10px;
+}
+div.innercontents#user_detail_box h4{
+	display: inline;
+	width: 65%;
+	overflow: hidden;
+	margin-top: 0;
+	margin-bottom: 5px;
 }
 
-div.innercontents#user_detail_box h3{
-	display: inline-block;
-	margin-left: 50px;
+div.innercontents#user_detail_box #user_bio{
+	clear:both;
+	margin-top: 48px;
+}
+
+div.innercontents#user_detail_box #user_bio h6{
+	font-style:italic;
+	margin-bottom: 5px;
 	
-}
-
+	}
+	
 /* -----------------------------------------
    padding bar for smaller screens
 ----------------------------------------- */
@@ -1880,7 +1938,7 @@ div.innercontents#user_detail_box h3{
 	position: relative;
 }
 #week-info .topic_input input{
-	width: 85%;
+	width: 80%;
 	float: left;
 	
 }

@@ -112,12 +112,10 @@ exports.setPreferedName = function(userUUID, newName, callback){
 	})
 }
 
-exports.updateFullName = function(userUUID, fName, lName, callback) {
+exports.updateUserInfo = function(userUUID, args, callback) {
 
 	User.find({where: {uuid:userUUID}}).success(function(user){
-		user.firstName = fName,
-		user.lastName = lName;
-		user.save().success(function(user){
+	user.updateAttributes(args).success(function(user){
 			callback(null, user);
 		}).error(function(error){
 			callback(error, null);

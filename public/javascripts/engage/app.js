@@ -1305,7 +1305,7 @@ function renderArticlePreviewBox(item) {
 			//end of innerwrap
 
 			+ '<h5>'
-			+ '<a '+ (item.thumbnail?'':'class="noimage"')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
+			+ '<a '+ ((!item.thumbnail && item.fileType ==='html' )?'class="noimage"':'')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
@@ -1384,10 +1384,9 @@ function renderLike(item) {
 
 
 function renderPreviewImage(item) {
-
 	var previewImage = "";
 
-	if (item.thumbnail){
+	if (item.thumbnail && item.fileType === "html" ){
 		previewImage= '<div class="innerwrap" style=\''
 			//IE
 			+'background-image: url("'
@@ -1399,6 +1398,56 @@ function renderPreviewImage(item) {
 			//FIREFOX
 			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
 			+ item.thumbnail + '");'
+//		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "pdf"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+//		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "doc" || item.fileType === "docx"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/word_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/word_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/word_icon.png' + '");'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "ppt" || item.fileType === "pptx"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/ppt_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/ppt_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/ppt_icon.png' + '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
 			+ '\'>'
 			+ '</div>'

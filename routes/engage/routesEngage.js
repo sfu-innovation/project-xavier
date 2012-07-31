@@ -440,15 +440,16 @@ exports.courseWeekInfo = function(req,res){
 	var weekNum = req.params.week;
 
 
+
 	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
-			if (req.session.user.type === 0){
-				new_result.owner = false;
+			if (req.session.user.type === 1){
+				new_result.owner = true;
 			}
 			else{
-				new_result.owner = true;
+				new_result.owner = false;
 			}
 
 			res.writeHead(200, { 'Content-Type':'application/json' });
@@ -512,6 +513,11 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
+exports.getNotifications = function (req,res){
+	routesCommon.getUserNotifications(2, req, res)
+
+}
+
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
 
@@ -532,11 +538,11 @@ exports.uploadResource = function (req,res){
 
 		var fileName = crypto.createHash('md5').update(UUID.generate()).digest('hex');
 
-		var fileType = '.' + ((req.files.article_file.name).split('.'))[1] || '';
+		var fileType =   ((req.files.article_file.name).split('.'))[1] || '';
 
-		fileType = fileType.toLowerCase();
+		fileType =  fileType.toLowerCase();
 
-		fileName += fileType;
+		fileName += '.' + fileType;
 
 		var serverPath = '/resources/files/' + fileName;
 
@@ -637,7 +643,6 @@ exports.index = function (req, res) {
 				
 			req.session.Profile = result;
 			res.redirect("/setup");
-			//res.end();
 			});
 
 		} else {
@@ -660,7 +665,7 @@ exports.index = function (req, res) {
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
 //		res.redirect("/login");
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 		//login with demo user, remove when everything is set.
 	}
@@ -674,14 +679,13 @@ exports.setup = function(req, res) {
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
-			User.updateFullName(req.session.user.uuid, {
+			User.updateUserInfo(req.session.user.uuid, {
 				firstName: req.body.firstname, 
 				lastName: req.body.lastname},function(err, res){
 				if (err)
 					console.log(err)
 			});
 		}
-		console.log('stuff done')
 
 		if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
 			res.redirect("/");
@@ -732,7 +736,7 @@ exports.starred = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 
 	}
@@ -754,7 +758,7 @@ exports.instructor = function (req, res) {
 		})
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 
@@ -802,7 +806,7 @@ exports.profile = function (req, res) {
 
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 
@@ -815,13 +819,13 @@ exports.notFound = function (req,res){
 	});
 }
 
-exports.splash = function(req, res) {
-	res.render('/', function  (err, rendered) {
-		title: "SFU ENGAGE"
-	}, function(err, rendered) {
-		res.writeHead(200, {'Content-Type': 'text/html'});
+exports.splashPage = function(req, res) {
+	res.render('engage/splash', {
+		title : "SFU ENGAGE"
+	}, function (err, rendered) {
+		res.writeHead(200, {'Content-Type':'text/html'});
 		res.end(rendered);
-	})
+	});
 }
 
 exports.articleView = function (req, res) {
@@ -878,7 +882,7 @@ exports.articleView = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 
 	}
@@ -901,7 +905,7 @@ exports.contributions = function (req, res) {
 		})
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 	}
 
 }
@@ -945,7 +949,7 @@ exports.courseView = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 
@@ -971,8 +975,8 @@ exports.demoPage = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
-			user:"llt3"
+			app:2,
+			user:fake_user_2.uuid
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){
@@ -1025,8 +1029,8 @@ exports.demoProf = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
-			user:"llt3"
+			app:2,
+			user:fake_user_2.uuid
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){

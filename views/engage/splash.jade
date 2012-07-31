@@ -1,0 +1,79 @@
+doctype 5
+html
+
+head
+	title= title
+	<meta content='True' name='HandheldFriendly' />
+	<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon-precomposed" href="/images/engage/SFUEngage_icon.png">
+	<meta name="viewport" content="width=device-width" />
+	script(src="http://code.jquery.com/jquery-latest.js")
+	script(src="/javascripts/engage/prettydate.js")
+	script(src="/javascripts/engage/datetime.js")
+	
+	link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet', type='text/css')
+	meta(charset="utf-8")
+	link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900', rel='stylesheet', type='text/css')
+	link(href='http://fonts.googleapis.com/css?family=Merriweather:400,700', rel='stylesheet', type='text/css')
+	
+	
+	<!-- Set the viewport width to device width for mobile -->
+	meta(name="viewport", content="width=device-width")
+	
+	
+	
+	<!-- Included CSS Files -->
+	link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
+	
+	link(rel="stylesheet", href="/stylesheets/engage/typicons.css")
+	
+	link(rel='stylesheet', href='/stylesheets/engage/style.css?v7')
+		link(rel="stylesheet", href="/stylesheets/engage/app.css")
+	<!--[if lt IE 9]>
+	link(rel="stylesheet", href="/stylesheets/engage/ie.css")
+	link(rel="stylesheet", href="/stylesheets/engage/jquery.jscrollpane.css")
+	<![endif]-->
+	
+	script(src="/javascripts/engage/modernizr.foundation.js")
+	
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+	script(src="http://html5shiv.googlecode.com/svn/trunk/html5.js")
+	<![endif]-->
+	
+	<!-- Included JS Files -->
+	script(src="/javascripts/jquery-1.7.2.min.js")
+	script(src="/javascripts/engage/quicksand/jquery.quicksand.js")
+	script(src="/javascripts/engage/quicksand/script.js")
+	script(src="/javascripts/engage/jquery.reveal.js")
+	script(src="/javascripts/engage/jquery.orbit-1.4.0.js")
+	script(src="/javascripts/engage/jquery.customforms.js")
+	script(src="/javascripts/engage/jquery.placeholder.min.js")
+	script(src="/javascripts/engage/jquery.tooltips.js")
+	script(src="/javascripts/engage/jquery.scrollTo-min.js")
+	script(src="/javascripts/engage/jquery.jscrollpane.min.js")
+	script(src="/javascripts/engage/jquery.form.js")
+	script(src="/javascripts/engage/jquery.dirtyforms.js")
+	
+	script(src="/javascripts/core.api.js")
+	script(src="/javascripts/engage/app.js?v119")
+
+
+body#splash
+	div#header.banner
+		img.logo(href="/", src="/images/engage/sfu_logo_white.png")
+		
+	div.row
+		div.twelve.columns
+			h1 SFU Engage
+	div.row
+		div.eight.columns.centered
+			div
+				a.button(href="/login") LOG IN
+	div.row
+		div.eight.columns.centered#login_as
+			p Demos
+			a.button(href="/demo") Catherine Tan
+			br
+			a.button(href="/prof") Ted Kirkpatrick

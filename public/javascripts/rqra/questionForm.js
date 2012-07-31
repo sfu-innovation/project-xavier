@@ -14,17 +14,17 @@
 function QuestionForm() { }
 
 QuestionForm.getQuestionTitle = function() {
-	return document.getElementById("questionField").getAttribute("value");
+	return document.getElementById("questionField").value;
 }
 
 QuestionForm.getQuestionBody = function() {
-	return document.getElementById("descriptionField").getAttribute("value");
+	return document.getElementById("descriptionField").value;
 }
 
 QuestionForm.getWeek = function() {
 	var weekBox = document.getElementById("weekBox");
 	if (weekBox) {
-		return parseInt(weekBox.getAttribute("value"));
+		return parseInt(weekBox.value);
 	} else {
 		return 1;
 	}
@@ -95,6 +95,10 @@ QuestionForm.onCourseBoxChanged = function() {
 	QuestionCommon.setCourse(QuestionForm.getCourseName());
 	CourseList.setSelectedName(QuestionForm.getCourseName());
 	QuestionForm.refreshWeekBox();
+}
+
+QuestionForm.onWeekBoxChanged = function() {
+	QuestionCommon.setWeek(QuestionForm.getWeek());
 }
 
 QuestionForm.refreshCourseBox = function(callback) {

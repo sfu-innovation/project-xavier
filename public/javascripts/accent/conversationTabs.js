@@ -194,12 +194,15 @@ function displayConversations(questionID, callback) {
 
 	//var topConversationList = $(".Conversation").children(".Top");
 	//var allConversationList = $(".Conversation").children(".All");
+	var containsTopResponse = false;
 	
 	var topStr = "";
+	var topDivStr ="<div class='Top'>";
+	var topResponseStr = "<h1> Top responses: </h1>";
 	var allStr = "";	
 
-	topStr += "<div class='Top'>";
-	topStr += "<h1> Top responses: </h1>";
+	//topStr += "<div class='Top'>";
+	//topStr += "<h1> Top responses: </h1>";
 
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	
@@ -208,19 +211,25 @@ function displayConversations(questionID, callback) {
 			
 		$.each(data.comments.hits, function (index, item) {		
 			
-			if (item.user.type === 1) {				
+			if (item.user.type === 1) {		
+				containsTopResponse = true;
 				topStr += formatResponse(item);
 			}	
 			else {
 				allStr += formatConversation(item);
 			}						
 		});
-		topStr += "</div>";	
+		
+		if (containsTopResponse) {
+			topDivStr += topResponseStr;
+		}
+		topDivStr += topStr;
+		topDivStr += "</div>";	
 		allStr += formatTextInput();
 		allStr += "</div>";
 		//topConversationList.replaceWith(topStr);
 		//allConversationList.replaceWith(allStr);
-		conversationStr += topStr;
+		conversationStr += topDivStr;
 		conversationStr += allStr;
 		conversationStr += "</div>";
 		callback(conversationStr);

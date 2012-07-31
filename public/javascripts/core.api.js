@@ -947,7 +947,7 @@ coreApi._construct = function () {
 
 		this.setSelectedCourse = function(courseID, week, callback){
 			console.log("API - setSelectedCourse");
-
+			
 			var body ={};
 			body.course = courseID;
 			body.week = week;

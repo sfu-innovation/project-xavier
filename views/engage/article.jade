@@ -4,7 +4,33 @@ block content
 	div.row#hidden-info(style="display:none;", data-resource-id="#{article.uuid}")
 	div.row.clearfix#article_container
 		div.eight.columns
-			div#article_options
+			div.article_options#article_options_mobile.show-for-small
+				div#options
+					a(href="/")#back
+						span#back_btn Back
+					a(href="#{article.url}", target="_blank")
+						span#link_btn View Original
+						
+			div.article_options#article_options_mobile.show-for-small
+				div#options
+					- if (article.starred)
+						span.star_btn.starred &nbsp;
+					- else
+						span.star_btn.unstarred &nbsp;
+					- if (article.liked)
+						span.like_btn.liked
+							|(
+							em #{article.likes}
+							)
+					- else
+						span.like_btn.disliked
+							|(
+							em #{article.likes}
+							)
+					span#invert_btn &nbsp;
+					span#textsize_btn &nbsp;
+					
+			div.article_options.hide-for-small
 			
 				a(href="/")#back
 					span#back_btn

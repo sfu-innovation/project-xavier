@@ -11,14 +11,13 @@ function deleteTag(tag){
 	var tagID = selectedTag.attr('UUID');	
 
 	accent.deleteTagById(tagID, function(data){});
-
 }
 
 function uploadTag(tag){
 	var selectedTag = $(".Tag.Selected");
 	
 	var tagStart = parseInt(selectedTag.css('left'));
-	var tagEnd = tagStart + parseInt(selectedTag.css('width'));
+	var tagEnd = parseInt(selectedTag.css('width'));
 	
 	var tagTitle = document.getElementById("TagTitle").value;
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');

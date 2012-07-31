@@ -151,14 +151,6 @@ function displayQuestions(course) {
 
 }
 
-function insertAtIndex(i) {
-    if(i === 0) {
-     $("#controller").prepend("<div>okay things</div>");        
-     return;
-    }
-
-    $("#controller div:nth-child(" + i + ")").before("<div>great things</div>");   
-}
 
 function enterPressed(event, textInput) {
 	

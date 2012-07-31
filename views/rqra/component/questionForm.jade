@@ -3,6 +3,9 @@ script(type="text/javascript", src="../javascripts/rqra/questionForm.js")
 div#content
 	include ./questionHeader
 	
+	div#hiddenCourse(style='display:none;') #{course}
+	div#hiddenWeek(style='display:none;') #{week}
+	
 	div#askForm
 		div.askFormField
 			div.askFormFieldName Your Question

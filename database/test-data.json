@@ -658,8 +658,8 @@
 		{
 
 			"uuid" : "1",
-			"user" : "llt3",
-			"course": "11",
+			"user" : "ted",
+			"course": "12",
 			"week": 4,
 			"title" : "Syria: Aleppo fighting traps thousands, UNHCR says",
 			"description" : "Very good article, it worth reading.",
@@ -675,7 +675,7 @@
 		{
 
 			"uuid" : "2",
-			"user" : "llt3",
+			"user" : "ted",
 			"course": "12",
 			"week": 4,
 			"title" : "Canada prepares for an Asian future",
@@ -692,7 +692,7 @@
 		{
 
 			"uuid" : "3",
-			"user" : "llt3",
+			"user" : "ted",
 			"course": "13",
 			"week": 4,
 			"title" : "Michael Phelps breaks Olympic record with 4x200m freestyle gold",
@@ -705,6 +705,36 @@
 			"excerpt": "Michael Phelps won a record 19th Olympic medal as he helped the US team to gold in the 4x200m freestyle relay.",
 			"thumbnail": "http://news.bbcimg.co.uk/media/images/61937000/jpg/_61937035_michael_phelps_getty.jpg"
 
+		},
+		{
+
+			"uuid" : "4",
+			"user" : "llt3",
+			"course": "11",
+			"week": 6,
+			"title" : "Best Practices for Accessible Flash Design",
+			"description" : "For many Flash designers, the single greatest challenge to understandingaccessibility is how to best appreciate the experience of people with disabilities. Aweb designer’s inherent talent is an ability to perceive the world in a unique visualway.",
+			"path" : "4.pdf",
+			"resourceType" : 2,
+			"fileType" : "pdf",
+			"likes" : 0,
+			"url" : "/resources/files/4.pdf" ,
+			"excerpt": "For many Flash designers, the single greatest challenge to understandingaccessibility is how to best appreciate the experience of people with disabilities. Aweb designer’s inherent talent is an ability to perceive the world in a unique visualway."
+		},
+		{
+
+			"uuid" : "5",
+			"user" : "llt3",
+			"course": "13",
+			"week": 6,
+			"title" : "Microsoft Word Documents: Universally Designed",
+			"description" : "How information is organized and presented determines the universalusability of your Microsoft Word document, whether it's text, a table oran image.",
+			"path" : "5.doc",
+			"resourceType" : 2,
+			"fileType" : "doc",
+			"likes" : 0,
+			"url" : "/resources/files/5.doc" ,
+			"excerpt": "How information is organized and presented determines the universalusability of your Microsoft Word document, whether it's text, a table oran image."
 		}
 
 

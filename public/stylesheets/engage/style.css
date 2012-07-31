@@ -712,9 +712,13 @@ div.post_details p a{
 	}
 
 div#submitnew .loading{
+	background-image: url('/images/engage/loading.gif');
+	background-position: 116px 100px;
+	background-repeat: no-repeat;
 	display: none;
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 170px;
+	padding-left:8px;
 	height: 360px;
 	position: absolute;
 	z-index: 5000;
@@ -1228,7 +1232,7 @@ div#article_container .thread li span.edit_btn{
 }
 
 .no-touch div#article_container .thread li span.edit_btn{
-	opacity: 0.5;
+	opacity: 0.7;
 
 	display: none;
 

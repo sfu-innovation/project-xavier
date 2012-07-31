@@ -753,7 +753,6 @@ exports.shareResource = function (req,res){
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
-
 	if (req.session && req.session.user) {
 		
 		if (req.session.user.firstName.length === 0 || req.session.user.lastName.length === 0){
@@ -777,7 +776,6 @@ exports.index = function (req, res) {
 					profile:req.session.Profile,
 					currentWeek:currentWeek
 				}, function (err, rendered) {
-
 					res.writeHead(200, {'Content-Type':'text/html'});
 					res.end(rendered);
 				})
@@ -804,74 +802,24 @@ exports.setup = function(req, res) {
 				if (err)
 					console.log(err)
 			});
-
-
-			CourseMember. addCourseMember(req.session.user.uuid, 11, function(err,result){});
-			CourseMember. addCourseMember(req.session.user.uuid, 12, function(err,result){});
-			CourseMember. addCourseMember(req.session.user.uuid, 13, function(err,result){});
-			CourseMember. addCourseMember(req.session.user.uuid, 14, function(err,result){});
-
-			User.getUserCourses(req.session.user.uuid, function (err, result) {
-
-				var args= {
-					app:2,
-					user:req.session.user.uuid
-				}
-
-				notification.createUserNotificationSettings(args, function(err, success){
-					if(success)
-						console.log("created: " + success)
-
-					var courseList = [];
-					result.forEach(function(course){
-						courseList.push(course.uuid);
-					})
-
-
-					async.forEach(courseList, function(course, done){
-						var args = {
-							target      : course,
-							app         : 2
-						}
-						notification.setupCourseMaterialNotifiers(args, function(err, callback){
-							if(err)
-								console.log(err)
-							done();
-						})
-					}, function(err){
-						if(err)
-							console.log("Problem adding course materials")
-
-						req.session.courses = result;
-					})
-				});
-			});
-
 		}
 		console.log('stuff done')
 
-			if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
-				res.redirect("/");
-				//res.end();
-			}
-			else {
-				res.render("engage/setup", {
+		if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
+			res.redirect("/");
+		}
+		else {
+			res.render("engage/setup", {
 				title: "Engage: First time Setup",
 				user: req.session.user,
 				profile:req.session.Profile,
 				courses:req.session.courses,
 				avatar: req.session.Profile.profilePicture,
 				msg: ""
-
-			
 			});
-
-			}
+		}
 		
-
-		
-	} 
-
+	}
 }
 
 
@@ -1346,4 +1294,3 @@ exports.commentsByResourceUUID = function(request, response) {
 		});
 	}
 }
-

@@ -6,9 +6,12 @@ var QueryES = require('./../../controller/queryES.js');
 var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
-var Notification = require(__dirname + "/../../controller/NotificationAction");
+var NotificationAction = require(__dirname + "/../../controller/NotificationAction");
 var UserNotificationSettings = require('../../models/userNotificationSettings.js');
 var Week = require(__dirname + "/../../models/week.js");
+var async = require('async');
+var CourseMember = require(__dirname + "/../../models/courseMember");
+var courseIdList = [11, 12, 13, 14];
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -21,13 +24,55 @@ exports.logout = function(request, response) {
 }
 
 var createUserNotification = function(args, callback){
-	//add user notification settings
-	Notification.createUserNotificationSettings(args, function(err, result){
+	NotificationAction.createUserNotificationSettings(args, function(err, success){
 		if(err)
 			return callback(err);
+		console.log("User notification setting - created")
 
-		callback(null, result);
+		User.getUserCourses(args.user, function(err, result){
+			if(err)
+				return callback(err)
+
+			console.log("Courses - Found")
+			result.forEach(function(course){
+				console.log("Course: " + course.subject + " " + course.number)
+			});
+
+			callback(null, result)
+		})
 	});
+}
+
+var createCoursesForUser = function(userId, callback){
+	async.forEach(courseIdList, function(id, done){
+		CourseMember.addCourseMember(userId, id, function(err,result){
+			if(err)
+				return callback(err)
+			done();
+		});
+	}, function(err){
+		if(err)
+			return callback(err)
+		console.log("Courses - Added to user: " + userId)
+		async.forEach(courseIdList, function(course, done){
+			var args = {
+				target      : course,
+				app         : 2
+			}
+			NotificationAction.setupCourseMaterialNotifiers(args, function(err, success){
+				if(err)
+					return callback(err)
+				done();
+			})
+		}, function(err){
+			if(err)
+				return callback(err)
+			console.log("Course material notification - created")
+			callback(null)
+		})
+	})
+
+
 }
 
 //apptype is used to setup inital user notification setting
@@ -61,21 +106,28 @@ exports.login = function(appType, request, response) {
 							}
 	        				User.createUser(newUser, function(error, user){
 	        					if(error){
-		        					response.send(error);
+		        					return response.send(error);
 	        					}else{
-									var args= {
-										app:appType,
-										user:user.uuid
-									}
-									createUserNotification(args, function(err, result){
-										if(err){
-											response.send(error);
-										}else{
-											request.session.user = user;
-											response.redirect('/');
+									//Add courses to user
+									createCoursesForUser(user.uuid, function(err){
+										if(err)
+											return response.send(err)
 
+										var args= {
+											app:appType,
+											user:user.uuid
 										}
+										createUserNotification(args, function(err, result){
+											if(err){
+												return response.send(err);
+											}else{
+												request.session.user = user;
+												request.session.courses = result;
+												response.redirect('/');
+											}
+										})
 									})
+
 	        					}
 	        				})
 	        			}
@@ -87,21 +139,14 @@ exports.login = function(appType, request, response) {
 								user:user.uuid
 							}
 							createUserNotification(args, function(err, result){
-								//err means the usr settings already exists for this app
-								console.log(err);
-								request.session.user = user;
-								//Store users courses in session for fast access
-								User.getUserCourses(user.uuid, function(error, courses) {
-									if(!error){
-										request.session.courses = courses;
-										response.redirect('/');
-									}
-									else{
-										request.session.courses = null;
-										response.redirect('/');	
-									}
-								});
-							});
+								if(err){
+									response.send(error);
+								}else{
+									request.session.user = user;
+									request.session.courses = result;
+									response.redirect('/');
+								}
+							})
 						}
 	        		}
 	        		else{
@@ -995,7 +1040,7 @@ exports.searchQuestionsRoute = function(appType, request, response){
 			nlp(queryData.searchQuery, function(query){
 				if(query)
 			 		queryData.searchQuery = query + " " + queryData.searchQuery;
-				
+
 				queryData.uuid = request.session.user.uuid;
 				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
 					if (!err) {
@@ -1027,7 +1072,7 @@ exports.updateUserNotifications = function(appType, request, response){
 			, notificationOnComment: request.body.notificationOnComment
 			, notificationOnStar:request.body.notificationOnStar}
 
-		Notification.updateUserNotificationSettings(args, function(err, result){
+		NotificationAction.updateUserNotificationSettings(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
@@ -1116,7 +1161,7 @@ exports.getUserNotifications = function(appType, request, response){
 			user : request.params.uid,
 			app  : appType
 		}
-		Notification.retrieveUserNotificationsByUser(args, function(err, result){
+		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
@@ -1141,7 +1186,7 @@ exports.removeCommentNotifier = function(appType, request, response){
 			app  : appType
 		}
 		console.log(JSON.stringify(args))
-		Notification.removeCommentNotifier(args, function(err, result){
+		NotificationAction.removeCommentNotifier(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){

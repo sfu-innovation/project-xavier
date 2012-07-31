@@ -215,7 +215,7 @@ exports.mediafile = function(request,response){
 				title: request.body.title,
 				description: request.body.description,
 				course: request.body.course,
-				path: '/media/' + filename + '.mp4',
+				path: filename + '.mp4',
 				type: 0
 			}
 			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
@@ -276,7 +276,36 @@ exports.mediafile = function(request,response){
 					});
 
 					ffmpeg.on('exit', function(code){
-						console.log("DONE CONVERTING " + code);
+						if(code === 0){
+							var thumbnailArgs = [
+								"-itsoffset", "-4",
+								"-i", config.accentServer.mediaFolder + filename + '.mp4',
+								"-vcodec", "mjpeg",
+								"-vframes", "1",
+								"-an",
+								"-f", "rawvideo",
+								"-s", "1024x768",
+								config.accentServer.mediaFolder + filename + '.jpg'
+							]
+
+							var jpeg = child.spawn('ffmpeg', thumbnailArgs);
+
+							jpeg.stderr.on('data', function (data) {
+							 	console.log('stderr: ' + data);
+							});
+
+							jpeg.on('exit', function(code){
+								if(code === 0){
+									var args = {
+										thumbnail: filename + '.jpg'
+									}
+									MediaFile.updateMediaFile(mediaFile.uuid, args, function(error, result){
+										console.log("RESULT " + result);
+									});
+								}
+								console.log("DONE UPLOAD " + code);
+							})
+						}
 					})
 					var args = {
 						section: request.body.section,
@@ -286,7 +315,7 @@ exports.mediafile = function(request,response){
 						if(!err){
 							//response.writeHead(200, { 'Content-Type': 'application/json' });
 							//response.end(JSON.stringify({ errorcode: 0, mediafile: mediaFile }));
-							response.redirect("/");	
+							response.redirect("/manage");	
 
 						}
 						else{

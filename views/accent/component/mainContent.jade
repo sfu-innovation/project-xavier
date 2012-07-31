@@ -18,7 +18,7 @@ div#Main
 				div.TagWindow
 					div.Type
 						label Type:
-						select
+						select#TagType
 							option Important
 							option Examable
 							option Question
@@ -26,13 +26,13 @@ div#Main
 							option General
 					div.Title
 						label Title:
-						input(type="text", placeholder="My Great Title")
+						input#TagTitle(type="text", placeholder="My Great Title")
 					div.Description
 						label Description:
-						textarea(rows="6", cols="50")
+						textarea#TagDescription(rows="6", cols="50")
 					div.Buttons
-						input(type="submit", value="Discard Changes")
-						input(type="submit", value="Save Changes")
+						input(type="submit", onclick="return deleteTag(this);", value="Discard Changes")
+						input(type="submit", onclick="return uploadTag(this);", value="Save Changes")
 
 			div.Commands
 				a(href="") Filters
@@ -58,4 +58,4 @@ div#Main
 
 					
 script(type="text/javascript", src="../javascripts/accent/load-media.js")
-script(type="text/javascript", src="../javascripts/accent/uploadTag.js")
+script(type="text/javascript", src="../javascripts/accent/tagControl.js")

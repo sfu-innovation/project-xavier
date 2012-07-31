@@ -57,11 +57,14 @@ QuestionCommon.getWeekTitle = function(callback) {
 	if (QuestionCommon.week === 0 || uuid === "") {
 		callback("All Weeks", "");
 	} else {
+		
 		var uuid = CourseList.getUuid(QuestionCommon.course);
+		//console.log( QuestionCommon.course);
 		if (!uuid || uuid === "") {
 			callback("Week " + QuestionCommon.week, "");
 		} else {
 			rqra.getWeeksByCourseId(uuid, function(data) {
+				
 				if (data && data.errorcode === 0 && data.week.length > 0) {
 					for(var i = 0; i < data.week.length; ++i) {
 						if (data.week[i].week === QuestionCommon.week) {

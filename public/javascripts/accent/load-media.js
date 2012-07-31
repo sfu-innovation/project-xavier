@@ -41,24 +41,31 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + (tag.start + 40) + "px; width: " + (tag.end  + 60) + "px; background: " + formatTagtype(tag.type) + ";' " + "onclick='return selectedTag(this);' " + "UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' 'UUID='" + tag.uuid + "'>"			
 }
 
 function loadTags(uuid) {
-	var tagger = $(".Tagger").children(".Timeline");
+	var timeline = $(".Tagger").children(".Timeline");		
 	
-	/*
+	console.log('loading tags');
 	accent.getTagsByMediaFileId(uuid, function(data){
-
+		console.log("tags found:");
+		console.log(data);
+		var tagWindow = $(timeline).children(".TagWindow");		
 		data.tags.forEach(function(tag) {	
-			tagger.append(formatTimeline(tag));		
+			//tagger.append(formatTimeline(tag));	
+							
+			var tagStr = formatTimeline(tag);	
+			tagWindow.before(tagStr);	
+								
+			//tag.prependTo(timeline);
 		});	
 
 		// append tag window here
-		tagger.append(formatTagWindow());
+		//tagger.append(formatTagWindow());
 
 	});
-	*/
+	
 	
 	//loadTagTypes();
 }
@@ -119,7 +126,7 @@ function bindTag(tag) {
 bindTag($(".Tag"));
 
 loadMedia(mediaID);
-//loadTags(mediaID);
+loadTags(mediaID);
 
 $(document).ready(function () {
 	console.log("                          Tag Tools - always executed");

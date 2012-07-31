@@ -8,9 +8,21 @@ function getTagType(value) {
 
 function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
+	var tagger = $(".Tag.Selected").parent();
 	var tagID = selectedTag.attr('UUID');	
 
-	accent.deleteTagById(tagID, function(data){});
+	/*
+	accent.deleteTagById(tagID, function(data){
+		// going to destroy it from the ui
+
+	});
+	*/
+	console.log(selectedTag);
+	console.log(tagger);
+
+	tagger.find(".Tag.Selected").remove();
+	$(".TagWindow").hide();
+
 }
 
 function uploadTag(tag){

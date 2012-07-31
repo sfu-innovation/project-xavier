@@ -6,6 +6,16 @@ function getTagType(value) {
 	return 1;
 }
 
+function deleteTag(tag){
+	var selectedTag = $(".Tag.Selected");
+
+	console.log('deleteTag');
+	console.log(selectedTag.attr('UUID'));
+
+	//accent.deleteTag()
+
+}
+
 function uploadTag(tag){
 	var selectedTag = $(".Tag.Selected");
 	
@@ -16,6 +26,9 @@ function uploadTag(tag){
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
+
+	console.log('tag selected');
+	console.log(selectedTag);
 
 	var tag = {				
 		user:"",
@@ -68,6 +81,8 @@ function uploadTag(tag){
 	accent.createTag(tag,function(data){
 		// put tag timelines dynamically
 		console.log(data);
+
+		selectedTag.attr('UUID', data.tag.uuid);
 	});		
 
 }

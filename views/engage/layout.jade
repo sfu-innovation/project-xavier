@@ -227,7 +227,7 @@ html
 												span.username Ted 
 												| liked your article in 
 												span.coursename BUS 354		
-						li
+						li#user-menu
 							div.dropdown_btn(onClick="dropdownToggle('#user_info_downdrop')")
 								span #{ user.firstName } #{ user.lastName } &#x25BE;
 							div.dropdown_list#user_info_downdrop.hide
@@ -238,7 +238,7 @@ html
 										a(href="/preference") Preference
 									li
 										a(href="/logout") Logout						
-						li
+						li#course-menu
 							div.dropdown_btn(onClick="dropdownToggle('#course_list')")
 								span Courses &#x25BE;
 							div.dropdown_list#course_list.hide

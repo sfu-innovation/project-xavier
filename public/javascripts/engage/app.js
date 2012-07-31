@@ -593,7 +593,7 @@ jQuery(document).ready(function ($) {
 	})
 
 
-//TODO: come back to here later
+
 
 	$('#upload_article').submit(function() {
 		$('div#submitnew .loading').show();
@@ -631,7 +631,18 @@ jQuery(document).ready(function ($) {
 	});
 
 
+	$('body').click(function(event) {
 
+		if (!$(event.target).closest('#notification').length) {
+			$('#notif').addClass('hide');
+		};
+		if (!$(event.target).closest('#user-menu').length) {
+			$('#user_info_downdrop').addClass('hide');
+		};
+		if (!$(event.target).closest('#course-menu').length) {
+			$('#course_list').addClass('hide');
+		};
+	});
 
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
@@ -1426,7 +1437,7 @@ function renderExcerpt(excerpt) {
 		return excerpt;
 	}
 	else {
-		return 'Australia\'s Prime Minister Julia Gillard and New Zealand\'s Foreign Minister Murray McCully give their reaction (whaling footage courtesy of';
+		return '';
 	}
 }
 

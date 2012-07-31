@@ -15,6 +15,25 @@ div#Main
 		div.Tagger
 			div.Timeline
 
+				div.TagWindow
+					div.Type
+						label Type:
+						select
+							option Important
+							option Examable
+							option Question
+							option Interesting
+							option General
+					div.Title
+						label Title:
+						input(type="text", placeholder="My Great Title")
+					div.Description
+						label Description:
+						textarea(rows="6", cols="50")
+					div.Buttons
+						input(type="submit", value="Discard Changes")
+						input(type="submit", value="Save Changes")
+
 			div.Commands
 				a(href="") Filters
 				ul

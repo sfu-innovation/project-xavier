@@ -1372,7 +1372,7 @@ div#article_container .thread li span.edit_btn:hover{
 div#article_container #comments span{
 	font-size: 12px;
 	font-weight: 300;
-	font-style: italic;
+	font-style: normal;
 }
 
 div#article_container #comments span.reply_to{
@@ -1384,7 +1384,9 @@ div#article_container #comments span.like_reply{
 	font-style: normal;
 	color: #9e9e9e;
 	}
-
+div#article_container .like_btn,div#article_container .dislike_btn{
+	cursor: pointer
+}
 
 #comments .comment_control input {margin-top: 10px}
 #comments .comment_control a { margin-right:5px;}

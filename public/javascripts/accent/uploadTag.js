@@ -7,9 +7,6 @@ function getTagType(value) {
 }
 
 function uploadTag(tag){
-	var tagNode = $(tag).parent().parent();
-	//var tagTitle = $(tagNode).children("input#TagTitle");
-	//var tagDescription = $(tagNode).children("textarea#TagDescription");	
 	var selectedTag = $(".Tag.Selected");
 	
 	var tagStart = parseInt(selectedTag.css('left'));
@@ -19,11 +16,6 @@ function uploadTag(tag){
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
-
-	console.log(tagTitle);
-	console.log(tagTarget);
-	console.log(tagType);
-	console.log(tagDescription);
 
 	var tag = {				
 		user:"",

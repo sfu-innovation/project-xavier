@@ -35,7 +35,7 @@ var retrieveMedia = function(courseUUID, all){
 				accent.getMediaSection(mediaItem.uuid, function(section){
 					var mediaNode = "<div class=\"MediaItem\">" + 
 						"<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
-						"<img src='" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
+						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
 						"</a>" + 
 						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
 						"<div class='MediaInfo'><h1>" + mediaItem.title + "</h1>" + 

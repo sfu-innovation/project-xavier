@@ -1027,13 +1027,13 @@ div.innercontents#submitnew form{
 	margin:10px
 }
 	
-#sumbitrow{
+.sumbitrow{
 	display: inline-block;
 	width: 100%;
 
 }
 
-#sumbitrow .small.button{
+.sumbitrow .small.button{
 	width : 60px;
 	background-color: gray;
 	border: 0;

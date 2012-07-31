@@ -15,6 +15,18 @@ CourseList.setSelectedIndex = function(index) {
 	CourseList.refreshButtonSelection();
 }
 
+CourseList.setSelectedName = function(name) {
+	var menu = document.getElementById("courseList");
+	var courseNames = menu.querySelectorAll(".courseButtonText");
+	for(var i = 0; i < courseNames.length; ++i) {
+		if (courseNames[i].innerHTML.toLowerCase() === name.toLowerCase()) {
+			CourseList.selectedIndex = i;
+			break;
+		}
+	}
+	CourseList.refreshButtonSelection();
+}
+
 CourseList.getCourseName = function(index) {
 	var menu = document.getElementById("courseList");
 	var courseName = menu.querySelectorAll(".courseButtonText")[index].innerHTML;

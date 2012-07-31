@@ -109,6 +109,7 @@ function filterTag(selectedFilter){
 	var filterType = $(selectedFilter).children("img").attr("alt");	
 
 	refreshTags(filterType);
+	$(".TagWindow").hide();
 	return false;
 }
 

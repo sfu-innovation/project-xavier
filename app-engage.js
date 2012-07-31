@@ -180,6 +180,8 @@ app.get('/course/:name', routesEngage.courseView);
 
 app.get('/article/:id', routesEngage.articleView);
 
+app.get('/splash', routesEngage.splashPage); 
+
 app.get('/demo', routesEngage.demoPage); //this will login you with a demo user
 app.get('/prof', routesEngage.demoProf); //this will login you with a demo prof user
 

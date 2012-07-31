@@ -925,6 +925,7 @@ exports.setup = function(req, res) {
 			});
 
 		}
+		console.log('stuff done')
 
 			if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
 				res.redirect("/");
@@ -1293,9 +1294,7 @@ exports.demoProf = function (req, res) {
 }
 
 exports.preference = function (req, res){
-	console.log('in preference')
 	if (req.session && req.session.user) {
-		console.log('user '+req.session.Profile)
 		ProfileSettings.settings(req, function(result) {
 			console.log('result '+result)
 

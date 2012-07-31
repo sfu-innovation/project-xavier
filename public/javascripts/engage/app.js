@@ -36,14 +36,31 @@ jQuery(document).ready(function ($) {
 
 
 	}
-	else if (window.location.toString().indexOf('design') != -1) {
+	else if (window.location.toString().indexOf('preference') != -1) {
+
+		var originalFormContent;
+
+		originalFormContent = $('#edit_profile input[type=text]').serialize()
+
+
+		function onClose() {	var content = $('#edit_profile input[type=text]').serialize()
+			if (content != originalFormContent){
+				$('.ui-tabs-selected a').css('background-color','#ff9999').attr('title','unsaved changes'); //highlight tab that contains unsaved fields
+				return "popup question";
+			}
+		}
+
+		window.onbeforeunload = onClose;
 
 
 	}
+
 	else if (window.location.toString().indexOf('profile') != -1) {
 
 		loadProfileArticles(engage);
 	}
+
+
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);

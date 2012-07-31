@@ -40,6 +40,11 @@ function updateSearch() {
 setInterval(updateSearch, 500);
 */
 
+function clearSearchBar() {
+	$('#askQuestionInput').prop("value", "Ask a Question");
+	$('#askQuestionInput').css('color', '#c6c6c6');
+}
+
 function showNotificationMenu() {	
 	var menu = document.getElementById("notificationList");
 	menu.style.webkitAnimationPlayState = "running";

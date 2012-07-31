@@ -59,16 +59,18 @@ block content
 					a(href="#{article.url}", target="_blank")
 						span#link_btn
 							|  View Original
-			script	
-				function invertText(){
-					article = getElementbyID("article");
-					article.style.color("black")
-				}
-			div#article
-				h1 #{article.title}
-				div
-			script(type='text/javascript')
-				$('div#article div').load('/resources/articles/'+"#{article.path}");
+
+
+			- if (article.fileType === 'html')
+				div#article
+					h1 #{article.title}
+					div
+				script(type='text/javascript')
+					$('div#article div').load('/resources/articles/'+"#{article.path}");
+			- else
+				div#article
+					iframe(src="http://docs.google.com/gview?url=http://#{host}/resources/files/#{article.path}&embedded=true")
+
 
 
 

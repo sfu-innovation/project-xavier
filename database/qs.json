@@ -16,8 +16,8 @@
 		"isInstructor":"true",
 		"viewCount":0,
 		"commentCount":1,
-		"course":"BUS100",
-		"week":1
+		"course":"CRIM101",
+		"week":10
 		}
 	},
 	{
@@ -44,8 +44,8 @@
 	"_score":1,
 	"_source":
 		{"user":"lol1user",
-		"title":"kia muziko vi auskultu?",
-		"body":"some description",
+		"title":"Am I able to go to any of the tutorials?",
+		"body":"I enrolled in the tuesday afternoon tutorial but it would be nice some days if I could go to the early tutorial and then leave school early.",
 		"category":"academic",
 		"status":"unanswered",
 		"created":"2012-07-10T18:19:31.204Z",
@@ -54,7 +54,7 @@
 		"isInstructor":"false",
 		"viewCount":0,
 		"commentCount":0,
-		"course":"ESPT100",
+		"course":"ENG109",
 		"week":1
 		}
 	},
@@ -65,8 +65,8 @@
 		"_score":1,
 		"_source": {
 			"user":"jrf2",
-			"title":"What is the capital city of Japan?",
-			"body":"What is the capital city of Japan?",
+			"title":"What is the theme of the poem described in class today?",
+			"body":"I think it had something to do with the struggle of man against nature, but the part with the cat wearing a top hat didnt make any sense to me.",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-10T18:19:31.204Z",
@@ -75,7 +75,7 @@
 			"isInstructor":"false",
 			"viewCount":432,
 			"commentCount":1,
-			"course":"JAPN101",
+			"course":"ENG109",
 			"week":1
 		}
 	},
@@ -200,8 +200,8 @@
 		"_score":1,
 		"_source": {
 			"user":"mak10",
-			"upvote":86,
-			"downvote":34,
+			"upvote":21,
+			"downvote":32,
 			"body":"The tallest building in America is the statue of liberty. It is 634m tall and was completed on May 22 2012. It is the tallest free-standing non-continuously inhabited tower in the world, ahead of China's Canton Tower and Canada's CN Tower. And it is the second tallest building in the world, behind the Burj Khalifa.",
 			"target_uuid":"zxcv0987",
 			"objectType":"comment",
@@ -217,8 +217,8 @@
 		"_score":1,
 		"_source":
 		{"user":"lol1user",
-			"title":"Kiam estas la finalo ekzameno?",
-			"body":"Kiam estas la finalo ekzameno?",
+			"title":"Where is the final exam for this course?",
+			"body":"When I registered it didnt say which room the exam was going to be in, and since I have another exam right before this one I want to know if I have to walk all the way across campus.",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -227,7 +227,7 @@
 			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"ESPT100",
+			"course":"CRIM101",
 			"week":12
 		}
 	},
@@ -238,8 +238,8 @@
 		"_score":1,
 		"_source":
 		{"user":"jhc20",
-			"title":"kio ludoj vi ludas?",
-			"body":"kio ludoj vi ludas?",
+			"title":"Is the textbook required for this course?",
+			"body":"The text book is 160$ and I cant find it for cheaper anywhere online, are we actually going to be using this textbook or can I just occasionally check out the reserve copy from the library?",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T15:19:31.204Z",
@@ -248,7 +248,28 @@
 			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"ESPT100",
+			"course":"CMPT371",
+			"week":1
+		}
+	},
+	{
+		"_index":"presenter",
+		"_type":"questions",
+		"_id":"pJfzndwdadddQuOicWWAjx7F05",
+		"_score":1,
+		"_source":
+		{"user":"jhc20",
+			"title":"What fields are contained in the message header of a UDP packet?",
+			"body":"I remember that this was described in class but its not in the slides or the text book and all the online resources are too technical for me to understand.",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-09T15:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":0,
+			"commentCount":0,
+			"course":"CMPT371",
 			"week":5
 		}
 	},
@@ -259,8 +280,8 @@
 		"_score":1,
 		"_source":
 		{"user":"jhc20",
-			"title":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
-			"body":"Mi serchas por formi studo groupo, kiu estas disponebla mardon posttagmeze?",
+			"title":"Is the 'na' at the end of 'na' adjectives ever pronounced?",
+			"body":"Or is this just in textbooks so that you know the difference between 'na' and 'i' adjectives?",
 			"category":"academic",
 			"status":"unanswered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -269,8 +290,8 @@
 			"isInstructor":"false",
 			"viewCount":0,
 			"commentCount":0,
-			"course":"ESPT100",
-			"week":2
+			"course":"JAPN101",
+			"week":8
 		}
 	},
 	{
@@ -280,8 +301,8 @@
 		"_score":1,
 		"_source":
 		{"user":"jhc20",
-			"title":"chu scias la respondon al hejmtasko demando kvin?",
-			"body":"Neniu scias la respondon al hejmtasko demando kvin?",
+			"title":"What is the answer to question 5 of the homework?",
+			"body":"I have lots of stuff to do tonight and was wondering if any one had done it yet.",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -290,8 +311,8 @@
 			"isInstructor":"false",
 			"viewCount":5231,
 			"commentCount":1,
-			"course":"ESPT100",
-			"week":2
+			"course":"PSYC221",
+			"week":3
 		}
 	},
 	{
@@ -303,7 +324,7 @@
 		{"user":"mcs3",
 			"upvote":1,
 			"downvote":125,
-			"body":"Vi devas fari la asigno sola. Mi satus vidi vin en mia oficejo post klaso.",
+			"body":"Your supposed to do the homework individually, I would like to see you in my office after class tomorrow to discuss this.",
 			"target_uuid":"pJfzndwdadddQuOicWWAjx7F07",
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -318,8 +339,8 @@
 		"_score":1,
 		"_source":
 		{"user":"jhc20",
-			"title":"chu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
-			"body":"Kiu baza formo vi shatas la plej: rondo, kvadrato, ortangulo, ktp.",
+			"title":"Why is the mirror test used to prove some animals have consciousness?",
+			"body":"What does being able to recognize oneself in a mirror have to do with consciousness?",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -328,7 +349,7 @@
 			"isInstructor":"false",
 			"viewCount":100,
 			"commentCount":1,
-			"course":"ESPT100",
+			"course":"PSYC221",
 			"week":10
 		}
 	},
@@ -341,7 +362,7 @@
 		{"user":"mcs3",
 			"upvote":5,
 			"downvote":2,
-			"body":"dekduedro!",
+			"body":"The idea of a live thing recognizing itself is seen of a sign of self awareness which is thought to be a main property of consciousness.",
 			"target_uuid":"pJfzndwdadddQuOicWWAjx7F08",
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -356,8 +377,8 @@
 		"_score":1,
 		"_source":
 		{"user":"jhc20",
-			"title":"Chu ke iu povas klarigi la diagramo sur pago 125?",
-			"body":"Chu ke iu povas klarigi la diagramo sur pago 125?",
+			"title":"Can someone explain the diagram on page 125?",
+			"body":"I dont understand what it is supposed to be about",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -366,7 +387,7 @@
 			"isInstructor":"false",
 			"viewCount":423,
 			"commentCount":2,
-			"course":"ESPT100",
+			"course":"CMPT371",
 			"week":4
 		}
 	},
@@ -379,7 +400,7 @@
 		{"user":"mcs3",
 			"upvote":0,
 			"downvote":25,
-			"body":"Mi ne komprenas ke diagramon chu",
+			"body":"I think alot of people are having trouble understanding it",
 			"target_uuid":"pJfzndwdadddQuOicWWAjx7F09",
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -396,7 +417,7 @@
 		{"user":"mcs3",
 			"upvote":25,
 			"downvote":0,
-			"body":"La diagramo estas bildo de kato portante cilindra capelo. Gi simbolas la lukton de la homaro kontrau naturo. Ankau gi estas amuzega.",
+			"body":"It is a protocol diagram showing the format of the messages passed between the client the server and the database.",
 			"target_uuid":"pJfzndwdadddQuOicWWAjx7F09",
 			"objectType":"question",
 			"created":"2012-07-09T18:19:31.204Z",
@@ -459,13 +480,13 @@
 			"commentParent":""
 		}
 	},
-		{
+	{
 		"_index":"accent",
 		"_type":"comments",
 		"_id":"aJfznhheQuOicWWAjx7F15",
 		"_score":1,
 		"_source":
-		{"user":"snsd",
+		{"user":"marko",
 			"upvote":5,
 			"downvote":2,
 			"body":"I am an idiot. Completely disregard this message. LOL!",
@@ -482,7 +503,7 @@
 		"_id":"aJfzggggguOicWWAjx7F16",
 		"_score":1,
 		"_source":
-		{"user":"kara",
+		{"user":"aka87",
 			"upvote":1,
 			"downvote":88,
 			"body":"Once upon a time mary had a little lamb. Then the lamb got killed and eaten. Was pretty tasty",
@@ -499,7 +520,7 @@
 		"_id":"aJfzggggguOicWWAjx7F19",
 		"_score":1,
 		"_source":
-		{"user":"4minute",
+		{"user":"aka87",
 			"upvote":3,
 			"downvote":1,
 			"body":"This is some testing text just typing it out for fun ok gonna keep going for a little bit... and just about there... aannd done.",

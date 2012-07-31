@@ -35,12 +35,13 @@ var paging = function(pageNum){
 }
 
 //add many user objects to result
+//data: ES query data
 var addUsersToData = function(data, callback){
 	var results = {};
 	results.total = data.hits.total;
 	results.hits = [];
 
-	async.forEach(data.hits.hits, function(item, done){
+	async.forEachSeries(data.hits.hits, function(item, done){
 		addUserToData(item, function(err, result){
 			if(err)
 				return callback(err)
@@ -54,6 +55,7 @@ var addUsersToData = function(data, callback){
 }
 
 //add a single user object to result
+//data: ES query data
 var addUserToData = function(data, callback){
 	user.selectUser({"uuid":data._source.user}, function(error, user){
 		if(error)
@@ -67,9 +69,10 @@ var addUserToData = function(data, callback){
 			if(err)
 				return callback(err)
 
-			if(profile){
+
+			if(profile)
 				data.profile = profile.profilePicture;
-			}
+
 			callback(null, data);
 		})
 	});
@@ -449,7 +452,7 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 
 
 //change the status of a question from unanswered to answered, increments comment count
-QueryES.prototype.updateStatus = function(questionID, isInstructor, appType, callback){
+QueryES.prototype.updateQuestionStatus = function(questionID, isInstructor, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();
 	var data = {
@@ -644,7 +647,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		isInstructor = true;
 	}
 
-	this.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
+	this.updateQuestionStatus(args.target, isInstructor, appType, function(err){
 		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 
@@ -652,13 +655,13 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 			if(err)
 				return callback(err);
 
-			NotificationAction.addCommentUserNotification(args, function(err, usrNotificationResult){
+			NotificationAction.addCommentUserNotification(args, function(err){
 				if(err)
 					return callback(err);
 
 				args.user =  args.origin;
 
-				NotificationAction.addCommentNotifier(args, function(err, result){
+				NotificationAction.addCommentNotifier(args, function(err){
 					if(err)
 						return callback(err);
 
@@ -846,11 +849,11 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			break;
 		}
 		case 'viewed':{
-			data = viewed(data, searchObj);
+			data = viewed(data);
 			break;
 		}
 		case 'replied':{
-			data = replied(data, searchObj);
+			data = replied(data);
 			break;
 		}
 		case 'notMyQuestions':{
@@ -871,7 +874,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 }
 
 //get questions sorted by comment count
-var replied = function(data, searchObj){
+var replied = function(data){
 	data.sort = [{"commentCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
 	return data;
 }
@@ -912,7 +915,7 @@ var notMyQuestions = function(data, searchObj){
 }
 
 //get questions sorted by view count
-var viewed = function(data, searchObj){
+var viewed = function(data){
 	data.sort = [{"viewCount":{"order":"desc"}},{"title.untouched":{"order":"asc"}}];
 	return data;
 }

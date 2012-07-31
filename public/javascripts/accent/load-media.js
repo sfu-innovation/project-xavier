@@ -6,7 +6,14 @@ function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
 		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
 		$('#mediaPlayer').attr('autoplay', 'autoplay');
-	})
+		var mediaTitle = $("#Main").children("h1");
+		mediaTitle.text(data.mediafile.title);
+
+		accent.getMediaSection(uuid, function(section){			
+			var mediaSection = $("#Main").children("h2");
+			mediaSection.text(section.section);
+		})
+	})			
 }
 
 function playVideo(){
@@ -20,21 +27,9 @@ function formatTagTypeOption(index){
 }
 
 
-function loadTagTypes() {
-	var tagType = $("#TagType");
-	
-	for(var i = 0; i <= 1; ++i) {
-		tagType.append(formatTagTypeOption(i));
-	}
-}
-
 function formatTagtype(value) {
-	var color = "";
-	if (value === 0)
-		color = "green";
-	else
-		color = "purple";
-	return color;
+	var color = ["green","yellow","pink","red","purple"];
+	return color[value];
 
 }
 
@@ -44,22 +39,55 @@ function formatTimeline(tag){
 	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
-function loadTags(uuid) {
+function displayTags(uuid, type) {
 	var timeline = $(".Tagger").children(".Timeline");		
-	
-	console.log('loading tags');
-	accent.getTagsByMediaFileId(uuid, function(data){
-		console.log("tags found:");
-		console.log(data);
-		var tagWindow = $(timeline).children(".TagWindow");		
-		data.tags.forEach(function(tag) {				
-			var tagStr = formatTimeline(tag);	
-			tagWindow.before(tagStr);	
+	accent.getTagsByMediaFileId(uuid, function(data){		
+		var tagWindow = $(timeline).children(".TagWindow");	
+		if(type === "") {
+			data.tags.forEach(function(tag) {				
+				var tagStr = formatTimeline(tag);	
+				tagWindow.before(tagStr);
+			});
+		}
+		else {			
+			data.tags.forEach(function(tag) {	
+				if (tag.type === type) {
+					var tagStr = formatTimeline(tag);	
+					tagWindow.before(tagStr);		
+				}						
+			});	
+		}
 
-		});	
 		bindTag($(".Tag"));
 	});
 
+}
+
+function refreshTags(filterType){	
+	var timeline = $(".Tagger").children(".Timeline");	
+	timeline.find(".Tag").remove();
+
+	switch(filterType) {
+		case "All":
+			displayTags(mediaID,"");
+			break;
+		case "Important":
+			displayTags(mediaID,0);
+			break;
+		case "Examable":
+			displayTags(mediaID,1);
+			break;
+		case "Question":
+			displayTags(mediaID,2);
+			break;
+		case "Interesting":
+			displayTags(mediaID,3);
+			break;
+		case "General":
+			displayTags(mediaID,4);
+			break;
+	}
+	
 }
 
 function selectedTag(tag) {	
@@ -69,6 +97,16 @@ function selectedTag(tag) {
 		alert(JSON.stringify(data.tag));
 	});
 	
+}
+
+function showTagInfo(title, description){
+	var tagTitle = document.getElementById("TagTitle");		
+	var tagType = document.getElementById("TagType");
+	var tagDescription = document.getElementById("TagDescription");
+
+	tagTitle.value = title;
+	tagDescription.value = description;
+	$(".TagWindow").show();
 }
 
 function bindTag(tag) {
@@ -93,18 +131,17 @@ function bindTag(tag) {
 
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
-		console.log('i am being selected wowwwww');
-		console.log(selectedTag);
-		console.log(tagID)
 
-		accent.getTagById(tagID, function(data){
-			var tagTitle = document.getElementById("TagTitle");		
-			var tagType = document.getElementById("TagType");
-			var tagDescription = document.getElementById("TagDescription");
-			
-			tagTitle.value = data.tag.title;
-			//tagType.valdata.tag.type;
-			tagDescription.innerHTML = data.tag.description;
+		accent.getTagById(tagID, function(data){		
+			if (data.tag) {
+				showTagInfo(data.tag.title, data.tag.description);			
+				console.log('should display something')
+			}				
+			else {
+				showTagInfo("", "");
+				console.log('should display nothing')
+			}				
+
 		})
 
 		return true;
@@ -128,13 +165,15 @@ function bindTag(tag) {
 }
 
 loadMedia(mediaID);
-loadTags(mediaID);
+displayTags(mediaID, "");
 
-$(document).ready(function () {
-	console.log("                          Tag Tools - always executed");
+$(document).ready(function () {	
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
+		console.log('should display nothing when d clicked')
+		showTagInfo("","");
+
 		tag.data("offset", offset)
 		tag.prependTo($(this))
 		bindTag(tag)

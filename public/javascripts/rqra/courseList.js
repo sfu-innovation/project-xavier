@@ -103,4 +103,5 @@ CourseList.clickButton = function(index) {
 	QuestionCommon.refreshDefaultHeader();
 	if (typeof(QuestionList) !== "undefined") QuestionList.refreshQuestionsList();
 	CourseList.setSelectedIndex(index);
+	clearSearchBar();
 }

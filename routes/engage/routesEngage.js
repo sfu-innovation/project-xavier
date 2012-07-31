@@ -18,6 +18,9 @@ var notification = require('../../controller/NotificationAction.js');
 var async = require('async');
 var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
+var UUID         = require('com.izaakschroeder.uuid');
+var fs = require('fs');
+
 
 
 
@@ -513,202 +516,71 @@ exports.resourcesOfCurrentUser = function (req, res) {
 ////////////NON-REST STUFF////////////////////////////////
 
 
-var user_1 = {
-	type:0,
-	firstName:"Gracey",
-	lastName:"Mesina",
-	userID:"3010123456",
-	email:"gmesina@sfu.ca"
-}
-
-var user_2 = {
-	type:1,
-	firstName:"Ted",
-	lastName:"Kirkpatrick",
-	userID:"3010111111",
-	email:"ted@sfu.ca"
-}
-
-var userobject = {
-	type:0,
-	firstName:"Catherine",
-	lastName:"Tan",
-	userID:301078676,
-	email:"llt3@sfu.ca",
-	courses:{}
-}
-
-var article_1 = {
-	id:1,
-	user:user_1,
-	url:"http://www.bbc.co.uk/news/science-environment-18716300",
-	title:"South Korea unveils 'scientific' whaling proposal",
-	author:"Richard Black",
-	publishedDate:"4 July 2012",
-	host:"http://www.bbc.co.uk",
-	path:"/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
-	uploaded_by:"Catherine Tan",
-	uploaded_on:"May 6 2012,  12:30 PM PST",
-	course:"CMPT120",
-	week:"1",
-	likes:5,
-	description:"please read this for the midterm.",
-	starred:0
-
-}
-
-var article_2 = {
-	id:2,
-	user:user_2,
-	url:"http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect",
-	title:"How To Create an Abstract Geometric Mosaic Text Effect",
-	author:"Chris Spooner",
-	publishedDate:"4 July 2012",
-	host:"http://blog.spoongraphics.co.uk",
-	path:"/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
-	uploaded_by:"Catherine Tan",
-	uploaded_on:"July 16 2012,  12:30 AM PST",
-	course:"CMPT120",
-	week:"4",
-	likes:2,
-	description:"what?!",
-	starred:1
-
-}
-
-var article_3 = {
-	id:3,
-	user:user_1,
-	url:"http://www.bbc.co.uk/news/uk-scotland-tayside-central-18873631",
-	title:"Naked rambler walks free from Perth Prison",
-	author:"",
-	publishedDate:"4 July 2012",
-	host:"http://www.bbc.co.uk",
-	path:"/resources/articles/f1311fc37403ff7518ab0a1b77c69804.xml",
-	uploaded_by:"Catherine Tan",
-	uploaded_on:"July 17 2012,  12:00 PM PST",
-	course:"IAT200",
-	week:"4",
-	likes:10,
-	description:"Check out this article",
-	starred:0
-}
-
-
-var article_4 = {
-	id:4,
-	user:userobject,
-	url:"http://www.bbc.co.uk/news/business-18867054",
-	title:"HSBC used by 'drug kingpins', says US Senate",
-	author:"Paul Adams",
-	publishedDate:"4 July 2012",
-	host:"http://www.bbc.co.uk",
-	path:"/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
-	uploaded_by:"Catherine Tan",
-	uploaded_on:"July 17 2012,  12:30 PM PST",
-	course:"BUS100",
-	week:"1",
-	likes:7,
-	description:"wow cool",
-	starred:0
-}
-
-var article_5 = {
-	id:5,
-	user:userobject,
-	url:"http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively",
-	title:"How To Interview Effectively",
-	author:"Victor Lipman",
-	publishedDate:"28 June 2012",
-	host:"http://www.forbes.com",
-	path:"/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
-	uploaded_by:"Catherine Tan",
-	uploaded_on:"July 15 2012,  12:30 PM PST",
-	course:"IAT200",
-	week:"2",
-	likes:6,
-	description:"what?!",
-	starred:1
-
-}
-
-userobject.courses = {
-	"CMPT120":[article_1, article_2],
-	"BUS100":[article_4],
-	"IAT200":[article_3, article_5]
-};
-
-
-var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
 
 
+exports.uploadResource = function (req,res){
+	console.log("uploading shit");
+	console.log(req.files);
+	console.log(req.body);
+	var title = req.body.article_title;
+	var description = req.body.article_comment;
+	var course = req.body.article_course;
+
+	if(req.files && req.files.article_file && req.files.article_file.name){
+
+		var fileName = crypto.createHash('md5').update(UUID.generate()).digest('hex');
+
+		var fileType = '.' + ((req.files.article_file.name).split('.'))[1] || '';
+
+		fileType = fileType.toLowerCase();
+
+		fileName += fileType;
+
+		var serverPath = '/resources/files/' + fileName;
+
+		fs.readFile(req.files.article_file.path, function (err, data) {
+			fs.writeFile('public' + serverPath, data, function (error) {
+				if(error)              {
+					console.log(error)
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:"Cannot Save the file" }));
+					return;
+				}
+				var currentWeek = EngageAction.weekHelper();
+				Resource.createResource(req.session.user.uuid, {description:description, path:fileName, url:serverPath, excerpt:description, week:currentWeek,course:course,fileType:fileType,resourceType:2, title:title}, function(err,result){
+					if (result){
+						EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+							res.writeHead(200, { 'Content-Type':'application/json' });
+							res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+						})
+
+					}
+					else{
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:1, message:error }));
+
+
+					}
+
+
+
+				})
+
+			});
+		});
 
 
 
 
-
-
-
-
-
-
-
-exports.design = function (req, res) {
-	if (!req.body.article_url) {
-		var error = "";
-		if (req.method === 'POST') {
-			error = "please enter an URL";
-		}
-
-		if (req.session && req.session.user) {
-
-			res.render("engage/design", {
-				title:"SFU ENGAGE",
-				user:userobject,
-				status:"logged in",
-				courses:req.session.courses,
-				errormsg:error }, function (err, rendered) {
-
-
-				res.writeHead(200, {'Content-Type':'text/html'});
-				res.end(rendered);
-
-			})
-		}
-		else {
-			//to avoid login to testing, this is comment out, using fake user instead
-//		res.redirect("/login");
-			res.redirect("/demo");
-
-			//login with demo user, remove when everything is set.
-		}
-
-		return;
+	}
+	else{
+		//do something later
 	}
 
 
-	Parser.articlize(req.body.article_url, function (err) {
-		res.render("engage/design", {     
-			title:"SFU ENGAGE",
-			user:userobject,
-			status:"logged in",
-			courses:req.session.courses,
-			errormsg:error }, function (err, rendered) {
-
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
-		})
-
-	});
-
-
 }
-
-
-///////////////////////////////////////////////////////////HEDY'S STUFF ABOVE/////////////////////////////////
-
 
 exports.shareResource = function (req,res){
 	var url = req.body.url;
@@ -954,6 +826,10 @@ exports.articleView = function (req, res) {
 
 	if (req.session && req.session.user) {
 
+
+		var host = req.headers.host;
+		console.log(host);
+
 		Resource.getResourceByUUID(req.params.id, function (error, resource) {
 
 			if (error){
@@ -974,12 +850,13 @@ exports.articleView = function (req, res) {
 			else{
 				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
 					var resource = resources[0];
-
+					console.log(host);
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
 						profile:req.session.Profile,
 						user:req.session.user,
-						courses:req.session.courses
+						courses:req.session.courses,
+						host:host  //finding the root
 					}, function (err, rendered) {
 
 

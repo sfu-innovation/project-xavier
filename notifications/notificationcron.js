@@ -66,6 +66,7 @@ function containsAppAndUser(a, obj){
 	return -1;
 }
 var visible_apps = ["RQRA", "Accent", "Engage"];
+var visible_times = ["Instant", "Daily", "Weekly", "Monthly"];
 var apps = [ 0, 1, 2];
 
 function compileEmail( userObj, notifications ){
@@ -91,7 +92,7 @@ function compileEmail( userObj, notifications ){
    					text:    str,
    					from:    config.emailsettings.from,
    					to:      user.firstName+ " " +user.lastName+"<"+user.email+">",
-   					subject: userObj.app + " : end of "+visible_apps[waitTime]+ " notification(s)"
+   					subject: visible_apps[userObj.app] +": "+ visible_times[waitTime]+ " notification(s)"
 		 		};
 		
 		 		server.send(message, function(err, message){

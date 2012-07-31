@@ -12,6 +12,7 @@ var Week = require(__dirname + "/../../models/week.js");
 var async = require('async');
 var CourseMember = require(__dirname + "/../../models/courseMember");
 var courseIdList = [11, 12, 13, 14];
+var sanitizer = require('sanitizer');
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -556,29 +557,36 @@ exports.questionRoute = function(appType, request, response) {
 	else if (request.method === "POST"){
 		//if not log in, cannot create a question
 		if(request.session && request.session.user){
-			//user, title, body, category
-			var newQuestion = new question(request.session.user.uuid
-				,request.body.question.title
-				,request.body.question.body
-				,request.body.question.category);
+			var title = sanitizer.sanitize(request.body.question.title)
+			var body = sanitizer.sanitize(request.body.question.body)
 
-			newQuestion.course = request.session.course;
-			newQuestion.week = parseInt(request.session.week);
+			if(title && body){
+				var newQuestion = new question(request.session.user.uuid
+					,title
+					,body
+					,request.body.question.category);
 
-			QueryES.addQuestion(newQuestion, appType, function(err, result) {
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, question: result }));
+				newQuestion.course = request.session.course;
+				newQuestion.week = parseInt(request.session.week);
+
+				QueryES.addQuestion(newQuestion, appType, function(err, result) {
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, question: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, question: "Failed to add a question" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addQuestion' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, question: "Failed to add a question" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addQuestion' }));
-				}
-			});
+				});
+			}else{
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Invalid title or body' }));
+			}
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -588,25 +596,28 @@ exports.questionRoute = function(appType, request, response) {
 	}
 
 	else if (request.method === "PUT") {
-		//TODO: need update document and unit-test
-		var questionTitle = request.body.title;
-		var questionBody = request.body.body;
+		var questionTitle = sanitizer.sanitize(request.body.title);
+		var questionBody = sanitizer.sanitize(request.body.body);
 
-		QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
-			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					response.end(JSON.stringify({ errorcode: 0, question: result }));
+		if(questionTitle && questionBody){
+			QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
+				if (!err) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, question: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, question: "Failed to update question" }));
+					}
+				} else {
+					response.writeHead(500, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateQuestion' }));
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 0, question: "Failed to update question" }));
-				}
-			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateQuestion' }));
-			}
-		});
-
+			});
+		}else{
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Invalid title or body' }));
+		}
 	} else if (request.method === "DELETE") {
 		QueryES.deleteQuestion(question_id, appType, function(err, result) {
 			if (!err) {
@@ -813,46 +824,61 @@ exports.commentRoute = function(appType, request, response) {
 		});
 	} else if (request.method === "POST"){
 		if(request.session && request.session.user){
-			var newComment = new comment(
-				request.body.comment.target_uuid
-				,request.session.user.uuid
-				,request.body.comment.objectType
-				,request.body.comment.body);
+			var body = sanitizer.sanitize(request.body.comment.body)
 
-			QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			if(body){
+				var newComment = new comment(
+					request.body.comment.target_uuid
+					,request.session.user.uuid
+					,request.body.comment.objectType
+					,body);
+
+				QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, comment: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
-				}
-			});
+				});
+			}else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Invalid body' }));
+			}
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
 		}
 	} else if (request.method === "PUT") {
-		QueryES.updateComment(request.params.uid, request.body.body, appType, function(err, result) {
-			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+		var body = sanitizer.sanitize(request.body.body)
+
+		if(body){
+			QueryES.updateComment(request.params.uid, body, appType, function(err, result) {
+				if (!err) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, comment: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update comment" }));
+					}
+				} else {
+					response.writeHead(500, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update comment" }));
-				}
-			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
-			}
-		});
+			});
+
+		}else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateStatus' }));
+		}
 
 	} else if (request.method === "DELETE") {
 		QueryES.deleteComment(request.params.uid, appType, function(err, result) {

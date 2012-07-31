@@ -59,7 +59,7 @@ html
 		script(src="/javascripts/engage/jquery.dirtyforms.js")
 		
 	body
-		div#header
+		div#header.banner
 			
 			div.row.clearfix.show-for-small
 				script(type='text/javascript')
@@ -109,8 +109,8 @@ html
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
-						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
-				div.mobile-two.columns#user_options
+						img.logo(href="/", src="/images/engage/sfu_logo_white_small.png")
+				div.mobile-two.columns#user_options_mobile
 					ul#user_options_list
 						li#notification.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
@@ -158,7 +158,7 @@ html
 									li
 										a(href="/logout") Logout
 
-			div.row.clearfix.hide-for-small#banner
+			div.row.clearfix.hide-for-small
 				div.three.columns#banner_logo.hide-for-medium
 					a(href="/")
 						img.logo(href="/", src="/images/engage/sfu_logo_white.png")

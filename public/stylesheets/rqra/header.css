@@ -124,8 +124,8 @@ div#newNotificationCount {
 nav#notificationList {
 	position: absolute;
 	top: -5000px;
-	left: -220px;
+	left: -210px;
 	-webkit-animation: notification-menu-animation 300ms 0ms infinite alternate forwards;
 	-webkit-animation-play-state: paused;
-	box-shadow: 4px 4px 5px rgba(0,0,0,0.3);
+	
 }

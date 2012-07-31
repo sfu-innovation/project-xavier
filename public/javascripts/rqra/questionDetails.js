@@ -38,6 +38,7 @@ QuestionDetails.refreshDetailsView = function() {
 						return (b._source.upvote - b._source.downvote)-(a._source.upvote - a._source.downvote);
 					});
 					
+					QuestionDetails.setCommentCount(data.comments.hits.length);
 					for(var i = 0; i < data.comments.hits.length; i++) {
 						commentList.innerHTML += ElementFactory.createCommentItem(data.comments.hits[i]);
 					}
@@ -85,8 +86,9 @@ QuestionDetails.vote = function(dir, targetDiv) {
 }
 
 window.onload = function() {
-	redirect = true;
 	QuestionCommon.refreshDefaultHeader();
-	displayCourseList();
+	CourseList.refreshCourseList(function() {
+		CourseList.setSelectedIndex(0);
+	});
 	QuestionDetails.refreshDetailsView();
 }

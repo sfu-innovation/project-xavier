@@ -10,9 +10,12 @@ function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
 
 	console.log('deleteTag');
-	console.log(selectedTag.attr('UUID'));
+	var tagID = selectedTag.attr('UUID');
+	console.log(tagID);
 
-	//accent.deleteTag()
+	accent.deleteTagById(tagID, function(data){
+		console.log('deleted succesfully');
+	})
 
 }
 

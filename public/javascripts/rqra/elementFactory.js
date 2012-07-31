@@ -102,6 +102,14 @@ ElementFactory.createQuestionsNotFoundItem = function() {
 	return item;
 }
 
+ElementFactory.createResponseThankYouItem = function() {
+	var item = ""
+		//+ "<div class='question' style='cursor: default;'>"
+			+ "<div class='questionText'>Thank you for your Response</div>"
+		//+ "</div>";
+	return item;
+}
+
 ElementFactory.createPageNumbers = function(totalPages) {
 	if (totalPages > 0) {
 		var item = "<img src='../images/rqra/prev.png' alt='previous'>";

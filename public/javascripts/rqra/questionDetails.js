@@ -5,6 +5,8 @@
 	a single question and all of its comments
 */
 
+var voted = []
+
 function QuestionDetails() { }
 
 QuestionDetails.commentCount = 0;
@@ -79,16 +81,19 @@ QuestionDetails.postComment = function() {
 
 QuestionDetails.vote = function(dir, targetDiv) {
 	var id = targetDiv.parentNode.parentNode.querySelector(".questionId").innerHTML;
-	if (dir === 1) {
-		rqra.upVoteCommentById(id, function(data) { 
-			var previousValue = parseInt(targetDiv.querySelector(".upVoteCount").innerHTML);
-			targetDiv.querySelector(".upVoteCount").innerHTML = previousValue+1;
-		});
-	} else if (dir === -1) {
-		rqra.downVoteCommentById(id, function(data) { 
-			var previousValue = parseInt(targetDiv.querySelector(".downVoteCount").innerHTML);
-			targetDiv.querySelector(".downVoteCount").innerHTML = previousValue+1;
-		});
+	if (voted.indexOf(id) === -1) {
+		if (dir === 1) {
+			rqra.upVoteCommentById(id, function(data) { 
+				var previousValue = parseInt(targetDiv.querySelector(".upVoteCount").innerHTML);
+				targetDiv.querySelector(".upVoteCount").innerHTML = previousValue+1;
+			});
+		} else if (dir === -1) {
+			rqra.downVoteCommentById(id, function(data) { 
+				var previousValue = parseInt(targetDiv.querySelector(".downVoteCount").innerHTML);
+				targetDiv.querySelector(".downVoteCount").innerHTML = previousValue+1;
+			});
+		}
+		voted += id;
 	}
 }
 

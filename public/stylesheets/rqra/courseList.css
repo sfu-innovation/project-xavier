@@ -20,6 +20,7 @@ div.courseButton {
 	color: white;
 	background: #394161;
 	height: 30px;
+	-moz-height: 35px;
 	width: 90px;
 	border-bottom: 4px solid white;
 	cursor: pointer;
@@ -34,6 +35,7 @@ div.courseButtonSelectorTop {
 	width: 100%;
 	background: #1b88d0;
 	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
 }
 
 div.courseButtonSelectorBottom {
@@ -46,6 +48,7 @@ div.courseButtonSelectorBottom {
 	width: 100%;
 	background: #4d4d4d;
 	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
 }
 
 div.courseButtonTextContainer {

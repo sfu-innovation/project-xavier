@@ -105,5 +105,10 @@ function uploadTag(tag){
 
 }
 
+function filterTag(){
+	console.log("filterting....");
+	return false;
+}
+
 
 

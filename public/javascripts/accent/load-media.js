@@ -46,11 +46,8 @@ function formatTimeline(tag){
 
 function loadTags(uuid) {
 	var timeline = $(".Tagger").children(".Timeline");		
-	
-	console.log('loading tags');
+		
 	accent.getTagsByMediaFileId(uuid, function(data){
-		console.log("tags found:");
-		console.log(data);
 		var tagWindow = $(timeline).children(".TagWindow");		
 		data.tags.forEach(function(tag) {				
 			var tagStr = formatTimeline(tag);	
@@ -93,9 +90,6 @@ function bindTag(tag) {
 
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
-		console.log('i am being selected wowwwww');
-		console.log(selectedTag);
-		console.log(tagID)
 
 		accent.getTagById(tagID, function(data){
 			var tagTitle = document.getElementById("TagTitle");		
@@ -103,6 +97,7 @@ function bindTag(tag) {
 			var tagDescription = document.getElementById("TagDescription");
 			
 			tagTitle.value = data.tag.title;
+			// maybe needed not sure
 			//tagType.valdata.tag.type;
 			tagDescription.innerHTML = data.tag.description;
 		})
@@ -130,8 +125,7 @@ function bindTag(tag) {
 loadMedia(mediaID);
 loadTags(mediaID);
 
-$(document).ready(function () {
-	console.log("                          Tag Tools - always executed");
+$(document).ready(function () {	
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');

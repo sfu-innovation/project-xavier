@@ -57,6 +57,7 @@ function loadTags(uuid) {
 			tagWindow.before(tagStr);	
 
 		});	
+		bindTag($(".Tag"));
 	});
 
 }
@@ -110,11 +111,6 @@ function bindTag(tag) {
 		})
 	})
 }
-
-
-
-
-bindTag($(".Tag"));
 
 loadMedia(mediaID);
 loadTags(mediaID);

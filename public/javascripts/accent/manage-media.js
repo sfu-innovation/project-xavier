@@ -18,7 +18,6 @@ function fillSectionDD(){
 	$('select[name|="sectionSelect"]').empty();
 	common.sectionsInCourse(courseID, function(data){
 		if (data && data.errorcode === 0){
-			console.log(JSON.stringify(data));
 			for(var i = 0; i < data.sectionsInCourse.length; ++i){
 				var s = data.sectionsInCourse[i];
 				$('select[name|="sectionSelect"]').append("<option value=\"" + s.uuid + "\">" +

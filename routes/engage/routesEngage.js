@@ -532,11 +532,11 @@ exports.uploadResource = function (req,res){
 
 		var fileName = crypto.createHash('md5').update(UUID.generate()).digest('hex');
 
-		var fileType = '.' + ((req.files.article_file.name).split('.'))[1] || '';
+		var fileType =   ((req.files.article_file.name).split('.'))[1] || '';
 
-		fileType = fileType.toLowerCase();
+		fileType =  fileType.toLowerCase();
 
-		fileName += fileType;
+		fileName += '.' + fileType;
 
 		var serverPath = '/resources/files/' + fileName;
 

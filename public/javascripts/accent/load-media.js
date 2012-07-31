@@ -41,7 +41,7 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' 'UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
 function loadTags(uuid) {
@@ -78,8 +78,6 @@ function bindTag(tag) {
 			$(this).parent().children().removeClass("Selected");
 		$(this).addClass("Selected");
 
-		
-
 		if (evt.offsetX < 5) {
 			$(this).parent().data("action", "resize-left");
 		}
@@ -88,10 +86,28 @@ function bindTag(tag) {
 		}
 		else {
 			$(this).parent().data("action", "move");
-		}
+		}		
 		return true;
 	}).bind("mouseup", function() {
 		$(this).parent().data("action", false);
+
+		var selectedTag = $(this);
+		var tagID = selectedTag.attr("uuid");
+		console.log('i am being selected wowwwww');
+		console.log(selectedTag);
+		console.log(tagID)
+
+
+
+		accent.getTagById(tagID, function(data){
+			var tagTitle = document.getElementById("TagTitle");		
+			var tagType = document.getElementById("TagType");
+			var tagDescription = document.getElementById("TagDescription");
+
+			console.log('display tag');
+			console.log(data);
+		})
+
 		return true;
 	}).bind("mousemove", function(evt) {
 		if (evt.offsetX < 5) {

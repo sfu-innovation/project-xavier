@@ -120,7 +120,7 @@ exports.addNotificationSetting = function( args, callback){
 				callback(null, setting );
 			});
 		} else {
-			callback("setting already exists", null );
+			callback( null , notificationSettings );
 		}
 	});
 }

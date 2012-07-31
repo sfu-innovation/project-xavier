@@ -77,6 +77,11 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 	var addedUserNotifications = new Array();
 	var argsWithListeners = new Array();
 	NotificationListener.findAllNotificationListeners( arg, function( error, listeners ){
+		if ( null === listeners ){
+			console.log("[NotificationListener.findAllNotificationListeners] error - unable to find any notification listeners");
+			callback( null, new Array());
+			return;
+		}
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
 
@@ -107,7 +112,11 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 						if ( error ){
 							console.log("[UserNotification.createUserNotification] error - "+ error );
 							callback( null, new Object());
-						}else {
+						} else if ( newNotification === null ){
+							console.log("[UserNotification.createUserNotification] error - newNotification is null");
+							callback( null, new Object());
+						}
+						else {
 							addedUserNotifications.push( newNotification );
 
 							//The root of the problem lies here.
@@ -193,6 +202,12 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 				if ( error ){
 					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
 					callback( null, new Array());
+					return;
+				}
+				else if ( null === usernotifications ){
+					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - usernotifications is null");
+					callback(null, new Array());
+					return;
 				}
 				else {
 					//var notifications = new Object();
@@ -201,8 +216,15 @@ NotificationAction.prototype.retrieveUserNotificationsByUserAndTarget = function
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
 						User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+						    if ( null === foundUser ){
+						    	console.log("[User.find] error - no user was found");
+						    	callback( null, new Object());
+						    	return;
+						    }
 							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								//its ok if this is technically null since this isn't required to further our search
 								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									//its ok if this is technically null since this isn't required to further our search
 									tempObj.profile = userProfile;
 									tempObj.notificationListener = notificationListener;
 								    tempObj.notification = usernotification;
@@ -296,6 +318,11 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - " + error );
 					callback( null, new Array());
 				}
+				else if ( null === usernotifications ){
+					console.log("[UserNotification.findUserNotificationsByListenerUUID] error - usernotifications is null");
+					callback(null, new Array());
+					return;
+				}
 				else {
 					//var notifications = new Object();
 					//notifications.usernotifications = usernotifications;
@@ -303,8 +330,15 @@ NotificationAction.prototype.retrieveUserNotificationsByUser = function( args, c
 					async.forEachSeries( usernotifications, function( usernotification, callback ){
 						var tempObj = new Object();
 						require('../models/user.js').User.find({ where : { uuid : usernotification.origin}}).success(function( foundUser ){
+							if ( null === foundUser ){
+						    	console.log("[User.find] error - no user was found");
+						    	callback( null, new Object());
+						    	return;
+						    }
 							NotificationListenerImpl.find({ where : { uuid : usernotification.listener}}).success(function( notificationListener) {
+								//its ok if this is technically null since this isn't required to further our search
 								UserProfileImpl.find({ where : { user : foundUser.uuid }}).success(function( userProfile){
+									//its ok if this is technically null since this isn't required to further our search
 									tempObj.profile = userProfile;
 									tempObj.notificationListener = notificationListener;
 								    tempObj.notification = usernotification;
@@ -409,7 +443,7 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 					callback( null, new Array());
 					return;
 				}
-				if ( 0 === userNotifications.length ){
+				if ( null === userNotifications || 0 === userNotifications.length ){
 					console.log("[NotificationListener.findNotificationListener] error - no user notifications were found matching your parameters");
 					callback( null, new Array());
 					return;
@@ -418,6 +452,10 @@ NotificationAction.prototype.removeNotifier = function( args, callback){
 				UserNotification.removeUserNotifications( arg, function( error, removedUserNotifications){
 					if ( error ){
 						console.log("[NotificationListener.removeUserNotifications] error - "+error);
+						callback( null, new Array());
+						return;
+					} else if ( null === removedUserNotifications ){
+						console.log("[UserNotification.removeUserNotifications] error - removedUserNotifications is null");
 						callback( null, new Array());
 						return;
 					}else {

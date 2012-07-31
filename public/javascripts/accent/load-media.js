@@ -14,16 +14,6 @@ function playVideo(){
 	console.log("PLAY");
 }
 
-
-										<label>Type:</label>
-										<select>
-											<option>Important</option>
-											<option>Examable</option>
-											<option>Question</option>
-											<option>Interesting</option>
-											<option>General</option>
-										</select>
-
 function formatTagTypeOption(index){
 	var tagType = ["Important","Examable", "Question", "Interesting", "General"];
 	return "<option value='" + index + "'>" + tagType[index] + "</option>";
@@ -84,6 +74,7 @@ function formatTimeline(tag){
 function loadTags(uuid) {
 	var tagger = $(".Tagger").children(".Timeline");
 	
+	/*
 	accent.getTagsByMediaFileId(uuid, function(data){
 
 		data.tags.forEach(function(tag) {	
@@ -94,7 +85,8 @@ function loadTags(uuid) {
 		tagger.append(formatTagWindow());
 
 	});
-
+	*/
+	
 	//loadTagTypes();
 }
 
@@ -154,9 +146,10 @@ function bindTag(tag) {
 bindTag($(".Tag"));
 
 loadMedia(mediaID);
-loadTags(mediaID);
+//loadTags(mediaID);
 
 $(document).ready(function () {
+	console.log("always excuted");
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');

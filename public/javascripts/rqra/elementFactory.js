@@ -196,3 +196,22 @@ ElementFactory.createQuestionCounter = function(count, line1, line2) {
 		+ "</div>";
 	return item;
 }
+
+ElementFactory.createCourseBoxItem = function(course) {
+	if (course) {
+		var courseName = course.subject + "" + course.number;
+		return "<option value='" + course.uuid +  "' " + "title='" + courseName + "'>"
+				+ courseName + " - " + course.title 
+			+ "</option>";
+	} else {
+		return "";
+	}
+}
+
+ElementFactory.createWeekBoxItem = function(index, week) {
+	if (week) {
+		return "<option value='" + index + "'>" + "Week " + week.week + " - " + week.topic + "</option>";
+	} else {
+		return "<option value='" + index + "'>" + "Week " + index + "</option>";
+	}
+}

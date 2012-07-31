@@ -15,11 +15,11 @@ div#content
 		div.askFormField
 			div.askFormFieldName Course Name
 			div.askFormFieldValue
-				select#courseBox(onchange="RefreshWeekBox()")
+				select#courseBox(onchange="QuestionForm.onCourseBoxChanged()")
 		div.askFormField
 			div.askFormFieldName Week / Topic
 			div.askFormFieldValue
 				select#weekBox
 
-	div.formButton(onclick="PostQuestion()") Ask Question
+	div.formButton(onclick="QuestionForm.postQuestion()") Ask Question
 

@@ -1535,8 +1535,8 @@ function updatePostTime(){
 function displayMsg(msg){
 
 	$('#submitnew .msg div').html(msg);
-	$('#submitnew  .msg').fadeIn(500);
-	$('div#submitnew .loading').hide();
+	$('#submitnew  .msg').fadeIn(500,function(){	$('div#submitnew .loading').hide();});
+
 	setTimeout(function(){
 		$('#submitnew  .msg').fadeOut(500);
 	},3000);
@@ -1548,8 +1548,8 @@ function displayErrorMsg(err){
 
 
 	$('#submitnew .error div').html(err);
-	$('#submitnew  .error').fadeIn(500);
-	$('div#submitnew .loading').hide();
+	$('#submitnew  .error').fadeIn(500,function(){$('div#submitnew .loading').hide();});
+
 	setTimeout(function(){
 		$('#submitnew  .error').fadeOut(500);
 	},5000);

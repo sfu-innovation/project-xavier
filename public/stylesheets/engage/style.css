@@ -451,12 +451,11 @@ li.mobile_view	div.expand_btn{
 
 li.mobile_view div#mobile_notif ul{
 	margin-top: 0;
-	margin-left: -145px !important;
-	
+	margin-left: -122px !important;	
 	}
  
 li.mobile_view div#mobile_notif li{
-	width: 300px;
+	width: 280px;
 }
 
 li.mobile_view div#mobile_notif li p.msg{
@@ -1052,8 +1051,9 @@ div.innercontents#submitnew form{
 
 .sumbitrow .small.button{
 	width : 60px;
-	background-color: gray;
-	border: 0;
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
 }
 div.submit{
 	display: inline;
@@ -1725,23 +1725,33 @@ div#preference img.avatar{
 }
 div#upload_avatar{
 	text-align: center;
-	padding: 5px 10px;
 	border: 1px solid #9e9e9e;
 	width: 120px;
+	height: 25px;
 	background-color: #eee;
 	overflow:hidden;
 }
 
+
+#upload_article #article_title{
+	width: 80%;
+}
 .browsebox {
-	position: relative;
-	overflow:hidden;
+	position: absolute;
+	overflow: hidden;
+	right: 12px;
+	top: 30px;
 }
 
 .browsebox input {
 	position: absolute;
 	opacity: 0;
 }
-
+.browsebox .button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+}
 
 div#preference .columns:first-child a{
 	float: right;	

@@ -637,7 +637,6 @@ exports.index = function (req, res) {
 				
 			req.session.Profile = result;
 			res.redirect("/setup");
-			//res.end();
 			});
 
 		} else {
@@ -674,14 +673,13 @@ exports.setup = function(req, res) {
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
-			User.updateFullName(req.session.user.uuid, {
+			User.updateUserInfo(req.session.user.uuid, {
 				firstName: req.body.firstname, 
 				lastName: req.body.lastname},function(err, res){
 				if (err)
 					console.log(err)
 			});
 		}
-		console.log('stuff done')
 
 		if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
 			res.redirect("/");

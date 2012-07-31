@@ -38,7 +38,7 @@ var retrieveMedia = function(courseUUID, all){
 						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
 						"</a>" + 
 						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
-						"<div class='MediaInfo'><h1>" + mediaItem.title + "</h1>" + 
+						"<div class='MediaInfo'>" + "<a href=\"/video/" + mediaItem.uuid + "\">" + "<h1>" + mediaItem.title + "</h1>" + 
 						"<p>" + mediaItem.description + "</p>";
 					
 					// If getting media for all courses, also get the course 

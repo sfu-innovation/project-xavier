@@ -925,6 +925,7 @@ exports.setup = function(req, res) {
 			});
 
 		}
+		console.log('stuff done')
 
 			if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
 				res.redirect("/");

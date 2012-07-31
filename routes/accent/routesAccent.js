@@ -286,7 +286,7 @@ exports.mediafile = function(request,response){
 						if(!err){
 							//response.writeHead(200, { 'Content-Type': 'application/json' });
 							//response.end(JSON.stringify({ errorcode: 0, mediafile: mediaFile }));
-							response.redirect("/");	
+							response.redirect("/manage");	
 
 						}
 						else{

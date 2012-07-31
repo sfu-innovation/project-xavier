@@ -1902,7 +1902,6 @@ div.innercontents#user_detail_box img.profile_avatar{
 }
 div.innercontents#user_detail_box h4{
 	display: inline;
-	float: left;
 	width: 65%;
 	overflow: hidden;
 	margin-top: 0;
@@ -1939,7 +1938,7 @@ div.innercontents#user_detail_box #user_bio h6{
 	position: relative;
 }
 #week-info .topic_input input{
-	width: 85%;
+	width: 80%;
 	float: left;
 	
 }

@@ -509,28 +509,12 @@ exports.resourcesInCoursesByWeek = function (req, res) {
 }
 
 
-exports.updateWeekInfo = function(req,res){
-	var id = req.params.id;
-	var args = req.body;
-	Week.updateWeek(id,args,function(err,data){
-		if(data){
-			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:0, week:data}));
-		}
-		else{
-			res.writeHead(200, { 'Content-Type':'application/json' });
-			res.end(JSON.stringify({ errorcode:1, message:err }));
-		}
-	})
-
-}
-
 exports.courseWeekInfo = function(req,res){
 	var id = req.params.id;
 	var weekNum = req.params.week;
 
 
-	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
+	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
@@ -860,18 +844,21 @@ exports.index = function (req, res) {
 			});
 
 		} else {
+			UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+				req.session.Profile = result;
+			
+				res.render("engage/index", {
+					title:"SFU ENGAGE",
+					user:req.session.user,
+					courses:req.session.courses,
+					profile:req.session.Profile,
+					currentWeek:currentWeek
+				}, function (err, rendered) {
 
-			res.render("engage/index", {
-				title:"SFU ENGAGE",
-				user:req.session.user,
-				courses:req.session.courses,
-				profile:req.session.Profile,
-				currentWeek:currentWeek
-			}, function (err, rendered) {
-
-				res.writeHead(200, {'Content-Type':'text/html'});
-				res.end(rendered);
-			})
+					res.writeHead(200, {'Content-Type':'text/html'});
+					res.end(rendered);
+				})
+			});
 		}
 	}
 	else {

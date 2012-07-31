@@ -22,7 +22,7 @@ div#content
 		div.askFormField
 			div.askFormFieldName Week / Topic
 			div.askFormFieldValue
-				select#weekBox
+				select#weekBox(onchange="QuestionForm.onWeekBoxChanged()")
 
 	div.formButton(onclick="QuestionForm.postQuestion()") Ask Question
 

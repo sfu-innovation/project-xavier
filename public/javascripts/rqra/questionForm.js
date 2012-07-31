@@ -97,6 +97,10 @@ QuestionForm.onCourseBoxChanged = function() {
 	QuestionForm.refreshWeekBox();
 }
 
+QuestionForm.onWeekBoxChanged = function() {
+	QuestionCommon.setWeek(QuestionForm.getWeek());
+}
+
 QuestionForm.refreshCourseBox = function(callback) {
 	var courseBox = document.getElementById("courseBox");
 	if (courseBox) {

@@ -912,186 +912,31 @@
 			"uuid":"1001",
 			"app" : 2,
 			"course": 11,
-			"topic":"#just some rand1324om topics#topic2#top ic 3",
-			"week": 1
+			"topic":"#Introduction#How to using crop in PS#How to select color in PS",
+			"week": 13
 		},
 		{
 			"uuid":"1002",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some rand3232om topics",
-			"week": 2
+			"course": 12,
+			"topic":"#Personal Interview#Written Summary",
+			"week": 13
 		},
 		{
 			"uuid":"1003",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some ra2323dom topics",
-			"week": 3
+			"course": 13,
+			"topic":"#Code Freeze#Oral Code Presentation",
+			"week": 13
 		},
 		{
 			"uuid":"1004",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some ran2323dom topics",
-			"week": 4
-		},
-		{
-			"uuid":"1005",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some raweqndom topics",
-			"week": 5
-		},
-		{
-			"uuid":"1006",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ran12321dom topics",
-			"week": 6
-		},
-		{
-			"uuid":"1007",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some rqweqandom topics",
-			"week": 7
-		},
-		{
-			"uuid":"1008",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ra21312ndom topics",
-			"week": 8
-		},
-		{
-			"uuid":"1009",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ran`31dom topics",
-			"week": 9
-		},
-		{
-			"uuid":"1010",
-			"app" : 2,
-			"course": 11,
-			"week": 10
-		},
-		{
-			"uuid":"1011",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some rando231m topics",
-			"week": 11
-		},
-		{
-			"uuid":"1012",
-			"app" : 2,
-			"course": 11,
-			"week": 12
-		},
-		{
-			"uuid":"1013",
-			"app" : 2,
-			"course": 11,
+			"course": 14,
+			"topic":"#Business Report#Final Presentation",
 			"week": 13
-		},
-		{
-			"uuid":"1014",
-			"app" : 2,
-			"course": 11,
-			"week": 14
-		} ,
-		{
-			"uuid":"2001",
-			"app" : 2,
-			"course": 12,
-			"week": 1,
-			"topic":"#topic1#topic2#topic3"
-
-		},
-		{
-			"uuid":"2002",
-			"app" : 2,
-			"course": 12,
-			"week": 2
-		},
-		{
-			"uuid":"2003",
-			"app" : 2,
-			"course": 12,
-			"week": 3
-		},
-		{
-			"uuid":"2004",
-			"app" : 2,
-			"course": 12,
-			"week": 4
-		},
-		{
-			"uuid":"2005",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some r253andom topics",
-			"week": 5
-		},
-		{
-			"uuid":"2006",
-			"app" : 2,
-			"course": 12,
-			"week": 6
-		},
-		{
-			"uuid":"2007",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some r131andom topics",
-			"week": 7
-		},
-		{
-			"uuid":"2008",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some ra131ndom topics",
-			"week": 8
-		},
-		{
-			"uuid":"2009",
-			"app" : 2,
-			"course": 12,
-			"week": 9
-		},
-		{
-			"uuid":"2010",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some ra232ndom topics",
-			"week": 10
-		},
-		{
-			"uuid":"2011",
-			"app" : 2,
-			"course": 12,
-			"week": 11
-		},
-		{
-			"uuid":"2012",
-			"app" : 2,
-			"course": 12,
-			"week": 12
-		},
-		{
-			"uuid":"2013",
-			"app" : 2,
-			"course": 12,
-			"week": 13
-		},
-		{
-			"uuid":"2014",
-			"app" : 2,
-			"course": 12,
-			"week": 14
 		}
+
 	],
 	"tags": [
 		{

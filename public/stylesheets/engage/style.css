@@ -92,10 +92,29 @@ body{
 
 
 /* -----------------------------------------
-   Header and Navigation
+   splash page
 ----------------------------------------- */
 
+body#splash{
+	text-align: center;
+}
 
+body#splash .button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+	}
+body#splash #login_as p{
+	margin-bottom: 5px;
+}	
+body#splash #login_as a{
+	margin: 10px;
+	margin-top: 5px;
+}
+
+/* -----------------------------------------
+   Header and Navigation
+----------------------------------------- */
 div#header{
 	background-color: rgba(0,0,0,0.1);
 	font-family: "Lato", sans-serif;
@@ -1741,16 +1760,19 @@ div#upload_avatar{
 	overflow: hidden;
 	right: 12px;
 	top: 30px;
+	margin-left:225px;
 }
 
 .browsebox input {
 	position: absolute;
 	opacity: 0;
+	width: 10%;
 }
 .browsebox .button{
 	border-radius: 2px;
 	border-color: #555;
 	background-color: #888;
+	pointer-events: none;
 }
 
 div#preference .columns:first-child a{

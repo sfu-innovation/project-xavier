@@ -64,15 +64,6 @@
 			"userID":"ntakei",
 			"email":"ntakei@sfu.ca"
 		},
-		{
-			"uuid":"jhc20",
-			"firstName":"Ji Hoon",
-			"lastName":"Choi",
-			"type":0,
-			"userID":"jhc20",
-			"email":"jhc20@sfu.ca"
-
-		},
 		{	
 			"uuid":"yk38",
 			"firstName":"Yukai",
@@ -88,14 +79,6 @@
 			"type":0,
 			"userID":"mis2",
 			"email":"mis2@sfu.ca"
-		},
-		{
-			"uuid":"aka87",
-			"firstName":"Alex",
-			"lastName":"Kwan",
-			"type":0,
-			"userID":"aka87",
-			"email":"aka87@sfu.ca"
 		},
 		{
 			"uuid":"marko",
@@ -244,10 +227,6 @@
 		},
 		{
 			"course":"A8G7S6H7ASDFG9",
-			"user":"jhc20"
-		},
-		{
-			"course":"A8G7S6H7ASDFG9",
 			"user":"yk38"
 		},
 		{
@@ -271,10 +250,7 @@
 			"course":"11",
 			"user":"xna2"
 		},
-		{
-			"course":"A827346H7ASDFG9",
-			"user":"aka87"
-		},
+
 		{
 			"course":"A827346H7ASDFG9",
 			"user":"xna2"
@@ -288,22 +264,6 @@
 			"user":"hrl1"
 		},
 		{
-			"course":"A827346H7ASDFG9",
-			"user":"jhc20"
-		},
-		{
-			"course":"F827346H7ASDFG1",
-			"user":"jhc20"
-		},
-		{
-			"course":"F827346H7ASDFG2",
-			"user":"jhc20"
-		},
-		{
-			"course":"F827346H7ASDFG3",
-			"user":"jhc20"
-		},
-				{
 			"course":"A827346H7ASDFG9",
 			"user":"jrf2"
 		},
@@ -324,28 +284,7 @@
 		}
 	],
 	"notificationlistener":[
-		 {
-			"uuid":"B827346H7fvfvASDFFSDGQEE",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8AS87G",
-			"event":0
-		 },
-		 {
-			"uuid":"B827qwwqqza346H7ASDFFSDGQEE",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8AS87G",
-			"event":1
-		 },
-		 {
-			"uuid":"B827346Hqw3rwref7ASDFFSDGQEE",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8AS87G",
-			"event":2
-		 },
-		 {
+				 {
 			"uuid":"B827342qe2w6H7ASDFFSDGQEE",
 			"user":"mak10",
 			"app":1,
@@ -372,90 +311,12 @@
 			"app":1,
 			"target":"A7S7FHGA7SD11A7SDF8AS87G",
 			"event":3
-		 },
-		 {
-			"uuid":"B8273ASDSAD46H7ewqx2ASDFFSDGQEE",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
-			"event":0
-		 },
-		 {
-			"uuid":"GFDGDGDFGFDGW313EREDQWD",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
-			"event":1
-		 },
-		 {
-			"uuid":"B827346ADSDSDGFH7ASDFFSDGQEE",
-			"user":"aka87",
-			"app":1,
-			"target":"A7S7FHGA7SD11A7SDF8ASD7G",
-			"event":2
 		 }
-	],
+		],
 	"usernotification":[
-		{
-		 "listener": "B827qwwqqza346H7ASDFFSDGQEE",
-		 "description": "Mike commented on a post \n \"Why is the sky blue\"\n",
-		 "emailSent": false,
-		 "wait": 1,
-		 "origin": "aka87"
-		 },
-
-		{
-		 "listener": "B827qwwqqza346H7ASDFFSDGQEE",
-		 "description": "Yukai commented on a post \n \"Thats a dumb question\"\n",
-		 "emailSent": false,
-		 "wait": 1,
-		 "origin": "aka87"
-		 },
-		 {
-		 "listener": "B827342qe2w6H7ASDFFSDGQEE",
-		 "description": "Alex commented on a post \n \"Guy's cmon...\"\n",
-		 "emailSent": false,
-		 "wait": 2,
-		 "origin": "aka87"
-		 },
-		 {
-
-		 "listener": "B827342qe2w6H7ASDFAFSDGQEE",
-		  "description": "Alex posted a new document\n",
-		 "emailSent": false,
-		 "wait": 3,
-		 "origin": "aka87"
-		 },
-		 {
-
-		 "listener": "B827346H7ASDFFdq2qwSDGQEE",
-		 "description": "Alex commented on a post \n \"Guy's cmon...\"\n",
-		 "emailSent": false,
-		 "wait": 3,
-		 "origin": "aka87"
-		 },
-		 {
-
-		 "listener": "B827346H7ASDFQGFdq2qwSDGQEE",
-		  "description": "Alex posted a new document\n",
-		 "emailSent": false,
-		 "wait": 2,
-		 "origin": "aka87"
-		 }
-
-
 	],
 		"usernotificationsettings": [
-		{
-			"user":"aka87",
-			"app" : 1,
-
-			"notificationOnLike":1,
-			"notificationOnComment":3,
-			"notificationOnStar":2,
-			"notificationOnNewResource":0
-		 },
-		 {
+				 {
 			"user":"mak10",
 			"app" : 1,
 
@@ -502,26 +363,8 @@
 			"course":"A827346H7ASDFG9",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
-		},
-		{
-			"user":"jhc20",
-			"uuid":"abc1233",
-			"title":"Preparation for linear algebra",
-			"description":"MATH!",
-			"course":"A8G7S6H7ASDFG9",		
-			"path":"http://www.youtube.com/linear_algebra",
-			"type":3
-		},
-		{
-			"user":"jhc20",
-			"uuid":"abc1234",
-			"title":"Making videos",
-			"description":"no description",
-			"course":"A827346H7ASDFG9",		
-			"path":"http://www.youtube.com/yt",
-			"type":0
 		}
-	],
+		],
 	"coursesections":[
 		{
 			"course"  : "A827346H7ASDFG9",
@@ -1243,22 +1086,8 @@
 			"examable":true,
 			"reviewlater":true,
 			"shared":false
-		},
-		{
-			"user":"jhc20",
-			"uuid":"bbc3",
-			"start":10,
-			"end":30,			
-			"type":1,
-			"target":"abc1233",
-			"title":"math formula",
-			"description":"basicaly formula that all students must memorize",
-			"important":true,
-			"interest":false,
-			"examable":true,
-			"reviewlater":true,
-			"shared":false
 		}
+		
 	] ,
 	"stars": [
 		{

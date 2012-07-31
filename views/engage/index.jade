@@ -48,7 +48,17 @@ block content
 
 				div.cover
 					div.frontCard
-						form#share_article(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						script (type='text/javascript')
+							function validateForm()
+							{
+							var x=document.forms["share_article"]["article_url"].value;
+							
+							if (x==null || x=="")
+								{
+								alert("link is empty");
+								return false;
+								}
+						form#share_article(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom", onsubmit="return validateForm()")
 							label Share or
 								a.flip_btn  upload a resource!
 							input(name="article_url",type="text", id="article_url", placeholder="http://")

@@ -6,17 +6,21 @@ div#Container
 
 	div#Content
 		form(action="/api/mediafile", enctype="multipart/form-data", method="POST")
-			div
-				|Title: 
+			div(class="form-row")
+				span(class="form-row-text")
+					|Title: 
 				input(type="text", name="title")
-			div
-				|Description:
-				input(type="text", name="description")
-			div
-				|Course:
+			div(class="form-row")
+				span(class="form-row-text")
+					|Description:
+				textarea(name="description", cols="50", rows="10")
+			div(class="form-row")
+				span(class="form-row-text")
+					|Course:
 				select(name="course")
-			div
-				|Section:
+			div(class="form-row")
+				span(class="form-row-text")
+					|Section:
 				select(name="section")
 			input(type="file", name="mediafile")
 			input(type="submit", value="UPLOAD!")

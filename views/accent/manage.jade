@@ -1,0 +1,25 @@
+include ./component/header
+
+div#Container
+	a.Archives.Button(href="", onclick="return showUploadForm();") Upload
+
+	div#Content
+		include ./component/manage-media-list
+
+		div#uploadForm(style="display:none")
+			a.Archives.Button(id="closeUploadButton", onclick="return hideUploadForm();") X
+			form(action="/api/mediafile", enctype="multipart/form-data", method="POST")
+				div(class="form-row")
+					span(class="form-row-text")
+						|Title: 
+					input(type="text", name="title")
+				div(class="form-row")
+					span(class="form-row-text")
+						|Description:
+					textarea(name="description", cols="50", rows="10")
+				input(id="uploadFormCourse", type="text", name="course", style="display:none")
+				input(id="uploadFormSection", type="text", name="section", style="display:none")
+				input(type="file", name="mediafile")
+				input(type="submit", value="UPLOAD!")
+
+script(type="text/javascript", src="../javascripts/accent/manage-media.js")

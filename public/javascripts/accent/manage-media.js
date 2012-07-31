@@ -1,5 +1,4 @@
 var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
 
 function fillCourseDD(){
 	common.getUserCourses(function(data){				
@@ -24,9 +23,32 @@ function fillSectionDD(){
 				$('select[name|="section"]').append("<option value=\"" + s.uuid + "\">" +
 					s.title + "</option>");
 			}
+			setFormCourse();
+			setFormSection();
+			getMedia(courseID);
 		}
 	})
 }
 
+function setFormCourse(){
+	$('#uploadFormCourse').val($('select[name|="course"]').val())
+}
+
+function setFormSection(){
+	$('#uploadFormSection').val($('select[name|="section"]').val())
+	console.log("VAL " + $('#uploadFormSection').val())
+}
+
+function showUploadForm(){
+	$('#uploadForm').css('display','block');
+	return false;
+}
+
+function hideUploadForm(){
+	$('#uploadForm').css('display','none');
+	return false;
+}
+
 $('select[name|="course"]').change(fillSectionDD);
+$('select[name|="section"]').change(setFormSection);
 fillCourseDD();

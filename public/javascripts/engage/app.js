@@ -20,30 +20,47 @@ jQuery(document).ready(function ($) {
 		//if starred
 		//TODO: change to a better method later
 
-		$('#starred_btn').addClass('active');
+		$('.starred_btn').addClass('active');
 
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		$('#instructor_btn').addClass('active');
+		$('.instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('mine') != -1) {
-		$('#contruibutions_btn').addClass('active');
+		$('.contruibutions_btn').addClass('active');
 		loadMyArticles(engage);
 
 
 	}
-	else if (window.location.toString().indexOf('design') != -1) {
+	else if (window.location.toString().indexOf('preference') != -1) {
+
+		var originalFormContent;
+
+		originalFormContent = $('#edit_profile input[type=text]').serialize()
+
+
+		function onClose() {	var content = $('#edit_profile input[type=text]').serialize()
+			if (content != originalFormContent){
+				$('.ui-tabs-selected a').css('background-color','#ff9999').attr('title','unsaved changes'); //highlight tab that contains unsaved fields
+				return "popup question";
+			}
+		}
+
+		window.onbeforeunload = onClose;
 
 
 	}
+
 	else if (window.location.toString().indexOf('profile') != -1) {
 
 		loadProfileArticles(engage);
 	}
+
+
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
@@ -317,7 +334,7 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('course') != -1) {
 
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -357,8 +374,10 @@ jQuery(document).ready(function ($) {
 
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
-			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self.parent());
+			if ($('.topic_input').length < 5) {
+				var new_topic_box = renderTopicInput('');
+				$(new_topic_box).insertBefore(self.parent());
+			}
 		})
 
 
@@ -375,6 +394,7 @@ jQuery(document).ready(function ($) {
 			})
 			var id = $('#week-info').attr('data-week-id');
 			if(id && result){
+				console.log(result);
 				engage.updateWeekInfo(id,result,function(data){
 
 					if (data && data.errorcode === 0){
@@ -395,7 +415,7 @@ jQuery(document).ready(function ($) {
 
 	}
 	else {
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -1132,7 +1152,6 @@ function renderWeekInfoBox(item){
 }
 
 function renderArticlePreviewBox(item) {
-console.log(formartDate(item.createdAt));
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
@@ -1207,7 +1226,6 @@ function activateTab($tab) {
 function formartDate(old_date) {
 	var now = new Date();
 	var post_time = new Date(Date.parse(old_date));
-	console.log(post_time);
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
 }

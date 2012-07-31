@@ -358,7 +358,7 @@ jQuery(document).ready(function ($) {
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
 			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self);
+			$(new_topic_box).insertBefore(self.parent());
 		})
 
 
@@ -1065,8 +1065,8 @@ function renderTopicInput(topic){
 function renderWeekInfoBox(item){
 	var weekBox =
 		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
-			item.week +
-			'</h4>';
+			item.week + 
+			'</h4>' + '<span id="topic_span">TOPICS:</span>';
 	if (!item.owner){
 		if (!item.topic){
 			weekBox += '<p>' +
@@ -1095,7 +1095,7 @@ function renderWeekInfoBox(item){
 
 	//if is prof
 	else{
-
+		
 		if (!item.topic){
 			weekBox += renderTopicInput('');
 
@@ -1118,8 +1118,9 @@ function renderWeekInfoBox(item){
 			}
 		}
 
-		weekBox += '<span class="medium button add_btn">Add</span>';
-		weekBox += '<span class="button medium save_btn">Save</span>';
+		weekBox += '<div id="week_topic_btn">' + 
+			'<span class="medium button add_btn">Add</span>' + 
+			'<span class="button medium save_btn">Save</span>' + '</div>';
 
 	}
 
@@ -1205,7 +1206,7 @@ function activateTab($tab) {
 
 function formartDate(old_date) {
 	var now = new Date();
-	var post_time = parseDate(old_date);
+	var post_time = new Date(Date.parse(old_date));
 	console.log(post_time);
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
@@ -1341,7 +1342,7 @@ function weekConverter() {
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
 	var current_date = new Date();
-	var semester_start_date = new Date(parseDate('2012-05-07T07:00:00.000Z'));
+	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
 	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 

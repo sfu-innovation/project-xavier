@@ -712,9 +712,13 @@ div.post_details p a{
 	}
 
 div#submitnew .loading{
+	background-image: url('/images/engage/loading.gif');
+	background-position: 116px 100px;
+	background-repeat: no-repeat;
 	display: none;
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 170px;
+	padding-left:8px;
 	height: 360px;
 	position: absolute;
 	z-index: 5000;
@@ -1228,7 +1232,7 @@ div#article_container .thread li span.edit_btn{
 }
 
 .no-touch div#article_container .thread li span.edit_btn{
-	opacity: 0.5;
+	opacity: 0.7;
 
 	display: none;
 
@@ -1410,7 +1414,7 @@ div#course	{
 }
 
 div#info, div#week-info {
-	padding: 10px;
+	padding: 10px 25px;
 	
 }
 div#info ul{
@@ -1696,3 +1700,56 @@ div.innercontents#user_detail_box h3{
 	float:left;
 	height: 1500px;
 }
+
+
+/* -----------------------------------------
+   week topic
+----------------------------------------- */
+
+#week-info .topic_input{
+	position: relative;
+}
+#week-info .topic_input input{
+	width: 85%;
+	float: left;
+	
+}
+#week-info span#topic_span{
+	display: inline-block;
+	padding-bottom: 10px;
+	font-style: italic;
+	font-weight: bold;
+}
+#week-info .topic_input span.remove_btn{
+	margin-left: 8px;
+	float: left;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size: 17px;
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+
+}
+
+#week-info #week_topic_btn{
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
+}
+
+#week-info #week_topic_btn .button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+	margin-left: 5px;
+	}
+	
+#week-info ul{
+	list-style: none;
+}
+
+
+#week-info ul li{
+	font-style: italic;
+	}

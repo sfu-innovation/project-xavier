@@ -151,6 +151,11 @@ app.post("/api/course/resources", routesCommon.numberOfResourcesInCourse);
 app.get('/api/resource/:id/comments',routesEngage.commentsByResourceUUID);
 
 
+//notification
+app.get('/api/user/:uid/notifications',routesEngage.getNotifications);
+
+
+
 //non-REST calls
 // routing
 app.get('/login', routesEngage.login);

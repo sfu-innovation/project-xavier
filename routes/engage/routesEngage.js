@@ -512,6 +512,11 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
+exports.getNotifications = function (req,res){
+	routesCommon.getUserNotifications(2, req, res)
+
+}
+
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
 

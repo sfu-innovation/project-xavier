@@ -48,13 +48,13 @@ block content
 
 				div.cover
 					div.frontCard
-						form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						form#share_article(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Share or
 								a.flip_btn  upload a resource!
 							input(name="article_url",type="text", id="article_url", placeholder="http://")
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
-							div#sumbitrow
+							div.sumbitrow
 								div.selectcourse
 									select(class="customDropdown", name="article_course", value="select a course")
 										each item in courses
@@ -62,20 +62,20 @@ block content
 								div.submit
 									input(type="submit", value="Post", class="small button")
 					div.backCard
-						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						form#upload_article(name="upload_article", action="/resource/upload",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
 								a.flip_btn  share a resource!
 							div
-								input(name="article_title",type="text", id="article_title", placeholder="Title", disabled="disabled")
+								input(name="article_title",type="text", id="article_title", placeholder="Title")
 								div.browsebox
-									input(type="file", value="upload")
+									input(type="file",name="resource-file",id="resource-file")
 									div#upload_file +
-							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")
+							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
-							div#sumbitrow
+							div.sumbitrow
 								div.selectcourse
-									select(class="customDropdown", name="article_course", value="select a course", disabled="disabled")
+									select(class="customDropdown", name="article_course", value="select a course")
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit
-									input(type="submit", value="Post", class="small button", disabled="disabled")
+									input(type="submit", value="Post", class="small button")

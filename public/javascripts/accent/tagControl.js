@@ -8,9 +8,17 @@ function getTagType(value) {
 
 function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
+	var tagger = $(".Tag.Selected").parent();
 	var tagID = selectedTag.attr('UUID');	
+	
+	if (tagID) {
+		accent.deleteTagById(tagID, function(data){});
+	}
 
-	accent.deleteTagById(tagID, function(data){});
+	tagger.find(".Tag.Selected").remove();
+	$(".TagWindow").hide();
+
+	
 }
 
 function uploadTag(tag){
@@ -76,10 +84,9 @@ function uploadTag(tag){
 
 	
 	accent.createTag(tag,function(data){
-		// put tag timelines dynamically
-		console.log(data);
-
+		// put tag timelines dynamically		
 		selectedTag.attr('UUID', data.tag.uuid);
+		$(".TagWindow").hide();
 	});		
 
 }

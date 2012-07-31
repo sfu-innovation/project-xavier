@@ -99,7 +99,7 @@ exports.questionForm = function(request, response) {
 }
 
 exports.questionFormPage = function(request, response) {
-	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user });
+	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user, course: request.session.course, week: request.session.week });
 }
 
 exports.notificationList = function(request, response) {

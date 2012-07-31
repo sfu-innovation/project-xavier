@@ -438,7 +438,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#submitnew form').bind('submit',function(){
+		$('#share_article').bind('submit',function(){
 
 			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
@@ -587,7 +587,7 @@ jQuery(document).ready(function ($) {
 //TODO: come back to here later
 
 	$('#upload_article').submit(function() {
-		status('uploading the file ...');
+		alert('!');
 
 		$(this).ajaxSubmit({
 

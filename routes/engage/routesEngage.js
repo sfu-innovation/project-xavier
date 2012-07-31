@@ -709,6 +709,15 @@ exports.design = function (req, res) {
 
 ///////////////////////////////////////////////////////////HEDY'S STUFF ABOVE/////////////////////////////////
 
+exports.uploadResource = function (req,res){
+	console.log("uploading shit");
+	console.log(req.files);
+	console.log(req.body);
+
+	res.writeHead(200, { 'Content-Type':'application/json' });
+	res.end(JSON.stringify({ errorcode:0, resource:"!" }));
+
+}
 
 exports.shareResource = function (req,res){
 	var url = req.body.url;

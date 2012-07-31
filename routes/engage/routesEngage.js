@@ -20,83 +20,6 @@ var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
 
 
-/*
-exports.login = function(request, response) {
-	var CAS = require('mikeklem-cas');
-	console.log(request.headers)
-	var cas = new CAS({base_url: 'https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/serviceValidate', service: 'http://'+request.headers['host']+'/login'});
-	console.log('http://'+request.headers['host']+request.url);
-	
-	//Pass ticket to CAS Validation url, or redirect to the CAS login page to get a ticket
-	var ticket = request.query["ticket"];
-	
-	if (ticket) {
-		cas.validate(ticket, function(err, status, username) {
-			if (err) {
-				// Handle the error
-	        	response.send({error: err});
-	    	}
-	    	
-	    	//Todo: proper redirection to page after login
-	    	else {
-	        	// Log the user in and store user in the session
-	        	User.selectUser({"userID":username}, function(error, user){
-	        		if(!error){
-	        			//If no user was found in the database, create a new one
-	        			if(!user){
-	        				var newUser = {
-								firstName: ""
-								, lastName: ""
-								, userID: username
-								, email: username + "@sfu.ca"
-							}
-	        				User.createUser(newUser, function(error, user){
-	        					if(error){
-		        					response.send(error);
-	        					}else{
-									var args= {
-										app:2,
-										user:user.uuid
-									}
-									createUserNotification(args, function(err, result){
-										if(err){
-											response.send(error);
-										}else{
-											request.session.user = user;;
-
-										}
-									})
-									UserProfile.getUserProfile(user, function(err, result) {
-										if (err) {
-											response.send(err);
-										}
-										request.session.Profile = result;
-										console.log(result)
-										console.log('redirecting...')
-										response.redirect('/');
-									});
-	        					}
-	        				})
-	        			}
-
-	        		}
-	        		else{
-	        			response.send(error);
-	        		}
-	        	});
-	      	}
-	    });
-	} 
-	else{
-		var myService = require('querystring').stringify({
-			service: 'http://'+request.headers['host']+request.url
-		});
-		response.redirect('https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/login?' + myService);
-	}
-}
-
-
-*/
 
 
 
@@ -514,7 +437,7 @@ exports.courseWeekInfo = function(req,res){
 	var weekNum = req.params.week;
 
 
-	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
+	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
@@ -951,6 +874,22 @@ exports.setup = function(req, res) {
 
 }
 
+
+exports.updateWeekInfo = function(req,res){
+	var id = req.params.id;
+	var args = req.body;
+	Week.updateWeek(id,args,function(err,data){
+		if(data){
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, week:data}));
+		}
+		else{
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:err }));
+		}
+	})
+
+}
 
 exports.starred = function (req, res) {
 

@@ -392,6 +392,7 @@ jQuery(document).ready(function ($) {
 			})
 			var id = $('#week-info').attr('data-week-id');
 			if(id && result){
+				console.log(result);
 				engage.updateWeekInfo(id,result,function(data){
 
 					if (data && data.errorcode === 0){

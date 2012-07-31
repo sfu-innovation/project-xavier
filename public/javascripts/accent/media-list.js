@@ -25,7 +25,21 @@ function getMedia(courseUUID, all){
 	}
 }
 
+function formatMediaList() {
+	return  "<div id='Main'>"
+			+ "<h1> Here are the videos you should watch! </h1>"
+			+ "<div id='media-list'></div>"
+			+ "</div>";
+}
+
 var retrieveMedia = function(courseUUID, all){
+	var mainContent = $("#Main").children("#media-list");
+
+	if (mainContent.size() === 0) {		
+		var mediaList = formatMediaList();
+		$("#Main").replaceWith(mediaList);
+	}
+
 	accent.getMediaFiles(courseUUID, function(response){
 		$('#media-list').empty();
 		var media = response.media;

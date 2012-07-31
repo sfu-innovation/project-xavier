@@ -97,15 +97,14 @@ function bindTag(tag) {
 		console.log(selectedTag);
 		console.log(tagID)
 
-
-
 		accent.getTagById(tagID, function(data){
 			var tagTitle = document.getElementById("TagTitle");		
 			var tagType = document.getElementById("TagType");
 			var tagDescription = document.getElementById("TagDescription");
-
-			console.log('display tag');
-			console.log(data);
+			
+			tagTitle.value = data.tag.title;
+			//tagType.valdata.tag.type;
+			tagDescription.innerHTML = data.tag.description;
 		})
 
 		return true;

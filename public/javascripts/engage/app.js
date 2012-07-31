@@ -20,18 +20,18 @@ jQuery(document).ready(function ($) {
 		//if starred
 		//TODO: change to a better method later
 
-		$('#starred_btn').addClass('active');
+		$('.starred_btn').addClass('active');
 
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		$('#instructor_btn').addClass('active');
+		$('.instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('mine') != -1) {
-		$('#contruibutions_btn').addClass('active');
+		$('.contruibutions_btn').addClass('active');
 		loadMyArticles(engage);
 
 
@@ -334,7 +334,7 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('course') != -1) {
 
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];

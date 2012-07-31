@@ -444,7 +444,7 @@ jQuery(document).ready(function ($) {
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
-			var course_name = $('#submitnew form option:selected').html();
+			var course_name = $('#share_article option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
@@ -587,16 +587,28 @@ jQuery(document).ready(function ($) {
 //TODO: come back to here later
 
 	$('#upload_article').submit(function() {
+		$('div#submitnew .loading').show();
+		var course_name = $('#upload_article option:selected').html();
 
 		$(this).ajaxSubmit({
 
+
 			error: function(xhr) {
+				displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
 
 			},
 
 			success: function(data) {
 				if (data && data.errorcode === 0){
-					alert('saved!');
+
+					var new_article = renderArticlePreviewBox(data.resource);
+					$('#sharebox').after(new_article);
+					displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
+
+				}
+				else{
+					displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
 				}
 
 			}

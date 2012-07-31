@@ -6,7 +6,14 @@ function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
 		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
 		$('#mediaPlayer').attr('autoplay', 'autoplay');
-	})
+		var mediaTitle = $("#Main").children("h1");
+		mediaTitle.text(data.mediafile.title);
+
+		accent.getMediaSection(uuid, function(section){			
+			var mediaSection = $("#Main").children("h2");
+			mediaSection.text(section.section);
+		})
+	})			
 }
 
 function playVideo(){

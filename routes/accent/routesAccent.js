@@ -532,7 +532,6 @@ exports.searchQuestionsRoute = function(request, response){
 
 exports.manageMedia = function (req, res) {
 	if (req.session && req.session.user) {
-
 		res.render("accent/manage",
 			{ 
 				title: "SFU Accent",

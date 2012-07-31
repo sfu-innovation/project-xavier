@@ -6,23 +6,26 @@ function getTagType(value) {
 	return 1;
 }
 
-function uploadTag(tag){
-	var tagNode = $(tag).parent().parent();
-	//var tagTitle = $(tagNode).children("input#TagTitle");
-	//var tagDescription = $(tagNode).children("textarea#TagDescription");
-	console.log('tag node');
-	
+function deleteTag(tag){
+	var selectedTag = $(".Tag.Selected");
+	var tagID = selectedTag.attr('UUID');	
 
+	accent.deleteTagById(tagID, function(data){});
+}
+
+function uploadTag(tag){
+	var selectedTag = $(".Tag.Selected");
+	
+	var tagStart = parseInt(selectedTag.css('left'));
+	var tagEnd = parseInt(selectedTag.css('width'));
 	
 	var tagTitle = document.getElementById("TagTitle").value;
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
 
-	console.log(tagTitle);
-	console.log(tagTarget);
-	console.log(tagType);
-	console.log(tagDescription);
+	console.log('tag selected');
+	console.log(selectedTag);
 
 	var tag = {				
 		user:"",
@@ -42,6 +45,8 @@ function uploadTag(tag){
 
 	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
 	tag.user = sessionUser;
+	tag.start = tagStart;
+	tag.end = tagEnd;
 	tag.target = tagTarget;
 	tag.title = tagTitle;
 	tag.description = tagDescription;	
@@ -69,11 +74,13 @@ function uploadTag(tag){
 		}
 	}
 
-
+	
 	accent.createTag(tag,function(data){
 		// put tag timelines dynamically
 		console.log(data);
-	});	
+
+		selectedTag.attr('UUID', data.tag.uuid);
+	});		
 
 }
 

@@ -47,13 +47,18 @@ function formatTimeline(tag){
 function loadTags(uuid) {
 	var timeline = $(".Tagger").children(".Timeline");		
 	
+	console.log('loading tags');
 	accent.getTagsByMediaFileId(uuid, function(data){
 		console.log("tags found:");
 		console.log(data);
+		var tagWindow = $(timeline).children(".TagWindow");		
 		data.tags.forEach(function(tag) {	
 			//tagger.append(formatTimeline(tag));	
-			var tag = formatTimeline(tag);						
-			tag.prependTo(timeline);
+							
+			var tagStr = formatTimeline(tag);	
+			tagWindow.before(tagStr);	
+								
+			//tag.prependTo(timeline);
 		});	
 
 		// append tag window here
@@ -121,7 +126,7 @@ function bindTag(tag) {
 bindTag($(".Tag"));
 
 loadMedia(mediaID);
-//loadTags(mediaID);
+loadTags(mediaID);
 
 $(document).ready(function () {
 	console.log("                          Tag Tools - always executed");

@@ -501,10 +501,10 @@ exports.searchQuestionsRoute = function(request, response){
 }
 
 
-exports.uploadMedia = function (req, res) {
+exports.manageMedia = function (req, res) {
 	if (req.session && req.session.user) {
 
-		res.render("accent/upload",
+		res.render("accent/manage",
 			{ 
 				title: "SFU Accent",
 				user :  req.session.user,
@@ -516,6 +516,9 @@ exports.uploadMedia = function (req, res) {
 				res.end(rendered);
 			}
 		);
+	}
+	else{
+		res.redirect("/login");	
 	}
 };
 

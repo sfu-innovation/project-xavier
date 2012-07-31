@@ -29,12 +29,8 @@ function loadTagTypes() {
 }
 
 function formatTagtype(value) {
-	var color = "";
-	if (value === 0)
-		color = "green";
-	else
-		color = "purple";
-	return color;
+	var color = ["green","yellow","pink","red","purple"];
+	return color[value];
 
 }
 

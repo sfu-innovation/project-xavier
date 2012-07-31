@@ -412,7 +412,7 @@ jQuery(document).ready(function ($) {
 
 	}
 	else {
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];

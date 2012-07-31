@@ -11,12 +11,13 @@ function deleteTag(tag){
 	var tagger = $(".Tag.Selected").parent();
 	var tagID = selectedTag.attr('UUID');	
 	
-	accent.deleteTagById(tagID, function(data){
-		// going to destroy it from the ui
-		tagger.find(".Tag.Selected").remove();
-		$(".TagWindow").hide();
+	if (tagID) {
+		accent.deleteTagById(tagID, function(data){});
+	}
 
-	});
+	tagger.find(".Tag.Selected").remove();
+	$(".TagWindow").hide();
+
 	
 }
 
@@ -83,10 +84,9 @@ function uploadTag(tag){
 
 	
 	accent.createTag(tag,function(data){
-		// put tag timelines dynamically
-		console.log(data);
-
+		// put tag timelines dynamically		
 		selectedTag.attr('UUID', data.tag.uuid);
+		$(".TagWindow").hide();
 	});		
 
 }

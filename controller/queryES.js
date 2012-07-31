@@ -41,7 +41,7 @@ var addUsersToData = function(data, callback){
 	results.total = data.hits.total;
 	results.hits = [];
 
-	async.forEach(data.hits.hits, function(item, done){
+	async.forEachSeries(data.hits.hits, function(item, done){
 		addUserToData(item, function(err, result){
 			if(err)
 				return callback(err)
@@ -66,13 +66,13 @@ var addUserToData = function(data, callback){
 		}
 
 		userProfile.getUserProfile(data._source.user, function(err, profile){
-			if(err){
-				console.log("Profile already exists")
-			}
+			if(err)
+				return callback(err)
 
-			if(profile){
+
+			if(profile)
 				data.profile = profile.profilePicture;
-			}
+
 			callback(null, data);
 		})
 	});
@@ -452,7 +452,7 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 
 
 //change the status of a question from unanswered to answered, increments comment count
-QueryES.prototype.updateStatus = function(questionID, isInstructor, appType, callback){
+QueryES.prototype.updateQuestionStatus = function(questionID, isInstructor, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();
 	var data = {
@@ -647,7 +647,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 		isInstructor = true;
 	}
 
-	this.updateStatus(args.target, isInstructor, appType, function(err){
+	this.updateQuestionStatus(args.target, isInstructor, appType, function(err){
 		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 

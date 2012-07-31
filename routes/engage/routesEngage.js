@@ -974,7 +974,7 @@ exports.demoPage = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
+			app:2,
 			user:"llt3"
 		}
 
@@ -1028,7 +1028,7 @@ exports.demoProf = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
+			app:2,
 			user:"llt3"
 		}
 

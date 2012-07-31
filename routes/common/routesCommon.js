@@ -1062,11 +1062,11 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
-		if(request.session.user){
+		if(request.session.user){/*
 			nlp(queryData.searchQuery, function(query){
-				if(query)
-			 		queryData.searchQuery = query + " " + queryData.searchQuery;
-
+				if(query){
+			 		queryData.searchQuery = queryData.searchQuery + " " +  query;
+				}*/
 				queryData.uuid = request.session.user.uuid;
 				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
 					if (!err) {
@@ -1081,8 +1081,8 @@ exports.searchQuestionsRoute = function(appType, request, response){
 						response.writeHead(500, { 'Content-Type': 'application/json' });
 						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: searchQuestionsRoute' }));
 					}
-				});
-			});
+				});/*
+			});*/
 		}
 	}
 }

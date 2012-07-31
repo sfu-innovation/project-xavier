@@ -41,7 +41,7 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 							target : resourceUUID,
 							app    :2
 						}
-						Notification.addStarNotifier(args, function(error, result){
+						Notification.addStarNotifier(args, function(error, result){console.log("NSTARR")
 							if(error)
 								return callback(error);
 

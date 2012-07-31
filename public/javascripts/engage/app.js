@@ -438,7 +438,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#submitnew form').bind('submit',function(){
+		$('#share_article').bind('submit',function(){
 
 			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
@@ -582,6 +582,40 @@ jQuery(document).ready(function ($) {
 
 		}
 	})
+
+
+//TODO: come back to here later
+
+	$('#upload_article').submit(function() {
+		alert('!');
+
+		$(this).ajaxSubmit({
+
+			error: function(xhr) {
+				status('Error: ' + xhr.status);
+			},
+
+			success: function(response) {
+
+				if(response.error) {
+					status('Opps, something bad happened');
+					return;
+				}
+
+				var imageUrlOnServer = response.path;
+
+
+			}
+		});
+
+		// Have to stop the form from submitting and causing
+		// a page refresh - don't forget this
+		return false;
+	});
+
+
+
+
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 

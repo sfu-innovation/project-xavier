@@ -1062,12 +1062,25 @@ div#article_container{
 	
 }
 div#article_container #article{
-	padding: 1em 2em 3em;
+	padding: 0;
 	word-spacing: -0.05em;
 	line-height: 1.3em;
 
 }
 
+.no-touch div#article_container #article{
+/*browser*/
+	padding: 1em 2em 3em;
+	word-spacing: -0.05em;
+	line-height: 1.3em;
+
+
+}
+
+.no-touch div#article_container #article pre{
+	white-space: normal;
+	width: 100%;
+}
 div#article_container #article p{
 		font-size: 16px;
 		}

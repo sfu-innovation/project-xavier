@@ -37,8 +37,7 @@ function displayTags(uuid, type) {
 	accent.getTagsByMediaFileId(uuid, function(data){		
 		var tagWindow = $(timeline).children(".TagWindow");	
 		if(type === "") {
-			data.tags.forEach(function(tag) {
-				console.log(tag.type);
+			data.tags.forEach(function(tag) {				
 				var tagStr = formatTimeline(tag);	
 				tagWindow.before(tagStr);
 			});
@@ -63,27 +62,21 @@ function refreshTags(filterType){
 
 	switch(filterType) {
 		case "All":
-			console.log("a")
 			displayTags(mediaID,"");
 			break;
 		case "Important":
-			console.log("imp")
 			displayTags(mediaID,0);
 			break;
 		case "Examable":
-			console.log("e")
 			displayTags(mediaID,1);
 			break;
 		case "Question":
-			console.log("q")
 			displayTags(mediaID,2);
 			break;
 		case "Interesting":
-			console.log("i")
 			displayTags(mediaID,3);
 			break;
 		case "General":
-			console.log("g")
 			displayTags(mediaID,4);
 			break;
 	}

@@ -1,0 +1,36 @@
+include ./component/header
+
+div#Container
+	a.Archives.Button(href="", onclick="return showUploadForm();") Upload
+
+	div#Content
+		include ./component/manage-media-list
+
+		div#UploadForm(style="display:none")
+			a.Archives.Button(id="closeUploadButton", onclick="return hideUploadForm();") X
+			form(action="/api/mediafile", enctype="multipart/form-data", method="POST")
+				h1 UPLOAD YOUR MEDIA
+				div#UploadDropDowns
+					div#UploadCourseDD
+						|Course
+						div#UploadCourseOptions
+							select(class="Selected", name="course")
+
+					div#UploadSectionDD
+						|Week
+						div#UploadSectionOptions
+							select(name="section")
+
+				div#UploadFormFields
+					div(class="form-row")
+						span(class="form-row-text")
+							|Title: 
+						input(class="form-row-input", type="text", name="title")
+					div(class="form-row")
+						span(class="form-row-text")
+							|Description:
+						textarea(class="form-row-input", name="description", cols="50", rows="10")
+					input(type="file", name="mediafile")
+					input(type="submit", value="DONE")
+
+script(type="text/javascript", src="../javascripts/accent/manage-media.js")

@@ -4,98 +4,103 @@
 	Manages the page that lists all of the questions
 */
 
-var prevSearchQuery = "";
-var prevSearchType = "latest";
+function QuestionList() { }
 
-function refreshQuestionListHeader() {
-	var courseUuid = getUuid(currentCourse);
-	var courseTitle = document.getElementById("courseTitle");
-	if (!currentCourse || currentCourse === "" || currentCourse === "all") {
-			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-	} else {
-		common.getCourseById(courseUuid, function(data) {
-			courseTitle.innerHTML = "Questions for <span class='inserted'>" 
-				+ currentCourse.toUpperCase() + " " + data.course.title 
-				+ "</span> from";
-		});
-	}
+// static variables (please use as readonly)
+// ------------------------------------------------
+QuestionList.searchQuery = "";
+QuestionList.searchType = "latest";
+QuestionList.count = 0;
+QuestionList.page = 0;
+QuestionList.pageLength = 7; // number of items per page
 
-	var sectionTitle = document.getElementById("sectionTitle");
-	if (currentWeek === 0) {
-		sectionTitle.innerHTML = "All Weeks";
-	} else if (!currentCourse || currentCourse === "" || currentCourse === "all") {
-		sectionTitle.innerHTML = "Week " + currentWeek;
-	} else {
-		rqra.getWeeksByCourseId(courseUuid, function(data) {
-			if (data && data.errorcode === 0 && data.week.length > 0) {
-				for(var i = 0; i < data.week.length; ++i) {
-					if (data.week[i].week === currentWeek) {
-						sectionTitle.innerHTML = "Week " + currentWeek + " <span id='sectionName'>&#8212; " + data.week[i].topic + "</span>";
-					}
-				}	
-			} else {
-				sectionTitle.innerHTML = "Week " + currentWeek;
-			}
-		});
-	}
+// getters and setters
+// ------------------------------------------------
+
+QuestionList.setCount = function(c) {
+	QuestionList.count = c;
+	QuestionCommon.setQuestionCounter(c, "Questions", "for this Week");
+	QuestionList.refreshPageNumbers();
 }
 
-function refreshQuestionsList() {
-	displayQuestions(prevSearchType, 0);
+QuestionList.setPage = function(p) {
+	QuestionList.page = p;
+	QuestionList.refreshQuestionsList();
 }
 
-function displayQuestions(searchType, page) {
-	var searchQuery = prevSearchQuery;
-	prevSearchType = searchType;
-	var questionList = document.getElementById("questionsList");
-	rqra.searchSortedQuestions(searchQuery, searchType, currentCourse, currentWeek, page, function (data) {
-		questionList.innerHTML = "";
-		if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
-			displayTotal(data.questions.total);
-			displayPageNumbers(data.questions.total);
-			for (var i = 0; i < data.questions.hits.length; ++i) {
-				questionList.innerHTML += ElementFactory.createQuestionItem(data.questions.hits[i]);
-			}
+QuestionList.setSearchType = function(t) {
+	QuestionList.searchType = t;
+	QuestionList.refreshSearchTypeSelection();
+}
+
+QuestionList.refreshSearchTypeSelection = function() {
+	var questionTabs = document.getElementById("questionTabs");
+	var individualTabs = questionTabs.querySelectorAll(".tab");
+	for (var i = 0; i < individualTabs.length; ++i) {
+		if (individualTabs[i].getAttribute("value") === QuestionList.searchType) {
+			individualTabs[i].style.color = "#1b88d0";
 		} else {
-			displayTotal(0);
-			displayPageNumbers(0);
-			questionList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
+			individualTabs[i].style.color = "#AAAAAA";
 		}
-	});
+	}
+}
+
+QuestionList.refreshPageNumbers = function() {
+	var pageNumbers = document.getElementById("pageNumber");
+	var pagesTotal = Math.ceil(QuestionList.count / QuestionList.pageLength);
+	pageNumbers.innerHTML = ElementFactory.createPageNumbers(pagesTotal);
+}
+
+QuestionList.refreshQuestionsList = function() {
+	var questionListDiv = document.getElementById("questionsList");
+	if (questionListDiv) {
+		var currentCourse = QuestionCommon.course;
+		if (currentCourse.toLowerCase() === "all") currentCourse = "";
+		
+		rqra.searchSortedQuestions(QuestionList.searchQuery, QuestionList.searchType, currentCourse, QuestionCommon.week, QuestionList.page, function (data) {
+			questionListDiv.innerHTML = "";
+			if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
+				QuestionList.setCount(data.questions.total);
+				for (var i = 0; i < data.questions.hits.length; ++i) {
+					questionListDiv.innerHTML += ElementFactory.createQuestionItem(data.questions.hits[i]);
+				}
+			} else {
+				QuestionList.setCount(0);
+				questionListDiv.innerHTML += ElementFactory.createQuestionsNotFoundItem();
+			}
+		});
+	} else {
+		console.error("Question List: could not find questionsList div element");
+	}
 }
 
 function updateSearch() {
 	var inputbox = document.getElementById("askQuestionInput");
-	if (inputbox.value != prevSearchQuery && inputbox.value != "Ask a Question") {
-		console.log(inputbox.value);
-		prevSearchQuery = inputbox.value;
-		changePage(0);
+	if (inputbox.value != QuestionList.searchQuery && inputbox.value != "Ask a Question") {
+		QuestionList.searchQuery = inputbox.value;
+		QuestionList.setPage(0);
 	}
 }
 setInterval(updateSearch, 500);
-
-function changePage(page) {
-	displayQuestions(prevSearchType, page);
-}
-
-function displayTotal(total) {
-	var questionCount = document.getElementById("questionCountNumber");
-	questionCount.innerHTML = total;
-}
-
-function displayPageNumbers(total) {
-	var pageNumbers = document.getElementById("pageNumber");
-	pageNumbers.innerHTML = ElementFactory.createPageNumbers(total);
-}
 
 function gotoQuestionPage(clicked) {
 	var questionId = clicked.firstChild.innerHTML;
 	document.location.href = "/question/" + questionId;
 }
 
+function questionTabClicked(tabdiv, e) {
+	var event = e || window.event;
+	if (event.target && event.target !== tabdiv) {
+		QuestionList.setSearchType(event.target.getAttribute("value"));
+		QuestionList.setPage(0);
+	}
+}
+
 window.onload = function() {
-	// displays asked questions on page load
-	displayCourseList();
-	displayQuestions("latest", 0);
-	refreshQuestionListHeader();
+	CourseList.refreshCourseList(function() {
+		CourseList.setSelectedIndex(0);
+	});
+	QuestionCommon.refreshDefaultHeader();
+	QuestionList.refreshSearchTypeSelection();
+	QuestionList.refreshQuestionsList();
 }

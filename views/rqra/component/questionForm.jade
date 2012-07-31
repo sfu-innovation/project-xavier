@@ -1,8 +1,10 @@
 script(type="text/javascript", src="../javascripts/rqra/questionForm.js")
 
 div#content
-	div#formHeader
-		h2#sectionTitle Ask a New Question
+	include ./questionHeader
+	
+	div#hiddenCourse(style='display:none;') #{course}
+	div#hiddenWeek(style='display:none;') #{week}
 	
 	div#askForm
 		div.askFormField
@@ -16,11 +18,11 @@ div#content
 		div.askFormField
 			div.askFormFieldName Course Name
 			div.askFormFieldValue
-				select#courseBox(onchange="RefreshWeekBox()")
+				select#courseBox(onchange="QuestionForm.onCourseBoxChanged()")
 		div.askFormField
 			div.askFormFieldName Week / Topic
 			div.askFormFieldValue
 				select#weekBox
 
-	div.formButton(onclick="PostQuestion()") Ask Question
+	div.formButton(onclick="QuestionForm.postQuestion()") Ask Question
 

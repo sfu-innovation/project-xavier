@@ -14,6 +14,7 @@ div#header {
 }
 
 img#logo {
+	position: relative;
 	margin-top: 0px;
 	width: 76px;
 	height: 46px;
@@ -121,11 +122,35 @@ div#newNotificationCount {
 	}
 }
 
+@-moz-keyframes notification-menu-animation {
+	0% { 
+		top: -5000px;
+		opacity: 0; 
+	}
+	5% { 
+		top: -5000px;
+		opacity: 0; 
+	}
+	6% {
+		top: 10px;
+		opacity: 0;
+	}
+	95% { 
+		top: 38px;
+		opacity: 1;
+	}
+	100% { 
+		top: 38px;
+		opacity: 1;
+	}
+}
+
 nav#notificationList {
 	position: absolute;
 	top: -5000px;
-	left: -220px;
+	left: -210px;
 	-webkit-animation: notification-menu-animation 300ms 0ms infinite alternate forwards;
 	-webkit-animation-play-state: paused;
-	box-shadow: 4px 4px 5px rgba(0,0,0,0.3);
+	-moz-animation: notification-menu-animation 300ms 0ms infinite alternate forwards;
+	-moz-animation-play-state: paused;
 }

@@ -1,0 +1,14 @@
+div#Main(onload="getMedia();")
+	h1 Manage Your Media
+	div#CourseDD
+		|Course
+		div#CourseOptions
+			select(class="Selected", name="courseSelect")
+
+	div#SectionDD
+		|Week
+		div#SectionOptions
+			select(name="sectionSelect")
+	
+	div#media-list
+script(type="text/javascript", src="../javascripts/accent/media-list.js")

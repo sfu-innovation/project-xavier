@@ -82,14 +82,6 @@
 			"email":"yk38@sfu.ca"
 		},
 		{	
-			"uuid":"hrl1",
-			"firstName":"Hedy",
-			"lastName":"Liu",
-			"type":0,
-			"userID":"hrl1",
-			"email":"hrl1@sfu.ca"
-		},
-		{	
 			"uuid":"mis2",
 			"firstName":"Izaak",
 			"lastName":"Schroeder",
@@ -494,7 +486,7 @@
 			"type":0
 		},
 		{
-			"user":"BSDF787D98A7SDF8ASD7G",
+			"user":"mak10",
 			"uuid":"abc1231",
 			"title":"How to dribble like Lionel",
 			"description":"Only Mesi can be Mesi",
@@ -503,7 +495,7 @@
 			"type":1
 		},
 		{
-			"user":"BSDF787D98ASDF099D7G",
+			"user":"mak10",
 			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
 			"description":"Buy a wok, some chicken, and terriyaki sauce.  Cook the chicken in the wok.  Add the terriyaki sauce.  Put it on a plate.  Put it in your mouth.  Enjoy!",
@@ -533,12 +525,12 @@
 	"coursesections":[
 		{
 			"course"  : "A827346H7ASDFG9",
-			"section" : "A827346H7AFSSFG9",
+			"section" : "1",
 			"app"       : 2
 		},
 		{
 			"course"  : "A827346H7ASDFG9",
-			"section" : "A827341H7AFSSFG9",
+			"section" : "2",
 			"app"       : 2
 		},
 		{
@@ -548,7 +540,7 @@
 		},
 		{
 			"course"  : "A8G7S6H7ASDFG9",
-			"section" : "A827341H7AFFFFG9",
+			"section" : "1",
 			"app"       : 2
 		},
 		{
@@ -558,7 +550,7 @@
 		},
 		{
 			"course"  : "A8G7S6H7ASDFG9",
-			"section" : "VVV7341H7AFFFFG10",
+			"section" : "2",
 			"app"       : 2
 		},
 		{
@@ -623,11 +615,11 @@
 			"material":"abc1234"
 		},
 		{
-			"section": "A827346H7AFSSFG9",
+			"section": "2",
 			"material":"abc1233"
 		},
 		{
-			"section": "A827341H7AFFFFG9",
+			"section": "1",
 			"material":"abc1232"
 		},
 		{
@@ -635,11 +627,11 @@
 			"material":"abc1231"
 		},
 		{
-			"section": "A827346H7AFSSFG9",
+			"section": "2",
 			"material":"abc1230"
 		},
 		{
-			"section": "A827341H7AFFFFG9",
+			"section": "1",
 			"material": "A7S7FWGA7SD11A7SDF8ASD7G"
 		},
 		{

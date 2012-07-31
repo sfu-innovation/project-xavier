@@ -37,7 +37,7 @@ app.dynamicHelpers({
 app.get('/login', routesAccent.login);
 app.get('/logout', routesCommon.logout);
 
-app.get('/upload', routesAccent.uploadMedia);
+app.get('/manage', routesAccent.manageMedia);
 
 // user
 app.get('/api/user/courses', routesCommon.userCourses); // gets a list of all the users courses

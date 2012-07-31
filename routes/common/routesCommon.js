@@ -6,9 +6,13 @@ var QueryES = require('./../../controller/queryES.js');
 var nlp = require('./../../controller/nlp.js');
 var question = require('./../../models/question.js');
 var comment = require('./../../models/comment.js');
-var Notification = require(__dirname + "/../../controller/NotificationAction");
+var NotificationAction = require(__dirname + "/../../controller/NotificationAction");
 var UserNotificationSettings = require('../../models/userNotificationSettings.js');
 var Week = require(__dirname + "/../../models/week.js");
+var async = require('async');
+var CourseMember = require(__dirname + "/../../models/courseMember");
+var courseIdList = [11, 12, 13, 14];
+var sanitizer = require('sanitizer');
 
 exports.index = function(request, response) {
 	response.render('common/index', { title: "Homepage" });
@@ -21,13 +25,55 @@ exports.logout = function(request, response) {
 }
 
 var createUserNotification = function(args, callback){
-	//add user notification settings
-	Notification.createUserNotificationSettings(args, function(err, result){
+	NotificationAction.createUserNotificationSettings(args, function(err, success){
 		if(err)
 			return callback(err);
+		console.log("User notification setting - created")
 
-		callback(null, result);
+		User.getUserCourses(args.user, function(err, result){
+			if(err)
+				return callback(err)
+
+			console.log("Courses - Found")
+			result.forEach(function(course){
+				console.log("Course: " + course.subject + " " + course.number)
+			});
+
+			callback(null, result)
+		})
 	});
+}
+
+var createCoursesForUser = function(userId, callback){
+	async.forEach(courseIdList, function(id, done){
+		CourseMember.addCourseMember(userId, id, function(err,result){
+			if(err)
+				return callback(err)
+			done();
+		});
+	}, function(err){
+		if(err)
+			return callback(err)
+		console.log("Courses - Added to user: " + userId)
+		async.forEach(courseIdList, function(course, done){
+			var args = {
+				target      : course,
+				app         : 2
+			}
+			NotificationAction.setupCourseMaterialNotifiers(args, function(err, success){
+				if(err)
+					return callback(err)
+				done();
+			})
+		}, function(err){
+			if(err)
+				return callback(err)
+			console.log("Course material notification - created")
+			callback(null)
+		})
+	})
+
+
 }
 
 //apptype is used to setup inital user notification setting
@@ -61,21 +107,28 @@ exports.login = function(appType, request, response) {
 							}
 	        				User.createUser(newUser, function(error, user){
 	        					if(error){
-		        					response.send(error);
+		        					return response.send(error);
 	        					}else{
-									var args= {
-										app:appType,
-										user:user.uuid
-									}
-									createUserNotification(args, function(err, result){
-										if(err){
-											response.send(error);
-										}else{
-											request.session.user = user;
-											response.redirect('/');
+									//Add courses to user
+									createCoursesForUser(user.uuid, function(err){
+										if(err)
+											return response.send(err)
 
+										var args= {
+											app:appType,
+											user:user.uuid
 										}
+										createUserNotification(args, function(err, result){
+											if(err){
+												return response.send(err);
+											}else{
+												request.session.user = user;
+												request.session.courses = result;
+												response.redirect('/');
+											}
+										})
 									})
+
 	        					}
 	        				})
 	        			}
@@ -87,21 +140,14 @@ exports.login = function(appType, request, response) {
 								user:user.uuid
 							}
 							createUserNotification(args, function(err, result){
-								//err means the usr settings already exists for this app
-								console.log(err);
-								request.session.user = user;
-								//Store users courses in session for fast access
-								User.getUserCourses(user.uuid, function(error, courses) {
-									if(!error){
-										request.session.courses = courses;
-										response.redirect('/');
-									}
-									else{
-										request.session.courses = null;
-										response.redirect('/');	
-									}
-								});
-							});
+								if(err){
+									response.send(error);
+								}else{
+									request.session.user = user;
+									request.session.courses = result;
+									response.redirect('/');
+								}
+							})
 						}
 	        		}
 	        		else{
@@ -511,29 +557,36 @@ exports.questionRoute = function(appType, request, response) {
 	else if (request.method === "POST"){
 		//if not log in, cannot create a question
 		if(request.session && request.session.user){
-			//user, title, body, category
-			var newQuestion = new question(request.session.user.uuid
-				,request.body.question.title
-				,request.body.question.body
-				,request.body.question.category);
+			var title = sanitizer.sanitize(request.body.question.title)
+			var body = sanitizer.sanitize(request.body.question.body)
 
-			newQuestion.course = request.session.course;
-			newQuestion.week = parseInt(request.session.week);
+			if(title){
+				var newQuestion = new question(request.session.user.uuid
+					,title
+					,body
+					,request.body.question.category);
 
-			QueryES.addQuestion(newQuestion, appType, function(err, result) {
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, question: result }));
+				newQuestion.course = request.session.course;
+				newQuestion.week = parseInt(request.session.week);
+
+				QueryES.addQuestion(newQuestion, appType, function(err, result) {
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, question: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, question: "Failed to add a question" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addQuestion' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, question: "Failed to add a question" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addQuestion' }));
-				}
-			});
+				});
+			}else{
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Invalid title or body' }));
+			}
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -543,25 +596,28 @@ exports.questionRoute = function(appType, request, response) {
 	}
 
 	else if (request.method === "PUT") {
-		//TODO: need update document and unit-test
-		var questionTitle = request.body.title;
-		var questionBody = request.body.body;
+		var questionTitle = sanitizer.sanitize(request.body.title);
+		var questionBody = sanitizer.sanitize(request.body.body);
 
-		QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
-			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					response.end(JSON.stringify({ errorcode: 0, question: result }));
+		if(questionTitle){
+			QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
+				if (!err) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, question: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, question: "Failed to update question" }));
+					}
+				} else {
+					response.writeHead(500, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateQuestion' }));
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 0, question: "Failed to update question" }));
-				}
-			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateQuestion' }));
-			}
-		});
-
+			});
+		}else{
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Invalid title or body' }));
+		}
 	} else if (request.method === "DELETE") {
 		QueryES.deleteQuestion(question_id, appType, function(err, result) {
 			if (!err) {
@@ -768,46 +824,61 @@ exports.commentRoute = function(appType, request, response) {
 		});
 	} else if (request.method === "POST"){
 		if(request.session && request.session.user){
-			var newComment = new comment(
-				request.body.comment.target_uuid
-				,request.session.user.uuid
-				,request.body.comment.objectType
-				,request.body.comment.body);
+			var body = sanitizer.sanitize(request.body.comment.body)
 
-			QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
-				if (!err) {
-					response.writeHead(200, { 'Content-Type': 'application/json' });
-					if(result){
-						response.end(JSON.stringify({ errorcode: 0, comment: result }));
+			if(body){
+				var newComment = new comment(
+					request.body.comment.target_uuid
+					,request.session.user.uuid
+					,request.body.comment.objectType
+					,body);
+
+				QueryES.addComment(newComment, request.session.user, appType, function(err, result) {
+					if (!err) {
+						response.writeHead(200, { 'Content-Type': 'application/json' });
+						if(result){
+							response.end(JSON.stringify({ errorcode: 0, comment: result }));
+						}
+						else{
+							response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
+						}
+					} else {
+						response.writeHead(500, { 'Content-Type': 'application/json' });
+						response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
 					}
-					else{
-						response.end(JSON.stringify({ errorcode: 0, comment: "Failed to add a comment" }));
-					}
-				} else {
-					response.writeHead(500, { 'Content-Type': 'application/json' });
-					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: addComment' }));
-				}
-			});
+				});
+			}else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: 'Invalid body' }));
+			}
 		}
 		else{
 			response.writeHead(200, { 'Content-Type': 'application/json' });
 			response.end(JSON.stringify({ errorcode: 1, message: 'You aren\'t logged in' }));
 		}
 	} else if (request.method === "PUT") {
-		QueryES.updateComment(request.params.uid, request.body.body, appType, function(err, result) {
-			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					response.end(JSON.stringify({ errorcode: 0, comment: result }));
+		var body = sanitizer.sanitize(request.body.body)
+
+		if(body){
+			QueryES.updateComment(request.params.uid, body, appType, function(err, result) {
+				if (!err) {
+					response.writeHead(200, { 'Content-Type': 'application/json' });
+					if(result){
+						response.end(JSON.stringify({ errorcode: 0, comment: result }));
+					}
+					else{
+						response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update comment" }));
+					}
+				} else {
+					response.writeHead(500, { 'Content-Type': 'application/json' });
+					response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 0, comment: "Failed to update comment" }));
-				}
-			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateComment' }));
-			}
-		});
+			});
+
+		}else {
+			response.writeHead(500, { 'Content-Type': 'application/json' });
+			response.end(JSON.stringify({ errorcode: 1, message: 'Elasticsearch error: updateStatus' }));
+		}
 
 	} else if (request.method === "DELETE") {
 		QueryES.deleteComment(request.params.uid, appType, function(err, result) {
@@ -991,14 +1062,11 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
-		//console.log(JSON.stringify(request.body))
 		if(request.session.user){
-
 			nlp(queryData.searchQuery, function(query){
-				/*
-				if(query){
+				if(query)
 			 		queryData.searchQuery = query + " " + queryData.searchQuery;
-				}*/
+
 				queryData.uuid = request.session.user.uuid;
 				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
 					if (!err) {
@@ -1030,7 +1098,7 @@ exports.updateUserNotifications = function(appType, request, response){
 			, notificationOnComment: request.body.notificationOnComment
 			, notificationOnStar:request.body.notificationOnStar}
 
-		Notification.updateUserNotificationSettings(args, function(err, result){
+		NotificationAction.updateUserNotificationSettings(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
@@ -1119,7 +1187,7 @@ exports.getUserNotifications = function(appType, request, response){
 			user : request.params.uid,
 			app  : appType
 		}
-		Notification.retrieveUserNotificationsByUser(args, function(err, result){
+		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){
@@ -1144,7 +1212,7 @@ exports.removeCommentNotifier = function(appType, request, response){
 			app  : appType
 		}
 		console.log(JSON.stringify(args))
-		Notification.removeCommentNotifier(args, function(err, result){
+		NotificationAction.removeCommentNotifier(args, function(err, result){
 			if (!err) {
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				if(result){

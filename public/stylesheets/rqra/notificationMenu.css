@@ -2,6 +2,7 @@ div#notificationMenu {
 	width: 300px;
 	background: white;
 	font-size: 14px;
+	box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
 }
 
 div#notificationArrow {

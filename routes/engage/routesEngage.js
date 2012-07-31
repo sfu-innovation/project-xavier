@@ -19,6 +19,10 @@ var async = require('async');
 var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
 
+
+
+
+
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
@@ -433,7 +437,7 @@ exports.courseWeekInfo = function(req,res){
 	var weekNum = req.params.week;
 
 
-	Week.selectWeek({course:id,week:weekNum}, function (error, result) {
+	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
@@ -638,6 +642,19 @@ userobject.courses = {
 var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 exports.design = function (req, res) {
 	if (!req.body.article_url) {
 		var error = "";
@@ -736,22 +753,37 @@ exports.shareResource = function (req,res){
 
 exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
-
 	if (req.session && req.session.user) {
+		
+		if (req.session.user.firstName.length === 0 || req.session.user.lastName.length === 0){
+			UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+			if (err)
+				console.log(err)
+				UserProfile.updateProfile(req.session.user.uuid, {
+					profilePicture: '/images/engage/default_profile.png'
+				}, function(err, result){})
+				
+			req.session.Profile = result;
+			res.redirect("/setup");
+			//res.end();
+			});
 
-
-		res.render("engage/index", {
-			title:"SFU ENGAGE",
-			user:req.session.user,
-			courses:req.session.courses,
-			profile:req.session.Profile,
-			currentWeek:currentWeek
-		}, function (err, rendered) {
-
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
-
-		})
+		} else {
+			UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+				req.session.Profile = result;
+			
+				res.render("engage/index", {
+					title:"SFU ENGAGE",
+					user:req.session.user,
+					courses:req.session.courses,
+					profile:req.session.Profile,
+					currentWeek:currentWeek
+				}, function (err, rendered) {
+					res.writeHead(200, {'Content-Type':'text/html'});
+					res.end(rendered);
+				})
+			});
+		}
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -763,6 +795,55 @@ exports.index = function (req, res) {
 
 };
 
+exports.setup = function(req, res) {
+
+	if(req.session && req.session.user) {
+		console.log('Porfile: '+req.session.Profile)
+		if (req.method === 'POST') {
+			req.session.user.firstName = req.body.firstname;
+			req.session.user.lastName = req.body.lastname;
+			User.updateFullName(req.session.user.uuid, {
+				firstName: req.body.firstname, 
+				lastName: req.body.lastname},function(err, res){
+				if (err)
+					console.log(err)
+			});
+		}
+		console.log('stuff done')
+
+		if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
+			res.redirect("/");
+		}
+		else {
+			res.render("engage/setup", {
+				title: "Engage: First time Setup",
+				user: req.session.user,
+				profile:req.session.Profile,
+				courses:req.session.courses,
+				avatar: req.session.Profile.profilePicture,
+				msg: ""
+			});
+		}
+		
+	}
+}
+
+
+exports.updateWeekInfo = function(req,res){
+	var id = req.params.id;
+	var args = req.body;
+	Week.updateWeek(id,args,function(err,data){
+		if(data){
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:0, week:data}));
+		}
+		else{
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:1, message:err }));
+		}
+	})
+
+}
 
 exports.starred = function (req, res) {
 
@@ -1106,7 +1187,6 @@ exports.demoProf = function (req, res) {
 }
 
 exports.preference = function (req, res){
-	
 	if (req.session && req.session.user) {
 		ProfileSettings.settings(req, function(result) {
 
@@ -1219,4 +1299,3 @@ exports.commentsByResourceUUID = function(request, response) {
 		});
 	}
 }
-

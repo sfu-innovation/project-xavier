@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 
 
 	initUI();
-
+//	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
 
 
@@ -20,30 +20,47 @@ jQuery(document).ready(function ($) {
 		//if starred
 		//TODO: change to a better method later
 
-		$('#starred_btn').addClass('active');
+		$('.starred_btn').addClass('active');
 
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		$('#instructor_btn').addClass('active');
+		$('.instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('mine') != -1) {
-		$('#contruibutions_btn').addClass('active');
+		$('.contruibutions_btn').addClass('active');
 		loadMyArticles(engage);
 
 
 	}
-	else if (window.location.toString().indexOf('design') != -1) {
+	else if (window.location.toString().indexOf('preference') != -1) {
+
+		var originalFormContent;
+
+		originalFormContent = $('#edit_profile input[type=text]').serialize()
+
+
+		function onClose() {	var content = $('#edit_profile input[type=text]').serialize()
+			if (content != originalFormContent){
+				$('.ui-tabs-selected a').css('background-color','#ff9999').attr('title','unsaved changes'); //highlight tab that contains unsaved fields
+				return "popup question";
+			}
+		}
+
+		window.onbeforeunload = onClose;
 
 
 	}
+
 	else if (window.location.toString().indexOf('profile') != -1) {
 
 		loadProfileArticles(engage);
 	}
+
+
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
@@ -220,20 +237,20 @@ jQuery(document).ready(function ($) {
 			return false;
 		})
 
-		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
+		$('.article_options span#options span:nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
-
+			$(".article_options").toggleClass('night');
 			return false;
 		})
 
-		$('#article_options span#options span:nth-child(4) ').bind('click', function () {
+		$('.article_options span#options span:nth-child(4) ').bind('click', function () {
 			$("#article").toggleClass('larger');
 
 			return false;
 		})
 
 
-		$('#article_options span.star_btn.unstarred').live('click', function () {
+		$('.article_options span.star_btn.unstarred').live('click', function () {
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
 			if (resource_uuid) {
@@ -249,7 +266,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.star_btn.starred').live('click', function () {
+		$('.article_options span.star_btn.starred').live('click', function () {
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
 			if (resource_uuid) {
@@ -269,7 +286,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.like_btn.disliked').live('click',function(){
+		$('.article_options span.like_btn.disliked').live('click',function(){
 
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
@@ -290,7 +307,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.like_btn.liked').live('click',function(){
+		$('.article_options span.like_btn.liked').live('click',function(){
 
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
@@ -317,7 +334,7 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('course') != -1) {
 
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -355,30 +372,54 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('#week-info .edit_btn').live('click',function(){
+			var self = $(this);
+			$('#week-info .topic_panel').hide();
+			$('#week-info .edit_panel').slideDown('slow');
+
+		})
+
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
-			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self);
+			if ($('.topic_input').length < 5) {
+				var new_topic_box = renderTopicInput('');
+				$(new_topic_box).insertBefore(self.parent());
+			}
 		})
 
 
 		$('#week-info .save_btn').live('click',function(){
-			alert('!');
 			var self = $(this);
 			var topics = $('.topic_input input');
 			var result = "";
 			$.each(topics, function(i,topic){
 				console.log(topic);
-				 result += '#' + $(topic).val();
+				if($(topic).val()){
+					result += '#' + $(topic).val();
+
+				}
 			})
-			alert(result);
+			var id = $('#week-info').attr('data-week-id');
+			if(id && result){
+				console.log(result);
+				engage.updateWeekInfo(id,result,function(data){
+
+					if (data && data.errorcode === 0){
+
+						updateTopicList(data.week);
+
+					}
+				})
+
+			}
+
 
 		})
 
 
 	}
 	else {
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -668,8 +709,8 @@ function renderBox(item,type){
 			+ '</div>'
 		;
 	}
-
 	if (item.createdAt === item.updatedAt || !item.updatedAt){
+
 		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
 			+ ' .</span>' ;
 	}
@@ -1045,55 +1086,111 @@ function renderTopicInput(topic){
 	return html;
 }
 
-function renderWeekInfoBox(item){
+function updateTopicList(item){
+
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
-			item.week +
-			'</h4>';
-	if (!item.owner){
-		if (!item.topic){
+		'<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
 			weekBox += '<p>' +
-				'Instructor has not set up weekly topics yet.' +
+				topic_list[0] +
 				'</p>';
 		}
-		else{
-			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
-				weekBox += '<p>' +
-					topic_list[0] +
-					'</p>';
-			}
-			else{
-				topic_list.shift();
-				weekBox += '<ul>'
-				$.each(topic_list,function(i,topic){
-					weekBox += '<li>'+ topic+'</li>'
-				})
-				weekBox += '</ul>'
-				console.log(topic_list)
-			}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
 		}
 
+
 	}
+	weekBox += '<span class="button small edit_btn">Edit</span>';
+
+	$('#week-info .topic_panel').html(weekBox);
+	$('#week-info .edit_panel').hide();
+	$('#week-info .topic_panel').slideDown('slow');
+
+}
+
+function renderWeekInfoBox(item) {
+
+	var weekBox =
+		'<div class="three columns weekbox">'
+			+ '<div id="week-info" data-week-id="' + item.uuid + '" class="innercontents">'
+
+
+			+ '<div class="topic_panel">'
+			+ '<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
+			weekBox += '<p>' +
+				topic_list[0] +
+				'</p>';
+		}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
+		}
+
+
+	}
+	if (item.owner) {
+		weekBox += '<span class="button small edit_btn">Edit</span>';
+	}
+	weekBox += '</div>';
+
 
 	//if is prof
-	else{
 
-		if (!item.topic){
+	if (item.owner) {
+
+		weekBox += '<div class="edit_panel">';
+		weekBox += '<h4>Week '
+			+ item.week
+			+ '</h4>'+ '<span id="topic_span">TOPICS:</span>';
+		if (!item.topic) {
 			weekBox += renderTopicInput('');
 
 
-
 		}
-		else{
+		else {
 			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
+			if (topic_list[0] !== "") {
 				weekBox += renderTopicInput(topic_list[0]);
 			}
-			else{
+			else {
 				topic_list.shift();
 
-				$.each(topic_list,function(i,topic){
+				$.each(topic_list, function (i, topic) {
 					weekBox += renderTopicInput(topic);
 				})
 
@@ -1101,11 +1198,14 @@ function renderWeekInfoBox(item){
 			}
 		}
 
-		weekBox += '<span class="medium button add_btn">Add</span>';
-		weekBox += '<span class="button medium save_btn">Save</span>';
+		weekBox += '<div id="week_topic_btn">' +
+			'<span class="small button add_btn">Add</span>' +
+			'<span class="button small save_btn">Save</span>' + '</div>';
+
+
+		weekBox += '</div>';
 
 	}
-
 
 
 	weekBox += '</div></div>'
@@ -1114,10 +1214,9 @@ function renderWeekInfoBox(item){
 }
 
 function renderArticlePreviewBox(item) {
-
 	var article =
 		'<div class="three columns articlebox">'
-			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 			+ isOwner(item.owner)
 
 			+ '<a href="/profile/'+ item.user.uuid +'">'
@@ -1131,7 +1230,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
 			+ '</span>'
 
@@ -1308,6 +1407,11 @@ function stylePicker() {
 
 }
 
+function parseDate(input) {
+	var parts = input.match(/(\d+)/g);
+	return new Date(parts[0], parts[1]-1, parts[2]);
+}
+
 //2012-07-21T00:00:24.000Z
 function weekConverter() {
 
@@ -1401,3 +1505,13 @@ function displayErrorMsg(err){
 
 
 }
+
+/*
+function paddingforMediumScreen(){
+	var height = document.body.clientHeight;
+	var padding_bar = document.getElementById('padding-bar')
+	alert(height);
+	padding_bar.style.height = height
+
+}
+*/

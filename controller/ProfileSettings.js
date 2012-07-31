@@ -5,6 +5,7 @@ var User = require(__dirname + "/../models/user");
 
 
 var settings = exports.settings = function( req, callback ) {
+	console.log('in profile settings')
 	var profile = { },
 		bio = req.session.Profile.bio, 
 		pName = req.session.user.preferedName,
@@ -15,7 +16,7 @@ var settings = exports.settings = function( req, callback ) {
 		if( req.method === 'POST') {
 			var filepath, path;
 
-			//console.log(req.body)
+			console.log(req.body)
 
 			/***
 			 *	Need to find proper way to limit upload size. 
@@ -31,9 +32,9 @@ var settings = exports.settings = function( req, callback ) {
 						console.log('upload format: '+format)
 
 						path = req.files.upload.path;
-						filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+						filepath = './public/images/avatars/donotremove/'+req.session.user.uuid+'.'+format;
 
-						img = '/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+						img = '/images/avatars/donotremove/'+req.session.user.uuid+'.'+format;
 					} else {
 						msg = "Error: Profile picture must be an image file."
 					}
@@ -47,15 +48,15 @@ var settings = exports.settings = function( req, callback ) {
 				console.log('delete format: '+format)
 
 				path = './public/images/engage/default_profile.png';
-				filepath = './public/images/avatars/tmp/'+req.session.user.uuid+'.'+format;
+				filepath = './public/images/avatars/donotremove/'+req.session.user.uuid+'.'+format;
 
 				img = '/images/engage/default_profile.png';
 			
-			} else { //save
+			} else { //saves
 				console.log('save format: '+format)
 				if(req.body.helper !== ''){ //has format, otherwise keep current img
 					var name = req.session.user.uuid+'.'+req.body.helper;
-					path = './public/images/avatars/tmp/'+name;
+					path = './public/images/avatars/donotremove/'+name;
 					filepath = './public/images/avatars/'+name;
 
 					img = '/images/avatars/'+name;

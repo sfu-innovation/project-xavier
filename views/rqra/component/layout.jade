@@ -2,6 +2,7 @@
 html
 	head
 		title Real Questions Real Answers - #{title}
+		meta(http-equiv="Content-Type", content="text/html;charset=utf-8")
 		
 		// stylesheets
 		link(rel="stylesheet", href="../stylesheets/rqra/main.css")
@@ -20,16 +21,14 @@ html
 		script(type="text/javascript", src="../javascripts/core.api.js")
 		script(type="text/javascript", src="../javascripts/rqra/elementFactory.js")
 		
-		// component managers
+		// common component managers
 		script(type="text/javascript", src="../javascripts/rqra/header.js")
 		script(type="text/javascript", src="../javascripts/rqra/courseList.js")
 		script(type="text/javascript", src="../javascripts/rqra/timeline.js")
+		script(type="text/javascript", src="../javascripts/rqra/questionCommon.js")
 		
 		// global variables
 		script(type='text/javascript')
 			var common = new coreApi.Common();
 			var rqra = new coreApi.Presenter();
-			
-			var currentCourse = "";
-			var currentWeek = 0;
 	body!=body

@@ -1,27 +1,15 @@
 script(type="text/javascript", src="../javascripts/rqra/questionList.js")
 
 div#questionListContent
-	div#infolist
-		div#questionHeader
-			h2#courseTitle Questions for 
-				span.inserted 
-				span  from
-			h1#sectionTitle 
-				span#sectionName
-		div#questionCount
-			div#questionCountNumber 25
-			div#questionCountText
-				div#questionCountText1 Questions
-				div#questionCountText2 for this Week
-		
+	include ./questionHeader
 			
-	div#questionTabs
-		div.tab(onclick="displayQuestions('latest', 0)") Latest Questions
-		div.tab(onclick="displayQuestions('instructor', 0)") Instructor Answered
-		div.tab(onclick="displayQuestions('replied', 0)") Most Responses
-		div.tab(onclick="displayQuestions('viewed', 0)") Most Viewed
-		div.tab(onclick="displayQuestions('unanswered', 0)") Unanswered Questions
-		div.tab(onclick="displayQuestions('myQuestions', 0)") My Questions
+	div#questionTabs(onclick="questionTabClicked(this, event)")
+		div.tab(value="latest") Latest Questions
+		div.tab(value="instructor") Instructor Answered
+		div.tab(value="replied") Most Responses
+		div.tab(value="viewed") Most Viewed
+		div.tab(value="unanswered") Unanswered Questions
+		div.tab(value="myQuestions") My Questions
 	div#askNewQuestionText Can't find the Question you were looking for? 
 		a#askNewQuestionLink(href="/new") Ask a new Question!
 	

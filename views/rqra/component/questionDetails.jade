@@ -1,13 +1,7 @@
 script(type="text/javascript", src="../javascripts/rqra/questionDetails.js")
 
 div#questionListContent
-	div#questionHeader
-		div#listInfo
-			h2#courseTitle Questions for 
-				span.inserted 
-				span  from
-			h1#sectionTitle
-				span#sectionName
+	include ./questionHeader
 			
 	div#detailedQuestion
 	
@@ -18,4 +12,4 @@ div#questionListContent
 	div#askForm
 		div#addReplyText Add a Reply
 		textarea#replyText(rows="4", cols="40")
-		div#replyButton(onclick="postComment()") Reply
+		div#replyButton(onclick="QuestionDetails.postComment()") Reply

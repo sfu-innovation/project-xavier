@@ -5,102 +5,70 @@
 	a single question and all of its comments
 */
 
-function refreshQuestionsList() {
+function QuestionDetails() { }
 
+QuestionDetails.commentCount = 0;
+
+QuestionDetails.setCommentCount = function(c) {
+	QuestionDetails.commentCount = c;
 }
 
-function refreshQuestionListHeader() {
-
+QuestionDetails.getQuestionId = function() {
+	return window.location.pathname.replace("/question/", "");
 }
 
-function refreshQuestionDetailsListHeader(question) {
-	if (question) {
-		var courseTitle = document.getElementById("courseTitle");
-		if (!question._source.course) {
-			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-		} else {
-			var courseUuid = getUuid(question._source.course.toLowerCase());
-			if (!courseUuid || courseUuid === "") {
-				courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-			} else {
-				common.getCourseById(courseUuid, function(data) {
-					courseTitle.innerHTML = "Questions for <span class='inserted'>" 
-						+ question._source.course + " " + data.course.title 
-						+ "</span> from";
-				});
-				
-				currentCourse = question._source.course;
-				selectButtonByName(question._source.course);
-			}
-		}
-
-		var currentWeek = question._source.week;
-		var sectionTitle = document.getElementById("sectionTitle");
-		if (currentWeek === 0 || currentWeek === null) {
-			sectionTitle.innerHTML = "All Weeks";
-		} else if (!courseUuid || courseUuid === "") {
-			sectionTitle.innerHTML = "Week " + currentWeek;
-		} else {
-			rqra.getWeeksByCourseId(courseUuid, function(data) {
-				if (data && data.errorcode === 0 && data.week.length > 0) {
-					for(var i = 0; i < data.week.length; ++i) {
-						if (data.week[i].week === currentWeek) {
-							sectionTitle.innerHTML = "Week " + currentWeek + " - " + data.week[i].topic;
-						}
-					}	
-				} else {
-					sectionTitle.innerHTML = "Week " + currentWeek;
-				}
-			});
-		}
-	}
+QuestionDetails.updateViewCount = function() {
+	rqra.updateQuestionViews(QuestionDetails.getQuestionId(), function(data) { });
 }
 
-function loadPage(first) {
-	var questionId = window.location.pathname.replace("/question/", "");
+QuestionDetails.refreshDetailsView = function(callback) {
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
-	
+
 	// get question
-	rqra.getQuestionById(questionId, function(data) {
+	rqra.getQuestionById(QuestionDetails.getQuestionId(), function(data) {
 		if (data && data.errorcode === 0) {
+			
+			if (data.question._source.course) {
+				QuestionCommon.setCourse(data.question._source.course.toLowerCase());
+				QuestionCommon.setWeek(data.question._source.week);
+			}
+			
 			question.innerHTML = ElementFactory.createDetailedQuestionItem(data.question);
-			refreshQuestionDetailsListHeader(data.question);
 
 			// get comments
-			rqra.getCommentsByTargetId(questionId, '-', function(data) {
+			rqra.getCommentsByTargetId(QuestionDetails.getQuestionId(), '-', function(data) {
 				commentList.innerHTML = "";
 				if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
 					data.comments.hits.sort(function(a, b){ 
 						return (b._source.upvote - b._source.downvote)-(a._source.upvote - a._source.downvote);
 					});
-				
-					//displayPageNumbers(data.questions.total);
 					
+					QuestionDetails.setCommentCount(data.comments.hits.length);
 					for(var i = 0; i < data.comments.hits.length; i++) {
 						commentList.innerHTML += ElementFactory.createCommentItem(data.comments.hits[i]);
 					}
 					
-					// updates page view count
-					if (first) {
-						rqra.updateQuestionViews(questionId, function(data) {
-						
-						});
-					}
+					QuestionDetails.updateViewCount();
 				} else {
 					commentList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 				}
+				if (callback) callback();
 			});
 		}
 	});
 }
 
-function postComment() {
-	var questionId = window.location.pathname.replace("/question/", "");
+QuestionDetails.postComment = function() {
 	var commentBody = document.getElementById("replyText").value;
 	var commentList = document.getElementById("comments");
 	
-	rqra.createComment(questionId, commentBody, function(data) {
+	if (QuestionDetails.commentCount <= 0) {
+		commentList.innerHTML = "";
+	}
+	QuestionDetails.commentCount++;
+	
+	rqra.createComment(QuestionDetails.getQuestionId(), commentBody, function(data) {
 		if (data && data.errorcode === 0) {
 			rqra.getCommentById(data.comment._id, function(data2) {
 				commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
@@ -109,7 +77,7 @@ function postComment() {
 	});
 }
 
-function vote(dir, targetDiv) {
+QuestionDetails.vote = function(dir, targetDiv) {
 	var id = targetDiv.parentNode.parentNode.querySelector(".questionId").innerHTML;
 	if (dir === 1) {
 		rqra.upVoteCommentById(id, function(data) { 
@@ -124,8 +92,15 @@ function vote(dir, targetDiv) {
 	}
 }
 
+QuestionDetails.initialize = function() {
+	QuestionDetails.refreshDetailsView(function() {
+		CourseList.refreshCourseList(function() {
+			CourseList.setSelectedName(QuestionCommon.course);
+			QuestionCommon.refreshDefaultHeader();
+		});
+	});
+}
+
 window.onload = function() {
-	redirect = true;
-	displayCourseList();
-	loadPage(true);
+	QuestionDetails.initialize();
 }

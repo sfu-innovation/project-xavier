@@ -1,0 +1,27 @@
+extends layout
+
+
+
+block content
+
+	div.row.clearfix
+		div.twelve.columns
+			div#preference
+				dl.tabs
+					dt First Time Setup
+				ul.tabs-content
+					li.active#editTab
+						form(id="setup", action="/setup",method="post")
+							div#avatar_column.columns
+								div.browsebox
+
+							div#edit_info_column.four.columns
+								div#edit_box
+									label First Name:
+									input(type="text", name="firstname", maxlength="20")
+									label Last Name:
+									input(type="text", name="lastname", maxlength="20")
+									input.button(type="submit", value="save changes", onClick="confirm( 'Confirm changes? You can only set your full name once.' )")
+									
+								div#feedback
+									| #{msg}

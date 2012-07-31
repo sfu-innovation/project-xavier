@@ -8,14 +8,9 @@ function getTagType(value) {
 
 function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
+	var tagID = selectedTag.attr('UUID');	
 
-	console.log('deleteTag');
-	var tagID = selectedTag.attr('UUID');
-	console.log(tagID);
-
-	accent.deleteTagById(tagID, function(data){
-		console.log('deleted succesfully');
-	})
+	accent.deleteTagById(tagID, function(data){});
 
 }
 

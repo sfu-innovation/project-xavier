@@ -655,6 +655,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 			if(err)
 				return callback(err);
 
+			console.log('Inserting comment: ' + args.target)
 			NotificationAction.addCommentUserNotification(args, function(err){
 				if(err)
 					return callback(err);

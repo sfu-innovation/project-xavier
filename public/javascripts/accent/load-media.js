@@ -68,6 +68,16 @@ function selectedTag(tag) {
 	
 }
 
+function showTagInfo(title, description){
+	var tagTitle = document.getElementById("TagTitle");		
+	var tagType = document.getElementById("TagType");
+	var tagDescription = document.getElementById("TagDescription");
+
+	tagTitle.value = title;
+	tagDescription.innerHTML = description;
+	$(".TagWindow").show();
+}
+
 function bindTag(tag) {
 	tag.bind("mousedown", function(evt) {
 		evt.stopPropagation();
@@ -92,16 +102,11 @@ function bindTag(tag) {
 		var tagID = selectedTag.attr("uuid");
 
 		accent.getTagById(tagID, function(data){		
-			if (data.tag) {
-				var tagTitle = document.getElementById("TagTitle");		
-				var tagType = document.getElementById("TagType");
-				var tagDescription = document.getElementById("TagDescription");
+			if (data.tag) 
+				showTagInfo(data.tag.title, data.tag.description);			
+			else
+				showTagInfo("", "");
 
-				tagTitle.value = data.tag.title;
-				// maybe needed not sure
-				//tagType.valdata.tag.type;
-				tagDescription.innerHTML = data.tag.description;
-			}
 		})
 
 		return true;
@@ -132,12 +137,8 @@ $(document).ready(function () {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
 		
-		var tagTitle = document.getElementById("TagTitle");		
-		var tagDescription = document.getElementById("TagDescription");
-		tagTitle.value = "";
-		tagDescription.innerHTML = "";
-		$(".TagWindow").show();
-		
+		showTagInfo("","");
+
 		tag.data("offset", offset)
 		tag.prependTo($(this))
 		bindTag(tag)

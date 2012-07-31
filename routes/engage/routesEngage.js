@@ -18,6 +18,8 @@ var notification = require('../../controller/NotificationAction.js');
 var async = require('async');
 var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
+var UUID         = require('com.izaakschroeder.uuid');
+
 
 
 
@@ -713,9 +715,60 @@ exports.uploadResource = function (req,res){
 	console.log("uploading shit");
 	console.log(req.files);
 	console.log(req.body);
+	var title = req.body.article_title;
+	var description = req.body.article_comment;
+	var course = req.body.article_course;
 
-	res.writeHead(200, { 'Content-Type':'application/json' });
-	res.end(JSON.stringify({ errorcode:0, resource:"!" }));
+	if(req.files && req.files.article_file && req.files.article_file.name){
+
+		var fileName = require('crypto').createHash('md5').update(UUID.generate()).digest('hex');
+
+		var fileType = '.' + ((req.files.article_file.name).split('.'))[1] || '';
+
+		fileType = fileType.toLowerCase();
+
+		fileName += fileType;
+
+		var serverPath = '/resources/files/' + fileName;
+
+		require('fs').rename(
+			req.files.article_file.path,
+			'public' + serverPath,
+			function(error) {
+				if(error) {
+					console.log(error);
+					res.writeHead(200, { 'Content-Type':'application/json' });
+					res.end(JSON.stringify({ errorcode:1, message:"Cannot Save the file" }));
+					return;
+				}
+				var currentWeek = EngageAction.weekHelper();
+				Resource.createResource(req.session.user.uuid, {description:description, path:fileName, url:serverPath, excerpt:description, week:currentWeek,course:course,fileType:fileType,resourceType:2, title:title}, function(err,result){
+					if (result){
+						EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
+							res.writeHead(200, { 'Content-Type':'application/json' });
+							res.end(JSON.stringify({ errorcode:0, resource:result[0] }));
+						})
+
+					}
+					else{
+						res.writeHead(200, { 'Content-Type':'application/json' });
+						res.end(JSON.stringify({ errorcode:1, message:error }));
+
+
+					}
+
+
+
+				})
+
+			}
+		);
+
+	}
+	else{
+		//do something later
+	}
+
 
 }
 

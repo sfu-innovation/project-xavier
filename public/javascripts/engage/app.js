@@ -587,25 +587,21 @@ jQuery(document).ready(function ($) {
 //TODO: come back to here later
 
 	$('#upload_article').submit(function() {
-		alert('!');
 
 		$(this).ajaxSubmit({
 
 			error: function(xhr) {
-				status('Error: ' + xhr.status);
+
 			},
 
-			success: function(response) {
-
-				if(response.error) {
-					status('Opps, something bad happened');
-					return;
+			success: function(data) {
+				if (data && data.errorcode === 0){
+					alert('saved!');
 				}
 
-				var imageUrlOnServer = response.path;
-
-
 			}
+
+
 		});
 
 		// Have to stop the form from submitting and causing

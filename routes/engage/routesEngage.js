@@ -759,7 +759,10 @@ exports.index = function (req, res) {
 			UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
 			if (err)
 				console.log(err)
-				result.profilePicture='/images/engage/default_profile.png'
+				UserProfile.updateProfile(req.session.user.uuid, {
+					profilePicture: '/images/engage/default_profile.png'
+				}, function(err, result){})
+				
 			req.session.Profile = result;
 			res.redirect("/setup");
 			//res.end();
@@ -795,10 +798,13 @@ exports.index = function (req, res) {
 exports.setup = function(req, res) {
 
 	if(req.session && req.session.user) {
+		console.log('Porfile: '+req.session.Profile)
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
-			User.updateFullName(req.session.user.uuid, req.body.firstname, req.body.lastname,function(err, res){
+			User.updateFullName(req.session.user.uuid, {
+				firstName: req.body.firstname, 
+				lastName: req.body.lastname},function(err, res){
 				if (err)
 					console.log(err)
 			});
@@ -1183,7 +1189,6 @@ exports.demoProf = function (req, res) {
 exports.preference = function (req, res){
 	if (req.session && req.session.user) {
 		ProfileSettings.settings(req, function(result) {
-			console.log('result '+result)
 
 				res.render("engage/preference", 
 				{

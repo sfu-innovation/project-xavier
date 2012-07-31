@@ -4,7 +4,7 @@ var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 
 function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
-		$('#mediaPlayer').attr('src', data.mediafile.path);
+		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
 		$('#mediaPlayer').attr('autoplay', 'autoplay');
 	})
 }

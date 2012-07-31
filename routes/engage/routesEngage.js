@@ -19,6 +19,87 @@ var async = require('async');
 var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
 
+
+/*
+exports.login = function(request, response) {
+	var CAS = require('mikeklem-cas');
+	console.log(request.headers)
+	var cas = new CAS({base_url: 'https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/serviceValidate', service: 'http://'+request.headers['host']+'/login'});
+	console.log('http://'+request.headers['host']+request.url);
+	
+	//Pass ticket to CAS Validation url, or redirect to the CAS login page to get a ticket
+	var ticket = request.query["ticket"];
+	
+	if (ticket) {
+		cas.validate(ticket, function(err, status, username) {
+			if (err) {
+				// Handle the error
+	        	response.send({error: err});
+	    	}
+	    	
+	    	//Todo: proper redirection to page after login
+	    	else {
+	        	// Log the user in and store user in the session
+	        	User.selectUser({"userID":username}, function(error, user){
+	        		if(!error){
+	        			//If no user was found in the database, create a new one
+	        			if(!user){
+	        				var newUser = {
+								firstName: ""
+								, lastName: ""
+								, userID: username
+								, email: username + "@sfu.ca"
+							}
+	        				User.createUser(newUser, function(error, user){
+	        					if(error){
+		        					response.send(error);
+	        					}else{
+									var args= {
+										app:2,
+										user:user.uuid
+									}
+									createUserNotification(args, function(err, result){
+										if(err){
+											response.send(error);
+										}else{
+											request.session.user = user;;
+
+										}
+									})
+									UserProfile.getUserProfile(user, function(err, result) {
+										if (err) {
+											response.send(err);
+										}
+										request.session.Profile = result;
+										console.log(result)
+										console.log('redirecting...')
+										response.redirect('/');
+									});
+	        					}
+	        				})
+	        			}
+
+	        		}
+	        		else{
+	        			response.send(error);
+	        		}
+	        	});
+	      	}
+	    });
+	} 
+	else{
+		var myService = require('querystring').stringify({
+			service: 'http://'+request.headers['host']+request.url
+		});
+		response.redirect('https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/login?' + myService);
+	}
+}
+
+
+*/
+
+
+
 exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
@@ -638,6 +719,19 @@ userobject.courses = {
 var articles = [article_1, article_2, article_3, article_4, article_5];
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 exports.design = function (req, res) {
 	if (!req.body.article_url) {
 		var error = "";
@@ -738,20 +832,31 @@ exports.index = function (req, res) {
 	var currentWeek = EngageAction.weekHelper();
 
 	if (req.session && req.session.user) {
+		
+		if (req.session.user.firstName.length === 0 || req.session.user.lastName.length === 0){
+			UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
+			if (err)
+				console.log(err)
+				result.profilePicture='/images/engage/default_profile.png'
+			req.session.Profile = result;
+			res.redirect("/setup");
+			//res.end();
+			});
 
+		} else {
 
-		res.render("engage/index", {
-			title:"SFU ENGAGE",
-			user:req.session.user,
-			courses:req.session.courses,
-			profile:req.session.Profile,
-			currentWeek:currentWeek
-		}, function (err, rendered) {
+			res.render("engage/index", {
+				title:"SFU ENGAGE",
+				user:req.session.user,
+				courses:req.session.courses,
+				profile:req.session.Profile,
+				currentWeek:currentWeek
+			}, function (err, rendered) {
 
-			res.writeHead(200, {'Content-Type':'text/html'});
-			res.end(rendered);
-
-		})
+				res.writeHead(200, {'Content-Type':'text/html'});
+				res.end(rendered);
+			})
+		}
 	}
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
@@ -762,6 +867,85 @@ exports.index = function (req, res) {
 	}
 
 };
+
+exports.setup = function(req, res) {
+
+	if(req.session && req.session.user) {
+		if (req.method === 'POST') {
+			req.session.user.firstName = req.body.firstname;
+			req.session.user.lastName = req.body.lastname;
+			User.updateFullName(req.session.user.uuid, req.body.firstname, req.body.lastname,function(err, res){
+				if (err)
+					console.log(err)
+			});
+
+
+			CourseMember. addCourseMember(req.session.user.uuid, 11, function(err,result){});
+			CourseMember. addCourseMember(req.session.user.uuid, 12, function(err,result){});
+			CourseMember. addCourseMember(req.session.user.uuid, 13, function(err,result){});
+			CourseMember. addCourseMember(req.session.user.uuid, 14, function(err,result){});
+
+			User.getUserCourses(req.session.user.uuid, function (err, result) {
+
+				var args= {
+					app:2,
+					user:req.session.user.uuid
+				}
+
+				notification.createUserNotificationSettings(args, function(err, success){
+					if(success)
+						console.log("created: " + success)
+
+					var courseList = [];
+					result.forEach(function(course){
+						courseList.push(course.uuid);
+					})
+
+
+					async.forEach(courseList, function(course, done){
+						var args = {
+							target      : course,
+							app         : 2
+						}
+						notification.setupCourseMaterialNotifiers(args, function(err, callback){
+							if(err)
+								console.log(err)
+							done();
+						})
+					}, function(err){
+						if(err)
+							console.log("Problem adding course materials")
+
+						req.session.courses = result;
+					})
+				});
+			});
+
+		}
+
+			if (req.session.user.firstName.length !== 0 || req.session.user.lastName.length !== 0){
+				res.redirect("/");
+				//res.end();
+			}
+			else {
+				res.render("engage/setup", {
+				title: "Engage: First time Setup",
+				user: req.session.user,
+				profile:req.session.Profile,
+				courses:req.session.courses,
+				avatar: req.session.Profile.profilePicture,
+				msg: ""
+
+			
+			});
+
+			}
+		
+
+		
+	} 
+
+}
 
 
 exports.starred = function (req, res) {
@@ -1106,9 +1290,11 @@ exports.demoProf = function (req, res) {
 }
 
 exports.preference = function (req, res){
-	
+	console.log('in preference')
 	if (req.session && req.session.user) {
+		console.log('user '+req.session.Profile)
 		ProfileSettings.settings(req, function(result) {
+			console.log('result '+result)
 
 				res.render("engage/preference", 
 				{

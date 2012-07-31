@@ -188,3 +188,7 @@ app.get('/design', routesEngage.design);
 
 app.post('/resource/share', routesEngage.shareResource);
 app.post('/resource/upload', routesEngage.uploadResource);
+
+
+app.get('/setup', routesEngage.setup);
+app.post('/setup',routesEngage.setup)

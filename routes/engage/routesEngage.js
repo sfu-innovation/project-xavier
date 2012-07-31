@@ -440,16 +440,15 @@ exports.courseWeekInfo = function(req,res){
 	var weekNum = req.params.week;
 
 
-
 	Week.selectWeekAndCreateOneIfNotFind({course:id,week:weekNum,app:2}, function (error, result) {
 
 		if (result) {
 			var new_result = JSON.parse(JSON.stringify(result));
-			if (req.session.user.type === 1){
-				new_result.owner = true;
+			if (req.session.user.type === 0){
+				new_result.owner = false;
 			}
 			else{
-				new_result.owner = false;
+				new_result.owner = true;
 			}
 
 			res.writeHead(200, { 'Content-Type':'application/json' });
@@ -976,7 +975,7 @@ exports.demoPage = function (req, res) {
 
 		var args= {
 			app:2,
-			user:fake_user_2.uuid
+			user:"llt3"
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){
@@ -1030,7 +1029,7 @@ exports.demoProf = function (req, res) {
 
 		var args= {
 			app:2,
-			user:fake_user_2.uuid
+			user:"llt3"
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){

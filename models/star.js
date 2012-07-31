@@ -97,6 +97,7 @@ exports.isResourceStarred = function(args,callback){
 }
 
 exports.getStarredResources = function (userUUID, callback) {
+	console.log(userUUID);
 	Star.findAll({where:{user:userUUID}}).success(
 		function (resources) {
 			var resourceUUIDs = null;

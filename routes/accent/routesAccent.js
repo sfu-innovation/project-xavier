@@ -215,7 +215,7 @@ exports.mediafile = function(request,response){
 				title: request.body.title,
 				description: request.body.description,
 				course: request.body.course,
-				path: config.accentServer.mediaFolder + filename,
+				path: '/media/' + filename + '.mp4',
 				type: 0
 			}
 			MediaAction.addMediaFile(mediaFile, function(error, mediaFile){
@@ -226,7 +226,9 @@ exports.mediafile = function(request,response){
 					var audioArgs = [
 						'-i', request.files.mediafile.path,
 						'-threads', '0',
-						'-f', 'wav',
+						'-acodec', 'libvo_aacenc',
+						'-ac', '128k',
+						'-f', 'mp4',
 						'media/' + filename
 					]
 
@@ -253,13 +255,13 @@ exports.mediafile = function(request,response){
 						'-keyint_min', '25',
 						'-refs', '4',
 						'-trellis', '1',
-						'-partitions', '+parti8x8+parti4x4+partp8x8+partb8x8',
+						/*'-partitions', '+parti8x8+parti4x4+partp8x8+partb8x8',*/
 						'-s', '720x480',
 						'-acodec', 'copy'/*libvo_aacenc*/,
 						'-ab', '128k',
 						'-threads', '0',
 						'-f', 'mp4', 
-						'media/' + filename
+						config.accentServer.mediaFolder + filename + '.mp4'
 					]
 
 					if(filetype.match(/audio/)){
@@ -282,8 +284,10 @@ exports.mediafile = function(request,response){
 					}
 					require('../../controller/OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 						if(!err){
-							response.writeHead(200, { 'Content-Type': 'application/json' });
-							response.end(JSON.stringify({ errorcode: 0, mediafile: mediaFile }));
+							//response.writeHead(200, { 'Content-Type': 'application/json' });
+							//response.end(JSON.stringify({ errorcode: 0, mediafile: mediaFile }));
+							response.redirect("/");	
+
 						}
 						else{
 							response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -412,15 +416,47 @@ exports.courseMediaFiles = function(request, response){
 			}
 		})
 	}
+	else if(request.method === "POST" && request.body.where){
+		MediaAction.getMediaByCourse(request.body.where, function(error, result){
+			if(!error){
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 0, media: result }));
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		})
+	}
 }
 
 exports.index = function(req, res){
 	if (req.session && req.session.user) {
-		console.log(JSON.stringify(req.session.user))	
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
-			status : "logged in" }, 
+			status : "logged in" }, function(err, rendered){			
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				res.end(rendered);
+
+		})
+		
+	}
+	else {
+		demoUserNotification(function(){ 
+			res.redirect("/demo");		
+		});
+		
+	}	
+};
+
+exports.viewMediaPage = function(req, res){
+	if (req.session && req.session.user) {
+		res.render("accent/view-media", { 	title: "SFU Accent",
+			user :  req.session.user,
+			courses : req.session.courses,
+			mediaUUID: req.params.mediaID,
+			status : "logged in" },
 			function(err, rendered){			
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
@@ -441,6 +477,21 @@ exports.demoPage = function (req,res){
 		req.session.courses = result;
 		res.redirect('/');
 
+	});
+}
+
+//TODO: remove when everything is setup
+var notification = require('../../controller/NotificationAction.js')
+var demoUserNotification = function(callback){
+	var args= {
+		app:1,
+		user:"jhc20"
+	}
+	notification.createUserNotificationSettings(args, function(err, result){
+		if(err)
+			console.log(err);
+
+		callback();
 	});
 }
 
@@ -467,3 +518,11 @@ exports.uploadMedia = function (req, res) {
 		);
 	}
 };
+
+exports.getUserNotifications = function(request, response){
+	routesCommon.getUserNotifications(1, request, response);
+}
+
+exports.removeCommentNotifier = function(request, response){
+	routesCommon.removeCommentNotifier(1, request, response);
+}

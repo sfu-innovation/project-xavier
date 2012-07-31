@@ -1,5 +1,10 @@
-var common = new coreApi.Common();
-var rqra = new coreApi.Presenter();
+/*
+	Question Form
+	----------------------------
+	Manages the page where a user asks a question
+*/
+
+function QuestionForm() { }
 
 function LoadCourseBox() {
 	var courseBox = document.getElementById("courseBox");
@@ -19,8 +24,10 @@ function LoadCourseBox() {
 	});
 }
 
-function refreshQuestionListHeader() {
-
+function refreshCustomQuestionHeader() {
+	QuestionCommon.getCourseTitle(function(courseTitle) {
+		QuestionCommon.setQuestionHeader(courseTitle, "Ask a Question", "");
+	});
 }
 
 function refreshQuestionsList() {
@@ -53,7 +60,8 @@ function PostQuestion() {
 	var week = parseInt(document.getElementById("weekBox").value);
 	var index = document.getElementById("courseBox").selectedIndex;
 	var courseName = document.getElementById("courseBox").children[index].title.toLowerCase();
-	
+
+	//courseName and week still gets passed in fornow, but wont be added at REST
 	rqra.createQuestion(questionTitle, questionBody, courseName, week, function(data) {
 		if (data && data.errorcode === 0) {
 			document.location.href = "/question/" + data.question._id;
@@ -61,4 +69,8 @@ function PostQuestion() {
 	});
 }
 
-LoadCourseBox();
+window.onload = function() {
+	displayCourseList();
+	LoadCourseBox();
+	refreshCustomQuestionHeader();
+}

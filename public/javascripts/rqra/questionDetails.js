@@ -1,147 +1,75 @@
-var rqra = new coreApi.Presenter();
+/*
+	Question Details
+	----------------------------
+	Manages the content of a page displaying
+	a single question and all of its comments
+*/
 
-function formatQuestion(question) {
-	var instructorStyle = "";
-	if (question._source.isInstructor === "true") {
-		instructorStyle = "background: #ffe450;";
-	}
+function QuestionDetails() { }
 
-	return "<div class='question'>"
-			+ "<div class='questionTitle'>" + question._source.title + "</div>"
-			+ "<div class='questionId'>" + question._id + "</div>"
-			+ "<div class='questionData'>"
-				+ "<div style='" + instructorStyle + "'>"
-				+ "<img src='../images/rqra/prof.png' alt='Instructor Responses'/></div>"
-				+ "<div class='replies'>" + question._source.commentCount + " <img src='../images/rqra/reply.png' alt='Replies'/></div>"
-				+ "<div class='views'>" + question._source.viewCount + " <img src='../images/rqra/view.png' alt='Views'/></div>"
-				+ "<div>Asked "
-					+ "<span class='inserted'>" + jQuery.timeago(new Date(question._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + question.user.firstName + " " + question.user.lastName + "</span></div>"
-			+ "</div>"
-			+ "<div class='questionDetailsText'>" + question._source.body + "</div><hr/>";
+QuestionDetails.commentCount = 0;
+
+QuestionDetails.setCommentCount = function(c) {
+	QuestionDetails.commentCount = c;
 }
 
-function formatComment(comment) {
-	var instructorStyle = "";
-	if (comment.user.type === 1) {
-		instructorStyle = "background: #ffe450;";
-	}
-	
-	var badCommentStyle = "";
-	if (comment._source.upvote - comment._source.downvote < 0) {
-		badCommentStyle = "color: #AAAAAA;";
-	}
-	
-	return "<div class='comment' style='" + instructorStyle + badCommentStyle + "'>"
-			+ "<div class='questionId'>" + comment._id + "</div>"
-			+ "<div class='questionDetailsText'>" + comment._source.body + "</div>"
-			+ "<div class='questionData'>"
-				+ "<div>Asked "
-					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
-					+ "by <span class='inserted'>" + comment.user.firstName + " " + comment.user.lastName + "</span></div>"
-				+ "<div class='votes' onclick='vote(1, this)'><span class='upVoteCount'>" 
-				+ comment._source.upvote 
-				+ "</span> <img src='../images/rqra/up.png' alt='UpVotes'/></div>"
-				+ "<div class='votes' onclick='vote(-1, this)'><span class='downVoteCount'>" 
-				+ comment._source.downvote 
-				+ "</span> <img src='../images/rqra/down.png' alt='DownVotes'/></div>"
-			+ "</div>";
+QuestionDetails.getQuestionId = function() {
+	return window.location.pathname.replace("/question/", "");
 }
 
-function refreshQuestionsList() {
-
+QuestionDetails.updateViewCount = function() {
+	rqra.updateQuestionViews(QuestionDetails.getQuestionId(), function(data) { });
 }
 
-function refreshQuestionListHeader(question) {
-	if (question) {
-		var courseUuid = getUuid(question._source.course.toLowerCase());
-		var courseTitle = document.getElementById("courseTitle");
-		if (!courseUuid || courseUuid === "") {
-			courseTitle.innerHTML = "Questions for <span class='inserted'>All Courses</span> from";
-		} else {
-			common.getCourseById(courseUuid, function(data) {
-				courseTitle.innerHTML = "Questions for <span class='inserted'>" 
-					+ question._source.course + " " + data.course.title 
-					+ "</span> from";
-			});
-		}
-
-		var currentWeek = question._source.week;
-		var sectionTitle = document.getElementById("sectionTitle");
-		if (currentWeek === 0) {
-			sectionTitle.innerHTML = "All Weeks";
-		} else if (!courseUuid || courseUuid === "") {
-			sectionTitle.innerHTML = "Week " + currentWeek;
-		} else {
-			rqra.getWeeksByCourseId(courseUuid, function(data) {
-				if (data && data.errorcode === 0 && data.week.length > 0) {
-					for(var i = 0; i < data.week.length; ++i) {
-						if (data.week[i].week === currentWeek) {
-							sectionTitle.innerHTML = "Week " + currentWeek + " - " + data.week[i].topic;
-						}
-					}	
-				} else {
-					sectionTitle.innerHTML = "Week " + currentWeek;
-				}
-			});
-		}
-	}
-}
-
-function loadPage(first) {
-	var questionId = window.location.pathname.replace("/question/", "");
+QuestionDetails.refreshDetailsView = function() {
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
-	
+
 	// get question
-	rqra.getQuestionById(questionId, function(data) {
+	rqra.getQuestionById(QuestionDetails.getQuestionId(), function(data) {
 		if (data && data.errorcode === 0) {
-			question.innerHTML = formatQuestion(data.question);
-			refreshQuestionListHeader(data.question);
-			
+			question.innerHTML = ElementFactory.createDetailedQuestionItem(data.question);
+
 			// get comments
-			rqra.getCommentsByTargetId(questionId, '-', function(data) {
+			rqra.getCommentsByTargetId(QuestionDetails.getQuestionId(), '-', function(data) {
 				commentList.innerHTML = "";
 				if (data && data.errorcode === 0 && data.comments.hits.length > 0) {
 					data.comments.hits.sort(function(a, b){ 
 						return (b._source.upvote - b._source.downvote)-(a._source.upvote - a._source.downvote);
 					});
-				
-					//displayPageNumbers(data.questions.total);
 					
 					for(var i = 0; i < data.comments.hits.length; i++) {
-						commentList.innerHTML += formatComment(data.comments.hits[i]);
+						commentList.innerHTML += ElementFactory.createCommentItem(data.comments.hits[i]);
 					}
 					
-					// updates page view count
-					if (first) {
-						rqra.updateQuestionViews(questionId, function(data) {
-						
-						});
-					}
+					QuestionDetails.updateViewCount();
 				} else {
-					commentList.innerHTML += "<div class='comment'>This Question has not yet been Answered</div>"
+					commentList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 				}
 			});
 		}
 	});
 }
 
-function postComment() {
-	var questionId = window.location.pathname.replace("/question/", "");
+QuestionDetails.postComment = function() {
 	var commentBody = document.getElementById("replyText").value;
 	var commentList = document.getElementById("comments");
 	
-	rqra.createComment(questionId, commentBody, function(data) {
+	if (QuestionDetails.commentCount <= 0) {
+		commentList.innerHTML = "";
+	}
+	QuestionDetails.commentCount++;
+	
+	rqra.createComment(QuestionDetails.getQuestionId(), commentBody, function(data) {
 		if (data && data.errorcode === 0) {
 			rqra.getCommentById(data.comment._id, function(data2) {
-				commentList.innerHTML += formatComment(data2.comment);
+				commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
 			});
 		}
 	});
 }
 
-function vote(dir, targetDiv) {
+QuestionDetails.vote = function(dir, targetDiv) {
 	var id = targetDiv.parentNode.parentNode.querySelector(".questionId").innerHTML;
 	if (dir === 1) {
 		rqra.upVoteCommentById(id, function(data) { 
@@ -156,4 +84,9 @@ function vote(dir, targetDiv) {
 	}
 }
 
-loadPage(true);
+window.onload = function() {
+	redirect = true;
+	QuestionCommon.refreshDefaultHeader();
+	displayCourseList();
+	QuestionDetails.refreshDetailsView();
+}

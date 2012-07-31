@@ -3,7 +3,21 @@ extends layout
 block content
 
 	- var weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-	div.row
+	
+	div.row.show-for-small
+		div.mobile-four.columns
+			span#mobile_week_label WEEK
+			div#mobile_week_bar
+				ul
+					each week in weeks
+						li.mobile_week_item
+							- if (week > currentWeek && user.type ===0 )
+								a.disabled( data-week="#{week}") #{week}
+							- else
+								a.passed(href="#week#{week}", data-week="#{week}") #{week}
+	
+				
+	div.row.hide-for-small
 		div.twelve.columns#weeks-bar
 			ul
 				li
@@ -14,9 +28,24 @@ block content
 							a.disabled( data-week="#{week}") #{week}
 						- else
 							a.passed(href="#week#{week}", data-week="#{week}") #{week}
+
+
+
 	div.row.clearfix#contents
-		div.three.columns#sharebox
+		
+		div.three.columns#sharebox.hide-for-small
+
 			div.innercontents#submitnew
+				div.loading
+					span loading...
+				div.msg
+					span.delete_btn X
+					div
+
+				div.error
+					span.delete_btn X
+					div
+
 				div.cover
 					div.frontCard
 						form(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
@@ -31,13 +60,16 @@ block content
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit
-									input(type="submit", value="add", class="small button")
+									input(type="submit", value="Post", class="small button")
 					div.backCard
 						form(name="upload_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
 							label Upload or
 								a.flip_btn  share a resource!
-
-							input(name="article_url",type="text", id="article_url", placeholder="http://", disabled="disabled")
+							div
+								input(name="article_title",type="text", id="article_title", placeholder="Title", disabled="disabled")
+								div.browsebox
+									input(type="file", value="upload")
+									div#upload_file +
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment", disabled="disabled")
 
 							div#sumbitrow
@@ -46,4 +78,4 @@ block content
 										each item in courses
 											option(value=item.uuid) #{item.subject+item.number}
 								div.submit
-									input(type="submit", value="add", class="small button", disabled="disabled")
+									input(type="submit", value="Post", class="small button", disabled="disabled")

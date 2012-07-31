@@ -21,7 +21,8 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 	course: {type: Sequelize.STRING, allowNull: false},
 	description :{type:Sequelize.STRING},//TODO: update this to graph
 	path: {type: Sequelize.STRING, allowNull: false},
-	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}	
+	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
+	thumbnail: {type: Sequelize.STRING, allowNull: false, defaultValue: 'media/default.jpg'}	
 });
 
 //Saves media file to database
@@ -46,7 +47,7 @@ exports.selectMediaFile = function(args, callback){
 }
 
 exports.selectMediaFiles = function(args, callback){
-	MediaFile.findAll({where: args}).success(function(mediaFiles){		
+	MediaFile.findAll({where: args, order: 'title DESC'}).success(function(mediaFiles){		
 		callback(null, mediaFiles);
 	}).error(function(error){
 		callback(error, null);

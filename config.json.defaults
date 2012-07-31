@@ -12,7 +12,7 @@
 		"host":"localhost",
 		"port":3001,
 		"tmpFolder":"/tmp/",
-		"mediaFolder":"media/"
+		"mediaFolder":"public/media/"
 	},
 	"rqraServer" : {
 		"host":"localhost",
@@ -36,7 +36,7 @@
 		 "user": "sfu.mobile.innovation@gmail.com",
 		 "password": "",
 		 "host": "smtp.gmail.com",
-		 "ssl": true"",
+		 "ssl": true,
 		 "from": "Administrator"
 	},
 	"dictionaryDB":{

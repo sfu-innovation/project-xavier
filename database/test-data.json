@@ -170,19 +170,35 @@
 		} ,
 		{
 			"uuid":"11",
-			"title":"Graphic Design",
+			"title":"Special Topics in IAT(Science)",
 			"section":"D100",
 			"subject":"IAT",
-			"number":102,
+			"number":381,
 			"instructor":"bernie"
 		},
 		{
 			"uuid":"12",
+			"title":"Honors Research Project",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":498,
+			"instructor":"ted"
+		},
+		{
+			"uuid":"13",
+			"title":"Special Topics Cmpt. Science",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":318,
+			"instructor":"ted"
+		},
+		{
+			"uuid":"14",
 			"title":"Bussiness Planing",
 			"section":"D100",
 			"subject":"BUS",
-			"number":354,
-			"instructor":"ted"
+			"number":394,
+			"instructor":"bernie"
 		},
 		{
 			"uuid":"37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
@@ -209,6 +225,14 @@
 		{
 			"course":"12",
 			"user":"ted"
+		},
+		{
+			"course":"13",
+			"user":"ted"
+		},
+		{
+			"course":"14",
+			"user":"bernie"
 		},
 		{
 			"course":"91cc5d86-1630-4b57-83c4-41d50cee2e78",
@@ -297,6 +321,13 @@
 		} ,
 		{
 			"course":"12",
+			"user":"llt3"
+		},		{
+			"course":"13",
+			"user":"llt3"
+		} ,
+		{
+			"course":"14",
 			"user":"llt3"
 		}
 	],
@@ -457,6 +488,7 @@
 			"user":"mak10",
 			"uuid":"abc1230",
 			"title":"How to dunk like MJ",
+			"description":"Grow really tall, get tallented, play for the Chicago bulls!",
 			"course":"A8G7S6H7ASDFG9",
 			"path":"http://www.youtube.com/mj",
 			"type":0
@@ -465,6 +497,7 @@
 			"user":"BSDF787D98A7SDF8ASD7G",
 			"uuid":"abc1231",
 			"title":"How to dribble like Lionel",
+			"description":"Only Mesi can be Mesi",
 			"course":"A8G7S6H7ASDFG9",	
 			"path":"http://www.youtube.com/Lionel",
 			"type":1
@@ -473,6 +506,7 @@
 			"user":"BSDF787D98ASDF099D7G",
 			"uuid":"abc1232",
 			"title":"Cooking terriyaki",
+			"description":"Buy a wok, some chicken, and terriyaki sauce.  Cook the chicken in the wok.  Add the terriyaki sauce.  Put it on a plate.  Put it in your mouth.  Enjoy!",
 			"course":"A827346H7ASDFG9",
 			"path":"http://www.youtube.com/terriyaki",
 			"type":2
@@ -481,6 +515,7 @@
 			"user":"jhc20",
 			"uuid":"abc1233",
 			"title":"Preparation for linear algebra",
+			"description":"MATH!",
 			"course":"A8G7S6H7ASDFG9",		
 			"path":"http://www.youtube.com/linear_algebra",
 			"type":3
@@ -489,6 +524,7 @@
 			"user":"jhc20",
 			"uuid":"abc1234",
 			"title":"Making videos",
+			"description":"no description",
 			"course":"A827346H7ASDFG9",		
 			"path":"http://www.youtube.com/yt",
 			"type":0
@@ -583,7 +619,27 @@
 
 	"sectionmaterials":[
 		{
+			"section": "1",
+			"material":"abc1234"
+		},
+		{
 			"section": "A827346H7AFSSFG9",
+			"material":"abc1233"
+		},
+		{
+			"section": "A827341H7AFFFFG9",
+			"material":"abc1232"
+		},
+		{
+			"section": "2",
+			"material":"abc1231"
+		},
+		{
+			"section": "A827346H7AFSSFG9",
+			"material":"abc1230"
+		},
+		{
+			"section": "A827341H7AFFFFG9",
 			"material": "A7S7FWGA7SD11A7SDF8ASD7G"
 		},
 		{
@@ -683,7 +739,7 @@
 			"author" : "Richard Black",
 			"publishedDate": "4 July 2012",
 			"description" : "Test resource description",
-			"path" : "/resources/articles/5c7bb63a68886ac1d159bccc71488927.xml",
+			"path" : "5c7bb63a68886ac1d159bccc71488927.xml",
 			"resourceType" : 2,
 			"fileType" : "html",
 			"likes" : 2,
@@ -701,13 +757,13 @@
 			"author" : "Chris Spooner",
 			"publishedDate": "28 June 2012",
 			"description" : "Test resource description",
-			"path" : "/resources/articles/f0f778a5204856f6d9bfb704ca389eb4.xml",
+			"path" : "f0f778a5204856f6d9bfb704ca389eb4.xml",
 			"resourceType" : 2,
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect" ,
-			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect.",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect."
+
 
 		},
 		{
@@ -742,8 +798,7 @@
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
 
 		},
 		{
@@ -760,8 +815,7 @@
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
 		},
 		{
 			"uuid" : "6",
@@ -777,8 +831,7 @@
 			"fileType" : "html",
 			"likes" : 2,
 			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg"
+			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
 
 		}
 
@@ -957,7 +1010,7 @@
 			"uuid":"1001",
 			"app" : 2,
 			"course": 11,
-			"topic":"just some rand1324om topics",
+			"topic":"#just some rand1324om topics#topic2#top ic 3",
 			"week": 1
 		},
 		{
@@ -1051,7 +1104,9 @@
 			"uuid":"2001",
 			"app" : 2,
 			"course": 12,
-			"week": 1
+			"week": 1,
+			"topic":"#topic1#topic2#topic3"
+
 		},
 		{
 			"uuid":"2002",

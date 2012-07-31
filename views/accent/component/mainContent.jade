@@ -4,19 +4,17 @@ div#Main
 	h2 Week 4
 
 	div
-		video(width="840", height="490", src="movie.mp4") Your browser doesn't support video!
+		span(id="mediaUUID", style='display:none;') #{mediaUUID}	
+		video(id="mediaPlayer", width="840", height="490", type="video/mp4", src="") Your browser doesn't support video!
 		div.Controls
-			a.Play(href="") Play
+			a.Play(onclick="playVideo();") Play
 			div.Timeline
 				a.Scrubber(href="")
 			div.Volume
 
 		div.Tagger
 			div.Timeline
-				div.Tag(style="left: 40px; width: 170px; background: green;")
-				div.Tag(style="left: 20px; width: 100px; background: yellow;")
-				div.Tag(style="left: 220px; width: 90px; background: orange;")
-				div.Tag(style="left: 520px; width: 12px; background: purple;")
+
 			div.Commands
 				a(href="") X
 				ul
@@ -31,14 +29,15 @@ div#Main
 		div.TagWindow
 			div
 				label Title:
-				input(type="text", placeholder="My Great Title")
+				input#TagTitle(type="text", placeholder="My Great Title")
 			div
 				label Tag Type:
+				select#TagType
 			div
 				label Description:
-				textarea
+				textarea#TagDescription
 			div
-				input(type="submit", value="Done")
+				input(type="submit", value="Done", onclick="return uploadTag(this);")
 					
-
-					
+script(type="text/javascript", src="../javascripts/accent/load-media.js")
+script(type="text/javascript", src="../javascripts/accent/uploadTag.js")

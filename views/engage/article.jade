@@ -10,15 +10,27 @@ block content
 					span#back_btn
 						|  BACK
 				span#options
-					span#star_btn 
-						|  Star
-					span#like_btn 
-						|  Like (4)
+					- if (article.starred)
+						span.star_btn.starred
+							|  Star
+					- else
+						span.star_btn.unstarred
+							|  Star
+					- if (article.liked)
+						span.like_btn.liked
+							|  Like (
+							em #{article.likes}
+							)
+					- else
+						span.like_btn.disliked
+							|  Like (
+							em #{article.likes}
+							)
 					span#invert_btn
 						|  Day/Night
 					span#textsize_btn 
 						|  Text Size
-					a(href="#{article.url}")
+					a(href="#{article.url}", target="_blank")
 						span#link_btn
 							|  View Original
 			script	
@@ -31,63 +43,24 @@ block content
 				div
 			script(type='text/javascript')
 				$('div#article div').load('/resources/articles/'+"#{article.path}");
-			
-
-
 
 
 
 		div.four.columns#comments
-			li#owner_comment				
+			h5 Poster's Comment
+			div#owner_comment
+				- if (article.user.avatar)
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="#{article.user.avatar}")
+				- else
+					a.avatar(href="/profile/#{article.user.uuid}")
+						img(src="/images/engage/default_profile.png")
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }
-				span.createtime #{article.createdAt}
+				span.post_time(data-time="#{article.createdAt}") #{article.createdAt}
 				span.like_reply
 
-					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") reply
+					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") Reply
 						span.typicn.forward
-
-
-
-
-
-
-
-			- var comment_id = 1
 			h5 Comments
-			ul
-				each comment in comments
-					li.comment(id = "comment_#{comment_id}") 
-						span.name #{comment.user.firstName} #{comment.user.lastName}
-						p #{comment.msg}
-						span.post_time Posted #{comment.time}
-						span.like_reply
-							a like (3) 
-							a.reply_click(onclick = 'show_comment_box("#{comment_id}_0")') reply 
-								img(src="/images/engage/icon/16x16/Reply_v1.png")
-					- var reply_id = 1
-					each reply in comment.replies
-						li.replies(id = "replies_#{reply_id}")
-							span.name #{reply.user.firstName} #{reply.user.lastName}				
-							p #{reply.msg}
-							span.post_time Posted #{comment.time}
-							span.like_reply
-								a like (3) 
-								a.reply_click(onclick = 'show_comment_box("#{comment_id}_#{reply_id}")') reply 
-									img(src="/images/engage/icon/16x16/Reply_v1.png")
-						li.reply_box(id ="#{comment_id}_#{reply_id}", style="display: none")
-							span replying to #{reply.user.firstName} #{reply.user.lastName}
-							form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
-								textarea(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-								input(type="submit", value="Post")
-						- reply_id = reply_id + 1			
-					div.reply_box(id = "#{comment_id}_0", style="")
-						span replying to #{comment.user.firstName} #{comment.user.lastName}
-						form(name="add_comment", action="/",enctype="multipart/form-data", method="post")
-							input(name="reply_conent", type="text", id="reply_conent", placeholder="Type in a comment")			
-							input.submit_btn(type="submit", value="Post")
-					- comment_id = comment_id + 1		
-		script(type='text/javascript')
-			function show_comment_box(id){
-				$("#"+ id +"").slideToggle();
-			}
+			ol

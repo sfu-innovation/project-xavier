@@ -80,6 +80,28 @@ coreApi._construct = function () {
 			})
 		}
 
+		this.userNotifications = function(userID, callback){
+			console.log("API - userNotifications");
+			$.ajax({
+				url:'/api/user/notification/' + userID,
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+		this.removeCommentNotifier = function(userID, qid, callback){
+			console.log("API - removeCommentNotifier");
+			$.ajax({
+				url:'/api/user/notification/' + userID + '/comment/' + qid,
+				type:'DELETE',
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
 
 	}
 
@@ -199,13 +221,77 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			})
+		}
 
+		this.getMediaFiles = function(courses, callback){
+			console.log('API - getMediaFiles');
+			var body = {};				
+			body.where = courses;
+			$.ajax({
+				url:'/api/mediafiles/course',
+				type:'POST',
+				data:body,
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
 
+		this.getMediaSection = function(uuid, callback){
+				$.ajax({
+				url:'/api/mediafile/' + uuid + '/section',
+				type:'GET',
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}
 
 	function Engage() {
+
+		this.createComment = function (args, callback) {
+			console.log("API - createComment");
+
+
+
+
+			args.objectType = 'resource';
+
+
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/comment',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(args),
+				success:function (data) {
+					callback(data);
+				}
+			})
+		}
+
+
+
+		this.deleteResource = function(uuid,callback){
+			console.log('API - deleteResource');
+
+			$.ajax({
+				url:'/api/resource/'+uuid,
+				type:'DELETE',
+				dataType:'json',
+				contentType:"application/json",
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
 
 		this.createResource = function (course_id,title,description,resource_type,file_type,url,callback){
 			console.log('API - createResource');
@@ -453,6 +539,53 @@ coreApi._construct = function () {
 
 		}
 
+		this.updateCommentById = function (id,commentBody, callback) {
+			console.log("API - updateCommentById");
+			var body = {};
+			body.body = commentBody;
+			$.ajax({
+				url:'/api/comment/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
+
+
+		this.likeCommentById = function(id, callback){
+			console.log("API - likeCommentById");
+			$.ajax({
+
+				url:'/api/comment/'+id+'/like',
+				type:'POST',
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+		}
+
+
+		this.updateWeekInfo = function(id, topic,callback){
+			console.log("API - updateCommentById");
+			var body = {};
+			body.topic = topic;
+			$.ajax({
+				url:'/api/week/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
+		}
 
 
 
@@ -810,6 +943,26 @@ coreApi._construct = function () {
 					callback(data);
 				}
 			});
+		}
+
+		this.setSelectedCourse = function(courseID, week, callback){
+			console.log("API - setSelectedCourse");
+
+			var body ={};
+			body.course = courseID;
+			body.week = week;
+
+			$.ajax({
+				//url : '/api/user/'+user_id+'/comments',
+				url:'/api/setSelectedCourse',
+				type:'POST',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			})
 		}
 
 	}

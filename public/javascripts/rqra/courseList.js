@@ -1,4 +1,11 @@
-var common = new coreApi.Common();
+/*
+	Course List
+	----------------------------
+	Responsible for controlling the course list widget
+	which appear across all pages
+*/
+
+var redirect = false;
 
 function setSelected(button, select) {
 	var buttonText = button.querySelector(".courseButtonText");
@@ -25,40 +32,49 @@ function setSelected(button, select) {
 	}
 }
 
+function clickButton(selectedButton) {
+	QuestionCommon.setCourse(selectedButton.querySelector(".courseButtonText").innerHTML.toLowerCase());
+	QuestionCommon.refreshDefaultHeader();
+	if (redirect) {
+		window.location = "/questions";
+	}
+	selectButton(selectedButton);
+}
+
 function selectButton(selectedButton) {
 	var menu = document.getElementById("courseList");
 	var buttons = menu.querySelectorAll(".courseButton");
-	NodeList.prototype.forEach = Array.prototype.forEach;
-	buttons.forEach(function(obj) {
-		if (selectedButton === obj) {
-			currentCourse = selectedButton.querySelector(".courseButtonText").innerHTML;
-			currentCourse = currentCourse.toLowerCase();
-			if (currentCourse === "all") currentCourse = "";
-			refreshQuestionListHeader();
-			refreshQuestionsList();
-			setSelected(obj, true);
+	for (var i = 0; i < buttons.length; ++i) {
+		if (selectedButton === buttons[i]) {
+			if (typeof(QuestionList) !== "undefined") {
+				QuestionList.setPage(0);
+			}
+			setSelected(buttons[i], true);
 		} else {
-			setSelected(obj, false);
+			setSelected(buttons[i], false);
 		}
-	});
+	}
 }
 
-function formatButton(name, uuid) {
-	return "<div class='courseButton' onclick='selectButton(this)'>"
-		+ "<div class='courseButtonSelectorTop'></div>"
-		+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
-		+ "<div class='courseButtonTextContainer'>" 
-			+ "<div class='courseButtonText'>" + name + "</div></div>"
-		+ "<div class='courseButtonSelectorBottom'></div>"
-		+ "</div>";
+function selectButtonByName(name) {
+	var menu = document.getElementById("courseList");
+	var buttons = menu.querySelectorAll(".courseButton");
+	for (var i = 0; i < buttons.length; ++i) {
+		if (name === buttons[i].querySelector(".courseButtonText").innerHTML) {
+			setSelected(buttons[i], true);
+		}	else {
+			setSelected(buttons[i], false);
+		}
+	}
 }
 
 function getUuid(courseName) {
 	var menu = document.getElementById("courseList");
-	for (var i = 0; i < menu.children.length; ++i) {
-		var child = menu.children[i];
-		if (courseName.toUpperCase() === child.querySelector(".courseButtonText").innerHTML) {
-			return child.querySelector(".courseButtonId").innerHTML;
+	if (menu) {
+		for (var i = 0; i < menu.children.length; ++i) {
+			if (courseName && courseName.toUpperCase() === menu.children[i].querySelector(".courseButtonText").innerHTML) {
+				return menu.children[i].querySelector(".courseButtonId").innerHTML;
+			}
 		}
 	}
 	return "";
@@ -69,13 +85,11 @@ function displayCourseList() {
 		if (data && data.errorcode === 0) {
 			var menu = document.getElementById("courseList");
 			menu.innerHTML = "";
-			menu.innerHTML += formatButton("All", "");
+			menu.innerHTML += ElementFactory.createCourseListItem("All", "");
 			for (var i = 0; i < data.courses.length; i++) {
-				menu.innerHTML += formatButton(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
+				menu.innerHTML += ElementFactory.createCourseListItem(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
 			}
 			selectButton($(".courseButton")[0]);
 		}
 	});
 }
-
-displayCourseList();

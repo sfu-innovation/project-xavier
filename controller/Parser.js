@@ -52,7 +52,7 @@ function walk(node, host, cb) {
 		var childNode = node.childNodes[i],
 			tagName = childNode.tagName;
 
-		if (~notAllowed.indexOf(childNode.tagName)===-1) {
+		if (notAllowed.indexOf(childNode.tagName) !==-1) {
 			node.removeChild(childNode);
 			--i;
 		}
@@ -80,6 +80,7 @@ function walk(node, host, cb) {
 			node: node
 		}
 	})
+	//console.log(items)
 	if (items.length > 0)
 		cb(items);
 }
@@ -99,15 +100,17 @@ function mean(set) {
 function strip(node, tag) {
 
 	var check = false;
-	for(var i = 0; i < node.childNodes.length; ++i){
-		var child = node.childNodes[i];
+	if (node.childNodes){
+		for(var i = 0; i < node.childNodes.length; ++i){
+			var child = node.childNodes[i];
 
-		if (child.tagName === tag) {
-			check = true;
-		}
-		if (!check) {
-			node.removeChild(child);
-			--i;
+			if (child.tagName === tag) {
+				check = true;
+			}
+			if (!check) {
+				node.removeChild(child);
+				--i;
+			}
 		}
 	}
 }
@@ -122,7 +125,7 @@ function listTypes(node, host) {
 
 	walk(node, host, function(tags) {
 		var retval = tags.some(function(item) {
-			return item.len > 2 && item.mean > 80 && item.std_dev < 350 && item.ratio > 0.17;
+			return item.len > 2 && item.mean > 80 && item.std_dev < 450 && item.ratio > 0.17;
 		});
 		if (retval) {
 			articles.push(tags)
@@ -140,7 +143,9 @@ function listTypes(node, host) {
 			}
 		})
 	}
-//	console.log(articles)
+	//console.log(articles)
+	if (articles.length ===0)
+		return;
 	if (candidateNode){
 	image = candidateNode.parentNode.querySelector('IMG');
 	}
@@ -199,22 +204,23 @@ var articlize =  exports.articlize = function( urlName, callback) {
 
 			var content = listTypes(document.documentElement, host);
 
+			if (content){
+				var stream = fs.createWriteStream(path);
+				stream.once('open', function (fd) {
 
-			var stream = fs.createWriteStream(path);
-			stream.once('open', function (fd) {
+					stream.write('<title>' + title + '</title>\n')
+					stream.write('<content>' + content.main + '</content>');
 
-				stream.write('<title>' + title + '</title>\n')
-				stream.write('<content>' + content.main + '</content>');
+				})
 
-			})
-
-			var result = {};
-			result.url = urlName;
-			result.path = fileName + ".xml";
-			result.title = title;
-			result.excerpt = content.firstParagraph;
-			result.thumbnail = content.image;
-
+				var result = {};
+			
+				result.url = urlName;
+				result.path = fileName + ".xml";
+				result.title = title;
+				result.excerpt = content.firstParagraph;
+				result.thumbnail = content.image;
+			}
 
 			callback(error,result);
 

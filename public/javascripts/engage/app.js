@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 
 
 	initUI();
-
+//	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
 
 
@@ -45,21 +45,179 @@ jQuery(document).ready(function ($) {
 		loadProfileArticles(engage);
 	}
 	else if (window.location.toString().indexOf('article') != -1) {
+		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
-		$('.reply_click').bind('click',function(){
+
+
+		$('#comments li .like_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var id = list.attr('data-parent-uuid');
+			engage.likeCommentById(id,function(data){
+				if (data && data.errorcode === 0){
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+					self.addClass('dislike_btn');
+					self.removeClass('like_btn');
+
+
+				}
+			})
+
+		})
+
+
+
+		$('#comments li .edit_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.hide();
+			control.slideDown('slow');
+		})
+
+
+		$('#comments li .cancel_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+
+			var control = list.children('.comment_control');
+			p.show();
+			control.slideUp('slow');
+		})
+
+		$('#comments li .delete_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = "!@#$%^&*()";
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					list.html('This comment has been deleted');
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+		$('#comments li .save_btn').live('click',function(){
+			var self = $(this);
+			var list = self.closest('li');
+			var p = list.children('p');
+			var control = list.children('.comment_control');
+//			engage.update
+			var id = list.attr('data-parent-uuid');
+			var text = control.children('input').val();
+
+			engage.updateCommentById(id,text,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0){
+
+					p.html(text);
+					p.show();
+					control.hide();
+
+				}
+
+
+			})
+
+		})
+
+
+		$('.reply_click').live('click',function(){
 
 			$('.reply_box').remove();   //remove all other reply box
 			var self = $(this);
+			var list = self.closest('li');
+
+			var target_uuid = list.attr('data-target-uuid');
+			var reply_to = list.attr('data-reply-to');
+			var parent_uuid = list.attr('data-parent-uuid');
+
+
+
 			if (self.attr('data-reply-type') === 'super'){
-				var target_uuid = $(this).attr('data-target-uuid');
-				var reply_to = $('#owner_comment .name').html();//the name of user it replies to
-				var new_reply_box = renderReplyBox(reply_to,target_uuid,null);
+				target_uuid = self.attr('data-target-uuid');
+				reply_to = $('#owner_comment .name').html();//the name of user it replies to
+				var new_reply_box = renderReplyBox("comment",reply_to,target_uuid,null);
 //
-				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow');
+				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
+
+			}
+			else if(list.attr('data-reply-type') === 'comment'){
+
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.comment')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
+
+
+			}
+			else if(list.attr('data-reply-type') === 'replies'){
+
+				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
 
 			}
 
 
+		})
+
+		$('.reply_box form').live('submit',function(){
+			var self = $(this);
+			var comment = {};
+			comment.target_uuid = $('form input#comment_target').val();
+			comment.parent_uuid = $('form input#comment_parent').val();
+			comment.body = $('form input#reply_content').val();
+
+			engage.createComment(comment,function(data){
+
+//				console.log(data);
+				if (data && data.comment){
+
+					data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
+					var type = $('.reply_box form').attr('data-reply-type');
+					console.log(data);
+					if (type){
+						$('.reply_box').hide();
+						var new_comment = renderBox(data.comment,type);
+						if (type === "replies"){
+
+							$(new_comment).appendTo(self.closest('ol'));
+
+							$.scrollTo(self.closest('ol').children('li').filter(':last'),900);
+
+						}
+						else if (type === "comment"){
+							new_comment = '<li class="thread"><ol>'+ new_comment +'</ol></li>'
+							$(new_comment).appendTo('#comments > ol');
+							$.scrollTo($('#comments > ol > li:last-child'),900);
+						}
+
+						$('.reply_box').remove();
+					}
+
+
+
+				}
+
+			})
+
+			return false;
 		})
 
 		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
@@ -73,6 +231,87 @@ jQuery(document).ready(function ($) {
 
 			return false;
 		})
+
+
+		$('#article_options span.star_btn.unstarred').live('click', function () {
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid) {
+				engage.starResource(resource_uuid, function (data) {
+					if (data && data.errorcode === 0) {
+						self.removeClass('unstarred');
+						self.addClass('starred');
+					}
+
+
+				})
+			}
+
+		})
+
+		$('#article_options span.star_btn.starred').live('click', function () {
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid) {
+				engage.unstarResource(resource_uuid, function (data) {
+					if (data && data.errorcode === 0) {
+						self.removeClass('starred');
+						self.addClass('unstarred');
+						if (window.location.toString().indexOf('starred') != -1) {
+							self.parent().parent().parent().fadeOut('slow', function () {
+								$(this).remove();
+							});
+						}
+					}
+
+				})
+			}
+
+		})
+
+		$('#article_options span.like_btn.disliked').live('click',function(){
+
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid){
+				engage.likeResource(resource_uuid,function(data){
+					console.log(data);
+					if (data && data.errorcode === 0) {
+						self.addClass('liked');
+						self.removeClass('disliked');
+
+						var num = parseInt(self.children().html()) + 1;
+						self.children().html(num);
+
+					}
+				})
+
+			}
+
+		})
+
+		$('#article_options span.like_btn.liked').live('click',function(){
+
+			var self = $(this);
+			var resource_uuid = $('#hidden-info').attr('data-resource-id');
+			if (resource_uuid){
+				engage.dislikeResource(resource_uuid,function(data){
+					if (data && data.errorcode === 0) {
+						self.removeClass('liked');
+						self.addClass('disliked');
+
+						var num = parseInt(self.children().html()) - 1;
+
+						self.children().html(num);
+
+					}
+
+				})
+
+			}
+
+		})
+
 
 	}
 
@@ -110,6 +349,49 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('.topic_input .remove_btn').live('click',function(){
+			var self = $(this);
+			self.closest('.topic_input').slideUp(function(){self.closest('.topic_input').remove()});
+
+		})
+
+		$('#week-info .add_btn').live('click',function(){
+			var self = $(this);
+			var new_topic_box = renderTopicInput('');
+			$(new_topic_box).insertBefore(self.parent());
+		})
+
+
+		$('#week-info .save_btn').live('click',function(){
+			var self = $(this);
+			var topics = $('.topic_input input');
+			var result = "";
+			$.each(topics, function(i,topic){
+				console.log(topic);
+				if($(topic).val()){
+					result += '#' + $(topic).val();
+
+				}
+			})
+			var id = $('#week-info').attr('data-week-id');
+			if(id && result){
+				engage.updateWeekInfo(id,result,function(data){
+
+					if (data && data.errorcode === 0){
+
+						alert('saved!');
+					}
+					else{alert('failed!')
+					};
+				})
+
+			}
+			else{
+				alert('failed!');
+			}
+
+		})
+
 
 	}
 	else {
@@ -118,6 +400,9 @@ jQuery(document).ready(function ($) {
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
+
+		$('div#submitnew .error span.delete_btn').bind('click',function(){$('div#submitnew .error').fadeOut(500);});
+		$('div#submitnew .msg span.delete_btn').bind('click',function(){$('div#submitnew .msg').fadeOut(500);});
 
 		$('.flip_btn').bind('click',function(){
 			$('div.cover').addClass('hack');
@@ -131,10 +416,11 @@ jQuery(document).ready(function ($) {
 
 		$('#submitnew form').bind('submit',function(){
 
-
+			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
+			var course_name = $('#submitnew form option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
@@ -142,18 +428,25 @@ jQuery(document).ready(function ($) {
 					if (data.errorcode === 0){
 						var new_article = renderArticlePreviewBox(data.resource);
 						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
 					}
 					else{
-
+						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
 					}
 				}
 				else{
-
+					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
 				}
 			});
 			return false;
 
 		})
+
+
+		$(window).bind( 'hashchange', function(e) {
+			var weekNum = (window.location.toString().split('#week'))[1];
+			loadAllArticles(engage, weekNum);
+		});
 
 		$('#weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
@@ -170,7 +463,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.starResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -186,7 +479,7 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.star_btn.starred').live('click', function () {
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid) {
 			engage.unstarResource(resource_uuid, function (data) {
 				if (data && data.errorcode === 0) {
@@ -207,7 +500,7 @@ jQuery(document).ready(function ($) {
 	$('.articlebox span.like_btn.disliked').live('click',function(){
 
 		var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.likeResource(resource_uuid,function(data){
 				console.log(data);
@@ -219,18 +512,6 @@ jQuery(document).ready(function ($) {
 					self.children().html(num);
 
 				}
-				else if (data.errorcode === 1){
-					//if already liked
-					engage.dislikeResource(resource_uuid,function(data){
-						if (data && data.errorcode === 0) {
-							var num = parseInt(self.children().html()) - 1;
-							self.children().html(num)
-						}
-
-					})
-
-				}
-
 			})
 
 		}
@@ -239,8 +520,8 @@ jQuery(document).ready(function ($) {
 
 	$('.articlebox span.like_btn.liked').live('click',function(){
 
-			var self = $(this);
-		var resource_uuid = $(this).parent().parent().attr('data-id');
+		var self = $(this);
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 		if (resource_uuid){
 			engage.dislikeResource(resource_uuid,function(data){
 				if (data && data.errorcode === 0) {
@@ -259,9 +540,26 @@ jQuery(document).ready(function ($) {
 
 	})
 
+	$('.articlebox span.delete_btn').live('click', function () {
+		var article = $(this).closest('.articlebox');
+		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
 
+		if (resource_uuid) {
+			engage.deleteResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
 
+					article.fadeOut('slow', function () {
+						article.remove()
+					});
 
+				}
+
+			})
+
+		}
+	})
+
+	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
 });
 
@@ -359,25 +657,70 @@ function initUI() {
 
 }
 
-function renderCommentBox(item){
-	function renderBox(item){
-		return '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
-			+ '</span><p>' + item.body
-			+ '</p><span class="post_time">' + formartDate(item.createdAt)
-			+ '</span><span class="like_reply"><a>like (' + item.like + ')'
-		+ '</a><a class="reply_click"> reply <span class="typicn forward"></span> </a></span></div>';
+function renderBox(item,type){
+	if (item.body === "!@#$%^&*()"){
+		return '<li class = "'+type+'">This comment has been deleted</li>'
+	}
+
+	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
+
+	if (item.owner){
+		html += '<span class="edit_btn">Edit</span>';
+	}
+
+	html	+= '<a href="/profile/'+ item.user.uuid +'" class="avatar">'
+		+ '<img src="' + (item.avatar ? item.avatar:'/images/engage/default_profile.png') + '"  />' + '</a>'
+		+ '<span class="name">' + item.user.firstName + ' ' + item.user.lastName
+		+ '</span>'
+		+ (item.reply_to ? ('<span class="reply_to">in reply to '+ item.reply_to+' .</span>') : '')
+		+ '<p>' + item.body
+		+ '</p>';
+
+	if (item.owner){
+
+		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
+			+'<a class="tiny button save_btn">Save</a>'
+			+'<a class="tiny button delete_btn">Delete</a>'
+			+'<a class="tiny button cancel_btn" >Cancel</a>'
+			+ '</div>'
+		;
+	}
+	if (item.createdAt === item.updatedAt || !item.updatedAt){
+
+		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
+	}
+	else{
+		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>' ;
 	}
 
 
-   var html = '<div class="comment">'+ renderBox(item);
+	html	+= ' <span class="like_reply"><span class="like_btn">Like (' + '<em>' +item.like + '</em>' +')'
+		+ '</span><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
+
+		+ '</li>';
+
+	return html;
+}
+
+function renderCommentBox(item){
+
+
+
+   var html = renderBox(item, "comment");
 
 	if (item.replies && item.replies.length > 0){
+
 		$.each(item.replies, function (index, reply) {
 
-			html += '<div class="replies">'+ renderBox(reply);
+			html += renderBox(reply, "replies");
 		});
 
+
 	}
+
+	html = '<li class="thread"><ol>'+ html +'</ol></li>';
 
 	return html;
 }
@@ -395,7 +738,7 @@ function loadComments(engage){
 						comment = renderCommentBox(item);
 
 
-						$('#comments').append(comment);
+						$('#comments > ol').append(comment);
 					});
 				}
 				else{
@@ -527,6 +870,7 @@ function loadCourseArticles(engage, week) {
 			engage.getWeekInfoByCourseIdAndWeekNum(id,week,function(data){
 				if (data){
 					if (data.errorcode ===0){
+						console.log(data);
 						var weekbox = renderWeekInfoBox(data.week);
 						$('.weekbox').remove();
 						$('#contents').append(weekbox);
@@ -709,25 +1053,93 @@ function loadStarredArticles(engage) {
 	})
 }
 
+function renderTopicInput(topic){
+	var html = '<div class="topic_input"><input  type="text" placeholder="#" value="'+topic+'" /> '
+	+  ''
+	+  '<span class="tiny button remove_btn">-</span></div>'
+			;
+
+	return html;
+}
+
 function renderWeekInfoBox(item){
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" class="innercontents"><h4>Week ' +
-			item.week +
-			'</h4><p>' +
-			(item.topic) +
-			'</p></div></div>'
+		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
+			item.week + 
+			'</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.owner){
+		if (!item.topic){
+			weekBox += '<p>' +
+				'Instructor has not set up weekly topics yet.' +
+				'</p>';
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += '<p>' +
+					topic_list[0] +
+					'</p>';
+			}
+			else{
+				topic_list.shift();
+				weekBox += '<ul>'
+				$.each(topic_list,function(i,topic){
+					weekBox += '<li>'+ topic+'</li>'
+				})
+				weekBox += '</ul>'
+				console.log(topic_list)
+			}
+		}
+
+	}
+
+	//if is prof
+	else{
+		
+		if (!item.topic){
+			weekBox += renderTopicInput('');
+
+
+
+		}
+		else{
+			var topic_list = item.topic.split('#');
+			if(topic_list[0] !== ""){
+				weekBox += renderTopicInput(topic_list[0]);
+			}
+			else{
+				topic_list.shift();
+
+				$.each(topic_list,function(i,topic){
+					weekBox += renderTopicInput(topic);
+				})
+
+				console.log(topic_list)
+			}
+		}
+
+		weekBox += '<div id="week_topic_btn">' + 
+			'<span class="medium button add_btn">Add</span>' + 
+			'<span class="button medium save_btn">Save</span>' + '</div>';
+
+	}
+
+
+
+	weekBox += '</div></div>'
 
 	return weekBox;
 }
 
 function renderArticlePreviewBox(item) {
-
+console.log(formartDate(item.createdAt));
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
-			+ '<span class="delete_btn">X</span>'
+			+ isOwner(item.owner)
+
 			+ '<a href="/profile/'+ item.user.uuid +'">'
-			+ '<img src="' + '/images/engage/default_profile.png' + '" class="avatar" />' + '</a>'
+			+ '<img src="' + (item.user.avatar ? item.user.avatar:'/images/engage/default_profile.png') + '" class="avatar" />' + '</a>'
 
 
 			+ '<div class="post_details"> '
@@ -735,7 +1147,7 @@ function renderArticlePreviewBox(item) {
 			+ isProf(item.user.type) //return nothing if not
 
 			+ '<p>Posted '
-			+ '<span class="post_time"> ' + formartDate(item.createdAt) + '</span>'
+			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
 			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
@@ -750,20 +1162,25 @@ function renderArticlePreviewBox(item) {
 			//end of innerwrap
 
 			+ '<h5>'
-			+ '<a href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
+			+ '<a '+ (item.thumbnail?'':'class="noimage"')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
 			+ '<div class="likescomments">'
 			+ renderStar(item.starred)
+			+ renderLike(item)
 
-			+ '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
-			+ '<span class="comment_btn">Comments (' + item.totalComments + ') </span>'
+			+ '<a href="/article/'+item.uuid+'"><span class="comment_btn">Comments (' + item.totalComments + ') </span></a>'
 			+ '</div>'
 			+ '</div>'
 			+ '</div>';
 	return article;
 
+}
+
+function isOwner(owner){
+	if (owner) return '<span class="delete_btn">X</span>'
+	else return ""
 }
 
 
@@ -789,7 +1206,8 @@ function activateTab($tab) {
 
 function formartDate(old_date) {
 	var now = new Date();
-	var post_time = new Date(Date.parse(old_date));
+	var post_time = parseDate(old_date);
+	console.log(post_time);
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
 }
@@ -813,33 +1231,50 @@ function renderStar(starred) {
 	}
 }
 
+function renderLike(item) {
+	if (item.liked) {
+		return '<span class="like_btn liked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+	else {
+		return '<span class="like_btn disliked">Like (<em>' + item.likes + '</em>) </span>'
+	}
+}
+
 
 function renderPreviewImage(item) {
 
-	var previewImage = '<div class="innerwrap" style=\''
-		//IE
-		+'background-image: url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
-		//CHROME SAFARI
-		+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	var previewImage = "";
 
-		//FIREFOX
-		+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
-		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')+ '");'
+	if (item.thumbnail){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ item.thumbnail + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ item.thumbnail + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ item.thumbnail + '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
-		 + '\'>'
-		+ '</div>'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else{
+		previewImage= '<div class="innerwrap" style=\''
+			+ 'opacity: 1;'
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/default_thumbnail.jpg' + '");'
+			+ '\'>'
+			+ '</div>'
+	}
 
 
 
-//	var previewImage = '<div class="innerwrap" >'
-//		+ '<img src = "'
-//		+ (item.thumbnail ? item.thumbnail : 'http://www.blog.spoongraphics.co.uk/wp-content/uploads/2011/great-britain/great-britain-sm.jpg')
-//		+ '" alt= "'+item.title+'" title="'+item.title+'"/>'
-//		+ '<h5>'
-//		+ '<a href="/article/' + item.uuid + '">' + item.title + '</a></h5>'
-//		+ '</div>'
+
 
 	return  previewImage
 
@@ -892,6 +1327,11 @@ function stylePicker() {
 
 }
 
+function parseDate(input) {
+	var parts = input.match(/(\d+)/g);
+	return new Date(parts[0], parts[1]-1, parts[2]);
+}
+
 //2012-07-21T00:00:24.000Z
 function weekConverter() {
 
@@ -902,18 +1342,96 @@ function weekConverter() {
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
 	var current_date = new Date();
-	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
+	var semester_start_date = new Date(parseDate('2012-05-07T07:00:00.000Z'));
 	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 
 }
 
-function renderReplyBox (reply_to, comment_target, comment_parent){
-	var html = '<div style="display:none" class="reply_box"><span>replying to ' + reply_to + '</span><form name="add_comment"><input  type="text" id="reply_conent" placeholder="Type in a comment"><input type="submit" value="Post"> <input type="hidden" id="comment_target" value="'
+function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<div style="display:none" class="reply_box"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
+
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
 		+ comment_target
-		+ '"><input type="hidden" id="comment_target" value="'
-		+ comment_parent
-		'"></form></div>'
+		+ '">';
+
+		if(comment_parent){
+			html += '<input type="hidden" id="comment_parent" value="'
+				+ comment_parent
+			+ '">'
+		}
+
+
+
+		html += '</form></div>';
 
 	return html;
 }
+
+function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){
+	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
+		+ ' data-reply-type="'+ reply_type+'"'
+
+		+'>'
+		+ '<input  type="text" id="reply_content" placeholder="Type in a comment">'
+		+ '<input type="submit" value="Post" class="submit_btn">'
+		+ '<input type="hidden" id="comment_target" value="'
+		+ comment_target
+		+ '">'
+		+ '<input type="hidden" id="comment_parent" value="'
+		+ comment_parent
+		+ '">'
+		+ '</form></li>'
+
+	return html;
+}
+
+function updatePostTime(){
+	 var time_spans = $('.post_time');
+	$.each(time_spans, function(i,item){
+		$(item).html(formartDate($(item).attr('data-time')));
+	})
+
+//	$('.post_time').html(formartDate($('.post_time').attr('data-time')))
+	setTimeout(updatePostTime,30000);
+}
+
+function displayMsg(msg){
+
+	$('#submitnew .msg div').html(msg);
+	$('#submitnew  .msg').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .msg').fadeOut(500);
+	},3000);
+
+
+}
+
+function displayErrorMsg(err){
+
+
+	$('#submitnew .error div').html(err);
+	$('#submitnew  .error').fadeIn(500);
+	$('div#submitnew .loading').hide();
+	setTimeout(function(){
+		$('#submitnew  .error').fadeOut(500);
+	},5000);
+
+
+}
+
+/*
+function paddingforMediumScreen(){
+	var height = document.body.clientHeight;
+	var padding_bar = document.getElementById('padding-bar')
+	alert(height);
+	padding_bar.style.height = height
+
+}
+*/

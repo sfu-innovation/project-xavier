@@ -1,7 +1,10 @@
 include ./component/header
 
 div#Container
-	a.Archives.Button(href="") Archives
+	- if (user.type === 1)
+		a.Archives.Button(class="Button", href="/manage") Manage Media
+	- else
+		a.Archives.Button(class="Button", href="") Archives
 	include ./component/courseList
 
 	div#Content

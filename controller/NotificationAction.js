@@ -84,7 +84,6 @@ NotificationAction.prototype.addUserNotification = function( args, callback ){
 		}
 		async.forEachSeries( listeners, function( listener, callback ) {
 			UserNotificationSettings.findNotificationSettings( listener, function( error, settings ){
-
 				if ( settings == undefined || settings === null){
 					console.log("[UserNotificationSettings.findNotificationSettings] error - "+error);
 					callback(null, new Array());
@@ -1255,8 +1254,8 @@ NotificationAction.prototype.updateUserNotificationSettings = function( args, ca
 	arg.notificationOnLike        = args.notificationOnLike;
 	arg.notificationOnComment     = args.notificationOnComment;
 	arg.notificationOnStar        = args.notificationOnStar;
-	
-	
+
+
 	UserNotificationSettings.findNotificationSettings( arg, function( error , setting ){
 		if ( error ){
 			console.log("[NotificationAction.updateUserNotificationSettings] error - "+error);

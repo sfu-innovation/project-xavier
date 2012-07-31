@@ -3,7 +3,7 @@ script(type="text/javascript", src="../javascripts/rqra/questionList.js")
 div#questionListContent
 	include ./questionHeader
 			
-	div#questionTabs(onclick="questionTabClicked(this)")
+	div#questionTabs(onclick="questionTabClicked(this, event)")
 		div.tab(value="latest") Latest Questions
 		div.tab(value="instructor") Instructor Answered
 		div.tab(value="replied") Most Responses

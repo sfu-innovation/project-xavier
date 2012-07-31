@@ -5,6 +5,8 @@
 	a single question and all of its comments
 */
 
+var voted = []
+
 function QuestionDetails() { }
 
 QuestionDetails.commentCount = 0;
@@ -21,13 +23,19 @@ QuestionDetails.updateViewCount = function() {
 	rqra.updateQuestionViews(QuestionDetails.getQuestionId(), function(data) { });
 }
 
-QuestionDetails.refreshDetailsView = function() {
+QuestionDetails.refreshDetailsView = function(callback) {
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
 
 	// get question
 	rqra.getQuestionById(QuestionDetails.getQuestionId(), function(data) {
 		if (data && data.errorcode === 0) {
+			
+			if (data.question._source.course) {
+				QuestionCommon.setCourse(data.question._source.course.toLowerCase());
+				QuestionCommon.setWeek(data.question._source.week);
+			}
+			
 			question.innerHTML = ElementFactory.createDetailedQuestionItem(data.question);
 
 			// get comments
@@ -38,6 +46,7 @@ QuestionDetails.refreshDetailsView = function() {
 						return (b._source.upvote - b._source.downvote)-(a._source.upvote - a._source.downvote);
 					});
 					
+					QuestionDetails.setCommentCount(data.comments.hits.length);
 					for(var i = 0; i < data.comments.hits.length; i++) {
 						commentList.innerHTML += ElementFactory.createCommentItem(data.comments.hits[i]);
 					}
@@ -46,6 +55,7 @@ QuestionDetails.refreshDetailsView = function() {
 				} else {
 					commentList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 				}
+				if (callback) callback();
 			});
 		}
 	});
@@ -71,22 +81,31 @@ QuestionDetails.postComment = function() {
 
 QuestionDetails.vote = function(dir, targetDiv) {
 	var id = targetDiv.parentNode.parentNode.querySelector(".questionId").innerHTML;
-	if (dir === 1) {
-		rqra.upVoteCommentById(id, function(data) { 
-			var previousValue = parseInt(targetDiv.querySelector(".upVoteCount").innerHTML);
-			targetDiv.querySelector(".upVoteCount").innerHTML = previousValue+1;
-		});
-	} else if (dir === -1) {
-		rqra.downVoteCommentById(id, function(data) { 
-			var previousValue = parseInt(targetDiv.querySelector(".downVoteCount").innerHTML);
-			targetDiv.querySelector(".downVoteCount").innerHTML = previousValue+1;
-		});
+	if (voted.indexOf(id) === -1) {
+		if (dir === 1) {
+			rqra.upVoteCommentById(id, function(data) { 
+				var previousValue = parseInt(targetDiv.querySelector(".upVoteCount").innerHTML);
+				targetDiv.querySelector(".upVoteCount").innerHTML = previousValue+1;
+			});
+		} else if (dir === -1) {
+			rqra.downVoteCommentById(id, function(data) { 
+				var previousValue = parseInt(targetDiv.querySelector(".downVoteCount").innerHTML);
+				targetDiv.querySelector(".downVoteCount").innerHTML = previousValue+1;
+			});
+		}
+		voted += id;
 	}
 }
 
+QuestionDetails.initialize = function() {
+	QuestionDetails.refreshDetailsView(function() {
+		CourseList.refreshCourseList(function() {
+			CourseList.setSelectedName(QuestionCommon.course);
+			QuestionCommon.refreshDefaultHeader();
+		});
+	});
+}
+
 window.onload = function() {
-	redirect = true;
-	QuestionCommon.refreshDefaultHeader();
-	displayCourseList();
-	QuestionDetails.refreshDetailsView();
+	QuestionDetails.initialize();
 }

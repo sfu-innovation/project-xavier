@@ -20,30 +20,47 @@ jQuery(document).ready(function ($) {
 		//if starred
 		//TODO: change to a better method later
 
-		$('#starred_btn').addClass('active');
+		$('.starred_btn').addClass('active');
 
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		$('#instructor_btn').addClass('active');
+		$('.instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('mine') != -1) {
-		$('#contruibutions_btn').addClass('active');
+		$('.contruibutions_btn').addClass('active');
 		loadMyArticles(engage);
 
 
 	}
-	else if (window.location.toString().indexOf('design') != -1) {
+	else if (window.location.toString().indexOf('preference') != -1) {
+
+		var originalFormContent;
+
+		originalFormContent = $('#edit_profile input[type=text]').serialize()
+
+
+		function onClose() {	var content = $('#edit_profile input[type=text]').serialize()
+			if (content != originalFormContent){
+				$('.ui-tabs-selected a').css('background-color','#ff9999').attr('title','unsaved changes'); //highlight tab that contains unsaved fields
+				return "popup question";
+			}
+		}
+
+		window.onbeforeunload = onClose;
 
 
 	}
+
 	else if (window.location.toString().indexOf('profile') != -1) {
 
 		loadProfileArticles(engage);
 	}
+
+
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
@@ -220,20 +237,20 @@ jQuery(document).ready(function ($) {
 			return false;
 		})
 
-		$('#article_options span#options span:nth-child(3) ').bind('click', function () {
+		$('.article_options span#options span:nth-child(3) ').bind('click', function () {
 			$("div#article_container .columns:first-child").toggleClass('night');
-
+			$(".article_options").toggleClass('night');
 			return false;
 		})
 
-		$('#article_options span#options span:nth-child(4) ').bind('click', function () {
+		$('.article_options span#options span:nth-child(4) ').bind('click', function () {
 			$("#article").toggleClass('larger');
 
 			return false;
 		})
 
 
-		$('#article_options span.star_btn.unstarred').live('click', function () {
+		$('.article_options span.star_btn.unstarred').live('click', function () {
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
 			if (resource_uuid) {
@@ -249,7 +266,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.star_btn.starred').live('click', function () {
+		$('.article_options span.star_btn.starred').live('click', function () {
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
 			if (resource_uuid) {
@@ -269,7 +286,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.like_btn.disliked').live('click',function(){
+		$('.article_options span.like_btn.disliked').live('click',function(){
 
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
@@ -290,7 +307,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#article_options span.like_btn.liked').live('click',function(){
+		$('.article_options span.like_btn.liked').live('click',function(){
 
 			var self = $(this);
 			var resource_uuid = $('#hidden-info').attr('data-resource-id');
@@ -317,7 +334,7 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('course') != -1) {
 
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -355,10 +372,19 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('#week-info .edit_btn').live('click',function(){
+			var self = $(this);
+			$('#week-info .topic_panel').hide();
+			$('#week-info .edit_panel').slideDown('slow');
+
+		})
+
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
-			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self.parent());
+			if ($('.topic_input').length < 5) {
+				var new_topic_box = renderTopicInput('');
+				$(new_topic_box).insertBefore(self.parent());
+			}
 		})
 
 
@@ -375,27 +401,25 @@ jQuery(document).ready(function ($) {
 			})
 			var id = $('#week-info').attr('data-week-id');
 			if(id && result){
+				console.log(result);
 				engage.updateWeekInfo(id,result,function(data){
 
 					if (data && data.errorcode === 0){
 
-						alert('saved!');
+						updateTopicList(data.week);
+
 					}
-					else{alert('failed!')
-					};
 				})
 
 			}
-			else{
-				alert('failed!');
-			}
+
 
 		})
 
 
 	}
 	else {
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -414,7 +438,7 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#submitnew form').bind('submit',function(){
+		$('#share_article').bind('submit',function(){
 
 			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
@@ -558,6 +582,40 @@ jQuery(document).ready(function ($) {
 
 		}
 	})
+
+
+//TODO: come back to here later
+
+	$('#upload_article').submit(function() {
+		alert('!');
+
+		$(this).ajaxSubmit({
+
+			error: function(xhr) {
+				status('Error: ' + xhr.status);
+			},
+
+			success: function(response) {
+
+				if(response.error) {
+					status('Opps, something bad happened');
+					return;
+				}
+
+				var imageUrlOnServer = response.path;
+
+
+			}
+		});
+
+		// Have to stop the form from submitting and causing
+		// a page refresh - don't forget this
+		return false;
+	});
+
+
+
+
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
@@ -1062,55 +1120,111 @@ function renderTopicInput(topic){
 	return html;
 }
 
-function renderWeekInfoBox(item){
+function updateTopicList(item){
+
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
-			item.week + 
-			'</h4>' + '<span id="topic_span">TOPICS:</span>';
-	if (!item.owner){
-		if (!item.topic){
+		'<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
 			weekBox += '<p>' +
-				'Instructor has not set up weekly topics yet.' +
+				topic_list[0] +
 				'</p>';
 		}
-		else{
-			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
-				weekBox += '<p>' +
-					topic_list[0] +
-					'</p>';
-			}
-			else{
-				topic_list.shift();
-				weekBox += '<ul>'
-				$.each(topic_list,function(i,topic){
-					weekBox += '<li>'+ topic+'</li>'
-				})
-				weekBox += '</ul>'
-				console.log(topic_list)
-			}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
 		}
 
+
 	}
+	weekBox += '<span class="button small edit_btn">Edit</span>';
+
+	$('#week-info .topic_panel').html(weekBox);
+	$('#week-info .edit_panel').hide();
+	$('#week-info .topic_panel').slideDown('slow');
+
+}
+
+function renderWeekInfoBox(item) {
+
+	var weekBox =
+		'<div class="three columns weekbox">'
+			+ '<div id="week-info" data-week-id="' + item.uuid + '" class="innercontents">'
+
+
+			+ '<div class="topic_panel">'
+			+ '<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
+			weekBox += '<p>' +
+				topic_list[0] +
+				'</p>';
+		}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
+		}
+
+
+	}
+	if (item.owner) {
+		weekBox += '<span class="button small edit_btn">Edit</span>';
+	}
+	weekBox += '</div>';
+
 
 	//if is prof
-	else{
-		
-		if (!item.topic){
+
+	if (item.owner) {
+
+		weekBox += '<div class="edit_panel">';
+		weekBox += '<h4>Week '
+			+ item.week
+			+ '</h4>'+ '<span id="topic_span">TOPICS:</span>';
+		if (!item.topic) {
 			weekBox += renderTopicInput('');
 
 
-
 		}
-		else{
+		else {
 			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
+			if (topic_list[0] !== "") {
 				weekBox += renderTopicInput(topic_list[0]);
 			}
-			else{
+			else {
 				topic_list.shift();
 
-				$.each(topic_list,function(i,topic){
+				$.each(topic_list, function (i, topic) {
 					weekBox += renderTopicInput(topic);
 				})
 
@@ -1118,12 +1232,14 @@ function renderWeekInfoBox(item){
 			}
 		}
 
-		weekBox += '<div id="week_topic_btn">' + 
-			'<span class="medium button add_btn">Add</span>' + 
-			'<span class="button medium save_btn">Save</span>' + '</div>';
+		weekBox += '<div id="week_topic_btn">' +
+			'<span class="small button add_btn">Add</span>' +
+			'<span class="button small save_btn">Save</span>' + '</div>';
+
+
+		weekBox += '</div>';
 
 	}
-
 
 
 	weekBox += '</div></div>'
@@ -1132,10 +1248,9 @@ function renderWeekInfoBox(item){
 }
 
 function renderArticlePreviewBox(item) {
-console.log(formartDate(item.createdAt));
 	var article =
 		'<div class="three columns articlebox">'
-			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 			+ isOwner(item.owner)
 
 			+ '<a href="/profile/'+ item.user.uuid +'">'
@@ -1149,7 +1264,7 @@ console.log(formartDate(item.createdAt));
 			+ '<p>Posted '
 			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
 			+ '</span>'
 
@@ -1206,8 +1321,7 @@ function activateTab($tab) {
 
 function formartDate(old_date) {
 	var now = new Date();
-	var post_time = parseDate(old_date);
-	console.log(post_time);
+	var post_time = new Date(Date.parse(old_date));
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
 }
@@ -1342,7 +1456,7 @@ function weekConverter() {
 
 	var one_week = 7 * 24 * 60 * 60 * 1000;
 	var current_date = new Date();
-	var semester_start_date = new Date(parseDate('2012-05-07T07:00:00.000Z'));
+	var semester_start_date = new Date(Date.parse('2012-05-07T07:00:00.000Z'));
 	return current_date.getWeek() - semester_start_date.getWeek() + 1;
 
 

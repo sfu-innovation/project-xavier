@@ -7,9 +7,9 @@
 
 function ElementFactory() { }
 
-ElementFactory.createCourseListItem = function(name, uuid) {
+ElementFactory.createCourseListItem = function(name, uuid, index) {
 	var courseListItem = ""
-		+ "<div class='courseButton' onclick='clickButton(this)'>"
+		+ "<div class='courseButton' onclick='CourseList.clickButton(" + index + ")'>"
 			+ "<div class='courseButtonSelectorTop'></div>"
 			+ "<div class='courseButtonId' style='display:none;'>" + uuid + "</div>"
 			+ "<div class='courseButtonTextContainer'>" 
@@ -106,7 +106,7 @@ ElementFactory.createPageNumbers = function(totalPages) {
 	if (totalPages > 0) {
 		var item = "<img src='../images/rqra/prev.png' alt='previous'>";
 		for(var i = 0; i < totalPages; i++) {
-			item += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
+			item += "<div class='pageNumberButton' onclick='QuestionList.setPage(" + i + ")'>" + (i+1) + "</div>";
 		}
 		item += "<img src='../images/rqra/next.png' alt='next'>";
 		return item;
@@ -195,4 +195,23 @@ ElementFactory.createQuestionCounter = function(count, line1, line2) {
 			+ "<div id='questionCountText2'>" + line2 + "</div>"
 		+ "</div>";
 	return item;
+}
+
+ElementFactory.createCourseBoxItem = function(course) {
+	if (course) {
+		var courseName = course.subject + "" + course.number;
+		return "<option value='" + course.uuid +  "' " + "title='" + courseName + "'>"
+				+ courseName + " - " + course.title 
+			+ "</option>";
+	} else {
+		return "";
+	}
+}
+
+ElementFactory.createWeekBoxItem = function(index, week) {
+	if (week) {
+		return "<option value='" + index + "'>" + "Week " + week.week + " - " + week.topic + "</option>";
+	} else {
+		return "<option value='" + index + "'>" + "Week " + index + "</option>";
+	}
 }

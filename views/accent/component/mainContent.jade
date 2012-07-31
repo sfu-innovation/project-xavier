@@ -15,29 +15,47 @@ div#Main
 		div.Tagger
 			div.Timeline
 
+				div.TagWindow
+					div.Type
+						label Type:
+						select#TagType
+							option Important
+							option Examable
+							option Question
+							option Interesting
+							option General
+					div.Title
+						label Title:
+						input#TagTitle(type="text", placeholder="My Great Title")
+					div.Description
+						label Description:
+						textarea#TagDescription(rows="6", cols="50")
+					div.Buttons
+						input(type="submit", onclick="return deleteTag(this);", value="Discard Changes")
+						input(type="submit", onclick="return uploadTag(this);", value="Save Changes")
+
 			div.Commands
-				a(href="") X
+				a(href="") Filters
 				ul
-					li
-						a(href="") X
-					li
-						a(href="") Y
-					li
-						a(href="") Z
-					li
-						a(href="") Q
-		div.TagWindow
-			div
-				label Title:
-				input#TagTitle(type="text", placeholder="My Great Title")
-			div
-				label Tag Type:
-				select#TagType
-			div
-				label Description:
-				textarea#TagDescription
-			div
-				input(type="submit", value="Done", onclick="return uploadTag(this);")
+					li.All
+						a(href="") All
+					li.Important
+						a(href="")
+							img(src="../../images/accent/important.png", alt="Important")
+					li.Examable
+						a(href="")
+							img(src="../../images/accent/examable.png", alt="Examable")
+					li.Question
+						a(href="")
+							img(src="../../images/accent/question.png", alt="Question")
+					li.Interesting
+						a(href="")
+							img(src="../../images/accent/interesting.png", alt="Interesting")
+					li.General
+						a(href="")
+							img(src="../../images/accent/general.png", alt="General")
+
+
 					
 script(type="text/javascript", src="../javascripts/accent/load-media.js")
-script(type="text/javascript", src="../javascripts/accent/uploadTag.js")
+script(type="text/javascript", src="../javascripts/accent/tagControl.js")

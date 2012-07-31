@@ -58,6 +58,7 @@ div#questionCount {
 	font-size: 34px;
 	font-weight: bold;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	-moz-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
 div#questionCountNumber {
@@ -137,6 +138,7 @@ div.question {
 	cursor: pointer;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	-moz-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
@@ -149,10 +151,23 @@ div.comment {
 	font-weight: 200;
 	color: #4d4d4d;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	-moz-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
 }
 
 @-webkit-keyframes question-appear-animation {
+	0% { 
+		opacity: 0;
+	}
+	10% {
+		opacity: 0;
+	}
+	100% { 
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes question-appear-animation {
 	0% { 
 		opacity: 0;
 	}
@@ -226,6 +241,7 @@ div#pageNumber {
 	box-orient: horizontal;
 	padding-bottom: 20px;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
+	-moz-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
 }
 
 div#pageNumber img {

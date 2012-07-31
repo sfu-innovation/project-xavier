@@ -10,6 +10,8 @@ html
 		title= title
 		<meta content='True' name='HandheldFriendly' />
 		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="apple-touch-icon-precomposed" href="/images/engage/SFUEngage_icon.png">
 		<meta name="viewport" content="width=device-width" />
 		script(src="http://code.jquery.com/jquery-latest.js")
 		script(src="/javascripts/engage/prettydate.js")
@@ -53,12 +55,15 @@ html
 		script(src="/javascripts/engage/jquery.placeholder.min.js")
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
-		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js?v118")
 		script(src="/javascripts/engage/jquery.jscrollpane.min.js")
+		script(src="/javascripts/engage/jquery.form.js")
+		script(src="/javascripts/engage/jquery.dirtyforms.js")
+
+		script(src="/javascripts/core.api.js")
+		script(src="/javascripts/engage/app.js?v119")
 		
 	body
-		div#header
+		div#header.banner
 			
 			div.row.clearfix.show-for-small
 				script(type='text/javascript')
@@ -68,14 +73,14 @@ html
 				div.slider_box#menu_box
 					ul
 						li
-							a#all_btn(href="/") All Resources
+							a.all_btn(href="/") All Resources
 						li
-							a#contruibutions_btn(href="/mine") Your Contributions
+							a.contruibutions_btn(href="/mine") Your Contributions
 					ul	
 						li
-							a#starred_btn(href="/starred") Starred
+							a.starred_btn(href="/starred") Starred
 						li
-							a#instructor_btn(href="/instructor") Instructor Posts
+							a.instructor_btn(href="/instructor") Instructor Posts
 				div.slider_box#courses_box
 					ul
 						each item in courses
@@ -108,8 +113,8 @@ html
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
-						img.logo(href="/", src="/images/engage/SFUEngage_draft3-03.png")
-				div.mobile-two.columns#user_options
+						img.logo#small_logo(href="/", src="/images/engage/sfu_logo_white_small.png")
+				div.mobile-two.columns#user_options_mobile
 					ul#user_options_list
 						li#notification.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
@@ -157,7 +162,7 @@ html
 									li
 										a(href="/logout") Logout
 
-			div.row.clearfix.hide-for-small#banner
+			div.row.clearfix.hide-for-small
 				div.three.columns#banner_logo.hide-for-medium
 					a(href="/")
 						img.logo(href="/", src="/images/engage/sfu_logo_white.png")
@@ -167,13 +172,13 @@ html
 				div.five.columns#nav-bar
 					ul#options
 						li
-							a#all_btn(href="/") All Resources
+							a.all_btn(href="/") All Resources
 						li
-							a#contruibutions_btn(href="/mine") Your Contributions
+							a.contruibutions_btn(href="/mine") Your Contributions
 						li
-							a#starred_btn(href="/starred") Starred
+							a.starred_btn(href="/starred") Starred
 						li
-							a#instructor_btn(href="/instructor") Instructor Posts
+							a.instructor_btn(href="/instructor") Instructor Posts
 				
 				div.four.columns.dropdowns#user_options					
 					ul#user_options_list

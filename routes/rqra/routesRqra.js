@@ -2,10 +2,10 @@ var routesCommon = require('./../common/routesCommon.js');
 var notification = require('../../controller/NotificationAction.js')
 
 //TODO: remove when everything is setup
-var fakeUserNotification = function(callback){
+var fakeUserNotification = function(user, callback){
 	var args= {
 		app:0,
-		user:"jrf2"
+		user:user
 	}
 	notification.createUserNotificationSettings(args, function(err, result){
 		if(err)
@@ -22,14 +22,12 @@ exports.index = function(req, res){
 			user : req.session.user,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){
-
-			fakeUserNotification(function(){
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
-			})
 		})
 	}
 	else {
+		//routesCommon.login(0, req, res);
 		var user = {
 			"uuid":"jrf2",
 			"firstName":"Jordan",
@@ -41,7 +39,7 @@ exports.index = function(req, res){
 		req.session.user = user
 		console.log(JSON.stringify(req.session))
 		//login with demo user, remove when everything is set.
-		fakeUserNotification(function(){
+		fakeUserNotification(user.uuid, function(){
 			console.log("redirect");
 			res.redirect("/questions");
 		})
@@ -61,7 +59,7 @@ exports.prof = function(req, res){
 	req.session.user = user
 	console.log(JSON.stringify(req.session))
 	//login with demo user, remove when everything is set.
-	fakeUserNotification(function(){
+	fakeUserNotification(user.uuid, function(){
 		console.log("redirect");
 		res.redirect("/questions");
 	})
@@ -101,7 +99,7 @@ exports.questionForm = function(request, response) {
 }
 
 exports.questionFormPage = function(request, response) {
-	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user });
+	response.render('rqra/questionFormPage', { title: "Demo", user: request.session.user, course: request.session.course, week: request.session.week });
 }
 
 exports.notificationList = function(request, response) {
@@ -220,10 +218,7 @@ exports.deleteComments = function(request, response){
 
 exports.setSelectedCourse = function(request, response){
 	if (request.method === "POST"){
-		//if not log in, cannot create a question
-		console.log(JSON.stringify(request.session))
 		if(request.session && request.session.user){
-
 			request.session.course = request.body.course;
 			request.session.week = request.body.week;
 

@@ -151,14 +151,6 @@ function displayQuestions(course) {
 
 }
 
-function insertAtIndex(i) {
-    if(i === 0) {
-     $("#controller").prepend("<div>okay things</div>");        
-     return;
-    }
-
-    $("#controller div:nth-child(" + i + ")").before("<div>great things</div>");   
-}
 
 function enterPressed(event, textInput) {
 	
@@ -212,7 +204,9 @@ function displayConversations(questionID, callback) {
 	allStr += "<h1> Conversation: </h1>";	
 				
 	rqra.getCommentsByQuestion(questionID, function(data) {					
-		$.each(data.comments.hits, function (index, item) {				
+			
+		$.each(data.comments.hits, function (index, item) {		
+			
 			if (item.user.type === 1) {				
 				topStr += formatResponse(item);
 			}	

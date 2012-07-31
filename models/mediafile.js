@@ -22,7 +22,7 @@ var MediaFile = exports.MediaFile = db.define('MediaFile', {
 	description :{type:Sequelize.STRING},//TODO: update this to graph
 	path: {type: Sequelize.STRING, allowNull: false},
 	type: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
-	thumbnail: {type: Sequelize.STRING, allowNull: false, defaultValue: 'media/default.jpg'}	
+	thumbnail: {type: Sequelize.STRING, allowNull: false, defaultValue: 'default.jpg'}	
 });
 
 //Saves media file to database
@@ -47,7 +47,7 @@ exports.selectMediaFile = function(args, callback){
 }
 
 exports.selectMediaFiles = function(args, callback){
-	MediaFile.findAll({where: args, order: 'title DESC'}).success(function(mediaFiles){		
+	MediaFile.findAll({where: args, order: 'createdAt DESC'}).success(function(mediaFiles){		
 		callback(null, mediaFiles);
 	}).error(function(error){
 		callback(error, null);
@@ -88,7 +88,8 @@ exports.getUserTagsByMedia = function(userUUID, mediaUUID, callback){
 
 //Update a media file with spcified attributes
 exports.updateMediaFile = function(id, args, callback){
-	MediaFile.find({where: id}).success(function(mediaFile) {
+	console.log("ID " + typeof id)
+	MediaFile.find(id).success(function(mediaFile) {
 		mediaFile.updateAttributes(args).success(function(updatedMedia) {
 			console.log("updated succesfully");
 			callback(null, updatedMedia);

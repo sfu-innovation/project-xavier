@@ -5,13 +5,79 @@
 	which appear across all pages
 */
 
-var redirect = false;
+function CourseList() { }
 
-function setSelected(button, select) {
-	var buttonText = button.querySelector(".courseButtonText");
-	var selectorTop = button.querySelector(".courseButtonSelectorTop");
+CourseList.count = 1;
+CourseList.selectedIndex = 0;
+
+CourseList.setSelectedIndex = function(index) {
+	CourseList.selectedIndex = index;
+	CourseList.refreshButtonSelection();
+}
+
+CourseList.setSelectedName = function(name) {
+	var menu = document.getElementById("courseList");
+	var courseNames = menu.querySelectorAll(".courseButtonText");
+	for(var i = 0; i < courseNames.length; ++i) {
+		if (courseNames[i].innerHTML.toLowerCase() === name.toLowerCase()) {
+			CourseList.selectedIndex = i;
+			break;
+		}
+	}
+	CourseList.refreshButtonSelection();
+}
+
+CourseList.getCourseName = function(index) {
+	var menu = document.getElementById("courseList");
+	var courseName = menu.querySelectorAll(".courseButtonText")[index].innerHTML;
+	return courseName.toLowerCase();
+}
+
+CourseList.getUuid = function(courseName) {
+	var menu = document.getElementById("courseList");
+	if (menu) {
+		for (var i = 0; i < menu.children.length; ++i) {
+			
+			if (courseName && courseName.toUpperCase() === menu.children[i].querySelector(".courseButtonText").innerHTML) {
+				
+				return menu.children[i].querySelector(".courseButtonId").innerHTML;
+			}
+		}
+	}
+	return "";
+}
+
+CourseList.refreshCourseList = function(callback) {
+	common.getUserCourses(function(data) {
+		if (data && data.errorcode === 0) {
+			var menu = document.getElementById("courseList");
+			if (menu) {
+				menu.innerHTML = "";
+				menu.innerHTML += ElementFactory.createCourseListItem("All", "", 0);
+				CourseList.count = data.courses.length+1;
+				for (var i = 0; i < data.courses.length; i++) {
+					var course = data.courses[i];
+					menu.innerHTML += ElementFactory.createCourseListItem(course.subject + "" + course.number, course.uuid, (i+1));
+				}
+			}
+		}
+		if (callback) callback();
+	});
+}
+
+CourseList.refreshButtonSelection = function() {
+	for(var i = 0; i < CourseList.count; ++i) {
+		CourseList.setStyleSelected(i, (i === CourseList.selectedIndex));
+	}
+}
+
+CourseList.setStyleSelected = function(index, selected) {
+	var menu = document.getElementById("courseList");
+	
+	var buttonText = menu.querySelectorAll(".courseButtonText")[index];
+	var selectorTop = menu.querySelectorAll(".courseButtonSelectorTop")[index];
 	if (selectorTop) {
-		if (!select) {
+		if (!selected) {
 			selectorTop.style.height = "0%";
 			buttonText.style.fontWeight = "normal";
 		} else {
@@ -20,9 +86,9 @@ function setSelected(button, select) {
 		}
 	}
 	
-	var selectorBottom = button.querySelector(".courseButtonSelectorBottom");
+	var selectorBottom = menu.querySelectorAll(".courseButtonSelectorBottom")[index];
 	if (selectorBottom) {
-		if (!select) {
+		if (!selected) {
 			selectorBottom.style.top = "40px";
 			selectorBottom.style.opacity = "0";
 		} else {
@@ -32,64 +98,9 @@ function setSelected(button, select) {
 	}
 }
 
-function clickButton(selectedButton) {
-	QuestionCommon.setCourse(selectedButton.querySelector(".courseButtonText").innerHTML.toLowerCase());
+CourseList.clickButton = function(index) {
+	QuestionCommon.setCourse(CourseList.getCourseName(index));
 	QuestionCommon.refreshDefaultHeader();
-	if (redirect) {
-		window.location = "/questions";
-	}
-	selectButton(selectedButton);
-}
-
-function selectButton(selectedButton) {
-	var menu = document.getElementById("courseList");
-	var buttons = menu.querySelectorAll(".courseButton");
-	for (var i = 0; i < buttons.length; ++i) {
-		if (selectedButton === buttons[i]) {
-			if (typeof(QuestionList) !== "undefined") {
-				QuestionList.setPage(0);
-			}
-			setSelected(buttons[i], true);
-		} else {
-			setSelected(buttons[i], false);
-		}
-	}
-}
-
-function selectButtonByName(name) {
-	var menu = document.getElementById("courseList");
-	var buttons = menu.querySelectorAll(".courseButton");
-	for (var i = 0; i < buttons.length; ++i) {
-		if (name === buttons[i].querySelector(".courseButtonText").innerHTML) {
-			setSelected(buttons[i], true);
-		}	else {
-			setSelected(buttons[i], false);
-		}
-	}
-}
-
-function getUuid(courseName) {
-	var menu = document.getElementById("courseList");
-	if (menu) {
-		for (var i = 0; i < menu.children.length; ++i) {
-			if (courseName && courseName.toUpperCase() === menu.children[i].querySelector(".courseButtonText").innerHTML) {
-				return menu.children[i].querySelector(".courseButtonId").innerHTML;
-			}
-		}
-	}
-	return "";
-}
-
-function displayCourseList() {
-	common.getUserCourses(function(data) {
-		if (data && data.errorcode === 0) {
-			var menu = document.getElementById("courseList");
-			menu.innerHTML = "";
-			menu.innerHTML += ElementFactory.createCourseListItem("All", "");
-			for (var i = 0; i < data.courses.length; i++) {
-				menu.innerHTML += ElementFactory.createCourseListItem(data.courses[i].subject + "" + data.courses[i].number, data.courses[i].uuid);
-			}
-			selectButton($(".courseButton")[0]);
-		}
-	});
+	if (typeof(QuestionList) !== "undefined") QuestionList.refreshQuestionsList();
+	CourseList.setSelectedIndex(index);
 }

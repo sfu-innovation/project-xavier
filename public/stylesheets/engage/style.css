@@ -40,10 +40,6 @@
 ::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(158, 158, 158, 1);
 
-
-
-
-
 }
 
 ::-webkit-scrollbar-button {
@@ -85,9 +81,9 @@ em {
 }
 
 body{
-	color: #9e9e9e !important;
 	padding-bottom: 20px;
 	overflow-x: hidden;
+	background-image: url("/images/engage/light_toast_bg_lighter.png");
 }
 
 .row{	
@@ -98,6 +94,8 @@ body{
 /* -----------------------------------------
    Header and Navigation
 ----------------------------------------- */
+
+
 div#header{
 	background-color: rgba(0,0,0,0.1);
 	font-family: "Lato", sans-serif;
@@ -131,6 +129,8 @@ div#header{
 
 #header ul#options li a{
 	color:  rgba(250, 250, 250, 1);
+	padding-bottom: 9px;
+
 
 }
 
@@ -143,27 +143,35 @@ div#header{
 }
 
 #header ul#options li:hover:first-child a{
-	border-bottom: 0;
+	/*border-bottom: 0;*/
 
 
 	}
+
+
 #header #nav-bar{
 	text-align: right;
 }
-#header #banner{
 
+.no-touch #header.banner{
 	background-image: url("/images/engage/sfu_brand_banner.png");
 	background-position: cover;
 	width: 100%;
 	}
+	
+#header.banner{
+	background-image: url("/images/engage/SFUMobile_TOP_Mobile_Banner.png");
+}
 #header #banner_logo{
 	padding-right:0;
+	margin-top:10px;
 }
 #header #banner_logo a{
 	line-height: 60px;
 	}	
-#header #banner_logo img.logo#small_logo{
+#header img.logo#small_logo{
 	min-width: 70px;
+	margin-top: 9px;
 }
 #header #banner img.logo{
 	vertical-align: middle;
@@ -192,7 +200,7 @@ div#header{
 }
 
 #sliderMenu li a{
-	color: #888;
+	color: #555;
 	font-weight: bold;
 	cursor: pointer;
 	}
@@ -254,6 +262,10 @@ div#header{
 div#user_options{
 
 	min-width: 320px;
+}
+
+div#user_options{
+
 }
 ul#user_options_list{
 	list-style: none;
@@ -543,7 +555,7 @@ display: none;
 
 div.innercontents{
 	/*background-color: rgba(0,0,0,0.02) ;*/
-	background-color: rgba(250, 250, 250,1);
+	background-color: #fff;
 	position: relative;
 	height:360px;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
@@ -553,60 +565,60 @@ div.innercontents{
 }
 
 div.innercontents.color-1{
-	border-top: 4px solid #F14241;
+	border-top: 4px solid #FF6A68;
 }
 
 div.innercontents.color-2{
-	border-top: 4px solid #FFAB08;
+	border-top: 4px solid #FFCE7A;
 }
 
 div.innercontents.color-3{
-	border-top: 4px solid #5FE1C2;
+	border-top: 4px solid #4FA2F7;
 }
 
 div.innercontents.color-4{
-	border-top: 4px solid #14CC43;
+	border-top: 4px solid #8FD960;
 }
 
 div.innercontents.color-5{
-	border-top: 4px solid #4860E3;
+	border-top: 4px solid #D3B2ED;
 }
 
 div.innercontents.color-6{
-	border-top: 4px solid #FFEA1C;
+	border-top: 4px solid #7ADFC7;
 }
 
 
 
 span.coursename a.color-1{
-	color:#F14241;
+	color:#FF6A68;
 
 }
 
 span.coursename a.color-2{
-	color:#FFAB08;
+	color:#FFCE7A;
 
 }
 
 
 span.coursename a.color-3{
-	color:#5FE1C2;
+	color:#4FA2F7;
 
 }
 
 span.coursename a.color-4{
-	color:#14CC43;
+	color:#8FD960;
 
 }
 
 
 span.coursename a.color-5{
-	color:#4860E3;
+	color:#D3B2ED;
 
 }
 
 span.coursename a.color-6{
-	color:#FFEA1C;
+	color:#7ADFC7;
 
 }
 
@@ -712,9 +724,13 @@ div.post_details p a{
 	}
 
 div#submitnew .loading{
+	background-image: url('/images/engage/loading.gif');
+	background-position: 116px 100px;
+	background-repeat: no-repeat;
 	display: none;
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 170px;
+	padding-left:8px;
 	height: 360px;
 	position: absolute;
 	z-index: 5000;
@@ -936,8 +952,7 @@ div.cover.hack{
 }
 
 div.cover .frontCard {
-	background-color: rgba(250, 250, 250,1);
-
+	background-color: #fff;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
 	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
@@ -1018,13 +1033,13 @@ div.innercontents#submitnew form{
 	margin:10px
 }
 	
-#sumbitrow{
+.sumbitrow{
 	display: inline-block;
 	width: 100%;
 
 }
 
-#sumbitrow .small.button{
+.sumbitrow .small.button{
 	width : 60px;
 	background-color: gray;
 	border: 0;
@@ -1057,19 +1072,31 @@ div#article_container{
 	
 }
 div#article_container #article{
-	padding: 1em 2em 3em;
+	padding: 0;
 	word-spacing: -0.05em;
 	line-height: 1.3em;
 
 }
 
+.no-touch div#article_container #article{
+/*browser*/
+	padding: 1em 2em 3em;
+	word-spacing: -0.05em;
+	line-height: 1.3em;
+
+
+}
+
+.no-touch div#article_container #article pre{
+	white-space: normal;
+	width: 100%;
+}
 div#article_container #article p{
 		font-size: 16px;
 		}
 
 div#article_container .columns:first-child.night{
-		-webkit-transition: all 0.2s ease-in-out;
-
+	-webkit-transition: all 0.2s ease-in-out;
 	color:white;
 	background-color: black;
 }
@@ -1088,81 +1115,163 @@ div#article_container div#article.larger h1{
 div#article_container #article img{
 	display: block;
 	}
-#article_options{
+.article_options{
 	margin-top: 30px;
 	padding: 0em 1em 0em;
 	}
-#article_options span{
-	color: #9e9e9e;
-	cursor: pointer;
 	
-	}
+	
+#article_options_mobile{
+	padding: 0;
+}
 
-	
-#article_options #options{
+.article_options.night #options span{
+	color: white;
+	opacity: 1;
+}
+.article_options #options{
 	margin-left:10px;
 	float: right;
-	
+	opacity: 0.8;
 }
-#article_options span{	
-	color: #3b3b3b; 
+.article_options #options span{	
+	color: #555; 
 	margin-left: 10px;
 	margin-right: 10px;
 	display: inline-block;
 	background-repeat: no-repeat;
 	padding-left: 18px;
-	opacity: 0.7;
+	cursor: pointer;
 	}
 
 
-#article_options span.star_btn.unstarred{
+.article_options span.star_btn.unstarred{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
-#article_options span.star_btn.unstarred:hover{
+.article_options span.star_btn.unstarred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
-#article_options span.star_btn.starred{
+.article_options span.star_btn.starred{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
-#article_options span.star_btn.starred:hover{
+.article_options span.star_btn.starred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
 
-#article_options span.like_btn.disliked{
+.article_options span.like_btn.disliked{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-#article_options span.like_btn.disliked:hover{
+.article_options span.like_btn.disliked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-#article_options span.like_btn.liked{
+.article_options span.like_btn.liked{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-#article_options span.like_btn.liked:hover{
+.article_options span.like_btn.liked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-#article_options span#invert_btn{
+.article_options span#invert_btn{
 	background-image: url( "/images/engage/icon/16x16/Invert_v1.png");
 }
 
-#article_options span#textsize_btn{
+.article_options span#textsize_btn{
 	background-image: url( "/images/engage/icon/16x16/TextSize_v1.png");
 }
 
-#article_options span#link_btn{
+.article_options span#link_btn{
 	background-image: url( "/images/engage/icon/16x16/ViewOriginal_v1.png");	
 }
-#article_options span#back_btn{
+.article_options span#back_btn{
 	background-image: url( "/images/engage/icon/16x16/Back_v1.png");	
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	color: #555;
 }
 
-#article_options span#course{
+.article_options span#course{
 	float: right;
 }	
+
+
+#article_options_mobile{
+	white-space: nowrap;
+	display: inline-block;
+	margin-top:10px;
+}
+#article_options_mobile #options{
+	
+	padding: 0 10px;
+	margin: 0 !important;
+	float:none;
+	text-align: center;
+}
+
+#article_options_mobile #options span{
+	margin: 0;
+	margin: 0 15px;
+	line-height: 35px;
+	padding-left: 30px;
+	
+}
+#article_options_mobile span#back_btn{
+	display: inline-block;
+	line-height: 35px;
+	padding-left: 35px !important;
+}
+.article_options#article_options_mobile span.star_btn.unstarred{
+	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
+}
+.article_options#article_options_mobile span.star_btn.unstarred:hover{
+	background-image: url( "/images/engage/icon/32x32/Star_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.star_btn.starred{
+	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
+}
+.article_options#article_options_mobile span.star_btn.starred:hover{
+	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.disliked{
+	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.disliked:hover{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.liked{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.liked:hover{
+	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
+}
+
+.article_options#article_options_mobile span#invert_btn{
+	background-image: url( "/images/engage/icon/32x32/Invert_v1.png");
+}
+
+.article_options#article_options_mobile span#textsize_btn{
+	background-image: url( "/images/engage/icon/32x32/TextSize_v1.png");
+}
+
+.article_options#article_options_mobile span#link_btn{
+	background-image: url( "/images/engage/icon/32x32/ViewOriginal_v1.png");	
+}
+.article_options#article_options_mobile span#back_btn{
+	background-image: url( "/images/engage/icon/32x32/Back_v1.png");	
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	color: #555;
+}
+
+
 div#article_container #article h1{
 	font-family: "Cambria", sans-serif;
 	font-size: 24px;
@@ -1228,7 +1337,7 @@ div#article_container .thread li span.edit_btn{
 }
 
 .no-touch div#article_container .thread li span.edit_btn{
-	opacity: 0.5;
+	opacity: 0.7;
 
 	display: none;
 
@@ -1413,6 +1522,11 @@ div#info, div#week-info {
 	padding: 10px 25px;
 	
 }
+
+div#week-info .edit_panel{
+	display: none;
+}
+
 div#info ul{
 	list-style: none;
 }
@@ -1742,7 +1856,8 @@ div.innercontents#user_detail_box h3{
 	}
 	
 #week-info ul{
-	list-style: none;
+	list-style: circle;
+	padding-left: 40px;
 }
 
 

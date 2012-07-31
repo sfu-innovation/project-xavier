@@ -102,10 +102,10 @@ ElementFactory.createQuestionsNotFoundItem = function() {
 	return item;
 }
 
-ElementFactory.createPageNumbers = function(number) {
-	if (number > 0) {
+ElementFactory.createPageNumbers = function(totalPages) {
+	if (totalPages > 0) {
 		var item = "<img src='../images/rqra/prev.png' alt='previous'>";
-		for(var i = 0; i < number/7; i++) {
+		for(var i = 0; i < totalPages; i++) {
 			item += "<div class='pageNumberButton' onclick='changePage(" + i + ")'>" + (i+1) + "</div>";
 		}
 		item += "<img src='../images/rqra/next.png' alt='next'>";
@@ -142,13 +142,13 @@ ElementFactory.createCommentItem = function(comment) {
 					+ "<span class='inserted'>" + jQuery.timeago(new Date(comment._source.timestamp)) + "</span> "
 					+ "by <span class='inserted'>" + user.firstName + " " + user.lastName + "</span>"
 				+ "</div>"
-				+ "<div class='votes' onclick='vote(1, this)'>"
+				+ "<div class='votes' onclick='QuestionDetails.vote(1, this)'>"
 					+ "<span class='upVoteCount'>" + comment._source.upvote + "</span> " 
 					+ "<img src='../images/rqra/up.png' alt='UpVotes'/>"
 				+ "</div>"
-				+ "<div class='votes' onclick='vote(-1, this)'>"
+				+ "<div class='votes' onclick='QuestionDetails.vote(-1, this)'>"
 					+ "<span class='downVoteCount'>" + comment._source.downvote + "</span> " 
-					+ "<img src='../images/rqra/up.png' alt='DownVotes'/>"
+					+ "<img src='../images/rqra/down.png' alt='DownVotes'/>"
 				+ "</div>"
 			+ "</div>";
 		return commentItem;
@@ -185,4 +185,14 @@ ElementFactory.createNotificationItem = function(notification) {
 		console.error("ElementFactory: cannot create notification item, notification is undefined!");
 		return "";
 	}
+}
+
+ElementFactory.createQuestionCounter = function(count, line1, line2) {
+	var item = ""
+		+ "<div id='questionCountNumber'>" + count + "</div>"
+		+ "<div id='questionCountText'>"
+			+ "<div id='questionCountText1'>" + line1 + "</div>"
+			+ "<div id='questionCountText2'>" + line2 + "</div>"
+		+ "</div>";
+	return item;
 }

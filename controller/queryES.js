@@ -5,7 +5,7 @@ var es = require('com.izaakschroeder.elasticsearch'),
 	index = db.index('presenter'),
 	mapping = index.mapping('questions'),
 	UUID = require('com.izaakschroeder.uuid'),
-	notification = require('./NotificationAction.js'),
+	NotificationAction = require('./NotificationAction.js'),
 	async = require('async'),
 	user = require('../models/user.js'),
 	userProfile = require('../models/userProfile.js'),
@@ -36,102 +36,43 @@ var paging = function(pageNum){
 
 //add many user objects to result
 var addUsersToData = function(data, callback){
-	var result = {};
-	result.total = data.hits.total;
-	result.hits = [];
+	var results = {};
+	results.total = data.hits.total;
+	results.hits = [];
 
-	async.forEach(data.hits.hits, function(obj, done){
-		user.selectUser({"uuid":obj._source.user}, function(error, user){
+	async.forEach(data.hits.hits, function(item, done){
+		addUserToData(item, function(err, result){
+			if(err)
+				return callback(err)
 
-			if(error){throw error;}
-
-			if(user){
-				obj.user = user;
-			}
-			else{
-				obj.user = "User not found: " + obj._source.user;
-			}
-
-			userProfile.getUserProfile(obj._source.user, function(err, profile){
-				if(err)
-					done(err);
-
-				if(profile){
-					obj.profile = profile.profilePicture;
-				}
-				result.hits.push(obj);
-				done();
-			})
-		});
+			results.hits.push(result);
+			done();
+		})
 	}, function(err){
-		//console.log(JSON.stringify(result))
-		callback(err, result);
+		callback(err, results);
 	});
 }
 
 //add a single user object to result
 var addUserToData = function(data, callback){
 	user.selectUser({"uuid":data._source.user}, function(error, user){
+		if(error)
+			return callback(error);
 
 		if(user){
 			data.user = user;
 		}
-		else{
-			data.user = "User not found: " + data._source.user;
-		}
 
-		if(error){
-			callback(error);
-		}else{
-			userProfile.getUserProfile(data._source.user, function(err, profile){
-				if(err)
-					return callback(err)
-
-				if(profile){
-					data.profile = profile.profilePicture;
-				}
-				callback(null, data);
-			})
-		}
-	});
-}
-//
-QueryES.prototype.getUserNotification = function(userID, appType, callback){
-	var self = this;
-	var notificationList = [];
-
-	self.getAllQuestionByUserID(userID, '-', appType, function(err, result){
-		if(err)
-			return callback(err);
-
-		async.forEach(result.hits, function(question, done){
-
-			var args = {
-				app    : appType,
-				target : question._id,
-				event : 1
-			}
-
-			notification.getUserNotifications(args, function(err, result){
-				if(err)
-					return callback(err)
-				if(result.length !== 0){
-					notificationList.push({
-						question: question._source.title,
-						user: result[0].user,
-						createdAt: result[0].createdAt
-					})
-				}
-
-				done();
-			})
-		}, function(err){
+		userProfile.getUserProfile(data._source.user, function(err, profile){
 			if(err)
 				return callback(err)
 
-			callback(null, notificationList)
+			if(profile){
+				data.profile = profile.profilePicture;
+			}
+			callback(null, data);
 		})
-	})
+	});
 }
 
 QueryES.prototype.getAllQuestionsByUuids = function(questionUuids, appType, callback){
@@ -394,29 +335,21 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	args.section = data.week;	//section uuid
 	args.resource = questionUuid;	//question uuid
 
-	user.selectUser({"uuid":data.user}, function(error, user){
-		if(error)
+	document.set(data, function(err, req, esResult){
+		if(err)
 			return callback(error);
 
-		document.set(data, function(err, req, esResult){
+		require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 			if(err)
-				return callback(error);
+				return callback(err);
 
-			//console.log('Added question to ES');
-			require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
+			NotificationAction.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
 				if(err)
 					return callback(err);
 
-				//console.log('Added question resource to section');
-				notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
-					if(err)
-						return callback(err);
-
-					//console.log('Added question notification');
-					callback(null, esResult);
-				});
+				callback(null, esResult);
 			});
-		})
+		});
 	})
 }
 
@@ -520,26 +453,19 @@ QueryES.prototype.deleteQuestion = function(questionID, appType, callback){
 QueryES.prototype.updateStatus = function(questionID, isInstructor, appType, callback){
 	var link = '/' + switchIndex(appType) + '/questions/' + questionID + '/_update';
 	var date = new Date().toISOString();
+	var data = {
+		'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count;',
+		'params':{
+			'status':'answered',
+			'date':date,
+			'count':1,
+			'isInstructor': "true"
+		}
+	}
 
 	if(isInstructor){
-		var data = {
-			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count; ctx._source.isInstructor = isInstructor',
-			'params':{
-				'status':'answered',
-				'date':date,
-				'count':1,
-				'isInstructor': "true"
-			}
-		}
-	}else{
-		var data = {
-			'script':'ctx._source.status = status; ctx._source.timestamp = date;ctx._source.commentCount += count ',
-			'params':{
-				'status':'answered',
-				'date':date,
-				'count':1
-			}
-		}
+		data.script += "ctx._source.isInstructor = isInstructor"
+		data.params.isInstructor = "true"
 	}
 
 	//add new comment to the document found at uid
@@ -698,7 +624,6 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 QueryES.prototype.addComment = function(data, user, appType, callback){
 	var document;
 	var commentUuid = UUID.generate();
-	var self = this;
 	var isInstructor = false;
 	var args = {
 		target:data.target_uuid
@@ -715,43 +640,30 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
+	//instructor has commented on a question
 	if(user.type === 1){
-		//console.log("User is an instructor")
 		isInstructor = true;
 	}
 
-	self.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
+	this.updateStatus(args.target, isInstructor, appType, function(err, updateResult){
 		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 
 		document.set(data, function(err, req, esData){
 			if(err)
 				return callback(err);
-			//console.log("document added");
 
-			notification.addCommentUserNotification(args, function(err, usrNotificationResult){
-				if(err){
-					console.log(err);
+			NotificationAction.addCommentUserNotification(args, function(err, usrNotificationResult){
+				if(err)
 					return callback(err);
-				}
 
-				delete args.description;
-				var user = args.origin;
-				delete args.origin
-				args.user = user;
-				notification.addCommentNotifier(args, function(err, result){
-					if(err){
-						console.log(err);
-						callback(err);
-					}
+				args.user =  args.origin;
 
-					//console.log('complete');
+				NotificationAction.addCommentNotifier(args, function(err, result){
+					if(err)
+						return callback(err);
 
-					// good idea to attach source so that it is
-					// not troublesome to check the object without calling getCommentByID
 					esData._source = data;
-					// maybe even add user if it's needed
-
 					callback(null, esData);
 				});
 			});
@@ -798,7 +710,7 @@ QueryES.prototype.deleteComment = function(commentID, appType, callback){
 
 			args = {user:result._source.user, target: result._source.target_uuid, app: appType};
 
-			notification.removeCommentNotifier( args, function(err, result){
+			NotificationAction.removeCommentNotifier( args, function(err, result){
 				if(err)
 					return callback(err)
 
@@ -910,12 +822,9 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 		data.query.bool.must.push({match_all:{}});
 	}
 
-	//check to see which type its in
 	if(searchObj.course){
-		//console.log("ES search- course param provided")
 		data.query.bool.must.push({"term":{"course": searchObj.course}});
 		if(searchObj.week){
-			//console.log("ES search - week param provided")
 			data.query.bool.must.push({"term":{"week": parseInt(searchObj.week)}});
 		}
 	}
@@ -934,7 +843,6 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			break;
 		}
 		case 'myQuestions':{
-			//TODO: change to use session user
 			data = myQuestions(data, searchObj);
 			break;
 		}
@@ -954,7 +862,6 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 
 	switchIndex(appType);
 	switchMapping(0);
-	//console.log(JSON.stringify(data))
 
 	mapping.search(data, function(err, data){
 		if(err)
@@ -992,8 +899,6 @@ var unansweredQuestion = function(data){
 
 //get question sorted by user uuid
 var myQuestions = function(data, searchObj){
-	//data.query.bool.must.push({"term":{"user": searchObj.uuid}});
-	//data = {"query":{"match_all":{}}, "filter": {"or":[]}};
 	data.filter =  { "or":[]};
 	data.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.or.push({"term":{"followup": searchObj.uuid}});
@@ -1001,9 +906,6 @@ var myQuestions = function(data, searchObj){
 }
 
 var notMyQuestions = function(data, searchObj){
-	//data.query.bool.must_not = [];
-	//data.query.bool.must_not.push({"term":{"user": searchObj.uuid}});
-	//data = {"query":{"match_all":{}}, "filter":}};
 	data.filter =  { "not":{ "filter":{ "or":[]}}};
 	data.filter.not.filter.or.push({"term":{"user": searchObj.uuid}});
 	data.filter.not.filter.or.push({"term":{"followup": searchObj.uuid}});

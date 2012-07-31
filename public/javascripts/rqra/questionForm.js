@@ -4,6 +4,8 @@
 	Manages the page where a user asks a question
 */
 
+function QuestionForm() { }
+
 function LoadCourseBox() {
 	var courseBox = document.getElementById("courseBox");
 	
@@ -22,8 +24,10 @@ function LoadCourseBox() {
 	});
 }
 
-function refreshQuestionListHeader() {
-
+function refreshCustomQuestionHeader() {
+	QuestionCommon.getCourseTitle(function(courseTitle) {
+		QuestionCommon.setQuestionHeader(courseTitle, "Ask a Question", "");
+	});
 }
 
 function refreshQuestionsList() {
@@ -68,4 +72,5 @@ function PostQuestion() {
 window.onload = function() {
 	displayCourseList();
 	LoadCourseBox();
+	refreshCustomQuestionHeader();
 }

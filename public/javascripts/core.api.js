@@ -225,7 +225,6 @@ coreApi._construct = function () {
 
 		this.getMediaFiles = function(courses, callback){
 			console.log('API - getMediaFiles');
-			console.log(courses);
 			var body = {};				
 			body.where = courses;
 			$.ajax({
@@ -569,6 +568,23 @@ coreApi._construct = function () {
 				}
 
 			})
+		}
+
+
+		this.updateWeekInfo = function(id, topic,callback){
+			console.log("API - updateCommentById");
+			var body = {};
+			body.topic = topic;
+			$.ajax({
+				url:'/api/week/' + id,
+				type:'PUT',
+				dataType:'json',
+				contentType:"application/json",
+				data:JSON.stringify(body),
+				success:function (data) {
+					callback(data);
+				}
+			});
 		}
 
 

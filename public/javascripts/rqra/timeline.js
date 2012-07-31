@@ -16,8 +16,8 @@ function timelineClicked(timeline) {
 	if (window.event.target !== timeline) {
 		var targetNode = window.event.target;
 		HTMLCollection.prototype.indexOf = Array.prototype.indexOf;
-		currentWeek = targetNode.parentNode.children.indexOf(targetNode);
+		QuestionCommon.setWeek(targetNode.parentNode.children.indexOf(targetNode));
 		refreshQuestionsList();
-		refreshQuestionListHeader();
+		QuestionCommon.refreshDefaultHeader();
 	}
 }

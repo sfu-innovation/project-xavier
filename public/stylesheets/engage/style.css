@@ -131,6 +131,7 @@ div#header{
 
 #header ul#options li a{
 	color:  rgba(250, 250, 250, 1);
+	padding-bottom: 9px;
 
 }
 

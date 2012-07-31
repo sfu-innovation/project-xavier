@@ -7,13 +7,22 @@ function getTagType(value) {
 }
 
 function uploadTag(tag){
-	var tagNode = $(tag).parent().parent().children("div");
+	var tagNode = $(tag).parent().parent();
 	//var tagTitle = $(tagNode).children("input#TagTitle");
 	//var tagDescription = $(tagNode).children("textarea#TagDescription");
+	console.log('tag node');
+	
+
+	
 	var tagTitle = document.getElementById("TagTitle").value;
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
-	var tagType = parseInt(document.getElementById("TagType").value);
+	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
+
+	console.log(tagTitle);
+	console.log(tagTarget);
+	console.log(tagType);
+	console.log(tagDescription);
 
 	var tag = {				
 		user:"",
@@ -35,9 +44,32 @@ function uploadTag(tag){
 	tag.user = sessionUser;
 	tag.target = tagTarget;
 	tag.title = tagTitle;
-	tag.type = tagType;
 	tag.description = tagDescription;	
-	
+
+	switch(tagType) {
+		case 'Important':{
+			tag.interest = true;
+			break;
+		}
+		case 'Examable':{
+			tag.examable = true;
+			break;
+		}
+		case 'Question':{
+			tag.type = 0;
+			break;
+		}
+		case 'Interesting':{
+			tag.interest = true;
+			break;
+		}
+		case 'General':{
+			tag.shared = true;
+			break;
+		}
+	}
+
+
 	accent.createTag(tag,function(data){
 		// put tag timelines dynamically
 		console.log(data);

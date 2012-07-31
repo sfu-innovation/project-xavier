@@ -43,6 +43,7 @@ setInterval(updateSearch, 500);
 function showNotificationMenu() {	
 	var menu = document.getElementById("notificationList");
 	menu.style.webkitAnimationPlayState = "running";
+	menu.style.mozAnimationPlayState = "running";
 	menuTimer = 0;
 	timeout = setTimeout(function() { menuOpened = true; }, 500);
 }
@@ -108,5 +109,8 @@ function initializeHeader(user_uuid) {
 	var menu = document.getElementById("notificationList");
 	menu.addEventListener("webkitAnimationIteration", function() { 
 		menu.style.webkitAnimationPlayState = "paused";
+	});
+	menu.addEventListener("mozAnimationIteration", function() { 
+		menu.style.mozAnimationPlayState = "paused";
 	});
 }

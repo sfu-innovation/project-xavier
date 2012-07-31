@@ -65,18 +65,22 @@ QuestionDetails.postComment = function() {
 	var commentBody = document.getElementById("replyText").value;
 	var commentList = document.getElementById("comments");
 	
-	if (QuestionDetails.commentCount <= 0) {
-		commentList.innerHTML = "";
-	}
-	QuestionDetails.commentCount++;
-	
-	rqra.createComment(QuestionDetails.getQuestionId(), commentBody, function(data) {
-		if (data && data.errorcode === 0) {
-			rqra.getCommentById(data.comment._id, function(data2) {
-				commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
-			});
+	if (commentBody.replace(/^\s+|\s+$/g, "") !== "") {
+		if (QuestionDetails.commentCount <= 0) {
+			commentList.innerHTML = "";
 		}
-	});
+		QuestionDetails.commentCount++;
+		
+		rqra.createComment(QuestionDetails.getQuestionId(), commentBody, function(data) {
+			if (data && data.errorcode === 0) {
+				rqra.getCommentById(data.comment._id, function(data2) {
+					commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
+				});
+			}
+		});
+	} else {
+		alert("The response is blank, blank responses are not accepted");
+	}
 }
 
 QuestionDetails.vote = function(dir, targetDiv) {

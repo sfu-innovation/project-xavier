@@ -78,6 +78,9 @@ function updateSearch() {
 	var inputbox = document.getElementById("askQuestionInput");
 	if (inputbox.value != QuestionList.searchQuery && inputbox.value != "Ask a Question") {
 		QuestionList.searchQuery = inputbox.value;
+		QuestionCommon.getCourseTitle(function(courseTitle) {
+			QuestionCommon.setQuestionHeader(courseTitle, "Question Search for", '"' + QuestionList.searchQuery + '"');
+		});
 		QuestionList.setPage(0);
 	}
 }

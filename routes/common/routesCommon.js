@@ -599,7 +599,7 @@ exports.questionRoute = function(appType, request, response) {
 		var questionTitle = sanitizer.sanitize(request.body.title);
 		var questionBody = sanitizer.sanitize(request.body.body);
 
-		if(questionTitle && questionBody){
+		if(questionTitle){
 			QueryES.updateQuestion(question_id,questionTitle,questionBody, appType, function(err, result) {
 				if (!err) {
 					response.writeHead(200, { 'Content-Type': 'application/json' });

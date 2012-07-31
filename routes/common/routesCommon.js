@@ -560,7 +560,7 @@ exports.questionRoute = function(appType, request, response) {
 			var title = sanitizer.sanitize(request.body.question.title)
 			var body = sanitizer.sanitize(request.body.question.body)
 
-			if(title && body){
+			if(title){
 				var newQuestion = new question(request.session.user.uuid
 					,title
 					,body

@@ -46,11 +46,8 @@ function formatTimeline(tag){
 
 function loadTags(uuid) {
 	var timeline = $(".Tagger").children(".Timeline");		
-	
-	console.log('loading tags');
+		
 	accent.getTagsByMediaFileId(uuid, function(data){
-		console.log("tags found:");
-		console.log(data);
 		var tagWindow = $(timeline).children(".TagWindow");		
 		data.tags.forEach(function(tag) {				
 			var tagStr = formatTimeline(tag);	
@@ -69,6 +66,16 @@ function selectedTag(tag) {
 		alert(JSON.stringify(data.tag));
 	});
 	
+}
+
+function showTagInfo(title, description){
+	var tagTitle = document.getElementById("TagTitle");		
+	var tagType = document.getElementById("TagType");
+	var tagDescription = document.getElementById("TagDescription");
+
+	tagTitle.value = title;
+	tagDescription.value = description;
+	$(".TagWindow").show();
 }
 
 function bindTag(tag) {
@@ -93,18 +100,17 @@ function bindTag(tag) {
 
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
-		console.log('i am being selected wowwwww');
-		console.log(selectedTag);
-		console.log(tagID)
 
-		accent.getTagById(tagID, function(data){
-			var tagTitle = document.getElementById("TagTitle");		
-			var tagType = document.getElementById("TagType");
-			var tagDescription = document.getElementById("TagDescription");
-			
-			tagTitle.value = data.tag.title;
-			//tagType.valdata.tag.type;
-			tagDescription.innerHTML = data.tag.description;
+		accent.getTagById(tagID, function(data){		
+			if (data.tag) {
+				showTagInfo(data.tag.title, data.tag.description);			
+				console.log('should display something')
+			}				
+			else {
+				showTagInfo("", "");
+				console.log('should display nothing')
+			}				
+
 		})
 
 		return true;
@@ -130,11 +136,13 @@ function bindTag(tag) {
 loadMedia(mediaID);
 loadTags(mediaID);
 
-$(document).ready(function () {
-	console.log("                          Tag Tools - always executed");
+$(document).ready(function () {	
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
+		console.log('should display nothing when d clicked')
+		showTagInfo("","");
+
 		tag.data("offset", offset)
 		tag.prependTo($(this))
 		bindTag(tag)

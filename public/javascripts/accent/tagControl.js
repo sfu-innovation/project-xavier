@@ -8,13 +8,22 @@ function getTagType(value) {
 
 function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
+	var tagger = $(".Tag.Selected").parent();
 	var tagID = selectedTag.attr('UUID');	
+	
+	if (tagID) {
+		accent.deleteTagById(tagID, function(data){});
+	}
 
-	accent.deleteTagById(tagID, function(data){});
+	tagger.find(".Tag.Selected").remove();
+	$(".TagWindow").hide();
+
+	
 }
 
 function uploadTag(tag){
 	var selectedTag = $(".Tag.Selected");
+	var tagID = selectedTag.attr("uuid");
 	
 	var tagStart = parseInt(selectedTag.css('left'));
 	var tagEnd = parseInt(selectedTag.css('width'));
@@ -24,11 +33,8 @@ function uploadTag(tag){
 	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
 
-	console.log('tag selected');
-	console.log(selectedTag);
-
 	var tag = {				
-		user:"",
+		//user:"",
 		start:0,
 		end:0,			
 		type:1,
@@ -43,8 +49,6 @@ function uploadTag(tag){
 		shared:false
 	};
 
-	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
-	tag.user = sessionUser;
 	tag.start = tagStart;
 	tag.end = tagEnd;
 	tag.target = tagTarget;
@@ -74,13 +78,22 @@ function uploadTag(tag){
 		}
 	}
 
-	
-	accent.createTag(tag,function(data){
-		// put tag timelines dynamically
-		console.log(data);
+	if (tagID) {
+		accent.updateTagById(tagID,tag,function(data){							
+			$(".TagWindow").hide();
+			console.log('updated correctly')
+		});	
+	}
+	else {
+		var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
+		tag.user = sessionUser;
 
-		selectedTag.attr('UUID', data.tag.uuid);
-	});		
+		accent.createTag(tag,function(data){
+			// put tag timelines dynamically		
+			selectedTag.attr('UUID', data.tag.uuid);			
+			$(".TagWindow").hide();
+		});	
+	}
 
 }
 

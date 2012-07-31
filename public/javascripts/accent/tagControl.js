@@ -58,22 +58,26 @@ function uploadTag(tag){
 	switch(tagType) {
 		case 'Important':{
 			tag.interest = true;
+			tag.type = 0;
 			break;
 		}
 		case 'Examable':{
 			tag.examable = true;
+			tag.type = 1;
 			break;
 		}
 		case 'Question':{
-			tag.type = 0;
+			tag.type = 2;
 			break;
 		}
 		case 'Interesting':{
 			tag.interest = true;
+			tag.type = 3;
 			break;
 		}
 		case 'General':{
 			tag.shared = true;
+			tag.type = 4;
 			break;
 		}
 	}
@@ -95,6 +99,17 @@ function uploadTag(tag){
 		});	
 	}
 
+	$(selectedTag).css({
+		background: ""+formatTagtype(tag.type)
+	})
+
+}
+
+function filterTag(selectedFilter){
+	var filterType = $(selectedFilter).children("img").attr("alt");	
+
+	refreshTags(filterType);
+	return false;
 }
 
 

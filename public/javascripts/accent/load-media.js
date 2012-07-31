@@ -20,21 +20,9 @@ function formatTagTypeOption(index){
 }
 
 
-function loadTagTypes() {
-	var tagType = $("#TagType");
-	
-	for(var i = 0; i <= 1; ++i) {
-		tagType.append(formatTagTypeOption(i));
-	}
-}
-
 function formatTagtype(value) {
-	var color = "";
-	if (value === 0)
-		color = "green";
-	else
-		color = "purple";
-	return color;
+	var color = ["green","yellow","pink","red","purple"];
+	return color[value];
 
 }
 
@@ -44,19 +32,62 @@ function formatTimeline(tag){
 	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
-function loadTags(uuid) {
+function displayTags(uuid, type) {
 	var timeline = $(".Tagger").children(".Timeline");		
-		
-	accent.getTagsByMediaFileId(uuid, function(data){
-		var tagWindow = $(timeline).children(".TagWindow");		
-		data.tags.forEach(function(tag) {				
-			var tagStr = formatTimeline(tag);	
-			tagWindow.before(tagStr);	
+	accent.getTagsByMediaFileId(uuid, function(data){		
+		var tagWindow = $(timeline).children(".TagWindow");	
+		if(type === "") {
+			data.tags.forEach(function(tag) {
+				console.log(tag.type);
+				var tagStr = formatTimeline(tag);	
+				tagWindow.before(tagStr);
+			});
+		}
+		else {			
+			data.tags.forEach(function(tag) {	
+				if (tag.type === type) {
+					var tagStr = formatTimeline(tag);	
+					tagWindow.before(tagStr);		
+				}						
+			});	
+		}
 
-		});	
 		bindTag($(".Tag"));
 	});
 
+}
+
+function refreshTags(filterType){	
+	var timeline = $(".Tagger").children(".Timeline");	
+	timeline.find(".Tag").remove();
+
+	switch(filterType) {
+		case "All":
+			console.log("a")
+			displayTags(mediaID,"");
+			break;
+		case "Important":
+			console.log("imp")
+			displayTags(mediaID,0);
+			break;
+		case "Examable":
+			console.log("e")
+			displayTags(mediaID,1);
+			break;
+		case "Question":
+			console.log("q")
+			displayTags(mediaID,2);
+			break;
+		case "Interesting":
+			console.log("i")
+			displayTags(mediaID,3);
+			break;
+		case "General":
+			console.log("g")
+			displayTags(mediaID,4);
+			break;
+	}
+	
 }
 
 function selectedTag(tag) {	
@@ -134,7 +165,7 @@ function bindTag(tag) {
 }
 
 loadMedia(mediaID);
-loadTags(mediaID);
+displayTags(mediaID, "");
 
 $(document).ready(function () {	
 	$(".Timeline").bind("dblclick", function(evt) {

@@ -149,13 +149,18 @@ QuestionForm.refreshCustomQuestionHeader = function() {
 }
 
 QuestionForm.postQuestion = function() {
-	rqra.createQuestion(QuestionForm.getQuestionTitle(), QuestionForm.getQuestionBody(), QuestionForm.getCourseName(), QuestionForm.getWeek(), function(data) {
-		if (data && data.errorcode === 0 && data.question) {
-			document.location.href = "/question/" + data.question._id;
-		} else {
-			console.error("Question Form: failed to create question");
-		}
-	});
+	var title = QuestionForm.getQuestionTitle();
+	if (title && title.replace(/^\s+|\s+$/g, "") !== "") {
+		rqra.createQuestion(QuestionForm.getQuestionTitle(), QuestionForm.getQuestionBody(), QuestionForm.getCourseName(), QuestionForm.getWeek(), function(data) {
+			if (data && data.errorcode === 0 && data.question) {
+				document.location.href = "/question/" + data.question._id;
+			} else {
+				console.error("Question Form: failed to create question");
+			}
+		});
+	} else {
+		alert("The question is a required field but has been left blank. Please enter a question.")
+	}
 }
 
 QuestionForm.initialize = function() {

@@ -1,3 +1,12 @@
+//___________ _______    ________    _____    ___________________
+//\_   _____/ \      \  /  _____/   /  _  \  /  _____/\_   _____/
+//|    __)_  /   |   \/   \  ___  /  /_\  \/   \  ___ |    __)_
+//|        \/    |    \    \_\  \/    |    \    \_\  \|        \
+///_______  /\____|__  /\______  /\____|__  /\______  /_______  /
+//\/         \/        \/         \/        \/        \/
+
+
+
 var stylePicker = new stylePicker();
 
 jQuery(document).ready(function ($) {
@@ -335,7 +344,7 @@ jQuery(document).ready(function ($) {
 	else if (window.location.toString().indexOf('course') != -1) {
 
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		if (!weekNum){
@@ -347,18 +356,18 @@ jQuery(document).ready(function ($) {
 		}
 
 		loadCourseArticles(engage, weekNum);
-		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
+		$('.weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
 			loadCourseArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadCourseArticles(engage, week);
 			}
@@ -420,7 +429,7 @@ jQuery(document).ready(function ($) {
 	}
 	else {
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
@@ -444,7 +453,7 @@ jQuery(document).ready(function ($) {
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
-			var course_name = $('#submitnew form option:selected').html();
+			var course_name = $('#share_article option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
@@ -472,11 +481,11 @@ jQuery(document).ready(function ($) {
 			loadAllArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadAllArticles(engage, week);
 			}
@@ -587,25 +596,33 @@ jQuery(document).ready(function ($) {
 //TODO: come back to here later
 
 	$('#upload_article').submit(function() {
-		alert('!');
+		$('div#submitnew .loading').show();
+		var course_name = $('#upload_article option:selected').html();
 
 		$(this).ajaxSubmit({
 
+
 			error: function(xhr) {
-				status('Error: ' + xhr.status);
+				displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
 			},
 
-			success: function(response) {
+			success: function(data) {
+				if (data && data.errorcode === 0){
 
-				if(response.error) {
-					status('Opps, something bad happened');
-					return;
+					var new_article = renderArticlePreviewBox(data.resource);
+					$('#sharebox').after(new_article);
+					displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
+
+				}
+				else{
+					displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
 				}
 
-				var imageUrlOnServer = response.path;
-
-
 			}
+
+
 		});
 
 		// Have to stop the form from submitting and causing

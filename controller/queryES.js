@@ -333,12 +333,11 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 
 	//should check if adding to a section is really needed. rqra dont need it
 	args.section = data.week;	//section uuid
-	args.resource = questionUuid;	//question uuid
+	args.material = questionUuid;	//question uuid
 
 	document.set(data, function(err, req, esResult){
 		if(err)
 			return callback(error);
-
 		require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
 			if(err)
 				return callback(err);

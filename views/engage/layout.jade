@@ -10,6 +10,8 @@ html
 		title= title
 		<meta content='True' name='HandheldFriendly' />
 		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="apple-touch-icon-precomposed" href="/images/engage/SFUEngage_icon.png">
 		<meta name="viewport" content="width=device-width" />
 		script(src="http://code.jquery.com/jquery-latest.js")
 		script(src="/javascripts/engage/prettydate.js")
@@ -53,10 +55,12 @@ html
 		script(src="/javascripts/engage/jquery.placeholder.min.js")
 		script(src="/javascripts/engage/jquery.tooltips.js")
 		script(src="/javascripts/engage/jquery.scrollTo-min.js")
-		script(src="/javascripts/core.api.js")
-		script(src="/javascripts/engage/app.js?v118")
 		script(src="/javascripts/engage/jquery.jscrollpane.min.js")
+		script(src="/javascripts/engage/jquery.form.js")
 		script(src="/javascripts/engage/jquery.dirtyforms.js")
+
+		script(src="/javascripts/core.api.js")
+		script(src="/javascripts/engage/app.js?v119")
 		
 	body
 		div#header.banner
@@ -109,7 +113,7 @@ html
 			div.row.clearfix.show-for-small
 				div.mobile-two.columns
 					a(href="/")
-						img.logo(href="/", src="/images/engage/sfu_logo_white_small.png")
+						img.logo#small_logo(href="/", src="/images/engage/sfu_logo_white_small.png")
 				div.mobile-two.columns#user_options_mobile
 					ul#user_options_list
 						li#notification.mobile_view

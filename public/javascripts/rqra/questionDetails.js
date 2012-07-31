@@ -92,11 +92,15 @@ QuestionDetails.vote = function(dir, targetDiv) {
 	}
 }
 
-window.onload = function() {
+QuestionDetails.initialize = function() {
 	QuestionDetails.refreshDetailsView(function() {
 		CourseList.refreshCourseList(function() {
 			CourseList.setSelectedName(QuestionCommon.course);
 			QuestionCommon.refreshDefaultHeader();
 		});
 	});
+}
+
+window.onload = function() {
+	QuestionDetails.initialize();
 }

@@ -16,6 +16,7 @@ block content
 						a(href="#notification") Notification
 				ul.tabs-content
 					li.active#editTab
+
 						form(id="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
 							div#avatar_column.columns
 								img.avatar(src=avatar) 
@@ -27,8 +28,8 @@ block content
 								script
 									function submit(ele){
 										var form = document.getElementById("edit_profile");
-										if (ele.id==='remove'){
-											form.helper.value = 'del';
+										if (ele.id==="remove"){
+											document.getElementsByName("helper")[0].value = "del";
 										}
 										form.submit();
 									}

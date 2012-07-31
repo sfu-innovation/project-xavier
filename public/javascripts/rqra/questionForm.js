@@ -30,6 +30,14 @@ QuestionForm.getWeek = function() {
 	}
 }
 
+QuestionForm.getSessionWeek = function() {
+	var hiddenWeek = document.getElementById("hiddenWeek");
+	if (hiddenWeek) {
+		return hiddenWeek.innerHTML;
+	}
+	return "";
+}
+
 QuestionForm.getCourseName = function() {
 	var courseBox = document.getElementById("courseBox");
 	if (courseBox) {
@@ -37,6 +45,25 @@ QuestionForm.getCourseName = function() {
 		return courseBox.children[index].title.toLowerCase();
 	} else {
 		return "";
+	}
+}
+
+QuestionForm.getSessionCourse = function() {
+	var hiddenCourse = document.getElementById("hiddenCourse");
+	if (hiddenCourse) {
+		return hiddenCourse.innerHTML;
+	}
+	return "";
+}
+
+QuestionForm.setSelectedWeek = function(w) {
+	w--;
+	if (w == -1) w = 0;
+
+	QuestionCommon.setWeek(w);
+	var weekBox = document.getElementById("weekBox");
+	if (weekBox) {
+		weekBox.selectedIndex = w;
 	}
 }
 
@@ -57,7 +84,7 @@ QuestionForm.onCourseBoxChanged = function() {
 	QuestionForm.refreshWeekBox();
 }
 
-QuestionForm.refreshCourseBox = function() {
+QuestionForm.refreshCourseBox = function(callback) {
 	var courseBox = document.getElementById("courseBox");
 	if (courseBox) {
 		common.getUserCourses(function(data) {
@@ -66,17 +93,19 @@ QuestionForm.refreshCourseBox = function() {
 				for(var i = 0; i < data.courses.length; ++i) {
 					courseBox.innerHTML += ElementFactory.createCourseBoxItem(data.courses[i]);
 				}
-				QuestionForm.refreshWeekBox();
+				QuestionForm.refreshWeekBox(callback);
 			} else {
 				console.error("Question Form: get User Courses returned an invalid result");
+				if (callback) callback();
 			}
 		});
 	} else {
 		console.error("Question Form: courseBox div not found");
+		if (callback) callback();
 	}
 }
 
-QuestionForm.refreshWeekBox = function() {
+QuestionForm.refreshWeekBox = function(callback) {
 	var courseId = QuestionForm.getCourseUuid();
 	var weekBox = document.getElementById("weekBox");
 	if (weekBox && courseId !== "") {
@@ -92,9 +121,11 @@ QuestionForm.refreshWeekBox = function() {
 					weekBox.innerHTML += ElementFactory.createWeekBoxItem(i);
 				}
 			}
+			if (callback) callback();
 		});
 	} else {
 		console.error("Question Form: weekBox div not found or courseId is null");
+		if (callback) callback();
 	}
 }
 
@@ -114,10 +145,16 @@ QuestionForm.postQuestion = function() {
 	});
 }
 
-window.onload = function() {
+QuestionForm.initialize = function() {
 	CourseList.refreshCourseList(function() {
-		CourseList.setSelectedName(1);
+		CourseList.setSelectedName(QuestionForm.getSessionCourse());
+		QuestionForm.refreshCourseBox(function() {
+			QuestionForm.refreshCustomQuestionHeader();
+			QuestionForm.setSelectedWeek(QuestionForm.getSessionWeek());
+		});
 	});
-	QuestionForm.refreshCourseBox();
-	QuestionForm.refreshCustomQuestionHeader();
+}
+
+window.onload = function() {
+	QuestionForm.initialize();
 }

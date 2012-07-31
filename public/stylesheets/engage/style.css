@@ -152,20 +152,26 @@ div#header{
 #header #nav-bar{
 	text-align: right;
 }
-#header.banner{
 
+.no-touch #header.banner{
 	background-image: url("/images/engage/sfu_brand_banner.png");
 	background-position: cover;
 	width: 100%;
 	}
+	
+#header.banner{
+	background-image: url("/images/engage/SFUMobile_TOP_Mobile_Banner.png");
+}
 #header #banner_logo{
 	padding-right:0;
+	margin-top:10px;
 }
 #header #banner_logo a{
 	line-height: 60px;
 	}	
-#header #banner_logo img.logo#small_logo{
+#header img.logo#small_logo{
 	min-width: 70px;
+	margin-top: 9px;
 }
 #header #banner img.logo{
 	vertical-align: middle;
@@ -194,7 +200,7 @@ div#header{
 }
 
 #sliderMenu li a{
-	color: #888;
+	color: #555;
 	font-weight: bold;
 	cursor: pointer;
 	}
@@ -1027,13 +1033,13 @@ div.innercontents#submitnew form{
 	margin:10px
 }
 	
-#sumbitrow{
+.sumbitrow{
 	display: inline-block;
 	width: 100%;
 
 }
 
-#sumbitrow .small.button{
+.sumbitrow .small.button{
 	width : 60px;
 	background-color: gray;
 	border: 0;
@@ -1090,8 +1096,7 @@ div#article_container #article p{
 		}
 
 div#article_container .columns:first-child.night{
-		-webkit-transition: all 0.2s ease-in-out;
-
+	-webkit-transition: all 0.2s ease-in-out;
 	color:white;
 	background-color: black;
 }
@@ -1110,81 +1115,163 @@ div#article_container div#article.larger h1{
 div#article_container #article img{
 	display: block;
 	}
-#article_options{
+.article_options{
 	margin-top: 30px;
 	padding: 0em 1em 0em;
 	}
-#article_options span{
-	color: #9e9e9e;
-	cursor: pointer;
 	
-	}
+	
+#article_options_mobile{
+	padding: 0;
+}
 
-	
-#article_options #options{
+.article_options.night #options span{
+	color: white;
+	opacity: 1;
+}
+.article_options #options{
 	margin-left:10px;
 	float: right;
-	
+	opacity: 0.8;
 }
-#article_options span{	
-	color: #3b3b3b; 
+.article_options #options span{	
+	color: #555; 
 	margin-left: 10px;
 	margin-right: 10px;
 	display: inline-block;
 	background-repeat: no-repeat;
 	padding-left: 18px;
-	opacity: 0.7;
+	cursor: pointer;
 	}
 
 
-#article_options span.star_btn.unstarred{
+.article_options span.star_btn.unstarred{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
-#article_options span.star_btn.unstarred:hover{
+.article_options span.star_btn.unstarred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
 
-#article_options span.star_btn.starred{
+.article_options span.star_btn.starred{
 	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
 }
-#article_options span.star_btn.starred:hover{
+.article_options span.star_btn.starred:hover{
 	background-image: url( "/images/engage/icon/16x16/Star_v1.png");
 }
 
-#article_options span.like_btn.disliked{
+.article_options span.like_btn.disliked{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-#article_options span.like_btn.disliked:hover{
+.article_options span.like_btn.disliked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-#article_options span.like_btn.liked{
+.article_options span.like_btn.liked{
 	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-#article_options span.like_btn.liked:hover{
+.article_options span.like_btn.liked:hover{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-#article_options span#invert_btn{
+.article_options span#invert_btn{
 	background-image: url( "/images/engage/icon/16x16/Invert_v1.png");
 }
 
-#article_options span#textsize_btn{
+.article_options span#textsize_btn{
 	background-image: url( "/images/engage/icon/16x16/TextSize_v1.png");
 }
 
-#article_options span#link_btn{
+.article_options span#link_btn{
 	background-image: url( "/images/engage/icon/16x16/ViewOriginal_v1.png");	
 }
-#article_options span#back_btn{
+.article_options span#back_btn{
 	background-image: url( "/images/engage/icon/16x16/Back_v1.png");	
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	color: #555;
 }
 
-#article_options span#course{
+.article_options span#course{
 	float: right;
 }	
+
+
+#article_options_mobile{
+	white-space: nowrap;
+	display: inline-block;
+	margin-top:10px;
+}
+#article_options_mobile #options{
+	
+	padding: 0 10px;
+	margin: 0 !important;
+	float:none;
+	text-align: center;
+}
+
+#article_options_mobile #options span{
+	margin: 0;
+	margin: 0 15px;
+	line-height: 35px;
+	padding-left: 30px;
+	
+}
+#article_options_mobile span#back_btn{
+	display: inline-block;
+	line-height: 35px;
+	padding-left: 35px !important;
+}
+.article_options#article_options_mobile span.star_btn.unstarred{
+	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
+}
+.article_options#article_options_mobile span.star_btn.unstarred:hover{
+	background-image: url( "/images/engage/icon/32x32/Star_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.star_btn.starred{
+	background-image: url( "/images/engage/icon/16x16/Star_pressed_v1.png");
+}
+.article_options#article_options_mobile span.star_btn.starred:hover{
+	background-image: url( "/images/engage/icon/32x32/Star_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.disliked{
+	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.disliked:hover{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.liked{
+	background-image: url( "/images/engage/icon/16x16/Like_pressed_v1.png");
+}
+
+.article_options#article_options_mobile span.like_btn.liked:hover{
+	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
+}
+
+.article_options#article_options_mobile span#invert_btn{
+	background-image: url( "/images/engage/icon/32x32/Invert_v1.png");
+}
+
+.article_options#article_options_mobile span#textsize_btn{
+	background-image: url( "/images/engage/icon/32x32/TextSize_v1.png");
+}
+
+.article_options#article_options_mobile span#link_btn{
+	background-image: url( "/images/engage/icon/32x32/ViewOriginal_v1.png");	
+}
+.article_options#article_options_mobile span#back_btn{
+	background-image: url( "/images/engage/icon/32x32/Back_v1.png");	
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	color: #555;
+}
+
+
 div#article_container #article h1{
 	font-family: "Cambria", sans-serif;
 	font-size: 24px;

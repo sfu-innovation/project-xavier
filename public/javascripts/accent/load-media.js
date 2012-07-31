@@ -52,22 +52,13 @@ function loadTags(uuid) {
 		console.log("tags found:");
 		console.log(data);
 		var tagWindow = $(timeline).children(".TagWindow");		
-		data.tags.forEach(function(tag) {	
-			//tagger.append(formatTimeline(tag));	
-							
+		data.tags.forEach(function(tag) {				
 			var tagStr = formatTimeline(tag);	
 			tagWindow.before(tagStr);	
-								
-			//tag.prependTo(timeline);
+
 		});	
-
-		// append tag window here
-		//tagger.append(formatTagWindow());
-
 	});
-	
-	
-	//loadTagTypes();
+
 }
 
 function selectedTag(tag) {	

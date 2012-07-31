@@ -105,8 +105,10 @@ function uploadTag(tag){
 
 }
 
-function filterTag(){
-	console.log("filterting....");
+function filterTag(selectedFilter){
+	var filterType = $(selectedFilter).children("img").attr("alt");	
+
+	refreshTags(filterType);
 	return false;
 }
 

@@ -6,6 +6,9 @@ div#HeaderContainer
 				a.User(href="/") #{ user.firstName }  #{ user.lastName }
 				div.Actions
 					a(href="") Settings
-					a(href="/logout") Logout
+					- if(user)
+						a(href="/logout") Logout
+					- else
+						a(href="/login") Login
 			img.User(src="../images/accent/user.jpg", alt="user")
 		h1 Accent		

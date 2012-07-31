@@ -116,7 +116,7 @@ QuestionForm.postQuestion = function() {
 
 window.onload = function() {
 	CourseList.refreshCourseList(function() {
-		CourseList.setSelectedIndex(1);
+		CourseList.setSelectedName(1);
 	});
 	QuestionForm.refreshCourseBox();
 	QuestionForm.refreshCustomQuestionHeader();

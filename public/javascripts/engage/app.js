@@ -372,6 +372,13 @@ jQuery(document).ready(function ($) {
 
 		})
 
+		$('#week-info .edit_btn').live('click',function(){
+			var self = $(this);
+			$('#week-info .topic_panel').hide();
+			$('#week-info .edit_panel').slideDown('slow');
+
+		})
+
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
 			if ($('.topic_input').length < 5) {
@@ -399,16 +406,13 @@ jQuery(document).ready(function ($) {
 
 					if (data && data.errorcode === 0){
 
-						alert('saved!');
+						updateTopicList(data.week);
+
 					}
-					else{alert('failed!')
-					};
 				})
 
 			}
-			else{
-				alert('failed!');
-			}
+
 
 		})
 
@@ -1082,55 +1086,111 @@ function renderTopicInput(topic){
 	return html;
 }
 
-function renderWeekInfoBox(item){
+function updateTopicList(item){
+
 	var weekBox =
-		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
-			item.week + 
-			'</h4>' + '<span id="topic_span">TOPICS:</span>';
-	if (!item.owner){
-		if (!item.topic){
+		'<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
 			weekBox += '<p>' +
-				'Instructor has not set up weekly topics yet.' +
+				topic_list[0] +
 				'</p>';
 		}
-		else{
-			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
-				weekBox += '<p>' +
-					topic_list[0] +
-					'</p>';
-			}
-			else{
-				topic_list.shift();
-				weekBox += '<ul>'
-				$.each(topic_list,function(i,topic){
-					weekBox += '<li>'+ topic+'</li>'
-				})
-				weekBox += '</ul>'
-				console.log(topic_list)
-			}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
 		}
 
+
 	}
+	weekBox += '<span class="button small edit_btn">Edit</span>';
+
+	$('#week-info .topic_panel').html(weekBox);
+	$('#week-info .edit_panel').hide();
+	$('#week-info .topic_panel').slideDown('slow');
+
+}
+
+function renderWeekInfoBox(item) {
+
+	var weekBox =
+		'<div class="three columns weekbox">'
+			+ '<div id="week-info" data-week-id="' + item.uuid + '" class="innercontents">'
+
+
+			+ '<div class="topic_panel">'
+			+ '<h4>Week '
+			+ item.week
+			+ '</h4>' + '<span id="topic_span">TOPICS:</span>';
+	if (!item.topic) {
+		weekBox += '<p>' +
+			'Instructor has not set up weekly topics yet.' +
+			'</p>';
+	}
+	else {
+		var topic_list = item.topic.split('#');
+		if (topic_list[0] !== "") {
+			weekBox += '<p>' +
+				topic_list[0] +
+				'</p>';
+		}
+		else {
+			topic_list.shift();
+			weekBox += '<ul>'
+			$.each(topic_list, function (i, topic) {
+				weekBox += '<li>' + topic + '</li>'
+			})
+			weekBox += '</ul>';
+
+
+			console.log(topic_list);
+		}
+
+
+	}
+	if (item.owner) {
+		weekBox += '<span class="button small edit_btn">Edit</span>';
+	}
+	weekBox += '</div>';
+
 
 	//if is prof
-	else{
-		
-		if (!item.topic){
+
+	if (item.owner) {
+
+		weekBox += '<div class="edit_panel">';
+		weekBox += '<h4>Week '
+			+ item.week
+			+ '</h4>'+ '<span id="topic_span">TOPICS:</span>';
+		if (!item.topic) {
 			weekBox += renderTopicInput('');
 
 
-
 		}
-		else{
+		else {
 			var topic_list = item.topic.split('#');
-			if(topic_list[0] !== ""){
+			if (topic_list[0] !== "") {
 				weekBox += renderTopicInput(topic_list[0]);
 			}
-			else{
+			else {
 				topic_list.shift();
 
-				$.each(topic_list,function(i,topic){
+				$.each(topic_list, function (i, topic) {
 					weekBox += renderTopicInput(topic);
 				})
 
@@ -1138,12 +1198,14 @@ function renderWeekInfoBox(item){
 			}
 		}
 
-		weekBox += '<div id="week_topic_btn">' + 
-			'<span class="medium button add_btn">Add</span>' + 
-			'<span class="button medium save_btn">Save</span>' + '</div>';
+		weekBox += '<div id="week_topic_btn">' +
+			'<span class="small button add_btn">Add</span>' +
+			'<span class="button small save_btn">Save</span>' + '</div>';
+
+
+		weekBox += '</div>';
 
 	}
-
 
 
 	weekBox += '</div></div>'
@@ -1154,7 +1216,7 @@ function renderWeekInfoBox(item){
 function renderArticlePreviewBox(item) {
 	var article =
 		'<div class="three columns articlebox">'
-			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
+			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
 			+ isOwner(item.owner)
 
 			+ '<a href="/profile/'+ item.user.uuid +'">'
@@ -1168,7 +1230,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
 			+ '</a>'
 			+ '</span>'
 

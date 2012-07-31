@@ -37,7 +37,9 @@ CourseList.getUuid = function(courseName) {
 	var menu = document.getElementById("courseList");
 	if (menu) {
 		for (var i = 0; i < menu.children.length; ++i) {
+			
 			if (courseName && courseName.toUpperCase() === menu.children[i].querySelector(".courseButtonText").innerHTML) {
+				
 				return menu.children[i].querySelector(".courseButtonId").innerHTML;
 			}
 		}

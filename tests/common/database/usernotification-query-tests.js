@@ -87,10 +87,12 @@ module.exports = {
 				listener    : "B857342H7ASDF01",
 		        description : "test description 345",
 		        emailSent         : false,
-				wait              : 2
+				wait              : 2,
+				origin            : "mak10"
 			}
 			
 			UserNotification.createUserNotification( args, function(error, newUserNotification ){
+				console.log( JSON.stringify(newUserNotification ));
 				test.ok(newUserNotification.should.have.property('listener', 'B857342H7ASDF01'));
 				UserNotification.selectUserNotifications( args, function(error, userNotifications ){
 		    		test.ok( userNotifications.should.have.lengthOf(1));

@@ -14,17 +14,17 @@
 function QuestionForm() { }
 
 QuestionForm.getQuestionTitle = function() {
-	return document.getElementById("questionField").value;
+	return document.getElementById("questionField").getAttribute("value");
 }
 
 QuestionForm.getQuestionBody = function() {
-	return document.getElementById("descriptionField").value;
+	return document.getElementById("descriptionField").getAttribute("value");
 }
 
 QuestionForm.getWeek = function() {
 	var weekBox = document.getElementById("weekBox");
 	if (weekBox) {
-		return parseInt(weekBox.value);
+		return parseInt(weekBox.getAttribute("value"));
 	} else {
 		return 1;
 	}
@@ -64,6 +64,19 @@ QuestionForm.setSelectedWeek = function(w) {
 	var weekBox = document.getElementById("weekBox");
 	if (weekBox) {
 		weekBox.selectedIndex = w;
+	}
+}
+
+QuestionForm.setSelectedCourse = function(c) {
+	if (c && c !== "") {
+		var courseBox = document.getElementById("courseBox");
+		for (var i = 0; i < courseBox.children.length; ++i) {
+			if (courseBox.children[i].getAttribute("title").toLowerCase() === c.toLowerCase()) {
+				courseBox.selectedIndex = i;
+				break;
+			}
+		}
+		QuestionForm.refreshWeekBox();
 	}
 }
 
@@ -136,21 +149,28 @@ QuestionForm.refreshCustomQuestionHeader = function() {
 }
 
 QuestionForm.postQuestion = function() {
-	rqra.createQuestion(QuestionForm.getQuestionTitle(), QuestionForm.getQuestionBody(), QuestionForm.getCourseName(), QuestionForm.getWeek(), function(data) {
-		if (data && data.errorcode === 0 && data.question) {
-			document.location.href = "/question/" + data.question._id;
-		} else {
-			console.error("Question Form: failed to create question");
-		}
-	});
+	var title = QuestionForm.getQuestionTitle();
+	if (title && title.replace(/^\s+|\s+$/g, "") !== "") {
+		rqra.createQuestion(QuestionForm.getQuestionTitle(), QuestionForm.getQuestionBody(), QuestionForm.getCourseName(), QuestionForm.getWeek(), function(data) {
+			if (data && data.errorcode === 0 && data.question) {
+				document.location.href = "/question/" + data.question._id;
+			} else {
+				console.error("Question Form: failed to create question");
+			}
+		});
+	} else {
+		alert("The question is a required field but has been left blank. Please enter a question.")
+	}
 }
 
 QuestionForm.initialize = function() {
 	CourseList.refreshCourseList(function() {
 		CourseList.setSelectedName(QuestionForm.getSessionCourse());
 		QuestionForm.refreshCourseBox(function() {
-			QuestionForm.refreshCustomQuestionHeader();
+			QuestionCommon.setCourse(QuestionForm.getSessionCourse());
+			QuestionForm.setSelectedCourse(QuestionForm.getSessionCourse());
 			QuestionForm.setSelectedWeek(QuestionForm.getSessionWeek());
+			QuestionForm.refreshCustomQuestionHeader();
 		});
 	});
 }

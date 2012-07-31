@@ -36,7 +36,7 @@
 			"uuid":"mak10",
 			"firstName":"Mike",
 			"lastName":"Klemarewski",
-			"type":0,
+			"type":1,
 			"userID":"mak10",
 			"email":"mak10@sfu.ca"
 		},
@@ -202,7 +202,7 @@
 		},
 		{
 			"uuid":"ffb52892-467a-4b3e-b205-4eadd2745afb",
-			"title":"English for Managers",
+			"title":"Introduction to Business",
 			"section":"D100",
 			"subject":"BUS",
 			"number":100,
@@ -235,11 +235,11 @@
 			"user":"jrf2"
 		},
 		{
-			"course":"37ba644d-8c2e-4d08-acfe-4c14e41afe0b",
+			"course":"F827346H7ASDFG1",
 			"user":"jrf2"
 		},
 		{
-			"course":"ffb52892-467a-4b3e-b205-4eadd2745afb",
+			"course":"F827346H7ASDFG2",
 			"user":"jrf2"
 		},
 		{

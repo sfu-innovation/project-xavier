@@ -1,3 +1,12 @@
+//___________ _______    ________    _____    ___________________
+//\_   _____/ \      \  /  _____/   /  _  \  /  _____/\_   _____/
+//|    __)_  /   |   \/   \  ___  /  /_\  \/   \  ___ |    __)_
+//|        \/    |    \    \_\  \/    |    \    \_\  \|        \
+///_______  /\____|__  /\______  /\____|__  /\______  /_______  /
+//\/         \/        \/         \/        \/        \/
+
+
+
 var stylePicker = new stylePicker();
 
 jQuery(document).ready(function ($) {
@@ -335,7 +344,7 @@ jQuery(document).ready(function ($) {
 	else if (window.location.toString().indexOf('course') != -1) {
 
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		if (!weekNum){
@@ -347,18 +356,18 @@ jQuery(document).ready(function ($) {
 		}
 
 		loadCourseArticles(engage, weekNum);
-		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
+		$('.weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
 			loadCourseArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadCourseArticles(engage, week);
 			}
@@ -420,7 +429,7 @@ jQuery(document).ready(function ($) {
 	}
 	else {
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
@@ -438,13 +447,13 @@ jQuery(document).ready(function ($) {
 
 		})
 
-		$('#submitnew form').bind('submit',function(){
+		$('#share_article').bind('submit',function(){
 
 			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
-			var course_name = $('#submitnew form option:selected').html();
+			var course_name = $('#share_article option:selected').html();
 			engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
@@ -472,11 +481,11 @@ jQuery(document).ready(function ($) {
 			loadAllArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadAllArticles(engage, week);
 			}
@@ -582,6 +591,59 @@ jQuery(document).ready(function ($) {
 
 		}
 	})
+
+
+
+
+	$('#upload_article').submit(function() {
+		$('div#submitnew .loading').show();
+		var course_name = $('#upload_article option:selected').html();
+
+		$(this).ajaxSubmit({
+
+
+			error: function(xhr) {
+				displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
+			},
+
+			success: function(data) {
+				if (data && data.errorcode === 0){
+
+					var new_article = renderArticlePreviewBox(data.resource);
+					$('#sharebox').after(new_article);
+					displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
+
+				}
+				else{
+					displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
+				}
+
+			}
+
+
+		});
+
+		// Have to stop the form from submitting and causing
+		// a page refresh - don't forget this
+		return false;
+	});
+
+
+	$('body').click(function(event) {
+
+		if (!$(event.target).closest('#notification').length) {
+			$('#notif').addClass('hide');
+		};
+		if (!$(event.target).closest('#user-menu').length) {
+			$('#user_info_downdrop').addClass('hide');
+		};
+		if (!$(event.target).closest('#course-menu').length) {
+			$('#course_list').addClass('hide');
+		};
+	});
+
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
@@ -1375,7 +1437,7 @@ function renderExcerpt(excerpt) {
 		return excerpt;
 	}
 	else {
-		return 'Australia\'s Prime Minister Julia Gillard and New Zealand\'s Foreign Minister Murray McCully give their reaction (whaling footage courtesy of';
+		return '';
 	}
 }
 
@@ -1484,8 +1546,8 @@ function updatePostTime(){
 function displayMsg(msg){
 
 	$('#submitnew .msg div').html(msg);
-	$('#submitnew  .msg').fadeIn(500);
-	$('div#submitnew .loading').hide();
+	$('#submitnew  .msg').fadeIn(500,function(){	$('div#submitnew .loading').hide();});
+
 	setTimeout(function(){
 		$('#submitnew  .msg').fadeOut(500);
 	},3000);
@@ -1497,8 +1559,8 @@ function displayErrorMsg(err){
 
 
 	$('#submitnew .error div').html(err);
-	$('#submitnew  .error').fadeIn(500);
-	$('div#submitnew .loading').hide();
+	$('#submitnew  .error').fadeIn(500,function(){$('div#submitnew .loading').hide();});
+
 	setTimeout(function(){
 		$('#submitnew  .error').fadeOut(500);
 	},5000);

@@ -355,6 +355,10 @@ select #SectionsOptions{
 	width:100%;
 }
 
+.Button {
+	z-index: 999;
+}
+
 .Conversations {
 	list-style-type: none;
 	color: #444;

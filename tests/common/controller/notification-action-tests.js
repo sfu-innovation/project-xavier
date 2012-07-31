@@ -51,6 +51,24 @@ module.exports = {
 			});
 		},
 		
+		/*"Add Notification Listener to a user that doesn't exist" : function( test ){
+			var args = {
+				user : 'aka089',
+				target : 'A7S7FHGA7SD11A7SDF8ASD7G',
+				event : 0,
+				app   : 2
+			}
+			NotificationListener.findNotificationListener( args, function( error, listener) {
+				NotificationAction.addNotifier( args, function( error, newListener){
+					NotificationListener.findNotificationListener( args, function( error, listener) {
+						test.ok( listener.should.have.property('user', 'mak10'));
+						test.ok( listener.should.have.property('target', 'A7S7FHGA7SD11A7SDF8ASD7G'));
+						test.done();
+					});
+				});
+			});
+		},*/
+		
 		
 		"Remove Notification Listener" : function( test ){
 			var args = {

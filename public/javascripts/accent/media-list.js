@@ -25,7 +25,21 @@ function getMedia(courseUUID, all){
 	}
 }
 
+function formatMediaList() {
+	return  "<div id='Main'>"
+			+ "<h1> Here are the videos you should watch! </h1>"
+			+ "<div id='media-list'></div>"
+			+ "</div>";
+}
+
 var retrieveMedia = function(courseUUID, all){
+	var mainContent = $("#Main").children("#media-list");
+
+	if (mainContent.size() === 0) {		
+		var mediaList = formatMediaList();
+		$("#Main").replaceWith(mediaList);
+	}
+
 	accent.getMediaFiles(courseUUID, function(response){
 		$('#media-list').empty();
 		var media = response.media;
@@ -38,7 +52,7 @@ var retrieveMedia = function(courseUUID, all){
 						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
 						"</a>" + 
 						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
-						"<div class='MediaInfo'><h1>" + mediaItem.title + "</h1>" + 
+						"<div class='MediaInfo'>" + "<a href=\"/video/" + mediaItem.uuid + "\">" + "<h1>" + mediaItem.title + "</h1>" + 
 						"<p>" + mediaItem.description + "</p>";
 					
 					// If getting media for all courses, also get the course 

@@ -13,7 +13,7 @@ function selectButton(selectedButton) {
 
 		//console.log('i am selected = ' + coursePrefix + ' ' + courseNumber);
 		var currentCourse = coursePrefix + courseNumber;
-		refreshQuestions(currentCourse.toLowerCase());
+		refreshQuestions(currentCourse.toLowerCase());		
 	}
 	else {
 		//console.log('all selected');

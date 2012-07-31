@@ -26,13 +26,11 @@ block content
 								input#helper(type="hidden", name="helper", value=format)
 								a(onclick="remove()", id="remove") remove photo
 								script
-
 									function remove(){
-										console.log('!!!');
 										$('#helper').val('del');
 										$('#edit_profile').submit();
 									}
-								
+
 							div#edit_info_column.four.columns
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}
@@ -43,7 +41,7 @@ block content
 									input.button(type="submit", value="save changes")
 								div#feedback
 									| #{msg}
-											
+			
 					li#notificationTab
 						div#notification
 							form(id="edit_notification", action="/preference", method="post")

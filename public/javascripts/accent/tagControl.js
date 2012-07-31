@@ -86,6 +86,7 @@ function uploadTag(tag){
 	accent.createTag(tag,function(data){
 		// put tag timelines dynamically		
 		selectedTag.attr('UUID', data.tag.uuid);
+		var tagDescription = document.getElementById("TagDescription");		
 		$(".TagWindow").hide();
 	});		
 

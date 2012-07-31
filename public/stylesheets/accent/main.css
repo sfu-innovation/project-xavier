@@ -283,6 +283,85 @@ img.User {
 	margin-bottom: 23px;
 }
 
+#CourseDD{
+	float:left;
+	margin:0px 20px 20px 0px;
+	width:300px;
+}
+
+#UploadCourseDD {
+	float:left;
+	margin:0px 20px 20px 0px;
+}
+
+#UploadFormFields {
+	clear:both;
+}
+
+#UploadForm{
+	background:white;
+	padding:20px;
+	border:3px solid black;
+	top:20%;
+	right:30%;
+	position:fixed;
+}
+
+#closeUploadButton {
+	cursor: pointer;
+}
+
+.MediaItem{
+	background:#DDD;
+	box-shadow: 3px 1px 5px #AAA;
+	clear:both;
+	width:80%;
+	height:230px;
+	margin-bottom:25px;
+}
+
+.MediaImage {
+	clear:both;
+	float:left;
+	position:relative;
+	left:15px;
+	top:15px;
+}
+
+.MediaInfo {
+	position:relative;
+	top:15px;
+	left:20px;
+}
+
+.MediaInfo h1{
+	padding-bottom: 10px;
+}
+
+.section {
+	color:white;
+	background:#333333;
+	position:relative;
+	top:-30px;
+	opacity:0.8;
+	padding: 3px 3px 3px 0px;
+	height:25px;
+	width:105%;
+}
+
+.section h2{
+	text-align:right;
+	vertical-align:text-top;
+}
+
+select #CourseOptions{
+	width:100%;
+}
+
+select #SectionsOptions{
+	width:100%;
+}
+
 .Conversations {
 	list-style-type: none;
 	color: #444;
@@ -490,7 +569,6 @@ img.User {
 	bottom: 100%;
 	margin-left: -5px;
 }
-
 
 .Commands {
 	position: relative;

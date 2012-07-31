@@ -38,33 +38,6 @@ function formatTagtype(value) {
 
 }
 
-function formatTagWindow(){
-	return 	"<div class='TagWindow'>"
-			+ "<div class='Type'>"
-			+	"<label>Type:</label>"
-			+	"<select>"
-			+		"<option>Important</option>"
-			+		"<option>Examable</option>"
-			+		"<option>Question</option>"
-			+		"<option>Interesting</option>"
-			+		"<option>General</option>"
-			+	"</select>"
-			+"</div>"
-			+"<div class='Title'>"
-			+	"<label>Title:</label>"
-			+	"<input type='text' placeholder='My Great Title'/>"
-			+"</div>"
-			+"<div class='Description'>"
-			+	"<label>Description:</label>"
-			+	"<textarea rows='6' cols='50'></textarea>"
-			+"</div>"
-			+"<div class='Buttons'>"
-			+	"<input type='submit' value='Discard Changes'/>"
-			+	"<input type='submit' value='Save Changes'/>"
-			+"</div>"
-			+"</div>";
-}
-
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
@@ -149,7 +122,7 @@ loadMedia(mediaID);
 //loadTags(mediaID);
 
 $(document).ready(function () {
-	console.log("always excuted");
+	console.log("                          Tag Tools - always executed");
 	$(".Timeline").bind("dblclick", function(evt) {
 		var offset = evt.offsetX;
 		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');

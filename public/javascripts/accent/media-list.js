@@ -34,9 +34,11 @@ var retrieveMedia = function(courseUUID, all){
 			(function(mediaItem){
 				accent.getMediaSection(mediaItem.uuid, function(section){
 					var mediaNode = "<div class=\"MediaItem\">" + 
-						"<img src=\"" + mediaItem.thumbnail + "\" alt=\"\" width=\"200\"/>" +
-						"<h1>" + mediaItem.title + "</h1>" + 
-						"<h2>" + section.section + "</h2>" + 
+						"<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
+						"<img src='" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
+						"</a>" + 
+						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
+						"<div class='MediaInfo'><h1>" + mediaItem.title + "</h1>" + 
 						"<p>" + mediaItem.description + "</p>";
 					
 					// If getting media for all courses, also get the course 
@@ -47,13 +49,13 @@ var retrieveMedia = function(courseUUID, all){
 								mediaNode = mediaNode + 
 								"<h2>" + response.course.subject + " " +
 								response.course.number + "</h2>" +
-								"</div>";
+								"</div></div>";
 								$('#media-list').append(mediaNode);
 							})
 						})(mediaItem.course);
 					}
 					else{
-						mediaNode = mediaNode + "</div>";
+						mediaNode = mediaNode + "</div></div>";
 						$('#media-list').append(mediaNode);
 					}
 				})

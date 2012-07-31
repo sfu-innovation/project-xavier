@@ -3,12 +3,15 @@ extends layout
 block content
 	div.row#hidden-info(style="display:none;", data-user-id="#{selectedUser}")
 	div.row.clearfix#contents
-		div.three.columns#sharebox.hide-for-small
+		div.three.columns
 			div.innercontents#user_detail_box
 				- if (targetProfile.profilePicture)
-					img.avatar(src="#{targetProfile.profilePicture}")
+					img.profile_avatar(src="#{targetProfile.profilePicture}")
 				- else
-					img.avatar(src="/images/engage/default_profile.png")
-				h3 #{targetUser.firstName}
+					img.profile_avatar(src="/images/engage/default_profile.png")
+				h4 #{targetUser.firstName} #{targetUser.lastName}
+				
 				p #{targetUser.email}
-				p #{targetProfile.bio}
+				div#user_bio
+					h6 ABOUT
+					p #{targetProfile.bio}

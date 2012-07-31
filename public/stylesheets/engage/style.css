@@ -299,7 +299,7 @@ ul#user_options_list{
 	text-align: right;
 	white-space: nowrap;
 	display: block;
-	padding-top:25px;
+	padding-top:18px;
 	margin-bottom: 10px;
 }
 
@@ -313,9 +313,6 @@ ul#user_options_list li{
 	}
 ul#user_options_list li#notification {
 	margin: 0;
-	position: absolute;
-	margin-left: -44px;
-	margin-top: -8px;
 }
 ul#user_options_list li#notification div{
 	background-color: transparent;
@@ -1897,15 +1894,32 @@ dl.tabs dd.active a{
    Profile page
 ----------------------------------------- */
 div.innercontents#user_detail_box{
-
+	padding: 10px;
+}
+div.innercontents#user_detail_box img.profile_avatar{
+	float: left;
+	margin-right: 10px;
+}
+div.innercontents#user_detail_box h4{
+	display: inline;
+	float: left;
+	width: 65%;
+	overflow: hidden;
+	margin-top: 0;
+	margin-bottom: 5px;
 }
 
-div.innercontents#user_detail_box h3{
-	display: inline-block;
-	margin-left: 50px;
+div.innercontents#user_detail_box #user_bio{
+	clear:both;
+	margin-top: 48px;
+}
+
+div.innercontents#user_detail_box #user_bio h6{
+	font-style:italic;
+	margin-bottom: 5px;
 	
-}
-
+	}
+	
 /* -----------------------------------------
    padding bar for smaller screens
 ----------------------------------------- */

@@ -20,30 +20,47 @@ jQuery(document).ready(function ($) {
 		//if starred
 		//TODO: change to a better method later
 
-		$('#starred_btn').addClass('active');
+		$('.starred_btn').addClass('active');
 
 		loadStarredArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('instructor') != -1) {
-		$('#instructor_btn').addClass('active');
+		$('.instructor_btn').addClass('active');
 		loadInstructorArticles(engage);
 
 	}
 	else if (window.location.toString().indexOf('mine') != -1) {
-		$('#contruibutions_btn').addClass('active');
+		$('.contruibutions_btn').addClass('active');
 		loadMyArticles(engage);
 
 
 	}
-	else if (window.location.toString().indexOf('design') != -1) {
+	else if (window.location.toString().indexOf('preference') != -1) {
+
+		var originalFormContent;
+
+		originalFormContent = $('#edit_profile input[type=text]').serialize()
+
+
+		function onClose() {	var content = $('#edit_profile input[type=text]').serialize()
+			if (content != originalFormContent){
+				$('.ui-tabs-selected a').css('background-color','#ff9999').attr('title','unsaved changes'); //highlight tab that contains unsaved fields
+				return "popup question";
+			}
+		}
+
+		window.onbeforeunload = onClose;
 
 
 	}
+
 	else if (window.location.toString().indexOf('profile') != -1) {
 
 		loadProfileArticles(engage);
 	}
+
+
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
 		loadComments(engage);
@@ -317,7 +334,7 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('course') != -1) {
 
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
@@ -395,7 +412,7 @@ jQuery(document).ready(function ($) {
 
 	}
 	else {
-		$('#all_btn').addClass('active');
+		$('.all_btn').addClass('active');
 		$('#weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];

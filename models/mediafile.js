@@ -47,7 +47,7 @@ exports.selectMediaFile = function(args, callback){
 }
 
 exports.selectMediaFiles = function(args, callback){
-	MediaFile.findAll({where: args, order: 'title DESC'}).success(function(mediaFiles){		
+	MediaFile.findAll({where: args, order: 'createdAt DESC'}).success(function(mediaFiles){		
 		callback(null, mediaFiles);
 	}).error(function(error){
 		callback(error, null);

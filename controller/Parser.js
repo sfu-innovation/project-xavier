@@ -174,6 +174,9 @@ function listTypes(node, host) {
 var articlize =  exports.articlize = function( urlName, callback) {
 
 	request(urlName, function (error, response, body) {
+		if(!response) {
+			return callback("it died.", null)
+		}
 		if (response.statusCode == 200) {
 			var
 				window = jsdom.jsdom(null, null, {

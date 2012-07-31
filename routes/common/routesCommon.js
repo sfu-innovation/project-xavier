@@ -991,14 +991,11 @@ exports.searchQuestionsRoute = function(appType, request, response){
 	var queryData = request.body;
 
 	if (request.method === "POST") {
-		//console.log(JSON.stringify(request.body))
 		if(request.session.user){
-
 			nlp(queryData.searchQuery, function(query){
-				/*
-				if(query){
+				if(query)
 			 		queryData.searchQuery = query + " " + queryData.searchQuery;
-				}*/
+				
 				queryData.uuid = request.session.user.uuid;
 				QueryES.searchQuestionsRoute(appType, request.params.page, queryData, function(err, result){
 					if (!err) {

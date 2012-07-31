@@ -358,7 +358,7 @@ jQuery(document).ready(function ($) {
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
 			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self);
+			$(new_topic_box).insertBefore(self.parent());
 		})
 
 
@@ -1065,8 +1065,8 @@ function renderTopicInput(topic){
 function renderWeekInfoBox(item){
 	var weekBox =
 		'<div class="three columns weekbox"><div id="week-info" data-week-id="'+item.uuid+'" class="innercontents"><h4>Week ' +
-			item.week +
-			'</h4>';
+			item.week + 
+			'</h4>' + '<span id="topic_span">TOPICS:</span>';
 	if (!item.owner){
 		if (!item.topic){
 			weekBox += '<p>' +
@@ -1095,7 +1095,7 @@ function renderWeekInfoBox(item){
 
 	//if is prof
 	else{
-
+		
 		if (!item.topic){
 			weekBox += renderTopicInput('');
 
@@ -1118,8 +1118,9 @@ function renderWeekInfoBox(item){
 			}
 		}
 
-		weekBox += '<span class="medium button add_btn">Add</span>';
-		weekBox += '<span class="button medium save_btn">Save</span>';
+		weekBox += '<div id="week_topic_btn">' + 
+			'<span class="medium button add_btn">Add</span>' + 
+			'<span class="button medium save_btn">Save</span>' + '</div>';
 
 	}
 

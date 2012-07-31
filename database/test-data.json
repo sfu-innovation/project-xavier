@@ -1,4 +1,16 @@
 {
+	"userProfiles":[
+		{
+			"user":"llt3",
+			"profilePicture":"/images/avatars/llt3.jpg",
+			"bio":"CTO of SFU Engage"
+		},
+		{
+			"user":"ted",
+			"profilePicture":"/images/avatars/ted.jpg",
+			"bio":"Associate Professor of Computing Science. Interests in Undergraduate education, human-computer interaction."
+		}
+	],
 	"users": [
 		{
 			"uuid":"mcs3",
@@ -647,163 +659,87 @@
 		}
 	],
 	"resources":[
-		{
-			"uuid" : "A7S7FWGA7SD11A7SDF8ASD7G",
-			"course": "A827346H7ASDFG9",
-			"user" : "ted",
-			"title" : "Totaly Ties",
-			"description" : "How to best match your tie with your suit",
-			"resourceType" : 2,
-			"fileType" : "mp4",
-			"likes" : 2,
-			"path" : "/resources/articles/1.html",
-			"url" : "http://www.google.com"
 
-		},
-		{
-			"uuid" : "A7S7FWGA8SD11A7SDF8ASD7G",
-			"user" : "mak10",
-			"course": "A827346H7ASDFG9",
-			"title" : "Test resource title1",
-			"description" : "Test resource description",
-			"resourceType" : 2,
-			"fileType" : "mp4",
-			"likes" : 2,
-			"path" : "/resources/articles/1.html",
-			"url" : "http://www.google.com"
-
-		},
-		{
-			"uuid" : "A7S7FHGA7SD11A7SDF8ASD7G",
-			"user" : "mak10",
-			"course": "A827346H7ASDFG9",
-			"title" : "Test resource title2",
-			"description" : "Test resource description",
-			"resourceType" : 2,
-			"fileType" : "mp4",
-			"likes" : 2,
-			"path" : "/resources/articles/1.html",
-			"url" : "http://www.google.com"
-
-		},
-		{
-			"uuid" : "A7S7FHGA7SD11A7SDF8AS87G",
-			"user" : "mak10",
-			"course": "A827346H7ASDFG9",
-			"title" : "Test resource title2",
-			"description" : "Test resource description",
-			"resourceType" : 2,
-			"fileType" : "mp4",
-			"likes" : 2,
-			"path" : "/resources/articles/1.html",
-			"url" : "http://www.google.com"
-
-
-		},
 		{
 
 			"uuid" : "1",
-			"user" : "xna2",
-			"course": "12",
-			"week": 4,
-			"title" : "South Korea unveils 'scientific' whaling proposal",
-			"author" : "Richard Black",
-			"publishedDate": "4 July 2012",
-			"description" : "Test resource description",
-			"path" : "5c7bb63a68886ac1d159bccc71488927.xml",
+			"user" : "bernie",
+			"course": "14",
+			"week": 11,
+			"title" : "Syria: Aleppo fighting traps thousands, UNHCR says",
+			"description" : "Very good article, it worth reading.",
+			"path" : "1.xml",
 			"resourceType" : 2,
 			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of ",
-			"thumbnail": "http://news.bbcimg.co.uk/media/images/61369000/jpg/_61369079_minke_spl.jpg"
+			"likes" : 0,
+			"url" : "http://www.bbc.co.uk/news/world-middle-east-19066753" ,
+			"excerpt": "The UN's refugee agency has warned that thousands of people are still trapped in Syria's economic hub, Aleppo, as the army offensive",
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/61936000/jpg/_61936107_salhinrebel_3107_afp.jpg"
 
 		} ,
 		{
+
 			"uuid" : "2",
-			"user" : "xna2",
+			"user" : "ted",
 			"course": "12",
-			"week": 9,
-			"title" : "How To Create an Abstract Geometric Mosaic Text Effect",
-			"author" : "Chris Spooner",
-			"publishedDate": "28 June 2012",
-			"description" : "Test resource description",
-			"path" : "f0f778a5204856f6d9bfb704ca389eb4.xml",
+			"week": 4,
+			"title" : "Canada prepares for an Asian future",
+			"description" : "Very good article, it worth reading.",
+			"path" : "2.xml",
 			"resourceType" : 2,
 			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://blog.spoongraphics.co.uk/tutorials/how-to-create-an-abstract-geometric-mosaic-text-effect" ,
-			"excerpt": "I recently stumbled across the new branding for the Canadian Olympic Team, which then reminded me of my recent abstract geometric poster design tutorials, so I decided to combine my technique with the idea of creating a patriotic design with a similar mosaic effect."
+			"likes" : 0,
+			"url" : "http://www.bbc.co.uk/news/world-radio-and-tv-18149316" ,
+			"excerpt": "Chinese immigrants have flocked to Canada's west coast and transformed Vancouver into Canada's very own Asian metropolis. The days ",
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/60484000/jpg/_60484471_vanocuver_hayter.jpg"
 
-
-		},
+		} ,
 		{
+
 			"uuid" : "3",
-			"user" : "llt3",
-			"course": "12",
-			"week": 1,
-			"title" : "How To Interview Effectively",
-			"author" : "Richard Black",
-			"publishedDate": "28 June 2012",
-			"description" : "Test resource description",
-			"path" : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
+			"user" : "ted",
+			"course": "13",
+			"week": 4,
+			"title" : "Michael Phelps breaks Olympic record with 4x200m freestyle gold",
+			"description" : "Very good article, it worth reading.",
+			"path" : "3.xml",
 			"resourceType" : 2,
 			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://www.forbes.com/sites/victorlipman/2012/06/28/how-to-interview-effectively/" ,
-			"excerpt": "Job interviews are a common source of anxiety, and can at times be as pleasant as a trip to the dentist.",
-			"thumbnail": "http://blogs-images.forbes.com/victorlipman/files/2012/06/300x1942.jpg"
+			"likes" : 0,
+			"url" : "http://www.bbc.co.uk/sport/0/olympics/18902418" ,
+			"excerpt": "Michael Phelps won a record 19th Olympic medal as he helped the US team to gold in the 4x200m freestyle relay.",
+			"thumbnail": "http://news.bbcimg.co.uk/media/images/61937000/jpg/_61937035_michael_phelps_getty.jpg"
 
 		},
 		{
+
 			"uuid" : "4",
 			"user" : "llt3",
 			"course": "11",
-			"week": 9,
-			"title" : "How To Interview Effectively",
-			"author" : "Victor Lipman",
-			"publishedDate": "28 June 2012",
-			"description" : "Test resource description",
-			"path" : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
+			"week": 6,
+			"title" : "Best Practices for Accessible Flash Design",
+			"description" : "For many Flash designers, the single greatest challenge to understandingaccessibility is how to best appreciate the experience of people with disabilities. Aweb designer’s inherent talent is an ability to perceive the world in a unique visualway.",
+			"path" : "4.pdf",
 			"resourceType" : 2,
-			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
-
+			"fileType" : "pdf",
+			"likes" : 0,
+			"url" : "/resources/files/4.pdf" ,
+			"excerpt": "For many Flash designers, the single greatest challenge to understandingaccessibility is how to best appreciate the experience of people with disabilities. Aweb designer’s inherent talent is an ability to perceive the world in a unique visualway."
 		},
 		{
+
 			"uuid" : "5",
-			"user" : "ted",
-			"course": "11",
-			"week": 7,
-			"title" : "HSBC used by 'drug kingpins', says US Senate",
-			"author" : "Victor Lipman",
-			"publishedDate": "28 June 2012",
-			"description" : "Test resource description",
-			"path" : "/resources/articles/1435b518441f246511d59aac6d66cae5.xml",
+			"user" : "llt3",
+			"course": "13",
+			"week": 6,
+			"title" : "Microsoft Word Documents: Universally Designed",
+			"description" : "How information is organized and presented determines the universalusability of your Microsoft Word document, whether it's text, a table oran image.",
+			"path" : "5.doc",
 			"resourceType" : 2,
-			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
-		},
-		{
-			"uuid" : "6",
-			"user" : "ted",
-			"course": "11",
-			"week": 3,
-			"title" : "How To Interview Effectively",
-			"author" : "Victor Lipman",
-			"publishedDate": "28 June 2012",
-			"description" : "Test resource description",
-			"path" : "/resources/articles/d41d8cd98f00b204e9800998ecf8427e.xml",
-			"resourceType" : 2,
-			"fileType" : "html",
-			"likes" : 2,
-			"url" : "http://www.bbc.co.uk/news/science-environment-18716300" ,
-			"excerpt": "Australia's Prime Minister Julia Gillard and New Zealand's Foreign Minister Murray McCully give their reaction (whaling footage courtesy of "
-
+			"fileType" : "doc",
+			"likes" : 0,
+			"url" : "/resources/files/5.doc" ,
+			"excerpt": "How information is organized and presented determines the universalusability of your Microsoft Word document, whether it's text, a table oran image."
 		}
 
 
@@ -981,186 +917,31 @@
 			"uuid":"1001",
 			"app" : 2,
 			"course": 11,
-			"topic":"#just some rand1324om topics#topic2#top ic 3",
-			"week": 1
+			"topic":"#Introduction#How to using crop in PS#How to select color in PS",
+			"week": 13
 		},
 		{
 			"uuid":"1002",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some rand3232om topics",
-			"week": 2
+			"course": 12,
+			"topic":"#Personal Interview#Written Summary",
+			"week": 13
 		},
 		{
 			"uuid":"1003",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some ra2323dom topics",
-			"week": 3
+			"course": 13,
+			"topic":"#Code Freeze#Oral Code Presentation",
+			"week": 13
 		},
 		{
 			"uuid":"1004",
 			"app" : 2,
-			"course": 11,
-			"topic":"just some ran2323dom topics",
-			"week": 4
-		},
-		{
-			"uuid":"1005",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some raweqndom topics",
-			"week": 5
-		},
-		{
-			"uuid":"1006",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ran12321dom topics",
-			"week": 6
-		},
-		{
-			"uuid":"1007",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some rqweqandom topics",
-			"week": 7
-		},
-		{
-			"uuid":"1008",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ra21312ndom topics",
-			"week": 8
-		},
-		{
-			"uuid":"1009",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some ran`31dom topics",
-			"week": 9
-		},
-		{
-			"uuid":"1010",
-			"app" : 2,
-			"course": 11,
-			"week": 10
-		},
-		{
-			"uuid":"1011",
-			"app" : 2,
-			"course": 11,
-			"topic":"just some rando231m topics",
-			"week": 11
-		},
-		{
-			"uuid":"1012",
-			"app" : 2,
-			"course": 11,
-			"week": 12
-		},
-		{
-			"uuid":"1013",
-			"app" : 2,
-			"course": 11,
+			"course": 14,
+			"topic":"#Business Report#Final Presentation",
 			"week": 13
-		},
-		{
-			"uuid":"1014",
-			"app" : 2,
-			"course": 11,
-			"week": 14
-		} ,
-		{
-			"uuid":"2001",
-			"app" : 2,
-			"course": 12,
-			"week": 1,
-			"topic":"#topic1#topic2#topic3"
-
-		},
-		{
-			"uuid":"2002",
-			"app" : 2,
-			"course": 12,
-			"week": 2
-		},
-		{
-			"uuid":"2003",
-			"app" : 2,
-			"course": 12,
-			"week": 3
-		},
-		{
-			"uuid":"2004",
-			"app" : 2,
-			"course": 12,
-			"week": 4
-		},
-		{
-			"uuid":"2005",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some r253andom topics",
-			"week": 5
-		},
-		{
-			"uuid":"2006",
-			"app" : 2,
-			"course": 12,
-			"week": 6
-		},
-		{
-			"uuid":"2007",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some r131andom topics",
-			"week": 7
-		},
-		{
-			"uuid":"2008",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some ra131ndom topics",
-			"week": 8
-		},
-		{
-			"uuid":"2009",
-			"app" : 2,
-			"course": 12,
-			"week": 9
-		},
-		{
-			"uuid":"2010",
-			"app" : 2,
-			"course": 12,
-			"topic":"just some ra232ndom topics",
-			"week": 10
-		},
-		{
-			"uuid":"2011",
-			"app" : 2,
-			"course": 12,
-			"week": 11
-		},
-		{
-			"uuid":"2012",
-			"app" : 2,
-			"course": 12,
-			"week": 12
-		},
-		{
-			"uuid":"2013",
-			"app" : 2,
-			"course": 12,
-			"week": 13
-		},
-		{
-			"uuid":"2014",
-			"app" : 2,
-			"course": 12,
-			"week": 14
 		}
+
 	],
 	"tags": [
 		{

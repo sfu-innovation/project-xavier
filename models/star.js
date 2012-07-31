@@ -39,15 +39,22 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
-							app    :2
+							app    :2,
+							origin: userUUID,
+							description: "someone shared your article"
 						}
-						Notification.addStarNotifier(args, function(error, result){
+						Notification.addStarUserNotification(args, function(error){
 							if(error)
-								return callback(error);
+								return callback(error)
 
-							callback(null, star);
+							Notification.addStarNotifier(args, function(error){
+								if(error)
+									return callback(error);
+
+								callback(null, star);
+							})
+
 						})
-
 					}).error(function (error) {
 						callback(error, null);
 					})

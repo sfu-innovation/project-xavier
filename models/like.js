@@ -36,13 +36,21 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
-							app    :2
+							app    :2,
+							origin: userUUID,
+							description: "someone liked your article"
 						}
-						Notification.addLikeNotifier(args, function(error, result){
+
+						Notification.addLikeUserNotification(args, function(error){
 							if(error)
 								return callback(error);
 
-							callback(null, result);
+							Notification.addLikeNotifier(args, function(error, result){
+								if(error)
+									return callback(error);
+
+								callback(null, result);
+							})
 						})
 					}).error(function(error){
 						callback(error, null);

@@ -583,6 +583,40 @@ jQuery(document).ready(function ($) {
 		}
 	})
 
+
+//TODO: come back to here later
+
+	$('#upload_article').submit(function() {
+		status('uploading the file ...');
+
+		$(this).ajaxSubmit({
+
+			error: function(xhr) {
+				status('Error: ' + xhr.status);
+			},
+
+			success: function(response) {
+
+				if(response.error) {
+					status('Opps, something bad happened');
+					return;
+				}
+
+				var imageUrlOnServer = response.path;
+
+
+			}
+		});
+
+		// Have to stop the form from submitting and causing
+		// a page refresh - don't forget this
+		return false;
+	});
+
+
+
+
+
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
 });

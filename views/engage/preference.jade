@@ -23,8 +23,8 @@ block content
 								div.browsebox
 									input(type="file", name="upload", onchange = "submit(this)")
 									div#upload_avatar upload
-								input(type="hidden", name="helper", value=format)
-								a(onclick="submit(this)", id="remove") remove photo
+								input#helper(type="hidden", name="helper", value=format)
+								a(onclick="remove()", id="remove") remove photo
 								script
 									function submit(ele){
 										var form = document.getElementById("edit_profile");
@@ -32,6 +32,12 @@ block content
 											document.getElementsByName("helper")[0].value = "del";
 										}
 										form.submit();
+									}
+
+									function remove(){
+										console.log('!!!');
+										$('#helper').val('del');
+										$('#edit_profile').submit();
 									}
 								
 							div#edit_info_column.four.columns

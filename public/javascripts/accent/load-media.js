@@ -4,7 +4,7 @@ var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 
 function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
-		$('#mediaPlayer').attr('src', data.mediafile.path);
+		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
 		$('#mediaPlayer').attr('autoplay', 'autoplay');
 	})
 }
@@ -41,26 +41,25 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + (tag.start + 40) + "px; width: " + (tag.end  + 60) + "px; background: " + formatTagtype(tag.type) + ";' " + "onclick='return selectedTag(this);' " + "UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
 function loadTags(uuid) {
-	var tagger = $(".Tagger").children(".Timeline");
+	var timeline = $(".Tagger").children(".Timeline");		
 	
-	/*
+	console.log('loading tags');
 	accent.getTagsByMediaFileId(uuid, function(data){
+		console.log("tags found:");
+		console.log(data);
+		var tagWindow = $(timeline).children(".TagWindow");		
+		data.tags.forEach(function(tag) {				
+			var tagStr = formatTimeline(tag);	
+			tagWindow.before(tagStr);	
 
-		data.tags.forEach(function(tag) {	
-			tagger.append(formatTimeline(tag));		
 		});	
-
-		// append tag window here
-		tagger.append(formatTagWindow());
-
+		bindTag($(".Tag"));
 	});
-	*/
-	
-	//loadTagTypes();
+
 }
 
 function selectedTag(tag) {	
@@ -79,8 +78,6 @@ function bindTag(tag) {
 			$(this).parent().children().removeClass("Selected");
 		$(this).addClass("Selected");
 
-		
-
 		if (evt.offsetX < 5) {
 			$(this).parent().data("action", "resize-left");
 		}
@@ -89,10 +86,27 @@ function bindTag(tag) {
 		}
 		else {
 			$(this).parent().data("action", "move");
-		}
+		}		
 		return true;
 	}).bind("mouseup", function() {
 		$(this).parent().data("action", false);
+
+		var selectedTag = $(this);
+		var tagID = selectedTag.attr("uuid");
+		console.log('i am being selected wowwwww');
+		console.log(selectedTag);
+		console.log(tagID)
+
+		accent.getTagById(tagID, function(data){
+			var tagTitle = document.getElementById("TagTitle");		
+			var tagType = document.getElementById("TagType");
+			var tagDescription = document.getElementById("TagDescription");
+			
+			tagTitle.value = data.tag.title;
+			//tagType.valdata.tag.type;
+			tagDescription.innerHTML = data.tag.description;
+		})
+
 		return true;
 	}).bind("mousemove", function(evt) {
 		if (evt.offsetX < 5) {
@@ -113,13 +127,8 @@ function bindTag(tag) {
 	})
 }
 
-
-
-
-bindTag($(".Tag"));
-
 loadMedia(mediaID);
-//loadTags(mediaID);
+loadTags(mediaID);
 
 $(document).ready(function () {
 	console.log("                          Tag Tools - always executed");

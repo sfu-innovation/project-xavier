@@ -2,11 +2,13 @@ div#Main(onload="getMedia();")
 	h1 Manage Your Media
 	div#CourseDD
 		|Course
-		select(class="Selected", name="course")
+		div#CourseOptions
+			select(class="Selected", name="courseSelect")
 
 	div#SectionDD
 		|Week
-		select(name="section")
+		div#SectionOptions
+			select(name="sectionSelect")
 	
 	div#media-list
 script(type="text/javascript", src="../javascripts/accent/media-list.js")

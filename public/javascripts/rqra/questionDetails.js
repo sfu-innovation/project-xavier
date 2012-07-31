@@ -21,13 +21,19 @@ QuestionDetails.updateViewCount = function() {
 	rqra.updateQuestionViews(QuestionDetails.getQuestionId(), function(data) { });
 }
 
-QuestionDetails.refreshDetailsView = function() {
+QuestionDetails.refreshDetailsView = function(callback) {
 	var question = document.getElementById("detailedQuestion");
 	var commentList = document.getElementById("comments");
 
 	// get question
 	rqra.getQuestionById(QuestionDetails.getQuestionId(), function(data) {
 		if (data && data.errorcode === 0) {
+			
+			if (data.question._source.course) {
+				QuestionCommon.setCourse(data.question._source.course.toLowerCase());
+				QuestionCommon.setWeek(data.question._source.week);
+			}
+			
 			question.innerHTML = ElementFactory.createDetailedQuestionItem(data.question);
 
 			// get comments
@@ -47,6 +53,7 @@ QuestionDetails.refreshDetailsView = function() {
 				} else {
 					commentList.innerHTML += ElementFactory.createQuestionsNotFoundItem();
 				}
+				if (callback) callback();
 			});
 		}
 	});
@@ -86,9 +93,10 @@ QuestionDetails.vote = function(dir, targetDiv) {
 }
 
 window.onload = function() {
-	QuestionCommon.refreshDefaultHeader();
-	CourseList.refreshCourseList(function() {
-		CourseList.setSelectedIndex(0);
+	QuestionDetails.refreshDetailsView(function() {
+		CourseList.refreshCourseList(function() {
+			CourseList.setSelectedName(QuestionCommon.course);
+			QuestionCommon.refreshDefaultHeader();
+		});
 	});
-	QuestionDetails.refreshDetailsView();
 }

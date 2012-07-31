@@ -34,7 +34,7 @@ QuestionForm.getCourseName = function() {
 	var courseBox = document.getElementById("courseBox");
 	if (courseBox) {
 		var index = courseBox.selectedIndex;
-		var courseName = courseBox.children[index].title.toLowerCase();
+		return courseBox.children[index].title.toLowerCase();
 	} else {
 		return "";
 	}
@@ -44,15 +44,17 @@ QuestionForm.getCourseUuid = function() {
 	var courseBox = document.getElementById("courseBox");
 	if (courseBox) {
 		var index = courseBox.selectedIndex;
-		var courseName = courseBox.children[index].value;
+		return courseBox.children[index].value;
 	} else {
 		return "";
 	}
 }
 
+// when the course is changed in the question form drop box
 QuestionForm.onCourseBoxChanged = function() {
 	QuestionCommon.setCourse(QuestionForm.getCourseName());
-	QuestionForm.refreshCourseBox();
+	CourseList.setSelectedName(QuestionForm.getCourseName());
+	QuestionForm.refreshWeekBox();
 }
 
 QuestionForm.refreshCourseBox = function() {
@@ -114,7 +116,7 @@ QuestionForm.postQuestion = function() {
 
 window.onload = function() {
 	CourseList.refreshCourseList(function() {
-		CourseList.setSelectedIndex(1);
+		CourseList.setSelectedName(1);
 	});
 	QuestionForm.refreshCourseBox();
 	QuestionForm.refreshCustomQuestionHeader();

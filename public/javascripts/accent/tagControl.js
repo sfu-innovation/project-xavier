@@ -6,14 +6,26 @@ function getTagType(value) {
 	return 1;
 }
 
+function deleteTag(tag){
+	var selectedTag = $(".Tag.Selected");
+	var tagID = selectedTag.attr('UUID');	
+
+	accent.deleteTagById(tagID, function(data){});
+}
+
 function uploadTag(tag){
-	var tagNode = $(tag).parent().parent().children("div");
-	//var tagTitle = $(tagNode).children("input#TagTitle");
-	//var tagDescription = $(tagNode).children("textarea#TagDescription");
+	var selectedTag = $(".Tag.Selected");
+	
+	var tagStart = parseInt(selectedTag.css('left'));
+	var tagEnd = parseInt(selectedTag.css('width'));
+	
 	var tagTitle = document.getElementById("TagTitle").value;
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
-	var tagType = parseInt(document.getElementById("TagType").value);
+	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
+
+	console.log('tag selected');
+	console.log(selectedTag);
 
 	var tag = {				
 		user:"",
@@ -33,15 +45,42 @@ function uploadTag(tag){
 
 	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
 	tag.user = sessionUser;
+	tag.start = tagStart;
+	tag.end = tagEnd;
 	tag.target = tagTarget;
 	tag.title = tagTitle;
-	tag.type = tagType;
 	tag.description = tagDescription;	
+
+	switch(tagType) {
+		case 'Important':{
+			tag.interest = true;
+			break;
+		}
+		case 'Examable':{
+			tag.examable = true;
+			break;
+		}
+		case 'Question':{
+			tag.type = 0;
+			break;
+		}
+		case 'Interesting':{
+			tag.interest = true;
+			break;
+		}
+		case 'General':{
+			tag.shared = true;
+			break;
+		}
+	}
+
 	
 	accent.createTag(tag,function(data){
 		// put tag timelines dynamically
 		console.log(data);
-	});	
+
+		selectedTag.attr('UUID', data.tag.uuid);
+	});		
 
 }
 

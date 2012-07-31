@@ -559,60 +559,60 @@ div.innercontents{
 }
 
 div.innercontents.color-1{
-	border-top: 4px solid #F14241;
+	border-top: 4px solid #FF6A68;
 }
 
 div.innercontents.color-2{
-	border-top: 4px solid #FFAB08;
+	border-top: 4px solid #FFCE7A;
 }
 
 div.innercontents.color-3{
-	border-top: 4px solid #5FE1C2;
+	border-top: 4px solid #4FA2F7;
 }
 
 div.innercontents.color-4{
-	border-top: 4px solid #14CC43;
+	border-top: 4px solid #8FD960;
 }
 
 div.innercontents.color-5{
-	border-top: 4px solid #4860E3;
+	border-top: 4px solid #D3B2ED;
 }
 
 div.innercontents.color-6{
-	border-top: 4px solid #FFEA1C;
+	border-top: 4px solid #7ADFC7;
 }
 
 
 
 span.coursename a.color-1{
-	color:#F14241;
+	color:#FF6A68;
 
 }
 
 span.coursename a.color-2{
-	color:#FFAB08;
+	color:#FFCE7A;
 
 }
 
 
 span.coursename a.color-3{
-	color:#5FE1C2;
+	color:#4FA2F7;
 
 }
 
 span.coursename a.color-4{
-	color:#14CC43;
+	color:#8FD960;
 
 }
 
 
 span.coursename a.color-5{
-	color:#4860E3;
+	color:#D3B2ED;
 
 }
 
 span.coursename a.color-6{
-	color:#FFEA1C;
+	color:#7ADFC7;
 
 }
 
@@ -1435,6 +1435,11 @@ div#info, div#week-info {
 	padding: 10px 25px;
 	
 }
+
+div#week-info .edit_panel{
+	display: none;
+}
+
 div#info ul{
 	list-style: none;
 }
@@ -1764,7 +1769,8 @@ div.innercontents#user_detail_box h3{
 	}
 	
 #week-info ul{
-	list-style: none;
+	list-style: circle;
+	padding-left: 40px;
 }
 
 

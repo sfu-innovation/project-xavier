@@ -16,6 +16,42 @@ block content
 						a(href="#notification") Notification
 				ul.tabs-content
 					li.active#editTab
+						script(type="")
+							function form_is_modified(oForm)
+							{
+								var el, opt, hasDefault, i = 0, j;
+								while (el = oForm.elements[i++]) {
+									switch (el.type) {
+										case 'text' :
+							                   	case 'textarea' :
+							                   	case 'hidden' :
+							                         	if (!/^\s*$/.test(el.value) && el.value != el.defaultValue) return true;
+							                         	break;
+							                   	case 'checkbox' :
+							                   	case 'radio' :
+							                         	if (el.checked != el.defaultChecked) return true;
+							                         	break;
+							                   	case 'select-one' :
+							                   	case 'select-multiple' :
+							                         	j = 0, hasDefault = false;
+							                         	while (opt = el.options[j++])
+							                                	if (opt.defaultSelected) hasDefault = true;
+							                         	j = hasDefault ? 0 : 1;
+							                         	while (opt = el.options[j++]) 
+							                                	if (opt.selected != opt.defaultSelected) return true;
+							                         	break;
+									}
+								}
+								return false;
+							}
+							
+							onunload = function()
+							{
+								if (form_is_modified(document.forms[0]))
+									if (confirm('Save changes?'))
+										document.forms[0].submit();
+							}
+
 						form(id="edit_profile", action="/preference",enctype="multipart/form-data", method="post")
 							div#avatar_column.columns
 								img.avatar(src=avatar) 

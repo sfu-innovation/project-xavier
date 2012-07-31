@@ -166,7 +166,8 @@ function enterPressed(event, textInput) {
 				
 		rqra.createComment(questionID, value, function(result) {
 			// it would be nice to add directly after creating comment
-			// the result should return the whole object not just top layer			
+			// the result should return the whole object not just top layer
+			console.log('creating comment:');
 			console.log(result);
 
 			// maybe refresh the question instead of dynamically adding it

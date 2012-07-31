@@ -17,14 +17,6 @@
 			"email":"jrf2@sfu.ca"
 		},
 		{
-			"uuid":"xna2",
-			"firstName":"Mark",
-			"lastName":"Ni",
-			"type":0,
-			"userID":"xna2",
-			"email":"xna2@sfu.ca"
-		},
-		{
 			"uuid":"llt3",
 			"firstName":"Catherine",
 			"lastName":"Tan",
@@ -264,20 +256,7 @@
 		},
 		{
 			"course":"A827346H7ASDFG9",
-			"user":"xna2"
-		},
-
-		{
-			"course":"11",
-			"user":"xna2"
-		},
-		{
-			"course":"A827346H7ASDFG9",
 			"user":"aka87"
-		},
-		{
-			"course":"A827346H7ASDFG9",
-			"user":"xna2"
 		},
 		{
 			"course":"A827346H7ASDFG9",

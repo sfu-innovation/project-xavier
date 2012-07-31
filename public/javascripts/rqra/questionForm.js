@@ -113,7 +113,9 @@ QuestionForm.postQuestion = function() {
 }
 
 window.onload = function() {
-	displayCourseList();
+	CourseList.refreshCourseList(function() {
+		CourseList.setSelectedIndex(1);
+	});
 	QuestionForm.refreshCourseBox();
 	QuestionForm.refreshCustomQuestionHeader();
 }

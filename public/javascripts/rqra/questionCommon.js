@@ -35,9 +35,9 @@ QuestionCommon.setWeek = function(w) {
 //
 QuestionCommon.getCourseTitle = function(callback) {
 	if (QuestionCommon.course && QuestionCommon.course !== "" && QuestionCommon.course !== "all") {
-		var uuid = getUuid(QuestionCommon.course);
+		var uuid = CourseList.getUuid(QuestionCommon.course);
 		if (uuid && uuid !== "") {
-			common.getCourseById(getUuid(QuestionCommon.course), function(data) {
+			common.getCourseById(CourseList.getUuid(QuestionCommon.course), function(data) {
 				callback(QuestionCommon.course.toUpperCase() + " " + data.course.title);
 			});
 		} else {
@@ -57,7 +57,7 @@ QuestionCommon.getWeekTitle = function(callback) {
 	if (QuestionCommon.week === 0 || uuid === "") {
 		callback("All Weeks", "");
 	} else {
-		var uuid = getUuid(QuestionCommon.course);
+		var uuid = CourseList.getUuid(QuestionCommon.course);
 		if (!uuid || uuid === "") {
 			callback("Week " + QuestionCommon.week, "");
 		} else {

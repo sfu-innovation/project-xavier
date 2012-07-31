@@ -39,7 +39,7 @@ QuestionList.refreshQuestionsList = function() {
 	if (questionListDiv) {
 		var currentCourse = QuestionCommon.course;
 		if (currentCourse.toLowerCase() === "all") currentCourse = "";
-
+		
 		rqra.searchSortedQuestions(QuestionList.searchQuery, QuestionList.searchType, currentCourse, QuestionCommon.week, QuestionList.page, function (data) {
 			questionListDiv.innerHTML = "";
 			if (data && data.errorcode === 0 && data.questions.hits.length > 0) {
@@ -79,8 +79,9 @@ function questionTabClicked(tabdiv) {
 }
 
 window.onload = function() {
-	// displays asked questions on page load
-	displayCourseList();
+	CourseList.refreshCourseList(function() {
+		CourseList.setSelectedIndex(0);
+	});
 	QuestionCommon.refreshDefaultHeader();
 	QuestionList.refreshQuestionsList();
 }

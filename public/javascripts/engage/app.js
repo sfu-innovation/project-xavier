@@ -335,7 +335,7 @@ jQuery(document).ready(function ($) {
 	else if (window.location.toString().indexOf('course') != -1) {
 
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		if (!weekNum){
@@ -347,18 +347,18 @@ jQuery(document).ready(function ($) {
 		}
 
 		loadCourseArticles(engage, weekNum);
-		$('#weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
+		$('.weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
 			loadCourseArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadCourseArticles(engage, week);
 			}
@@ -420,7 +420,7 @@ jQuery(document).ready(function ($) {
 	}
 	else {
 		$('.all_btn').addClass('active');
-		$('#weeks-bar a').removeClass('active');
+		$('.weeks-bar a').removeClass('active');
 
 		var weekNum = (window.location.toString().split('#week'))[1];
 		loadAllArticles(engage, weekNum);
@@ -472,11 +472,11 @@ jQuery(document).ready(function ($) {
 			loadAllArticles(engage, weekNum);
 		});
 
-		$('#weeks-bar a.passed').bind('click', function () {
+		$('.weeks-bar a.passed').bind('click', function () {
 			var weekObj = $(this);
 			var week = weekObj.attr('data-week');
 			if (week) {
-				$('#weeks-bar a').removeClass('active');
+				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
 				loadAllArticles(engage, week);
 			}

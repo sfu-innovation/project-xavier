@@ -28,6 +28,23 @@ QuestionList.setPage = function(p) {
 	QuestionList.refreshQuestionsList();
 }
 
+QuestionList.setSearchType = function(t) {
+	QuestionList.searchType = t;
+	QuestionList.refreshSearchTypeSelection();
+}
+
+QuestionList.refreshSearchTypeSelection = function() {
+	var questionTabs = document.getElementById("questionTabs");
+	var individualTabs = questionTabs.querySelectorAll(".tab");
+	for (var i = 0; i < individualTabs.length; ++i) {
+		if (individualTabs[i].getAttribute("value") === QuestionList.searchType) {
+			individualTabs[i].style.color = "#1b88d0";
+		} else {
+			individualTabs[i].style.color = "#AAAAAA";
+		}
+	}
+}
+
 QuestionList.refreshPageNumbers = function() {
 	var pageNumbers = document.getElementById("pageNumber");
 	var pagesTotal = Math.ceil(QuestionList.count / QuestionList.pageLength);
@@ -71,9 +88,10 @@ function gotoQuestionPage(clicked) {
 	document.location.href = "/question/" + questionId;
 }
 
-function questionTabClicked(tabdiv) {
-	if (window.event.target && window.event.target !== tabdiv) {
-		QuestionList.searchType = window.event.target.getAttribute("value");
+function questionTabClicked(tabdiv, e) {
+	var event = e || window.event;
+	if (event.target && event.target !== tabdiv) {
+		QuestionList.setSearchType(event.target.getAttribute("value"));
 		QuestionList.setPage(0);
 	}
 }
@@ -83,5 +101,6 @@ window.onload = function() {
 		CourseList.setSelectedIndex(0);
 	});
 	QuestionCommon.refreshDefaultHeader();
+	QuestionList.refreshSearchTypeSelection();
 	QuestionList.refreshQuestionsList();
 }

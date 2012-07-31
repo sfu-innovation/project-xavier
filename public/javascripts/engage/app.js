@@ -374,8 +374,10 @@ jQuery(document).ready(function ($) {
 
 		$('#week-info .add_btn').live('click',function(){
 			var self = $(this);
-			var new_topic_box = renderTopicInput('');
-			$(new_topic_box).insertBefore(self.parent());
+			if ($('.topic_input').length < 5) {
+				var new_topic_box = renderTopicInput('');
+				$(new_topic_box).insertBefore(self.parent());
+			}
 		})
 
 
@@ -392,6 +394,7 @@ jQuery(document).ready(function ($) {
 			})
 			var id = $('#week-info').attr('data-week-id');
 			if(id && result){
+				console.log(result);
 				engage.updateWeekInfo(id,result,function(data){
 
 					if (data && data.errorcode === 0){
@@ -1149,7 +1152,6 @@ function renderWeekInfoBox(item){
 }
 
 function renderArticlePreviewBox(item) {
-console.log(formartDate(item.createdAt));
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
@@ -1224,7 +1226,6 @@ function activateTab($tab) {
 function formartDate(old_date) {
 	var now = new Date();
 	var post_time = new Date(Date.parse(old_date));
-	console.log(post_time);
 	var prettytime = formatAgo(post_time, null, now);
 	return prettytime;
 }

@@ -4,6 +4,11 @@
 			"user":"llt3",
 			"profilePicture":"/images/avatars/llt3.jpg",
 			"bio":"CTO of SFU Engage"
+		},
+		{
+			"user":"ted",
+			"profilePicture":"/images/avatars/ted.jpg",
+			"bio":"Associate Professor of Computing Science. Interests in Undergraduate education, human-computer interaction."
 		}
 	],
 	"users": [

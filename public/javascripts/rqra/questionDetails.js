@@ -72,10 +72,16 @@ QuestionDetails.postComment = function() {
 		QuestionDetails.commentCount++;
 		
 		rqra.createComment(QuestionDetails.getQuestionId(), commentBody, function(data) {
+			console.log(data);
 			if (data && data.errorcode === 0) {
 				rqra.getCommentById(data.comment._id, function(data2) {
 					commentList.innerHTML += ElementFactory.createCommentItem(data2.comment);
 				});
+				var askForm = document.getElementById("askForm");
+				console.log(askForm);
+				if (askForm) {
+					askForm.innerHTML = ElementFactory.createResponseThankYouItem();
+				}
 			}
 		});
 	} else {

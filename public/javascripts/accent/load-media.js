@@ -17,11 +17,6 @@ function loadMedia(uuid){
 	})			
 }
 
-function playVideo(){
-	$('#mediaPlayer').get(0).play();
-	console.log("PLAY");
-}
-
 function formatTagTypeOption(index){
 	var tagType = ["Important","Examable", "Question", "Interesting", "General"];
 	return "<option value='" + index + "'>" + tagType[index] + "</option>";

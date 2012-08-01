@@ -22,16 +22,18 @@ block content
 								img.avatar(src=avatar) 
 								div.browsebox
 									input(type="file", name="upload", onchange = "$('#edit_profile').submit();")
-									div#upload_avatar upload
-								input#helper(type="hidden", name="helper", value=format)
-								a(onclick="remove()", id="remove") remove photo
+									a#upload_avatar.button upload
+									
+								div.removebox
+									input#helper(type="hidden", name="helper", value=format)
+									a(onclick="remove()", id="remove").button remove
 								script
 									function remove(){
 										$('#helper').val('del');
 										$('#edit_profile').submit();
 									}
 
-							div#edit_info_column.four.columns
+							div#edit_info_column.six.columns.end
 								div#edit_box
 									h4 #{user.firstName} #{user.lastName}
 									label Preferred Name:
@@ -43,7 +45,7 @@ block content
 									| #{msg}
 			
 					li#notificationTab
-						div
+						div.nine.columns
 							form(id="edit_notification", action="/preference", method="post")
 								h4 Notifications
 								p 
@@ -60,7 +62,6 @@ block content
 											
 									ul.checkbox_column
 										li
-											span.typicn.mail
 											span#email always
 											span#email daily
 											span#email weekly

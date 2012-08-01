@@ -304,8 +304,44 @@ img.User {
 	cursor: pointer;
 }
 
+#CourseOptions select, #SectionOptions select {
+   background: transparent;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 34px;
+}
+
+.EditLink {
+	position:absolute;
+	right:2%;
+	top:5%;
+}
+
+.EditLink:hover {
+	cursor: pointer;
+}
+
+.VideoTitle {
+	position:absolute;
+	left:40%;
+	top:5%;
+}
+
+.VideoDescription {
+	position:absolute;
+	left:40%;
+	top:15%;
+}
+
 .MediaItem {
- margin-bottom: 25px;
+	position:relative;
+	width:100%;
+	height: 230px;
+	margin-top: 25px;
+	border: solid 1px #c0c0c0;
+	box-shadow: 3px 2px 5px #888;
 }
 
 .MediaItem a {
@@ -313,10 +349,17 @@ img.User {
 }
 
 .MediaImage {
- clear:both;
- float:left;
- margin-right: 30px;
- border: solid 1px #c0c0c0
+	position:absolute;
+	left:2%;
+	top:5%;
+	clear:both;
+	margin-right: 30px;
+	border: solid 1px #c0c0c0
+}
+
+.MediaImage img{
+	height:200px;
+	width:300px;
 }
 
 .MediaInfo {
@@ -340,20 +383,22 @@ img.User {
  color: #222;
 }
 
-.section {
+.Section {
 	color:white;
 	background:#333333;
-	position:relative;
-	top:-30px;
+	position:absolute;
+	bottom:10%;
+	left:2%;
 	opacity:0.8;
 	padding: 3px 3px 3px 0px;
 	height:25px;
-	width:105%;
+	width:310px;
 }
 
-.section h2{
-	text-align:right;
-	vertical-align:text-top;
+.Section h2{
+	position:absolute;
+	right:20px;
+	top:8px;
 }
 
 select #CourseOptions{

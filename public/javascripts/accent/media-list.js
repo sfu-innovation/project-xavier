@@ -47,17 +47,16 @@ var retrieveMedia = function(courseUUID, all){
 
 			(function(mediaItem){
 				accent.getMediaSection(mediaItem.uuid, function(section){
-					var mediaNode = "<div class=\"MediaItem\">";
+					var mediaNode = "<div class=\"MediaItem\">" + 
+						"<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
+						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" />" +
+						"</a></div>" + 
+						"<div class='MediaInfo'>" + "<a href=\"/video/" + mediaItem.uuid + "\" class='VideoTitle'>" + "<h1>" + mediaItem.title + "</h1></a>";
 					if($('#EditForm').length > 0){
-						mediaNode = mediaNode + "<div><a onclick='return editLinks(\"" + mediaItem.uuid + "\");' class='EditLink' >Edit</a></div>";
+						mediaNode = mediaNode + "<a onclick='return editLinks(\"" + mediaItem.uuid + "\",\"" + mediaItem.title + "\",\"" + mediaItem.description + "\");' class='EditLink' >Edit</a>";
 					}
 
-					mediaNode = mediaNode + "<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
-						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
-						"</a>" + 
-						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
-						"<div class='MediaInfo'>" + "<a href=\"/video/" + mediaItem.uuid + "\">" + "<h1>" + mediaItem.title + "</h1>" + 
-						"<p>" + mediaItem.description + "</p>";
+					mediaNode = mediaNode + "<p class='VideoDescription'>" + mediaItem.description + "</p></div>";
 					
 					// If getting media for all courses, also get the course 
 					// name/number of the media file
@@ -65,15 +64,16 @@ var retrieveMedia = function(courseUUID, all){
 						(function(courseUUID){
 							common.getCourseById(courseUUID, function(response){
 								mediaNode = mediaNode + 
-								"<h2>" + response.course.subject + " " +
-								response.course.number + "</h2>" +
-								"</div></div>";
+								"<div class='Section'><h2><b>" + response.course.subject + " " +
+								response.course.number + "</b></h2>" +
+								"</div></div></div>";
 								$('#media-list').append(mediaNode);
 							})
 						})(mediaItem.course);
 					}
 					else{
-						mediaNode = mediaNode + "</div></div>";
+						mediaNode = mediaNode +
+						"<div class='Section'><h2><b>" + section.section + "</b></h2></div></div></div>";
 						$('#media-list').append(mediaNode);
 					}
 				})
@@ -82,10 +82,11 @@ var retrieveMedia = function(courseUUID, all){
 	})
 }
 
-function editLinks(mediaUUID){
+function editLinks(mediaUUID, mediaTitle, mediaDescription){
 	$('#EditForm').css('display','block');
-	console.log($('#EditFormAction'));
 	$('#EditFormAction').attr('action','/mediafile/'+mediaUUID+'/update');
+	$('.edit-title').val(mediaTitle);
+	$('.edit-description').val(mediaDescription);
 	return false;
 }
 

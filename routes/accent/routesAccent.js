@@ -350,6 +350,7 @@ exports.mediafile = function(request,response){
 	}
 	else if (request.method === 'PUT'){		
 		var uuid = request.params.id;
+		console.log("UPDATING MEDIAFILE")
 		MediaAction.updateMediaFile({'uuid':uuid}, request.body, function(error, result){
 			if(result){
 				response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -377,6 +378,21 @@ exports.mediafile = function(request,response){
 	}
 
 
+}
+
+exports.updateMediaFile = function(request, response){
+		if (request.method === 'POST'){		
+		var uuid = request.params.id;
+		MediaAction.updateMediaFile({'uuid':uuid}, request.body, function(error, result){
+			if(result){
+				response.redirect("/manage");	
+			}
+			else{
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: error }));
+			}
+		});	
+	}
 }
 
 exports.mediafileTag = function(request,response){	

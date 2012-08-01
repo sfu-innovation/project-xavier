@@ -118,6 +118,7 @@ app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged 
 app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
 //mediafile
+app.post("/mediafile/:id/update", routesAccent.updateMediaFile); // create a new mediafile
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
 app.get("/api/mediafile/:id/conversations", routesAccent.getConversationsByMedia); // get all questions by media
 app.get("/api/mediafile/:id", routesAccent.mediafile); // get a mediafile by id

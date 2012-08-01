@@ -33,8 +33,12 @@ var retrieveMedia = function(courseUUID, all){
 
 			(function(mediaItem){
 				accent.getMediaSection(mediaItem.uuid, function(section){
-					var mediaNode = "<div class=\"MediaItem\">" + 
-						"<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
+					var mediaNode = "<div class=\"MediaItem\">";
+					if($('#EditForm').length > 0){
+						mediaNode = mediaNode + "<div><a onclick='return editLinks(\"" + mediaItem.uuid + "\");' class='EditLink' >Edit</a></div>";
+					}
+
+					mediaNode = mediaNode + "<div class='MediaImage'><a href=\"/video/" + mediaItem.uuid + "\">" + 
 						"<img src='/media/" + mediaItem.thumbnail + "' alt=\"\" width='300px' height='200px'/>" +
 						"</a>" + 
 						"<div class='section'><h2><b>" + section.section + "</b></h2></div></div>" + 
@@ -62,6 +66,13 @@ var retrieveMedia = function(courseUUID, all){
 			})(media[i])
 		}
 	})
+}
+
+function editLinks(mediaUUID){
+	$('#EditForm').css('display','block');
+	console.log($('#EditFormAction'));
+	$('#EditFormAction').attr('action','/mediafile/'+mediaUUID+'/update');
+	return false;
 }
 
 getMedia($('.Selected').text());

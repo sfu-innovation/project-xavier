@@ -85,8 +85,8 @@ var retrieveMedia = function(courseUUID, all){
 function editLinks(mediaUUID, mediaTitle, mediaDescription){
 	$('#EditForm').css('display','block');
 	$('#EditFormAction').attr('action','/mediafile/'+mediaUUID+'/update');
-	$('.edit-title').val(mediaTitle);
-	$('.edit-description').val(mediaDescription);
+	$('.EditTitle').val(mediaTitle);
+	$('.EditDescription').val(mediaDescription);
 	return false;
 }
 

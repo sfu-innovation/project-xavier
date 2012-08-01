@@ -549,13 +549,18 @@ function renderCommentThread(item) {
 	return html;
 }
 
+// two types of comment, the threaded head comment, and its replies
+//they have very similar structure, so we only need change the css Class
+
 function renderBox(item,type){
+	// the comment content is the special deleted pattern, don't render it
 	if (item.body === "!@#$%^&*()"){
 		return '<li class = "'+type+'">This comment has been deleted</li>'
 	}
 
 	var html = '<li class="'+type+'" '+ 'data-reply-type="'+ type +'" data-target-uuid="'+ item.target_uuid +'" data-parent-uuid="'+ item.uuid + '"' + 'data-reply-to="'+ item.user.firstName +' ' + item.user.lastName+'"'  +'>';
 
+	// if user is the owner of the item, render the edit button
 	if (item.owner){
 		html += '<span class="edit_btn">Edit</span>';
 	}
@@ -568,6 +573,7 @@ function renderBox(item,type){
 		+ '<p>' + item.body
 		+ '</p>';
 
+	// if user is the author of the comment, render edit panel
 	if (item.owner){
 
 		html	+= '<div class="comment_control" style = "display:none;"><input type="text" value="'+  item.body+ '"/>'
@@ -577,6 +583,8 @@ function renderBox(item,type){
 			+ '</div>'
 		;
 	}
+
+	// if the created date doesn't match the updated date,   it means that the post has been edited.
 	if (item.createdAt === item.updatedAt || !item.updatedAt){
 
 		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
@@ -596,6 +604,8 @@ function renderBox(item,type){
 	return html;
 }
 
+
+//bind listener to all the buttons so they will do actions
 
 function bindArticlePageListeners(engage) {
 

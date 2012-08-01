@@ -334,18 +334,18 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	//should check if adding to a section is really needed. rqra dont need it
 	args.section = data.week;	//section uuid
 	args.material = questionUuid;	//question uuid
 
 	document.set(data, function(err, req, esResult){
 		if(err)
-			return callback(error);
-		require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
+			return callback(err);
+
+		require('./OrganizationAction.js').addResourceToSection(args, function(err){
 			if(err)
 				return callback(err);
 
-			NotificationAction.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+			NotificationAction.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err){
 				if(err)
 					return callback(err);
 
@@ -465,7 +465,8 @@ QueryES.prototype.updateQuestionStatus = function(questionID, isInstructor, appT
 		}
 	}
 
-	if(isInstructor){
+	//instructor has commented on a question
+	if(isInstructor === 1){
 		data.script += "ctx._source.isInstructor = isInstructor"
 		data.params.isInstructor = "true"
 	}
@@ -642,12 +643,7 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	//instructor has commented on a question
-	if(user.type === 1){
-		isInstructor = true;
-	}
-
-	this.updateQuestionStatus(args.target, isInstructor, appType, function(err){
+	this.updateQuestionStatus(args.target, user.type, appType, function(err){
 		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 

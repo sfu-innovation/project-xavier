@@ -183,12 +183,21 @@ jQuery(document).ready(function ($) {
 
 		$('#share_article').bind('submit',function(){
 
-			$('div#submitnew .loading').show();
 			var course = $('#submitnew form option:selected').val();
 			var description = $('#article_comment').val();
 			var url = $('#article_url').val();
 			var course_name = $('#share_article option:selected').html();
-			engage.shareResource({course:course,description:description,url:url},function(data){
+
+			var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+			if (!(RegExp.test(url))){
+				$('#article_url').attr('placeholder','Please enter a valid url');
+
+			}
+			else {
+				$('div#submitnew .loading').show();
+
+				engage.shareResource({course:course,description:description,url:url},function(data){
 
 						console.log(data);
 				if (data){
@@ -205,6 +214,10 @@ jQuery(document).ready(function ($) {
 					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
 				}
 			});
+
+			}
+
+
 			return false;
 
 		})
@@ -333,34 +346,43 @@ jQuery(document).ready(function ($) {
 
 
 	$('#upload_article').submit(function() {
-		$('div#submitnew .loading').show();
 		var course_name = $('#upload_article option:selected').html();
 
-		$(this).ajaxSubmit({
+		var title = $('#upload_article #article_title').val();
+
+		if (!title){
+			$('#upload_article #article_title').attr('placeholder','Please enter a title')
+		}
+		else{
+			$('div#submitnew .loading').show();
+
+			$(this).ajaxSubmit({
 
 
-			error: function(xhr) {
-				displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
-
-			},
-
-			success: function(data) {
-				if (data && data.errorcode === 0){
-
-					var new_article = renderArticlePreviewBox(data.resource);
-					$('#sharebox').after(new_article);
-					displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
-
-				}
-				else{
+				error: function(xhr) {
 					displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
 
+				},
+
+				success: function(data) {
+					if (data && data.errorcode === 0){
+
+						var new_article = renderArticlePreviewBox(data.resource);
+						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
+
+					}
+					else{
+						displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
+
+					}
+
 				}
 
-			}
 
+			});
+		}
 
-		});
 
 		// Have to stop the form from submitting and causing
 		// a page refresh - don't forget this
@@ -783,6 +805,8 @@ function bindArticlePageListeners(engage) {
 		comment.parent_uuid = $('form input#comment_parent').val();
 		comment.body = $('form input#reply_content').val();
 
+		if (comment.body){
+
 		engage.createComment(comment,function(data){
 
 
@@ -816,6 +840,11 @@ function bindArticlePageListeners(engage) {
 
 		})
 
+		}
+
+		else{
+			$('form input#reply_content').attr('placeholder','Please fill in the comment.')
+		}
 		return false;
 	})
 

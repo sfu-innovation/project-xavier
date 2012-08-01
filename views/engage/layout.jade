@@ -120,7 +120,10 @@ html
 					ul#user_options_list
 						li#notification.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
-								img.avatar(src="/images/engage/default_profile.png") 
+								- if (profile && profile.profilePicture)
+									img.avatar(src="#{profile.profilePicture}")
+								- else
+									img.avatar(src="/images/engage/default_profile.png")
 								span#notification_number 4
 							div.dropdown_list#mobile_notif.hide
 								ul
@@ -174,13 +177,17 @@ html
 				div.five.columns#nav-bar
 					ul#options
 						li
-							a.all_btn(href="/") All Resources
+							a.all_btn(href="/") 
+								span All Resources
 						li
-							a.contruibutions_btn(href="/mine") Your Contributions
+							a.contruibutions_btn(href="/mine") 
+								span Your Contributions
 						li
-							a.starred_btn(href="/starred") Starred
+							a.starred_btn(href="/starred") 
+								span Starred
 						li
-							a.instructor_btn(href="/instructor") Instructor Posts
+							a.instructor_btn(href="/instructor") 
+								span Instructor Posts
 				
 				div.four.columns.dropdowns#user_options					
 					ul#user_options_list
@@ -229,7 +236,8 @@ html
 												span.coursename BUS 354		
 						li#user-menu
 							div.dropdown_btn(onClick="dropdownToggle('#user_info_downdrop')")
-								span #{ user.firstName } #{ user.lastName } &#x25BE;
+								span #{ user.firstName } #{ user.lastName } 
+								span &#x25BE;
 							div.dropdown_list#user_info_downdrop.hide
 								ul
 									li

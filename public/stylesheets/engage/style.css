@@ -139,16 +139,12 @@ div#header{
 	list-style: none;
 	white-space: nowrap;
 	float: left;
-	margin-bottom: 10px;
-	margin-top: 15px;
-	padding-top:15px;
-	padding-left: 15px;
+	margin-bottom: 0;
+	margin-left: 10px;
 }
 
 #header ul#options li{
 	display: inline-block;
-	padding-right: 14px !important;
-	
 	vertical-align: middle;
 	color: #555;
 	text-align: left;
@@ -156,16 +152,31 @@ div#header{
 
 #header ul#options li a{
 	color:  rgba(250, 250, 250, 1);
-	padding-bottom: 9px;
+	height: 90px;
+	padding: 0 8px;
+	padding-top: 36px;
+	font-size: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-shadow: 0 0 2px black;
+
 
 
 }
-
+#header ul#options li a span{
+	padding-bottom: 10px;
+}
 #header ul#options li a.active{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#header ul#options li a.active span{
 	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
-
-#header ul#options li:hover a{
+#header ul#options li:hover{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#header ul#options li:hover a span{
 	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
 
@@ -190,15 +201,15 @@ div#header{
 	background-image: url("/images/engage/SFUMobile_TOP_Mobile_Banner.png");
 }
 #header #banner_logo{
-	padding-right:0;
-	margin-top:9px;
+	line-height: 90px;
+	vertical-align: middle;
+	display: inline-block;
 }
-#header #banner_logo a{
-	line-height: 60px;
+#header #banner_logo img{
+	vertical-align: middle;
 	}	
 #header img.logo#small_logo{
 	min-width: 70px;
-	margin-top: 5px;
 }
 #header #banner img.logo{
 	vertical-align: middle;
@@ -313,6 +324,7 @@ ul#user_options_list li{
 	}
 ul#user_options_list li#notification {
 	margin: 0;
+	margin-right: -4px;
 }
 ul#user_options_list li#notification div{
 	background-color: transparent;
@@ -1899,13 +1911,18 @@ div.innercontents#user_detail_box{
 div.innercontents#user_detail_box img.profile_avatar{
 	float: left;
 	margin-right: 10px;
+	width: 68px;
+	height: 68px;
+	overflow: hidden;
+	display: inline-block;
 }
 div.innercontents#user_detail_box h4{
-	display: inline;
-	width: 65%;
+	display: inline-block;
+	width: 70%;
 	overflow: hidden;
 	margin-top: 0;
-	margin-bottom: 5px;
+	margin-bottom: 0;
+	height: 52px;
 }
 
 div.innercontents#user_detail_box #user_bio{

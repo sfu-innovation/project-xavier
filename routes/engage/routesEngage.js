@@ -20,6 +20,8 @@ var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
 var UUID         = require('com.izaakschroeder.uuid');
 var fs = require('fs');
+var NotificationAction = require("./../../controller/NotificationAction");
+
 
 
 
@@ -512,9 +514,34 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
-exports.getNotifications = function (req,res){
-	routesCommon.getUserNotifications(2, req, res)
+exports.getNotifications = function(request, response){
+	if (request.method === "GET") {
+		var args = {
+			user : request.params.uid,
+			app  : 2
+		}
+		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
+			if (!err) {
+				response.writeHead(200, { 'Content-Type': 'application/json' });
+				if(result){
+					EngageAction.notificationHelper(result,function(err,new_result){
 
+
+						response.end(JSON.stringify({ errorcode: 0, notification: new_result }));
+
+
+
+					})
+				}
+				else{
+					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type': 'application/json' });
+				response.end(JSON.stringify({ errorcode: 1, message: err }));
+			}
+		})
+	}
 }
 
 /////PUT REST CALLS ABOVE/////////////////////////////////

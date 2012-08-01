@@ -39,27 +39,27 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 						//notification has nothing to do with user who post the comments
 						//don't block them, run it in background.
 
-
-						var args = {
-							user : userUUID,
-							target : resourceUUID,
-							app    :2,
-							origin: userUUID,
-							description: "someone liked your article"
-						}
-
-						Notification.addLikeUserNotification(args, function(error){
-							if(error)
-								console.log("addLikeUserNotification Failed" + error);
-
-							Notification.addLikeNotifier(args, function(error, result){
-								if(error)
-									console.log("addLikeNotifier Failed" + error);
-//									return callback(error);
 //
-//								callback(null, result);
-							})
-						})
+//						var args = {
+//							user : userUUID,
+//							target : resourceUUID,
+//							app    :2,
+//							origin: userUUID,
+//							description: "someone liked your article"
+//						}
+//
+//						Notification.addLikeUserNotification(args, function(error){
+//							if(error)
+//								console.log("addLikeUserNotification Failed" + error);
+//
+//							Notification.addLikeNotifier(args, function(error, result){
+//								if(error)
+//									console.log("addLikeNotifier Failed" + error);
+////									return callback(error);
+////
+////								callback(null, result);
+//							})
+//						})
 					}).error(function(error){
 							callback(error,null);
 					})

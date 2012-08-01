@@ -424,6 +424,7 @@ div.dropdown_list li{
  }
  
   div.dropdown_list#notif p.msg{
+	  white-space: normal;
 	  margin-bottom: 0;
 	  color: #555;
   }

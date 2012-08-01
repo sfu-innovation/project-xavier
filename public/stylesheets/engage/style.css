@@ -1894,13 +1894,16 @@ div#upload_avatar{
 .browsebox input {
 	position: absolute;
 	opacity: 0;
-	width: 10%;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
 }
 .browsebox .button{
 	border-radius: 2px;
 	border-color: #555;
 	background-color: #888;
 	pointer-events: none;
+	cursor: pointer;
 }
 div#preference .button{
 	border-radius: 2px;
@@ -1917,6 +1920,15 @@ div#preference #avatar_column .button{
 	width: 120px;
 }
 
+
+div#preference div#edit_box label{
+	float:left;
+	cursor: default;
+}
+
+div#preference div#edit_box span{
+	float:right;
+}
 
 div#preference div#edit_box h4{
 	margin-top: 0;

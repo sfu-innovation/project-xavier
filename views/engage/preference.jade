@@ -39,7 +39,8 @@ block content
 									label Preferred Name:
 									input(type="text", name="pref_name", maxlength="20", value=pref_name)
 									label Academic Bio:
-									textarea(type="text", name="bio")= bio
+									span Max 300 characters.
+									textarea(type="text", name="bio",maxlength="300")= bio
 									input.button(type="submit", value="save changes")
 								div#feedback
 									| #{msg}

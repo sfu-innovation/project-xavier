@@ -139,16 +139,12 @@ div#header{
 	list-style: none;
 	white-space: nowrap;
 	float: left;
-	margin-bottom: 10px;
-	margin-top: 15px;
-	padding-top:15px;
-	padding-left: 15px;
+	margin-bottom: 0;
+	margin-left: 10px;
 }
 
 #header ul#options li{
 	display: inline-block;
-	padding-right: 14px !important;
-	
 	vertical-align: middle;
 	color: #555;
 	text-align: left;
@@ -156,16 +152,31 @@ div#header{
 
 #header ul#options li a{
 	color:  rgba(250, 250, 250, 1);
-	padding-bottom: 9px;
+	height: 90px;
+	padding: 0 8px;
+	padding-top: 36px;
+	font-size: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	text-shadow: 0 0 2px black;
+
 
 
 }
-
+#header ul#options li a span{
+	padding-bottom: 10px;
+}
 #header ul#options li a.active{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#header ul#options li a.active span{
 	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
-
-#header ul#options li:hover a{
+#header ul#options li:hover{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+#header ul#options li:hover a span{
 	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
 }
 
@@ -180,25 +191,21 @@ div#header{
 	text-align: right;
 }
 
-.no-touch #header.banner{
-	background-image: url("/images/engage/sfu_brand_banner.png");
-	background-position: cover;
-	width: 100%;
-	}
-	
 #header.banner{
-	background-image: url("/images/engage/SFUMobile_TOP_Mobile_Banner.png");
+	background-image: url("/images/engage/sfu_brand_banner.png");
+	background-position: center;
 }
 #header #banner_logo{
-	padding-right:0;
-	margin-top:9px;
+	line-height: 90px;
+	vertical-align: middle;
+	display: inline-block;
+	padding-left: 8px;
 }
-#header #banner_logo a{
-	line-height: 60px;
+#header #banner_logo img{
+	vertical-align: middle;
 	}	
 #header img.logo#small_logo{
 	min-width: 70px;
-	margin-top: 5px;
 }
 #header #banner img.logo{
 	vertical-align: middle;
@@ -287,13 +294,11 @@ div#header{
    right section of the HEADER, course and user box
 ----------------------------------------- */
 div#user_options{
-
+	padding-right:0;
 	min-width: 320px;
 }
 
-div#user_options{
 
-}
 ul#user_options_list{
 	list-style: none;
 	text-align: right;
@@ -313,6 +318,7 @@ ul#user_options_list li{
 	}
 ul#user_options_list li#notification {
 	margin: 0;
+	margin-right: -4px;
 }
 ul#user_options_list li#notification div{
 	background-color: transparent;
@@ -447,7 +453,9 @@ ul#user_options_list span.typicn.next{
 	-webkit-transform: rotate(90deg); 
 	-moz-transform: rotate(90deg);	
 }
-
+#mobile_logo_box{
+	padding-left: 8px;
+}
 
 li.mobile_view ul{
 	margin-left: -100px;
@@ -464,7 +472,7 @@ li.mobile_view	div.expand_btn{
 	-moz-box-shadow: 1px 1px 5px black;
 	-webkit-box-shadow: 1px 1px 5px black;
 	box-shadow: 1px 1px 5px black;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	text-align: center;
 	vertical-align: text-bottom;
 	line-height: 30px;
@@ -661,6 +669,7 @@ div.innerwrap > img {
 	position: absolute;
 	opacity: 0.4;
 	-webkit-transition: all 0.5s ease-in-out;
+
 }
 
 div.innerwrap > img:hover {
@@ -684,18 +693,19 @@ div.innerwrap{
 	padding: 0;
 	overflow: hidden;
 	z-index: 1;
+	border-bottom: 1px solid #CCC;
 
 }
 
 div.innercontents h5{
 	width:100%;
 	overflow: hidden;
-	padding-bottom: 4px;
-	padding: 18px;
+	padding: 16px;
 	position: absolute;
 	bottom: 95px;
 	z-index: 9;
 	height: 180px;
+	margin-bottom: 5px;
 	
 	}
 	
@@ -1021,7 +1031,7 @@ div.cover.flip .frontCard {
 
 
 div.cover .backCard {
-	background-color: rgba(250, 250, 250,1);
+	background-color: #fff;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow:0px 0px 7px rgba(0, 0, 0, 0.35);
 	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
@@ -1064,9 +1074,12 @@ div.innercontents#submitnew{
 }
 
 div.innercontents#submitnew form{
-	margin:10px
+	padding: 12px 20px;
 }
-	
+
+div.innercontents#submitnew form label{
+	margin-bottom: 10px;
+} 
 .sumbitrow{
 	display: inline-block;
 	width: 100%;
@@ -1088,7 +1101,7 @@ div.submit{
 }
 
 div.innercontents form textarea{
-	height: 226px;
+	height: 220px;
 	resize: none; 
 	}
 
@@ -1807,8 +1820,8 @@ div#upload_avatar{
 .browsebox {
 	position: absolute;
 	overflow: hidden;
-	right: 12px;
-	top: 30px;
+	right: 21px;
+	top: 38px;
 	margin-left:225px;
 }
 
@@ -1899,13 +1912,18 @@ div.innercontents#user_detail_box{
 div.innercontents#user_detail_box img.profile_avatar{
 	float: left;
 	margin-right: 10px;
+	width: 68px;
+	height: 68px;
+	overflow: hidden;
+	display: inline-block;
 }
 div.innercontents#user_detail_box h4{
-	display: inline;
-	width: 65%;
+	display: inline-block;
+	width: 70%;
 	overflow: hidden;
 	margin-top: 0;
-	margin-bottom: 5px;
+	margin-bottom: 0;
+	height: 52px;
 }
 
 div.innercontents#user_detail_box #user_bio{

@@ -13,7 +13,7 @@ block content
 					dd.active
 						a(href="#edit") Edit Profile
 					dd 
-						a(href="#notification") Notification
+						a(href="#notification") Notifications
 				ul.tabs-content
 					li.active#editTab
 
@@ -36,7 +36,7 @@ block content
 									h4 #{user.firstName} #{user.lastName}
 									label Preferred Name:
 									input(type="text", name="pref_name", maxlength="20", value=pref_name)
-									label About:
+									label Academic Bio:
 									textarea(type="text", name="bio")= bio
 									input.button(type="submit", value="save changes")
 								div#feedback
@@ -53,13 +53,10 @@ block content
 
 								div#setting_detail
 									ul
-										li
-											span
 										li 
 											span When others comment on my shares
 										li 
 											span When others like my shares
-
 											
 									ul.checkbox_column
 										li

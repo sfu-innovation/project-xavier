@@ -457,7 +457,7 @@ div.dropdown_list#course_list ul{
 }
 
 
-div.dropdown_list li .notification img{
+div.dropdown_list li .notification_item img{
 	height: 35px; 
 	width: 35px;
 	float: left;
@@ -1853,9 +1853,14 @@ div#upload_avatar{
 .browsebox {
 	position: absolute;
 	overflow: hidden;
+}
+
+#submitnew .browsebox{
 	right: 21px;
 	top: 38px;
 	margin-left:225px;
+	position: absolute;
+	overflow: hidden;
 }
 
 .browsebox input {
@@ -1889,7 +1894,7 @@ div#preference #setting_detail{
 	margin-left: 20px;
 }
 
-div#preference #notification ul{
+div#preference #notificationTab ul{
 	list-style-type: none;
 	display: inline-block;
 }
@@ -1898,26 +1903,26 @@ div#preference #notification ul.checkbox_column{
 	display: inline-block;
 }
 
-div#preference #notification ul.checkbox_column li input{
+div#preference #notificationTab ul.checkbox_column li input{
 	margin-left: 12px;
 	font-size: 20px;
 	vertical-align: middle;
 }
-div#preference #notification ul li{
+div#preference #notificationTab ul li{
 	line-height: 2em;
 }
 
-div#preference #notification ul.checkbox_column li span{
+div#preference #notificationTab ul.checkbox_column li span{
 	margin-left: 12px;
 	font-size: 15px;
 	vertical-align: middle;
 }
 
-div#preference #notification ul li input{
+div#preference #notificationTab ul li input{
 	margin-top: 10px;
 }
 
-div#preference #notification input.button{
+div#preference #notificationTab input.button{
 	display: block !important;
 	text-align: center;
 }

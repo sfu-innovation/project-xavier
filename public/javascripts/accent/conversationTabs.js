@@ -44,7 +44,8 @@ function formatResponse(response) {
 
 function formatConversation(conversation) {	
 	var upVote = conversation._source.upvote;
-	var downVote = conversation._source.downvote;		
+	var downVote = conversation._source.downvote;
+	console.log(conversation.user);
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
 			+ "<div class='Actions'>"
@@ -55,6 +56,10 @@ function formatConversation(conversation) {
 			+ "<a class='Count' href=''>" + formatVoteCount(upVote - downVote) + "</a>"  			
 			+ "</div>"
 			+ "<div class='Content'>" 
+			+ "<span class='Author'>" 
+			+ "<image src='../images/accent/" + conversation.user.uuid + ".jpg'>" 
+			+ conversation.user.firstName + " " + conversation.user.lastName 
+			+ "</span> "
 			+ conversation._source.body
 			+ "</div>"
 			+ "</div>";

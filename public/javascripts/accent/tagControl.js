@@ -24,7 +24,7 @@ function deleteTag(tag){
 function convertPixel2Time(pixel) {
 	var videoWidth = $(".Timeline").width();
 	var video = document.getElementById("Video");
-	var realTime = pixel/videoWidth * video.duration;
+	var realTime = pixel/100 * video.duration;
 	return realTime;
 }
 
@@ -32,8 +32,10 @@ function uploadTag(tag){
 	var selectedTag = $(".Tag.Selected");
 	var tagID = selectedTag.attr("uuid");
 	
-	var tagStart = parseInt(selectedTag.css('left'));
-	var tagEnd = parseInt(selectedTag.css('width'));
+	var tagLeft = parseFloat(selectedTag.css('left'));	
+	var tagWidth = (100 * parseFloat(selectedTag.css('width')) / parseFloat(selectedTag.parent().css('width')));
+	var tagStart = convertPixel2Time(tagLeft);
+	var tagEnd = convertPixel2Time(tagLeft + tagWidth);
 	
 	var tagTitle = document.getElementById("TagTitle").value;
 	var tagTarget = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
@@ -56,18 +58,11 @@ function uploadTag(tag){
 		shared:false
 	};	
 
-	console.log('tags creating')
-	console.log('tag start = ' + tagStart)
-	console.log('tag end = ' + tagEnd)
-
-	tag.start = convertPixel2Time(tagStart);
-	tag.end = convertPixel2Time(tagEnd);
+	tag.start = tagStart;
+	tag.end = tagEnd;
 	tag.target = tagTarget;
 	tag.title = tagTitle;
 	tag.description = tagDescription;	
-
-	console.log('converted tag start = ' + tag.start)
-	console.log('converted tag end = ' + tag.end)
 
 	switch(tagType) {
 		case 'Important':{
@@ -98,19 +93,18 @@ function uploadTag(tag){
 
 	if (tagID) {
 		accent.updateTagById(tagID,tag,function(data){							
-			$(".TagWindow").hide();
-			console.log('updated correctly')
+			$(".TagWindow").hide();			
 		});	
 	}
 	else {
 		var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
 		tag.user = sessionUser;
-
+		
 		accent.createTag(tag,function(data){
 			// put tag timelines dynamically		
 			selectedTag.attr('UUID', data.tag.uuid);			
 			$(".TagWindow").hide();
-		});	
+		});			
 	}
 
 	$(selectedTag).css({

@@ -32,6 +32,21 @@ exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
 
+exports.logout = function(request, response) {
+
+	if (request.session.user){
+		if (request.session.user.uuid === "ted" || request.session.user.uuid === "llt3"){
+			request.session.destroy();
+			response.redirect('/splash');
+		}
+		else{
+			request.session.destroy();
+			response.redirect('https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/logout');
+		}
+	}
+
+}
+
 
 exports.likeComment = function(req,res){
 	var commentID = req.params.id;
@@ -910,7 +925,7 @@ exports.articleView = function (req, res) {
 			else{
 				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
 					var resource = resources[0];
-					console.log(host);
+
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
 						profile:req.session.Profile,

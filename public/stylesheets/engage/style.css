@@ -296,6 +296,22 @@ display: inline-block;
 .slider_box#mobile_share_box form{
 	margin: 20px;
 }
+
+.slider_box#mobile_share_box .button{
+	width: 100px;
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+}
+
+.slider_box#mobile_share_box .selectcourse .dropdown{
+	width:106px;
+}	
+
+.slider_box#mobile_share_box .selectcourse .dropdown a{
+	width:80px;
+	}
+
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */
@@ -361,6 +377,10 @@ ul#user_options_list li img{
 	-moz-box-shadow: 1px 1px 2px #9E9E9E;
 	-webkit-box-shadow: 1px 1px 2px #9E9E9E;
 	box-shadow: 1px 1px 2px #9E9E9E;
+	}
+	
+ul#user_options_list li img.user_avatar{
+	float :left;
 	}
 	
 ul#user_options_list span.notification_number{
@@ -435,12 +455,19 @@ div.dropdown_list li{
 	 height: 64px;
  }
  
-  div.dropdown_list#notif p.msg{
+div.dropdown_list#notif p.msg{
 	  white-space: normal;
 	  margin-bottom: 0;
 	  color: #555;
   }
   
+a.notification img{
+	height: 35px; 
+	width: 35px;
+	float: left;
+	margin-right: 10px;
+	z-index: 10px;
+ }
 div.dropdown_list#notif p.msg span.coursename{
 	font-weight: bold;
    }
@@ -457,13 +484,7 @@ div.dropdown_list#course_list ul{
 }
 
 
-div.dropdown_list li .notification_item img{
-	height: 35px; 
-	width: 35px;
-	float: left;
-	margin-right: 10px;
-	z-index: 10px;
- }
+
 
 ul#user_options_list span.typicn.next{
 	position: absolute;
@@ -511,6 +532,9 @@ li.mobile_view div#mobile_notif li p.msg{
 	white-space: normal;
 	margin-bottom: 0;
 }
+
+
+
 
 #mobile_notif li{
 	height: 70px;

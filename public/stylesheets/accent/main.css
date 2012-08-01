@@ -304,31 +304,40 @@ img.User {
 	cursor: pointer;
 }
 
-.MediaItem{
-	background:#DDD;
-	box-shadow: 3px 1px 5px #AAA;
-	clear:both;
-	width:80%;
-	height:230px;
-	margin-bottom:25px;
+.MediaItem {
+ margin-bottom: 25px;
+}
+
+.MediaItem a {
+     text-decoration: none;
 }
 
 .MediaImage {
-	clear:both;
-	float:left;
-	position:relative;
-	left:15px;
-	top:15px;
+ clear:both;
+ float:left;
+ margin-right: 30px;
+ border: solid 1px #c0c0c0
 }
 
 .MediaInfo {
-	position:relative;
-	top:15px;
-	left:20px;
+  
+}
+
+.MediaInfo:after {
+ content: " ";
+ display: block;
+ clear: both;   
 }
 
 .MediaInfo h1{
-	padding-bottom: 10px;
+ padding-bottom: 10px;
+ color: #111;
+ text-decoration: underline;
+}
+
+
+.MediaInfo p {
+ color: #222;
 }
 
 .section {

@@ -32,14 +32,17 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
+	console.log('tags fetching')
+	console.log('tag start = ' + tag.start)
+	console.log('tag end = ' + tag.end)
 	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "px; width: " + convertTime2Pixel(tag.end) + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
 function convertTime2Pixel(time) {
 	var videoWidth = $(".Timeline").width();	
-	console.log('videowidth = ' + videoWidth)
-
 	var pixel = time * videoWidth / video.duration;	
+
+	console.log('pixel = ' + pixel)
 
 	return pixel;
 }
@@ -119,6 +122,7 @@ function bindTag(tag) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
 		video.pause();
+		console.log('play here = ' + tag.offset)
 		video.currentTime = tag.offset;
 		if (tag.duration > 0)
 			video.play();
@@ -194,7 +198,9 @@ $(document).ready(function () {
 
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');		
+		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');	
+		console.log('evt X = ' + evt.offsetX)
+		console.log('dbl click = ' + (evt.offsetX / $(this).width() * video.duration))	
 		var tag = addTag(evt.offsetX / $(this).width() * video.duration);
 		console.log('should display nothing when d clicked')
 		showTagInfo("","");
@@ -281,10 +287,10 @@ $(document).ready(function () {
 				
 	$(video).on("play", function() {
 		$(".Play").data("action", "pause")
-			.children("img").attr("src","pause.png");
+			.children("img").attr("src","../../images/accent/pause.png");
 	}).on("pause", function() {
 		$(".Play").data("action", "play")
-			.children("img").attr("src","play.png");
+			.children("img").attr("src","../../images/accent/play.png");
 	}).on("timeupdate", function() {
 		var progress = this.currentTime / this.duration;
 		$(".Scrubber").css({

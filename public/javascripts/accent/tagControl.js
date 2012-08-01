@@ -56,11 +56,18 @@ function uploadTag(tag){
 		shared:false
 	};	
 
+	console.log('tags creating')
+	console.log('tag start = ' + tagStart)
+	console.log('tag end = ' + tagEnd)
+
 	tag.start = convertPixel2Time(tagStart);
 	tag.end = convertPixel2Time(tagEnd);
 	tag.target = tagTarget;
 	tag.title = tagTitle;
 	tag.description = tagDescription;	
+
+	console.log('converted tag start = ' + tag.start)
+	console.log('converted tag end = ' + tag.end)
 
 	switch(tagType) {
 		case 'Important':{

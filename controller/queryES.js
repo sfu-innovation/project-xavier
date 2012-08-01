@@ -625,9 +625,9 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 
 //create a new comment
 QueryES.prototype.addComment = function(data, user, appType, callback){
-	var document;
 	var commentUuid = UUID.generate();
-	var isInstructor = false;
+	var document = mapping.document(commentUuid);
+
 	var args = {
 		target:data.target_uuid
 		,app:appType
@@ -639,7 +639,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	switchIndex(appType);
 	switchMapping(1);
 
-	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
@@ -657,7 +656,6 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 
 			}
 
-			console.log('Inserting comment: ' + args.target)
 			NotificationAction.addCommentUserNotification(args, function(err){
 				if(err){
 					if (appType !== 2){

@@ -515,33 +515,39 @@ exports.resourcesOfCurrentUser = function (req, res) {
 
 
 exports.getNotifications = function(request, response){
-	if (request.method === "GET") {
+	if (request.session && request.session.user) {
+
 		var args = {
-			user : request.session.user.uuid,
-			app  : 2
+			user:request.session.user.uuid,
+			app:2
 		}
-		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
+		NotificationAction.retrieveUserNotificationsByUser(args, function (err, result) {
 			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					EngageAction.notificationHelper(result,function(err,new_result){
 
+				if (result) {
+					EngageAction.notificationHelper(result, function (err, new_result) {
 
-						response.end(JSON.stringify({ errorcode: 0, notifications: new_result }));
-
+						response.writeHead(200, { 'Content-Type':'application/json' });
+						response.end(JSON.stringify({ errorcode:0, notifications:new_result }));
 
 
 					})
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 1, message: "No result found" }));
+				else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:"No result found" }));
 				}
 			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.writeHead(500, { 'Content-Type':'application/json' });
+				response.end(JSON.stringify({ errorcode:1, message:err }));
 			}
 		})
 	}
+	else{
+		response.writeHead(403, { 'Content-Type':'application/json' });
+		response.end(JSON.stringify({ errorcode:1, message: "You cannot acces this data" }));
+	}
+
 }
 
 /////PUT REST CALLS ABOVE/////////////////////////////////

@@ -6,6 +6,40 @@ var Star = require('../models/star.js');
 var Like = require('../models/like.js');
 var UserProfile = require('../models/userProfile.js');
 
+var notificationHelper = exports.notificationHelper = function(notifications,callback){
+	if(notifications){
+
+
+
+		var new_list = [];
+
+		var counter = 0;
+
+		notifications.forEach(function(notification){
+			counter ++;
+			if (counter <6){  //only return the first 5
+				var no = {};
+				no.id = notification.notificationListener.uuid;
+				no.description = notification.notification.description;
+				no.user = notification.user;
+				no.user.avatar = notification.profile.profilePicture;
+				no.type = notification.notificationListener.event;
+				no.target = notification.notificationListener.target;
+
+				new_list.push(no);
+			}
+
+		})
+
+		callback(null,new_list);
+
+	}
+	else{
+		callback('no notifications',notifications);
+	}
+
+}
+
 
 var commentHelper = exports.commentHelper = function (comment, callback){
 

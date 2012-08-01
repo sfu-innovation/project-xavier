@@ -50,7 +50,7 @@
 			"lastName":"Kirkpatrick",
 			"type":1,
 			"userID":"ted",
-			"email":"ted@sfu.ca"
+			"email":"ted_fake@sfu.ca"
 		},
 		{
 			"uuid":"bernie",
@@ -58,7 +58,7 @@
 			"lastName":"Maroney",
 			"type":1,
 			"userID":"bernie",
-			"email":"bernie@sfu.ca"
+			"email":"bernie_fake@sfu.ca"
 		},
 		{
 			"uuid":"ntakei",

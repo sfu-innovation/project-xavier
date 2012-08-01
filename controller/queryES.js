@@ -655,19 +655,35 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 			if(err)
 				return callback(err);
 
+			if(appType === 2){
+				//engage will return result right way, notification will be created in the background, not blokcing the user.
+				callback(null, esData);
+
+			}
+
 			console.log('Inserting comment: ' + args.target)
 			NotificationAction.addCommentUserNotification(args, function(err){
-				if(err)
-					return callback(err);
+				if(err){
+					if (appType !== 2){
+						return callback(err);
+					}
+				}
+
 
 				args.user =  args.origin;
 
 				NotificationAction.addCommentNotifier(args, function(err){
-					if(err)
-						return callback(err);
+
+					if(err){
+						if (appType !== 2){
+							return callback(err);
+						}
+					}
 
 					esData._source = data;
-					callback(null, esData);
+					if (appType !== 2){
+						callback(null, esData);
+					}
 				});
 			});
 		});

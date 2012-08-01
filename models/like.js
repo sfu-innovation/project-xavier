@@ -33,6 +33,13 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 				Resource.find({where:{uuid: resourceUUID}}).success(function(resource){
 					var likeCount = resource.likes + 1;
 					resource.updateAttributes({likes: likeCount}).success(function(result){
+
+						callback(null,result);
+
+						//notification has nothing to do with user who post the comments
+						//don't block them, run it in background.
+
+
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
@@ -43,17 +50,18 @@ exports.likeResource = function(userUUID, resourceUUID, callback){
 
 						Notification.addLikeUserNotification(args, function(error){
 							if(error)
-								return callback(error);
+								console.log("addLikeUserNotification Failed" + error);
 
 							Notification.addLikeNotifier(args, function(error, result){
 								if(error)
-									return callback(error);
-
-								callback(null, result);
+									console.log("addLikeNotifier Failed" + error);
+//									return callback(error);
+//
+//								callback(null, result);
 							})
 						})
 					}).error(function(error){
-						callback(error, null);
+							callback(error,null);
 					})
 				}).error(function(error){
 					callback(error, null);

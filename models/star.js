@@ -36,25 +36,42 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 			else {
 				Star.create({user:userUUID, resource:resourceUUID}).success(
 					function (star) {
-						var args = {
-							user : userUUID,
-							target : resourceUUID,
-							app    :2,
-							origin: userUUID,
-							description: "someone shared your article"
+
+						if (star){
+							callback(null,star);
 						}
-						Notification.addStarUserNotification(args, function(error){
-							if(error)
-								return callback(error)
+else{
+							callback("failed creating a star", null);
+						}
 
-							Notification.addStarNotifier(args, function(error){
-								if(error)
-									return callback(error);
+// Engage drop the requirement for notification in stars.
 
-								callback(null, star);
-							})
+// uncomment this if you need it;
 
-						})
+
+//						var args = {
+//							user : userUUID,
+//							target : resourceUUID,
+//							app    :2,
+//							origin: userUUID,
+//							description: "someone shared your article"
+//						}
+//						Notification.addStarUserNotification(args, function(error){
+//							if(error)
+//								console.log('addStarUserNotification Failed' + error);
+//
+//							Notification.addStarNotifier(args, function(error){
+//								if(error){
+//									console.log('addStarNotifier Failed' + error);
+//								}
+////									return callback(error);
+//
+////								callback(null, star);
+//							})
+//
+//						})
+
+
 					}).error(function (error) {
 						callback(error, null);
 					})

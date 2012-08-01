@@ -587,6 +587,18 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.getNotifications = function(id,callback){
+				console.log("API - getNotifications");
+				$.ajax({
+					url:'/api/user/'+id+'/notifications',
+					type:'GET',
+					success:function (data) {
+						callback(data);
+					}
+				});
+
+		}
+
 
 
 

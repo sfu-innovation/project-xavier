@@ -6,11 +6,17 @@ div#Main
 	div
 		span(id="mediaUUID", style='display:none;') #{mediaUUID}	
 		video(id="mediaPlayer", width="840", height="490", type="video/mp4", src="") Your browser doesn't support video!
+
 		div.Controls
-			a.Play(onclick="playVideo();") Play
+			a.Play(href="", data-action="play")
+				img(src="../../images/accent/play.png", alt="Play")
 			div.Timeline
 				a.Scrubber(href="")
 			div.Volume
+				a(href="")
+					img(src="../../images/accent/speaker.png", style="width: 16px; height: 16px; padding: 4px;", alt="")
+				div.Input
+					input(type="range", value="1.0", max="1.0", min="0.0", step="0.05")
 
 		div.Tagger
 			div.Timeline
@@ -35,7 +41,8 @@ div#Main
 						input(type="submit", onclick="return uploadTag(this);", value="Save Changes")
 
 			div.Commands
-				a(href="") Filters
+				a(href="") 
+					img(src="../../images/accent/gear.png", alt="")
 				ul
 					li.All
 						a(href="", onclick="return filterTag(this);") All
@@ -55,6 +62,12 @@ div#Main
 					li.General
 						a(href="", onclick="return filterTag(this);")
 							img(src="../../images/accent/general.png", alt="General")
+		div(style="text-align: center; padding: 20px;")
+			a.TagHere(href="")
+				img(src="../../images/accent/tag-button.png", alt="Tag") 
+			a.TagHere(href="")
+				img(src="../../images/accent/question-button.png", alt="Question") 
+					
 
 
 					

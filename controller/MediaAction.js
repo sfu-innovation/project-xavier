@@ -205,7 +205,8 @@ args = {
 
 */
 
-MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){	
+MediaAction.prototype.updateMediaFile = function( uuid, args, callback ){
+	console.log("UUID AAAHHH    "  + uuid);
 	if ( uuid === null || uuid === undefined ){		
 		callback("UUID is not existent", null);
 		return;

@@ -1651,9 +1651,11 @@ function getAllNotifications(){
 	setTimeout(getAllNotifications,10000);
 
 	engage.getNotifications(function(data){
+		$('#notification .notification_number').html(0);
+		$('#notification_mobile .notification_number').html(0);
 		console.log(data);
-		$('#notification ul').html('<li>You have no new notifications</li>');
-		$('#mobile_notif ul').html('<li>You have no new notifications</li>')
+		$('#notification ul').html('<li class="center">You have no new notifications</li>');
+		$('#mobile_notif ul').html('<li class="center">You have no new notifications</li>')
 		if (data && data.errorcode == 0)
 		{
 //			$('#notification ul').empty();

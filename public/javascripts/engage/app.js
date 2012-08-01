@@ -492,17 +492,25 @@ jQuery(document).ready(function ($) {
 
 
 	engage.getNotifications(function(data){
-		alert('!');
 		console.log(data);
-
+		$('#notification ul').html('You have no new notifications');
 		if (data && data.errorcode == 0)
 		{
-			alert('!!!!')
+//			$('#notification ul').empty();
+			if (data.notifications && data.notifications.length > 0){
+				$('#notification .notification_number').html(data.notifications.length);
+				$('#notification ul').empty();
 			$(data.notifications).each(function(i,notification){
+				console.log('!');
 				console.log(notification);
+				$('#notification ul').append(renderNotificationBox(notification));
 
 
 			})
+			}
+			else{
+				$('#notification ul').html('You have no new notifications');
+			}
 		}
 	})
 
@@ -1579,16 +1587,17 @@ function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
 
 function renderNotificationBox(item){
 	var html = '<li>';
-	html += '<a class="notification"><img src="'
-		+item.user.avatar
-		+ '" class="">user_avatar</a>'
+	html += '<a class="notification" href="/"><img src="'
+		+ (item.avatar ? item.avatar:'/images/engage/default_profile.png')
+		+ '" class="user_avatar">'
 	+ '<p class="msg">'
-		+ '<span class="username">'+item.user.firstName+'</span>'
+		+ '<span class="username">'+item.user.firstName+' </span>'
 		+'commented on your article : "' + item.description + '"'
 		+'</p>'
 
 	html += '</a></li>';
 
+	return html;
 }
 
 function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){

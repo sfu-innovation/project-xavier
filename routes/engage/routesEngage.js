@@ -528,7 +528,7 @@ exports.getNotifications = function(request, response){
 					EngageAction.notificationHelper(result,function(err,new_result){
 
 
-						response.end(JSON.stringify({ errorcode: 0, notification: new_result }));
+						response.end(JSON.stringify({ errorcode: 0, notifications: new_result }));
 
 
 

@@ -15,7 +15,7 @@ var notificationHelper = exports.notificationHelper = function(notifications,cal
 
 		var counter = 0;
 
-		
+
 
 		notifications.forEach(function(notification){
 			counter ++;

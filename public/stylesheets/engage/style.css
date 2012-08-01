@@ -351,7 +351,7 @@ ul#user_options_list li img{
 	box-shadow: 1px 1px 2px #9E9E9E;
 	}
 	
-ul#user_options_list span#notification_number{
+ul#user_options_list span.notification_number{
 	display: block;
 	position: absolute;
 	background-color: #B5111B;

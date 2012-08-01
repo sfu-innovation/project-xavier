@@ -2,7 +2,9 @@ include ./component/header
 
 div#Container
 	div#ManageHeader
-		a(onclick="window.history.back();") Back
+		div#LeftHeaderDiv
+			a(onclick="window.history.back();", class='BackLink') Back
+		div#RightHeaderDiv
 
 	div#Content
 		a.Archives.Button(class="Button", href="", onclick="return showUploadForm();") Upload

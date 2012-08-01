@@ -313,6 +313,29 @@ img.User {
    height: 34px;
 }
 
+#ManageHeader {
+	position:relative;
+	left:20px;
+	margin-top:40px;
+}
+
+#LeftHeaderDiv {
+	position:absolute;
+	text-align: center;
+	top:-20px;
+	width:10%;
+	border-bottom: solid 2px #c0c0c0;
+}
+
+#RightHeaderDiv {
+	position:absolute;
+	text-align: center;
+	right:35px;
+	top:-1px;
+	width:86%;
+	border-bottom: solid 2px #c0c0c0;
+}
+
 .EditLink {
 	position:absolute;
 	right:2%;
@@ -410,6 +433,8 @@ select #SectionsOptions{
 }
 
 .Button {
+	position:absolute;
+	right:15px;
 	z-index: 999;
 }
 

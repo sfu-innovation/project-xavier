@@ -65,14 +65,41 @@ var commentHelper = exports.commentHelper = function (comment, callback){
 
 }
 
+
+
+
+/*** This Helper formant the given raw json data into something more  meaningful
+ to front end developer of Engage
+
+It is written in controller level so other project using comments models won't be affected  */
+
 var commentsHelper = exports.commentsHelper = function(json ,callback){
 
 
 	if (json && json.total &&  json.hits){
+		//only useful part of ES's returned data is the .hits part, save it
+
 		var comments = json.hits;
+
+		// a new list we are going to store formatted new json
+
 		var new_comments = [];
+
+		// a id name relationship list that developer can quickly access poster's name by comment id
+		// this is used to fullfill a request that need a "reply to" filed for engage comment UI
+
 		var id_name_list = [];
+
+		// a child parent relationship list that developer can quickly access the parent id by giving child's id
+		// this is used to find the ancestor of a replies in multi-threaded comments
+
 		var child_parent_list = [];
+
+
+		// reformart the comments to a standard json similar to what Sequelize returns;
+		// this making front-end development easier because the naming convention
+		// ex. timestamp is changed to updatedAt and _source layer is removed because it's not useful
+		// some fileds not needed such as "downvote" is removed as well
 
 		comments.forEach(function(comment){
 			var new_comment = {};
@@ -93,10 +120,13 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 
 		})
 
+		//buiding the id / name relastionship map
 		new_comments.forEach(function(comment){
 			comment.reply_to = id_name_list[comment.parent_uuid];
 		})
 
+
+		// two helper private functions here to find out who is the ancestor and the parent comment
 		var getAncestor = function(child){
 			var parent = getParent(child);
 			if (parent){
@@ -116,8 +146,12 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 
 		var map = [];
 		var counter = 0;
+
+		//creating the list we are going to return
 		var super_new_comments = [];
 
+
+		//first inset all the root/ancestor comment (which doesn't reply to other comments)
 		new_comments.forEach(function(comment){
 			if (!comment.parent_uuid){
 				map[comment.uuid] = counter;
@@ -127,13 +161,15 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 			}
 		})
 
+		//then insert all sub replies into their ancestors
 		new_comments.forEach(function(comment){
 			if (comment.parent_uuid){
 				super_new_comments[map[getAncestor(comment.uuid)]].replies.push(comment);
 			}
 		})
 
-
+		//return the pretty formarted comments json objects
+		//@see http://localhost:3000/api/resource/1/comments
 		callback(null,super_new_comments);
 
 
@@ -147,6 +183,10 @@ var commentsHelper = exports.commentsHelper = function(json ,callback){
 	}
 
 }
+
+
+
+
 
 var weekHelper = exports.weekHelper = function(){
 	Date.prototype.getWeek = function () {

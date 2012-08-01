@@ -599,6 +599,7 @@ function renderBox(item,type){
 
 function bindArticlePageListeners(engage) {
 
+	//update like number after user clicks like on comment
 	$('#comments li .like_btn').live('click',function(){
 		var self = $(this);
 		var list = self.closest('li');
@@ -617,7 +618,7 @@ function bindArticlePageListeners(engage) {
 	})
 
 
-
+	//show hidden edit panel after user click edit on their comments
 	$('#comments li .edit_btn').live('click',function(){
 		var self = $(this);
 		var list = self.closest('li');
@@ -628,7 +629,7 @@ function bindArticlePageListeners(engage) {
 		control.slideDown('slow');
 	})
 
-
+	//close edit panel after user click cancel in edit panel
 	$('#comments li .cancel_btn').live('click',function(){
 		var self = $(this);
 		var list = self.closest('li');
@@ -639,13 +640,19 @@ function bindArticlePageListeners(engage) {
 		control.slideUp('slow');
 	})
 
+
+	//delete comment after
 	$('#comments li .delete_btn').live('click',function(){
 		var self = $(this);
 		var list = self.closest('li');
 		var p = list.children('p');
 		var control = list.children('.comment_control');
-//			engage.update
+
 		var id = list.attr('data-parent-uuid');
+
+		// update the original comment to special text pattern indicates the comments are deleted
+		// since we do not destroy the tree structure.
+
 		var text = "!@#$%^&*()";
 
 		engage.updateCommentById(id,text,function(data){
@@ -663,22 +670,28 @@ function bindArticlePageListeners(engage) {
 
 	})
 
+	//save the comments after user click save.
 	$('#comments li .save_btn').live('click',function(){
 		var self = $(this);
 		var list = self.closest('li');
-		var p = list.children('p');
+		var p = list.children('p'); // this is the comment content displayed to user
 		var control = list.children('.comment_control');
-//			engage.update
-		var id = list.attr('data-parent-uuid');
-		var text = control.children('input').val();
 
+		// getting the comment id we need from HTML 5 data- Attributes,
+		// we saved the id here when rendering
+		var id = list.attr('data-parent-uuid');
+
+
+		var text = control.children('input').val();   // this is the value from the edit input box
+
+		//calling REST api to update the comment by id
 		engage.updateCommentById(id,text,function(data){
 			console.log(data);
 			if (data && data.errorcode === 0){
 
-				p.html(text);
-				p.show();
-				control.hide();
+				p.html(text);   //update the old comment content with new text inputted by user
+				p.show();       //show the comment content
+				control.hide(); //hide the edit panel
 
 			}
 
@@ -687,7 +700,7 @@ function bindArticlePageListeners(engage) {
 
 	})
 
-
+	//create and show reply box on the fly when reply is clicked
 	$('.reply_click').live('click',function(){
 
 		$('.reply_box').remove();   //remove all other reply box
@@ -699,7 +712,8 @@ function bindArticlePageListeners(engage) {
 		var parent_uuid = list.attr('data-parent-uuid');
 
 
-
+		// if the reply is replying to a orginal uploader's comment
+		// put it in the bottom as a new thread
 		if (self.attr('data-reply-type') === 'super'){
 			target_uuid = self.attr('data-target-uuid');
 			reply_to = $('#owner_comment .name').html();//the name of user it replies to
@@ -708,6 +722,9 @@ function bindArticlePageListeners(engage) {
 			$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
 
 		}
+
+		// if the reply is replying to a first comment in thread
+		// put it in the bottom of this thread
 		else if(list.attr('data-reply-type') === 'comment'){
 
 			var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
@@ -716,6 +733,10 @@ function bindArticlePageListeners(engage) {
 
 
 		}
+
+		// if the reply is replying to another reply
+		// put it in the bottom of this thread
+
 		else if(list.attr('data-reply-type') === 'replies'){
 
 			var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
@@ -727,6 +748,10 @@ function bindArticlePageListeners(engage) {
 
 	})
 
+	//when reply form on submit, send the data via AJAX in the background
+	//Then create a new comment box with the content user just posted
+	//put it in somewhere it belongs to
+
 	$('.reply_box form').live('submit',function(){
 		var self = $(this);
 		var comment = {};
@@ -736,7 +761,7 @@ function bindArticlePageListeners(engage) {
 
 		engage.createComment(comment,function(data){
 
-//				console.log(data);
+
 			if (data && data.comment){
 
 				data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
@@ -769,6 +794,9 @@ function bindArticlePageListeners(engage) {
 
 		return false;
 	})
+
+
+	//other bindings for article toolbox buttons
 
 	$('.article_options span#options span:nth-child(3) ').bind('click', function () {
 		$("div#article_container .columns:first-child").toggleClass('night');

@@ -75,12 +75,9 @@ app.put("/api/question/:uid", routesAccent.question); // update question by id
 app.delete("/api/question/:uid", routesAccent.question); // update question by id
 app.get("/api/user/:uid/questions/page/:page", routesAccent.questionsByUser); // get all questions for a user. TODO:sort desc
 
-//deprecated
-//app.post("/api/user/:uid/questions", routesAccent.questionsByUser); // user posts a new question
+
 app.put("/api/question/:uid/follow/:follower", routesAccent.followQuestion); // a follower follows a question
-
 app.put("/api/question/:uid/status", routesAccent.questionStatus); // updates a questions status
-
 app.post("/api/search/page/:page", routesAccent.search); // search based on a query
 
 // comments
@@ -94,16 +91,12 @@ app.get("/api/comment/:uid", routesAccent.comment); // get a comment by id
 app.put("/api/comment/:uid", routesAccent.comment); // updates a question by id
 app.delete("/api/comment/:uid", routesAccent.comment); //deletes a comment by id
 
-//deprecated
-//app.post("/api/user/:uid/comments", routesAccent.commentsByUser); // user posts a comment
-
 app.put("/api/comment/:uid/vote/:dir", routesAccent.commentVote); // votes on a comment
 app.put("/api/comment/:uid/answered", routesAccent.commentAnswered); // updates a comments status to answered
 app.get("/api/question/:uid/comments/page/:page", routesAccent.commentsByQuestion); // P get all of the comments for a question
 
 
-//tags
-
+// Tags REST
 app.post("/api/tag", routesAccent.tag); // create a new tag
 app.get("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
 app.put("/api/tag/last-watched", routesAccent.lastWatched); // Update users last-watched media tag
@@ -112,12 +105,8 @@ app.put("/api/tag/:id", routesAccent.tag); // update a tag by id
 app.delete("/api/tag/:id", routesAccent.tag); // delete a tag by id
 app.get("/api/tag/mediafile/:id", routesAccent.userTagsByMedia); // get all user tags for specific media file
 
-//to be deprecated, use Get API for each Model instead
-app.get("/api/tag/:qid/question", routesAccent.taggedQuestion); // get all tagged questions
-app.get("/api/tag/:cid/comment", routesAccent.taggedComment); // get all tagged comment
-app.get("/api/tag/:uid/user", routesAccent.taggedUser); // get all tagged user
 
-//mediafile
+// MediaFiles REST
 app.post("/mediafile/:id/update", routesAccent.updateMediaFile); // create a new mediafile
 app.post("/api/mediafile", routesAccent.mediafile); // create a new mediafile
 app.get("/api/mediafile/:id/conversations", routesAccent.getConversationsByMedia); // get all questions by media

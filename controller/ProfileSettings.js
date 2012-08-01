@@ -29,7 +29,7 @@ var settings = exports.settings = function( req, callback ) {
 		likes[data.notificationOnLike] = "checked"
 		comments[data.notificationOnComment] = "checked"
 	//	console.log(JSON.stringify(args))
-		
+		console.log(data)
 
 		if(req.method === 'POST') { //probably notification settings
 				//notification settings
@@ -39,7 +39,7 @@ var settings = exports.settings = function( req, callback ) {
 			var data = req.body;
 			var changes = Object.getOwnPropertyNames(data);
 
-			changes.forEach(function(item){	//items = likes, comments, replies
+			changes.forEach(function(item){	//items = likes, comments
 				args[item] = data[item];
 				if(item === 'notificationOnComment')
 					comments[data[item]] = "checked"

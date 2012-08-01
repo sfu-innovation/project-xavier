@@ -5,7 +5,7 @@ div#courseList {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	margin-bottom: 30px;;
+	margin-bottom: 30px;
 	z-index: -100;
 }
 
@@ -20,7 +20,6 @@ div.courseButton {
 	color: white;
 	background: #394161;
 	height: 30px;
-	-moz-height: 35px;
 	width: 90px;
 	border-bottom: 4px solid white;
 	cursor: pointer;

@@ -48,7 +48,17 @@ block content
 
 				div.cover
 					div.frontCard
-						form#share_article(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+						script (type='text/javascript')
+							function validateForm()
+							{
+							var x=document.forms["share_article"]["article_url"].value;
+							
+							if (x==null || x=="")
+								{
+								alert("link is empty");
+								return false;
+								}
+						form#share_article(name="share_article", action="/",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom", onsubmit="return validateForm()")
 							label Share or
 								a.flip_btn  upload a resource!
 							input(name="article_url",type="text", id="article_url", placeholder="http://")
@@ -69,7 +79,7 @@ block content
 								input(name="article_title",type="text", id="article_title", placeholder="Title")
 								div.browsebox
 									input(type="file",name="article_file",id="article_file")
-									div#upload_file +
+									div#upload_file.small.button +
 							textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
 
 							div.sumbitrow

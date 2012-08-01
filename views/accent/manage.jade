@@ -1,9 +1,11 @@
 include ./component/header
 
 div#Container
-	a.Archives.Button(class="Button", href="", onclick="return showUploadForm();") Upload
+	div#ManageHeader
+		a(onclick="window.history.back();") Back
 
 	div#Content
+		a.Archives.Button(class="Button", href="", onclick="return showUploadForm();") Upload
 		include ./component/manage-media-list
 
 		div#UploadForm(style="display:none")
@@ -31,6 +33,22 @@ div#Container
 							|Description:
 						textarea(class="form-row-input", name="description", cols="50", rows="10")
 					input(type="file", name="mediafile")
+					input(type="submit", value="DONE")
+
+		div#EditForm(style="display:none")
+			a.Archives.Button(id="closeUploadButton", onclick="return hideEditForm();") X
+			form(id="EditFormAction", action="/mediafile/:id/update", enctype="multipart/form-data", method="POST")
+				h1 EDIT YOUR MEDIA
+
+				div#UploadFormFields
+					div(class="form-row")
+						span(class="form-row-text")
+							|Title: 
+						input(class="form-row-input edit-title", type="text", name="title")
+					div(class="form-row")
+						span(class="form-row-text")
+							|Description:
+						textarea(class="form-row-input edit-description", name="description", cols="50", rows="10")
 					input(type="submit", value="DONE")
 
 script(type="text/javascript", src="../javascripts/accent/manage-media.js")

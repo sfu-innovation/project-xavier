@@ -686,7 +686,6 @@ args = {
 	}
 */
 NotificationAction.prototype.addStarNotifier = function( args, callback){
-
 	if ( args === null || args === undefined ){
 		console.log("[NotificationAction.addStarNotifier] error - Args is not existent");
 		callback( null, new Object());

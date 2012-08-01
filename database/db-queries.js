@@ -67,6 +67,7 @@ exports.createDB = function(dbName, callback){
 				createTable.bind(undefined, Section),
 				createTable.bind(undefined, SectionMaterial),
 				createTable.bind(undefined, Week),
+
 				createTable.bind(undefined, CourseSection)]
 			, callback);
 		}

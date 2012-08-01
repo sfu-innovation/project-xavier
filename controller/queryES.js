@@ -334,18 +334,18 @@ QueryES.prototype.addQuestion = function(data, appType, callback){
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	//should check if adding to a section is really needed. rqra dont need it
 	args.section = data.week;	//section uuid
 	args.material = questionUuid;	//question uuid
 
 	document.set(data, function(err, req, esResult){
 		if(err)
-			return callback(error);
-		require('./OrganizationAction.js').addResourceToSection(args, function(err, orgResult){
+			return callback(err);
+
+		require('./OrganizationAction.js').addResourceToSection(args, function(err){
 			if(err)
 				return callback(err);
 
-			NotificationAction.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+			NotificationAction.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err){
 				if(err)
 					return callback(err);
 
@@ -465,7 +465,8 @@ QueryES.prototype.updateQuestionStatus = function(questionID, isInstructor, appT
 		}
 	}
 
-	if(isInstructor){
+	//instructor has commented on a question
+	if(isInstructor === 1){
 		data.script += "ctx._source.isInstructor = isInstructor"
 		data.params.isInstructor = "true"
 	}
@@ -624,9 +625,9 @@ QueryES.prototype.getAllCommentByUserID = function(userID, pageNum, appType, cal
 
 //create a new comment
 QueryES.prototype.addComment = function(data, user, appType, callback){
-	var document;
 	var commentUuid = UUID.generate();
-	var isInstructor = false;
+	var document = mapping.document(commentUuid);
+
 	var args = {
 		target:data.target_uuid
 		,app:appType
@@ -638,16 +639,10 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 	switchIndex(appType);
 	switchMapping(1);
 
-	document = mapping.document(commentUuid);
 	data.timestamp = new Date().toISOString();
 	data.created = data.timestamp;
 
-	//instructor has commented on a question
-	if(user.type === 1){
-		isInstructor = true;
-	}
-
-	this.updateQuestionStatus(args.target, isInstructor, appType, function(err){
+	this.updateQuestionStatus(args.target, user.type, appType, function(err){
 		if(err && appType !== 2)  //engage doesn't need update status, so who cares about err....mark
 			return callback(err);
 
@@ -655,18 +650,34 @@ QueryES.prototype.addComment = function(data, user, appType, callback){
 			if(err)
 				return callback(err);
 
+			if(appType === 2){
+				//engage will return result right way, notification will be created in the background, not blokcing the user.
+				callback(null, esData);
+
+			}
+
 			NotificationAction.addCommentUserNotification(args, function(err){
-				if(err)
-					return callback(err);
+				if(err){
+					if (appType !== 2){
+						return callback(err);
+					}
+				}
+
 
 				args.user =  args.origin;
 
 				NotificationAction.addCommentNotifier(args, function(err){
-					if(err)
-						return callback(err);
+
+					if(err){
+						if (appType !== 2){
+							return callback(err);
+						}
+					}
 
 					esData._source = data;
-					callback(null, esData);
+					if (appType !== 2){
+						callback(null, esData);
+					}
 				});
 			});
 		});

@@ -65,6 +65,11 @@ function hideUploadForm(){
 	return false;
 }
 
+function hideEditForm(){
+	$('#EditForm').css('display','none');
+	return false;
+}
+
 $('select[name|="courseSelect"]').change(fillSectionDD);
 $('select[name|="course"]').change(fillFormSectionDD);
 fillCourseDD();

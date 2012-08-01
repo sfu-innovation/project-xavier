@@ -14,8 +14,8 @@ function formatNotification(item){
 function updateNotificationList(user) {	
 	var notificationLists = $(".Notifications");
 	//notificationLists.empty();	
-	console.log(notificationIDs);	
-	
+	//console.log(notificationIDs);	
+	/*
 	common.userNotifications(user, function(data) {
 		//console.log('notification data')
 		if (data) {								
@@ -37,7 +37,8 @@ function updateNotificationList(user) {
 
 			}			
 		}
-	});		
+	});	
+	*/	
 }
 
 function selectNotification(selectedNotification) {	
@@ -59,7 +60,9 @@ function selectNotification(selectedNotification) {
 	return false;
 }
 
+/*
 setInterval(function() {
 	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');	
 	updateNotificationList(sessionUser);
 }, 4000);
+*/

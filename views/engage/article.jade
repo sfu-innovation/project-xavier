@@ -8,7 +8,7 @@ block content
 				div#options
 					a(href="/")#back
 						span#back_btn Back
-					a(href="#{article.url}", target="_blank")
+					a(href="#{article.url}", target="_blank")#view_original
 						span#link_btn View Original
 						
 			div.article_options#article_options_mobile.show-for-small
@@ -18,15 +18,13 @@ block content
 					- else
 						span.star_btn.unstarred &nbsp;
 					- if (article.liked)
-						span.like_btn.liked
-							|(
+						span.like_btn.liked 
 							em #{article.likes}
-							)
+
 					- else
 						span.like_btn.disliked
-							|(
 							em #{article.likes}
-							)
+							
 					span#invert_btn &nbsp;
 					span#textsize_btn &nbsp;
 					

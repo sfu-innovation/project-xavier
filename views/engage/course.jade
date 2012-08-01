@@ -4,7 +4,7 @@ block content
 	- var weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 	div.row#hidden-info(style="display:none;", data-course-id="#{course.uuid}")
 	div.row.show-for-small
-		div.mobile-four.columns
+		div.mobile-four.columns.weeks-bar
 			span#mobile_week_label WEEK
 			div#mobile_week_bar
 				ul
@@ -17,7 +17,7 @@ block content
 	
 				
 	div.row.hide-for-small
-		div.twelve.columns#weeks-bar
+		div.twelve.columns.weeks-bar
 			ul
 				li
 					a#week WEEK

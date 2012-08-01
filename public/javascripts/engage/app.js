@@ -11,10 +11,6 @@ var stylePicker = new stylePicker();
 
 jQuery(document).ready(function ($) {
 
-	if ($('html').hasClass('lt-ie8')) {
-		window.location="http://www.youtube.com/watch?v=4DbgiOCTQts";
-		return;
-	}
 
 
 
@@ -494,6 +490,9 @@ jQuery(document).ready(function ($) {
 		})
 	}
 
+
+
+
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
 		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
@@ -646,6 +645,8 @@ jQuery(document).ready(function ($) {
 
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
+
+	getAllNotifications();
 
 });
 
@@ -1292,7 +1293,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number 
 			+ '</a>'
 			+ '</span>'
 
@@ -1305,7 +1306,7 @@ function renderArticlePreviewBox(item) {
 			//end of innerwrap
 
 			+ '<h5>'
-			+ '<a '+ (item.thumbnail?'':'class="noimage"')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
+			+ '<a '+ ((!item.thumbnail && item.fileType ==='html' )?'class="noimage"':'')  +'href="/article/' + item.uuid + '" style="font-size:'+  renderTitleFontSize(item)   +'px">' + item.title + '</a></h5>'
 
 			+ '<div class="articlepreview">' + '<p>' + renderExcerpt(item.excerpt) + '</p>'
 			+ '</div>'
@@ -1384,10 +1385,9 @@ function renderLike(item) {
 
 
 function renderPreviewImage(item) {
-
 	var previewImage = "";
 
-	if (item.thumbnail){
+	if (item.thumbnail && item.fileType === "html" ){
 		previewImage= '<div class="innerwrap" style=\''
 			//IE
 			+'background-image: url("'
@@ -1399,6 +1399,56 @@ function renderPreviewImage(item) {
 			//FIREFOX
 			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
 			+ item.thumbnail + '");'
+//		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "pdf"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/pdf_icon.png' + '");'
+//		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "doc" || item.fileType === "docx"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/word_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/word_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/word_icon.png' + '");'
+			+ '\'>'
+			+ '</div>'
+	}
+
+	else if (item.fileType === "ppt" || item.fileType === "pptx"){
+		previewImage= '<div class="innerwrap" style=\''
+			//IE
+			+'background-image: url("'
+			+ '/images/engage/ppt_icon.png' + '");'
+			//CHROME SAFARI
+			+'background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.62)), color-stop(27%,rgba(0,0,0,0.12)), color-stop(41%,rgba(0,0,0,0.01)), color-stop(53%,rgba(0,0,0,0.06)), color-stop(100%,rgba(0,0,0,0.48))), url("'
+			+ '/images/engage/ppt_icon.png' + '");'
+
+			//FIREFOX
+			+'background-image: -moz-linear-gradient(top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.12) 27%, rgba(0,0,0,0.01) 42%, rgba(0,0,0,0.06) 53%, rgba(0,0,0,0.48) 100%), url("'
+			+ '/images/engage/ppt_icon.png' + '");'
 //		+ 'http://www.smashinglists.com/wp-content/uploads/2010/02/persian.jpg'
 			+ '\'>'
 			+ '</div>'
@@ -1515,6 +1565,22 @@ function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
 	return html;
 }
 
+function renderNotificationBox(item){
+	var html = '<li>';
+	html += '<a class="notification" href="/article/'+item.target+'"><img src="'
+		+ (item.avatar ? item.avatar:'/images/engage/default_profile.png')
+		+ '" class="user_avatar">'
+	+ '<p class="msg">'
+		+ '<span class="username">'+item.user.firstName+' </span>';
+	html	+= 'commented on your article : "' + item.description + '"'
+		+'</p>';
+
+
+	html += '</a></li>';
+
+	return html;
+}
+
 function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){
 	var html = '<li style="display:none" class="reply_box replies"><span>in reply to ' + reply_to + '.</span><form name="add_comment" data-reply-to="'+ reply_to +'"'
 		+ ' data-reply-type="'+ reply_type+'"'
@@ -1577,3 +1643,40 @@ function paddingforMediumScreen(){
 
 }
 */
+
+
+function getAllNotifications(){
+
+	var engage = new coreApi.Engage();
+	setTimeout(getAllNotifications,10000);
+
+	engage.getNotifications(function(data){
+		$('#notification .notification_number').html(0);
+		$('#notification_mobile .notification_number').html(0);
+		console.log(data);
+		$('#notification ul').html('<li class="center">You have no new notifications</li>');
+		$('#mobile_notif ul').html('<li class="center">You have no new notifications</li>')
+		if (data && data.errorcode == 0)
+		{
+//			$('#notification ul').empty();
+			if (data.notifications && data.notifications.length > 0){
+				$('#notification .notification_number').html(data.notifications.length);
+				$('#notification_mobile .notification_number').html(data.notifications.length);
+
+				$('#notification ul').empty();
+				$('#mobile_notif ul').empty();
+				$(data.notifications).each(function(i,notification){
+					console.log('!');
+					console.log(notification);
+					$('#notification ul').append(renderNotificationBox(notification));
+					$('#mobile_notif ul').append(renderNotificationBox(notification));
+
+				})
+			}
+			else{
+				$('#notification ul').html('<li>You have no new notifications</li>');
+			}
+		}
+	})
+
+}

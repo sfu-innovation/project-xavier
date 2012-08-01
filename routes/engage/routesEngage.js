@@ -20,6 +20,8 @@ var QueryES = require('./../../controller/queryES.js');
 var Comment = require('./../../models/comment.js');
 var UUID         = require('com.izaakschroeder.uuid');
 var fs = require('fs');
+var NotificationAction = require("./../../controller/NotificationAction");
+
 
 
 
@@ -512,6 +514,42 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
+exports.getNotifications = function(request, response){
+	if (request.session && request.session.user) {
+
+		var args = {
+			user:request.session.user.uuid,
+			app:2
+		}
+		NotificationAction.retrieveUserNotificationsByUser(args, function (err, result) {
+			if (!err) {
+
+				if (result) {
+					EngageAction.notificationHelper(result, function (err, new_result) {
+
+						response.writeHead(200, { 'Content-Type':'application/json' });
+						response.end(JSON.stringify({ errorcode:0, notifications:new_result }));
+
+
+					})
+				}
+				else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:"No result found" }));
+				}
+			} else {
+				response.writeHead(500, { 'Content-Type':'application/json' });
+				response.end(JSON.stringify({ errorcode:1, message:err }));
+			}
+		})
+	}
+	else{
+		response.writeHead(403, { 'Content-Type':'application/json' });
+		response.end(JSON.stringify({ errorcode:1, message: "You cannot acces this data" }));
+	}
+
+}
+
 /////PUT REST CALLS ABOVE/////////////////////////////////
 ////////////NON-REST STUFF////////////////////////////////
 
@@ -532,11 +570,11 @@ exports.uploadResource = function (req,res){
 
 		var fileName = crypto.createHash('md5').update(UUID.generate()).digest('hex');
 
-		var fileType = '.' + ((req.files.article_file.name).split('.'))[1] || '';
+		var fileType =   ((req.files.article_file.name).split('.'))[1] || '';
 
-		fileType = fileType.toLowerCase();
+		fileType =  fileType.toLowerCase();
 
-		fileName += fileType;
+		fileName += '.' + fileType;
 
 		var serverPath = '/resources/files/' + fileName;
 
@@ -659,7 +697,7 @@ exports.index = function (req, res) {
 	else {
 		//to avoid login to testing, this is comment out, using fake user instead
 //		res.redirect("/login");
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 		//login with demo user, remove when everything is set.
 	}
@@ -728,7 +766,7 @@ exports.starred = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 
 	}
@@ -750,7 +788,7 @@ exports.instructor = function (req, res) {
 		})
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 
@@ -798,7 +836,7 @@ exports.profile = function (req, res) {
 
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 
@@ -811,13 +849,13 @@ exports.notFound = function (req,res){
 	});
 }
 
-exports.splash = function(req, res) {
-	res.render('/', function  (err, rendered) {
-		title: "SFU ENGAGE"
-	}, function(err, rendered) {
-		res.writeHead(200, {'Content-Type': 'text/html'});
+exports.splashPage = function(req, res) {
+	res.render('engage/splash', {
+		title : "SFU ENGAGE"
+	}, function (err, rendered) {
+		res.writeHead(200, {'Content-Type':'text/html'});
 		res.end(rendered);
-	})
+	});
 }
 
 exports.articleView = function (req, res) {
@@ -874,7 +912,7 @@ exports.articleView = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 
 	}
@@ -897,7 +935,7 @@ exports.contributions = function (req, res) {
 		})
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 	}
 
 }
@@ -934,7 +972,7 @@ exports.courseView = function (req, res) {
 	}
 	else {
 
-		res.redirect("/demo");
+		res.redirect("/splash");
 
 	}
 }
@@ -958,7 +996,7 @@ exports.demoPage = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
+			app:2,
 			user:"llt3"
 		}
 
@@ -1012,7 +1050,7 @@ exports.demoProf = function (req, res) {
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
-			app:1,
+			app:2,
 			user:"llt3"
 		}
 

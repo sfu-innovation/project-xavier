@@ -1,6 +1,7 @@
 var accent = new coreApi.Accent();
 
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
+var video = document.getElementById("Video");
 
 function loadMedia(uuid){
 	accent.getMediaFileById(uuid, function(data){
@@ -14,11 +15,6 @@ function loadMedia(uuid){
 			mediaSection.text(section.section);
 		})
 	})			
-}
-
-function playVideo(){
-	$('#mediaPlayer').get(0).play();
-	console.log("PLAY");
 }
 
 function formatTagTypeOption(index){
@@ -110,7 +106,14 @@ function showTagInfo(title, description){
 }
 
 function bindTag(tag) {
-	tag.bind("mousedown", function(evt) {
+	tag.bind("dblclick", function(evt) {
+		evt.stopPropagation();
+		var tag = $(this).data("tag");
+		video.pause();
+		video.currentTime = tag.offset;
+		if (tag.duration > 0)
+			video.play();
+	}).bind("mousedown", function(evt) {
 		evt.stopPropagation();
 		if (!evt.shiftKey)
 			$(this).parent().children().removeClass("Selected");
@@ -155,60 +158,104 @@ function bindTag(tag) {
 		else {
 			$(this).parent().css("cursor", "auto");
 		}
-
+		
 		$(".TagWindow").css({
-			opacity: 1.0,
+			display: "block",
 			top: ($(this).position().top + $(this).height()) + "px",
 			left: ($(this).position().left + $(this).width()/2 - $(".TagWindow").width()/2 - 9) + "px"
 		})
 	})
 }
 
+function addTag(time) {
+	var p = time/video.duration * 100;
+	var tag = $('<div class="Tag" style="left: '+p+'%; width: 12px; background: red;"></div>');
+	$(".Timeline").prepend(tag);
+	tag.data("tag", {
+		offset: time,
+		duration: 0
+	});
+	bindTag(tag);
+}
+
 loadMedia(mediaID);
 displayTags(mediaID, "");
 
 $(document).ready(function () {	
-	$(".Timeline").bind("dblclick", function(evt) {
-		var offset = evt.offsetX;
-		var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
+	$(".Timeline").bind("dblclick", function(evt) {		
+		//var offset = evt.offsetX;
+		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
+		var tag = addTag(evt.offsetX / $(this).width() * video.duration);
 		console.log('should display nothing when d clicked')
 		showTagInfo("","");
 
-		tag.data("offset", offset)
-		tag.prependTo($(this))
-		bindTag(tag)
-		tag.data("offset", offset)
+		//tag.data("offset", offset)
+		//tag.prependTo($(this))
+		//bindTag(tag)
+		//tag.data("offset", offset)
 		$(this).data("current-tag", tag)
 	}).bind("mousedown", function(evt) {					
 		$(this).data("last", evt.pageX);
 		return true;
 	}).bind("mousemove", function(evt) {
 		var offset = evt.offsetX;
+
+		if (evt.which !== 1)
+			return;
+
 		switch($(this).data("action")) {
 		case "move":
 			var offset = evt.pageX - $(this).data("last");
 			$(this).children(".Selected").each(function() {
+				var 
+					r = ($(this).position().left + offset) / $(this).parent().width(),
+					x = Math.max(r,0),
+					tag = $(this).data("tag"),
+					q = tag.duration/video.duration,
+					y = Math.min(r + q, 1),
+					z = y - q,
+					w = y != r + q ? z : x;
+
+				tag.offset = w * video.duration;
+
 				$(this).css({
-					left: ($(this).position().left + offset) + "px"
+					left: (w*100) + "%"
 				})
 			})
 			break;
 		
 		case "resize-left":
 			var offset = evt.pageX - $(this).data("last");
+
 			$(this).children(".Selected").each(function() {
+				var 
+					x = Math.max(($(this).position().left + offset) / $(this).parent().width(), 0),
+					duration = ($(this).width() - offset) / $(this).parent().width();
+
+				var tag = $(this).data("tag");
+				tag.offset = x * video.duration;
+				tag.duration = duration * video.duration;
+
 				$(this).css({
-					left: ($(this).position().left + offset) + "px",
-					width: ($(this).width() - offset) + "px"
+					left: (x*100) + "%",
+					width: (duration*100) + "%"
 				})
 			})
+
 			break;
 		
 		case "resize-right":
 			var offset = evt.pageX - $(this).data("last");
 			$(this).children(".Selected").each(function() {
+
+				var 
+					duration = ($(this).width() + offset) / $(this).parent().width(),
+					tag = $(this).data("tag");
+				
+				tag.duration = duration * video.duration;
+
 				$(this).css({
-					width: ($(this).width() + offset) + "px"
+					width: (duration*100) + "%"
 				})
 			})
 			break;
@@ -218,6 +265,98 @@ $(document).ready(function () {
 
 	}).bind("mouseup", function() {
 		$(this).data("current-tag", null);
+	})
+
+	bindTag($(".Tag"));
+				
+	$(video).on("play", function() {
+		$(".Play").data("action", "pause")
+			.children("img").attr("src","pause.png");
+	}).on("pause", function() {
+		$(".Play").data("action", "play")
+			.children("img").attr("src","play.png");
+	}).on("timeupdate", function() {
+		var progress = this.currentTime / this.duration;
+		$(".Scrubber").css({
+			left: (progress*100) + "%"
+		})
+
+	})
+
+	$(".Controls .Timeline").bind("click", function(evt) {
+		var progress = evt.offsetX / $(this).width();
+
+		video.currentTime = video.duration*progress;
+	}).bind("mousemove", function(evt) {
+		if (evt.which !== 1)
+			return;
+
+		if (evt.srcElement !== this)
+			return;
+
+		var progress = evt.offsetX / $(this).width();
+
+		video.currentTime = video.duration*progress;
+		return false;
+	
+	})
+
+	$(".Play").bind("click", function() {
+		switch($(this).data("action")) {
+		case "play":
+			video.play();
+			break;
+		case "pause":
+			video.pause();
+			break;
+		}
+		return false;
+	})
+
+	$(".Volume > a").bind("click", function() {
+		//COde here
+		var i = $(this).parent().children(".Input");
+
+		if (!i.is(":visible")) {
+			i.show();
+			$(document).one("click", function() {
+				i.hide();
+			})
+		}
+		else
+			i.hide();
+
+		
+		return false;
+	})
+
+	$(".Commands > a").bind("click", function() {
+		//COde here
+		var i = $(this).parent().children("ul");
+
+		if (!i.is(":visible")) {
+			i.show();
+			$(document).one("click", function() {
+				i.hide();
+			})
+		}
+		else
+			i.hide();
+
+		
+		return false;
+	})
+
+	$(".Volume input").bind("change", function() {
+		video.volume = 1.0 - $(this).val();
+	}).bind("click", function(evt) {
+		evt.preventDefault();
+		return false;
+	})
+
+	$(".TagHere").bind("click", function() {
+		addTag(video.currentTime)
+		return false;
 	})
 
 

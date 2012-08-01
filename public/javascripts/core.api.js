@@ -587,6 +587,18 @@ coreApi._construct = function () {
 			});
 		}
 
+		this.getNotifications = function(callback){
+				console.log("API - getNotifications");
+				$.ajax({
+					url:'/api/notifications',
+					type:'GET',
+					success:function (data) {
+						callback(data);
+					}
+				});
+
+		}
+
 
 
 
@@ -947,7 +959,7 @@ coreApi._construct = function () {
 
 		this.setSelectedCourse = function(courseID, week, callback){
 			console.log("API - setSelectedCourse");
-
+			
 			var body ={};
 			body.course = courseID;
 			body.week = week;

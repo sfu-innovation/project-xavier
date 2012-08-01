@@ -74,3 +74,6 @@ $('select[name|="courseSelect"]').change(fillSectionDD);
 $('select[name|="course"]').change(fillFormSectionDD);
 fillCourseDD();
 fillFormCourseDD();
+$('#MockUploadButton').click(function(){
+	$('#MediaFileUpload').click();
+});

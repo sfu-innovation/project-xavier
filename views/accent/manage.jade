@@ -27,15 +27,16 @@ div#Container
 
 				div#UploadFormFields
 					div(class="form-row")
-						span(class="form-row-text")
-							|Title: 
-						input(class="form-row-input", type="text", name="title")
+						span(class="FormRowText")
+							|Title
+						input(class="FormRowInput", type="text", name="title")
 					div(class="form-row")
-						span(class="form-row-text")
-							|Description:
-						textarea(class="form-row-input", name="description", cols="50", rows="10")
-					input(type="file", name="mediafile")
-					input(type="submit", value="DONE")
+						span(class="FormRowText")
+							|Description
+						textarea(class="FormRowInput", name="description", cols="50", rows="10")
+					input(type="file", name="mediafile", id="MediaFileUpload", style="visibility:hidden;")
+					input(type="button", id="MockUploadButton", value="Upload Media")​
+					input(type="submit", value="DONE", id="MediaUploadSubmit")
 
 		div#EditForm(style="display:none")
 			a.Archives.Button(id="closeUploadButton", onclick="return hideEditForm();") X

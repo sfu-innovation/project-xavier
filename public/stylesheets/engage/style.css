@@ -326,6 +326,12 @@ ul#user_options_list li#notification {
 	margin: 0;
 	margin-right: -4px;
 }
+
+li.center {
+	text-align: center;
+	padding-top: 20px;
+}
+
 ul#user_options_list li#notification div{
 	background-color: transparent;
 }

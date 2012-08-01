@@ -251,6 +251,23 @@ coreApi._construct = function () {
 
 	function Engage() {
 
+		this.deleteNotification = function(id,callback){
+			console.log("API - deleteNotification " + id);
+
+			$.ajax({
+				url:'/api/notification/'+id,
+				type:'DELETE',
+				dataType:'json',
+				contentType:"application/json",
+				success:function (data) {
+					callback(data);
+
+				}
+
+			})
+
+		}
+
 		this.createComment = function (args, callback) {
 			console.log("API - createComment");
 

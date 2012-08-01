@@ -153,13 +153,12 @@ app.get('/api/resource/:id/comments',routesEngage.commentsByResourceUUID);
 
 //notification
 app.get('/api/notifications',routesEngage.getNotifications);
-
-
+app.delete('/api/notification/:id',routesEngage.deleteNotificationById);   //using get just for testing, will change to delete
 
 //non-REST calls
 // routing
 app.get('/login', routesEngage.login);
-app.get('/logout', routesCommon.logout);
+app.get('/logout', routesEngage.logout);
 
 
 

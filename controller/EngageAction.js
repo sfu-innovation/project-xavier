@@ -20,7 +20,7 @@ var notificationHelper = exports.notificationHelper = function(notifications,cal
 			counter ++;
 			if (counter <6){  //only return the first 5
 				var no = {};
-				no.id = notification.notificationListener.uuid;
+				no.id = notification.notification.id;
 				no.description = notification.notification.description;
 				no.user = notification.user;
 				no.avatar = notification.profile.profilePicture;

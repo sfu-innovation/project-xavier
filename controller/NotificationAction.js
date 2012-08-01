@@ -1334,4 +1334,23 @@ NotificationAction.prototype.getUserNotifications = function(args, callback){
 	});
 }
 
+
+NotificationAction.prototype.deleteNotificationById = function (id, callback) {
+				UserNotificationImpl.find({where:{id:id}}).success(function (notification) {
+						if (notification) {
+							notification.destroy().success(
+								function (result) {
+									console.log('NOTIFICATION DESTROYED');
+									callback(null, result);
+								}).error(function (error) {
+									callback(error, null);
+								})
+						}
+						else {
+							callback("That notification doesn't exist!", null);
+						}
+					})
+
+}
+
 module.exports = new NotificationAction;

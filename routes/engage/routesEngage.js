@@ -32,6 +32,21 @@ exports.login = function (request, response) {
 	routesCommon.login(2, request, response);
 }
 
+exports.logout = function(request, response) {
+
+	if (request.session.user){
+		if (request.session.user.uuid === "ted" || request.session.user.uuid === "llt3"){
+			request.session.destroy();
+			response.redirect('/splash');
+		}
+		else{
+			request.session.destroy();
+			response.redirect('https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/logout');
+		}
+	}
+
+}
+
 
 exports.likeComment = function(req,res){
 	var commentID = req.params.id;
@@ -514,6 +529,30 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
+exports.deleteNotificationById = function(req,res){
+	var id = req.params.id;
+	if (id){
+		NotificationAction.deleteNotificationById(id,function(err,data){
+
+			if (data){
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:0, notifications:data }));
+			}
+
+			else{
+				res.writeHead(500, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:1, message:err }));
+			}
+
+		})
+	}
+
+	else{
+		res.writeHead(500, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:1, message:"Invalid" }));
+	}
+}
+
 exports.getNotifications = function(request, response){
 	if (request.session && request.session.user) {
 
@@ -707,7 +746,6 @@ exports.index = function (req, res) {
 exports.setup = function(req, res) {
 
 	if(req.session && req.session.user) {
-		console.log('Porfile: '+req.session.Profile)
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
@@ -732,7 +770,6 @@ exports.setup = function(req, res) {
 				msg: ""
 			});
 		}
-		
 	}
 }
 
@@ -888,7 +925,7 @@ exports.articleView = function (req, res) {
 			else{
 				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
 					var resource = resources[0];
-					console.log(host);
+
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
 						profile:req.session.Profile,
@@ -960,7 +997,6 @@ exports.courseView = function (req, res) {
 						courses:req.session.courses
 					}, function (err, rendered) {
 
-
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
 
@@ -970,22 +1006,14 @@ exports.courseView = function (req, res) {
 
 				}
 
-
-
-
 			});
-
 		}
-
-
 	}
 	else {
 
 		res.redirect("/splash");
 
 	}
-
-
 }
 
 
@@ -1113,20 +1141,17 @@ exports.preference = function (req, res){
 					pref_name: result.pName,
 					bio: result.bio,
 					format: result.format,
-					msg: result.msg
+					msg: result.msg,
+					comments: result.comments,
+					likes: result.likes
 					}, function (err, rendered) {
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
-
 				})
 		})
-		
 	}
 	else {
-
 		res.redirect("/demo");
-
-
 	}
 
 }

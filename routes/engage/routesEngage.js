@@ -1030,7 +1030,7 @@ exports.demoPage = function (req, res) {
 	req.session.user = null;
 	req.session.courses = null;
 	req.session.Profile = null;
-//	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"P", userID:"ted", email:"ted@sfu.ca",type:1}
+
 	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
 
 	req.session.user = fake_user_2;
@@ -1044,7 +1044,7 @@ exports.demoPage = function (req, res) {
 
 		var args= {
 			app:2,
-			user:"llt3"
+			user:fake_user_2.uuid
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){
@@ -1098,7 +1098,7 @@ exports.demoProf = function (req, res) {
 
 		var args= {
 			app:2,
-			user:"llt3"
+			user:fake_user_2.uuid
 		}
 
 		notification.createUserNotificationSettings(args, function(err, success){

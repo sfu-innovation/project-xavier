@@ -29,31 +29,34 @@ var settings = exports.settings = function( req, callback ) {
 		likes[data.notificationOnLike] = "checked"
 		comments[data.notificationOnComment] = "checked"
 	//	console.log(JSON.stringify(args))
-		
+		console.log(data)
 
 		if(req.method === 'POST') { //probably notification settings
 				//notification settings
 
-			likes = ["","","",""];
-			comments = ["","","",""];
-			var data = req.body;
-			var changes = Object.getOwnPropertyNames(data);
-
-			changes.forEach(function(item){	//items = likes, comments, replies
-				args[item] = data[item];
-				if(item === 'notificationOnComment')
-					comments[data[item]] = "checked"
-				if(item === 'notificationOnLike')
-					likes[data[item]] = "checked"
-
-			})
-
-			//console.log(args)
 			
-			notification.updateUserNotificationSettings(args, function(err, updates){});
+			var body = req.body;
+			if (body.length > 0){
+				likes = ["","","",""];
+				comments = ["","","",""];
+				var changes = Object.getOwnPropertyNames(body);
+
+				changes.forEach(function(item){	//items = likes, comments
+					args[item] = body[item];
+					if(item === 'notificationOnComment')
+						comments[body[item]] = "checked"
+					if(item === 'notificationOnLike')
+						likes[body[item]] = "checked"
+
+				})
+
+				//console.log(args)
+				
+				notification.updateUserNotificationSettings(args, function(err, updates){});
 
 
-			msg="Notification changes saved.";
+				msg="Notification changes saved.";
+			}
 
 			if(req.files !== undefined){
 
@@ -136,8 +139,8 @@ var settings = exports.settings = function( req, callback ) {
 			}
 		}
 
-	//	console.log('likes: '+likes)
-	//	console.log('comments: '+comments)
+		console.log('likes: '+likes)
+		console.log('comments: '+comments)
 		profile.pName = pName;
 		profile.bio = bio;
 		profile.img = img;

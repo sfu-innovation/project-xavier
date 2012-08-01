@@ -29,8 +29,10 @@ QuestionList.setPage = function(p) {
 }
 
 QuestionList.setSearchType = function(t) {
-	QuestionList.searchType = t;
-	QuestionList.refreshSearchTypeSelection();
+	if (QuestionList.searchType !== t) {
+		QuestionList.searchType = t;
+		QuestionList.refreshSearchTypeSelection();
+	}
 }
 
 QuestionList.refreshSearchTypeSelection = function() {
@@ -96,16 +98,18 @@ function gotoQuestionPage(clicked) {
 function questionTabClicked(tabdiv, e) {
 	var event = e || window.event;
 	if (event.target && event.target !== tabdiv) {
-		QuestionList.setSearchType(event.target.getAttribute("value"));
-		QuestionList.setPage(0);
+		if (event.target.getAttribute("value") !== QuestionList.searchType) {
+			QuestionList.setSearchType(event.target.getAttribute("value"));
+			QuestionList.setPage(0);
+		}
 	}
 }
 
 window.onload = function() {
 	CourseList.refreshCourseList(function() {
 		CourseList.setSelectedIndex(0);
+		QuestionCommon.refreshDefaultHeader();
+		QuestionList.refreshSearchTypeSelection();
+		QuestionList.refreshQuestionsList();
 	});
-	QuestionCommon.refreshDefaultHeader();
-	QuestionList.refreshSearchTypeSelection();
-	QuestionList.refreshQuestionsList();
 }

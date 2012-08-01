@@ -322,7 +322,7 @@ ul#user_options_list li{
 	color: #555;
 
 	}
-ul#user_options_list li.notification {
+ul#user_options_list li#notification {
 	margin: 0;
 	margin-right: -4px;
 }
@@ -332,7 +332,7 @@ li.center {
 	padding-top: 20px;
 }
 
-ul#user_options_list li.notification div{
+ul#user_options_list li#notification div{
 	background-color: transparent;
 }
 
@@ -1810,6 +1810,9 @@ div#preference{
 	background-color: #F9F9F9;
 }
 
+div#preference dd a{
+	padding: 0 12px;
+}
 div#preference_header{
 	padding: 20px;
 	background-color: rgba(0, 0, 0, 0.05);
@@ -1836,6 +1839,7 @@ div#preference .columns:first-child{
 }
 div#preference img.avatar{
 	width: 120px;
+	height: 120px;
 }
 div#upload_avatar{
 	text-align: center;
@@ -1853,9 +1857,14 @@ div#upload_avatar{
 .browsebox {
 	position: absolute;
 	overflow: hidden;
+}
+
+#submitnew .browsebox{
 	right: 21px;
 	top: 38px;
 	margin-left:225px;
+	position: absolute;
+	overflow: hidden;
 }
 
 .browsebox input {
@@ -1869,48 +1878,55 @@ div#upload_avatar{
 	background-color: #888;
 	pointer-events: none;
 }
+div#preference .button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
 
-div#preference .columns:first-child a{
-	float: right;	
-	}
-div#preference .columns:last-child{
-	float: left;
 }
+div#preference .removebox{
+	margin-top: 43px;
+	margin-bottom: 20px;
+}
+
+div#preference #avatar_column .button{
+	width: 120px;
+}
+
 
 div#preference div#edit_box h4{
 	margin-top: 0;
 }
 
 div#preference #edit_info_column input.button{
-
+	float: right;
 }
 
-div#preference #setting_detail{
-	margin-left: 20px;
-}
 
 div#preference #notificationTab ul{
 	list-style-type: none;
 	display: inline-block;
+	margin-left: 16px;
 }
 
 div#preference #notification ul.checkbox_column{
 	display: inline-block;
+	margin-left: 20px;
 }
 
 div#preference #notificationTab ul.checkbox_column li input{
-	margin-left: 12px;
-	font-size: 20px;
+	width:60px;
 	vertical-align: middle;
-}
-div#preference #notificationTab ul li{
-	line-height: 2em;
+	text-align: center;
+
 }
 
+
 div#preference #notificationTab ul.checkbox_column li span{
-	margin-left: 12px;
 	font-size: 15px;
 	vertical-align: middle;
+	width:60px;
+	display: inline-block;
 }
 
 div#preference #notificationTab ul li input{
@@ -1918,8 +1934,7 @@ div#preference #notificationTab ul li input{
 }
 
 div#preference #notificationTab input.button{
-	display: block !important;
-	text-align: center;
+	display: block;
 }
 /* -----------------------------------------
    overwriting fundation's tab
@@ -1933,8 +1948,7 @@ dl.tabs dd.active{
 }
 dl.tabs dd.active a{
 	background: none; 
-	border: none;
-}
+	border: none;}
 
 /* -----------------------------------------
    Profile page

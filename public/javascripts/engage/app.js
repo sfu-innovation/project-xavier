@@ -379,6 +379,19 @@ jQuery(document).ready(function ($) {
 		if (!$(event.target).closest('#course-menu').length) {
 			$('#course_list').addClass('hide');
 		};
+
+		if (!$(event.target).closest('#slide_courses').length && !$(event.target).closest('#courses_box').length) {
+			$('#courses_box').hide();
+		};
+
+		if (!$(event.target).closest('#slide_menu').length && !$(event.target).closest('#menu_box').length) {
+			$('#menu_box').hide();
+		};
+
+		if (!$(event.target).closest('#slide_share').length && !$(event.target).closest('#mobile_share_box').length) {
+			$('#mobile_share_box').hide();
+		};
+
 	});
 
 	$('a.notification').live('click', function () {

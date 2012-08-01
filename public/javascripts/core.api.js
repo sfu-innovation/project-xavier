@@ -23,6 +23,7 @@ coreApi._construct = function () {
 				url:'/api/course/' + id,
 				type:'GET',
 				success:function (data) {
+					console.log(data)
 					callback(data);
 				}
 			});

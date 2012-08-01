@@ -2,7 +2,6 @@ var accent = new coreApi.Accent();
 var common = new coreApi.Common();
 
 function getMedia(courseUUID, all){
-	
 	// Only load media files if on the main page
 	if($('#media-list')){
 		//alert("UUID " + courseUUID);
@@ -32,7 +31,26 @@ function formatMediaList() {
 			+ "</div>";
 }
 
+function returnColor(uuid) {
+	var color = "", done = false;
+	var courseNumbers = $('#Courses li a span.UUID');
+	courseNumbers.each(function() {
+		var courseID = $(this).text().trim();
+
+		if (courseID === uuid) {
+			var course = $(this).parent().parent();
+
+			if (!done) {
+				color = course.css("border-bottom-color");
+				done = true;
+			}
+		}									
+	})
+	return color;
+}
+
 var retrieveMedia = function(courseUUID, all){
+	console.log(courseUUID);
 	var mainContent = $("#Main").children("#media-list");
 
 	if (mainContent.size() === 0) {		
@@ -63,8 +81,10 @@ var retrieveMedia = function(courseUUID, all){
 					if(all){
 						(function(courseUUID){
 							common.getCourseById(courseUUID, function(response){
+								var courseName = response.course.subject + " " + response.course.number;
+								var color =  returnColor(response.course.uuid);
 								mediaNode = mediaNode + 
-								"<div class='Section'><h2><b>" + response.course.subject + " " +
+								"<div class='Section' style='background:"+ color +"'><h2><b>" + response.course.subject + " " +
 								response.course.number + "</b></h2>" +
 								"</div></div></div>";
 								$('#media-list').append(mediaNode);

@@ -1591,7 +1591,7 @@ function renderNotificationBox(item){
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
 		+ '<span class="username">'+item.user.firstName+' </span>';
-	html	+= 'commented on your article : "' + item.description + '"'
+	html	+= 'replied on your message:  "' + item.description + '"'
 		+'</p>';
 
 

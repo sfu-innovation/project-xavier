@@ -17,6 +17,7 @@ var notificationHelper = exports.notificationHelper = function(notifications,cal
 
 
 		notifications.forEach(function(notification){
+
 			counter ++;
 			if (counter <6){  //only return the first 5
 				var no = {};

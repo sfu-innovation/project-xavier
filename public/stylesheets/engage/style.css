@@ -322,7 +322,7 @@ ul#user_options_list li{
 	color: #555;
 
 	}
-ul#user_options_list li.notification {
+ul#user_options_list li#notification {
 	margin: 0;
 	margin-right: -4px;
 }
@@ -332,7 +332,7 @@ li.center {
 	padding-top: 20px;
 }
 
-ul#user_options_list li.notification div{
+ul#user_options_list li#notification div{
 	background-color: transparent;
 }
 
@@ -1853,9 +1853,14 @@ div#upload_avatar{
 .browsebox {
 	position: absolute;
 	overflow: hidden;
+}
+
+#submitnew .browsebox{
 	right: 21px;
 	top: 38px;
 	margin-left:225px;
+	position: absolute;
+	overflow: hidden;
 }
 
 .browsebox input {

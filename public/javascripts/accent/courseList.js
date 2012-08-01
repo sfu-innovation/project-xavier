@@ -25,9 +25,8 @@ function selectButton(selectedButton) {
 }
 
 function setSelected(select) {	
-	var 
-		p = $(select).parent(),
-		wasSelected = p.hasClass("Selected");
+	var p = $(select).parent();
+	var wasSelected = p.hasClass("Selected");
 	
 	if (!wasSelected) {
 		p.parent().find("li.Selected").removeClass("Selected");	
@@ -68,20 +67,6 @@ function formatAll() {
 
 function displayCourseList() {
 	var courseList = $("#Courses");		
-	/*
-	for (var i = 0; i < courseList.length; i++) {
-		var lastNode = $(courseList[i].lastChild)
-		if (lastNode.hasClass("Count")) {				 			
-			var coursePrefix = $(courseList[i]).find(".Prefix").text();
-			var courseNumber = $(courseList[i]).find(".Number").text();
-			var courseName = coursePrefix + courseNumber;			
-			
-		
-		}
-	    	
-	}
-	*/
-
 	var courseStr = "<ul id='Courses'>";
 	courseStr += formatAll();
 	

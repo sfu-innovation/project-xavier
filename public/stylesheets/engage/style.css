@@ -296,6 +296,22 @@ display: inline-block;
 .slider_box#mobile_share_box form{
 	margin: 20px;
 }
+
+.slider_box#mobile_share_box .button{
+	width: 100px;
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+}
+
+.slider_box#mobile_share_box .selectcourse .dropdown{
+	width:106px;
+}	
+
+.slider_box#mobile_share_box .selectcourse .dropdown a{
+	width:80px;
+	}
+
 /* -----------------------------------------
    right section of the HEADER, course and user box
 ----------------------------------------- */

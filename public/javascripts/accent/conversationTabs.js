@@ -45,7 +45,6 @@ function formatResponse(response) {
 function formatConversation(conversation) {	
 	var upVote = conversation._source.upvote;
 	var downVote = conversation._source.downvote;
-	console.log(conversation.user);
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
 			+ "<div class='Actions'>"
@@ -85,7 +84,6 @@ function selectVote(selectedVote) {
 	}
 	else {
 		value -= 1;		
-		console.log('result:')
 		rqra.downVoteCommentById(commentID.text(), function(result){});
 	}	
 
@@ -172,8 +170,6 @@ function enterPressed(event, textInput) {
 		rqra.createComment(questionID, value, function(result) {
 			// it would be nice to add directly after creating comment
 			// the result should return the whole object not just top layer
-			console.log('creating comment:');
-			console.log(result);
 
 			// maybe refresh the question instead of dynamically adding it
 			rqra.getCommentById(result.comment._id,function(result){	
@@ -238,21 +234,14 @@ function displayConversations(questionID, callback) {
 		conversationStr += allStr;
 		conversationStr += "</div>";
 		callback(conversationStr);
-		//console.log(conver)
-		//return conversationStr;
 	})
 
 }
 
 function refreshQuestions(course) {
-	console.log('show the questions for this course = ' + course)
 	displayQuestions(course);
 
 }
-
-
-// displays asked questions on page load
-console.log('Loaded properly');
 
 // '' = meaning all courses
 displayQuestions('');

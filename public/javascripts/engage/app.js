@@ -808,17 +808,31 @@ function bindArticlePageListeners(engage) {
 
 	//other bindings for article toolbox buttons
 
-	$('.article_options span#options span:nth-child(3) ').bind('click', function () {
+	$('.article_options span.invert_btn ').bind('click', function () {
 		$("div#article_container .columns:first-child").toggleClass('night');
 		$(".article_options").toggleClass('night');
 		return false;
 	})
 
-	$('.article_options span#options span:nth-child(4) ').bind('click', function () {
+	$('.article_options span.textsize_btn ').bind('click', function () {
 		$("#article").toggleClass('larger');
 
 		return false;
 	})
+
+	$('.article_options_mobile span.invert_btn ').bind('click', function () {
+		$("div#article_container .columns:first-child").toggleClass('night');
+		$(".article_options").toggleClass('night');
+		return false;
+	})
+
+	$('.article_options_mobile span.textsize_btn ').bind('click', function () {
+		$("#article").toggleClass('larger');
+
+		return false;
+	})
+
+
 
 
 	$('.article_options span.star_btn.unstarred').live('click', function () {

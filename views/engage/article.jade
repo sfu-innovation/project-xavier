@@ -7,9 +7,9 @@ block content
 			div.article_options#article_options_mobile.show-for-small
 				div#options
 					a(href="/")#back
-						span#back_btn Back
+						span.back_btn Back
 					a(href="#{article.url}", target="_blank")#view_original
-						span#link_btn View Original
+						span.link_btn View Original
 						
 			div.article_options#article_options_mobile.show-for-small
 				div#options
@@ -25,13 +25,13 @@ block content
 						span.like_btn.disliked
 							em #{article.likes}
 							
-					span#invert_btn &nbsp;
-					span#textsize_btn &nbsp;
+					span.invert_btn &nbsp;
+					span.textsize_btn &nbsp;
 					
 			div.article_options.hide-for-small
 			
 				a(href="/")#back
-					span#back_btn
+					span.back_btn
 						|  BACK
 				span#options
 					- if (article.starred)
@@ -50,12 +50,12 @@ block content
 							|  Like (
 							em #{article.likes}
 							)
-					span#invert_btn
+					span.invert_btn
 						|  Day/Night
-					span#textsize_btn 
+					span.textsize_btn 
 						|  Text Size
 					a(href="#{article.url}", target="_blank")
-						span#link_btn
+						span.link_btn
 							|  View Original
 
 

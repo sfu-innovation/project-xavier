@@ -1286,18 +1286,18 @@ div#article_container #article img{
 	background-image: url( "/images/engage/icon/16x16/Like_v1.png");
 }
 
-.article_options span#invert_btn{
+.article_options span.invert_btn{
 	background-image: url( "/images/engage/icon/16x16/Invert_v1.png");
 }
 
-.article_options span#textsize_btn{
+.article_options span.textsize_btn{
 	background-image: url( "/images/engage/icon/16x16/TextSize_v1.png");
 }
 
-.article_options span#link_btn{
+.article_options span.link_btn{
 	background-image: url( "/images/engage/icon/16x16/ViewOriginal_v1.png");	
 }
-.article_options span#back_btn{
+.article_options span.back_btn{
 	background-image: url( "/images/engage/icon/16x16/Back_v1.png");	
 	background-repeat: no-repeat;
 	padding-left: 20px;
@@ -1371,7 +1371,7 @@ div#article_container #article img{
 	color: white;
 	text-align: center;
 }
-#article_options_mobile span#back_btn{
+#article_options_mobile span.back_btn{
 	display: inline-block;
 	line-height: 35px;
 	padding-left: 35px !important;
@@ -1406,23 +1406,23 @@ div#article_container #article img{
 	background-image: url( "/images/engage/icon/32x32/Like_v1.png");
 }
 
-.article_options#article_options_mobile span#invert_btn{
+.article_options#article_options_mobile span.invert_btn{
 	background-image: url( "/images/engage/icon/32x32/Invert_v1.png");
 }
 
-.article_options#article_options_mobile span#textsize_btn{
+.article_options#article_options_mobile span.textsize_btn{
 	background-image: url( "/images/engage/icon/32x32/TextSize_v1.png");
 }
 
-.article_options#article_options_mobile span#link_btn{
+.article_options#article_options_mobile span.link_btn{
 	background-image: none;
 	display: inline-block;
-	width: auto;
+	width: auto !important;
 }
-.article_options#article_options_mobile span#back_btn{
+.article_options#article_options_mobile span.back_btn{
 	background-image: url( "/images/engage/icon/32x32/Back_v1.png");	
 	background-repeat: no-repeat;
-	padding-left: 20px;
+	padding-left: 25px;
 	color: #555;
 }
 
@@ -1894,13 +1894,16 @@ div#upload_avatar{
 .browsebox input {
 	position: absolute;
 	opacity: 0;
-	width: 10%;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
 }
 .browsebox .button{
 	border-radius: 2px;
 	border-color: #555;
 	background-color: #888;
 	pointer-events: none;
+	cursor: pointer;
 }
 div#preference .button{
 	border-radius: 2px;
@@ -1917,6 +1920,15 @@ div#preference #avatar_column .button{
 	width: 120px;
 }
 
+
+div#preference div#edit_box label{
+	float:left;
+	cursor: default;
+}
+
+div#preference div#edit_box span{
+	float:right;
+}
 
 div#preference div#edit_box h4{
 	margin-top: 0;

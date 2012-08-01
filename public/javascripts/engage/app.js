@@ -13,6 +13,7 @@ jQuery(document).ready(function ($) {
 
 
 	initUI();
+	addColor();
 //	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
 
@@ -1350,7 +1351,27 @@ function renderWeekInfoBox(item) {
 	return weekBox;
 }
 
+function addColor(){
+	var courses = $('#course_list li a');
+	var mobile_courses = $('#courses_box .courses a');
+
+	courses.each(function(i,course){
+		var coursename = $(course).html().replace(/\s/g, "");
+		$(course).addClass(stylePicker.getStyle(coursename));
+	})
+
+	mobile_courses.each(function(i,course){
+		var coursename = $(course).html().replace(/\s/g, "");
+
+		$(mobile_courses).addClass(stylePicker.getStyle(coursename));
+	})
+
+
+}
+
 function renderArticlePreviewBox(item) {
+
+
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'

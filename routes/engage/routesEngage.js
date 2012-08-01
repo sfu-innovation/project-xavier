@@ -515,7 +515,6 @@ exports.resourcesOfCurrentUser = function (req, res) {
 
 
 exports.getNotifications = function(request, response){
-	console.log('////');
 	if (request.method === "GET") {
 		var args = {
 			user : request.session.user.uuid,

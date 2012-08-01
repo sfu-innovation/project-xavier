@@ -9,7 +9,6 @@ var UserProfile = require('../models/userProfile.js');
 var notificationHelper = exports.notificationHelper = function(notifications,callback){
 	if(notifications){
 
-		console.log('!!!!!!!!!');
 
 		var new_list = [];
 

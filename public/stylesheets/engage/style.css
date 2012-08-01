@@ -411,7 +411,10 @@ ul#user_options_list li div.dropdown_list{
 ul#user_options_list li div.dropdown_list li{
 	display: block;
 	}
-
+	
+ul#user_options_list li div.dropdown_list li:first-child{
+	border-top: 0px;
+}
 ul#user_options_list li div.dropdown_list.hide{
 	display: none;
 
@@ -914,7 +917,7 @@ div.innercontents span#prof img{
 
 div.articlepreview{
 	padding: 18px;
-	padding-top: 12px;
+	padding-top: 10px;
 	height: 55px;
 	overflow: hidden;
 	font-family: "Lato", sans-serif;
@@ -925,7 +928,10 @@ div.articlepreview{
 div.articlepreview p{
 	font-size: 12px !important;
 	line-height: 1.2 !important;
-	text-overflow: ellipsis
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: normal;
+	height: 43px;
 }
 
 

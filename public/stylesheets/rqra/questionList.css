@@ -2,6 +2,12 @@ div#questionListContent {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	display: -moz-box;
+	-moz-box-orient: vertical;
+	display: box;
+	box-orient: vertical;
 }
 
 div#infolist {
@@ -53,8 +59,8 @@ div#questionCount {
 	-moz-box-orient: horizontal;
 	display: box;
 	box-orient: horizontal;
-	margin-left: 60px;
-	margin-top: 1.0em;
+	margin-left: 58px;
+	margin-top: -5px;
 	font-size: 34px;
 	font-weight: bold;
 	-webkit-animation: question-appear-animation 600ms 0ms 1 alternate forwards;
@@ -233,6 +239,7 @@ div.instructorResponseFlag {
 }
 
 div#pageNumber {
+	margin-top: 15px;
 	display: -webkit-box;
 	-webkit-box-orient: horizontal;
 	display: -moz-box;
@@ -245,8 +252,8 @@ div#pageNumber {
 }
 
 div#pageNumber img {
-	width: 1em;
-	height: 1em;
+	width: 20px;
+	height: 20px;
 	margin: 0.6em;
 }
 

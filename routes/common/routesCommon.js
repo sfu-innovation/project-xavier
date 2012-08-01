@@ -19,9 +19,7 @@ exports.index = function(request, response) {
 }
 
 exports.logout = function(request, response) {
-	console.log('loging out...');	
-	request.session.destroy();	
-	response.redirect('home');
+	response.redirect('https://cas.sfu.ca/cgi-bin/WebObjects/cas.woa/wa/logout');
 }
 
 var createUserNotification = exports.createUserNotification = function(args, callback){

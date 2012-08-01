@@ -617,6 +617,23 @@
 	},
 	{
 		"_index":"accent",
+		"_type":"comments",
+		"_id":"x112348798",
+		"_score":1,
+		"_source":
+		{"user":"jrf2",
+			"upvote":7,
+			"downvote":0,
+			"body":"Buy some hot dogs!",
+			"target_uuid":"aJfzndwdadddQuOicWWAjx7F88",
+			"objectType":"question",
+			"created":"2012-07-09T08:19:31.204Z",
+			"timestamp":"2012-07-09T18:19:31.204Z",
+			"commentParent":""
+		}
+	},
+	{
+		"_index":"accent",
 		"_type":"questions",
 		"_id":"aJfzndwdadddQuOicWWAjx7F32",
 		"_score":1,

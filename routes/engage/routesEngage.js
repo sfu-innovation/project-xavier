@@ -515,33 +515,39 @@ exports.resourcesOfCurrentUser = function (req, res) {
 
 
 exports.getNotifications = function(request, response){
-	if (request.method === "GET") {
+	if (request.session && request.session.user) {
+
 		var args = {
-			user : request.session.user.uuid,
-			app  : 2
+			user:request.session.user.uuid,
+			app:2
 		}
-		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
+		NotificationAction.retrieveUserNotificationsByUser(args, function (err, result) {
 			if (!err) {
-				response.writeHead(200, { 'Content-Type': 'application/json' });
-				if(result){
-					EngageAction.notificationHelper(result,function(err,new_result){
 
+				if (result) {
+					EngageAction.notificationHelper(result, function (err, new_result) {
 
-						response.end(JSON.stringify({ errorcode: 0, notifications: new_result }));
-
+						response.writeHead(200, { 'Content-Type':'application/json' });
+						response.end(JSON.stringify({ errorcode:0, notifications:new_result }));
 
 
 					})
 				}
-				else{
-					response.end(JSON.stringify({ errorcode: 1, message: "No result found" }));
+				else {
+					response.writeHead(200, { 'Content-Type':'application/json' });
+					response.end(JSON.stringify({ errorcode:1, message:"No result found" }));
 				}
 			} else {
-				response.writeHead(500, { 'Content-Type': 'application/json' });
-				response.end(JSON.stringify({ errorcode: 1, message: err }));
+				response.writeHead(500, { 'Content-Type':'application/json' });
+				response.end(JSON.stringify({ errorcode:1, message:err }));
 			}
 		})
 	}
+	else{
+		response.writeHead(403, { 'Content-Type':'application/json' });
+		response.end(JSON.stringify({ errorcode:1, message: "You cannot acces this data" }));
+	}
+
 }
 
 /////PUT REST CALLS ABOVE/////////////////////////////////
@@ -701,7 +707,6 @@ exports.index = function (req, res) {
 exports.setup = function(req, res) {
 
 	if(req.session && req.session.user) {
-		console.log('Porfile: '+req.session.Profile)
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
@@ -726,7 +731,6 @@ exports.setup = function(req, res) {
 				msg: ""
 			});
 		}
-		
 	}
 }
 
@@ -954,7 +958,6 @@ exports.courseView = function (req, res) {
 						courses:req.session.courses
 					}, function (err, rendered) {
 
-
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
 
@@ -964,22 +967,14 @@ exports.courseView = function (req, res) {
 
 				}
 
-
-
-
 			});
-
 		}
-
-
 	}
 	else {
 
 		res.redirect("/splash");
 
 	}
-
-
 }
 
 
@@ -1107,20 +1102,17 @@ exports.preference = function (req, res){
 					pref_name: result.pName,
 					bio: result.bio,
 					format: result.format,
-					msg: result.msg
+					msg: result.msg,
+					comments: result.comments,
+					likes: result.likes
 					}, function (err, rendered) {
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
-
 				})
 		})
-		
 	}
 	else {
-
 		res.redirect("/demo");
-
-
 	}
 
 }

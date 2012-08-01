@@ -70,7 +70,7 @@ html
 			div.row.clearfix.show-for-small
 				script(type='text/javascript')
 					function show_slider_box(id){
-						$(id).slideToggle();
+						$(id).slideToggle('fast');
 					}
 				div.slider_box#menu_box
 					ul
@@ -78,7 +78,6 @@ html
 							a.all_btn(href="/") All Resources
 						li
 							a.contruibutions_btn(href="/mine") Your Contributions
-					ul	
 						li
 							a.starred_btn(href="/starred") Starred
 						li
@@ -124,7 +123,7 @@ html
 									img.avatar(src="#{profile.profilePicture}")
 								- else
 									img.avatar(src="/images/engage/default_profile.png")
-								span#.notification_number 4
+								span.notification_number 4
 							div.dropdown_list#mobile_notif.hide
 								ul
 									li

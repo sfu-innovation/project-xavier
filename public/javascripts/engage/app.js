@@ -491,28 +491,6 @@ jQuery(document).ready(function ($) {
 	}
 
 
-	engage.getNotifications(function(data){
-		console.log(data);
-		$('#notification ul').html('You have no new notifications');
-		if (data && data.errorcode == 0)
-		{
-//			$('#notification ul').empty();
-			if (data.notifications && data.notifications.length > 0){
-				$('#notification .notification_number').html(data.notifications.length);
-				$('#notification ul').empty();
-			$(data.notifications).each(function(i,notification){
-				console.log('!');
-				console.log(notification);
-				$('#notification ul').append(renderNotificationBox(notification));
-
-
-			})
-			}
-			else{
-				$('#notification ul').html('You have no new notifications');
-			}
-		}
-	})
 
 
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
@@ -667,6 +645,8 @@ jQuery(document).ready(function ($) {
 
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
+
+	getAllNotifications();
 
 });
 
@@ -1587,13 +1567,14 @@ function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
 
 function renderNotificationBox(item){
 	var html = '<li>';
-	html += '<a class="notification" href="/"><img src="'
+	html += '<a class="notification" href="/article/'+item.target+'"><img src="'
 		+ (item.avatar ? item.avatar:'/images/engage/default_profile.png')
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
-		+ '<span class="username">'+item.user.firstName+' </span>'
-		+'commented on your article : "' + item.description + '"'
-		+'</p>'
+		+ '<span class="username">'+item.user.firstName+' </span>';
+	html	+= 'commented on your article : "' + item.description + '"'
+		+'</p>';
+
 
 	html += '</a></li>';
 
@@ -1662,3 +1643,40 @@ function paddingforMediumScreen(){
 
 }
 */
+
+
+function getAllNotifications(){
+
+	var engage = new coreApi.Engage();
+	setTimeout(getAllNotifications,10000);
+
+	engage.getNotifications(function(data){
+		$('#notification .notification_number').html(0);
+		$('#notification_mobile .notification_number').html(0);
+		console.log(data);
+		$('#notification ul').html('<li class="center">You have no new notifications</li>');
+		$('#mobile_notif ul').html('<li class="center">You have no new notifications</li>')
+		if (data && data.errorcode == 0)
+		{
+//			$('#notification ul').empty();
+			if (data.notifications && data.notifications.length > 0){
+				$('#notification .notification_number').html(data.notifications.length);
+				$('#notification_mobile .notification_number').html(data.notifications.length);
+
+				$('#notification ul').empty();
+				$('#mobile_notif ul').empty();
+				$(data.notifications).each(function(i,notification){
+					console.log('!');
+					console.log(notification);
+					$('#notification ul').append(renderNotificationBox(notification));
+					$('#mobile_notif ul').append(renderNotificationBox(notification));
+
+				})
+			}
+			else{
+				$('#notification ul').html('<li>You have no new notifications</li>');
+			}
+		}
+	})
+
+}

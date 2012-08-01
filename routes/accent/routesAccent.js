@@ -381,10 +381,12 @@ exports.mediafile = function(request,response){
 }
 
 exports.updateMediaFile = function(request, response){
-		if (request.method === 'POST'){		
+		if (request.method === 'POST'){
 		var uuid = request.params.id;
-		MediaAction.updateMediaFile({'uuid':uuid}, request.body, function(error, result){
+		console.log("UPDATE " + uuid);
+		MediaAction.updateMediaFile(uuid, request.body, function(error, result){
 			if(result){
+				console.log(JSON.stringify(result));
 				response.redirect("/manage");	
 			}
 			else{

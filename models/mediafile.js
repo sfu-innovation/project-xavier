@@ -90,6 +90,7 @@ exports.getUserTagsByMedia = function(userUUID, mediaUUID, callback){
 exports.updateMediaFile = function(id, args, callback){
 	console.log("ID " + typeof id)
 	MediaFile.find(id).success(function(mediaFile) {
+		console.log("GOT IT!!!!!!!  " + mediaFile.uuid)
 		mediaFile.updateAttributes(args).success(function(updatedMedia) {
 			console.log("updated succesfully");
 			callback(null, updatedMedia);

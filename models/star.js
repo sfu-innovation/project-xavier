@@ -36,6 +36,8 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 			else {
 				Star.create({user:userUUID, resource:resourceUUID}).success(
 					function (star) {
+						callback(null,star);
+
 						var args = {
 							user : userUUID,
 							target : resourceUUID,
@@ -45,13 +47,15 @@ exports.starResource = function (userUUID, resourceUUID, callback) {
 						}
 						Notification.addStarUserNotification(args, function(error){
 							if(error)
-								return callback(error)
+								console.log('addStarUserNotification Failed' + error);
 
 							Notification.addStarNotifier(args, function(error){
-								if(error)
-									return callback(error);
+								if(error){
+									console.log('addStarNotifier Failed' + error);
+								}
+//									return callback(error);
 
-								callback(null, star);
+//								callback(null, star);
 							})
 
 						})

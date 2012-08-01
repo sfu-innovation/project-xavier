@@ -32,18 +32,12 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	console.log('tags fetching')
-	console.log('tag start = ' + tag.start)
-	console.log('tag end = ' + tag.end)
-	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "px; width: " + convertTime2Pixel(tag.end) + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "%; width: " + convertTime2Pixel(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
 function convertTime2Pixel(time) {
 	var videoWidth = $(".Timeline").width();	
-	var pixel = time * videoWidth / video.duration;	
-
-	console.log('pixel = ' + pixel)
-
+	var pixel = time * 100 / video.duration;	
 	return pixel;
 }
 
@@ -121,8 +115,7 @@ function bindTag(tag) {
 	tag.bind("dblclick", function(evt) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
-		video.pause();
-		console.log('play here = ' + tag.offset)
+		video.pause();			
 		video.currentTime = tag.offset;
 		if (tag.duration > 0)
 			video.play();
@@ -150,12 +143,10 @@ function bindTag(tag) {
 
 		accent.getTagById(tagID, function(data){		
 			if (data.tag) {
-				showTagInfo(data.tag.title, data.tag.description);			
-				console.log('should display something')
+				showTagInfo(data.tag.title, data.tag.description);							
 			}				
 			else {
-				showTagInfo("", "");
-				console.log('should display nothing')
+				showTagInfo("", "");				
 			}				
 
 		})
@@ -182,11 +173,12 @@ function bindTag(tag) {
 
 function addTag(time) {
 	var p = time/video.duration * 100;
+	var endTime = 0;
 	var tag = $('<div class="Tag" style="left: '+p+'%; width: 12px; background: red;"></div>');
 	$(".Timeline").prepend(tag);
 	tag.data("tag", {
 		offset: time,
-		duration: 0
+		duration: endTime
 	});
 	bindTag(tag);
 }
@@ -198,17 +190,12 @@ $(document).ready(function () {
 
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');	
-		console.log('evt X = ' + evt.offsetX)
-		console.log('dbl click = ' + (evt.offsetX / $(this).width() * video.duration))	
-		var tag = addTag(evt.offsetX / $(this).width() * video.duration);
-		console.log('should display nothing when d clicked')
+		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');			
+		var curTime = (evt.offsetX / $(this).width() * video.duration);		
+		
+		var tag = addTag(curTime);		
 		showTagInfo("","");
 
-		//tag.data("offset", offset)
-		//tag.prependTo($(this))
-		//bindTag(tag)
-		//tag.data("offset", offset)
 		$(this).data("current-tag", tag)
 	}).bind("mousedown", function(evt) {					
 		$(this).data("last", evt.pageX);

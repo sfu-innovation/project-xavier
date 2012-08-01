@@ -1,12 +1,12 @@
 var accent = new coreApi.Accent();
 
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
-var video = document.getElementById("mediaPlayer");
+var video = document.getElementById("Video");
 
 function loadMedia(uuid){	
 	accent.getMediaFileById(uuid, function(data){
-		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
-		$('#mediaPlayer').attr('autoplay', 'autoplay');
+		$('#Video').attr('src', '/media/' + data.mediafile.path);
+		$('#Video').attr('autoplay', 'autoplay');
 		var mediaTitle = $("#Main").children("h1");
 		mediaTitle.text(data.mediafile.title);
 

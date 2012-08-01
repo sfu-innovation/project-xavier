@@ -71,22 +71,22 @@ function refreshTags(filterType){
 
 	switch(filterType) {
 		case "All":
-			displayTags(mediaID,"");
+			displayTags("");
 			break;
 		case "Important":
-			displayTags(mediaID,0);
+			displayTags(0);
 			break;
 		case "Examable":
-			displayTags(mediaID,1);
+			displayTags(1);
 			break;
 		case "Question":
-			displayTags(mediaID,2);
+			displayTags(2);
 			break;
 		case "Interesting":
-			displayTags(mediaID,3);
+			displayTags(3);
 			break;
 		case "General":
-			displayTags(mediaID,4);
+			displayTags(4);
 			break;
 	}
 	

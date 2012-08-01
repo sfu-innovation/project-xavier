@@ -191,19 +191,15 @@ div#header{
 	text-align: right;
 }
 
-.no-touch #header.banner{
-	background-image: url("/images/engage/sfu_brand_banner.png");
-	background-position: cover;
-	width: 100%;
-	}
-	
 #header.banner{
-	background-image: url("/images/engage/SFUMobile_TOP_Mobile_Banner.png");
+	background-image: url("/images/engage/sfu_brand_banner.png");
+	background-position: center;
 }
 #header #banner_logo{
 	line-height: 90px;
 	vertical-align: middle;
 	display: inline-block;
+	padding-left: 8px;
 }
 #header #banner_logo img{
 	vertical-align: middle;
@@ -298,13 +294,11 @@ div#header{
    right section of the HEADER, course and user box
 ----------------------------------------- */
 div#user_options{
-
+	padding-right:0;
 	min-width: 320px;
 }
 
-div#user_options{
 
-}
 ul#user_options_list{
 	list-style: none;
 	text-align: right;
@@ -459,7 +453,9 @@ ul#user_options_list span.typicn.next{
 	-webkit-transform: rotate(90deg); 
 	-moz-transform: rotate(90deg);	
 }
-
+#mobile_logo_box{
+	padding-left: 8px;
+}
 
 li.mobile_view ul{
 	margin-left: -100px;
@@ -476,7 +472,7 @@ li.mobile_view	div.expand_btn{
 	-moz-box-shadow: 1px 1px 5px black;
 	-webkit-box-shadow: 1px 1px 5px black;
 	box-shadow: 1px 1px 5px black;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	text-align: center;
 	vertical-align: text-bottom;
 	line-height: 30px;
@@ -673,6 +669,7 @@ div.innerwrap > img {
 	position: absolute;
 	opacity: 0.4;
 	-webkit-transition: all 0.5s ease-in-out;
+
 }
 
 div.innerwrap > img:hover {
@@ -696,18 +693,19 @@ div.innerwrap{
 	padding: 0;
 	overflow: hidden;
 	z-index: 1;
+	border-bottom: 1px solid #CCC;
 
 }
 
 div.innercontents h5{
 	width:100%;
 	overflow: hidden;
-	padding-bottom: 4px;
-	padding: 18px;
+	padding: 16px;
 	position: absolute;
 	bottom: 95px;
 	z-index: 9;
 	height: 180px;
+	margin-bottom: 5px;
 	
 	}
 	
@@ -1033,7 +1031,7 @@ div.cover.flip .frontCard {
 
 
 div.cover .backCard {
-	background-color: rgba(250, 250, 250,1);
+	background-color: #fff;
 	-moz-box-shadow: 0px 0px 7px rgba(0,0,0,0.35);
 	-webkit-box-shadow:0px 0px 7px rgba(0, 0, 0, 0.35);
 	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.35);
@@ -1076,9 +1074,12 @@ div.innercontents#submitnew{
 }
 
 div.innercontents#submitnew form{
-	margin:10px
+	padding: 12px 20px;
 }
-	
+
+div.innercontents#submitnew form label{
+	margin-bottom: 10px;
+} 
 .sumbitrow{
 	display: inline-block;
 	width: 100%;
@@ -1100,7 +1101,7 @@ div.submit{
 }
 
 div.innercontents form textarea{
-	height: 226px;
+	height: 220px;
 	resize: none; 
 	}
 
@@ -1819,8 +1820,8 @@ div#upload_avatar{
 .browsebox {
 	position: absolute;
 	overflow: hidden;
-	right: 12px;
-	top: 30px;
+	right: 21px;
+	top: 38px;
 	margin-left:225px;
 }
 

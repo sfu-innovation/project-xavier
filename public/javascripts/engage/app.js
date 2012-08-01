@@ -1288,7 +1288,7 @@ function renderArticlePreviewBox(item) {
 			+ '<p>Posted '
 			+ '<span class="post_time" data-time="'+ item.createdAt +'"> ' + formartDate(item.createdAt) + '</span>'
 			+ ' in '
-			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number
+			+ '<span class="coursename">' + '<a class="'+stylePicker.getStyle(item.course.subject+item.course.number)+'" href="/course/' + item.course.subject + '-' + item.course.number + '-' + item.course.section + '#week' + item.week + '">' + item.course.subject + " " + item.course.number 
 			+ '</a>'
 			+ '</span>'
 

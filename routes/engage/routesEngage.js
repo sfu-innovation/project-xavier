@@ -1217,7 +1217,7 @@ exports.commentsByResourceUUID = function(request, response) {
 											}
 										}
 										else{
-											resply.owner = false;
+											reply.owner = false;
 										}
 									})
 								}

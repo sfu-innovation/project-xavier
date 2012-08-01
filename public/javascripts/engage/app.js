@@ -12,10 +12,6 @@ var stylePicker = new stylePicker();
 jQuery(document).ready(function ($) {
 
 
-
-
-
-
 	initUI();
 //	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
@@ -68,271 +64,12 @@ jQuery(document).ready(function ($) {
 
 	else if (window.location.toString().indexOf('article') != -1) {
 		$('#owner_comment span.post_time').html(formartDate($('#owner_comment span.post_time').attr('data-time')));
+
 		loadComments(engage);
 
+		bindArticlePageListeners(engage);
 
-		$('#comments li .like_btn').live('click',function(){
-			var self = $(this);
-			var list = self.closest('li');
-			var id = list.attr('data-parent-uuid');
-			engage.likeCommentById(id,function(data){
-				if (data && data.errorcode === 0){
-					var num = parseInt(self.children().html()) + 1;
-					self.children().html(num);
-					self.addClass('dislike_btn');
-					self.removeClass('like_btn');
 
-
-				}
-			})
-
-		})
-
-
-
-		$('#comments li .edit_btn').live('click',function(){
-			var self = $(this);
-			var list = self.closest('li');
-			var p = list.children('p');
-
-			var control = list.children('.comment_control');
-			p.hide();
-			control.slideDown('slow');
-		})
-
-
-		$('#comments li .cancel_btn').live('click',function(){
-			var self = $(this);
-			var list = self.closest('li');
-			var p = list.children('p');
-
-			var control = list.children('.comment_control');
-			p.show();
-			control.slideUp('slow');
-		})
-
-		$('#comments li .delete_btn').live('click',function(){
-			var self = $(this);
-			var list = self.closest('li');
-			var p = list.children('p');
-			var control = list.children('.comment_control');
-//			engage.update
-			var id = list.attr('data-parent-uuid');
-			var text = "!@#$%^&*()";
-
-			engage.updateCommentById(id,text,function(data){
-				console.log(data);
-				if (data && data.errorcode === 0){
-
-					list.html('This comment has been deleted');
-					p.show();
-					control.hide();
-
-				}
-
-
-			})
-
-		})
-
-		$('#comments li .save_btn').live('click',function(){
-			var self = $(this);
-			var list = self.closest('li');
-			var p = list.children('p');
-			var control = list.children('.comment_control');
-//			engage.update
-			var id = list.attr('data-parent-uuid');
-			var text = control.children('input').val();
-
-			engage.updateCommentById(id,text,function(data){
-				console.log(data);
-				if (data && data.errorcode === 0){
-
-					p.html(text);
-					p.show();
-					control.hide();
-
-				}
-
-
-			})
-
-		})
-
-
-		$('.reply_click').live('click',function(){
-
-			$('.reply_box').remove();   //remove all other reply box
-			var self = $(this);
-			var list = self.closest('li');
-
-			var target_uuid = list.attr('data-target-uuid');
-			var reply_to = list.attr('data-reply-to');
-			var parent_uuid = list.attr('data-parent-uuid');
-
-
-
-			if (self.attr('data-reply-type') === 'super'){
-				target_uuid = self.attr('data-target-uuid');
-				reply_to = $('#owner_comment .name').html();//the name of user it replies to
-				var new_reply_box = renderReplyBox("comment",reply_to,target_uuid,null);
-//
-				$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
-
-			}
-			else if(list.attr('data-reply-type') === 'comment'){
-
-				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).insertAfter(self.closest('.comment')).slideDown('slow',function(){$('form input#reply_content').focus();});
-
-
-
-			}
-			else if(list.attr('data-reply-type') === 'replies'){
-
-				var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
-				$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
-
-
-			}
-
-
-		})
-
-		$('.reply_box form').live('submit',function(){
-			var self = $(this);
-			var comment = {};
-			comment.target_uuid = $('form input#comment_target').val();
-			comment.parent_uuid = $('form input#comment_parent').val();
-			comment.body = $('form input#reply_content').val();
-
-			engage.createComment(comment,function(data){
-
-//				console.log(data);
-				if (data && data.comment){
-
-					data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
-					var type = $('.reply_box form').attr('data-reply-type');
-					console.log(data);
-					if (type){
-						$('.reply_box').hide();
-						var new_comment = renderBox(data.comment,type);
-						if (type === "replies"){
-
-							$(new_comment).appendTo(self.closest('ol'));
-
-							$.scrollTo(self.closest('ol').children('li').filter(':last'),900);
-
-						}
-						else if (type === "comment"){
-							new_comment = '<li class="thread"><ol>'+ new_comment +'</ol></li>'
-							$(new_comment).appendTo('#comments > ol');
-							$.scrollTo($('#comments > ol > li:last-child'),900);
-						}
-
-						$('.reply_box').remove();
-					}
-
-
-
-				}
-
-			})
-
-			return false;
-		})
-
-		$('.article_options span#options span:nth-child(3) ').bind('click', function () {
-			$("div#article_container .columns:first-child").toggleClass('night');
-			$(".article_options").toggleClass('night');
-			return false;
-		})
-
-		$('.article_options span#options span:nth-child(4) ').bind('click', function () {
-			$("#article").toggleClass('larger');
-
-			return false;
-		})
-
-
-		$('.article_options span.star_btn.unstarred').live('click', function () {
-			var self = $(this);
-			var resource_uuid = $('#hidden-info').attr('data-resource-id');
-			if (resource_uuid) {
-				engage.starResource(resource_uuid, function (data) {
-					if (data && data.errorcode === 0) {
-						self.removeClass('unstarred');
-						self.addClass('starred');
-					}
-
-
-				})
-			}
-
-		})
-
-		$('.article_options span.star_btn.starred').live('click', function () {
-			var self = $(this);
-			var resource_uuid = $('#hidden-info').attr('data-resource-id');
-			if (resource_uuid) {
-				engage.unstarResource(resource_uuid, function (data) {
-					if (data && data.errorcode === 0) {
-						self.removeClass('starred');
-						self.addClass('unstarred');
-						if (window.location.toString().indexOf('starred') != -1) {
-							self.parent().parent().parent().fadeOut('slow', function () {
-								$(this).remove();
-							});
-						}
-					}
-
-				})
-			}
-
-		})
-
-		$('.article_options span.like_btn.disliked').live('click',function(){
-
-			var self = $(this);
-			var resource_uuid = $('#hidden-info').attr('data-resource-id');
-			if (resource_uuid){
-				engage.likeResource(resource_uuid,function(data){
-					console.log(data);
-					if (data && data.errorcode === 0) {
-						self.addClass('liked');
-						self.removeClass('disliked');
-
-						var num = parseInt(self.children().html()) + 1;
-						self.children().html(num);
-
-					}
-				})
-
-			}
-
-		})
-
-		$('.article_options span.like_btn.liked').live('click',function(){
-
-			var self = $(this);
-			var resource_uuid = $('#hidden-info').attr('data-resource-id');
-			if (resource_uuid){
-				engage.dislikeResource(resource_uuid,function(data){
-					if (data && data.errorcode === 0) {
-						self.removeClass('liked');
-						self.addClass('disliked');
-
-						var num = parseInt(self.children().html()) - 1;
-
-						self.children().html(num);
-
-					}
-
-				})
-
-			}
-
-		})
 
 
 	}
@@ -763,6 +500,55 @@ function initUI() {
 
 }
 
+
+/*** load Comments and Render the HTML on */
+function loadComments(engage) {
+	//hidden info that backend passes to front end javascript
+	//find the id we rquired to call the REST api
+	var id = $('#hidden-info').attr('data-resource-id');
+	if (id) {
+		// using our REST api library to request a list of json objects from backend
+		engage.getCommentsByResourceId(id, function (data) {
+			if (data) {
+				if (data.errorcode === 0) {
+					//if we got data form backend and there is no error, start to render the data
+					console.log(data);
+					//we render comment thread by thread, append the result immediately to the page
+					$.each(data.comments, function (index, item) {
+
+						comment = renderCommentThread(item);
+
+						$('#comments > ol').append(comment);
+					});
+				}
+
+			}
+
+
+		})
+	}
+
+}
+
+function renderCommentThread(item) {
+
+	var html = renderBox(item, "comment");
+
+	if (item.replies && item.replies.length > 0) {
+
+		$.each(item.replies, function (index, reply) {
+
+			html += renderBox(reply, "replies");
+		});
+
+
+	}
+
+	html = '<li class="thread"><ol>' + html + '</ol></li>';
+
+	return html;
+}
+
 function renderBox(item,type){
 	if (item.body === "!@#$%^&*()"){
 		return '<li class = "'+type+'">This comment has been deleted</li>'
@@ -810,54 +596,271 @@ function renderBox(item,type){
 	return html;
 }
 
-function renderCommentBox(item){
+
+function bindArticlePageListeners(engage) {
+
+	$('#comments li .like_btn').live('click',function(){
+		var self = $(this);
+		var list = self.closest('li');
+		var id = list.attr('data-parent-uuid');
+		engage.likeCommentById(id,function(data){
+			if (data && data.errorcode === 0){
+				var num = parseInt(self.children().html()) + 1;
+				self.children().html(num);
+				self.addClass('dislike_btn');
+				self.removeClass('like_btn');
 
 
-
-   var html = renderBox(item, "comment");
-
-	if (item.replies && item.replies.length > 0){
-
-		$.each(item.replies, function (index, reply) {
-
-			html += renderBox(reply, "replies");
-		});
-
-
-	}
-
-	html = '<li class="thread"><ol>'+ html +'</ol></li>';
-
-	return html;
-}
-
-function loadComments(engage){
-	var id = $('#hidden-info').attr('data-resource-id');
-	if(id){
-		engage.getCommentsByResourceId(id,function(data){
-			if (data){
-				if (data.errorcode === 0){
-					console.log(data);
-					$.each(data.comments, function (index, item) {
-
-						console.log(item);
-						comment = renderCommentBox(item);
-
-
-						$('#comments > ol').append(comment);
-					});
-				}
-				else{
-
-				}
 			}
-			else{
+		})
+
+	})
+
+
+
+	$('#comments li .edit_btn').live('click',function(){
+		var self = $(this);
+		var list = self.closest('li');
+		var p = list.children('p');
+
+		var control = list.children('.comment_control');
+		p.hide();
+		control.slideDown('slow');
+	})
+
+
+	$('#comments li .cancel_btn').live('click',function(){
+		var self = $(this);
+		var list = self.closest('li');
+		var p = list.children('p');
+
+		var control = list.children('.comment_control');
+		p.show();
+		control.slideUp('slow');
+	})
+
+	$('#comments li .delete_btn').live('click',function(){
+		var self = $(this);
+		var list = self.closest('li');
+		var p = list.children('p');
+		var control = list.children('.comment_control');
+//			engage.update
+		var id = list.attr('data-parent-uuid');
+		var text = "!@#$%^&*()";
+
+		engage.updateCommentById(id,text,function(data){
+			console.log(data);
+			if (data && data.errorcode === 0){
+
+				list.html('This comment has been deleted');
+				p.show();
+				control.hide();
+
+			}
+
+
+		})
+
+	})
+
+	$('#comments li .save_btn').live('click',function(){
+		var self = $(this);
+		var list = self.closest('li');
+		var p = list.children('p');
+		var control = list.children('.comment_control');
+//			engage.update
+		var id = list.attr('data-parent-uuid');
+		var text = control.children('input').val();
+
+		engage.updateCommentById(id,text,function(data){
+			console.log(data);
+			if (data && data.errorcode === 0){
+
+				p.html(text);
+				p.show();
+				control.hide();
+
+			}
+
+
+		})
+
+	})
+
+
+	$('.reply_click').live('click',function(){
+
+		$('.reply_box').remove();   //remove all other reply box
+		var self = $(this);
+		var list = self.closest('li');
+
+		var target_uuid = list.attr('data-target-uuid');
+		var reply_to = list.attr('data-reply-to');
+		var parent_uuid = list.attr('data-parent-uuid');
+
+
+
+		if (self.attr('data-reply-type') === 'super'){
+			target_uuid = self.attr('data-target-uuid');
+			reply_to = $('#owner_comment .name').html();//the name of user it replies to
+			var new_reply_box = renderReplyBox("comment",reply_to,target_uuid,null);
+//
+			$(new_reply_box).insertAfter('#owner_comment').slideDown('slow',function(){$('form input#reply_content').focus();});
+
+		}
+		else if(list.attr('data-reply-type') === 'comment'){
+
+			var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+			$(new_reply_box).insertAfter(self.closest('.comment')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
+
+
+		}
+		else if(list.attr('data-reply-type') === 'replies'){
+
+			var new_reply_box = renderSubReplyBox("replies",reply_to,target_uuid,parent_uuid);
+			$(new_reply_box).insertAfter(self.closest('.replies')).slideDown('slow',function(){$('form input#reply_content').focus();});
+
+
+		}
+
+
+	})
+
+	$('.reply_box form').live('submit',function(){
+		var self = $(this);
+		var comment = {};
+		comment.target_uuid = $('form input#comment_target').val();
+		comment.parent_uuid = $('form input#comment_parent').val();
+		comment.body = $('form input#reply_content').val();
+
+		engage.createComment(comment,function(data){
+
+//				console.log(data);
+			if (data && data.comment){
+
+				data.comment.reply_to =  $('.reply_box form').attr('data-reply-to');
+				var type = $('.reply_box form').attr('data-reply-type');
+				console.log(data);
+				if (type){
+					$('.reply_box').hide();
+					var new_comment = renderBox(data.comment,type);
+					if (type === "replies"){
+
+						$(new_comment).appendTo(self.closest('ol'));
+
+						$.scrollTo(self.closest('ol').children('li').filter(':last'),900);
+
+					}
+					else if (type === "comment"){
+						new_comment = '<li class="thread"><ol>'+ new_comment +'</ol></li>'
+						$(new_comment).appendTo('#comments > ol');
+						$.scrollTo($('#comments > ol > li:last-child'),900);
+					}
+
+					$('.reply_box').remove();
+				}
+
+
 
 			}
 
 		})
-	}
 
+		return false;
+	})
+
+	$('.article_options span#options span:nth-child(3) ').bind('click', function () {
+		$("div#article_container .columns:first-child").toggleClass('night');
+		$(".article_options").toggleClass('night');
+		return false;
+	})
+
+	$('.article_options span#options span:nth-child(4) ').bind('click', function () {
+		$("#article").toggleClass('larger');
+
+		return false;
+	})
+
+
+	$('.article_options span.star_btn.unstarred').live('click', function () {
+		var self = $(this);
+		var resource_uuid = $('#hidden-info').attr('data-resource-id');
+		if (resource_uuid) {
+			engage.starResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
+					self.removeClass('unstarred');
+					self.addClass('starred');
+				}
+
+
+			})
+		}
+
+	})
+
+	$('.article_options span.star_btn.starred').live('click', function () {
+		var self = $(this);
+		var resource_uuid = $('#hidden-info').attr('data-resource-id');
+		if (resource_uuid) {
+			engage.unstarResource(resource_uuid, function (data) {
+				if (data && data.errorcode === 0) {
+					self.removeClass('starred');
+					self.addClass('unstarred');
+					if (window.location.toString().indexOf('starred') != -1) {
+						self.parent().parent().parent().fadeOut('slow', function () {
+							$(this).remove();
+						});
+					}
+				}
+
+			})
+		}
+
+	})
+
+	$('.article_options span.like_btn.disliked').live('click',function(){
+
+		var self = $(this);
+		var resource_uuid = $('#hidden-info').attr('data-resource-id');
+		if (resource_uuid){
+			engage.likeResource(resource_uuid,function(data){
+				console.log(data);
+				if (data && data.errorcode === 0) {
+					self.addClass('liked');
+					self.removeClass('disliked');
+
+					var num = parseInt(self.children().html()) + 1;
+					self.children().html(num);
+
+				}
+			})
+
+		}
+
+	})
+
+	$('.article_options span.like_btn.liked').live('click',function(){
+
+		var self = $(this);
+		var resource_uuid = $('#hidden-info').attr('data-resource-id');
+		if (resource_uuid){
+			engage.dislikeResource(resource_uuid,function(data){
+				if (data && data.errorcode === 0) {
+					self.removeClass('liked');
+					self.addClass('disliked');
+
+					var num = parseInt(self.children().html()) - 1;
+
+					self.children().html(num);
+
+				}
+
+			})
+
+		}
+
+	})
 }
 
 function loadInstructorArticles(engage) {

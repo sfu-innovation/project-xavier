@@ -158,7 +158,7 @@ app.delete('/api/notification/:id',routesEngage.deleteNotificationById);   //usi
 //non-REST calls
 // routing
 app.get('/login', routesEngage.login);
-app.get('/logout', routesCommon.logout);
+app.get('/logout', routesEngage.logout);
 
 
 

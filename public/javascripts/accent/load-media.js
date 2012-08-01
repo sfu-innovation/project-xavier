@@ -1,9 +1,9 @@
 var accent = new coreApi.Accent();
 
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
-var video = document.getElementById("Video");
+var video = document.getElementById("mediaPlayer");
 
-function loadMedia(uuid){
+function loadMedia(uuid){	
 	accent.getMediaFileById(uuid, function(data){
 		$('#mediaPlayer').attr('src', '/media/' + data.mediafile.path);
 		$('#mediaPlayer').attr('autoplay', 'autoplay');
@@ -181,7 +181,8 @@ function addTag(time) {
 loadMedia(mediaID);
 displayTags(mediaID, "");
 
-$(document).ready(function () {	
+$(document).ready(function () {		
+
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;
 		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');

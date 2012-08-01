@@ -24,7 +24,7 @@ exports.logout = function(request, response) {
 	response.redirect('home');
 }
 
-var createUserNotification = function(args, callback){
+var createUserNotification = exports.createUserNotification = function(args, callback){
 	NotificationAction.createUserNotificationSettings(args, function(err, success){
 		if(err)
 			return callback(err);

@@ -151,14 +151,14 @@ div#header{
 }
 
 #header ul#options li a{
-	color:  rgba(250, 250, 250, 1);
+	color:  rgba(250, 250, 250, 0.97);
 	height: 90px;
 	padding: 0 8px;
 	padding-top: 36px;
 	font-size: 15px;
 	display: inline-block;
 	vertical-align: middle;
-	text-shadow: 0 0 2px black;
+	text-shadow: 0 0 5px black;
 
 
 
@@ -171,13 +171,13 @@ div#header{
 }
 
 #header ul#options li a.active span{
-	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
+	border-bottom: 4px solid rgba(250, 250, 250, 0.9);
 }
 #header ul#options li:hover{
 	background-color: rgba(0, 0, 0, 0.5);
 }
 #header ul#options li:hover a span{
-	border-bottom: 4px solid rgba(250, 250, 250, 0.8);
+	border-bottom: 4px solid rgba(250, 250, 250, 0.9);
 }
 
 #header ul#options li:hover:first-child a{
@@ -203,6 +203,7 @@ div#header{
 }
 #header #banner_logo img{
 	vertical-align: middle;
+	padding-bottom: 2px;
 	}	
 #header img.logo#small_logo{
 	min-width: 70px;
@@ -275,7 +276,7 @@ div#header{
 	width:50%;
 	float: left;
 	text-align: left;
-display: inline-block;
+	display: inline-block;
 }
 
 .slider_box#courses_box ul{
@@ -339,7 +340,7 @@ ul#user_options_list li{
 
 	}
 ul#user_options_list li#notification {
-	margin: 0;
+	margin-top: 9px;
 	margin-right: -4px;
 }
 
@@ -374,9 +375,9 @@ ul#user_options_list div.dropdown_btn{
 ul#user_options_list li img{
 	height: 45px;
 	width: 45px;
-	-moz-box-shadow: 1px 1px 2px #9E9E9E;
-	-webkit-box-shadow: 1px 1px 2px #9E9E9E;
-	box-shadow: 1px 1px 2px #9E9E9E;
+	-moz-box-shadow: 1px 1px 5px rgb(65,65,65);
+	-webkit-box-shadow: 1px 1px 5px rgb(65,65,65);
+	box-shadow: 1px 1px 5px rgb(65,65,65);
 	}
 	
 ul#user_options_list li img.user_avatar{
@@ -386,17 +387,17 @@ ul#user_options_list li img.user_avatar{
 ul#user_options_list span.notification_number{
 	display: block;
 	position: absolute;
-	background-color: #B5111B;
+	background-color: rgb(255,39,39);
 	-moz-box-shadow: 1px 1px 5px black;
 	-webkit-box-shadow: 1px 1px 5px black;
-	box-shadow: 1px 1px 5px black;
-	width: 20px;
-	height: 20px;
+	box-shadow: 0px 1px 4px black;
+	width: 18px;
+	height: 18px;
 	color: white;
 	font-weight: bold;
 	text-align: center;
-	margin-left: -6px;
-	margin-top: -22px;
+	margin-left: -9px;
+	margin-top: -17px;
 }
 	
 ul#user_options_list li div.dropdown_list{
@@ -410,7 +411,10 @@ ul#user_options_list li div.dropdown_list{
 ul#user_options_list li div.dropdown_list li{
 	display: block;
 	}
-
+	
+ul#user_options_list li div.dropdown_list li:first-child{
+	border-top: 0px;
+}
 ul#user_options_list li div.dropdown_list.hide{
 	display: none;
 
@@ -424,8 +428,8 @@ div.dropdown_list ul{
 	-moz-box-shadow: 1px 1px 2px #9e9e9e;
 	-webkit-box-shadow: 1px 1px 2px #9e9e9e;
 	box-shadow: 1px 1px 2px #9e9e9e;
-	margin-left: -7px;
-	margin-top:1px;
+	margin-left: -10px;
+	margin-top:	15px;
 
 	}
 	
@@ -480,7 +484,7 @@ div.dropdown_list#notif p.msg span.coursename{
  }
 
 div.dropdown_list#course_list ul{
-	margin-left: -44px;
+	margin-left: -47px;
 }
 
 
@@ -772,9 +776,9 @@ div.innercontents h5 a{
 	font-size: 30px;
 	font-family: 'Merriweather', serif;
 	color: white;	
-	text-shadow: 1px 1px 5px black;
+	text-shadow: 1px 1px 7px black;
 	margin-bottom: 5px;
-	padding-right: 10px;
+	padding-right: 12px;
 }
 
 div.innercontents h5 a.noimage{
@@ -785,7 +789,7 @@ div.innercontents h5 a.noimage{
 }
 
 div.post_details {
-	padding-left: 50px;
+	padding-left: 53px;
 	height: 65px;
 	padding-top: 10px;
 	}
@@ -794,7 +798,10 @@ div.innercontents img.avatar{
 	width:49px;
 	position: absolute;
 	margin-left: -5px;
-	margin-top:8px;
+	margin-top:7px;
+	box-shadow: 1px 1px 3px rgb(160,160,160);
+	-moz-box-shadow: 1px 1px 3px rgb(160,160,160);
+	-webkit-box-shadow: 1px 1px 3px rgb(160,160,160);
 }
 
 div.post_details{
@@ -910,7 +917,7 @@ div.innercontents span#prof img{
 
 div.articlepreview{
 	padding: 18px;
-	padding-top: 12px;
+	padding-top: 10px;
 	height: 55px;
 	overflow: hidden;
 	font-family: "Lato", sans-serif;
@@ -921,7 +928,10 @@ div.articlepreview{
 div.articlepreview p{
 	font-size: 12px !important;
 	line-height: 1.2 !important;
-	text-overflow: ellipsis
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: normal;
+	height: 43px;
 }
 
 
@@ -940,6 +950,7 @@ div.post_details span.coursename:hover{
 div.likescomments{
 	text-align: right;
 	padding: 10px;
+	padding-right: 16px;
 	
 }
 div.likescomments span{
@@ -1131,11 +1142,11 @@ div.innercontents#submitnew{
 }
 
 div.innercontents#submitnew form{
-	padding: 12px 20px;
+	padding: 12px 16px;
 }
 
 div.innercontents#submitnew form label{
-	margin-bottom: 10px;
+	margin-bottom: 11px;
 } 
 .sumbitrow{
 	display: inline-block;
@@ -1203,8 +1214,8 @@ div#article_container #article iframe{
 	width: 100%;
 }
 div#article_container #article p{
-		font-size: 16px;
-		}
+	font-size: 14px;
+}
 
 div#article_container .columns:first-child.night{
 	-webkit-transition: all 0.2s ease-in-out;
@@ -1228,7 +1239,7 @@ div#article_container #article img{
 	}
 .article_options{
 	margin-top: 30px;
-	padding: 0em 1em 0em;
+	padding: 0.5em 1.9em 0.5em;
 	}
 	
 	
@@ -1300,7 +1311,7 @@ div#article_container #article img{
 .article_options span.back_btn{
 	background-image: url( "/images/engage/icon/16x16/Back_v1.png");	
 	background-repeat: no-repeat;
-	padding-left: 20px;
+	padding-left: 25px;
 	color: #555;
 }
 
@@ -1422,7 +1433,7 @@ div#article_container #article img{
 .article_options#article_options_mobile span.back_btn{
 	background-image: url( "/images/engage/icon/32x32/Back_v1.png");	
 	background-repeat: no-repeat;
-	padding-left: 25px;
+	padding-left: 20px;
 	color: #555;
 }
 
@@ -1461,17 +1472,16 @@ div#article_container #comments #owner_comment{
 	/*-moz-box-shadow: 0 0 1px #9e9e9e;*/
 	/*-webkit-box-shadow: 0 0 1px #9e9e9e;*/
 	/*box-shadow: 0 0 1px #9e9e9e;*/
-	padding: 10px;
-
+	padding: 11px;
 	background: rgba(0,0,0,0.1);
 	border-top: 2px solid rgba(0,0,0,0.1);
-	padding-left: 70px;
+	padding-left: 75px;
 	position: relative;
 
 	}
 
 div#article_container #comments h5{
-	padding-left: 10px;
+	padding-left: 15px;
 	
 
 }
@@ -1510,7 +1520,7 @@ div#article_container .thread li span.edit_btn:hover{
 div#article_container #comments span{
 	font-size: 12px;
 	font-weight: 300;
-	font-style: normal;
+	font-style: italic;
 }
 
 div#article_container #comments span.reply_to{
@@ -1543,13 +1553,13 @@ div#article_container #comments li{
 	}
 
 div#article_container #comments li.comment,div#article_container #comments li.replies{
-	padding-left: 70px;
+	padding-left: 75px;
 	position: relative;
 }
 
 div#article_container #comments .avatar{
 	position: absolute;
-	left:10px;
+	left:15px;
 	top:15px;
 
 }
@@ -1558,6 +1568,10 @@ div#article_container #comments .avatar img{
 	border: 0;
 	width: 49px;
 	height: 49px;
+	box-shadow: 0px 0px 4px gray;
+	-moz-box-shadow: 0 0 4px gray;
+	-webkit-box-shadow: 0 0 4px gray;
+
 }
 
 div#article_container #comments ol{
@@ -1611,7 +1625,7 @@ div#article_container #comments .replies{
 	/*-webkit-box-shadow: 0 0 2px #9e9e9e;*/
 	/*box-shadow: 0 0 2px #9e9e9e;*/
 
-	margin-left: 40px !important;
+	margin-left: 25px !important;
 	}
 
 #comments .reply_box form{
@@ -1620,18 +1634,12 @@ div#article_container #comments .replies{
 }
 
 #comments .reply_box span{
-
-	padding-left: 5px;
-
+	padding-left: 2px;
 }
 
 #comments .reply_box{
 	border-top: 1px solid #9e9e9e;
-
 	padding: 10px 20px 0px 20px;
-
-
-
 }
 
 #comments .reply_box.replies{
@@ -1639,7 +1647,7 @@ div#article_container #comments .replies{
 }
 
 #comments .reply_box input{
-	width: 80%;
+	width: 79%;
 	display: inline;
 	height: 40px;
 	font-size: 12px;
@@ -1669,13 +1677,12 @@ a.reply_click img{
    courses
 ----------------------------------------- */
 	
-div#course	{	
+div#course{	
 	margin-top: 20px;
 	font-family: "Lato", sans-serif;
-	
 }
 
-div#info, div#week-info {
+div#info, div#week-info{
 	padding: 10px 25px;
 	
 }
@@ -1990,7 +1997,7 @@ dl.tabs dd.active a{
    Profile page
 ----------------------------------------- */
 div.innercontents#user_detail_box{
-	padding: 10px;
+	padding: 13px 10px 10px 10px;
 }
 div.innercontents#user_detail_box img.profile_avatar{
 	float: left;
@@ -2002,16 +2009,15 @@ div.innercontents#user_detail_box img.profile_avatar{
 }
 div.innercontents#user_detail_box h4{
 	display: inline-block;
-	width: 70%;
+	width: 68%;
 	overflow: hidden;
 	margin-top: 0;
 	margin-bottom: 0;
-	height: 52px;
+	max-height: 52px;
 }
 
 div.innercontents#user_detail_box #user_bio{
-	clear:both;
-	margin-top: 48px;
+	padding: 8px;
 }
 
 div.innercontents#user_detail_box #user_bio h6{
@@ -2020,6 +2026,10 @@ div.innercontents#user_detail_box #user_bio h6{
 	
 	}
 	
+	
+div.innercontents#user_detail_box div.avatar_name{
+	height: 68px;
+}	
 /* -----------------------------------------
    padding bar for smaller screens
 ----------------------------------------- */

@@ -514,6 +514,30 @@ exports.resourcesOfCurrentUser = function (req, res) {
 }
 
 
+exports.deleteNotificationById = function(req,res){
+	var id = req.params.id;
+	if (id){
+		NotificationAction.deleteNotificationById(id,function(err,data){
+
+			if (data){
+				res.writeHead(200, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:0, notifications:data }));
+			}
+
+			else{
+				res.writeHead(500, { 'Content-Type':'application/json' });
+				res.end(JSON.stringify({ errorcode:1, message:err }));
+			}
+
+		})
+	}
+
+	else{
+		res.writeHead(500, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:1, message:"Invalid" }));
+	}
+}
+
 exports.getNotifications = function(request, response){
 	if (request.session && request.session.user) {
 

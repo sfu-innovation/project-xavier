@@ -1674,7 +1674,8 @@ function getAllNotifications(){
 				})
 			}
 			else{
-				$('#notification ul').html('<li>You have no new notifications</li>');
+				$('#notification ul').html('<li class="center">You have no new notifications</li>');
+				$('#mobile_notif ul').html('<li class="center">You have no new notifications</li>')
 			}
 		}
 	})

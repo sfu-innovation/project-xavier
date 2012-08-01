@@ -21,6 +21,13 @@ function deleteTag(tag){
 	
 }
 
+function convertPixel2Time(pixel) {
+	var videoWidth = $(".Timeline").width();
+	var video = document.getElementById("Video");
+	var realTime = pixel/videoWidth * video.duration;
+	return realTime;
+}
+
 function uploadTag(tag){
 	var selectedTag = $(".Tag.Selected");
 	var tagID = selectedTag.attr("uuid");
@@ -47,13 +54,20 @@ function uploadTag(tag){
 		examable:false,
 		reviewlater:false,
 		shared:false
-	};
+	};	
 
-	tag.start = tagStart;
-	tag.end = tagEnd;
+	console.log('tags creating')
+	console.log('tag start = ' + tagStart)
+	console.log('tag end = ' + tagEnd)
+
+	tag.start = convertPixel2Time(tagStart);
+	tag.end = convertPixel2Time(tagEnd);
 	tag.target = tagTarget;
 	tag.title = tagTitle;
 	tag.description = tagDescription;	
+
+	console.log('converted tag start = ' + tag.start)
+	console.log('converted tag end = ' + tag.end)
 
 	switch(tagType) {
 		case 'Important':{

@@ -1,11 +1,10 @@
 div#Main
 	a.Button(style="float: right;") Review Notes
 	h1
-	h2 
-
+	h2 	
 	div
 		span(id="mediaUUID", style='display:none;') #{mediaUUID}	
-		video(id="mediaPlayer", width="840", height="490", type="video/mp4", src="") Your browser doesn't support video!
+		video(id="Video", width="840", height="490", type="video/mp4", src="", onloadedmetadata="displayTags('')") Your browser doesn't support video!
 
 		div.Controls
 			a.Play(href="", data-action="play")

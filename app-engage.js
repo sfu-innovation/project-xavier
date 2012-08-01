@@ -152,7 +152,7 @@ app.get('/api/resource/:id/comments',routesEngage.commentsByResourceUUID);
 
 
 //notification
-app.get('/api/user/:uid/notifications',routesEngage.getNotifications);
+app.get('/api/notifications',routesEngage.getNotifications);
 
 
 

@@ -515,9 +515,10 @@ exports.resourcesOfCurrentUser = function (req, res) {
 
 
 exports.getNotifications = function(request, response){
+	console.log('////');
 	if (request.method === "GET") {
 		var args = {
-			user : request.params.uid,
+			user : request.session.user.uuid,
 			app  : 2
 		}
 		NotificationAction.retrieveUserNotificationsByUser(args, function(err, result){
@@ -534,7 +535,7 @@ exports.getNotifications = function(request, response){
 					})
 				}
 				else{
-					response.end(JSON.stringify({ errorcode: 0, notification: "No result found" }));
+					response.end(JSON.stringify({ errorcode: 1, message: "No result found" }));
 				}
 			} else {
 				response.writeHead(500, { 'Content-Type': 'application/json' });

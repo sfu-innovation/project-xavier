@@ -490,6 +490,23 @@ jQuery(document).ready(function ($) {
 		})
 	}
 
+
+	engage.getNotifications(function(data){
+		alert('!');
+		console.log(data);
+
+		if (data && data.errorcode == 0)
+		{
+			alert('!!!!')
+			$(data.notifications).each(function(i,notification){
+				console.log(notification);
+
+
+			})
+		}
+	})
+
+
 	$('.articlebox span.star_btn.unstarred').live('click', function () {
 		var self = $(this);
 		var resource_uuid = $(this).closest('.innercontents').attr('data-id');
@@ -1558,6 +1575,20 @@ function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
 		html += '</form></div>';
 
 	return html;
+}
+
+function renderNotificationBox(item){
+	var html = '<li>';
+	html += '<a class="notification"><img src="'
+		+item.user.avatar
+		+ '" class="">user_avatar</a>'
+	+ '<p class="msg">'
+		+ '<span class="username">'+item.user.firstName+'</span>'
+		+'commented on your article : "' + item.description + '"'
+		+'</p>'
+
+	html += '</a></li>';
+
 }
 
 function renderSubReplyBox (reply_type,reply_to, comment_target, comment_parent){

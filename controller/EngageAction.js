@@ -9,11 +9,13 @@ var UserProfile = require('../models/userProfile.js');
 var notificationHelper = exports.notificationHelper = function(notifications,callback){
 	if(notifications){
 
-
+		console.log('!!!!!!!!!');
 
 		var new_list = [];
 
 		var counter = 0;
+
+		
 
 		notifications.forEach(function(notification){
 			counter ++;
@@ -22,7 +24,7 @@ var notificationHelper = exports.notificationHelper = function(notifications,cal
 				no.id = notification.notificationListener.uuid;
 				no.description = notification.notification.description;
 				no.user = notification.user;
-				no.user.avatar = notification.profile.profilePicture;
+				no.avatar = notification.profile.profilePicture;
 				no.type = notification.notificationListener.event;
 				no.target = notification.notificationListener.target;
 

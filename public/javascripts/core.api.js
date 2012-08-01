@@ -587,10 +587,10 @@ coreApi._construct = function () {
 			});
 		}
 
-		this.getNotifications = function(id,callback){
+		this.getNotifications = function(callback){
 				console.log("API - getNotifications");
 				$.ajax({
-					url:'/api/user/'+id+'/notifications',
+					url:'/api/notifications',
 					type:'GET',
 					success:function (data) {
 						callback(data);

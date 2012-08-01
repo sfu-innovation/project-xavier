@@ -910,7 +910,7 @@ exports.articleView = function (req, res) {
 			else{
 				EngageAction.resourceHelper(req.session.user, [resource], function (err,resources) {
 					var resource = resources[0];
-					console.log(host);
+
 					res.render("engage/article", { title:"SFU ENGAGE",
 						article:resource,
 						profile:req.session.Profile,

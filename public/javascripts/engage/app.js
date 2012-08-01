@@ -643,6 +643,25 @@ jQuery(document).ready(function ($) {
 		};
 	});
 
+	$('a.notification').live('click', function () {
+
+
+		var id = $(this).attr('data-id');
+		var url =  $(this).attr('data-url');
+		if (id) {
+
+			engage.deleteNotification(id, function (data) {
+				// success or not... we are redirect the page!
+				window.location =  url;
+
+
+
+			})
+		}
+
+
+	})
+
 
 	setTimeout(updatePostTime,30000); // update the time stamp every 30 seconds
 
@@ -1567,7 +1586,7 @@ function renderReplyBox (reply_type,reply_to, comment_target, comment_parent){
 
 function renderNotificationBox(item){
 	var html = '<li>';
-	html += '<a class="notification" href="/article/'+item.target+'"><img src="'
+	html += '<a class="notification" data-id ="'+item.id+'" data-url="/article/'+item.target+'"><img src="'
 		+ (item.avatar ? item.avatar:'/images/engage/default_profile.png')
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
@@ -1666,7 +1685,7 @@ function getAllNotifications(){
 				$('#notification ul').empty();
 				$('#mobile_notif ul').empty();
 				$(data.notifications).each(function(i,notification){
-					console.log('!');
+
 					console.log(notification);
 					$('#notification ul').append(renderNotificationBox(notification));
 					$('#mobile_notif ul').append(renderNotificationBox(notification));

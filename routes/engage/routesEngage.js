@@ -566,8 +566,16 @@ exports.getNotifications = function(request, response){
 				if (result) {
 					EngageAction.notificationHelper(result, function (err, new_result) {
 
+						result = [];
+						new_result.forEach(function(item){
+							if (item.user.uuid !== request.session.user.uuid){
+								result.push(item);
+							}
+
+						});
+
 						response.writeHead(200, { 'Content-Type':'application/json' });
-						response.end(JSON.stringify({ errorcode:0, notifications:new_result }));
+						response.end(JSON.stringify({ errorcode:0, notifications:result }));
 
 
 					})

@@ -117,38 +117,38 @@ html
 						img.logo#small_logo(href="/", src="/images/engage/sfu_logo_white_small.png")
 				div.mobile-two.columns#user_options_mobile
 					ul#user_options_list
-						li#notification_mobile.notification.mobile_view
+						li#notification_mobile.mobile_view
 							div(onClick="dropdownToggle('#mobile_notif')")
 								- if (profile && profile.profilePicture)
 									img.avatar(src="#{profile.profilePicture}")
 								- else
 									img.avatar(src="/images/engage/default_profile.png")
-								span.notification_number 4
+								span.notification_number 0
 							div.dropdown_list#mobile_notif.hide
 								ul
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png")
 											p.msg 
 												span.username Mark 
 												| just shared an resource in 
 												span.coursename IAT 200.
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
 											p.msg 
 												span.username Catherine 
 												| just shared an resource in 
 												span.coursename IAT 200.
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png") 
 											p.msg 
 												span.username Mark 
 												| liked your article in 
 												span.coursename BUS 354
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png") 
 											p.msg 
 												span.username Ted 
@@ -196,38 +196,38 @@ html
 								}
 										
 
-						li.notification
+						li#notification
 							div(onClick="dropdownToggle('#notif')")
 								- if (profile && profile.profilePicture)
 									img.avatar(src="#{profile.profilePicture}")
 								- else
 									img.avatar(src="/images/engage/default_profile.png")
-								span.notification_number 4
+								span.notification_number 0
 							div.dropdown_list#notif.hide
 								ul
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png")
 											p.msg 
 												span.username Mark 
 												| just shared an resource in 
 												span.coursename IAT 200.
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="http://m4.licdn.com/mpr/mpr/shrink_100_100/p/2/000/0e8/1e8/1f4efb2.jpg") 
 											p.msg 
 												span.username Catherine 
 												| just shared an resource in 
 												span.coursename IAT 200.
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png") 
 											p.msg 
 												span.username Mark 
 												| liked your article in 
 												span.coursename BUS 354
 									li
-										a.notification_item
+										a.notification
 											img.user_avatar(src="/images/engage/default_profile.png") 
 											p.msg 
 												span.username Ted 

@@ -3,6 +3,8 @@ var accent = new coreApi.Accent();
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 var video = document.getElementById("Video");
 
+var tagColors = [];
+
 function loadMedia(){	
 	accent.getMediaFileById(mediaID, function(data){
 		$('#Video').attr('src', '/media/' + data.mediafile.path);
@@ -23,27 +25,19 @@ function formatTagTypeOption(index){
 }
 
 
-function formatTagtype(value) {
-	var color = ["green","yellow","pink","red","purple"];
-	return color[value];
-
+function formatTagtype(value) {	
+	return tagColors[value];
 }
 
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	console.log('tags fetching')
-	console.log('tag start = ' + tag.start)
-	console.log('tag end = ' + tag.end)
-	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "px; width: " + convertTime2Pixel(tag.end) + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "%; width: " + convertTime2Pixel(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
 function convertTime2Pixel(time) {
 	var videoWidth = $(".Timeline").width();	
-	var pixel = time * videoWidth / video.duration;	
-
-	console.log('pixel = ' + pixel)
-
+	var pixel = time * 100 / video.duration;	
 	return pixel;
 }
 
@@ -121,8 +115,7 @@ function bindTag(tag) {
 	tag.bind("dblclick", function(evt) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
-		video.pause();
-		console.log('play here = ' + tag.offset)
+		video.pause();			
 		video.currentTime = tag.offset;
 		if (tag.duration > 0)
 			video.play();
@@ -150,12 +143,10 @@ function bindTag(tag) {
 
 		accent.getTagById(tagID, function(data){		
 			if (data.tag) {
-				showTagInfo(data.tag.title, data.tag.description);			
-				console.log('should display something')
+				showTagInfo(data.tag.title, data.tag.description);							
 			}				
 			else {
-				showTagInfo("", "");
-				console.log('should display nothing')
+				showTagInfo("", "");				
 			}				
 
 		})
@@ -182,11 +173,12 @@ function bindTag(tag) {
 
 function addTag(time) {
 	var p = time/video.duration * 100;
+	var endTime = 0;
 	var tag = $('<div class="Tag" style="left: '+p+'%; width: 12px; background: red;"></div>');
 	$(".Timeline").prepend(tag);
 	tag.data("tag", {
 		offset: time,
-		duration: 0
+		duration: endTime
 	});
 	bindTag(tag);
 }
@@ -194,21 +186,42 @@ function addTag(time) {
 loadMedia();
 //displayTags(mediaID, "");
 
+var hexDigits = new Array
+        ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+//Function to convert hex format to a rgb color
+function rgb2hex(rgb) {
+ rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+ return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
+function hex(x) {
+  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+ }
+
+
 $(document).ready(function () {		
+	var importantColor = $(".Commands .Important a").css('backgroundColor');
+	var examableColor = $(".Commands .Examable a").css('backgroundColor');
+	var questionColor = $(".Commands .Question a").css('backgroundColor');
+	var interestingColor = $(".Commands .Interesting a").css('backgroundColor');
+	var generalColor = $(".General a").css('backgroundColor');
+
+	tagColors.push(rgb2hex(importantColor));
+	tagColors.push(rgb2hex(examableColor));
+	tagColors.push(rgb2hex(questionColor));
+	tagColors.push(rgb2hex(interestingColor));
+	tagColors.push(rgb2hex(generalColor));
+
 
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');	
-		console.log('evt X = ' + evt.offsetX)
-		console.log('dbl click = ' + (evt.offsetX / $(this).width() * video.duration))	
-		var tag = addTag(evt.offsetX / $(this).width() * video.duration);
-		console.log('should display nothing when d clicked')
+		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');			
+		var curTime = (evt.offsetX / $(this).width() * video.duration);		
+		
+		var tag = addTag(curTime);		
 		showTagInfo("","");
 
-		//tag.data("offset", offset)
-		//tag.prependTo($(this))
-		//bindTag(tag)
-		//tag.data("offset", offset)
 		$(this).data("current-tag", tag)
 	}).bind("mousedown", function(evt) {					
 		$(this).data("last", evt.pageX);

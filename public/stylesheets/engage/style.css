@@ -324,6 +324,10 @@ ul#user_options_list li#notification div{
 	background-color: transparent;
 }
 
+ul#user_options_list li#notification_mobile div{
+	background-color: transparent;
+}
+
 ul#user_options_list li div{
 	cursor: pointer;
 	background-color: rgba(0, 0, 0, 0.75);
@@ -339,7 +343,7 @@ ul#user_options_list div.dropdown_btn{
 } 	
 
 
-ul#user_options_list li#notification img{
+ul#user_options_list li img{
 	height: 45px;
 	width: 45px;
 	-moz-box-shadow: 1px 1px 2px #9E9E9E;
@@ -507,7 +511,7 @@ li.mobile_view div#mobile_notif li p.msg{
 	margin-bottom: 16px !important;
 }
 
-#user_options_mobile li#notification{
+#user_options_mobile li#notification_mobile{
 	margin-left: -50px !important;
 	margin-top: -8px !important;
 }

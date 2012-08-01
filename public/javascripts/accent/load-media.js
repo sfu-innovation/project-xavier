@@ -3,6 +3,8 @@ var accent = new coreApi.Accent();
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 var video = document.getElementById("Video");
 
+var tagColors = [];
+
 function loadMedia(){	
 	accent.getMediaFileById(mediaID, function(data){
 		$('#Video').attr('src', '/media/' + data.mediafile.path);
@@ -23,10 +25,8 @@ function formatTagTypeOption(index){
 }
 
 
-function formatTagtype(value) {
-	var color = ["green","yellow","pink","red","purple"];
-	return color[value];
-
+function formatTagtype(value) {	
+	return tagColors[value];
 }
 
 // start and end has to be matching with the UI timeline
@@ -186,7 +186,33 @@ function addTag(time) {
 loadMedia();
 //displayTags(mediaID, "");
 
+var hexDigits = new Array
+        ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+
+//Function to convert hex format to a rgb color
+function rgb2hex(rgb) {
+ rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+ return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
+function hex(x) {
+  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+ }
+
+
 $(document).ready(function () {		
+	var importantColor = $(".Commands .Important a").css('backgroundColor');
+	var examableColor = $(".Commands .Examable a").css('backgroundColor');
+	var questionColor = $(".Commands .Question a").css('backgroundColor');
+	var interestingColor = $(".Commands .Interesting a").css('backgroundColor');
+	var generalColor = $(".General a").css('backgroundColor');
+
+	tagColors.push(rgb2hex(importantColor));
+	tagColors.push(rgb2hex(examableColor));
+	tagColors.push(rgb2hex(questionColor));
+	tagColors.push(rgb2hex(interestingColor));
+	tagColors.push(rgb2hex(generalColor));
+
 
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;

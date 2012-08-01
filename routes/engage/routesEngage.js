@@ -1085,7 +1085,7 @@ exports.demoProf = function (req, res) {
 	req.session.Profile = null;
 
 	var fake_user_2 = {uuid:'ted', firstName:"Ted", lastName:"Kirkpatrick", userID:"ted", email:"ted@sfu.ca",type:1}
-//	var fake_user_2 = {uuid:'llt3', firstName:"Catherine", lastName:"Tan", userID:"llt3@sfu.ca", email:"llt3@sfu.ca", type:0, preferedName:"Cath"}
+
 
 	req.session.user = fake_user_2;
 	UserProfile.getUserProfile(req.session.user.uuid, function(err, result) {
@@ -1093,7 +1093,7 @@ exports.demoProf = function (req, res) {
 			console.log(err)
 		req.session.Profile = result;
 	});
-	//req.session.Profile = fake_user_2_profile;
+
 	User.getUserCourses(req.session.user.uuid, function (err, result) {
 
 		var args= {
@@ -1109,9 +1109,6 @@ exports.demoProf = function (req, res) {
 				courseList.push(course.uuid);
 			})
 
-//			console.log(courseList);
-
-//			courseList = ['11', '12','13','14'];
 
 
 			async.forEach(courseList, function(course, done){

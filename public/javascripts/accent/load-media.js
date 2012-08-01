@@ -3,14 +3,14 @@ var accent = new coreApi.Accent();
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 var video = document.getElementById("Video");
 
-function loadMedia(uuid){	
-	accent.getMediaFileById(uuid, function(data){
+function loadMedia(){	
+	accent.getMediaFileById(mediaID, function(data){
 		$('#Video').attr('src', '/media/' + data.mediafile.path);
 		$('#Video').attr('autoplay', 'autoplay');
 		var mediaTitle = $("#Main").children("h1");
 		mediaTitle.text(data.mediafile.title);
 
-		accent.getMediaSection(uuid, function(section){			
+		accent.getMediaSection(mediaID, function(section){			
 			var mediaSection = $("#Main").children("h2");
 			mediaSection.text(section.section);
 		})
@@ -32,12 +32,21 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + tag.start + "px; width: " + tag.end + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "px; width: " + convertTime2Pixel(tag.end) + "px; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
-function displayTags(uuid, type) {
+function convertTime2Pixel(time) {
+	var videoWidth = $(".Timeline").width();	
+	console.log('videowidth = ' + videoWidth)
+
+	var pixel = time * videoWidth / video.duration;	
+
+	return pixel;
+}
+
+function displayTags(type) {
 	var timeline = $(".Tagger").children(".Timeline");		
-	accent.getTagsByMediaFileId(uuid, function(data){		
+	accent.getTagsByMediaFileId(mediaID, function(data){		
 		var tagWindow = $(timeline).children(".TagWindow");	
 		if(type === "") {
 			data.tags.forEach(function(tag) {				
@@ -178,14 +187,14 @@ function addTag(time) {
 	bindTag(tag);
 }
 
-loadMedia(mediaID);
-displayTags(mediaID, "");
+loadMedia();
+//displayTags(mediaID, "");
 
 $(document).ready(function () {		
 
 	$(".Timeline").bind("dblclick", function(evt) {		
 		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');
+		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');		
 		var tag = addTag(evt.offsetX / $(this).width() * video.duration);
 		console.log('should display nothing when d clicked')
 		showTagInfo("","");

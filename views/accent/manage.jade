@@ -1,9 +1,11 @@
 include ./component/header
 
 div#Container
-	a.Archives.Button(class="Button", href="", onclick="return showUploadForm();") Upload
+	div#ManageHeader
+		a(onclick="window.history.back();") Back
 
 	div#Content
+		a.Archives.Button(class="Button", href="", onclick="return showUploadForm();") Upload
 		include ./component/manage-media-list
 
 		div#UploadForm(style="display:none")

@@ -10,6 +10,7 @@ div#header {
 	padding-top: 0.8em;
 	padding-bottom: 0em;
 	border-bottom: 2px solid #1b88d0;
+	/*width: 100%;*/
 	z-index: 100;
 }
 

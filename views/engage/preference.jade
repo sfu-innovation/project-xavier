@@ -50,6 +50,7 @@ block content
 									|An email will automatically be sent to your inbox when one or more of the events occur.	
 									br
 									| You may also uncheck the boxes to turn these off at any time you would like.
+
 								div#setting_detail
 									ul
 										li
@@ -58,21 +59,33 @@ block content
 											span When others comment on my shares
 										li 
 											span When others like my shares
-										li 
-											span When others reply to my comments
+
 											
 									ul.checkbox_column
 										li
-											span.typicn.star
 											span.typicn.mail
+											span#email always
+											span#email daily
+											span#email weekly
+											span#email monthly
+											
 										li 
-											input(type="checkbox", name="comment_notif") 
-											input(type="checkbox", name="comment_email") 
+											- var counter = 0
+											for item in comments
+												if item == "checked"
+													input(type="radio", name="notificationOnComment", value=counter, checked = "checked") 
+												else
+													input(type="radio", name="notificationOnComment", value=counter)
+												- counter = counter + 1
+
 										li 
-											input(type="checkbox", name="likes_notif") 
-											input(type="checkbox", name="likes_email") 
-										li 
-											input(type="checkbox", name="reply_notif") 
-											input(type="checkbox", name="reply_email") 
+											- counter = 0
+											for item in likes
+												if item == "checked"
+													input(type="radio", name="notificationOnLike", value= counter, checked = "checked") 
+												else
+													input(type="radio", name="notificationOnLike", value=counter)
+												- counter = counter + 1
+					
 								
 									input.button(type="submit", value="save changes")

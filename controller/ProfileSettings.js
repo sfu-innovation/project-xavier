@@ -1,43 +1,79 @@
 var fs = require('fs');
 var UserProfile = require(__dirname + "/../models/userProfile");
 var User = require(__dirname + "/../models/user");
-
-
+var notification = require(__dirname + "/../controller/NotificationAction");
+var routesCommon = require(__dirname + "/../routes/common/routesCommon");
 
 var settings = exports.settings = function( req, callback ) {
-	console.log('in profile settings')
 	var profile = { },
 		bio = req.session.Profile.bio, 
 		pName = req.session.user.preferedName,
 		img = req.session.Profile.profilePicture,
 		format="",
 		msg="";
-	
-		if( req.method === 'POST') {
 
-			var filepath, path;
+	var likes = ["","","",""];
+	var comments = ["","","",""];
+
+	var args = {
+		user: req.session.user.uuid,
+		app: 2
+	};
 	
-			if(req.files === undefined) { //probably notification settings
+	notification.createUserNotificationSettings(args, function(err, data) {
+		args['notificationOnComment'] = data.notificationOnComment;//*used
+		args['notificationOnLike'] = data.notificationOnLike;//*used
+		args['notificationOnStar'] = data.notificationOnStar;
+		args['notificationOnNewResource'] = data.notificationOnNewResource;
+
+		likes[data.notificationOnLike] = "checked"
+		comments[data.notificationOnComment] = "checked"
+	//	console.log(JSON.stringify(args))
+		
+
+		if(req.method === 'POST') { //probably notification settings
 				//notification settings
-				console.log(req.body)
-				console.log('no upload')
-			} //callback on end
-			else {
-			
 
-				/***
-				 *	Need to find proper way to limit upload size. 
-				 ***/
-			//	console.log(req.files.upload)
+			likes = ["","","",""];
+			comments = ["","","",""];
+			var data = req.body;
+			var changes = Object.getOwnPropertyNames(data);
+
+			changes.forEach(function(item){	//items = likes, comments, replies
+				args[item] = data[item];
+				if(item === 'notificationOnComment')
+					comments[data[item]] = "checked"
+				if(item === 'notificationOnLike')
+					likes[data[item]] = "checked"
+
+			})
+
+			//console.log(args)
+			
+			notification.updateUserNotificationSettings(args, function(err, updates){});
+
+
+			msg="Notification changes saved.";
+
+			if(req.files !== undefined){
+
+				var filepath, path;
+
+					/***
+					 *	Need to find proper way to limit upload size. 
+					 ***/
+
 				  if(req.files.upload.size > 0) { //upload --> preview
+				  	msg = "";
 
 					if(req.files.upload.size < 5242880) {
+
 						var upload = req.files.upload.type.split('/'),
 							type = upload[0];
-						if (type === 'image'){
-							format = upload[1];
-							console.log('upload format: '+format)
 
+						if (type === 'image'){
+
+							format = upload[1];
 							path = req.files.upload.path;
 							filepath = './public/images/avatars/donotremove/'+req.session.user.uuid+'.'+format;
 
@@ -47,25 +83,23 @@ var settings = exports.settings = function( req, callback ) {
 						}
 					} else {
 						msg = "Error: Profile picture must be less than 5MB in size."
-
 					
 					}
 				} else if (req.body.helper === 'del') { //delete --> preview
-					format = 'png';
-					console.log('delete format: '+format)
 
+					msg = "";
+					format = 'png';
 					path = './public/images/engage/default_profile.png';
 					filepath = './public/images/avatars/donotremove/'+req.session.user.uuid+'.'+format;
-
 					img = '/images/engage/default_profile.png';
 				
 				} else { //saves
-					console.log('save format: '+format)
+
 					if(req.body.helper !== ''){ //has format, otherwise keep current img
+
 						var name = req.session.user.uuid+'.'+req.body.helper;
 						path = './public/images/avatars/donotremove/'+name;
 						filepath = './public/images/avatars/'+name;
-
 						img = '/images/avatars/'+name;
 					}	
 
@@ -99,14 +133,19 @@ var settings = exports.settings = function( req, callback ) {
 
 				pName = req.body.pref_name;
 				bio = req.body.bio;
-			}		
+			}
+		}
 
-		}//#if POST
+	//	console.log('likes: '+likes)
+	//	console.log('comments: '+comments)
 		profile.pName = pName;
 		profile.bio = bio;
 		profile.img = img;
 		profile.format = format;
 		profile.msg = msg;
+		profile.likes = likes;
+		profile.comments = comments;
 		callback(profile);
-	
+
+	})	
 }

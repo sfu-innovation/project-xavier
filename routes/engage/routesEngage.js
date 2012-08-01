@@ -731,7 +731,6 @@ exports.index = function (req, res) {
 exports.setup = function(req, res) {
 
 	if(req.session && req.session.user) {
-		console.log('Porfile: '+req.session.Profile)
 		if (req.method === 'POST') {
 			req.session.user.firstName = req.body.firstname;
 			req.session.user.lastName = req.body.lastname;
@@ -756,7 +755,6 @@ exports.setup = function(req, res) {
 				msg: ""
 			});
 		}
-		
 	}
 }
 
@@ -984,7 +982,6 @@ exports.courseView = function (req, res) {
 						courses:req.session.courses
 					}, function (err, rendered) {
 
-
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
 
@@ -994,22 +991,14 @@ exports.courseView = function (req, res) {
 
 				}
 
-
-
-
 			});
-
 		}
-
-
 	}
 	else {
 
 		res.redirect("/splash");
 
 	}
-
-
 }
 
 
@@ -1137,20 +1126,17 @@ exports.preference = function (req, res){
 					pref_name: result.pName,
 					bio: result.bio,
 					format: result.format,
-					msg: result.msg
+					msg: result.msg,
+					comments: result.comments,
+					likes: result.likes
 					}, function (err, rendered) {
 						res.writeHead(200, {'Content-Type':'text/html'});
 						res.end(rendered);
-
 				})
 		})
-		
 	}
 	else {
-
 		res.redirect("/demo");
-
-
 	}
 
 }

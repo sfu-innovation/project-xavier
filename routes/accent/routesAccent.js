@@ -491,9 +491,8 @@ exports.index = function(req, res){
 	}
 	else {
 		demoUserNotification(function(){ 
-			res.redirect("/demo");		
+			res.redirect("/login");		
 		});
-		
 	}	
 };
 

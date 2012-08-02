@@ -1783,7 +1783,7 @@ function renderNotificationBox(item){
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
 		+ '<span class="username">'+item.user.firstName+' </span>';
-	html	+= 'replied on your message:  "' + (item.description).slice(0,40) + '..."'
+	html	+= 'replied on your comment:  "' + (item.description).slice(0,40) + '..."'
 		+'</p>';
 
 
@@ -1859,7 +1859,7 @@ function paddingforMediumScreen(){
 function getAllNotifications(){
 
 	var engage = new coreApi.Engage();
-	setTimeout(getAllNotifications,10000);
+	setTimeout(getAllNotifications,30000);
 
 	engage.getNotifications(function(data){
 		$('#notification .notification_number').html(0);

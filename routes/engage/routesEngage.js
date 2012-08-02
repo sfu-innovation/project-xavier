@@ -1069,29 +1069,10 @@ exports.demoPage = function (req, res) {
 			if(success)
 				console.log("created: " + success)
 
-			var courseList = [];
-			result.forEach(function(course){
-				courseList.push(course.uuid);
-			})
+			req.session.courses = result;
+			res.redirect('/');
 
 
-			async.forEach(courseList, function(course, done){
-				var args = {
-					target      : course,
-					app         : 2
-				}
-				notification.setupCourseMaterialNotifiers(args, function(err, callback){
-					if(err)
-						console.log(err)
-					done();
-				})
-			}, function(err){
-				if(err)
-					console.log("Problem adding course materials")
-
-				req.session.courses = result;
-				res.redirect('/');
-			})
 		});
 	});
 }
@@ -1122,30 +1103,31 @@ exports.demoProf = function (req, res) {
 		notification.createUserNotificationSettings(args, function(err, success){
 			if(success)
 				console.log("created: " + success)
-			var courseList = [];
-			result.forEach(function(course){
-				courseList.push(course.uuid);
-			})
+//			var courseList = [];
+//			result.forEach(function(course){
+//				courseList.push(course.uuid);
+//			})
+			req.session.courses = result;
+			res.redirect('/');
 
 
-
-			async.forEach(courseList, function(course, done){
-				var args = {
-					target      : course,
-					app         : 2
-				}
-				notification.setupCourseMaterialNotifiers(args, function(err, callback){
-					if(err)
-						console.log(err)
-					done();
-				})
-			}, function(err){
-				if(err)
-					console.log("Problem adding course materials")
-
-				req.session.courses = result;
-				res.redirect('/');
-			})
+//			async.forEach(courseList, function(course, done){
+//				var args = {
+//					target      : course,
+//					app         : 2
+//				}
+//				notification.setupCourseMaterialNotifiers(args, function(err, callback){
+//					if(err)
+//						console.log(err)
+//					done();
+//				})
+//			}, function(err){
+//				if(err)
+//					console.log("Problem adding course materials")
+//
+//				req.session.courses = result;
+//				res.redirect('/');
+//			})
 		});
 	});
 }

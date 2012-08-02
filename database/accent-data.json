@@ -179,7 +179,7 @@
 			"thumbnail":"627edb97361dd6fc3f5f6df0a0bb312d.jpg",
 			"type":0
 		},
-				{
+		{
 			"user":"mak10",
 			"uuid":"abc1235",
 			"title":"Node.js Tutorial",
@@ -187,6 +187,16 @@
 			"course":"4",
 			"path":"1b1a7e50ca370d4062a40aa43778dd71.mp4",
 			"thumbnail":"1b1a7e50ca370d4062a40aa43778dd71.jpg",
+			"type":0
+		},
+		{
+			"user":"mak10",
+			"uuid":"abc1236",
+			"title":"Innovative New Workout Routine!",
+			"description":"This exhausting yet fun song and dance workout will have you burning away those extra calories so fast your pants will fall off!",
+			"course":"2",
+			"path":"037c10a5750ab28ab1eb2743f20bbfaf.mp4",
+			"thumbnail":"037c10a5750ab28ab1eb2743f20bbfaf.jpg",
 			"type":0
 		}
 	],

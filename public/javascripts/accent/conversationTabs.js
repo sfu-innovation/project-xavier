@@ -34,7 +34,7 @@ function formatResponse(response) {
 	console.log(response);
 	return "<div class='Message'>"
 			+ "<span class='Author'>" 
-			+ "<image src='../images/avatars/" + response._source.user + ".jpg'>" 
+			+ "<image src='" + response._source.profile + "'>" 
 			+ response._source.user
 			+ "</span>"
 			+ " " + response._source.body		
@@ -44,6 +44,7 @@ function formatResponse(response) {
 function formatConversation(conversation) {	
 	var upVote = conversation._source.upvote;
 	var downVote = conversation._source.downvote;
+	console.log(conversation);
 	return "<div class='Message'>"
 			+ "<div class='Votes'>" 
 			+ "<div class='Actions'>"
@@ -55,7 +56,7 @@ function formatConversation(conversation) {
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ "<span class='Author'>" 
-			+ "<image src='../images/avatars/" + conversation.user.uuid + ".jpg'>" 
+			+ "<image src='" + conversation.profile + "'>" 
 			+ conversation.user.firstName + " " + conversation.user.lastName 
 			+ "</span> "
 			+ conversation._source.body

@@ -230,8 +230,13 @@ jQuery(document).ready(function ($) {
 					self.removeClass('starred');
 					self.addClass('unstarred');
 					if (window.location.toString().indexOf('starred') != -1) {
+
 						self.parent().parent().parent().fadeOut('slow', function () {
 							$(this).remove();
+							var a = $('.articlebox');
+							if( a.length <= 0){
+								$('#no_resource_box').show();
+							}
 						});
 					}
 				}
@@ -914,8 +919,14 @@ function bindArticlePageListeners(engage) {
 					self.removeClass('starred');
 					self.addClass('unstarred');
 					if (window.location.toString().indexOf('starred') != -1) {
+
+
 						self.parent().parent().parent().fadeOut('slow', function () {
 							$(this).remove();
+							var a = $('.articlebox');
+							if( a.length <= 0){
+								$('#no_resource_box').show();
+							}
 						});
 					}
 				}
@@ -1283,7 +1294,9 @@ function loadStarredArticles(engage) {
 //	engage.getResourcesByCourseUUIDs(function(data){
 		if (data) {
 			if (data.errorcode == 0) {
-
+				if( data.resources.length <= 0){
+					$('#no_resource_box').show();
+				}
 				$('.articlebox').remove();
 				//$('#contents').empty();
 				console.log(data);
@@ -1299,11 +1312,17 @@ function loadStarredArticles(engage) {
 			}
 
 			else {
-
+				var a = $('.articlebox');
+				if( a.length <= 0){
+					$('#no_resource_box').show();
+				}
 			}
 		}
 		else {
-
+			var a = $('.articlebox');
+			if( a.length <= 0){
+				$('#no_resource_box').show();
+			}
 		}
 
 

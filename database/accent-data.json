@@ -1,0 +1,172 @@
+{
+	"userProfiles":[
+		{
+			"user":"mak10",
+			"profilePicture":"/images/avatars/mak10.jpg",
+			"bio":"Super awesome computing scientist!"
+		}
+	],
+	"users": [
+		{
+			"uuid":"mak10",
+			"firstName":"Mike",
+			"lastName":"Klemarewski",
+			"type":1,
+			"userID":"mak10",
+			"email":"mak10@sfu.ca"
+		},
+		{
+			"uuid":"jhc20",
+			"firstName":"Ji Hoon",
+			"lastName":"Choi",
+			"type":0,
+			"userID":"jhc20",
+			"email":"jhc20@sfu.ca"
+
+		},
+		{	
+			"uuid":"mis2",
+			"firstName":"Izaak",
+			"lastName":"Schroeder",
+			"type":0,
+			"userID":"mis2",
+			"email":"mis2@sfu.ca"
+		}
+	],
+	"courses":[
+		{
+			"uuid":"1",
+			"title":"Algorithms",
+			"section":"D100",
+			"subject":"CMPT",
+			"number":307,
+			"instructor":"mak10"
+		},
+		{
+			"uuid":"2",
+			"title":"Health and Exercise",
+			"section":"D100",
+			"subject":"KIN",
+			"number":143,
+			"instructor":"mak10"
+		},
+		{
+			"uuid":"3",
+			"title":"Moral Philosophy",
+			"section":"D100",
+			"subject":"PHIL",
+			"number":120,
+			"instructor":"mak10"
+		},
+		{
+			"uuid":"4",
+			"title":"Web Applications",
+			"section":"D200",
+			"subject":"CMPT",
+			"number":470,
+			"instructor":"mak10"
+		}
+	],
+	"courseMembers":[
+		{
+			"course":"1",
+			"user":"mak10"
+		},
+		{
+			"course":"2",
+			"user":"mak10"
+		},
+		{
+			"course":"3",
+			"user":"mak10"
+		},
+		{
+			"course":"4",
+			"user":"mak10"
+		}
+	],
+
+	"mediafiles": [
+		{
+			"user":"mak10",
+			"uuid":"abc1230",
+			"title":"How to dunk like MJ",
+			"description":"Grow really tall, get tallented, play for the Chicago bulls!",
+			"course":"1",
+			"path":"http://www.youtube.com/mj",
+			"type":0
+		}
+	],
+	"coursesections":[
+		{
+			"course"  : "1",
+			"section" : "1",
+			"app"       : 2
+		},
+		{
+			"course"  : "1",
+			"section" : "2",
+			"app"       : 2
+		},
+		{
+			"course"  : "1",
+			"section" : "3",
+			"app"       : 2
+		},
+		{
+			"course"  : "1",
+			"section" : "4",
+			"app"       : 2
+		},
+		{
+			"course"  : "1",
+			"section" : "1",
+			"app"       : 2
+		}
+	],
+	"sections":[
+		{
+			"uuid": "1",
+			"title": "WEEK 1",
+			"app": 2
+		},		{
+			"uuid": "2",
+			"title": "WEEK 2",
+			"app": 2
+		},
+		{
+			"uuid": "3",
+			"title": "WEEK 3",
+			"app": 2
+		},		{
+			"uuid": "4",
+			"title": "WEEK 4",
+			"app": 2
+		}
+	],
+
+	"sectionmaterials":[
+		{
+			"section": "1",
+			"material":"abc1230"
+		}
+	],
+	
+	"tags": [
+		{
+			"uuid":"bbc0",
+			"user":"mak10",
+			"start":20,
+			"end":30,
+			"type":1,
+			"target":"abc1230",
+			"title":"basketball dunk",
+			"description":"the windmill",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		}
+	]
+}

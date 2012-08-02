@@ -486,7 +486,7 @@
 		"_id":"aJfznhheQuOicWWAjx7F15",
 		"_score":1,
 		"_source":
-		{"user":"marko",
+		{"user":"mak10",
 			"upvote":5,
 			"downvote":2,
 			"body":"I am an idiot. Completely disregard this message. LOL!",

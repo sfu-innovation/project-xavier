@@ -127,6 +127,14 @@
 			"number":371,
 			"instructor":"BSDF787D98ASDF099D7G"
 		},
+		{
+			"uuid":"HD7D2146H7ASDFG9",
+			"title":"The Joy of Painting",
+			"section":"D200",
+			"subject":"IAT",
+			"number":123,
+			"instructor":"BSDF787D98ASDF099D7G"
+		},
 		{	"uuid":"F827346H7ASDFG1",
 			"title":"Introduction to Criminology",
 			"section":"D100",
@@ -214,6 +222,10 @@
 		}
 	],
 	"courseMembers":[
+		{
+			"course":"HD7D2146H7ASDFG9",
+			"user":"mak10"
+		},
 		{
 			"course":"11",
 			"user":"bernie"

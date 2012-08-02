@@ -30,7 +30,7 @@ function setSelected(select) {
 	
 	if (!wasSelected) {
 		p.parent().find("li.Selected").removeClass("Selected");	
-		p.addClass("Selected")		
+		p.addClass("Selected")	
 	}
 
 
@@ -80,7 +80,8 @@ function displayCourseList() {
 					--remaining;								
 					if (!remaining) {						
 						courseStr += "<ul>";											
-						courseList.replaceWith(courseStr);				
+						courseList.replaceWith(courseStr);
+						getMedia($('.Selected').text());
 					}
 				})				
 			})

@@ -397,6 +397,7 @@ ul#user_options_list span.notification_number{
 	text-align: center;
 	margin-left: -9px;
 	margin-top: -17px;
+	line-height: 18px;
 }
 	
 ul#user_options_list li div.dropdown_list{

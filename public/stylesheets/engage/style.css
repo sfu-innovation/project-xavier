@@ -306,11 +306,10 @@ div#header{
 }
 
 .slider_box#mobile_share_box .selectcourse .dropdown{
-	width:106px;
-}	
+	}
 
 .slider_box#mobile_share_box .selectcourse .dropdown a{
-	width:80px;
+
 	}
 
 /* -----------------------------------------
@@ -2100,7 +2099,19 @@ div.innercontents#user_detail_box div.avatar_name{
 
 
 #no_resource{
-	border:dashed 1px #ccc;
-	text-align: center;
-	padding-top: 50px;
+	text-align: left;
+	padding-top: 7px;
+	padding-left: 25px;
+	color: #666;
+
+}
+
+#no_resource p{
+	padding: 0;
+	margin: 0;
+	margin: 2px;
+}
+
+#no_resource h4{
+	color:#222;
 }

@@ -4,6 +4,16 @@
 			"user":"mak10",
 			"profilePicture":"/images/avatars/mak10.jpg",
 			"bio":"Super awesome computing scientist!"
+		},
+		{
+			"user":"jhc20",
+			"profilePicture":"/images/avatars/jhc20.jpg",
+			"bio":"Super awesome computing scientist!"
+		},
+		{
+			"user":"mis2",
+			"profilePicture":"/images/avatars/mis2.gif",
+			"bio":"Code wizard"
 		}
 	],
 	"users": [
@@ -36,10 +46,10 @@
 	"courses":[
 		{
 			"uuid":"1",
-			"title":"Algorithms",
+			"title":"Networking",
 			"section":"D100",
 			"subject":"CMPT",
-			"number":307,
+			"number":371,
 			"instructor":"mak10"
 		},
 		{
@@ -83,6 +93,38 @@
 		{
 			"course":"4",
 			"user":"mak10"
+		},
+		{
+			"course":"1",
+			"user":"jhc20"
+		},
+		{
+			"course":"2",
+			"user":"jhc20"
+		},
+		{
+			"course":"3",
+			"user":"jhc20"
+		},
+		{
+			"course":"4",
+			"user":"jhc20"
+		},
+				{
+			"course":"1",
+			"user":"mis2"
+		},
+		{
+			"course":"2",
+			"user":"mis2"
+		},
+		{
+			"course":"3",
+			"user":"mis2"
+		},
+		{
+			"course":"4",
+			"user":"mis2"
 		}
 	],
 
@@ -90,10 +132,61 @@
 		{
 			"user":"mak10",
 			"uuid":"abc1230",
-			"title":"How to dunk like MJ",
-			"description":"Grow really tall, get tallented, play for the Chicago bulls!",
+			"title":"What is the Internet?",
+			"description":"A brief history of the internet, followed by a more in depth description about what the internet is and how it functions.",
 			"course":"1",
-			"path":"http://www.youtube.com/mj",
+			"path":"a111ce2a1eb99ac6e4765da30ee379c4.mp4",
+			"thumbnail":"a111ce2a1eb99ac6e4765da30ee379c4.jpg",
+			"type":0
+		},
+		{
+			"user":"mak10",
+			"uuid":"abc1231",
+			"title":"How Routing Works",
+			"description":"An introduction to packet switched networks.  Decribes how packets are routed from one end user to another.",
+			"course":"1",
+			"path":"237a216e371af0006ad12903fa4b669a.mp4",
+			"thumbnail":"237a216e371af0006ad12903fa4b669a.jpg",
+			"type":0
+		},
+		{
+			"user":"mak10",
+			"uuid":"abc1232",
+			"title":"HTTP Requests",
+			"description":"Details on how HTTP requests are created and handled.",
+			"course":"1",
+			"path":"3c5228ad0481446ea3542fa03e2e1568.mp4",
+			"thumbnail":"3c5228ad0481446ea3542fa03e2e1568.jpg",
+			"type":0
+		},
+		{
+			"user":"mak10",
+			"uuid":"abc1233",
+			"title":"Proper Nutrition for Endurance Athletes",
+			"description":"Carbs carbs carbs!  Load em up!",
+			"course":"2",
+			"path":"177647894f04af565ed9497bee557782.mp4",
+			"thumbnail":"177647894f04af565ed9497bee557782.jpg",
+			"type":0
+		},
+		{
+			"user":"mak10",
+			"uuid":"abc1234",
+			"title":"Should Animals Ever Be Put Down?",
+			"description":"Should they have a say in it?  Or is it ever in the animals best interest?",
+			"course":"3",
+			"path":"627edb97361dd6fc3f5f6df0a0bb312d.mp4",
+			"thumbnail":"627edb97361dd6fc3f5f6df0a0bb312d.jpg",
+			"type":0
+		},
+				{
+			"user":"mak10",
+			"uuid":"abc1235",
+			"title":"Node.js Tutorial",
+			"description":"In this tutorial, we will see how to create an interactive video tagging program that will enhance the way we view lectures online.",
+			"course":"4",
+			"path":"1b1a7e50ca370d4062a40aa43778dd71.mp4",
+			"thumbnail":"1b1a7e50ca370d4062a40aa43778dd71.jpg",
 			"type":0
 		}
 	],
@@ -101,27 +194,82 @@
 		{
 			"course"  : "1",
 			"section" : "1",
-			"app"       : 2
+			"app"     : 2
 		},
 		{
 			"course"  : "1",
 			"section" : "2",
-			"app"       : 2
+			"app"     : 2
 		},
 		{
 			"course"  : "1",
 			"section" : "3",
-			"app"       : 2
+			"app"     : 2
 		},
 		{
 			"course"  : "1",
 			"section" : "4",
-			"app"       : 2
+			"app"     : 2
 		},
 		{
-			"course"  : "1",
+			"course"  : "2",
 			"section" : "1",
-			"app"       : 2
+			"app"     : 2
+		},
+		{
+			"course"  : "2",
+			"section" : "2",
+			"app"     : 2
+		},
+		{
+			"course"  : "2",
+			"section" : "3",
+			"app"     : 2
+		},
+		{
+			"course"  : "2",
+			"section" : "4",
+			"app"     : 2
+		},
+		{
+			"course"  : "3",
+			"section" : "1",
+			"app"     : 2
+		},
+		{
+			"course"  : "3",
+			"section" : "2",
+			"app"     : 2
+		},
+		{
+			"course"  : "3",
+			"section" : "3",
+			"app"     : 2
+		},
+		{
+			"course"  : "3",
+			"section" : "4",
+			"app"     : 2
+		},
+				{
+			"course"  : "4",
+			"section" : "1",
+			"app"     : 2
+		},
+		{
+			"course"  : "4",
+			"section" : "2",
+			"app"     : 2
+		},
+		{
+			"course"  : "4",
+			"section" : "3",
+			"app"     : 2
+		},
+		{
+			"course"  : "4",
+			"section" : "4",
+			"app"     : 2
 		}
 	],
 	"sections":[
@@ -144,14 +292,32 @@
 			"app": 2
 		}
 	],
-
 	"sectionmaterials":[
 		{
 			"section": "1",
 			"material":"abc1230"
+		},
+		{
+			"section": "2",
+			"material":"abc1231"
+		},
+		{
+			"section": "4",
+			"material":"abc1232"
+		},
+		{
+			"section": "1",
+			"material":"abc1233"
+		},
+		{
+			"section": "3",
+			"material":"abc1234"
+		},
+		{
+			"section": "3",
+			"material":"abc1235"
 		}
 	],
-	
 	"tags": [
 		{
 			"uuid":"bbc0",
@@ -170,14 +336,28 @@
 		},
 		{
 			"uuid":"bbc1",
-			"user":"mak10",
-			"start":20,
-			"end":30,
+			"user":"jhc20",
+			"start":27,
 			"type":1,
-			"target":"abc1230",
-			"title":"basketball dunk",
-			"description":"the windmill",
+			"target":"abc1231",
+			"title":"How do routers know where a given IP address is?",
+			"description":"",
 			"question":"3469445c-7679-4283-9bf8-39d9e35f0895",
+			"important":true,
+			"interest":false,
+			"examable":true,
+			"reviewlater":true,
+			"shared":false
+		},
+		{
+			"uuid":"bbc2",
+			"user":"mis2",
+			"start":0,
+			"type":1,
+			"target":"abc1233",
+			"title":"How many plates of pasta should I eat before doing an iron man?",
+			"description":"",
+			"question":"3461235c-7679-4283-9bf8-39d9e35f0895",
 			"important":true,
 			"interest":false,
 			"examable":true,

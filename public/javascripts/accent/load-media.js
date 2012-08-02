@@ -44,14 +44,12 @@ function displayTags(type) {
 			data.tags.forEach(function(tag) {				
 				var tagStr = formatTimeline(tag);	
 				//tagWindow.before(tagStr);
-
-				var time = tag.start * video.duration / 100;
-				var endTime = 0;
-				var newTag = $(tagStr);
+				
+				var newTag = $(tagStr);				
 				$(".Timeline").prepend(newTag);
 				newTag.data("tag", {
-					offset: time,
-					duration: endTime
+					offset: tag.start,
+					duration: tag.end - tag.start
 				});
 				bindTag(newTag);
 			});
@@ -62,20 +60,17 @@ function displayTags(type) {
 					var tagStr = formatTimeline(tag);	
 					//tagWindow.before(tagStr);	
 
-					var time = tag.start * video.duration / 100;
-					var endTime = 0;
 					var newTag = $(tagStr);
+
 					$(".Timeline").prepend(newTag);
 					newTag.data("tag", {
-						offset: time,
-						duration: endTime
+						offset: tag.start,
+						duration: tag.end - tag.start
 					});
 					bindTag(newTag);	
 				}						
 			});	
 		}
-
-		//bindTag($(".Tag"));
 	});
 
 }
@@ -116,10 +111,19 @@ function selectedTag(tag) {
 	
 }
 
-function showTagInfo(title, description){
+function showTagInfo(tag){
 	var tagTitle = document.getElementById("TagTitle");		
 	var tagType = document.getElementById("TagType");
 	var tagDescription = document.getElementById("TagDescription");
+
+	var title = "";
+	var description = "";
+
+	if (typeof tag != 'undefined') {
+		title = tag.title;
+		description = tag.description;
+	}
+
 
 	tagTitle.value = title;
 	tagDescription.value = description;
@@ -131,6 +135,9 @@ function bindTag(tag) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
 		video.pause();			
+		console.log('tag clicked succesfully')
+		console.log('video current = ' + tag.offset)
+		console.log('video duration = ' + tag.duration)
 		video.currentTime = tag.offset;
 		if (tag.duration > 0)
 			video.play();
@@ -156,14 +163,8 @@ function bindTag(tag) {
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
 
-		accent.getTagById(tagID, function(data){		
-			if (data.tag) {
-				showTagInfo(data.tag.title, data.tag.description);							
-			}				
-			else {
-				showTagInfo("", "");				
-			}				
-
+		accent.getTagById(tagID, function(data){
+			showTagInfo(data.tag);				
 		})
 
 		return true;
@@ -177,6 +178,15 @@ function bindTag(tag) {
 		else {
 			$(this).parent().css("cursor", "auto");
 		}
+
+		var selectedTag = $(this);
+		var tagID = selectedTag.attr("uuid");
+
+		accent.getTagById(tagID, function(data){	
+			console.log('tag');
+			console.log(data);
+			showTagInfo(data.tag);						
+		})
 		
 		$(".TagWindow").css({
 			display: "block",
@@ -228,9 +238,7 @@ $(document).ready(function () {
 	tagColors.push(rgb2hex(generalColor));
 
 
-	$(".Timeline").bind("dblclick", function(evt) {		
-		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');			
+	$(".Timeline").bind("dblclick", function(evt) {				
 		var curTime = (evt.offsetX / $(this).width() * video.duration);		
 		
 		var tag = addTag(curTime);		
@@ -250,15 +258,6 @@ $(document).ready(function () {
 		case "move":
 			var offset = evt.pageX - $(this).data("last");
 			$(this).children(".Selected").each(function() {
-				console.log('this is =');
-				console.log($(this))
-
-				if (tag.hasOwnProperty('duration')) {
-					console.log('tag duration = ' + tag.duration)
-				}
-				else {
-					console.log('fuck u')	
-				}
 				var 
 					r = ($(this).position().left + offset) / $(this).parent().width(),
 					x = Math.max(r,0),

@@ -9,6 +9,11 @@
 			"user":"ted",
 			"profilePicture":"/images/avatars/ted.jpg",
 			"bio":"Associate Professor of Computing Science. Interests in Undergraduate education, human-computer interaction."
+		},
+		{
+			"user":"jhc20",
+			"profilePicture":"/images/accent/jhc20.jpg",
+			"bio":"Soccer enthusiast!"
 		}
 	],
 	"users": [

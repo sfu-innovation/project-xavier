@@ -29,24 +29,83 @@ block content
 							a.passed(href="#week#{week}", data-week="#{week}") #{week}
 
 
-			
+
 	div.row.clearfix#contents
+
+		- if (user.type ===1)
+			div.three.columns#sharebox.hide-for-small
+
+				div.innercontents#submitnew
+					div.loading
+						span loading...
+					div.msg
+						span.delete_btn X
+						div
+
+					div.error
+						span.delete_btn X
+						div
+
+					div.cover
+						div.frontCard
+
+							form#share_article(name="share_article",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+								label Share or
+									a.flip_btn  upload a resource!
+								input(name="article_url",type="text", id="article_url", placeholder="http://")
+								textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+
+								div.sumbitrow
+									div.selectcourse
+										select(class="customDropdown", name="article_course", value="select a course")
+											each item in courses
+												option(value=item.uuid) #{item.subject+item.number}
+									div.submit
+										input(type="submit", value="Post", class="small button")
+						div.backCard
+							form#upload_article(name="upload_article", action="/resource/upload",enctype="multipart/form-data", method="post", style="margin-bottom : 0", class="custom")
+								label Upload or
+									a.flip_btn  share a resource!
+								div
+									input(name="article_title",type="text", id="article_title", placeholder="Title")
+									div.browsebox
+										input(type="file",name="article_file",id="article_file")
+										div#upload_file.small.button +
+								textarea(name="article_comment", type="text", id="article_comment", placeholder="Type in a comment")
+								input(type="hidden",name="article_week", id="article_week", value="0")
+								div.sumbitrow
+									div.selectcourse
+										select#article_course(class="customDropdown", name="article_course", value="select a course")
+											each item in courses
+												option(value=item.uuid) #{item.subject+item.number}
+									div.submit
+										input(type="submit", value="Post", class="small button")
+
+
+
+
 		div.three.columns
 			div.innercontents#info
 				h4 #{courseName}
 					ul
-						li Intructor: 
+						li Intructor:
 							span Bernie M.
-						li Email: 
+						li Email:
 							span bmaroney@sfu.ca
-					ul 
-						li TA: 
+					ul
+						li TA:
 							span Alice W.
-						li Email: 
+						li Email:
 							span alicew@sfu.ca
-					ul 
-						li TA: 
+					ul
+						li TA:
 							span George S.
-						li Email: 
+						li Email:
 							span georges@sfu.ca
-				
+
+		div.three.columns#no_resource_box(style="display:none;")
+			div.innercontents#no_resource
+				div
+					p We have no resource in this section
+					P Be the first one to share one
+

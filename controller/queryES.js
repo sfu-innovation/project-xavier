@@ -871,6 +871,7 @@ QueryES.prototype.searchQuestionsRoute = function(appType, pageNum, searchObj, c
 			data = notMyQuestions(data, searchObj);
 			break;
 		}
+		default:{}
 	}
 
 	switchIndex(appType);

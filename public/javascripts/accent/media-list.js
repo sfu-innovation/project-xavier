@@ -2,13 +2,12 @@ var accent = new coreApi.Accent();
 var common = new coreApi.Common();
 
 function getMedia(courseUUID, all){
-	
 	// Only load media files if on the main page
 	if($('#media-list')){
 		//alert("UUID " + courseUUID);
 		// If the all button was clicked, build up an array of course uuids
 		// to feed to getMedia
-		if(typeof courseUUID === 'string' && courseUUID.toLowerCase() === 'all'){
+		if(typeof courseUUID === 'string' && courseUUID.toLowerCase().replace(/ /g,'') === 'all'){
 			var courseUUIDS = [];
 			var courses = $('#Courses').children();
 			for(var i = 0; i < courses.length; ++i){
@@ -30,6 +29,24 @@ function formatMediaList() {
 			+ "<h1> Here are the videos you should watch! </h1>"
 			+ "<div id='media-list'></div>"
 			+ "</div>";
+}
+
+function returnColor(uuid) {
+	var color = "", done = false;
+	var courseNumbers = $('#Courses li a span.UUID');
+	courseNumbers.each(function() {
+		var courseID = $(this).text().trim();
+
+		if (courseID === uuid) {
+			var course = $(this).parent().parent();
+
+			if (!done) {
+				color = course.css("border-bottom-color");
+				done = true;
+			}
+		}									
+	})
+	return color;
 }
 
 var retrieveMedia = function(courseUUID, all){
@@ -63,8 +80,10 @@ var retrieveMedia = function(courseUUID, all){
 					if(all){
 						(function(courseUUID){
 							common.getCourseById(courseUUID, function(response){
+								var courseName = response.course.subject + " " + response.course.number;
+								var color =  returnColor(response.course.uuid);
 								mediaNode = mediaNode + 
-								"<div class='Section'><h2><b>" + response.course.subject + " " +
+								"<div class='Section' style='background:"+ color +"'><h2><b>" + response.course.subject + " " +
 								response.course.number + "</b></h2>" +
 								"</div></div></div>";
 								$('#media-list').append(mediaNode);
@@ -89,5 +108,3 @@ function editLinks(mediaUUID, mediaTitle, mediaDescription){
 	$('.EditDescription').val(mediaDescription);
 	return false;
 }
-
-getMedia($('.Selected').text());

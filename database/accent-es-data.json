@@ -1,0 +1,40 @@
+[
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"30bde763-5435-423f-9d58-e7315164dfdc",
+		"_score":1,
+		"_source": {
+			"user":"mak10",
+			"upvote":250,
+			"downvote":8,
+			"body":"The capital city of Japan is Tokyo, it is also Japan's largest city with over 35 million inhabitants",
+			"target_uuid":"3469445c-7679-4283-9bf8-39d9e35f0895",
+			"objectType":"comment",
+			"created":"2012-07-21T18:19:31.204Z",
+			"timestamp":"2012-07-21T18:19:31.204Z",
+			"commentParent":""
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"3469445c-7679-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"jhc20",
+			"title":"What is capital of Japan?",
+			"body":"What is capital of Japan?",
+			"category":"academic",
+			"status":"answered",
+			"created":"2012-07-11T18:19:31.204Z",
+			"timestamp":"2012-07-11T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":382,
+			"commentCount":1,
+			"course":"2",
+			"week":1
+		}
+	}
+]

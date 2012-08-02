@@ -5,13 +5,14 @@ block content
 	div.row.clearfix#contents
 		div.three.columns
 			div.innercontents#user_detail_box
-				- if (targetProfile.profilePicture)
-					img.profile_avatar(src="#{targetProfile.profilePicture}")
-				- else
-					img.profile_avatar(src="/images/engage/default_profile.png")
-				h4 #{targetUser.firstName} #{targetUser.lastName}
-				
-				p #{targetUser.email}
+				div.avatar_name
+					- if (targetProfile.profilePicture)
+						img.profile_avatar(src="#{targetProfile.profilePicture}")
+					- else
+						img.profile_avatar(src="/images/engage/default_profile.png")
+					h4 #{targetUser.firstName} #{targetUser.lastName}
+					
+					span #{targetUser.email}
 				div#user_bio
 					h6 ABOUT
 					p #{targetProfile.bio}

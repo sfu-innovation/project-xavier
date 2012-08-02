@@ -19,11 +19,6 @@ function loadMedia(){
 	})			
 }
 
-function formatTagTypeOption(index){
-	var tagType = ["Important","Examable", "Question", "Interesting", "General"];
-	return "<option value='" + index + "'>" + tagType[index] + "</option>";
-}
-
 
 function formatTagtype(value) {	
 	return tagColors[value];
@@ -32,35 +27,55 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + convertTime2Pixel(tag.start) + "%; width: " + convertTime2Pixel(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + convertTime2Percentage(tag.start) + "%; width: " + convertTime2Percentage(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
 }
 
-function convertTime2Pixel(time) {
+function convertTime2Percentage(time) {
 	var videoWidth = $(".Timeline").width();	
 	var pixel = time * 100 / video.duration;	
 	return pixel;
 }
 
 function displayTags(type) {
-	var timeline = $(".Tagger").children(".Timeline");		
+	//var timeline = $(".Tagger").children(".Timeline");		
 	accent.getTagsByMediaFileId(mediaID, function(data){		
-		var tagWindow = $(timeline).children(".TagWindow");	
+		//var tagWindow = $(timeline).children(".TagWindow");	
 		if(type === "") {
 			data.tags.forEach(function(tag) {				
 				var tagStr = formatTimeline(tag);	
-				tagWindow.before(tagStr);
+				//tagWindow.before(tagStr);
+
+				var time = tag.start * video.duration / 100;
+				var endTime = 0;
+				var newTag = $(tagStr);
+				$(".Timeline").prepend(newTag);
+				newTag.data("tag", {
+					offset: time,
+					duration: endTime
+				});
+				bindTag(newTag);
 			});
 		}
 		else {			
 			data.tags.forEach(function(tag) {	
 				if (tag.type === type) {
 					var tagStr = formatTimeline(tag);	
-					tagWindow.before(tagStr);		
+					//tagWindow.before(tagStr);	
+
+					var time = tag.start * video.duration / 100;
+					var endTime = 0;
+					var newTag = $(tagStr);
+					$(".Timeline").prepend(newTag);
+					newTag.data("tag", {
+						offset: time,
+						duration: endTime
+					});
+					bindTag(newTag);	
 				}						
 			});	
 		}
 
-		bindTag($(".Tag"));
+		//bindTag($(".Tag"));
 	});
 
 }
@@ -184,7 +199,6 @@ function addTag(time) {
 }
 
 loadMedia();
-//displayTags(mediaID, "");
 
 var hexDigits = new Array
         ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
@@ -236,6 +250,15 @@ $(document).ready(function () {
 		case "move":
 			var offset = evt.pageX - $(this).data("last");
 			$(this).children(".Selected").each(function() {
+				console.log('this is =');
+				console.log($(this))
+
+				if (tag.hasOwnProperty('duration')) {
+					console.log('tag duration = ' + tag.duration)
+				}
+				else {
+					console.log('fuck u')	
+				}
 				var 
 					r = ($(this).position().left + offset) / $(this).parent().width(),
 					x = Math.max(r,0),

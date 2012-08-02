@@ -145,6 +145,7 @@
 			"description":"An introduction to packet switched networks.  Decribes how packets are routed from one end user to another.",
 			"course":"1",
 			"path":"237a216e371af0006ad12903fa4b669a.mp4",
+			"thumbnail":"237a216e371af0006ad12903fa4b669a.jpg",
 			"type":0
 		},
 		{
@@ -163,6 +164,7 @@
 			"description":"Carbs carbs carbs!  Load em up!",
 			"course":"2",
 			"path":"177647894f04af565ed9497bee557782.mp4",
+			"thumbnail":"177647894f04af565ed9497bee557782.jpg",
 			"type":0
 		},
 		{
@@ -181,6 +183,7 @@
 			"description":"In this tutorial, we will see how to create an interactive video tagging program that will enhance the way we view lectures online.",
 			"course":"4",
 			"path":"1b1a7e50ca370d4062a40aa43778dd71.mp4",
+			"thumbnail":"1b1a7e50ca370d4062a40aa43778dd71.jpg",
 			"type":0
 		}
 	],

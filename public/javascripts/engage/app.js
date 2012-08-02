@@ -294,6 +294,11 @@ jQuery(document).ready(function ($) {
 
 					article.fadeOut('slow', function () {
 						article.remove()
+
+						var a = $('.articlebox');
+						if( a.length <= 0){
+							$('#no_resource_box').show();
+						}
 					});
 
 				}
@@ -1083,7 +1088,8 @@ function loadCourseArticles(engage, week) {
 						console.log(data);
 						var weekbox = renderWeekInfoBox(data.week);
 						$('.weekbox').remove();
-						$('#contents').append(weekbox);
+						$(weekbox).insertAfter($('#info').parent())
+//						$('#contents').append(weekbox);
 					}
 					else{
 
@@ -1103,8 +1109,11 @@ function loadCourseArticles(engage, week) {
 				if (data) {
 					if (data.errorcode === 0) {
 
+						if( data.resources <= 0){
+							$('#no_resource_box').show();
+						}
 						$('.articlebox').remove();
-;
+
 						console.log(data);
 						$.each(data.resources, function (index, item) {
 
@@ -1130,11 +1139,17 @@ function loadCourseArticles(engage, week) {
 					}
 
 					else {
-
+						var a = $('.articlebox');
+						if( a.length <= 0){
+							$('#no_resource_box').show();
+						}
 					}
 				}
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			})
 		}
@@ -1178,7 +1193,6 @@ function loadCourseArticles(engage, week) {
 
 
 function loadAllArticles(engage, week) {
-
 	if (week) {
 		engage.getResourcesByCourseUUIDsAndWeek(week, function (data) {
 			if (data) {
@@ -1188,6 +1202,9 @@ function loadAllArticles(engage, week) {
 					//$('#contents').empty();
 					console.log(data);
 
+					if( data.resources.length <= 0){
+						$('#no_resource_box').show();
+					}
 
 
 					$.each(data.resources, function (index, item) {
@@ -1202,11 +1219,17 @@ function loadAllArticles(engage, week) {
 				}
 
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			}
 			else {
-
+				var a = $('.articlebox');
+				if( a.length <= 0){
+					$('#no_resource_box').show();
+				}
 			}
 		})
 
@@ -1219,6 +1242,9 @@ function loadAllArticles(engage, week) {
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
+					if( data.resources.length <= 0){
+						$('#no_resource_box').show();
+					}
 					$.each(data.resources, function (index, item) {
 
 						console.log(item);
@@ -1231,11 +1257,17 @@ function loadAllArticles(engage, week) {
 				}
 
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			}
 			else {
-
+				var a = $('.articlebox');
+				if( a.length <= 0){
+					$('#no_resource_box').show();
+				}
 			}
 
 
@@ -1434,7 +1466,7 @@ function addColor(){
 
 function renderArticlePreviewBox(item) {
 
-
+	$('#no_resource_box').hide();
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'

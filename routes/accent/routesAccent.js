@@ -505,12 +505,11 @@ exports.viewMediaPage = function(req, res){
 			profile: req.session.profile,
 			mediaUUID: req.params.mediaID,
 			status : "logged in" },
-			function(err, rendered){			
+			function(err, rendered){		
 				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.end(rendered);
 
 		})
-		
 	}
 	else {
 		res.redirect("/demo");		

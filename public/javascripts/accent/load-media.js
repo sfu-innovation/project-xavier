@@ -45,15 +45,13 @@ function displayTags(type) {
 				var tagStr = formatTimeline(tag);	
 				//tagWindow.before(tagStr);
 				
-				var time = tag.start * video.duration / 100;
-				var endTime = 0;
-				var newTag = $(tagStr);
+				var newTag = $(tagStr);				
 				$(".Timeline").prepend(newTag);
 				newTag.data("tag", {
-					offset: time,
-					duration: endTime
+					offset: tag.start,
+					duration: tag.end - tag.start
 				});
-				//bindTag(newTag);
+				bindTag(newTag);
 			});
 		}
 		else {			
@@ -62,20 +60,17 @@ function displayTags(type) {
 					var tagStr = formatTimeline(tag);	
 					//tagWindow.before(tagStr);	
 
-					var time = tag.start * video.duration / 100;
-					var endTime = 0;
 					var newTag = $(tagStr);
+
 					$(".Timeline").prepend(newTag);
 					newTag.data("tag", {
-						offset: time,
-						duration: endTime
+						offset: tag.start,
+						duration: tag.end - tag.start
 					});
-					//bindTag(newTag);	
+					bindTag(newTag);	
 				}						
 			});	
 		}
-
-		bindTag($(".Tag"));
 	});
 
 }
@@ -131,6 +126,9 @@ function bindTag(tag) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
 		video.pause();			
+		console.log('tag clicked succesfully')
+		console.log('video current = ' + tag.offset)
+		console.log('video duration = ' + tag.duration)
 		video.currentTime = tag.offset;
 		if (tag.duration > 0)
 			video.play();
@@ -228,9 +226,7 @@ $(document).ready(function () {
 	tagColors.push(rgb2hex(generalColor));
 
 
-	$(".Timeline").bind("dblclick", function(evt) {		
-		//var offset = evt.offsetX;
-		//var tag = $('<div class="Tag" style="left: '+offset+'px; width: 12px; background: red;"></div>');			
+	$(".Timeline").bind("dblclick", function(evt) {				
 		var curTime = (evt.offsetX / $(this).width() * video.duration);		
 		
 		var tag = addTag(curTime);		

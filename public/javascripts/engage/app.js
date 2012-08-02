@@ -629,11 +629,11 @@ function renderBox(item,type){
 	// if the created date doesn't match the updated date,   it means that the post has been edited.
 	if (item.createdAt === item.updatedAt || !item.updatedAt){
 
-		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-			+ ' .</span>' ;
+		html +=	'<div class="post_time_box">' + ' <span>Posted </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>';
 	}
 	else{
-		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+		html +=	' <span>Updated </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
 			+ ' .</span>' ;
 	}
 
@@ -641,7 +641,7 @@ function renderBox(item,type){
 	html	+= ' <span class="like_reply"><span class="like_btn">Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</span><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
-		+ '</li>';
+		+ '</li>'  + ' </div>';
 
 	return html;
 }

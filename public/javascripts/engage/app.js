@@ -89,11 +89,14 @@ jQuery(document).ready(function ($) {
 			weekNum = parseInt(weekNum);
 		}
 
+		$('#article_week').val(weekNum);
+
 		loadCourseArticles(engage, weekNum);
 		$('.weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
+			$('#article_week').val(weekNum);
 			loadCourseArticles(engage, weekNum);
 		});
 
@@ -103,6 +106,7 @@ jQuery(document).ready(function ($) {
 			if (week) {
 				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
+				$('#article_week').val(week);
 				loadCourseArticles(engage, week);
 			}
 
@@ -171,56 +175,13 @@ jQuery(document).ready(function ($) {
 		$('div#submitnew .error span.delete_btn').bind('click',function(){$('div#submitnew .error').fadeOut(500);});
 		$('div#submitnew .msg span.delete_btn').bind('click',function(){$('div#submitnew .msg').fadeOut(500);});
 
-		$('.flip_btn').bind('click',function(){
-			$('div.cover').addClass('hack');
-			$('div.cover').toggleClass('flip');
-		})
+
 
 		$('.selectcourse .dropdown a').bind('click',function(){
 			$('div.cover').removeClass('hack');
 
 		})
 
-		$('#share_article').bind('submit',function(){
-
-			var course = $('#submitnew form option:selected').val();
-			var description = $('#article_comment').val();
-			var url = $('#article_url').val();
-			var course_name = $('#share_article option:selected').html();
-
-			var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-
-			if (!(RegExp.test(url))){
-				$('#article_url').attr('placeholder','Please enter a valid url');
-
-			}
-			else {
-				$('div#submitnew .loading').show();
-
-				engage.shareResource({course:course,description:description,url:url},function(data){
-
-						console.log(data);
-				if (data){
-					if (data.errorcode === 0){
-						var new_article = renderArticlePreviewBox(data.resource);
-						$('#sharebox').after(new_article);
-						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
-					}
-					else{
-						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
-					}
-				}
-				else{
-					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
-				}
-			});
-
-			}
-
-
-			return false;
-
-		})
 
 
 		$(window).bind( 'hashchange', function(e) {
@@ -342,7 +303,52 @@ jQuery(document).ready(function ($) {
 		}
 	})
 
+	$('.flip_btn').bind('click',function(){
+		$('div.cover').addClass('hack');
+		$('div.cover').toggleClass('flip');
+	})
 
+	$('#share_article').bind('submit', function () {
+
+		var course = $('#submitnew form option:selected').val();
+		var description = $('#article_comment').val();
+		var url = $('#article_url').val();
+		var course_name = $('#share_article option:selected').html();
+		var week = $('#article_week').val();
+
+		var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+		if (!(RegExp.test(url))) {
+			$('#article_url').attr('placeholder', 'Please enter a valid url');
+
+		}
+		else {
+			$('div#submitnew .loading').show();
+
+			engage.shareResource({course:course, description:description, url:url, week:week}, function (data) {
+
+				console.log(data);
+				if (data) {
+					if (data.errorcode === 0) {
+						var new_article = renderArticlePreviewBox(data.resource);
+						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>' + course_name + '</span>.');
+					}
+					else {
+						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
+					}
+				}
+				else {
+					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
+				}
+			});
+
+		}
+
+
+		return false;
+
+	})
 
 
 	$('#upload_article').submit(function() {
@@ -351,7 +357,7 @@ jQuery(document).ready(function ($) {
 		var title = $('#upload_article #article_title').val();
 
 		if (!title){
-			$('#upload_article #article_title').attr('placeholder','Please enter a title')
+		$('#upload_article #article_title').attr('placeholder','Please enter a title')
 		}
 		else{
 			$('div#submitnew .loading').show();

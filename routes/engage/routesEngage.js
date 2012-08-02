@@ -612,6 +612,7 @@ exports.uploadResource = function (req,res){
 	var title = req.body.article_title;
 	var description = req.body.article_comment;
 	var course = req.body.article_course;
+	var week = req.body.article_week;
 
 	if(req.files && req.files.article_file && req.files.article_file.name){
 
@@ -633,7 +634,14 @@ exports.uploadResource = function (req,res){
 					res.end(JSON.stringify({ errorcode:1, message:"Cannot Save the file" }));
 					return;
 				}
-				var currentWeek = EngageAction.weekHelper();
+				var currentWeek;
+				if (week && week <14 && week != 0 ){
+					currentWeek = week;
+				}
+				else{
+					currentWeek = EngageAction.weekHelper();
+
+				}
 				Resource.createResource(req.session.user.uuid, {description:description, path:fileName, url:serverPath, excerpt:description, week:currentWeek,course:course,fileType:fileType,resourceType:2, title:title}, function(err,result){
 					if (result){
 						EngageAction.resourceHelper(req.session.user, [result], function (error, result) {
@@ -671,12 +679,22 @@ exports.shareResource = function (req,res){
 	var url = req.body.url;
 	var description = req.body.description;
 	var course = req.body.course;
+	var week = req.body.week;
 
-	//console.log(req.body);
+
 
 	Parser.articlize(url, function (err,result) {
 		if(result) {
-			var currentWeek = EngageAction.weekHelper();
+			var currentWeek;
+
+			if (week &&  week != 0 && week < 14 ){
+				currentWeek = week;
+			}
+			else{
+				currentWeek = EngageAction.weekHelper();
+
+			}
+
 			Resource.createResource(req.session.user.uuid, {description:description, url:result.url, path:result.path,thumbnail:result.thumbnail, excerpt:result.excerpt, week:currentWeek,course:course,fileType:"html",resourceType:2, title:result.title}, function(err,result){
 				if (result){
 					EngageAction.resourceHelper(req.session.user, [result], function (error, result) {

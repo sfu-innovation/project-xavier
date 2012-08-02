@@ -72,7 +72,7 @@ html
 					function show_slider_box(id){
 						$(id).slideToggle('fast');
 					}
-				div.slider_box#menu_box
+				div.slider_box#menu_box.mobile-four.columns
 					ul
 						li
 							a.all_btn(href="/") All Resources
@@ -82,13 +82,13 @@ html
 							a.starred_btn(href="/starred") Starred
 						li
 							a.instructor_btn(href="/instructor") Instructor Posts
-				div.slider_box#courses_box
+				div.slider_box#courses_box.mobile-four.columns
 					ul
 						each item in courses
 							li.courses
 								a(href="../course/#{item.subject+'-'+item.number+'-'+item.section}") #{item.subject+' '+item.number}
 								
-				div.slider_box#mobile_share_box
+				div.slider_box#mobile_share_box.mobile-four.columns
 					form(name="share_article", action="/",enctype="multipart/form-data", method="post", class="custom")
 						input.article_url(name="article_url",type="text",placeholder="http://")
 						input.article_comment(name="article_comment", type="text", placeholder="Type in a comment")

@@ -2093,3 +2093,10 @@ div.innercontents#user_detail_box div.avatar_name{
 #week-info ul li{
 	font-style: italic;
 	}
+
+
+#no_resource{
+	border:dashed 1px #ccc;
+	text-align: center;
+	padding-top: 50px;
+}

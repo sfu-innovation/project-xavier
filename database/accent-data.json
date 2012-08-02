@@ -12,7 +12,7 @@
 		},
 		{
 			"user":"mis2",
-			"profilePicture":"/images/avatars/mis2.jpg",
+			"profilePicture":"/images/avatars/mis2.gif",
 			"bio":"Code wizard"
 		}
 	],
@@ -135,7 +135,8 @@
 			"title":"What is the Internet?",
 			"description":"A brief history of the internet, followed by a more in depth description about what the internet is and how it functions.",
 			"course":"1",
-			"path":"internet.mp4",
+			"path":"a111ce2a1eb99ac6e4765da30ee379c4.mp4",
+			"thumbnail":"a111ce2a1eb99ac6e4765da30ee379c4.jpg",
 			"type":0
 		},
 		{
@@ -154,7 +155,8 @@
 			"title":"HTTP Requests",
 			"description":"Details on how HTTP requests are created and handled.",
 			"course":"1",
-			"path":"default.mp4",
+			"path":"3c5228ad0481446ea3542fa03e2e1568.mp4",
+			"thumbnail":"3c5228ad0481446ea3542fa03e2e1568.jpg",
 			"type":0
 		},
 		{
@@ -173,7 +175,8 @@
 			"title":"Should Animals Ever Be Put Down?",
 			"description":"Should they have a say in it?  Or is it ever in the animals best interest?",
 			"course":"3",
-			"path":"default.mp4",
+			"path":"627edb97361dd6fc3f5f6df0a0bb312d.mp4",
+			"thumbnail":"627edb97361dd6fc3f5f6df0a0bb312d.jpg",
 			"type":0
 		},
 				{

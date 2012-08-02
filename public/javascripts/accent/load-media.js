@@ -253,15 +253,6 @@ $(document).ready(function () {
 		case "move":
 			var offset = evt.pageX - $(this).data("last");
 			$(this).children(".Selected").each(function() {
-				console.log('this is =');
-				console.log($(this))
-
-				if (tag.hasOwnProperty('duration')) {
-					console.log('tag duration = ' + tag.duration)
-				}
-				else {
-					console.log('fuck u')	
-				}
 				var 
 					r = ($(this).position().left + offset) / $(this).parent().width(),
 					x = Math.max(r,0),

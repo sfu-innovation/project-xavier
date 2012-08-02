@@ -1162,7 +1162,7 @@ exports.preference = function (req, res){
 		})
 	}
 	else {
-		res.redirect("/demo");
+		res.redirect("/splash");
 	}
 
 }

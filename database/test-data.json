@@ -758,6 +758,263 @@
 
 	],
 	"weeks":[
+	
+
+{
+	"uuid": "superasdf12",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 1,
+	"topic": "The Protocol Stack"
+},
+
+{
+	"uuid": "superasdf11",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 2,
+	"topic": "TCP and UDP"
+},
+
+{
+	"uuid": "superasdf10",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 3,
+	"topic": "Routing Protocols"
+},
+
+{
+	"uuid": "superasdf9",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 4,
+	"topic": "Load Balancing"
+},
+
+{
+	"uuid": "superasdf8",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 5,
+	"topic": "Socket Programming"
+},
+
+{
+	"uuid": "superasdf7",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 6,
+	"topic": "Midterm Review"
+},
+
+{
+	"uuid": "superasdf6",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 7,
+	"topic": "Wireless Networks"
+},
+
+{
+	"uuid": "superasdf5",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 8,
+	"topic": "Network Architecture"
+},
+
+{
+	"uuid": "superasdf4",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 9,
+	"topic": "Network Traffic Management"
+},
+
+{
+	"uuid": "superasdf3",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 10,
+	"topic": "Privacy and Security"
+},
+
+{
+	"uuid": "superasdf2",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 11,
+	"topic": "Failure Handling "
+},
+
+{
+	"uuid": "superasdf1",
+	"app": 0,
+	"course": "A827346H7ASDFG9",
+	"week": 12,
+	"topic": "Final Exam Review"
+},
+
+{
+	"uuid": "superasdf13",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 1,
+	"topic": "Course Overview"
+},
+
+{
+	"uuid": "superasdf14",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 2,
+	"topic": "Styles and Genres"
+},
+
+{
+	"uuid": "superasdf15",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 3,
+	"topic": "Natural Symbolism"
+},
+
+{
+	"uuid": "superasdf16",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 4,
+	"topic": "Thematic Analysis"
+},
+
+{
+	"uuid": "superasdf17",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 5,
+	"topic": "Poetic Techniques"
+},
+
+{
+	"uuid": "superasdf18",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 6,
+	"topic": "Midterm Review"
+},
+
+{
+	"uuid": "superasdf19",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 7,
+	"topic": "Mood and Voice"
+},
+
+{
+	"uuid": "superasdf20",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 8,
+	"topic": "Pacing and Rhythm"
+},
+
+{
+	"uuid": "superasdf21",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 9,
+	"topic": "Selected Poem Analysis"
+},
+
+{
+	"uuid": "superasdf22",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 10,
+	"topic": "Sonnets"
+},
+
+{
+	"uuid": "superasdf23",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 11,
+	"topic": "Oral Presentations"
+},
+
+{
+	"uuid": "superasdf24",
+	"app": 0,
+	"course": "F827346H7ASDFG2",
+	"week": 12,
+	"topic": "Final Exam Review"
+},
+
+{
+	"uuid": "superasdf28",
+	"app": 0,
+	"course": "F827346H7ASDFG1",
+	"week": 1,
+	"topic": "Course Overview"
+},
+
+{
+	"uuid": "superasdf35",
+	"app": 0,
+	"course": "F827346H7ASDFG1",
+	"week": 3,
+	"topic": "Theories of The Mind"
+},
+
+{
+	"uuid": "superasdf33",
+	"app": 0,
+	"course": "F827346H7ASDFG1",
+	"week": 5,
+	"topic": "Pattern Recognition"
+},
+
+{
+	"uuid": "superasdf31",
+	"app": 0,
+	"course": "F827346H7ASDFG1",
+	"week": 6,
+	"topic": "Midterm Review"
+},
+
+{
+	"uuid": "superasdf25",
+	"app": 0,
+	"course": "F827346H7ASDFG1",
+	"week": 12,
+	"topic": "Final Exam Review"
+},
+
+{
+	"uuid": "superasdf29",
+	"app": 0,
+	"course": "91cc5d86-1630-4b57-83c4-41d50cee2e78",
+	"week": 1,
+	"topic": "Course Overview"
+},
+
+{
+	"uuid": "superasdf30",
+	"app": 0,
+	"course": "91cc5d86-1630-4b57-83c4-41d50cee2e78",
+	"week": 6,
+	"topic": "Midterm Review"
+},
+
+{
+	"uuid": "superasdf26",
+	"app": 0,
+	"course": "91cc5d86-1630-4b57-83c4-41d50cee2e78",
+	"week": 12,
+	"topic": "Final Exam Review"
+},
 		{
 			"uuid": "e9ff3a7a-abb9-4f3e-acf0-7173e930767b",
 			"app": 0,

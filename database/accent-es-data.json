@@ -5,10 +5,27 @@
 		"_id":"30bde763-5435-423f-9d58-e7315164dfdc",
 		"_score":1,
 		"_source": {
+			"user":"mis2",
+			"upvote":5,
+			"downvote":20,
+			"body":"Storks pick up the packets and fly them to their destination",
+			"target_uuid":"3469445c-7679-4283-9bf8-39d9e35f0895",
+			"objectType":"comment",
+			"created":"2012-07-21T18:19:31.204Z",
+			"timestamp":"2012-07-21T18:19:31.204Z",
+			"commentParent":""
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"30bde763-5435-423f-9d58-e2345164dfdc",
+		"_score":1,
+		"_source": {
 			"user":"mak10",
-			"upvote":250,
-			"downvote":8,
-			"body":"The capital city of Japan is Tokyo, it is also Japan's largest city with over 35 million inhabitants",
+			"upvote":5,
+			"downvote":20,
+			"body":"Routers have routing tables that are maintained by one of a number of algorithms.  The table tells the router where to send the data packets.",
 			"target_uuid":"3469445c-7679-4283-9bf8-39d9e35f0895",
 			"objectType":"comment",
 			"created":"2012-07-21T18:19:31.204Z",
@@ -23,18 +40,93 @@
 		"_score":1,
 		"_source": {
 			"user":"jhc20",
-			"title":"What is capital of Japan?",
-			"body":"What is capital of Japan?",
+			"title":"How do routers know where a given IP address is?",
+			"body":"How do routers know where a given IP address is?",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-11T18:19:31.204Z",
 			"timestamp":"2012-07-11T18:19:31.204Z",
 			"followup":[],
 			"isInstructor":"false",
-			"viewCount":382,
+			"viewCount":38,
 			"commentCount":1,
-			"course":"2",
+			"course":"1",
 			"week":1
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"3461235c-7679-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"mis2",
+			"title":"How many plates of pasta should I eat before doing an iron man?",
+			"body":"How many plates of pasta should I eat before doing an iron man?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-11T18:19:31.204Z",
+			"timestamp":"2012-07-11T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":51,
+			"commentCount":0,
+			"course":"3",
+			"week":1
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"3469445c-1414-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"mak10",
+			"title":"Did everyone understand when I described all of the different status codes?",
+			"category":"academic",
+			"status":"answered",
+			"created":"2012-07-11T18:19:31.204Z",
+			"timestamp":"2012-07-11T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":7,
+			"commentCount":2,
+			"course":"1",
+			"week":1
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"3469445c-1111-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"mis2",
+			"upvote":0,
+			"downvote":0,
+			"body":"Sure did.  Thanks prof!",
+			"target_uuid":"3469445c-1414-4283-9bf8-39d9e35f0895",
+			"objectType":"comment",
+			"created":"2012-07-21T18:19:31.204Z",
+			"timestamp":"2012-07-21T18:19:31.204Z",
+			"commentParent":""
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"comments",
+		"_id":"3469445c-1111-2222-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"jhc20",
+			"upvote":0,
+			"downvote":0,
+			"body":"I was a confused before, but I understand everything now.",
+			"target_uuid":"3469445c-1414-4283-9bf8-39d9e35f0895",
+			"objectType":"comment",
+			"created":"2012-07-21T18:19:31.204Z",
+			"timestamp":"2012-07-21T18:19:31.204Z",
+			"commentParent":""
 		}
 	}
 ]

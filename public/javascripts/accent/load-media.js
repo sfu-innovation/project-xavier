@@ -37,14 +37,14 @@ function convertTime2Percentage(time) {
 }
 
 function displayTags(type) {
-	var timeline = $(".Tagger").children(".Timeline");		
+	//var timeline = $(".Tagger").children(".Timeline");		
 	accent.getTagsByMediaFileId(mediaID, function(data){		
-		var tagWindow = $(timeline).children(".TagWindow");	
+		//var tagWindow = $(timeline).children(".TagWindow");	
 		if(type === "") {
 			data.tags.forEach(function(tag) {				
 				var tagStr = formatTimeline(tag);	
-				tagWindow.before(tagStr);
-				/*
+				//tagWindow.before(tagStr);
+				
 				var time = tag.start * video.duration / 100;
 				var endTime = 0;
 				var newTag = $(tagStr);
@@ -53,17 +53,15 @@ function displayTags(type) {
 					offset: time,
 					duration: endTime
 				});
-				bindTag(newTag);
-				*/
+				//bindTag(newTag);
 			});
 		}
 		else {			
 			data.tags.forEach(function(tag) {	
 				if (tag.type === type) {
 					var tagStr = formatTimeline(tag);	
-					tagWindow.before(tagStr);	
+					//tagWindow.before(tagStr);	
 
-					/*
 					var time = tag.start * video.duration / 100;
 					var endTime = 0;
 					var newTag = $(tagStr);
@@ -72,8 +70,7 @@ function displayTags(type) {
 						offset: time,
 						duration: endTime
 					});
-					bindTag(newTag);	
-					*/
+					//bindTag(newTag);	
 				}						
 			});	
 		}

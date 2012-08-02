@@ -1035,7 +1035,7 @@ exports.courseView = function (req, res) {
 					})
 				}
 				else{
-
+					res.redirect("/404");
 				}
 
 			});

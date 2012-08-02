@@ -81,7 +81,9 @@ function displayCourseList() {
 					if (!remaining) {						
 						courseStr += "<ul>";											
 						courseList.replaceWith(courseStr);
-						getMedia($('.Selected').text());
+						if($('#media-list').length > 0){
+							getMedia($('.Selected').text());
+						}
 					}
 				})				
 			})

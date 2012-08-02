@@ -2,9 +2,6 @@ var common = new coreApi.Common();
 //var rqra = new coreApi.Presenter();
 var accent = new coreApi.Accent();
 
-function getTagType(value) {
-	return 1;
-}
 
 function deleteTag(tag){
 	var selectedTag = $(".Tag.Selected");
@@ -42,8 +39,7 @@ function uploadTag(tag){
 	var tagType = document.getElementById("TagType").value;
 	var tagDescription = document.getElementById("TagDescription").value;
 
-	var tag = {				
-		//user:"",
+	var tag = {						
 		start:0,
 		end:0,			
 		type:1,

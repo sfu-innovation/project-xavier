@@ -4,15 +4,13 @@ function formatQuestion(question, type, callback) {
 	displayConversations(question._id, function(conversation){
 		var followingType = formatFollowing(type, question._source.user);
 		var questionStr = "<li>" 
-				+ "<div class='Question'>"
-				//+ "<span class='Course'>" + question._source.course + "</span>"
+				+ "<div class='Question'>"				
 				+ "<a href='' class=" + "'" + followingType + "'>" + followingType + "</a>"				
 				+ "<a class='UUID' style='display:none;'>" + question._id + "</a>"
 				+ "<a href=''>" + question._source.title + "</a>"		
 				+ "</div>"
 				+ conversation
-				+ "</li>";
-		//console.log(questionStr);
+				+ "</li>";		
 		callback(questionStr);
 	})
 
@@ -193,17 +191,12 @@ function displayConversations(questionID, callback) {
 	// My conversations
 	var conversationStr = "<div class='Conversation'>";
 
-	//var topConversationList = $(".Conversation").children(".Top");
-	//var allConversationList = $(".Conversation").children(".All");
 	var containsTopResponse = false;
 	
 	var topStr = "";
 	var topDivStr ="<div class='Top'>";
 	var topResponseStr = "<h1> Top responses: </h1>";
 	var allStr = "";	
-
-	//topStr += "<div class='Top'>";
-	//topStr += "<h1> Top responses: </h1>";
 
 	allStr += "<div class='All'>";
 	allStr += "<h1> Conversation: </h1>";	

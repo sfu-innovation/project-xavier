@@ -7,12 +7,12 @@
 		},
 		{
 			"user":"jhc20",
-			"profilePicture":"/images/avatars/default.jpg",
+			"profilePicture":"/images/avatars/jhc20.jpg",
 			"bio":"Super awesome computing scientist!"
 		},
 		{
 			"user":"mis2",
-			"profilePicture":"/images/avatars/default.jpg",
+			"profilePicture":"/images/avatars/mis2.gif",
 			"bio":"Code wizard"
 		}
 	],
@@ -154,7 +154,8 @@
 			"title":"HTTP Requests",
 			"description":"Details on how HTTP requests are created and handled.",
 			"course":"1",
-			"path":"default.mp4",
+			"path":"3c5228ad0481446ea3542fa03e2e1568.mp4",
+			"thumbnail":"3c5228ad0481446ea3542fa03e2e1568.jpg",
 			"type":0
 		},
 		{
@@ -173,7 +174,8 @@
 			"title":"Should Animals Ever Be Put Down?",
 			"description":"Should they have a say in it?  Or is it ever in the animals best interest?",
 			"course":"3",
-			"path":"default.mp4",
+			"path":"627edb97361dd6fc3f5f6df0a0bb312d.mp4",
+			"thumbnail":"627edb97361dd6fc3f5f6df0a0bb312d.jpg",
 			"type":0
 		},
 				{

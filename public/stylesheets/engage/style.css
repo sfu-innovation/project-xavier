@@ -977,8 +977,12 @@ div.likescomments span{
 	background-repeat: no-repeat;
 
 	padding-left: 18px;
-	opacity: 0.5;
+	opacity: 0.7;
 	cursor: pointer
+}
+
+.no-touch div.likescomments span{
+	opacity: 0.5;
 }
 
 div.likescomments span:hover{
@@ -993,9 +997,8 @@ div.likescomments span.comment_btn{
 	background-position: 0 1px;
 }
 
-}
 
-div.likescomments span.comment_btn:hover{
+.no-touch div.likescomments span.comment_btn:hover{
 
 	background-image: url("/images/engage/icon/16x16/Comment_v1.png");
 
@@ -1027,7 +1030,7 @@ div.likescomments span.like_btn.disliked{
 
 }
 
-div.likescomments span.like_btn.disliked:hover{
+.no-touch div.likescomments span.like_btn.disliked:hover{
 	background-image: url("/images/engage/icon/16x16/Like_pressed_v1.png");
 
 
@@ -1036,7 +1039,7 @@ div.likescomments span.like_btn.liked{
 	background-image: url("/images/engage/icon/16x16/Like_pressed_v1.png");
 }
 
-div.likescomments span.like_btn.liked:hover{
+.no-touch div.likescomments span.like_btn.liked:hover{
 	background-image: url("/images/engage/icon/16x16/Like_v1.png");
 }
 
@@ -1727,7 +1730,7 @@ div#no_resource_box{
 	margin: 20px 0 10px 0;
 	}
 
-.weeks-bar ul li:hover a.disabled {
+.no-touch .weeks-bar ul li:hover a.disabled {
 	opacity: 0.5;
 	border-color: #888;
 }

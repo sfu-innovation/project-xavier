@@ -175,6 +175,19 @@ function bindTag(tag) {
 		else {
 			$(this).parent().css("cursor", "auto");
 		}
+
+		var selectedTag = $(this);
+		var tagID = selectedTag.attr("uuid");
+
+		accent.getTagById(tagID, function(data){		
+			if (data.tag) {
+				showTagInfo(data.tag.title, data.tag.description);							
+			}				
+			else {
+				showTagInfo("", "");				
+			}				
+
+		})
 		
 		$(".TagWindow").css({
 			display: "block",

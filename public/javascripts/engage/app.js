@@ -1762,7 +1762,7 @@ function renderNotificationBox(item){
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
 		+ '<span class="username">'+item.user.firstName+' </span>';
-	html	+= 'replied on your message:  "' + item.description + '"'
+	html	+= 'replied on your message:  "' + (item.description).slice(0,40) + '..."'
 		+'</p>';
 
 

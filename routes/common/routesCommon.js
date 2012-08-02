@@ -120,9 +120,12 @@ exports.login = function(appType, request, response) {
 											if(err){
 												return response.send(err);
 											}else{
-												request.session.user = user;
-												request.session.courses = result;
-												response.redirect('/');
+												UserProfile.getUserProfile(user.uuid, function(error, profile){
+													request.session.user = user;
+													request.session.courses = result;
+													request.session.profile = profile;
+													response.redirect('/');
+												})
 											}
 										})
 									})
@@ -141,9 +144,12 @@ exports.login = function(appType, request, response) {
 								if(err){
 									response.send(error);
 								}else{
-									request.session.user = user;
-									request.session.courses = result;
-									response.redirect('/');
+									UserProfile.getUserProfile(user.uuid, function(error, profile){
+										request.session.user = user;
+										request.session.courses = result;
+										request.session.profile = profile;
+										response.redirect('/');
+									})
 								}
 							})
 						}

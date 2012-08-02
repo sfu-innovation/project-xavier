@@ -481,6 +481,7 @@ exports.index = function(req, res){
 	if (req.session && req.session.user) {
 		res.render("accent/index", { 	title: "SFU Accent",
 			user :  req.session.user,
+			profile: req.session.profile,
 			courses : req.session.courses,
 			status : "logged in" }, function(err, rendered){			
 				res.writeHead(200, {'Content-Type': 'text/html'});
@@ -501,6 +502,7 @@ exports.viewMediaPage = function(req, res){
 		res.render("accent/view-media", { 	title: "SFU Accent",
 			user :  req.session.user,
 			courses : req.session.courses,
+			profile: req.session.profile,
 			mediaUUID: req.params.mediaID,
 			status : "logged in" },
 			function(err, rendered){			
@@ -553,6 +555,7 @@ exports.manageMedia = function (req, res) {
 			{ 
 				title: "SFU Accent",
 				user :  req.session.user,
+				profile: req.session.profile,
 				courses : req.session.courses,
 				status : "logged in" 
 			},

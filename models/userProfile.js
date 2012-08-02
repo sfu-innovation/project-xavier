@@ -16,7 +16,7 @@ var db = new Sequelize(
 
 var UserProfile = exports.UserProfile = db.define('UserProfile', {
 	user: {type: Sequelize.STRING, primaryKey: true},
-	profilePicture: {type: Sequelize.STRING, allowNull: true},
+	profilePicture: {type: Sequelize.STRING, allowNull: true, defaultValue: "/images/avatars/default.png"},
 	bio: {type: Sequelize.TEXT, allowNull: true},
 	lastWatchedTag: {type: Sequelize.STRING}
 });

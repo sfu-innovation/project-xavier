@@ -23,8 +23,8 @@
 		"_score":1,
 		"_source": {
 			"user":"jhc20",
-			"title":"What is the tallest building in America?",
-			"body":"What is the tallest building in America?",
+			"title":"What is capital of Japan?",
+			"body":"What is capital of Japan?",
 			"category":"academic",
 			"status":"answered",
 			"created":"2012-07-11T18:19:31.204Z",
@@ -33,7 +33,7 @@
 			"isInstructor":"false",
 			"viewCount":382,
 			"commentCount":1,
-			"course":"ENG109",
+			"course":"2",
 			"week":1
 		}
 	}

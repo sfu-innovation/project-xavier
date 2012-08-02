@@ -10,7 +10,7 @@ div#HeaderContainer
 						a(href="/logout") Logout
 					- else
 						a(href="/login") Login
-			img.User(src="../images/accent/user.jpg", alt="user")
+			img.User(src="#{ profile.profilePicture }", alt="user")
 		h1 
 			a(href="/")
 				img(src="../../images/accent/AccentIcon.png", href="/", alt="Accent")	

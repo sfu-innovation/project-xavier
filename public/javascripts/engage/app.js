@@ -89,11 +89,14 @@ jQuery(document).ready(function ($) {
 			weekNum = parseInt(weekNum);
 		}
 
+		$('#article_week').val(weekNum);
+
 		loadCourseArticles(engage, weekNum);
 		$('.weeks-bar li:nth-child('+ (weekNum+1) +') a	').addClass('active');
 
 		$(window).bind( 'hashchange', function(e) {
 			var weekNum = (window.location.toString().split('#week'))[1];
+			$('#article_week').val(weekNum);
 			loadCourseArticles(engage, weekNum);
 		});
 
@@ -103,6 +106,7 @@ jQuery(document).ready(function ($) {
 			if (week) {
 				$('.weeks-bar a').removeClass('active');
 				weekObj.addClass('active');
+				$('#article_week').val(week);
 				loadCourseArticles(engage, week);
 			}
 
@@ -171,56 +175,13 @@ jQuery(document).ready(function ($) {
 		$('div#submitnew .error span.delete_btn').bind('click',function(){$('div#submitnew .error').fadeOut(500);});
 		$('div#submitnew .msg span.delete_btn').bind('click',function(){$('div#submitnew .msg').fadeOut(500);});
 
-		$('.flip_btn').bind('click',function(){
-			$('div.cover').addClass('hack');
-			$('div.cover').toggleClass('flip');
-		})
+
 
 		$('.selectcourse .dropdown a').bind('click',function(){
 			$('div.cover').removeClass('hack');
 
 		})
 
-		$('#share_article').bind('submit',function(){
-
-			var course = $('#submitnew form option:selected').val();
-			var description = $('#article_comment').val();
-			var url = $('#article_url').val();
-			var course_name = $('#share_article option:selected').html();
-
-			var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-
-			if (!(RegExp.test(url))){
-				$('#article_url').attr('placeholder','Please enter a valid url');
-
-			}
-			else {
-				$('div#submitnew .loading').show();
-
-				engage.shareResource({course:course,description:description,url:url},function(data){
-
-						console.log(data);
-				if (data){
-					if (data.errorcode === 0){
-						var new_article = renderArticlePreviewBox(data.resource);
-						$('#sharebox').after(new_article);
-						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
-					}
-					else{
-						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
-					}
-				}
-				else{
-					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
-				}
-			});
-
-			}
-
-
-			return false;
-
-		})
 
 
 		$(window).bind( 'hashchange', function(e) {
@@ -333,6 +294,11 @@ jQuery(document).ready(function ($) {
 
 					article.fadeOut('slow', function () {
 						article.remove()
+
+						var a = $('.articlebox');
+						if( a.length <= 0){
+							$('#no_resource_box').show();
+						}
 					});
 
 				}
@@ -342,7 +308,52 @@ jQuery(document).ready(function ($) {
 		}
 	})
 
+	$('.flip_btn').bind('click',function(){
+		$('div.cover').addClass('hack');
+		$('div.cover').toggleClass('flip');
+	})
 
+	$('#share_article').bind('submit', function () {
+
+		var course = $('#submitnew form option:selected').val();
+		var description = $('#article_comment').val();
+		var url = $('#article_url').val();
+		var course_name = $('#share_article option:selected').html();
+		var week = $('#article_week').val();
+
+		var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+		if (!(RegExp.test(url))) {
+			$('#article_url').attr('placeholder', 'Please enter a valid url');
+
+		}
+		else {
+			$('div#submitnew .loading').show();
+
+			engage.shareResource({course:course, description:description, url:url, week:week}, function (data) {
+
+				console.log(data);
+				if (data) {
+					if (data.errorcode === 0) {
+						var new_article = renderArticlePreviewBox(data.resource);
+						$('#sharebox').after(new_article);
+						displayMsg('You have successfully shared a resource to <span>' + course_name + '</span>.');
+					}
+					else {
+						displayErrorMsg('<p>We have trouble parsing this URL.</p><p> Please try another one.</p>');
+					}
+				}
+				else {
+					displayErrorMsg('Cannot connect to server. Please try agian after refresh the page.');
+				}
+			});
+
+		}
+
+
+		return false;
+
+	})
 
 
 	$('#upload_article').submit(function() {
@@ -351,7 +362,7 @@ jQuery(document).ready(function ($) {
 		var title = $('#upload_article #article_title').val();
 
 		if (!title){
-			$('#upload_article #article_title').attr('placeholder','Please enter a title')
+		$('#upload_article #article_title').attr('placeholder','Please enter a title')
 		}
 		else{
 			$('div#submitnew .loading').show();
@@ -623,11 +634,11 @@ function renderBox(item,type){
 	// if the created date doesn't match the updated date,   it means that the post has been edited.
 	if (item.createdAt === item.updatedAt || !item.updatedAt){
 
-		html +=	' <span>Posted at </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
-			+ ' .</span>' ;
+		html +=	'<div class="post_time_box">' + ' <span>Posted </span><span class="post_time" data-time="'+item.createdAt+'">' + formartDate(item.createdAt)
+			+ ' .</span>';
 	}
 	else{
-		html +=	' <span>Updated at </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
+		html +=	' <span>Updated </span><span class="post_time" data-time="'+item.updatedAt+'">' + formartDate(item.createdAt)
 			+ ' .</span>' ;
 	}
 
@@ -635,7 +646,7 @@ function renderBox(item,type){
 	html	+= ' <span class="like_reply"><span class="like_btn">Like (' + '<em>' +item.like + '</em>' +')'
 		+ '</span><a class="reply_click" '       +'> Reply <span class="typicn forward"></span> </a></span>'
 
-		+ '</li>';
+		+ '</li>'  + ' </div>';
 
 	return html;
 }
@@ -1077,7 +1088,8 @@ function loadCourseArticles(engage, week) {
 						console.log(data);
 						var weekbox = renderWeekInfoBox(data.week);
 						$('.weekbox').remove();
-						$('#contents').append(weekbox);
+						$(weekbox).insertAfter($('#info').parent())
+//						$('#contents').append(weekbox);
 					}
 					else{
 
@@ -1097,26 +1109,47 @@ function loadCourseArticles(engage, week) {
 				if (data) {
 					if (data.errorcode === 0) {
 
+						if( data.resources <= 0){
+							$('#no_resource_box').show();
+						}
 						$('.articlebox').remove();
-;
+
 						console.log(data);
 						$.each(data.resources, function (index, item) {
 
-							console.log(item);
-							var article = renderArticlePreviewBox(item);
+							if (item.user.type === 1){
+								var article = renderArticlePreviewBox(item);
+								$('#contents').append(article);
+							}
 
 
-							$('#contents').append(article);
+
+						});
+						$.each(data.resources, function (index, item) {
+
+							if (item.user.type !== 1){
+								var article = renderArticlePreviewBox(item);
+								$('#contents').append(article);
+							}
+
+
+
 						});
 
 					}
 
 					else {
-
+						var a = $('.articlebox');
+						if( a.length <= 0){
+							$('#no_resource_box').show();
+						}
 					}
 				}
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			})
 		}
@@ -1160,7 +1193,6 @@ function loadCourseArticles(engage, week) {
 
 
 function loadAllArticles(engage, week) {
-
 	if (week) {
 		engage.getResourcesByCourseUUIDsAndWeek(week, function (data) {
 			if (data) {
@@ -1169,6 +1201,12 @@ function loadAllArticles(engage, week) {
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
+
+					if( data.resources.length <= 0){
+						$('#no_resource_box').show();
+					}
+
+
 					$.each(data.resources, function (index, item) {
 
 						console.log(item);
@@ -1181,11 +1219,17 @@ function loadAllArticles(engage, week) {
 				}
 
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			}
 			else {
-
+				var a = $('.articlebox');
+				if( a.length <= 0){
+					$('#no_resource_box').show();
+				}
 			}
 		})
 
@@ -1198,6 +1242,9 @@ function loadAllArticles(engage, week) {
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
+					if( data.resources.length <= 0){
+						$('#no_resource_box').show();
+					}
 					$.each(data.resources, function (index, item) {
 
 						console.log(item);
@@ -1210,11 +1257,17 @@ function loadAllArticles(engage, week) {
 				}
 
 				else {
-
+					var a = $('.articlebox');
+					if( a.length <= 0){
+						$('#no_resource_box').show();
+					}
 				}
 			}
 			else {
-
+				var a = $('.articlebox');
+				if( a.length <= 0){
+					$('#no_resource_box').show();
+				}
 			}
 
 
@@ -1413,7 +1466,7 @@ function addColor(){
 
 function renderArticlePreviewBox(item) {
 
-
+	$('#no_resource_box').hide();
 	var article =
 		'<div class="three columns articlebox">'
 			+ '<div class="innercontents ' + stylePicker.getStyle(item.course.subject+item.course.number) + '" data-id="' + item.uuid + '" id="' + item.uuid + '">'
@@ -1709,7 +1762,7 @@ function renderNotificationBox(item){
 		+ '" class="user_avatar">'
 	+ '<p class="msg">'
 		+ '<span class="username">'+item.user.firstName+' </span>';
-	html	+= 'replied on your message:  "' + item.description + '"'
+	html	+= 'replied on your message:  "' + (item.description).slice(0,40) + '..."'
 		+'</p>';
 
 

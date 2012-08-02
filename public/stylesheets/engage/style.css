@@ -306,11 +306,10 @@ div#header{
 }
 
 .slider_box#mobile_share_box .selectcourse .dropdown{
-	width:106px;
-}	
+	}
 
 .slider_box#mobile_share_box .selectcourse .dropdown a{
-	width:80px;
+
 	}
 
 /* -----------------------------------------
@@ -876,7 +875,6 @@ div#submitnew .msg span.delete_btn,div#submitnew .error span.delete_btn{
 	border: 1px solid #d9dad5;
 	padding: 1px 3px;
 	cursor: pointer;
-
 	opacity: 0.6;
 	line-height: 13px;
 
@@ -906,7 +904,8 @@ div.innercontents .post_time{
 	white-space: nowrap;
 	overflow: hidden;
 	font-weight: 400;
-	}
+	font-style: italic;
+}
 	
 div.innercontents span#prof img{
 	opacity: 0.6;
@@ -1520,7 +1519,6 @@ div#article_container .thread li span.edit_btn:hover{
 div#article_container #comments span{
 	font-size: 12px;
 	font-weight: 300;
-	font-style: italic;
 }
 
 div#article_container #comments span.reply_to{
@@ -1530,7 +1528,7 @@ div#article_container #comments span.reply_to{
 div#article_container #comments span.like_reply{
 	float: right;
 	font-style: normal;
-	color: #9e9e9e;
+	color: #555;
 	}
 div#article_container .like_btn,div#article_container .dislike_btn{
 	cursor: pointer
@@ -1540,9 +1538,14 @@ div#article_container .like_btn,div#article_container .dislike_btn{
 #comments .comment_control a { margin-right:5px;}
 	
 #comments span.like_reply a{
-	color: #9e9e9e;
+	color: #555;
 	cursor: pointer;
 	padding-left: 5px;
+	}
+	
+	
+#comments span.like_reply a span.reply_btn{
+background-image: url("/images/engage/icon/16x16/Reply_v1.png");
 	}
 
 div#article_container #comments li{
@@ -1671,7 +1674,7 @@ a.reply_click img{
 	opacity: 0.6;
 	height: 10px;
 	bottom: 0;
-	line-height: 10px;
+	margin-left: 5px;
 }
 /* -----------------------------------------
    courses
@@ -2093,3 +2096,18 @@ div.innercontents#user_detail_box div.avatar_name{
 #week-info ul li{
 	font-style: italic;
 	}
+
+
+#no_resource{
+	border:dashed 1px #ccc;
+	text-align: left;
+	padding-top: 20px;
+	padding-left: 30px;
+	color: #666;
+}
+
+#no_resource p{
+	padding: 0;
+	margin: 0;
+	margin: 2px;
+}

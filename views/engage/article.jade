@@ -83,10 +83,10 @@ block content
 						img(src="/images/engage/default_profile.png")
 				span.name #{article.user.firstName} #{article.user.lastName}
 				p #{ article.description }
+				span Posted 
 				span.post_time(data-time="#{article.createdAt}") #{article.createdAt}
 				span.like_reply
-
 					a.reply_click(data-target-uuid="#{article.uuid}", data-reply-type="super") Reply
-						span.typicn.forward
+						img(src="/images/engage/icon/16x16/Reply_v1.png")
 			h5 Comments
 			ol

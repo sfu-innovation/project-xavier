@@ -82,6 +82,7 @@ function updateSearch() {
 	var inputbox = document.getElementById("askQuestionInput");
 	if (inputbox.value != QuestionList.searchQuery && inputbox.value != "Ask a Question") {
 		QuestionList.searchQuery = inputbox.value;
+		QuestionList.searchType = ""; // sorts by nothing, this generally more accurately reflects order or relevance
 		QuestionCommon.getCourseTitle(function(courseTitle) {
 			QuestionCommon.setQuestionHeader(courseTitle, "Question Search for", '"' + QuestionList.searchQuery + '"');
 		});

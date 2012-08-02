@@ -15,7 +15,7 @@ function updateNotificationList(user) {
 	var notificationLists = $(".Notifications");
 	//notificationLists.empty();	
 	//console.log(notificationIDs);	
-	/*
+	
 	common.userNotifications(user, function(data) {
 		//console.log('notification data')
 		if (data) {								
@@ -23,12 +23,7 @@ function updateNotificationList(user) {
 				var contains = $.inArray(data.notification[i].notification.id, notificationIDs);
 
 				// need a better way to check whether the notification is worth listening too
-				if (contains === -1) {
-					var notificationType = "notificationRegular";
-					if (data.notification[i].user.type === 1) {
-						notificationType = "notificationInstructor";
-					}
-				
+				if (contains === -1) {				
 					if (data.notification[i].notification && data.notification[i].user) {	
 						notificationIDs.push(data.notification[i].notification.id);					
 						notificationLists.append(formatNotification(data.notification[i]));
@@ -38,7 +33,7 @@ function updateNotificationList(user) {
 			}			
 		}
 	});	
-	*/	
+	
 }
 
 function selectNotification(selectedNotification) {	

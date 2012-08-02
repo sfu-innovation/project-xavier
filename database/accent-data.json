@@ -135,7 +135,7 @@
 			"title":"What is the Internet?",
 			"description":"A brief history of the internet, followed by a more in depth description about what the internet is and how it functions.",
 			"course":"1",
-			"path":"default.mp4",
+			"path":"internet.mp4",
 			"type":0
 		},
 		{
@@ -144,7 +144,7 @@
 			"title":"How Routing Works",
 			"description":"An introduction to packet switched networks.  Decribes how packets are routed from one end user to another.",
 			"course":"1",
-			"path":"default.mp4",
+			"path":"237a216e371af0006ad12903fa4b669a.mp4",
 			"type":0
 		},
 		{
@@ -162,7 +162,7 @@
 			"title":"Proper Nutrition for Endurance Athletes",
 			"description":"Carbs carbs carbs!  Load em up!",
 			"course":"2",
-			"path":"default.mp4",
+			"path":"177647894f04af565ed9497bee557782.mp4",
 			"type":0
 		},
 		{
@@ -180,7 +180,7 @@
 			"title":"Node.js Tutorial",
 			"description":"In this tutorial, we will see how to create an interactive video tagging program that will enhance the way we view lectures online.",
 			"course":"4",
-			"path":"default.mp4",
+			"path":"1b1a7e50ca370d4062a40aa43778dd71.mp4",
 			"type":0
 		}
 	],

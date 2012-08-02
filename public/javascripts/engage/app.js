@@ -1108,11 +1108,23 @@ function loadCourseArticles(engage, week) {
 						console.log(data);
 						$.each(data.resources, function (index, item) {
 
-							console.log(item);
-							var article = renderArticlePreviewBox(item);
+							if (item.user.type === 1){
+								var article = renderArticlePreviewBox(item);
+								$('#contents').append(article);
+							}
 
 
-							$('#contents').append(article);
+
+						});
+						$.each(data.resources, function (index, item) {
+
+							if (item.user.type !== 1){
+								var article = renderArticlePreviewBox(item);
+								$('#contents').append(article);
+							}
+
+
+
 						});
 
 					}
@@ -1175,6 +1187,9 @@ function loadAllArticles(engage, week) {
 					$('.articlebox').remove();
 					//$('#contents').empty();
 					console.log(data);
+
+
+
 					$.each(data.resources, function (index, item) {
 
 						console.log(item);

@@ -7,7 +7,7 @@ function getMedia(courseUUID, all){
 		//alert("UUID " + courseUUID);
 		// If the all button was clicked, build up an array of course uuids
 		// to feed to getMedia
-		if(typeof courseUUID === 'string' && courseUUID.toLowerCase() === 'all'){
+		if(typeof courseUUID === 'string' && courseUUID.toLowerCase().replace(/ /g,'') === 'all'){
 			var courseUUIDS = [];
 			var courses = $('#Courses').children();
 			for(var i = 0; i < courses.length; ++i){
@@ -50,7 +50,6 @@ function returnColor(uuid) {
 }
 
 var retrieveMedia = function(courseUUID, all){
-	console.log(courseUUID);
 	var mainContent = $("#Main").children("#media-list");
 
 	if (mainContent.size() === 0) {		
@@ -109,5 +108,3 @@ function editLinks(mediaUUID, mediaTitle, mediaDescription){
 	$('.EditDescription').val(mediaDescription);
 	return false;
 }
-
-getMedia($('.Selected').text());

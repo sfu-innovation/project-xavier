@@ -43,8 +43,8 @@ function displayTags(type) {
 		if(type === "") {
 			data.tags.forEach(function(tag) {				
 				var tagStr = formatTimeline(tag);	
-				//tagWindow.before(tagStr);
-
+				tagWindow.before(tagStr);
+				/*
 				var time = tag.start * video.duration / 100;
 				var endTime = 0;
 				var newTag = $(tagStr);
@@ -54,14 +54,16 @@ function displayTags(type) {
 					duration: endTime
 				});
 				bindTag(newTag);
+				*/
 			});
 		}
 		else {			
 			data.tags.forEach(function(tag) {	
 				if (tag.type === type) {
 					var tagStr = formatTimeline(tag);	
-					//tagWindow.before(tagStr);	
+					tagWindow.before(tagStr);	
 
+					/*
 					var time = tag.start * video.duration / 100;
 					var endTime = 0;
 					var newTag = $(tagStr);
@@ -71,6 +73,7 @@ function displayTags(type) {
 						duration: endTime
 					});
 					bindTag(newTag);	
+					*/
 				}						
 			});	
 		}

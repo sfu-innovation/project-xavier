@@ -34,7 +34,7 @@ function formatResponse(response) {
 	console.log(response);
 	return "<div class='Message'>"
 			+ "<span class='Author'>" 
-			+ "<image src='" + response._source.profile + "'>" 
+			+ "<image src='" + response.profile + "'>" 
 			+ response._source.user
 			+ "</span>"
 			+ " " + response._source.body		
@@ -98,6 +98,7 @@ function selectVote(selectedVote) {
 
 //function displayQuestions(searchType, page) {
 function displayQuestions(course) {
+	console.log(course);
 	// My conversations
 	//var questionList = document.getElementById("myQuestionsList");
 	var questionList = $("#myConversations").children(".Conversations");	

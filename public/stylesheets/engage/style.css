@@ -92,7 +92,7 @@ body{
 
 
 /* -----------------------------------------
-   splash page
+   splash & 404 page
 ----------------------------------------- */
 
 body#splash{
@@ -119,7 +119,20 @@ body#splash #login_as a{
 
 	margin-top: 5px;
 }
+#404 h1{
+	font-size: 80px;
+}
+#404 div{
+	text-align: center;
+}
 
+
+#404 .button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+
+}
 /* -----------------------------------------
    Header and Navigation
 ----------------------------------------- */
@@ -208,7 +221,7 @@ div#header{
 #header img.logo#small_logo{
 	min-width: 70px;
 }
-#header #banner img.logo{
+#header.banner img.logo{
 	vertical-align: middle;
 }	
 
@@ -397,6 +410,7 @@ ul#user_options_list span.notification_number{
 	text-align: center;
 	margin-left: -9px;
 	margin-top: -17px;
+	line-height: 18px;
 }
 	
 ul#user_options_list li div.dropdown_list{
@@ -580,7 +594,7 @@ div#contents div.columns{
 }
 
 div#contents div.columns:last-child{;  
-	float: left !important;
+	float: left ;
 	}
 
 

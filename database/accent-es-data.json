@@ -50,7 +50,7 @@
 			"isInstructor":"false",
 			"viewCount":38,
 			"commentCount":1,
-			"course":"1",
+			"course":"cmpt371",
 			"week":1
 		}
 	},
@@ -71,8 +71,29 @@
 			"isInstructor":"false",
 			"viewCount":51,
 			"commentCount":0,
-			"course":"3",
+			"course":"kin143",
 			"week":1
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"3asd35c-7679-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"mis2",
+			"title":"How do I get bigger calf muscles?",
+			"body":"How do I get bigger calf muscles?",
+			"category":"academic",
+			"status":"unanswered",
+			"created":"2012-07-11T18:19:31.204Z",
+			"timestamp":"2012-07-11T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":51,
+			"commentCount":0,
+			"course":"kin143",
+			"week":2
 		}
 	},
 	{
@@ -91,7 +112,27 @@
 			"isInstructor":"false",
 			"viewCount":7,
 			"commentCount":2,
-			"course":"1",
+			"course":"cmpt371",
+			"week":1
+		}
+	},
+	{
+		"_index":"accent",
+		"_type":"questions",
+		"_id":"3469445c-1444-4283-9bf8-39d9e35f0895",
+		"_score":1,
+		"_source": {
+			"user":"mis2",
+			"title":"What are the advantages of using javascript for the back-end of an application rather than Python or PHP?",
+			"category":"academic",
+			"status":"answered",
+			"created":"2012-07-11T18:19:31.204Z",
+			"timestamp":"2012-07-11T18:19:31.204Z",
+			"followup":[],
+			"isInstructor":"false",
+			"viewCount":7,
+			"commentCount":2,
+			"course":"cmpt470",
 			"week":1
 		}
 	},

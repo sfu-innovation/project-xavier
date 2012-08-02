@@ -1,1 +1,20 @@
-p Just a 404 Page
+doctype 5
+html
+
+head
+	link(href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', rel='stylesheet', type='text/css')
+	meta(charset="utf-8")
+	link(href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900', rel='stylesheet', type='text/css')
+	link(rel='stylesheet', href='/stylesheets/engage/style.css')
+	link(rel="stylesheet", href="/stylesheets/engage/foundation.css")
+
+body
+	div#header.banner
+		img.logo(href="/", src="/images/engage/sfu_logo_white.png", style="width: 260px; margin: 20px;")
+	
+	div.row
+	
+		div.six.columns.centered(id= "#404msg", style= "float: none; text-align: center")
+			h1(style="font-size:60px") 404
+			p Page Not Found
+			a.button(href="/", style="border-radius: 2px; border-color: #555; background-color: #888;") return to home

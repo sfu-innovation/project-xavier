@@ -3,6 +3,7 @@ var accent = new coreApi.Accent();
 var mediaID = $('#mediaUUID').text().replace(/^\s+|\s+$/g, '');
 var video = document.getElementById("Video");
 
+var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
 var tagColors = [];
 
 function loadMedia(){	
@@ -27,7 +28,7 @@ function formatTagtype(value) {
 // start and end has to be matching with the UI timeline
 // probabaly adding some offset value
 function formatTimeline(tag){
-	return "<div class='Tag' style='left: " + convertTime2Percentage(tag.start) + "%; width: " + convertTime2Percentage(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "'>"			
+	return "<div class='Tag' style='left: " + convertTime2Percentage(tag.start) + "%; width: " + convertTime2Percentage(tag.end - tag.start) + "%; background: " + formatTagtype(tag.type) + ";' UUID='" + tag.uuid + "' user='" + tag.user + "'>"			
 }
 
 function convertTime2Percentage(time) {
@@ -102,13 +103,37 @@ function refreshTags(filterType){
 	
 }
 
-function selectedTag(tag) {	
-	var tagID = $(tag).attr('uuid');	
-	
-	accent.getTagById(tagID, function(data){
-		alert(JSON.stringify(data.tag));
-	});
-	
+function setTagWindow(selectedTag) {
+	var tagTitle = document.getElementById("TagTitle");		
+	var tagType = document.getElementById("TagType");
+	var tagDescription = document.getElementById("TagDescription");	
+	var type = "disabled";
+
+	//var selectedTag = $(".Tagger div.Timeline div.Tag.Selected");
+	//console.log(selectedTag)
+	var selectedTagUser = selectedTag.attr("user");
+	//console.log(selectedTagUser);
+
+	if (selectedTagUser === sessionUser) {
+		tagTitle.removeAttribute(type);
+		tagType.removeAttribute(type);
+		tagDescription.removeAttribute(type);
+
+		var tagButtons = $(".Tagger div.Timeline div.TagWindow div.Buttons input");
+		tagButtons.each(function(){
+			$(this).removeAttr(type);		
+		})
+	}
+	else {
+		tagTitle.setAttribute(type, type);
+		tagType.setAttribute(type, type);
+		tagDescription.setAttribute(type, type);
+
+		var tagButtons = $(".Tagger div.Timeline div.TagWindow div.Buttons input");
+		tagButtons.each(function(){
+			$(this).attr(type, type);		
+		})
+	}
 }
 
 function showTagInfo(tag){
@@ -121,9 +146,8 @@ function showTagInfo(tag){
 
 	if (typeof tag != 'undefined') {
 		title = tag.title;
-		description = tag.description;
+		description = tag.description;									
 	}
-
 
 	tagTitle.value = title;
 	tagDescription.value = description;
@@ -135,10 +159,9 @@ function bindTag(tag) {
 		evt.stopPropagation();
 		var tag = $(this).data("tag");
 		video.pause();			
-		console.log('tag clicked succesfully')
-		console.log('video current = ' + tag.offset)
-		console.log('video duration = ' + tag.duration)
 		video.currentTime = tag.offset;
+		var selectedTag = $(this);
+		setTagWindow(selectedTag);		
 		if (tag.duration > 0)
 			video.play();
 	}).bind("mousedown", function(evt) {
@@ -164,7 +187,8 @@ function bindTag(tag) {
 		var tagID = selectedTag.attr("uuid");
 
 		accent.getTagById(tagID, function(data){
-			showTagInfo(data.tag);				
+			showTagInfo(data.tag);		
+			setTagWindow(selectedTag);			
 		})
 
 		return true;
@@ -182,10 +206,9 @@ function bindTag(tag) {
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
 
-		accent.getTagById(tagID, function(data){	
-			console.log('tag');
-			console.log(data);
-			showTagInfo(data.tag);						
+		accent.getTagById(tagID, function(data){				
+			showTagInfo(data.tag);		
+			setTagWindow(selectedTag);					
 		})
 		
 		$(".TagWindow").css({
@@ -196,16 +219,22 @@ function bindTag(tag) {
 	})
 }
 
-function addTag(time) {
+function addTag(time) {	
 	var p = time/video.duration * 100;
 	var endTime = 0;
-	var tag = $('<div class="Tag" style="left: '+p+'%; width: 12px; background: red;"></div>');
+
+	var sessionUser = $("#Session .Components a.UUID").text().replace(/^\s+|\s+$/g, '');
+	var tag = $('<div class="Tag" style="left: '+p+'%; width: 12px; background: red;" user="' + sessionUser +'"></div>');
 	$(".Timeline").prepend(tag);
 	tag.data("tag", {
 		offset: time,
 		duration: endTime
 	});
-	bindTag(tag);
+	bindTag(tag);	
+
+	var selectedTag = $(".Tagger div.Timeline div.Tag.Selected");
+	setTagWindow(selectedTag);
+
 }
 
 loadMedia();
@@ -242,7 +271,7 @@ $(document).ready(function () {
 		var curTime = (evt.offsetX / $(this).width() * video.duration);		
 		
 		var tag = addTag(curTime);		
-		showTagInfo("","");
+		showTagInfo();
 
 		$(this).data("current-tag", tag)
 	}).bind("mousedown", function(evt) {					

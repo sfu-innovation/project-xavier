@@ -16,6 +16,8 @@ jQuery(document).ready(function ($) {
 	addColor();
 //	paddingforMediumScreen();
 	var engage = new coreApi.Engage();
+	
+	$(".three.columns").last().addClass("end");
 
 
 	if (window.location.toString().indexOf('starred') != -1) {

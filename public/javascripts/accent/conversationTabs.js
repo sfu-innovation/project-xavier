@@ -31,6 +31,7 @@ function formatFollowing(type, questionUser) {
 
 				
 function formatResponse(response) {
+	console.log(response);
 	return "<div class='Message'>"
 			+ "<span class='Author'>" 
 			+ "<image src='../images/avatars/" + response._source.user + ".jpg'>" 
@@ -54,7 +55,7 @@ function formatConversation(conversation) {
 			+ "</div>"
 			+ "<div class='Content'>" 
 			+ "<span class='Author'>" 
-			+ "<image src='../images/accent/" + conversation.user.uuid + ".jpg'>" 
+			+ "<image src='../images/avatars/" + conversation.user.uuid + ".jpg'>" 
 			+ conversation.user.firstName + " " + conversation.user.lastName 
 			+ "</span> "
 			+ conversation._source.body

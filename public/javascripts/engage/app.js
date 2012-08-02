@@ -331,6 +331,7 @@ jQuery(document).ready(function ($) {
 		var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
 		if (!(RegExp.test(url))) {
+			displayErrorMsg('<p>Please enter a valid url.</p>');
 			$('#article_url').attr('placeholder', 'Please enter a valid url');
 
 		}
@@ -369,6 +370,7 @@ jQuery(document).ready(function ($) {
 		var title = $('#upload_article #article_title').val();
 
 		if (!title){
+			displayErrorMsg('<p>Please enter a title.</p>');
 		$('#upload_article #article_title').attr('placeholder','Please enter a title')
 		}
 		else{
@@ -389,6 +391,12 @@ jQuery(document).ready(function ($) {
 						$('#sharebox').after(new_article);
 						displayMsg('You have successfully shared a resource to <span>'+ course_name + '</span>.');
 
+					}
+					else if (data && data.errorcode === 4){
+						displayErrorMsg('<p>Please select a file.</p>');
+					}
+					else if (data && data.errorcode === 5){
+						displayErrorMsg('<p>Sorry, we only support pdf, word and powerpoint documents.</p>');
 					}
 					else{
 						displayErrorMsg('<p>We have trouble reading this File.</p><p> Please try another one.</p>');
@@ -861,6 +869,7 @@ function bindArticlePageListeners(engage) {
 		}
 
 		else{
+			displayErrorMsg('<p>Please fill in the comment.</p>');
 			$('form input#reply_content').attr('placeholder','Please fill in the comment.')
 		}
 		return false;
@@ -1840,7 +1849,7 @@ function displayErrorMsg(err){
 
 	setTimeout(function(){
 		$('#submitnew  .error').fadeOut(500);
-	},5000);
+	},2000);
 
 
 }

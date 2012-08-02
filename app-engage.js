@@ -29,8 +29,9 @@ app.configure(function() {
 			store: express.session.MemoryStore({ reapInterval: 60000 })
 	}));
 	//app.use(express.csrf());
-	app.use(app.router);
 	app.use(express.static(__dirname + "/public"));
+	app.use(app.router);
+
 });
 
 app.configure('development', function(){
@@ -206,3 +207,5 @@ app.post('/resource/upload', routesEngage.uploadResource);
 app.get('/setup', routesEngage.setup);
 app.post('/setup',routesEngage.setup)
 
+app.get('/*', routesEngage.notFound);
+app.post('/*',routesEngage.notFound)

@@ -606,9 +606,7 @@ exports.getNotifications = function(request, response){
 
 
 exports.uploadResource = function (req,res){
-	console.log("uploading shit");
-	console.log(req.files);
-	console.log(req.body);
+
 	var title = req.body.article_title;
 	var description = req.body.article_comment;
 	var course = req.body.article_course;
@@ -621,6 +619,13 @@ exports.uploadResource = function (req,res){
 		var fileType =   ((req.files.article_file.name).split('.'))[1] || '';
 
 		fileType =  fileType.toLowerCase();
+
+		if (fileType!=="pdf" && fileType!=="doc" && fileType!=="docx" && fileType!=="ppt" && fileType!=="pptx"){
+			console.log(fileType!=="pdf");
+			res.writeHead(200, { 'Content-Type':'application/json' });
+			res.end(JSON.stringify({ errorcode:5, message:'Not supported file types' }));
+			return;
+		}
 
 		fileName += '.' + fileType;
 
@@ -669,7 +674,8 @@ exports.uploadResource = function (req,res){
 
 	}
 	else{
-		//do something later
+		res.writeHead(200, { 'Content-Type':'application/json' });
+		res.end(JSON.stringify({ errorcode:4, message:'Please select a file' }));
 	}
 
 

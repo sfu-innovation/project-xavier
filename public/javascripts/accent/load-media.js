@@ -111,10 +111,19 @@ function selectedTag(tag) {
 	
 }
 
-function showTagInfo(title, description){
+function showTagInfo(tag){
 	var tagTitle = document.getElementById("TagTitle");		
 	var tagType = document.getElementById("TagType");
 	var tagDescription = document.getElementById("TagDescription");
+
+	var title = "";
+	var description = "";
+
+	if (typeof tag != 'undefined') {
+		title = tag.title;
+		description = tag.description;
+	}
+
 
 	tagTitle.value = title;
 	tagDescription.value = description;
@@ -154,14 +163,8 @@ function bindTag(tag) {
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
 
-		accent.getTagById(tagID, function(data){		
-			if (data.tag) {
-				showTagInfo(data.tag.title, data.tag.description);							
-			}				
-			else {
-				showTagInfo("", "");				
-			}				
-
+		accent.getTagById(tagID, function(data){
+			showTagInfo(data.tag);				
 		})
 
 		return true;
@@ -179,14 +182,10 @@ function bindTag(tag) {
 		var selectedTag = $(this);
 		var tagID = selectedTag.attr("uuid");
 
-		accent.getTagById(tagID, function(data){		
-			if (data.tag) {
-				showTagInfo(data.tag.title, data.tag.description);							
-			}				
-			else {
-				showTagInfo("", "");				
-			}				
-
+		accent.getTagById(tagID, function(data){	
+			console.log('tag');
+			console.log(data);
+			showTagInfo(data.tag);						
 		})
 		
 		$(".TagWindow").css({

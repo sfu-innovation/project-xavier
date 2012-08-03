@@ -80,6 +80,20 @@ em {
 	clear: both;
 }
 
+.button{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+	
+	}
+
+.button:hover{
+	border-radius: 2px;
+	border-color: #555;
+	background-color: #888;
+	
+	}
+
 body{
 	padding-bottom: 20px;
 	overflow-x: hidden;
@@ -256,7 +270,7 @@ div#header{
 .slider_box ul{
 	display: inline-block;
 	margin-bottom: 0;
-	width: 85%;
+	width: 90%;
 	padding: 0 20px;
 	}
 	
@@ -276,7 +290,7 @@ div#header{
 
 	width:50%;
 	float: left;
-	text-align: left;
+	text-align: center;
 	display: inline-block;
 }
 

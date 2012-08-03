@@ -11,8 +11,8 @@ var db = new Sequelize(
 	
 	{
 		port: config.mysqlDatabase["port"],
-		host: config.mysqlDatabase["host"]
-		//logging: false
+		host: config.mysqlDatabase["host"],
+		logging: false
 	}
 );
 

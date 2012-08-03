@@ -12,15 +12,13 @@ block content
 				ul.tabs-content
 					li.active#editTab
 						form(id="setup", action="/setup",method="post")
-							div#avatar_column.columns
-								div.browsebox
 
-							div#edit_info_column.four.columns.end
-								div#edit_box
+							div#edit_info_column.five.columns.centered
+								div#edit_box(style  = "text-align: left")
 									label First Name:
-									input(type="text", name="firstname", maxlength="20")
+									input(type="text", name="firstname", maxlength="10", style="width : 200px")
 									label Last Name:
-									input(type="text", name="lastname", maxlength="20")
+									input(type="text", name="lastname", maxlength="10" , style="width : 200px")
 									input.button(type="submit", value="save changes", onClick="confirm( 'Confirm changes? You can only set your full name once.' )")
 									
 								div#feedback
